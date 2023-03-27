@@ -6,7 +6,9 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenCombineAttribute
+import io.micronaut.starter.build.maven.MavenPlugin
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -27,6 +29,21 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         expect:
         !maven.isGradle()
         maven.isMaven()
+    }
+
+    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(
+            ApplicationType apptype, Language lang
+    ) {
+        when:
+        def output = generate(apptype, new Options(lang, BuildTool.MAVEN))
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
+
+        where:
+        [lang, apptype] << [ Language.values().toList(), ApplicationType.values().toList() ].combinations()
     }
 
     void "multi-module-pom isn't created for single-module builds"() {

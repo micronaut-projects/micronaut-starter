@@ -37,9 +37,14 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature {
+
+    public static final String MICRONAUT_GRADLE_DOCS_URL = "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/";
+    public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
 
     @Override
     @NonNull
@@ -50,7 +55,14 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(shouldApplyMicronautApplicationGradlePlugin(generatorContext) ?
+
+            boolean shouldApplyApplicationPlugin = shouldApplyMicronautApplicationGradlePlugin(generatorContext);
+
+            generatorContext.addHelpLink("Micronaut Gradle Plugin documentation", MICRONAUT_GRADLE_DOCS_URL);
+            if (shouldApplyApplicationPlugin && (generatorContext.getLanguage() == JAVA || generatorContext.getLanguage() == KOTLIN)) {
+                generatorContext.addHelpLink("GraalVM Gradle Plugin documentation", GRAALVM_GRADLE_DOCS_URL);
+            }
+            generatorContext.addBuildPlugin(shouldApplyApplicationPlugin ?
                     micronautGradleApplicationPluginBuilder(generatorContext).build() :
                     micronautLibraryGradlePlugin(generatorContext));
         }
@@ -154,4 +166,5 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
+
 }
