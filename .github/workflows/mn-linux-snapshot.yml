@@ -2,10 +2,10 @@ name: Linux Native CLI
 on:
   push:
     branches:
-      - 'fully-static-image'
+      - '[1-9]+.[0-9]+.x'
   pull_request:
     branches:
-      - 'fully-static-image'
+      - '[1-9]+.[0-9]+.x'
 jobs:
   build:
     name: Builds Linux Native CLI
@@ -42,7 +42,7 @@ jobs:
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/fully-static-image'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.8.x'
         uses: actions/upload-artifact@v3
         with:
           name: mn-linux-amd64-snapshot
