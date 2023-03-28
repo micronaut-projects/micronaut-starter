@@ -7,6 +7,7 @@ import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -126,7 +127,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
     }
 
-    void 'Readme has Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
+    void 'Supporeted langaues have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
@@ -140,13 +141,13 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         [lang, buildTool, apptype] << [
-                Language.values().toList() - Language.GROOVY,
+                GraalVMFeatureValidator.supportedLanguages(),
                 BuildTool.valuesGradle(),
-                ApplicationType.values().toList() - ApplicationType.FUNCTION
+                ApplicationType.values().toList()
         ].combinations()
     }
 
-    void 'Readme has Gradle but no GraalVM plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
+    void 'Unsupported languages have Gradle but omit GraalVM plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
@@ -160,9 +161,9 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         [lang, buildTool, apptype] << [
-                Language.values().toList(),
+                Language.values().toList() - GraalVMFeatureValidator.supportedLanguages(),
                 BuildTool.valuesGradle(),
-                [ApplicationType.FUNCTION]
+                ApplicationType.values().toList()
         ].combinations()
     }
 }

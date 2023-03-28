@@ -30,6 +30,7 @@ import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import jakarta.inject.Singleton;
@@ -37,8 +38,6 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
-import static io.micronaut.starter.options.Language.JAVA;
-import static io.micronaut.starter.options.Language.KOTLIN;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature {
@@ -56,13 +55,12 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
 
-            boolean shouldApplyApplicationPlugin = shouldApplyMicronautApplicationGradlePlugin(generatorContext);
-
             generatorContext.addHelpLink("Micronaut Gradle Plugin documentation", MICRONAUT_GRADLE_DOCS_URL);
-            if (shouldApplyApplicationPlugin && (generatorContext.getLanguage() == JAVA || generatorContext.getLanguage() == KOTLIN)) {
+            if (GraalVMFeatureValidator.supports(generatorContext.getLanguage())) {
                 generatorContext.addHelpLink("GraalVM Gradle Plugin documentation", GRAALVM_GRADLE_DOCS_URL);
             }
-            generatorContext.addBuildPlugin(shouldApplyApplicationPlugin ?
+
+            generatorContext.addBuildPlugin(shouldApplyMicronautApplicationGradlePlugin(generatorContext) ?
                     micronautGradleApplicationPluginBuilder(generatorContext).build() :
                     micronautLibraryGradlePlugin(generatorContext));
         }
