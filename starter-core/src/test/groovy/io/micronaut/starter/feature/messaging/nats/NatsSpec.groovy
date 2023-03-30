@@ -38,6 +38,6 @@ class NatsSpec extends ApplicationContextSpec {
         GeneratorContext ctx = buildGeneratorContext(['nats'])
 
         then:
-        ctx.configuration.containsKey('nats.addresses')
+        ctx.configuration.containsKey('nats.default.addresses')
     }
 }
