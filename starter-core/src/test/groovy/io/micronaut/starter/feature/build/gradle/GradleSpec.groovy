@@ -4,8 +4,10 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -125,4 +127,43 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
     }
 
+    void 'Supporeted langaues have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
+            ApplicationType apptype, Language lang, BuildTool buildTool
+    ) {
+        when:
+        def output = generate(apptype, new Options(lang, buildTool))
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains(MicronautBuildPlugin.MICRONAUT_GRADLE_DOCS_URL)
+        readme.contains(MicronautBuildPlugin.GRAALVM_GRADLE_DOCS_URL)
+
+        where:
+        [lang, buildTool, apptype] << [
+                GraalVMFeatureValidator.supportedLanguages(),
+                BuildTool.valuesGradle(),
+                ApplicationType.values().toList()
+        ].combinations()
+    }
+
+    void 'Unsupported languages have Gradle but omit GraalVM plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
+            ApplicationType apptype, Language lang, BuildTool buildTool
+    ) {
+        when:
+        def output = generate(apptype, new Options(lang, buildTool))
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains(MicronautBuildPlugin.MICRONAUT_GRADLE_DOCS_URL)
+        !readme.contains(MicronautBuildPlugin.GRAALVM_GRADLE_DOCS_URL)
+
+        where:
+        [lang, buildTool, apptype] << [
+                Language.values().toList() - GraalVMFeatureValidator.supportedLanguages(),
+                BuildTool.valuesGradle(),
+                ApplicationType.values().toList()
+        ].combinations()
+    }
 }

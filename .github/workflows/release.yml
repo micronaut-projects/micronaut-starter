@@ -107,6 +107,7 @@ jobs:
           java-version: '11'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-musl: 'true'
       - name: Build the JAR
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -114,7 +115,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --static --libc=musl --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build

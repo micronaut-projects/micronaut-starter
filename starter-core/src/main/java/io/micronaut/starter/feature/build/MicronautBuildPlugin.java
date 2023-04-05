@@ -36,6 +36,7 @@ import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import jakarta.inject.Inject;
@@ -47,6 +48,9 @@ import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature {
+    public static final String MICRONAUT_GRADLE_DOCS_URL = "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/";
+    public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
+
     protected final CoordinateResolver coordinateResolver;
 
     @Deprecated
@@ -68,6 +72,10 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Micronaut Gradle Plugin documentation", MICRONAUT_GRADLE_DOCS_URL);
+            if (GraalVMFeatureValidator.supports(generatorContext.getLanguage())) {
+                generatorContext.addHelpLink("GraalVM Gradle Plugin documentation", GRAALVM_GRADLE_DOCS_URL);
+            }
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
     }
@@ -80,6 +88,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         } else {
             builder = micronautLibraryGradlePluginBuilder(generatorContext);
         }
+
         if (shouldAddRepositoriesForSnapshots(builder)) {
             builder.pluginsManagementRepository(new GradlePluginPortal())
                     .pluginsManagementRepository(GradleRepository.of(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), new S01SonatypeSnapshots()));
@@ -218,4 +227,5 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
+
 }

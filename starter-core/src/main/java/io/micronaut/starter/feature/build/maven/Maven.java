@@ -27,6 +27,7 @@ import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
+import io.micronaut.starter.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
@@ -37,7 +38,6 @@ import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
 import java.util.Collection;
 import java.util.List;
@@ -45,10 +45,10 @@ import java.util.Set;
 
 @Singleton
 public class Maven implements BuildFeature {
+    public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";
     protected static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     protected static final String MAVEN_PREFIX = "maven/";
-
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
@@ -81,6 +81,7 @@ public class Maven implements BuildFeature {
                     null;
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
         }
+        generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
     }
 
     protected void addMavenWrapper(GeneratorContext generatorContext) {
