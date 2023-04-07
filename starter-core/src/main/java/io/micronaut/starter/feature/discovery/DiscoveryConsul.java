@@ -57,11 +57,8 @@ public class DiscoveryConsul extends DiscoveryCore {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
-        applyCore(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.discovery")
-                .artifactId("micronaut-discovery-client")
-                .compile());
+        super.apply(generatorContext);
+        generatorContext.addDependency(DiscoveryCore.DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT);
     }
 
     @Override

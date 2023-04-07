@@ -39,11 +39,8 @@ public class Eureka extends DiscoveryCore {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        applyCore(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.discovery")
-                .artifactId("micronaut-discovery-client")
-                .compile());
+        super.apply(generatorContext);
+        generatorContext.addDependency(DiscoveryCore.DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT);
 
         generatorContext.getConfiguration().put("eureka.client.registration.enabled", true);
         generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");

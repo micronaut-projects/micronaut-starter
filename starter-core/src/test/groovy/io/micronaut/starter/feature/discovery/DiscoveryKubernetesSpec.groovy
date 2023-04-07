@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.discovery
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,47 +24,20 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
     }
 
     @Unroll
-    void 'test gradle discovery-kubernetes feature for language=#language'() {
+    void 'test gradle discovery-kubernetes feature for language=#language and buildTool=#buildTool'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['discovery-kubernetes'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-discovery-core")')
-        template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
+        verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven discovery-kubernetes feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['discovery-kubernetes'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kubernetes</groupId>
-      <artifactId>micronaut-kubernetes-discovery-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-discovery-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 
     void 'test discovery-kubernetes configuration'() {

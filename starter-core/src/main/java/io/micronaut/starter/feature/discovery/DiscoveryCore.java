@@ -15,13 +15,45 @@
  */
 package io.micronaut.starter.feature.discovery;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 
-public abstract class DiscoveryCore implements DiscoveryFeature {
-    protected void applyCore(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-discovery-core")
-                .compile());
+public class DiscoveryCore implements DiscoveryFeature {
+    private final static Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CORE = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-discovery-core")
+            .compile()
+            .build();
+
+    protected final static Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT = Dependency.builder()
+            .groupId("io.micronaut.discovery")
+            .artifactId("micronaut-discovery-client")
+            .compile()
+            .build();
+
+    @NonNull
+    @Override
+    public String getName() {
+        return "discovery-core";
+    }
+
+    @Override
+    public String getTitle() {
+        return "Micronaut Service Discovery";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for Service Discovery with Micronaut";
+    }
+
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_CORE);
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/";
     }
 }
