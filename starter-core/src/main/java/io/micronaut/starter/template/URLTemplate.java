@@ -59,4 +59,8 @@ public class URLTemplate extends DefaultTemplate {
     public boolean isExecutable() {
         return executable;
     }
+
+    public URL getUrl() {
+        return url;
+    }
 }

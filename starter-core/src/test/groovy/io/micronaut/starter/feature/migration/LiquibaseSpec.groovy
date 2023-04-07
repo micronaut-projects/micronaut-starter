@@ -18,6 +18,25 @@ class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixt
         readme.contains("https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html")
     }
 
+    void 'test feature liquibase contains configuration'() {
+        when:
+        def output = generate(['liquibase'])
+        def changelog = output["src/main/resources/db/liquibase-changelog.xml"]
+        def schema = output["src/main/resources/db/changelog/01-schema.xml"]
+        def config = output["src/main/resources/application.yml"]
+
+        then:
+        changelog
+        schema
+        config
+        config.contains("""
+liquibase:
+  datasources:
+    default:
+      change-log: classpath:db/liquibase-changelog.xml
+""")
+    }
+
     void "test the dependency is added to the gradle build"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)

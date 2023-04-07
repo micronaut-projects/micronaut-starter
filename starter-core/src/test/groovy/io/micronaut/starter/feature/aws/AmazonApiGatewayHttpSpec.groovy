@@ -22,6 +22,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
     void 'amazon-api-gateway-http feature is an instance of AwsApiFeature'() {
         expect:
         amazonApiGatewayHttp instanceof AwsApiFeature
+        amazonApiGatewayHttp instanceof LambdaTrigger
     }
 
     void "amazon-api-gateway-http does not support #applicationType application type"(ApplicationType applicationType) {
@@ -63,6 +64,18 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
                 .value(api.getUrl())
                 .build();
 ''')
+    }
+
+    void 'amazon-api-gateway-http feature without Cdk has dependency in project and doc links'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+                [AmazonApiGatewayHttp.NAME])
+
+        then:
+        output."build.gradle".contains($/implementation("io.micronaut.aws:micronaut-aws-apigateway/$)
+        output."README.md".contains($/https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway/$)
+        output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
+
     }
 
     void 'Selecting more than one AmazonApiGateway feature fails with exception'() {

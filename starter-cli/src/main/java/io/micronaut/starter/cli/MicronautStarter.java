@@ -29,6 +29,7 @@ import io.micronaut.starter.cli.command.CreateBuilderCommand;
 import io.micronaut.starter.cli.command.CreateCliCommand;
 import io.micronaut.starter.cli.command.CreateFunctionCommand;
 import io.micronaut.starter.cli.command.CreateGrpcCommand;
+import io.micronaut.starter.cli.command.CreateLambdaBuilderCommand;
 import io.micronaut.starter.cli.command.CreateMessagingCommand;
 import io.micronaut.starter.cli.command.LanguageCandidates;
 import io.micronaut.starter.cli.command.LanguageConverter;
@@ -63,7 +64,8 @@ import java.util.function.BiFunction;
                 CreateFunctionCommand.class,
                 CreateGrpcCommand.class,
                 CreateMessagingCommand.class,
-                CreateBuilderCommand.class
+                CreateBuilderCommand.class,
+                CreateLambdaBuilderCommand.class
         })
 @Prototype
 @TypeHint({

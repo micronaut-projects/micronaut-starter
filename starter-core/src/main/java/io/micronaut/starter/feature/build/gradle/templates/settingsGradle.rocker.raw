@@ -3,7 +3,7 @@
 @import io.micronaut.starter.build.gradle.GradlePlugin
 @import io.micronaut.starter.build.gradle.GradleDsl
 @import java.util.Collection;
-@args (Project project, GradleBuild gradleBuild, Collection<String> moduleNames)
+@args (Project project, GradleBuild gradleBuild, boolean hasMultiProjectFeature, Collection<String> moduleNames)
 @gradleBuild.renderSettingsPluginsManagement()
 @if(!gradleBuild.getSettingsPlugins().isEmpty()) {
 plugins {
@@ -21,7 +21,7 @@ plugins {
 
 rootProject.name="@project.getName()"
 
-@if (moduleNames.size() > 1) {
+@if (hasMultiProjectFeature || moduleNames.size() > 1) {
 @for (String moduleName : moduleNames) {
 include("@moduleName")
 }

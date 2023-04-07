@@ -2,6 +2,7 @@ plugins {
     id "io.micronaut.internal.starter.published-module"
     id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
+    id "io.micronaut.internal.starter.coordinates"
 }
 
 configurations.all {
@@ -51,5 +52,4 @@ rocker {
     javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
-
 

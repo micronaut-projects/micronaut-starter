@@ -10,7 +10,7 @@ package @project.getPackageName();
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 @if (features.contains("aws-lambda-scheduled-event")) {
-import com.amazonaws.services.lambda.runtime.events.ScheduledEvent
+import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 } else if (features.contains("aws-lambda-s3-event-notification")) {
 import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotification;
 }
