@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.other
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -50,38 +53,19 @@ class HttpSessionSpec extends ApplicationContextSpec implements CommandOutputFix
     }
 
     @Unroll
-    void 'test http-session with Gradle for language=#language'() {
+    void 'test http-session with Gradle for language=#language and buildTool=#buildTool'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['http-session'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut.session:micronaut-session")')
+        verifier.hasDependency("io.micronaut.session", "micronaut-session", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
 
-    }
-
-    @Unroll
-    void 'test http-session with Maven for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['http-session'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.session</groupId>
-      <artifactId>micronaut-session</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
     }
 }
