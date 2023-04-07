@@ -44,8 +44,13 @@ public class Nats implements MessagingFeature {
     }
 
     @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-nats/snapshot/guide/";
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("nats.addresses", Collections.singletonList("nats://localhost:4222"));
+        generatorContext.getConfiguration().put("nats.default.addresses", Collections.singletonList("nats://localhost:4222"));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.nats")
                 .artifactId("micronaut-nats")
