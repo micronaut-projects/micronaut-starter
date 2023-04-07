@@ -1,10 +1,12 @@
 package io.micronaut.starter.core.test.feature.database
 
+import io.micronaut.starter.feature.database.MySQL
+import io.micronaut.starter.feature.database.TestContainers
+import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import spock.lang.Unroll
 
 class DataR2dbcSpec extends CommandSpec {
 
@@ -13,10 +15,9 @@ class DataR2dbcSpec extends CommandSpec {
         return "dataR2dbc"
     }
 
-    @Unroll
     void "test maven data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["data-r2dbc"])
+        generateProject(language, BuildTool.MAVEN, [DataR2dbc.NAME, MySQL.NAME])
         String output = executeMaven("compile test")
 
         then:
@@ -26,10 +27,18 @@ class DataR2dbcSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
+    void "test maven data-r2dbc with TestContainers"() {
+        when:
+        generateProject(Language.JAVA, BuildTool.MAVEN, [DataR2dbc.NAME, MySQL.NAME, TestContainers.NAME])
+        String output = executeMaven("compile test")
+
+        then:
+        output?.contains("BUILD SUCCESS")
+    }
+
     void "test gradle data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["data-r2dbc"])
+        generateProject(language, BuildTool.GRADLE, [DataR2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
@@ -37,5 +46,14 @@ class DataR2dbcSpec extends CommandSpec {
 
         where:
         language << Language.values()
+    }
+
+    void "test gradle data-r2dbc with TestContainers"() {
+        when:
+        generateProject(Language.JAVA, BuildTool.GRADLE, [DataR2dbc.NAME, MySQL.NAME])
+        BuildResult result = executeGradle("test")
+
+        then:
+        result?.output?.contains("BUILD SUCCESS")
     }
 }

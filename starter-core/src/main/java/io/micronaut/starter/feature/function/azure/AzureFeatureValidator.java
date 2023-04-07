@@ -19,10 +19,9 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
-
 import jakarta.inject.Singleton;
+
 import java.util.Set;
 
 @Singleton
@@ -38,9 +37,6 @@ public class AzureFeatureValidator implements FeatureValidator  {
 
             if (options.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
                 throw new IllegalArgumentException("The Azure Gradle plugin currently does not support the Kotlin Gradle DSL.");
-            }
-            if (!(options.getJavaVersion() == JdkVersion.JDK_8 || options.getJavaVersion() == JdkVersion.JDK_11)) {
-                throw new IllegalArgumentException("The Azure Functions runtime only supports Java 8 or Java 11.");
             }
         }
     }

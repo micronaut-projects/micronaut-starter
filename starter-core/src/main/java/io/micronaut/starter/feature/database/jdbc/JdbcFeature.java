@@ -32,7 +32,7 @@ public abstract class JdbcFeature implements OneOfFeature, DatabaseDriverConfigu
     private static final String PREFIX = "datasources.default.";
     public static final String PROPERTY_DATASOURCES_DEFAULT_DB_TYPE = PREFIX + "db-type";
     private static final String URL_KEY = PREFIX + "url";
-    private static final String DRIVER_KEY = PREFIX + "driverClassName";
+    private static final String DRIVER_KEY = PREFIX + "driver-class-name";
     private static final String USERNAME_KEY = PREFIX + "username";
     private static final String PASSWORD_KEY = PREFIX + "password";
 

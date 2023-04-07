@@ -161,7 +161,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         with(ctx.getConfiguration()) {
-            get("mongodb.uri") == 'mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb'
+            // test-resources is automatic, so mongo.uri is eliminated
+            !get("mongodb.uri")
         }
 
         where:

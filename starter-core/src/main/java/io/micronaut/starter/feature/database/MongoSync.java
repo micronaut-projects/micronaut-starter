@@ -25,6 +25,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class MongoSync extends MongoFeature {
 
+    public static final String NAME = "mongo-sync";
+
     public MongoSync(TestContainers testContainers,
                      TestResources testResources) {
         super(testContainers, testResources);
@@ -32,7 +34,7 @@ public class MongoSync extends MongoFeature {
 
     @Override
     public String getName() {
-        return "mongo-sync";
+        return NAME;
     }
 
     @Override

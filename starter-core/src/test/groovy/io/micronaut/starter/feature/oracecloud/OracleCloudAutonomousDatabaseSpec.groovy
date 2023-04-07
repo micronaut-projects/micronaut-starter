@@ -77,7 +77,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         def config = output["src/main/resources/application.yml"]
 
         then:
-        !config.contains('driverClassName')
+        !config.contains('driver-class-name')
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/912")
