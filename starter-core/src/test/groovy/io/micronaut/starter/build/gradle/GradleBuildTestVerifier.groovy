@@ -53,8 +53,8 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, String scope) {
-        String expected = """${scope}("${groupId}:${artifactId}")"""
-        template.contains(expected)
+        String expected = """(?s).*${scope}\\("${groupId}:${artifactId}(?:.+)?\\).*"""
+        template.matches(Pattern.compile(expected))
     }
 
     @Override

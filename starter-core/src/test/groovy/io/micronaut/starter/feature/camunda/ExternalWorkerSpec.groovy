@@ -18,10 +18,11 @@ package io.micronaut.starter.feature.camunda
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -35,37 +36,18 @@ class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutput
         readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-external-client")
     }
 
-    @Unroll
-    void 'test gradle camunda-external-worker feature for language=#language'() {
+    void "test dependency added for camunda-external-worker feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['camunda-external-worker'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([ExternalWorker.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.count('implementation("info.novatec:micronaut-camunda-external-client-feature:') == 1
+        verifier.hasDependency("info.novatec", "micronaut-camunda-external-client-feature", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven camunda-external-worker feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['camunda-external-worker'])
-                .render()
-
-        then:
-        template.count('''\
-    <dependency>
-      <groupId>info.novatec</groupId>
-      <artifactId>micronaut-camunda-external-client-feature</artifactId>
- ''') == 1
-        where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
     void 'test camunda-external-worker configuration'() {

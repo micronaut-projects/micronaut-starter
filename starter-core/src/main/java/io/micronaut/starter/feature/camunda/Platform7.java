@@ -23,17 +23,30 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.server.Jetty;
+import io.micronaut.starter.feature.server.Netty;
 import io.micronaut.starter.feature.test.AssertJ;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Platform7 implements CamundaCommunityFeature {
+    public static final String NAME = "camunda-platform7";
 
-    private final AssertJ assertJ;
+    private static final Dependency.Builder DEPENDENCY_PLATFORM7 = Dependency.builder()
+            .lookupArtifactId("micronaut-camunda-bpm-feature")
+            .compile();
+
+    private static final Dependency.Builder DEPENDENCY_BPM_ASSERT = Dependency.builder()
+            .lookupArtifactId("camunda-bpm-assert")
+            .test();
+
     private final DatabaseDriverFeature defaultDbFeature;
+    private final Jetty jetty;
+    private final AssertJ assertJ;
 
-    public Platform7(DatabaseDriverFeature defaultDbFeature, AssertJ assertJ) {
+    public Platform7(DatabaseDriverFeature defaultDbFeature, Jetty jetty, AssertJ assertJ) {
         this.defaultDbFeature = defaultDbFeature;
+        this.jetty = jetty;
         this.assertJ = assertJ;
     }
 
@@ -46,7 +59,7 @@ public class Platform7 implements CamundaCommunityFeature {
     @Override
     @NonNull
     public String getCommunityFeatureTitle() {
-        return "Camunda Workflow Engine";
+        return "Camunda Platform 7 Workflow Engine";
     }
 
     @Override
@@ -56,7 +69,7 @@ public class Platform7 implements CamundaCommunityFeature {
 
     @Override
     public String getDescription() {
-        return "Bringing process automation to Micronaut: Embed the Camunda Platform Workflow Engine";
+        return "Bringing process automation to Micronaut: Embed the Camunda Platform 7 Workflow Engine";
     }
 
     @Override
@@ -66,22 +79,17 @@ public class Platform7 implements CamundaCommunityFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
-            featureContext.addFeature(defaultDbFeature);
-        }
-        if (!featureContext.isPresent(AssertJ.class)) {
-            featureContext.addFeature(assertJ);
-        }
+        featureContext.exclude(feature -> feature instanceof Netty);
+        featureContext.addFeatureIfNotPresent(DatabaseDriverFeature.class, defaultDbFeature);
+        featureContext.addFeatureIfNotPresent(Jetty.class, jetty);
+        featureContext.addFeatureIfNotPresent(AssertJ.class, assertJ);
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId("micronaut-camunda-bpm-feature")
-                .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId("camunda-bpm-assert")
-                .test());
+        addConfiguration(generatorContext);
+        generatorContext.addDependency(DEPENDENCY_PLATFORM7);
+        generatorContext.addDependency(DEPENDENCY_BPM_ASSERT);
     }
 
     @Override
@@ -92,7 +100,16 @@ public class Platform7 implements CamundaCommunityFeature {
     @Override
     @Nullable
     public String getThirdPartyDocumentation() {
-        return "https://github.com/camunda-community-hub/micronaut-camunda-bpm";
+        return "https://github.com/camunda-community-hub/micronaut-camunda-platform-7";
+    }
+
+    protected static void addConfiguration(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("camunda.admin-user.id", "admin");
+        generatorContext.getConfiguration().put("camunda.admin-user.password", "admin");
+        generatorContext.getConfiguration().put("camunda.webapps.enabled", true);
+        generatorContext.getConfiguration().put("camunda.rest.enabled", true);
+        generatorContext.getConfiguration().put("camunda.generic-properties.properties.initialize-telemetry", true);
+        generatorContext.getConfiguration().put("camunda.filter.create", "All tasks");
     }
 
 }
