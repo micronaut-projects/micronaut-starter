@@ -45,13 +45,12 @@ import java.util.Set;
 
 @Singleton
 public class Maven implements BuildFeature {
+    public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";
     protected static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     protected static final String MAVEN_PREFIX = "maven/";
-
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
-    public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";
 
     @Deprecated
     public Maven(MavenBuildCreator dependencyResolver) {

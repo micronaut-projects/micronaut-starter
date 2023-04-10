@@ -1,6 +1,10 @@
+@import io.micronaut.starter.build.gradle.GradleRepository
+@import java.util.List
+@args (List<GradleRepository> gradleRepositories)
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
+@for (GradleRepository repo: gradleRepositories) {
+@(repo.render(8))
+}
     }
 }

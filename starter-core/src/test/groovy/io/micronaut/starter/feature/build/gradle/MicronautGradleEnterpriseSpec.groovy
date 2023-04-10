@@ -2,18 +2,26 @@ package io.micronaut.starter.feature.build.gradle
 
 import groovy.namespace.QName
 import groovy.xml.XmlParser
+import io.micronaut.context.annotation.Replaces
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.gradle.GradlePluginPortal
+import io.micronaut.starter.build.gradle.GradleRepository
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import jakarta.inject.Singleton
+import spock.lang.Subject
 
 class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    @Subject
+    MicronautGradleEnterprise micronautGradleEnterprise = beanContext.getBean(MicronautGradleEnterprise.class)
 
     void "if you add micronaut-gradle-enterprise it is configured for #buildTool"() {
         given:when:
@@ -26,10 +34,11 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
 
         then:
-        settings.contains('pluginManagement {')
+        micronautGradleEnterprise.pluginsManagementRepositories().size() == 3
+        settings.count('pluginManagement {') == 1
         settings.contains('    repositories {')
-        settings.contains('        gradlePluginPortal()')
-        settings.contains('        mavenCentral()')
+        settings.count('        gradlePluginPortal()') == 1
+        settings.count('        mavenCentral()') == 1
         settings.contains('    }')
         settings.contains('}')
         settings.contains('plugins {')
@@ -96,5 +105,14 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         xml.server.url.text() == 'https://ge.micronaut.io'
         xml.buildScan.publish.text() == 'ALWAYS'
         !xml.buildCache.remote.storeEnabled // Not set in here, this is handled in custom data
+    }
+
+    @Singleton
+    @Replaces(MicronautGradleEnterprise.class)
+    static class MicronautGradleEnterpriseReplacement extends MicronautGradleEnterprise {
+        @Override
+        protected List<GradleRepository> pluginsManagementRepositories() {
+            super.pluginsManagementRepositories() + new GradlePluginPortal()
+        }
     }
 }

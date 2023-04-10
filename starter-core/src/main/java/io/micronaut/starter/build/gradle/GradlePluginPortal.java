@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,21 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import io.micronaut.starter.build.MavenCentral;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class GradleMavenCentral extends GradleRepository {
-
-    public GradleMavenCentral() {
-        this(GradleDsl.KOTLIN, MavenCentral.URL);
+public class GradlePluginPortal extends GradleRepository {
+    public GradlePluginPortal() {
+        super(GradleDsl.KOTLIN, "https://plugins.gradle.org");
     }
 
-    public GradleMavenCentral(GradleDsl gradleDsl, String url) {
+    public GradlePluginPortal(GradleDsl gradleDsl, String url) {
         super(gradleDsl, url);
     }
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        outputStream.write("mavenCentral()\n".getBytes(StandardCharsets.UTF_8));
+        outputStream.write("gradlePluginPortal()\n".getBytes(StandardCharsets.UTF_8));
     }
 }

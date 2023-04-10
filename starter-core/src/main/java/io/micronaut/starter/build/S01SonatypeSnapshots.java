@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,21 @@ package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
 
-public class MavenCentral implements Repository {
-
-    public static final String URL = "https://repo.maven.apache.org/maven2";
-
+public class S01SonatypeSnapshots implements Repository {
     @Override
     @NonNull
     public String getId() {
-        return "central";
+        return "s01-sonatype-snapshots";
     }
 
     @Override
     @NonNull
     public String getUrl() {
-        return URL;
+        return "https://s01.oss.sonatype.org/content/repositories/snapshots/";
+    }
+
+    @Override
+    public boolean isSnapshot() {
+        return true;
     }
 }

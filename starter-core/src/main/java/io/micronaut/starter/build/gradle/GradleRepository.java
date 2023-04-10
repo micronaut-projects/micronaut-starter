@@ -20,6 +20,7 @@ import io.micronaut.starter.build.MavenCentral;
 import io.micronaut.starter.build.MavenLocal;
 import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.template.Writable;
+import io.micronaut.starter.template.WritableUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,6 +52,34 @@ public class GradleRepository implements Writable  {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        GradleRepository that = (GradleRepository) o;
+
+        if (isSnapshot != that.isSnapshot) {
+            return false;
+        }
+        if (gradleDsl != that.gradleDsl) {
+            return false;
+        }
+        return url != null ? url.equals(that.url) : that.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = gradleDsl != null ? gradleDsl.hashCode() : 0;
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (isSnapshot ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public void write(OutputStream outputStream) throws IOException {
         String content = (getGradleDsl() == GradleDsl.KOTLIN ? kotlinDslRepository() : groovyDslRepository());
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));
@@ -74,7 +103,16 @@ public class GradleRepository implements Writable  {
                     if (it instanceof MavenLocal) {
                         return new GradleMavenLocal(gradleDsl, it.getUrl());
                     }
-                    return new GradleRepository(gradleDsl, it.getUrl(), it.isSnapshot());
+                    return of(gradleDsl, it);
                 }).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public static GradleRepository of(GradleDsl gradleDsl, Repository repository) {
+        return new GradleRepository(gradleDsl, repository.getUrl(), repository.isSnapshot());
+    }
+
+    public String render(int indentationSpaces) {
+        return WritableUtils.renderWritable(this, indentationSpaces);
     }
 }

@@ -19,12 +19,14 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.feature.build.gradle.templates.settingsPluginManagement;
+import io.micronaut.starter.feature.build.gradle.templates.substitutions;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.template.WritableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.micronaut.starter.feature.build.gradle.templates.substitutions;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -117,13 +119,14 @@ public class GradleBuild {
 
     @NonNull
     public String renderSettingsPluginsManagement() {
-        return plugins == null ? "" : plugins.stream()
-                .map(plugin -> plugin.getSettingsPluginsManagement()
-                            .map(writable -> renderWritableExtensions(Stream.of(writable))).orElse(null)
-                )
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElse("");
+        List<GradleRepository> repos = plugins.stream()
+                .flatMap(plugin -> plugin.getPluginsManagementRepositories().stream())
+                .distinct()
+                .collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(repos)) {
+            return "";
+        }
+        return WritableUtils.renderWritable(new RockerWritable(settingsPluginManagement.template(repos)), 0);
     }
 
     @NonNull
