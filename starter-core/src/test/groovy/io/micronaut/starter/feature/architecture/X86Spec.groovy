@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.architecture
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.OneOfFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
@@ -9,8 +10,9 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.IgnoreIf
 import spock.lang.Subject
-import io.micronaut.starter.feature.Category
+import spock.util.environment.Jvm
 
 class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -36,6 +38,7 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         applicationType << ApplicationType.values()
     }
 
+    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'x86 plus cdk feature sets lambda function architecture'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),

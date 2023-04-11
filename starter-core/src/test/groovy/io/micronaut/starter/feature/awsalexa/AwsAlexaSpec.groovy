@@ -8,9 +8,11 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
+import spock.util.environment.Jvm
 
 class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -153,6 +155,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
+    @IgnoreIf({ Jvm.current.isJava17Compatible() })
     void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with maven for language=#language'() {
         when:
         def output = generate(
@@ -180,6 +183,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
+    @IgnoreIf({ Jvm.current.isJava17Compatible() })
     void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with gradle for language=#language'() {
         when:
         def output = generate(

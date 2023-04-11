@@ -4,21 +4,16 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.build.maven.MavenCombineAttribute
-import io.micronaut.starter.build.maven.MavenPlugin
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.MicronautBuildPlugin
-import io.micronaut.starter.feature.build.gradle.Gradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Unroll
+import spock.util.environment.Jvm
 
 class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -43,7 +38,21 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
 
         where:
-        [lang, apptype] << [ Language.values().toList(), ApplicationType.values().toList() ].combinations()
+        [lang, apptype] << [ Language.values().toList(), ApplicationType.values() - ApplicationType.FUNCTION ].combinations()
+    }
+
+    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
+    void 'Readme has Maven plugin docs (lang = #lang) for FUNCTION'(Language lang) {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(lang, BuildTool.MAVEN))
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
+
+        where:
+        lang << Language.values().toList()
     }
 
     void "multi-module-pom isn't created for single-module builds"() {

@@ -7,7 +7,9 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.IgnoreIf
 import spock.lang.Subject
+import spock.util.environment.Jvm
 
 class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -37,6 +39,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
         lambdaFunctionUrl.supports(ApplicationType.FUNCTION)
     }
 
+    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'Function AppStack log retention is included for #buildTool'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [LambdaFunctionUrl.NAME])

@@ -8,11 +8,18 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
+import spock.util.environment.Jvm
 
+@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared

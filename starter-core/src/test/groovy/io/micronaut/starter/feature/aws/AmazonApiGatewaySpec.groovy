@@ -7,8 +7,11 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.IgnoreIf
 import spock.lang.Subject
+import spock.util.environment.Jvm
 
+@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
@@ -39,6 +42,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         amazonApiGateway.supports(ApplicationType.DEFAULT)
     }
 
+    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'amazon-api-gateway feature with Cdk has doc links'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
@@ -49,6 +53,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
     }
 
+    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'amazon-api-gateway feature without Cdk has doc links'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),

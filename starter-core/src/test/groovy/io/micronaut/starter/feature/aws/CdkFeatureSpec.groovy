@@ -12,8 +12,11 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.template.Template
+import spock.lang.IgnoreIf
 import spock.lang.Subject
+import spock.util.environment.Jvm
 
+@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
