@@ -15,15 +15,31 @@
  */
 package io.micronaut.starter.feature.function.gcp;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
 public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
+    private static final Dependency DEPENDENCY_MICRONAUT_SERVLET_CORE = MicronautDependencyUtils.servletDependency()
+                    .artifactId("micronaut-servlet-core")
+                    .test()
+                    .build();
+
     private final ShadePlugin shadePlugin;
 
     public AbstractGoogleCloudFunction(ShadePlugin shadePlugin) {
         this.shadePlugin = shadePlugin;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        if (generatorContext.getFeatures().testFramework().isSpock()) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_SERVLET_CORE);
+        }
     }
 
     @Override

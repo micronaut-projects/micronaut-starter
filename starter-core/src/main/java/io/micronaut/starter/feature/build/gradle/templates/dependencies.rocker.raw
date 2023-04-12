@@ -50,7 +50,4 @@ dependencies {
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
 }
-@if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
-    @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null, false)
-}
 }

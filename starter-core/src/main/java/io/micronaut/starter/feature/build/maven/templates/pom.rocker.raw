@@ -101,8 +101,6 @@ MavenBuild mavenBuild
     @if (features.contains("google-cloud-function-http")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null, false, null)
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http-test", "test", null, false, null)
-<!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
-@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null, false, null)
 @dependency.template("io.micronaut", "micronaut-http-netty", "compile", null, false, null)
     } else {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.gcp;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
@@ -61,6 +62,11 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
     @Override
     public boolean isVisible() {
         return false;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
     }
 
     @Override

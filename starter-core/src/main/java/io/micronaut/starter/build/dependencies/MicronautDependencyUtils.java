@@ -24,6 +24,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
+    public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
@@ -56,6 +57,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder securityDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SECURITY);
+    }
+
+    @NonNull
+    public static Dependency.Builder servletDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
     }
 
     @NonNull
