@@ -4,18 +4,13 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.build.maven.MavenCombineAttribute
-import io.micronaut.starter.build.maven.MavenPlugin
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.MicronautBuildPlugin
-import io.micronaut.starter.feature.build.gradle.Gradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -31,11 +26,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         maven.isMaven()
     }
 
-    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(
-            ApplicationType apptype, Language lang
-    ) {
+    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
         when:
-        def output = generate(apptype, new Options(lang, BuildTool.MAVEN))
+        Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
         def readme = output["README.md"]
 
         then:
@@ -43,7 +36,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
 
         where:
-        [lang, apptype] << [ Language.values().toList(), ApplicationType.values().toList() ].combinations()
+        [lang, apptype] << [ Language.values().toList(), ApplicationType.values()].combinations()
     }
 
     void "multi-module-pom isn't created for single-module builds"() {
@@ -179,4 +172,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+    }
 }
