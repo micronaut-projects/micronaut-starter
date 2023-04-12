@@ -42,7 +42,11 @@ public class KotlinBuildPlugins implements Feature {
         if (generatorContext.getBuildTool().isGradle() &&
                 shouldApply(generatorContext.getFeatures().language(), generatorContext.getFeatures().testFramework())) {
             generatorContext.addBuildPlugin(gradlePlugin("org.jetbrains.kotlin.jvm", "kotlin-gradle-plugin"));
-            generatorContext.addBuildPlugin(gradlePlugin("org.jetbrains.kotlin.kapt", "kotlin-gradle-plugin"));
+            if (generatorContext.isFeaturePresent(KotlinSymbolProcessing.class)) {
+                generatorContext.addBuildPlugin(gradlePlugin("com.google.devtools.ksp", "com.google.devtools.ksp.gradle.plugin"));
+            } else {
+                generatorContext.addBuildPlugin(gradlePlugin("org.jetbrains.kotlin.kapt", "kotlin-gradle-plugin"));
+            }
             generatorContext.addBuildPlugin(gradlePlugin("org.jetbrains.kotlin.plugin.allopen", "kotlin-allopen"));
             if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
                 generatorContext.addBuildPlugin(gradlePlugin("org.jetbrains.kotlin.plugin.jpa", "kotlin-noarg"));

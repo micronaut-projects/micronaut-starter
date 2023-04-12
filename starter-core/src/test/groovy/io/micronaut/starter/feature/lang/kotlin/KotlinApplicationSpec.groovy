@@ -18,6 +18,25 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
     @Subject
     KotlinApplication kotlinApplication = beanContext.getBean(KotlinApplication)
 
+    void 'test KSP feature'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE),
+                ["ksp"]
+        )
+        def buildGradle = output[BuildTool.GRADLE.getBuildFileName()]
+
+        then:
+        output.containsKey("src/main/kotlin/example/micronaut/Application.${Language.KOTLIN.extension}".toString())
+        buildGradle
+        buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
+        !buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
+        buildGradle.contains('id("com.google.devtools.ksp")')
+        buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
+        buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
+    }
+
     @Unroll
     void 'Application file is generated for a default application type with #buildTool and language: kotlin and testing framework: #testFramework'(BuildTool buildTool, TestFramework testFramework) {
         when:
@@ -37,6 +56,8 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         then:
         if (buildTool.isGradle()) {
             assert buildGradle
+            assert buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
+            assert buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
             assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
             assert buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
 

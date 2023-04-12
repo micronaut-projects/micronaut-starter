@@ -16,9 +16,12 @@
 package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.Ordered;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.feature.build.KotlinSymbolProcessing;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
@@ -27,19 +30,21 @@ import java.util.Optional;
 public enum GradleConfiguration implements Ordered {
     ANNOTATION_PROCESSOR("annotationProcessor", 0),
     KAPT("kapt", 1),
-    API("api", 2),
-    IMPLEMENTATION("implementation", 3),
-    COMPILE_ONLY("compileOnly", 4),
-    RUNTIME_ONLY("runtimeOnly", 5),
-    NATIVE_IMAGE_COMPILE_ONLY("nativeImageCompileOnly", 6),
-    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 7),
-    TEST_KAPT("kaptTest", 8),
-    TEST_IMPLEMENTATION("testImplementation", 9),
-    TEST_COMPILE_ONLY("testCompileOnly", 10),
-    TEST_RUNTIME_ONLY("testRuntimeOnly", 11),
-    DEVELOPMENT_ONLY("developmentOnly", 12),
-    OPENREWRITE("rewrite", 13),
-    TEST_RESOURCES_SERVICE("testResourcesService", 14);
+    KSP("ksp", 2),
+    API("api", 3),
+    IMPLEMENTATION("implementation", 4),
+    COMPILE_ONLY("compileOnly", 5),
+    RUNTIME_ONLY("runtimeOnly", 6),
+    NATIVE_IMAGE_COMPILE_ONLY("nativeImageCompileOnly", 7),
+    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 8),
+    TEST_KAPT("kaptTest", 9),
+    TEST_KSP("kspTest", 10),
+    TEST_IMPLEMENTATION("testImplementation", 11),
+    TEST_COMPILE_ONLY("testCompileOnly", 12),
+    TEST_RUNTIME_ONLY("testRuntimeOnly", 13),
+    DEVELOPMENT_ONLY("developmentOnly", 14),
+    OPENREWRITE("rewrite", 15),
+    TEST_RESOURCES_SERVICE("testResourcesService", 16);
 
     private final String configurationName;
     private final int order;
@@ -67,17 +72,25 @@ public enum GradleConfiguration implements Ordered {
     public static Optional<GradleConfiguration> of(@NonNull Scope scope,
                                                    @NonNull Language language,
                                                    @NonNull TestFramework testFramework) {
+        return of(scope, language, testFramework, null);
+    }
+
+    @NonNull
+    public static Optional<GradleConfiguration> of(@NonNull Scope scope,
+                                                   @NonNull Language language,
+                                                   @NonNull TestFramework testFramework,
+                                                   @Nullable GeneratorContext generatorContext) {
         switch (scope.getSource()) {
             case MAIN:
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
                     if (language == Language.JAVA) {
                         if (testFramework == TestFramework.KOTEST) {
-                            return Optional.of(GradleConfiguration.KAPT);
+                            return Optional.of(kotlinAnnotationProcessor(generatorContext));
                         } else {
                             return Optional.of(GradleConfiguration.ANNOTATION_PROCESSOR);
                         }
                     } else if (language == Language.KOTLIN) {
-                        return Optional.of(GradleConfiguration.KAPT);
+                        return Optional.of(kotlinAnnotationProcessor(generatorContext));
                     } else if (language == Language.GROOVY) {
                         return Optional.of(GradleConfiguration.COMPILE_ONLY);
                     }
@@ -109,12 +122,12 @@ public enum GradleConfiguration implements Ordered {
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
                     if (language == Language.JAVA) {
                         if (testFramework == TestFramework.KOTEST) {
-                            return Optional.of(GradleConfiguration.TEST_KAPT);
+                            return Optional.of(kotlinTestAnnotationProcessor(generatorContext));
                         } else {
                             return Optional.of(GradleConfiguration.TEST_ANNOTATION_PROCESSOR);
                         }
                     } else if (language == Language.KOTLIN) {
-                        return Optional.of(GradleConfiguration.TEST_KAPT);
+                        return Optional.of(kotlinTestAnnotationProcessor(generatorContext));
                     } else if (language == Language.GROOVY) {
                         return Optional.of(GradleConfiguration.TEST_COMPILE_ONLY);
                     }
@@ -135,5 +148,19 @@ public enum GradleConfiguration implements Ordered {
                 return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    private static GradleConfiguration kotlinAnnotationProcessor(GeneratorContext generatorContext) {
+        if (generatorContext != null && generatorContext.isFeaturePresent(KotlinSymbolProcessing.class)) {
+            return GradleConfiguration.KSP;
+        }
+        return GradleConfiguration.KAPT;
+    }
+
+    private static GradleConfiguration kotlinTestAnnotationProcessor(GeneratorContext generatorContext) {
+        if (generatorContext != null && generatorContext.isFeaturePresent(KotlinSymbolProcessing.class)) {
+            return GradleConfiguration.TEST_KSP;
+        }
+        return GradleConfiguration.TEST_KAPT;
     }
 }
