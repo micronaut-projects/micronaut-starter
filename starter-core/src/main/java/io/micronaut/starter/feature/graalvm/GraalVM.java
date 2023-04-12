@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
@@ -27,6 +28,11 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class GraalVM implements Feature {
+    Dependency GRAAL_SVM = Dependency.builder()
+            .groupId("org.graalvm.nativeimage")
+            .artifactId("svm")
+            .compileOnly()
+            .build();
 
     public static final String FEATURE_NAME_GRAALVM = "graalvm";
 
@@ -57,11 +63,8 @@ public class GraalVM implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN) {
-            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                    .artifactId("micronaut-graal")
-                    .versionProperty("micronaut.version")
-                    .annotationProcessor());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(GRAAL_SVM);
         }
     }
 }
