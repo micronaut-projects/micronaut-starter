@@ -32,6 +32,9 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 'aws-lambda-s3-event-notification',
         ] == result
 
+        and:
+        ['amazon-api-gateway', 'amazon-api-gateway-http'] == command.apiTriggerFeatures(command.applicationTypeForCodingStyle(CodingStyle.CONTROLLERS), features)*.name
+
         cleanup:
         applicationContext.close()
     }
