@@ -53,7 +53,4 @@ dependencies {
 @if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
     @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null, false)
 }
-@if (features.contains("neo4j-bolt")) {
-    @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null, false)
-}
 }

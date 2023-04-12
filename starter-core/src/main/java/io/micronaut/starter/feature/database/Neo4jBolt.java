@@ -47,6 +47,10 @@ public class Neo4jBolt implements Feature {
                 .groupId("io.micronaut.neo4j")
                 .artifactId("micronaut-neo4j-bolt")
                 .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.neo4j.test")
+                .artifactId("neo4j-harness")
+                .testRuntime());
     }
 
     @Override
