@@ -16,9 +16,6 @@ dependencies {
 @for (GradleDependency dependency : gradleBuild.getDependencies()) {
     @dependency.toSnippet()
 }
-@if (features.contains("graalvm")) {
-    @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null, false)
-}
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null, false)
 @if (features.contains("oracle-function")) {
     @if (!features.contains("oracle-function-http")) {
