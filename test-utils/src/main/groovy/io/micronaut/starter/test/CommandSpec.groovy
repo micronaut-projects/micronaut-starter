@@ -25,6 +25,7 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -123,15 +124,15 @@ abstract class CommandSpec extends Specification {
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = lang.getDefaults().test,
-                         boolean addMicronautGradleEnterpriseFeature = true
-    ) {
+                         boolean addMicronautGradleEnterpriseFeature = true,
+                         JdkVersion jdkVersion = JdkVersion.JDK_11) {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }
 
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, testFramework, buildTool),
+                new Options(lang, testFramework, buildTool, jdkVersion),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),

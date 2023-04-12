@@ -4,15 +4,16 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.OneOfFeature
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.IgnoreIf
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Subject
-import spock.util.environment.Jvm
 
 class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -38,10 +39,11 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         applicationType << ApplicationType.values()
     }
 
-    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
+
     void 'x86 plus cdk feature sets lambda function architecture'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, X86.NAME])
 
         then:
@@ -49,7 +51,7 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.X86_64)/$)
 
         when: 'x86 is the default'
-        output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
 
         then:

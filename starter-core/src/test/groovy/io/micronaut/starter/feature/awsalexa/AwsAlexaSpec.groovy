@@ -3,16 +3,16 @@ package io.micronaut.starter.feature.awsalexa
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import spock.util.environment.Jvm
 
 class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -155,12 +155,11 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    @IgnoreIf({ Jvm.current.isJava17Compatible() })
     void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with maven for language=#language'() {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, BuildTool.MAVEN),
+                createOptions(language, BuildTool.MAVEN),
                 ['aws-alexa']
         )
 
@@ -183,12 +182,11 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    @IgnoreIf({ Jvm.current.isJava17Compatible() })
     void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with gradle for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                createOptions(language),
                 ['aws-alexa']
         )
 
@@ -232,5 +230,9 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         extension << Language.extensions()
         srcDir << Language.srcDirs()
         testSrcDir << Language.testSrcDirs()
+    }
+
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

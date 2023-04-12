@@ -5,17 +5,20 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.IgnoreIf
+import io.micronaut.starter.options.TestFramework
+import spock.lang.Shared
 import spock.lang.Subject
-import spock.util.environment.Jvm
 
-@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
     AmazonApiGateway amazonApiGateway = beanContext.getBean(AmazonApiGateway)
+
+    @Shared
+    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
 
     void 'amazon-api-gateway feature is in the cloud category'() {
         expect:
@@ -42,10 +45,9 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         amazonApiGateway.supports(ApplicationType.DEFAULT)
     }
 
-    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'amazon-api-gateway feature with Cdk has doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        def output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AmazonApiGateway.NAME])
 
         then:
@@ -53,10 +55,9 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
     }
 
-    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'amazon-api-gateway feature without Cdk has doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        def output = generate(ApplicationType.FUNCTION, options,
                 [AmazonApiGateway.NAME])
 
         then:
@@ -67,7 +68,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void 'amazon-api-gateway feature is a OneOfFeature with amazon-api-gateway-http'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        def output = generate(ApplicationType.FUNCTION, options,
                 [AmazonApiGateway.NAME, AmazonApiGatewayHttp.NAME])
 
         then:

@@ -4,16 +4,16 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Unroll
-import spock.util.environment.Jvm
 
 class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -26,11 +26,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         maven.isMaven()
     }
 
-    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(
-            ApplicationType apptype, Language lang
-    ) {
+    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
         when:
-        def output = generate(apptype, new Options(lang, BuildTool.MAVEN))
+        Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
         def readme = output["README.md"]
 
         then:
@@ -38,21 +36,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
 
         where:
-        [lang, apptype] << [ Language.values().toList(), ApplicationType.values() - ApplicationType.FUNCTION ].combinations()
-    }
-
-    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
-    void 'Readme has Maven plugin docs (lang = #lang) for FUNCTION'(Language lang) {
-        when:
-        def output = generate(ApplicationType.FUNCTION, new Options(lang, BuildTool.MAVEN))
-        def readme = output["README.md"]
-
-        then:
-        readme
-        readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
-
-        where:
-        lang << Language.values().toList()
+        [lang, apptype] << [ Language.values().toList(), ApplicationType.values()].combinations()
     }
 
     void "multi-module-pom isn't created for single-module builds"() {
@@ -188,4 +172,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+    }
 }

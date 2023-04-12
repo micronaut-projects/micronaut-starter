@@ -8,9 +8,10 @@ import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.IgnoreIf
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Subject
 import spock.util.environment.Jvm
 
@@ -38,10 +39,10 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
         applicationType << ApplicationType.values()
     }
 
-    @IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
     void 'arm plus cdk feature sets lambda function architecture'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, Arm.NAME])
 
         then:

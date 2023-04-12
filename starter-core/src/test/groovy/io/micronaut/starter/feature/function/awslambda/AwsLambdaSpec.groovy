@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.MicronautRuntimeFeature
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -13,45 +14,51 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import spock.util.environment.Jvm
 
-@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
 
-    void 'test gradle.properties does not contain micronaut.runtime'() {
+    @Shared
+    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+
+    void 'test gradle.properties does not contain micronaut.runtime'(ApplicationType applicationType) {
         when:
-        Map<String, String> output = generate(['aws-lambda'])
+        Map<String, String> output = generate(applicationType, options, ['aws-lambda'])
         String properties = output["gradle.properties"]
 
         then:
         properties
         !properties.contains(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)
         output["build.gradle"].contains('runtime("lambda_java")')
+
+        where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
     }
 
-    void 'test readme.md with feature aws-lambda contains links to micronaut docs'() {
+    void 'test readme.md with feature aws-lambda contains links to micronaut docs'(ApplicationType applicationType) {
         when:
-        def output = generate(['aws-lambda'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(applicationType, options, ['aws-lambda'])
+        String readme = output["README.md"]
 
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda")
+
+        where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
     }
 
     void 'test readme.md for application #applicationType feature aws-lambda contains Handler '(ApplicationType applicationType,
                                                                                                 String handler) {
         when:
-        def output = generate(applicationType, ['aws-lambda'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(applicationType, options, ['aws-lambda'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -204,7 +211,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, BuildTool.GRADLE),
+                createOptions(language),
                 ['aws-lambda']
         )
 
@@ -222,9 +229,9 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void 'function with maven and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, BuildTool.MAVEN),
+                createOptions(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -248,9 +255,9 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void 'Application file is generated for a default application type with gradle and features aws-lambda for language: #language'(Language language, String extension) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.GRADLE),
+                createOptions(language),
                 ['aws-lambda']
         )
 
@@ -282,7 +289,7 @@ tasks.named("dockerfileNative") {
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(Language.KOTLIN, BuildTool.GRADLE_KOTLIN),
+                createOptions(Language.KOTLIN, BuildTool.GRADLE_KOTLIN),
                 ['aws-lambda']
         )
         String buildGradle = output['build.gradle.kts']
@@ -298,7 +305,7 @@ tasks.named("dockerfileNative") {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.GRADLE_KOTLIN),
+                createOptions(language, BuildTool.GRADLE_KOTLIN),
                 ['aws-lambda']
         )
 
@@ -453,7 +460,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                createOptions(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -494,9 +501,9 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
     @Unroll
     void 'app with gradle and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.GRADLE),
+                createOptions(language),
                 ['aws-lambda']
         )
         String build = output['build.gradle']
@@ -519,9 +526,9 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
     @Unroll
     void 'app with maven and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.MAVEN),
+                createOptions(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -537,5 +544,9 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         extension << Language.extensions()
         srcDir << Language.srcDirs()
         testSrcDir << Language.testSrcDirs()
+    }
+
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

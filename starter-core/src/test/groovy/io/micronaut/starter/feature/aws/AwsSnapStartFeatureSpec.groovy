@@ -7,17 +7,16 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.IgnoreIf
-import spock.util.environment.Jvm
+import io.micronaut.starter.options.TestFramework
 
-@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'SnapStart does not support ARM #buildTool'() {
+    void 'SnapStart does not support ARM #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, Arm.NAME])
         String text = output['infra/src/main/java/example/micronaut/AppStack.java']
         then:
@@ -32,7 +31,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
 
     void 'Function AppStack imports included for SnapStart #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME])
         String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
@@ -48,7 +47,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
 
     void 'Function AppStack does not use SnapStart when using graalvm feature #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, GraalVM.FEATURE_NAME_GRAALVM])
         String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
@@ -59,9 +58,9 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         buildTool << graalVmAndCdkSupportedBuilds()
     }
 
-    void 'Function AppStack with SnapStart is included for #buildTool'() {
+    void 'Function AppStack with SnapStart is included for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME])
         String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
@@ -74,9 +73,9 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         buildTool << BuildTool.values()
     }
 
-    void 'SnapStart is enabled by default even without a API Gateway #buildTool'() {
+    void 'SnapStart is enabled by default even without a API Gateway #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME])
         String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
@@ -98,5 +97,9 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
 
     private static List<BuildTool> graalVmAndCdkSupportedBuilds() {
         BuildTool.values() - BuildTool.MAVEN
+    }
+
+    private static Options createOptions(BuildTool buildTool) {
+        new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

@@ -6,17 +6,20 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.IgnoreIf
+import io.micronaut.starter.options.TestFramework
+import spock.lang.Shared
 import spock.lang.Subject
-import spock.util.environment.Jvm
 
-@IgnoreIf( value = { Jvm.current.isJava17Compatible() }, reason = "AWS Lambda does not have a Java 17 runtime" )
 class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
     AmazonApiGatewayHttp amazonApiGatewayHttp = beanContext.getBean(AmazonApiGatewayHttp)
+
+    @Shared
+    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
 
     void 'amazon-api-gateway-http feature is in the cloud category'() {
         expect:
@@ -45,7 +48,9 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature has dependencies, imports and code'() {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+
+
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AmazonApiGatewayHttp.NAME])
 
         then:
@@ -76,7 +81,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http and arm do not use SnapStart'() {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AmazonApiGatewayHttp.NAME, Arm.NAME])
         String appStack = output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java"
         then:
@@ -87,7 +92,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature without Cdk has dependency in project and doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+        def output = generate(ApplicationType.FUNCTION, options,
                 [AmazonApiGatewayHttp.NAME])
 
         then:
@@ -99,7 +104,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'Selecting more than one AmazonApiGateway feature fails with exception'() {
         when:
-        generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE), [Cdk.NAME, AmazonApiGatewayHttp.NAME, AmazonApiGateway.NAME])
+        generate(ApplicationType.FUNCTION, options, [Cdk.NAME, AmazonApiGatewayHttp.NAME, AmazonApiGateway.NAME])
 
         then:
         def e = thrown(IllegalArgumentException)

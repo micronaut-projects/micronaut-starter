@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AmazonApiGateway;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
 import io.micronaut.starter.feature.aws.LambdaTrigger;
@@ -165,10 +166,10 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 };
             default:
             case FAT_JAR:
-                return new JdkVersion[] {
-                        JdkVersion.JDK_11,
-                        JdkVersion.JDK_8,
-                };
+                List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
+                JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
+                supportedJdks.toArray(arr);
+                return arr;
         }
     }
 
