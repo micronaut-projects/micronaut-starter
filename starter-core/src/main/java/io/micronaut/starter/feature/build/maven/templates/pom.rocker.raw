@@ -138,9 +138,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
 }
 }
-@if (features.language().isKotlin()) {
-@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)
-}
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
 }

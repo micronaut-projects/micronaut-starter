@@ -84,9 +84,15 @@ public class Kotlin implements LanguageFeature {
                 .compile()
                 .version("${kotlinVersion}")
                 .template();
+        Dependency.Builder jacksonModuleKotlin = Dependency.builder()
+                .artifactId("com.fasterxml.jackson.module")
+                .groupId("jackson-module-kotlin")
+                .runtime()
+                .template();
         generatorContext.addDependency(kotlin.artifactId("kotlin-stdlib-jdk8"));
         generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME);
+        generatorContext.addDependency(jacksonModuleKotlin);
     }
 
     @Override

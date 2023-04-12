@@ -42,9 +42,6 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null, false)
     }
 }
-@if (features.language().isKotlin()) {
-    @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null, false)
-}
 @if (features.testFramework().isSpock()) {
     @if (features.contains("aws-lambda") || features.contains("aws-lambda-custom-runtime")) {
     @dependency.template("io.micronaut","micronaut-function", "testImplementation", null, false)
