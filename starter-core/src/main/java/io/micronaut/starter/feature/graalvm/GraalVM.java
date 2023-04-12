@@ -18,23 +18,19 @@ package io.micronaut.starter.feature.graalvm;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 public class GraalVM implements Feature {
-    Dependency GRAAL_SVM = Dependency.builder()
+    public static final String FEATURE_NAME_GRAALVM = "graalvm";
+
+    static final Dependency GRAAL_SVM = Dependency.builder()
             .groupId("org.graalvm.nativeimage")
             .artifactId("svm")
             .compileOnly()
             .build();
-
-    public static final String FEATURE_NAME_GRAALVM = "graalvm";
 
     @Override
     public String getName() {
