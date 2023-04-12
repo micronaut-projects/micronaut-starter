@@ -378,6 +378,7 @@ jobs:
     name: Bump Chocolatey package
     runs-on: windows-latest
     needs: [windows]
+    shell: pwsh
     steps:
       - name: Determine default branch
         uses: octokit/request-action@v2.x
@@ -418,7 +419,7 @@ jobs:
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
           Get-Content ./tools/chocolateyinstall.ps1
-          echo "nuget_version=$NugetVersion" >> $GITHUB_OUTPUT
+          echo "nuget_version=$NugetVersion" >> $env:GITHUB_OUTPUT
       - name: Create package
         working-directory: chocolatey
         run: choco pack
