@@ -88,8 +88,6 @@ MavenBuild mavenBuild
 
   <dependencies>
 @if (features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null, false, null)
-@dependency.template("org.codehaus.groovy", "groovy", "compile", "${groovyVersion}", false, null)
 @for (processor : mavenBuild.getAnnotationProcessors()) {
 @dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
 }

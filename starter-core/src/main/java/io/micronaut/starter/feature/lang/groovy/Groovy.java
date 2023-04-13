@@ -40,6 +40,16 @@ public class Groovy implements LanguageFeature {
             .artifactId("micronaut-runtime-groovy")
             .compile()
             .build();
+    protected static final Dependency DEPENDENCY_MICRONAUT_INJECT_GROOVY = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-inject-groovy")
+            .developmentOnly()
+            .build();
+    protected static final Dependency DEPENDENCY_GROOVY = new Dependency.Builder()
+            .groupId("org.codehaus.groovy")
+            .artifactId("groovy")
+            .versionProperty("groovy.version")
+            .compile()
+            .build();
     protected final List<GroovyApplicationFeature> applicationFeatures;
 
     public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
@@ -70,6 +80,8 @@ public class Groovy implements LanguageFeature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_INJECT_GROOVY);
+            generatorContext.addDependency(DEPENDENCY_GROOVY);
         }
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_GROOVY_RUNTIME);
     }
