@@ -100,7 +100,7 @@ public class MavenBuildCreator {
         if (testCombineAttribute == MavenCombineAttribute.OVERRIDE) {
             testAnnotationProcessorsCoordinates.add(injectJava);
             testAnnotationProcessorsCoordinates.add(validation);
-            annotationProcessorsCoordinates.add(mnGraal);
+            testAnnotationProcessorsCoordinates.add(mnGraal);
         }
 
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);

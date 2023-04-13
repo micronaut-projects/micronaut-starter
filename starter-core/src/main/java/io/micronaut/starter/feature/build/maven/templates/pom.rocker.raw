@@ -128,9 +128,6 @@ MavenBuild mavenBuild
 }
 }
 
-@if (features.contains("graalvm") && features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-graal", "provided", null, false, null)
-}
 @if (features.contains("openapi")) {
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
