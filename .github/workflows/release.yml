@@ -378,7 +378,6 @@ jobs:
     name: Bump Chocolatey package
     runs-on: windows-latest
     needs: [windows]
-    shell: pwsh
     steps:
       - name: Determine default branch
         uses: octokit/request-action@v2.x
@@ -396,6 +395,7 @@ jobs:
       - name: Download ZIP, update versions and checksum
         id: choco
         working-directory: chocolatey
+        shell: pwsh
         run: |
           Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -OutFile 'mn.zip'
 
