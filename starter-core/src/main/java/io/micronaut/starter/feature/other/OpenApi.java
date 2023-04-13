@@ -21,6 +21,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -56,6 +58,14 @@ public class OpenApi implements Feature, MicronautServerDependent {
                 .groupId("io.swagger.core.v3")
                 .artifactId("swagger-annotations")
                 .compile());
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN &&
+                generatorContext.getLanguage() == Language.GROOVY) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.openapi")
+                    .artifactId("micronaut-openapi")
+                    .versionProperty("micronaut.openapi.version")
+                    .compile());
+        }
     }
 
     @Override
