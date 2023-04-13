@@ -39,11 +39,6 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null, false)
     }
 }
-@if (features.testFramework().isSpock()) {
-    @if (features.contains("aws-lambda") || features.contains("aws-lambda-custom-runtime")) {
-    @dependency.template("io.micronaut","micronaut-function", "testImplementation", null, false)
-    }
-}
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
 }
