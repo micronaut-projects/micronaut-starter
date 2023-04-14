@@ -33,12 +33,6 @@ dependencies {
     }
 }
 
-@if (features.contains("azure-function")) {
-    @if (!features.contains("azure-function-http")) {
-    @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null, false)
-    @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null, false)
-    }
-}
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null, false)
 }

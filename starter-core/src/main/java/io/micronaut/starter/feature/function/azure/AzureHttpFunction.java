@@ -21,7 +21,10 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionKoTest;
@@ -35,6 +38,18 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
+
+    private static final Dependency MICRONAUT_AZURE_FUNCTION_HTTP = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function-http")
+            .compile()
+            .build();
+
+    private static final Dependency MICRONAUT_AZURE_FUNCTION_HTTP_TEST = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function-http-test")
+            .test()
+            .build();
 
     public AzureHttpFunction(CoordinateResolver coordinateResolver) {
         super(coordinateResolver);
@@ -86,6 +101,13 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
                     azureFunctionTriggerGroovy.template(project));
         }
 
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
+        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);
     }
 
     @Override

@@ -22,6 +22,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
@@ -51,6 +53,15 @@ import java.util.Optional;
 public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
     public static final String NAME = "azure-function";
+
+    private static final Dependency MICRONAUT_AZURE_FUNCTION = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function")
+            .compile()
+            .build();
+    private static final Dependency.Builder AZURE_FUNCTION_JAVA_LIBRARY = Dependency.builder()
+            .groupId("com.microsoft.azure.functions")
+            .artifactId("azure-functions-java-library");
 
     private final CoordinateResolver coordinateResolver;
 
@@ -94,6 +105,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
                     .lookupArtifactId("azure-functions-gradle-plugin")
                     .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), javaVersionValue(generatorContext).orElse("null"))))
                     .build());
+            generatorContext.addDependency(AZURE_FUNCTION_JAVA_LIBRARY.compile());
         } else if (buildTool == BuildTool.MAVEN) {
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
             generatorContext.addBuildPlugin(MavenPlugin.builder()
@@ -109,7 +121,9 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("functionRuntimeOs", "windows");
             javaVersionValue(generatorContext).ifPresent(value -> props.put("functionRuntimeJavaVersion", value));
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
+            generatorContext.addDependency(AZURE_FUNCTION_JAVA_LIBRARY.developmentOnly());
         }
+        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION);
         addFunctionTemplate(generatorContext, project);
     }
 
