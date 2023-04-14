@@ -22,6 +22,8 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
@@ -40,6 +42,17 @@ import jakarta.inject.Singleton;
 @Singleton
 @Primary
 public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {
+    private static final Dependency MICRONAUT_OCI_FUNCTION_HTTP = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function-http")
+            .compile()
+            .build();
+
+    private static final Dependency MICRONAUT_OCI_FUNCTION_HTTP_TEST = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function-http-test")
+            .test()
+            .build();
 
     private final SimpleLogging simpleLogging;
 
@@ -68,6 +81,8 @@ public class OracleFunction extends AbstractFunctionFeature implements OracleClo
                         projectFnFunc.template(generatorContext.getProject()
                 ))
         );
+        generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP);
+        generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP_TEST);
     }
 
     @Override

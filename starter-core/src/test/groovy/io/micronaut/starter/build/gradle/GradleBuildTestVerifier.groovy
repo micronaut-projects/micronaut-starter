@@ -53,7 +53,9 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, String scope) {
-        String expected = """(?s).*${scope}\\("${groupId}:${artifactId}(?:.+)?\\).*"""
+        // this needs to support ignoring versions for non-managed dependencies
+        // but it also needs to return false for ("com.foo":"foo") when ("com.foo":"foo-bar") is present
+        String expected = /(?s).*${scope}\("${groupId}:${artifactId}(:.+)?\"\).*/
         template.matches(Pattern.compile(expected))
     }
 

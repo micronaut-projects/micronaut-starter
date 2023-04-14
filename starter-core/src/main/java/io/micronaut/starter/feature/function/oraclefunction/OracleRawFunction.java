@@ -20,6 +20,8 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
@@ -38,6 +40,15 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OracleRawFunction extends OracleFunction {
     public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
+
+    private static final Dependency MICRONAUT_OCI_FUNCTION = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function")
+            .compile()
+            .build();
+
+    private static final Dependency.Builder COM_FNPROJECT = Dependency.builder()
+            .groupId("com.fnproject.fn");
 
     private final OracleFunction httpFunction;
 
@@ -96,6 +107,25 @@ public class OracleRawFunction extends OracleFunction {
             }
 
             applyTestTemplate(generatorContext, project, "Function");
+        }
+        addDependencies(generatorContext);
+    }
+
+    private void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(COM_FNPROJECT
+                .artifactId("runtime")
+                .runtime()
+        );
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(MICRONAUT_OCI_FUNCTION);
+            generatorContext.addDependency(COM_FNPROJECT
+                    .artifactId("api")
+                    .compile()
+            );
+            generatorContext.addDependency(COM_FNPROJECT
+                    .artifactId("testing-junit4")
+                    .test()
+            );
         }
     }
 
