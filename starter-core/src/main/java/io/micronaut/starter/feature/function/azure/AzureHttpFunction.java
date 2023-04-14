@@ -24,7 +24,6 @@ import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionKoTest;
@@ -33,7 +32,6 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
-
 import jakarta.inject.Singleton;
 
 @Singleton
