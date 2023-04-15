@@ -123,7 +123,9 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
             generatorContext.addDependency(AZURE_FUNCTION_JAVA_LIBRARY.developmentOnly());
         }
-        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION);
+        if (type == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION);
+        }
         addFunctionTemplate(generatorContext, project);
     }
 
