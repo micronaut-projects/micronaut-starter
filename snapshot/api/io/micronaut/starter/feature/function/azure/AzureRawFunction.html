@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,7 +141,7 @@ extends <a href="../../../../../../io/micronaut/starter/feature/function/azure/A
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;io.micronaut.starter.feature.function.azure.<a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AbstractAzureFunction</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#NAME">NAME</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY">ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS">GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#NAME">NAME</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.io.micronaut.starter.feature.MicronautRuntimeFeature">
@@ -191,31 +191,35 @@ extends <a href="../../../../../../io/micronaut/starter/feature/function/azure/A
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#addDependencies-io.micronaut.starter.application.generator.GeneratorContext-">addDependencies</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#applyFunction-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.ApplicationType-">applyFunction</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
              <a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#applyTestTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-java.lang.String-">applyTestTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
                  <a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
                  java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#getMicronautDocumentation--">getMicronautDocumentation</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected java.util.Optional&lt;com.fizzed.rocker.RockerModel&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/azure/AzureRawFunction.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">readmeTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
               <a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
@@ -227,7 +231,7 @@ extends <a href="../../../../../../io/micronaut/starter/feature/function/azure/A
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.function.azure.<a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AbstractAzureFunction</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#addFunctionTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-">addFunctionTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getName--">getName</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#koTestTemplate-io.micronaut.starter.application.Project-">koTestTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#addAzureFunctionsJavaLibraryDependency-io.micronaut.starter.application.generator.GeneratorContext-">addAzureFunctionsJavaLibraryDependency</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#addFunctionTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-">addFunctionTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getName--">getName</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#koTestTemplate-io.micronaut.starter.application.Project-">koTestTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.AbstractFunctionFeature">
@@ -399,13 +403,26 @@ extends <a href="../../../../../../io/micronaut/starter/feature/function/azure/A
 <a name="getThirdPartyDocumentation--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getThirdPartyDocumentation</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getThirdPartyDocumentation()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns a link to third party. E.g. https://hazelcast.org</dd>
+</dl>
+</li>
+</ul>
+<a name="addDependencies-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addDependencies</h4>
+<pre>protected&nbsp;void&nbsp;addDependencies(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html#addDependencies-io.micronaut.starter.application.generator.GeneratorContext-">addDependencies</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AbstractAzureFunction</a></code></dd>
 </dl>
 </li>
 </ul>
