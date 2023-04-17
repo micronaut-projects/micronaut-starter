@@ -20,6 +20,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
@@ -41,6 +43,17 @@ import java.util.Optional;
 @Singleton
 public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public static final String NAME = "google-cloud-function";
+
+    private static final Dependency MICRONAUT_GCP_FUNCTION = MicronautDependencyUtils
+            .gcpDependency()
+            .artifactId("micronaut-gcp-function")
+            .compile()
+            .build();
+
+    private static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()
+            .groupId("com.google.cloud.functions")
+            .artifactId("functions-framework-api");
+
 
     private final GoogleCloudFunction googleCloudFunction;
 
@@ -82,6 +95,15 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
             }
 
             applyTestTemplate(generatorContext, project, "Function");
+            addDependencies(generatorContext);
+        }
+    }
+
+    void addDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
+            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
+            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.test());
         }
     }
 

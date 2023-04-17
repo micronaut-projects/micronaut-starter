@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.function.gcp
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires
@@ -191,5 +194,50 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         def e = thrown(IllegalArgumentException)
         e.message == 'Google Cloud Function is not supported for GraalVM. ' +
                 'Consider Google Cloud Run for deploying GraalVM native images as docker containers.'
+    }
+
+    void 'test gcp-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(ApplicationType.DEFAULT)
+                .features(['google-cloud-function'])
+                .language(language)
+                .jdkVersion(JdkVersion.JDK_11)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        if (buildTool.isGradle()) {
+            assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
+            assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
+
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
+            assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
+        }
+        assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+    }
+
+    void 'test gcp-function feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['google-cloud-function'])
+                .language(language)
+                .jdkVersion(JdkVersion.JDK_11)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
+        assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
+        assert verifier.hasDependency("com.google.cloud.functions", "functions-framework-api")
+        assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 }

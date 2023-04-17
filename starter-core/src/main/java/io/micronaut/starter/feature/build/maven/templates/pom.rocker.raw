@@ -94,16 +94,6 @@ MavenBuild mavenBuild
 }
 @dependency.template("io.micronaut", "micronaut-inject", "compile", null, false, null)
 @dependency.template("io.micronaut", "micronaut-validation", "compile", null, false, null)
-@if (features.contains("google-cloud-function")) {
-@dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null, false, null)
-    @if (features.contains("google-cloud-function-http")) {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http-test", "test", null, false, null)
-@dependency.template("io.micronaut", "micronaut-http-netty", "compile", null, false, null)
-    } else {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
-    }
-}
 
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
