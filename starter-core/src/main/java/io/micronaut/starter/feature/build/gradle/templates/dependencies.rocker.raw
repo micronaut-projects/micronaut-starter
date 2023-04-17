@@ -16,7 +16,6 @@ dependencies {
 @for (GradleDependency dependency : gradleBuild.getDependencies()) {
     @dependency.toSnippet()
 }
-    @dependency.template("io.micronaut", "micronaut-validation", "implementation", null, false)
 @if (features.contains("google-cloud-function")) {
     @if (!features.contains("google-cloud-function-http")) {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null, false)

@@ -95,7 +95,6 @@ MavenBuild mavenBuild
 }
 }
 @dependency.template("io.micronaut", "micronaut-inject", "compile", null, false, null)
-@dependency.template("io.micronaut", "micronaut-validation", "compile", null, false, null)
 @if (features.contains("google-cloud-function")) {
 @dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null, false, null)
     @if (features.contains("google-cloud-function-http")) {
