@@ -8,7 +8,6 @@ import io.micronaut.starter.options.TestFramework
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
-
     final String template
     final Language language
     final TestFramework testFramework
@@ -53,8 +52,8 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, String scope) {
-        String expected = """(?s).*${scope}\\("${groupId}:${artifactId}(?:.+)?\\).*"""
-        template.matches(Pattern.compile(expected))
+        String regex = /(?s).*${scope}\("${groupId}:${artifactId}(?::.+)?\"\).*/
+        template.matches(Pattern.compile(regex))
     }
 
     @Override
