@@ -58,10 +58,8 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
                 .findFirst()
                 .orElse(JdkVersion.JDK_11);
     }
-
+    
     public static boolean supports(JdkVersion jdkVersions) {
         return !jdkVersions.greaterThanEqual(JdkVersion.JDK_17);
     }
-
-
 }

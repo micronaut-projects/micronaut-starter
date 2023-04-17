@@ -253,36 +253,61 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'Application file is generated for a default application type with gradle and features aws-lambda for language: #language'(Language language, String extension) {
+    void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(ApplicationType applicationType, Language language, BuildTool buildTool) {
+        given:
+        String extension = language.extension
+
         when:
         Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                createOptions(language),
-                ['aws-lambda']
+                applicationType,
+                createOptions(language, buildTool),
+                ['aws-lambda', 'graalvm']
         )
 
         then:
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        if (applicationType == ApplicationType.DEFAULT) {
+            assert output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        }
 
         when:
-        def buildGradle = output['build.gradle']
+        String fileName = buildTool.getBuildFileName()
+        String buildGradle = output[fileName]
 
         then:
         !buildGradle.contains('id "application"')
-        buildGradle.contains('mainClass.set')
+        if (applicationType == ApplicationType.DEFAULT) {
+            assert buildGradle.contains('mainClass.set')
+        }
         buildGradle.contains('id("io.micronaut.application")')
 
-        buildGradle.contains('''\
-tasks.named("dockerfileNative") {
+        if (buildTool == BuildTool.GRADLE_KOTLIN) {
+            assert buildGradle.contains('''\
+tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    baseImage.set("amazonlinux:2")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
 }''')
+        } else if (buildTool == BuildTool.GRADLE) {
+            assert buildGradle.contains('''\
+tasks.named("dockerfileNative") {
+    baseImage = "amazonlinux:2"
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
+        }
+
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
+        [applicationType, language, buildTool] << [
+                [ApplicationType.DEFAULT, ApplicationType.FUNCTION],
+                [Language.JAVA, Language.KOTLIN],
+                [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        ].combinations()
     }
 
     void "kotlin.kapt plugin is applied before micronaut library plugin"() {
@@ -302,10 +327,12 @@ tasks.named("dockerfileNative") {
 
     @Unroll
     void 'Application file is generated for a default application type with gradle Kotlin DSL and features aws-lambda for language: #language'(Language language, String extension) {
+        given:
+        BuildTool buildTool = BuildTool.GRADLE_KOTLIN
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                createOptions(language, BuildTool.GRADLE_KOTLIN),
+                createOptions(language, buildTool),
                 ['aws-lambda']
         )
 
@@ -313,7 +340,7 @@ tasks.named("dockerfileNative") {
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         when:
-        String buildGradle = output['build.gradle.kts']
+        String buildGradle = output[buildTool.buildFileName]
 
         then:
         !buildGradle.contains('id "application"')
@@ -322,6 +349,7 @@ tasks.named("dockerfileNative") {
 
         buildGradle.contains('''\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    baseImage.set("amazonlinux:2")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
