@@ -63,7 +63,6 @@ public class OpenApi implements Feature, MicronautServerDependent {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.openapi")
                     .artifactId("micronaut-openapi")
-                    .versionProperty("micronaut.openapi.version")
                     .compile());
         }
     }
