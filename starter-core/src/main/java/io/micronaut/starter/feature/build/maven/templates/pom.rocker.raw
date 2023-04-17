@@ -118,18 +118,6 @@ MavenBuild mavenBuild
 }
 }
 
-@if (features.contains("oracle-function")) {
-@dependency.template("com.fnproject.fn", "runtime", "runtime", null, false, null)
-@if (features.contains("oracle-function-http")) {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "api", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "testing-junit4", "test", null, false, null)
-}
-}
-
 @if (features.contains("openapi")) {
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
