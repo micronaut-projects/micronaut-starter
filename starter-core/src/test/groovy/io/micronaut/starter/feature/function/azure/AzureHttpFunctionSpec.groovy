@@ -63,7 +63,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
     }
 
-    void 'test gradle azure-function-http feature for language=#language and buildTool=#buildTool'() {
+    void 'test gradle azure-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(['azure-function-http'])
@@ -72,9 +72,16 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-        verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+        if (buildTool.isGradle()) {
+            assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
+            assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
+            assert !verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
+            assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
+            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+        }
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()

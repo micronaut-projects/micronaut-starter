@@ -32,6 +32,7 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
+import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -104,12 +105,18 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
-        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);
+        addDependencies(generatorContext);
     }
 
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions";
+    }
+    
+    protected void addDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
+            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);
+        }
     }
 }
