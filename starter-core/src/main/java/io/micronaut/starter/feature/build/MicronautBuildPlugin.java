@@ -177,7 +177,8 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
                         (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
-            builder = builder.dockerNative(Dockerfile.builder().arg("-XX:MaximumHeapSizePercent=80")
+            builder = builder.dockerNative(Dockerfile.builder().baseImage("amazonlinux:2")
+                    .arg("-XX:MaximumHeapSizePercent=80")
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")
                     .build());

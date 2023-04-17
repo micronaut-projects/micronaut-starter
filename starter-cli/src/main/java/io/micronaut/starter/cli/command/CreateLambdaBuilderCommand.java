@@ -116,7 +116,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         CodingStyle codingStyle = getCodingStyle(reader);
         ApplicationType applicationType = applicationTypeForCodingStyle(codingStyle);
         if (codingStyle == CodingStyle.CONTROLLERS) {
-            Feature apiFeature = getApiTrigger(reader);
+            Feature apiFeature = getApiTrigger(applicationType, reader);
             applicationFeatures.add(apiFeature.getName());
         } else {
             Feature trigger = getTrigger(reader);
@@ -192,19 +192,19 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 Language.values();
     }
 
-    protected Feature getApiTrigger(LineReader reader) {
-        Feature defaultFeature = features.stream().filter(f -> f instanceof AmazonApiGateway).findFirst()
+    protected Feature getApiTrigger(ApplicationType applicationType, LineReader reader) {
+        Feature defaultFeature = features.stream().filter(AmazonApiGateway.class::isInstance).findFirst()
                 .orElseThrow(() -> new ConfigurationException("default feature " + LambdaFunctionUrl.NAME + " not found"));
         out("Choose your trigger. (enter for " + defaultFeature.getTitle() + ")");
         return getFeatureOption(
-                apiTriggerFeatures(features),
+                apiTriggerFeatures(applicationType, features),
                 Feature::getTitle,
                 defaultFeature,
                 reader);
     }
 
     protected Feature getTrigger(LineReader reader) {
-        Feature defaultFeature = features.stream().filter(f -> f instanceof LambdaFunctionUrl).findFirst()
+        Feature defaultFeature = features.stream().filter(LambdaFunctionUrl.class::isInstance).findFirst()
                 .orElseThrow(() -> new ConfigurationException("default feature " + LambdaFunctionUrl.NAME + " not found"));
         out("Choose your trigger. (enter for " + defaultFeature.getTitle() + ")");
         return getFeatureOption(
@@ -273,9 +273,10 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                         .findFirst() : Optional.empty() ;
     }
 
-    protected List<Feature> apiTriggerFeatures(Collection<Feature> features) {
+    protected List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
         return features.stream()
                 .filter(AwsApiFeature.class::isInstance)
+                .filter(f -> f.supports(applicationType))
                 .sorted(Comparator.comparing(Feature::getTitle).reversed())
                 .collect(Collectors.toList());
     }

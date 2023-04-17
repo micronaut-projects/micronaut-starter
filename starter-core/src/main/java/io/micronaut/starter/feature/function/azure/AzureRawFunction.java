@@ -20,6 +20,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
@@ -36,6 +38,11 @@ import java.util.Optional;
 
 @Singleton
 public class AzureRawFunction extends AbstractAzureFunction {
+    private static final Dependency MICRONAUT_AZURE_FUNCTION = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function")
+            .compile()
+            .build();
     private final AzureHttpFunction httpFunction;
 
     public AzureRawFunction(CoordinateResolver coordinateResolver, AzureHttpFunction httpFunction) {
@@ -113,5 +120,11 @@ public class AzureRawFunction extends AbstractAzureFunction {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://docs.microsoft.com/azure";
+    }
+
+    @Override
+    protected void addDependencies(GeneratorContext generatorContext) {
+        super.addDependencies(generatorContext);
+        generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION);
     }
 }

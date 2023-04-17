@@ -104,27 +104,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
     }
 }
-@if (features.contains("azure-function")) {
-@dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null, false, null)
-@if (features.contains("azure-function-http")) {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null, false, null)
-}
-}
-
-@if (features.contains("oracle-function")) {
-@dependency.template("com.fnproject.fn", "runtime", "runtime", null, false, null)
-@if (features.contains("oracle-function-http")) {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "api", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "testing-junit4", "test", null, false, null)
-}
-}
 
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)

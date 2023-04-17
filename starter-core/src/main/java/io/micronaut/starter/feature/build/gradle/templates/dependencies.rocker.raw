@@ -17,14 +17,6 @@ dependencies {
     @dependency.toSnippet()
 }
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null, false)
-@if (features.contains("oracle-function")) {
-    @if (!features.contains("oracle-function-http")) {
-    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "implementation", null, false)
-    @dependency.template("com.fnproject.fn", "api", "implementation", null, false)
-    @dependency.template("com.fnproject.fn", "runtime", "runtimeOnly", null, false)
-    @dependency.template("com.fnproject.fn", "testing-junit4", "testImplementation", null, false)
-    }
-}
 @if (features.contains("google-cloud-function")) {
     @if (!features.contains("google-cloud-function-http")) {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null, false)
@@ -33,12 +25,6 @@ dependencies {
     }
 }
 
-@if (features.contains("azure-function")) {
-    @if (!features.contains("azure-function-http")) {
-    @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null, false)
-    @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null, false)
-    }
-}
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
 }

@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.function.oraclefunction
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 
@@ -69,7 +72,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
 
         then:
         build.contains('runtime("oracle_function")')
-        build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
 
         where:
         language << Language.values().toList()
@@ -90,13 +92,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         readme
         funcYaml
         build.contains('<micronaut.runtime>oracle_function</micronaut.runtime>')
-
-        build.contains('''
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>runtime</scope>
-    </dependency>''')
 
         output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
@@ -152,28 +147,61 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
           </container>
         </configuration>''')
 
-        build.contains('''
-    <dependency>
-      <groupId>com.fnproject.fn</groupId>
-      <artifactId>api</artifactId>
-      <scope>compile</scope>
-    </dependency>''')
-
-        build.contains('''
-    <dependency>
-      <groupId>com.fnproject.fn</groupId>
-      <artifactId>runtime</artifactId>
-      <scope>runtime</scope>
-    </dependency>''')
-
-        build.contains('''
-    <dependency>
-      <groupId>com.fnproject.fn</groupId>
-      <artifactId>testing-junit4</artifactId>
-      <scope>test</scope>
-    </dependency>''')
-
         where:
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+    }
+
+    void 'test oracle cloud function dependencies for language=#language and buildtool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['oracle-function'])
+                .applicationType(ApplicationType.FUNCTION)
+                .language(language)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", Scope.COMPILE)
+        verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
+        verifier.hasDependency("com.fnproject.fn", "api", Scope.COMPILE)
+        verifier.hasDependency("com.fnproject.fn", "testing-junit4", Scope.TEST)
+        verifier.hasDependency("org.slf4j", "slf4j-simple", Scope.RUNTIME)
+
+        !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http")
+        !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+
+    }
+
+    void 'test oracle cloud application dependencies for language=#language and buildtool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['oracle-function'])
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+
+        if (buildTool.isGradle()) {
+            assert !verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
+            assert !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", Scope.COMPILE)
+            assert !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", Scope.TEST)
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
+            assert verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", Scope.COMPILE)
+            assert verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", Scope.TEST)
+        }
+        verifier.hasDependency("org.slf4j", "slf4j-simple", Scope.RUNTIME)
+
+        !verifier.hasDependency("com.fnproject.fn", "api")
+        !verifier.hasDependency("com.fnproject.fn", "testing-junit4")
+        !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function")
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 }

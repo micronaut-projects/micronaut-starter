@@ -22,6 +22,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
@@ -50,8 +51,10 @@ import java.util.Optional;
  */
 public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
-    public static final String NAME = "azure-function";
+    public static final String GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS = "com.microsoft.azure.functions";
+    public static final String ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY = "azure-functions-java-library";
 
+    public static final String NAME = "azure-function";
     private final CoordinateResolver coordinateResolver;
 
     public AbstractAzureFunction(CoordinateResolver coordinateResolver) {
@@ -70,6 +73,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Microsoft Azure";
     }
@@ -111,6 +115,8 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
         addFunctionTemplate(generatorContext, project);
+
+        addDependencies(generatorContext);
     }
 
     @NonNull
@@ -191,6 +197,21 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             return "gradlew clean azureFunctionsDeploy";
         } else {
             throw new IllegalStateException("Unsupported build tool");
+        }
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        addAzureFunctionsJavaLibraryDependency(generatorContext);
+    }
+
+    protected void addAzureFunctionsJavaLibraryDependency(GeneratorContext generatorContext) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
+                .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(builder.developmentOnly());
+        } else if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(builder.compile());
         }
     }
 }
