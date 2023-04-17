@@ -42,7 +42,7 @@ jobs:
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.9.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.10.x'
         uses: actions/upload-artifact@v3
         with:
           name: mn-linux-amd64-snapshot
