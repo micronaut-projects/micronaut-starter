@@ -108,15 +108,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
     }
 }
-@if (features.contains("azure-function")) {
-@dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null, false, null)
-@if (features.contains("azure-function-http")) {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null, false, null)
-}
-}
 
 @if (features.contains("openapi")) {
 @if (features.language().isGroovy()) {
