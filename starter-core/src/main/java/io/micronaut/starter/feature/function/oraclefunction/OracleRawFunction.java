@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -46,9 +47,17 @@ public class OracleRawFunction extends OracleFunction {
             .artifactId("micronaut-oraclecloud-function")
             .compile()
             .build();
+    private static final Dependency COM_FNPROJECT_API = Dependency.builder()
+            .groupId(GROUP_ID_COM_FNPROJECT_FN)
+            .artifactId("api")
+            .compile()
+            .build();
 
-    private static final Dependency.Builder COM_FNPROJECT = Dependency.builder()
-            .groupId("com.fnproject.fn");
+    private static final Dependency COM_FNPROJECT_TESTING_JUNIT4 = Dependency.builder()
+            .groupId(GROUP_ID_COM_FNPROJECT_FN)
+            .artifactId("testing-junit4")
+            .test()
+            .build();
 
     private final OracleFunction httpFunction;
 
@@ -58,6 +67,7 @@ public class OracleRawFunction extends OracleFunction {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_ORACLE_RAW_FUNCTION;
     }
@@ -111,21 +121,13 @@ public class OracleRawFunction extends OracleFunction {
         addDependencies(generatorContext);
     }
 
-    private void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(COM_FNPROJECT
-                .artifactId("runtime")
-                .runtime()
-        );
+    @Override
+    protected void addDependencies(GeneratorContext generatorContext) {
         if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
             generatorContext.addDependency(MICRONAUT_OCI_FUNCTION);
-            generatorContext.addDependency(COM_FNPROJECT
-                    .artifactId("api")
-                    .compile()
-            );
-            generatorContext.addDependency(COM_FNPROJECT
-                    .artifactId("testing-junit4")
-                    .test()
-            );
+            generatorContext.addDependency(COM_FNPROJECT_RUNTIME);
+            generatorContext.addDependency(COM_FNPROJECT_API);
+            generatorContext.addDependency(COM_FNPROJECT_TESTING_JUNIT4);
         }
     }
 

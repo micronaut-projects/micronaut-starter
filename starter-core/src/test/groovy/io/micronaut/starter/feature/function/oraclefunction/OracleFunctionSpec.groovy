@@ -185,9 +185,16 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
-        verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", Scope.TEST)
+
+        if (buildTool.isGradle()) {
+            assert !verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
+            assert !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", Scope.COMPILE)
+            assert !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", Scope.TEST)
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("com.fnproject.fn", "runtime", Scope.RUNTIME)
+            assert verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", Scope.COMPILE)
+            assert verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", Scope.TEST)
+        }
         verifier.hasDependency("org.slf4j", "slf4j-simple", Scope.RUNTIME)
 
         !verifier.hasDependency("com.fnproject.fn", "api")
