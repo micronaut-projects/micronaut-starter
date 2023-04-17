@@ -8,7 +8,6 @@ import io.micronaut.starter.options.TestFramework
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
-
     final String template
     final Language language
     final TestFramework testFramework
@@ -53,10 +52,8 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, String scope) {
-        // this needs to support ignoring versions for non-managed dependencies
-        // but it also needs to return false for ("com.foo":"foo") when ("com.foo":"foo-bar") is present
-        String expected = /(?s).*${scope}\("${groupId}:${artifactId}(?::.+)?\"\).*/
-        template.matches(Pattern.compile(expected))
+        String regex = /(?s).*${scope}\("${groupId}:${artifactId}(?::.+)?\"\).*/
+        template.matches(Pattern.compile(regex))
     }
 
     @Override
