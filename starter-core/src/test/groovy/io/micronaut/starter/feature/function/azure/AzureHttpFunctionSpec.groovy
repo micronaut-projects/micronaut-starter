@@ -63,10 +63,11 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
     }
 
-    void 'test gradle azure-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
+    void 'test azure-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['azure-function-http'])
+                .applicationType(ApplicationType.DEFAULT)
+                .features(['azure-function'])
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
@@ -75,13 +76,32 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         if (buildTool.isGradle()) {
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert !verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
 
         } else if (buildTool == BuildTool.MAVEN) {
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.DEVELOPMENT_ONLY)
         }
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+    }
+
+    void 'test azure-function feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['azure-function'])
+                .language(language)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
+        assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
+        assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library")
+        assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function")
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()

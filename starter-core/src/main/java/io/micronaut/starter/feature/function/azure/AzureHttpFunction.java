@@ -103,17 +103,13 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        addDependencies(generatorContext);
-    }
-
-    @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions";
     }
-    
+
+    @Override
     protected void addDependencies(GeneratorContext generatorContext) {
+        super.addDependencies(generatorContext);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
             generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);

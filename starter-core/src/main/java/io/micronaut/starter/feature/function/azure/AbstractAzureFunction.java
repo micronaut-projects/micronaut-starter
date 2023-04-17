@@ -23,7 +23,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
@@ -52,17 +51,10 @@ import java.util.Optional;
  */
 public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
+    public static final String GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS = "com.microsoft.azure.functions";
+    public static final String ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY = "azure-functions-java-library";
+
     public static final String NAME = "azure-function";
-
-    private static final Dependency MICRONAUT_AZURE_FUNCTION = MicronautDependencyUtils
-            .azureDependency()
-            .artifactId("micronaut-azure-function")
-            .compile()
-            .build();
-    private static final Dependency.Builder AZURE_FUNCTION_JAVA_LIBRARY = Dependency.builder()
-            .groupId("com.microsoft.azure.functions")
-            .artifactId("azure-functions-java-library");
-
     private final CoordinateResolver coordinateResolver;
 
     public AbstractAzureFunction(CoordinateResolver coordinateResolver) {
@@ -81,6 +73,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Microsoft Azure";
     }
@@ -105,7 +98,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
                     .lookupArtifactId("azure-functions-gradle-plugin")
                     .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), javaVersionValue(generatorContext).orElse("null"))))
                     .build());
-            generatorContext.addDependency(AZURE_FUNCTION_JAVA_LIBRARY.compile());
         } else if (buildTool == BuildTool.MAVEN) {
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
             generatorContext.addBuildPlugin(MavenPlugin.builder()
@@ -121,12 +113,10 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("functionRuntimeOs", "windows");
             javaVersionValue(generatorContext).ifPresent(value -> props.put("functionRuntimeJavaVersion", value));
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
-            generatorContext.addDependency(AZURE_FUNCTION_JAVA_LIBRARY.developmentOnly());
-        }
-        if (type == ApplicationType.FUNCTION) {
-            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION);
         }
         addFunctionTemplate(generatorContext, project);
+
+        addDependencies(generatorContext);
     }
 
     @NonNull
@@ -207,6 +197,21 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             return "gradlew clean azureFunctionsDeploy";
         } else {
             throw new IllegalStateException("Unsupported build tool");
+        }
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        addAzureFunctionsJavaLibraryDependency(generatorContext);
+    }
+
+    protected void addAzureFunctionsJavaLibraryDependency(GeneratorContext generatorContext) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
+                .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(builder.developmentOnly());
+        } else if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(builder.compile());
         }
     }
 }
