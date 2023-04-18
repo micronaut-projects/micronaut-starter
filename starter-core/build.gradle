@@ -40,7 +40,7 @@ def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.i
 sourceSets.main.resources.srcDir(micronautVersionInfo)
 
 rocker {
-    javaVersion = '1.8'
+    javaVersion = '17'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
 
