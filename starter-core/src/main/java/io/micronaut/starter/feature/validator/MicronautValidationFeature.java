@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,53 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.validator;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class HibernateValidator implements Feature {
+public class MicronautValidationFeature implements ValidationFeature {
+    public static final String NAME = "micronaut-validation";
+
+    private static final Dependency MICRONAUT_VALIDATION_COMPILE = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-validation")
+            .compile()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
-        return "hibernate-validator";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "Hibernate Validator";
+        return "Micronaut Validation";
     }
 
     @Override
+    @NonNull
     public String getDescription() {
-        return "Adds support for the Hibernate Validator";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+        return "Adds support for Micronaut Validation";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.beanvalidation")
-                .artifactId("micronaut-hibernate-validator")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
     }
 
     @Override
     public String getCategory() {
         return Category.VALIDATION;
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-hibernate-validator/latest/guide/index.html";
     }
 }

@@ -1,9 +1,9 @@
-package io.micronaut.starter.feature.other
+package io.micronaut.starter.feature.validator
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.fixture.CommandOutputFixture
 
-class HibernateValidatorSpec extends BeanContextSpec  implements CommandOutputFixture {
+class HibernateValidationFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md contains links to micronaut docs'() {
         when:

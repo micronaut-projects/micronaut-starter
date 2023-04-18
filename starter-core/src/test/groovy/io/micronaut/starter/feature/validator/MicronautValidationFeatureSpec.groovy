@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.other
+package io.micronaut.starter.feature.validator
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -22,7 +22,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
     @PendingFeature(reason = "Only Micronaut Framework 4 has docs")
     void 'test readme.md with feature http-session contains links to micronaut docs'() {
         when:
-        def output = generate([])
+        def output = generate(['micronaut-validation'])
         def readme = output["README.md"]
 
         then:
@@ -35,9 +35,9 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         Category.VALIDATION == micronautValidationFeature.category
     }
 
-    void "test Micronaut Validation is not visible"() {
+    void "test Micronaut Validation is visible"() {
         expect:
-        !micronautValidationFeature.visible
+        micronautValidationFeature.visible
     }
 
     void "test Micronaut Validation supports application type=#appType"(ApplicationType appType) {
@@ -54,11 +54,31 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
+                .features(['micronaut-validation'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         assert verifier.hasDependency("io.micronaut", "micronaut-validation", Scope.COMPILE)
+
+        where:
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+    }
+
+    @PendingFeature(reason = "Only Micronaut Framework 4 has new dependency coordinates and processor")
+    void 'test Micronaut Validation feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(ApplicationType.FUNCTION)
+                .language(language)
+                .features(['micronaut-validation'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        assert verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
+        assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
+        assert verifier.hasDependency("jakarta.validation", "validation-api", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
