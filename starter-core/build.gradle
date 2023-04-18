@@ -14,7 +14,7 @@ sourceSets {
 }
 
 dependencies {
-    api platform("io.micronaut:micronaut-bom:$micronautVersion")
+    api platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"
@@ -31,6 +31,8 @@ dependencies {
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
     version = micronautVersion
     extraBomProperties = [
+            'io.micronaut:micronaut-core',
+            'io.micronaut.logging:micronaut-logging',
             'io.micronaut.grpc:micronaut-grpc',
             'io.micronaut.picocli:micronaut-picocli',
     ]

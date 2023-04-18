@@ -11,7 +11,7 @@ configurations {
 }
 
 dependencies {
-    developmentOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    developmentOnly platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
