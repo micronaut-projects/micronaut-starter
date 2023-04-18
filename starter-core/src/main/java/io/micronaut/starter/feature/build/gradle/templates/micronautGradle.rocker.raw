@@ -89,7 +89,12 @@ dockerfile {
 }
 
 @if(dockerfileNative.getBaseImage() != null) {
-    baseImage("@(dockerfileNative.getBaseImage())")
+@if(build == BuildTool.GRADLE) {
+    baseImage = "@(dockerfileNative.getBaseImage())"
+}
+@if(build == BuildTool.GRADLE_KOTLIN) {
+    baseImage.set("@(dockerfileNative.getBaseImage())")
+}
 }
 
 @if (dockerfileNative.getArgs() != null) {

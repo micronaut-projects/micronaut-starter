@@ -12,17 +12,19 @@
 agorapulse-gru = "1.2.5"
 agorapulse-micronaut-console = "2.0.1-micronaut-3.0"
 agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
+agorapulse-micronaut-slack = "1.0.4-micronaut-3.0"
 agorapulse-micronaut-worker = "1.2.2-micronaut-3.0"
 apigatewayv2 = "2.42.1-alpha.0"
 apigatewayv2-integrations = "2.44.0-alpha.0"
+appengine-gradle-plugin = "2.4.5"
 asciidoctor-gradle-jvm = "3.3.2"
 asciidoctor-maven-plugin = "2.2.2"
 asciidoctorj = "2.5.5"
 asciidoctorj-diagram = "2.2.3"
 awaitility = "4.2.0"
 aws-java-events = "3.11.0"
-azure-functions-gradle-plugin = "1.8.2"
-azure-functions-maven-plugin = "1.21.0"
+azure-functions-gradle-plugin = "1.12.1"
+azure-functions-maven-plugin = "1.24.0"
 bom-opentelemetry = "1.14.0-alpha"
 bpm-assert = "7.18.0"
 bpm-micronaut = "2.12.0"
@@ -35,15 +37,15 @@ gradle-shadow-plugin = "7.1.2"
 jib-gradle-plugin = "2.8.0"
 jruby = "9.3.8.0"
 json-bind = "2.0.0"
-jte-gradle-plugin= "1.12.1"
-jte-maven-plugin= "2.2.2"
+jte-gradle-plugin= "2.2.6"
+jte-maven-plugin= "2.2.6"
 kotest = "4.2.5"
-kotlin = "1.6.10"
+kotlin = "1.6.21"
 log4j = "2.19.0"
 log4j-slf4j = "2.17.2"
 micronaut-aot = "1.1.0"
-micronaut-build-plugins = "5.3.14"
-micronaut-gradle-plugin = "3.7.4"
+micronaut-build-plugins = "5.4.8"
+micronaut-gradle-plugin = "3.7.8"
 mockk = "1.9.3"
 protobuf-gradle-plugin = "0.8.15"
 rewrite-gradle-plugin = "5.12.0"
@@ -59,9 +61,11 @@ zeebe-micronaut-client = "1.11.0"
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
+agorapulse-micronaut-slack = { module = "com.agorapulse:micronaut-slack-http", version.ref = "agorapulse-micronaut-slack" }
 agorapulse-micronaut-worker = { module = "com.agorapulse:micronaut-worker", version.ref = "agorapulse-micronaut-worker" }
 apigatewayv2-alpha = { module = "software.amazon.awscdk:apigatewayv2-alpha", version.ref = "apigatewayv2" }
 apigatewayv2-integrations-alpha = { module = "software.amazon.awscdk:apigatewayv2-integrations-alpha", version.ref = "apigatewayv2-integrations" }
+appengine-gradle-plugin = { module = "com.google.cloud.tools:appengine-gradle-plugin", version.ref = "appengine-gradle-plugin" }
 asciidoctor-gradle-jvm = { module = "org.asciidoctor:asciidoctor-gradle-jvm", version.ref = "asciidoctor-gradle-jvm" }
 asciidoctor-maven-plugin = { module = "org.asciidoctor:asciidoctor-maven-plugin", version.ref = "asciidoctor-maven-plugin" }
 asciidoctorj = { module = "org.asciidoctor:asciidoctorj", version.ref = "asciidoctorj" }
@@ -79,7 +83,7 @@ bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version
 camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
 gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
-gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise" }
+gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }

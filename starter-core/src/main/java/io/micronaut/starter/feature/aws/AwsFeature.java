@@ -16,18 +16,12 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+
 
 /**
  * Marker interface for AWS related features.
  */
-public interface AwsFeature extends Feature, CloudFeature {
+public interface AwsFeature extends Feature, AwsCloudFeature {
     String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
-
-    @Override
-    default Cloud getCloud() {
-        return Cloud.AWS;
-    }
 }

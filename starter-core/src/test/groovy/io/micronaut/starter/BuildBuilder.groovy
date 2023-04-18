@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildPlugin
+import io.micronaut.starter.build.DefaultRepositoryResolver
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradleBuildCreator
@@ -18,7 +19,6 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.*
-import static io.micronaut.starter.build.Repository.micronautRepositories
 
 class BuildBuilder implements ProjectFixture, ContextFixture {
 
@@ -121,12 +121,12 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
 
     MavenBuild mavenBuild(Options options, Features features, Project project, ApplicationType type) {
         GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
-        getMavenDependencyResolver().create(ctx)
+        getMavenDependencyResolver().create(ctx, new DefaultRepositoryResolver().resolveRepositories(ctx))
     }
 
     GradleBuild gradleBuild(Options options, Features features, Project project, ApplicationType type) {
         GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
-        getGradleDependencyResolver().create(ctx, micronautRepositories(), Gradle.DEFAULT_USER_VERSION_CATALOGUE)
+        getGradleDependencyResolver().create(ctx, new DefaultRepositoryResolver().resolveRepositories(ctx), Gradle.DEFAULT_USER_VERSION_CATALOGUE)
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {

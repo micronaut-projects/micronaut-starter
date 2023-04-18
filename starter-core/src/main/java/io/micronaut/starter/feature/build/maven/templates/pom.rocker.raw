@@ -108,45 +108,11 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
     }
 }
-@if (features.contains("azure-function")) {
-@dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null, false, null)
-@if (features.contains("azure-function-http")) {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null, false, null)
-}
-}
 
-@if (features.contains("oracle-function")) {
-@dependency.template("com.fnproject.fn", "runtime", "runtime", null, false, null)
-@if (features.contains("oracle-function-http")) {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "api", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "testing-junit4", "test", null, false, null)
-}
-}
-
-@if (features.contains("graalvm") && features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-graal", "provided", null, false, null)
-}
 @if (features.contains("openapi")) {
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
 }
-}
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null, false, null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null, false, null)
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy-test", "test", null, false, null)
-}
-@if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null, false, null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)

@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.MavenCentral;
+import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
@@ -30,16 +32,27 @@ import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class MavenBuildCreator {
 
+    /**
+     * Not used anymore
+     *
+     * @param generatorContext Generator Context
+     * @return a Maven Build
+     */
+    @Deprecated
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext) {
+        return create(generatorContext, Collections.singletonList(new MavenCentral()));
+    }
+
+    @NonNull
+    public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
         List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext);
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
@@ -87,7 +100,7 @@ public class MavenBuildCreator {
         if (testCombineAttribute == MavenCombineAttribute.OVERRIDE) {
             testAnnotationProcessorsCoordinates.add(injectJava);
             testAnnotationProcessorsCoordinates.add(validation);
-            annotationProcessorsCoordinates.add(mnGraal);
+            testAnnotationProcessorsCoordinates.add(mnGraal);
         }
 
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
@@ -106,14 +119,19 @@ public class MavenBuildCreator {
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
-                getRepositories(),
+                MavenRepository.listOf(repositories),
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles());
     }
 
+    /**
+     * @deprecated Not used anymore
+     * @return Empty list
+     */
+    @Deprecated
     @NonNull
     protected List<MavenRepository> getRepositories() {
-        return MavenRepository.listOf(micronautRepositories());
+        return Collections.emptyList();
     }
 }

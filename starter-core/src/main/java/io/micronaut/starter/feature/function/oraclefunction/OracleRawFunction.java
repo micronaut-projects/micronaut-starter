@@ -16,10 +16,13 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
@@ -39,6 +42,23 @@ import jakarta.inject.Singleton;
 public class OracleRawFunction extends OracleFunction {
     public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
 
+    private static final Dependency MICRONAUT_OCI_FUNCTION = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function")
+            .compile()
+            .build();
+    private static final Dependency COM_FNPROJECT_API = Dependency.builder()
+            .groupId(GROUP_ID_COM_FNPROJECT_FN)
+            .artifactId("api")
+            .compile()
+            .build();
+
+    private static final Dependency COM_FNPROJECT_TESTING_JUNIT4 = Dependency.builder()
+            .groupId(GROUP_ID_COM_FNPROJECT_FN)
+            .artifactId("testing-junit4")
+            .test()
+            .build();
+
     private final OracleFunction httpFunction;
 
     public OracleRawFunction(SimpleLogging simpleLogging, OracleFunction httpFunction) {
@@ -47,6 +67,7 @@ public class OracleRawFunction extends OracleFunction {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_ORACLE_RAW_FUNCTION;
     }
@@ -88,7 +109,7 @@ public class OracleRawFunction extends OracleFunction {
             }
 
             if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+                addMicronautRuntimeBuildProperty(generatorContext);
                 generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
                 generatorContext.getBuildProperties().put("exec.mainClass", "com.fnproject.fn.runtime.EntryPoint");
                 generatorContext.getBuildProperties().put("jib.docker.image", "[REGION].ocir.io/[TENANCY]/[REPO]/${project.artifactId}");
@@ -96,6 +117,17 @@ public class OracleRawFunction extends OracleFunction {
             }
 
             applyTestTemplate(generatorContext, project, "Function");
+        }
+        addDependencies(generatorContext);
+    }
+
+    @Override
+    protected void addDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(MICRONAUT_OCI_FUNCTION);
+            generatorContext.addDependency(COM_FNPROJECT_RUNTIME);
+            generatorContext.addDependency(COM_FNPROJECT_API);
+            generatorContext.addDependency(COM_FNPROJECT_TESTING_JUNIT4);
         }
     }
 

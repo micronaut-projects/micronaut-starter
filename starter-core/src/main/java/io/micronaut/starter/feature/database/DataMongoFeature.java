@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.Priority;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
@@ -28,13 +28,10 @@ import io.micronaut.starter.options.Language;
 /**
  * Base class for our data-mongo features.
  */
-public abstract class DataMongoFeature extends EaseTestingFeature implements DataFeature {
+public abstract class DataMongoFeature extends EaseTestingFeature implements DataDocumentFeature {
 
     private static final String MONGODB_GROUP = "org.mongodb";
-    private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
-    private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
-    private static final String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
-    private static final String MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT = "micronaut-data-document-processor";
+
     private static final String MICRONAUT_DATA_MONGODB_ARTIFACT = "micronaut-data-mongodb";
     private static final String MONGODB_URI_CONFIGURATION_KEY = "mongodb.uri";
     private static final String MONGODB_URI_CONFIGURATION_VALUE = "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb";
@@ -53,21 +50,11 @@ public abstract class DataMongoFeature extends EaseTestingFeature implements Dat
         }
 
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(Dependency.builder()
-                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-                    .annotationProcessor(true)
-                    .groupId(MICRONAUT_DATA_GROUP)
-                    .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-                    .versionProperty(MICRONAUT_DATA_VERSION));
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         }
-        generatorContext.addDependency(Dependency.builder()
-                .annotationProcessor()
-                .groupId(MICRONAUT_DATA_GROUP)
-                .artifactId(MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT)
-                .versionProperty(MICRONAUT_DATA_VERSION));
-        generatorContext.addDependency(Dependency.builder()
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR);
+        generatorContext.addDependency(MicronautDependencyUtils.dataDependency()
                 .compile()
-                .groupId(MICRONAUT_DATA_GROUP)
                 .artifactId(MICRONAUT_DATA_MONGODB_ARTIFACT)
                 .versionProperty(MICRONAUT_DATA_VERSION));
 

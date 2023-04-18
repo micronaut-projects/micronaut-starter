@@ -21,6 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
@@ -30,11 +32,23 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
-
+import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
+
+    private static final Dependency MICRONAUT_AZURE_FUNCTION_HTTP = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function-http")
+            .compile()
+            .build();
+
+    private static final Dependency MICRONAUT_AZURE_FUNCTION_HTTP_TEST = MicronautDependencyUtils
+            .azureDependency()
+            .artifactId("micronaut-azure-function-http-test")
+            .test()
+            .build();
 
     public AzureHttpFunction(CoordinateResolver coordinateResolver) {
         super(coordinateResolver);
@@ -91,5 +105,14 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions";
+    }
+
+    @Override
+    protected void addDependencies(GeneratorContext generatorContext) {
+        super.addDependencies(generatorContext);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
+            generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);
+        }
     }
 }

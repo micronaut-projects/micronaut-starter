@@ -20,7 +20,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
+import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
@@ -52,7 +54,9 @@ import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -68,8 +72,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static io.micronaut.starter.build.Repository.micronautRepositories;
-
 @Singleton
 public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
@@ -77,6 +79,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String MAIN_CLASS_NAME = "Main";
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
+    private final RepositoryResolver repositoryResolver;
 
     @Deprecated
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -88,13 +91,22 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                Arm arm) {
         this.defaultCpuArchitecture = arm;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
+        this.repositoryResolver = new DefaultRepositoryResolver();
+    }
+
+    @Deprecated
+    public Cdk(CoordinateResolver coordinateResolver,
+               X86 x86) {
+        this(coordinateResolver, x86, new DefaultRepositoryResolver());
     }
 
     @Inject
     public Cdk(CoordinateResolver coordinateResolver,
-               X86 x86) {
+               X86 x86,
+               RepositoryResolver repositoryResolver) {
         this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
+        this.repositoryResolver = repositoryResolver;
     }
 
     @Override
@@ -135,9 +147,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
         String handler = resolveHandler(generatorContext);
         Language lang = Language.JAVA;
-        generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
-                cdkappstacktest.template(generatorContext.getProject(), handler)));
-
+        addAppStackTest(generatorContext, lang, handler);
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
                 .orElse(defaultCpuArchitecture);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
@@ -162,13 +172,19 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE)));
     }
 
+    protected void addAppStackTest(@NonNull GeneratorContext generatorContext,
+                                   @NonNull Language lang,
+                                   @NonNull String handler) {
+        generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
+                cdkappstacktest.template(generatorContext.getProject(), handler)));
+
+    }
+
     @NonNull
     private String resolveHandler(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) &&
-                generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
-            return AwsLambda.MICRONAUT_LAMBDA_HANDLER;
-        }
-        return generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
+        return generatorContext.getFeature(HandlerClassFeature.class)
+                .map(f -> f.handlerClass(generatorContext))
+                .orElse(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
     }
 
     private void populateDependencies(GeneratorContext generatorContext) {
@@ -241,7 +257,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 dependencies,
                 properties,
                 plugins,
-                MavenRepository.listOf(micronautRepositories()),
+                MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
                 Collections.emptyList());
@@ -257,7 +273,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 GradleDependency.listOf(dependencyContext, generatorContext, useVersionCatalog()),
                 plugins,
                 GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                        micronautRepositories()));
+                        repositoryResolver.resolveRepositories(generatorContext)));
     }
 
     /**

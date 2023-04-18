@@ -160,7 +160,7 @@ public class TestContainers implements Feature {
             return Optional.of("jdbc:tc:mysql:8:///db");
 
         } else if (driverFeature instanceof PostgreSQL) {
-            return Optional.of("jdbc:tc:postgresql:12:///postgres");
+            return Optional.of("jdbc:tc:postgresql:14:///postgres");
 
         } else if (driverFeature instanceof MariaDB) {
             return Optional.of("jdbc:tc:mariadb:10:///db");

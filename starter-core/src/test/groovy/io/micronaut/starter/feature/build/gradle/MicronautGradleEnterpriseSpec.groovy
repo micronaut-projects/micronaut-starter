@@ -1,18 +1,27 @@
 package io.micronaut.starter.feature.build.gradle
 
+import groovy.namespace.QName
 import groovy.xml.XmlParser
+import io.micronaut.context.annotation.Replaces
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.gradle.GradlePluginPortal
+import io.micronaut.starter.build.gradle.GradleRepository
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import jakarta.inject.Singleton
+import spock.lang.Subject
 
 class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    @Subject
+    MicronautGradleEnterprise micronautGradleEnterprise = beanContext.getBean(MicronautGradleEnterprise.class)
 
     void "if you add micronaut-gradle-enterprise it is configured for #buildTool"() {
         given:when:
@@ -25,10 +34,11 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
 
         then:
-        settings.contains('pluginManagement {')
+        micronautGradleEnterprise.pluginsManagementRepositories().size() == 3
+        settings.count('pluginManagement {') == 1
         settings.contains('    repositories {')
-        settings.contains('        gradlePluginPortal()')
-        settings.contains('        mavenCentral()')
+        settings.count('        gradlePluginPortal()') == 1
+        settings.count('        mavenCentral()') == 1
         settings.contains('    }')
         settings.contains('}')
         settings.contains('plugins {')
@@ -40,7 +50,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         settings.contains('}')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     void "io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise is not visible"() {
@@ -54,7 +64,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
-        xml.name() == 'extensions'
+        xml.name() == new QName('https://maven.apache.org/EXTENSIONS/1.0.0', 'extensions')
 
         def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'gradle-enterprise-maven-extension' }
         enterpriseExtension.groupId.text() == 'com.gradle'
@@ -82,7 +92,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         output[".mvn/extensions.xml"] == null
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
@@ -91,11 +101,18 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
 
         then:
-        xml.name() == 'gradleEnterprise'
+        xml.name() == new QName('https://www.gradle.com/gradle-enterprise-maven', 'gradleEnterprise')
         xml.server.url.text() == 'https://ge.micronaut.io'
         xml.buildScan.publish.text() == 'ALWAYS'
-        xml.buildCache.remote.server.credentials.username.text() == '${env.GRADLE_ENTERPRISE_CACHE_USERNAME}'
-        xml.buildCache.remote.server.credentials.password.text() == '${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}'
         !xml.buildCache.remote.storeEnabled // Not set in here, this is handled in custom data
+    }
+
+    @Singleton
+    @Replaces(MicronautGradleEnterprise.class)
+    static class MicronautGradleEnterpriseReplacement extends MicronautGradleEnterprise {
+        @Override
+        protected List<GradleRepository> pluginsManagementRepositories() {
+            super.pluginsManagementRepositories() + new GradlePluginPortal()
+        }
     }
 }

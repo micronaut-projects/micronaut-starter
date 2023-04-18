@@ -37,7 +37,7 @@ class ObjectStorageGcpSpec extends ApplicationContextSpec implements CommandOutp
         template.contains('implementation("io.micronaut.objectstorage:micronaut-object-storage-gcp")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven object-storage-gcp feature for language=#language'(Language language) {

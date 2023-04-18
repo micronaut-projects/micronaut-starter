@@ -42,7 +42,7 @@ class WorkerSpec extends CommandSpec {
 
         where:
         [buildTool, language, testFramework] << [
-                [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN],
+                BuildTool.valuesGradle(),
                 Language.values(),
                 TestFramework.values()
         ].combinations()

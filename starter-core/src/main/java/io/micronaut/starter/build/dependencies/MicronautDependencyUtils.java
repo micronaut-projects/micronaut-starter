@@ -18,10 +18,12 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 
 public final class MicronautDependencyUtils {
-
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
+    public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
+    public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
+    public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
@@ -35,6 +37,10 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
 
+    private MicronautDependencyUtils() {
+
+    }
+
     @NonNull
     public static Dependency.Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
@@ -43,6 +49,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder awsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AWS);
+    }
+
+    @NonNull
+    public static Dependency.Builder azureDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_AZURE);
     }
 
     @NonNull
@@ -101,7 +112,18 @@ public final class MicronautDependencyUtils {
                 .groupId(groupId);
     }
 
+    @NonNull
     public static Dependency.Builder cracDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
+    }
+
+    @NonNull
+    public static Dependency.Builder gcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GCP);
+    }
+
+    @NonNull
+    public static Dependency.Builder ociDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_OCI);
     }
 }

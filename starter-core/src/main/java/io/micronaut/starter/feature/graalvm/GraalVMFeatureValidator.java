@@ -27,7 +27,10 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Singleton
 public class GraalVMFeatureValidator implements FeatureValidator {
@@ -55,7 +58,13 @@ public class GraalVMFeatureValidator implements FeatureValidator {
         }
     }
 
-    public boolean supports(Language language) {
+    public static List<Language> supportedLanguages() {
+        return Stream.of(Language.values())
+                .filter(GraalVMFeatureValidator::supports)
+                .collect(Collectors.toList());
+    }
+
+    public static boolean supports(Language language) {
         return language != Language.GROOVY;
     }
 }

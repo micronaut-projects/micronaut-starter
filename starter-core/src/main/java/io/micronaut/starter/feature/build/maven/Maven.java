@@ -19,12 +19,15 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.DefaultRepositoryResolver;
+import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
+import io.micronaut.starter.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
@@ -33,26 +36,31 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.util.VersionInfo;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static io.micronaut.starter.build.Repository.micronautRepositories;
-
 @Singleton
 public class Maven implements BuildFeature {
+    public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";
     protected static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
-    protected static final String WRAPPER_DOWNLOADER = ".mvn/wrapper/MavenWrapperDownloader.java";
     protected static final String MAVEN_PREFIX = "maven/";
-
     protected final MavenBuildCreator dependencyResolver;
+    protected final RepositoryResolver repositoryResolver;
 
+    @Deprecated
     public Maven(MavenBuildCreator dependencyResolver) {
+        this(dependencyResolver, new DefaultRepositoryResolver());
+    }
+
+    @Inject
+    public Maven(MavenBuildCreator dependencyResolver, RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
+        this.repositoryResolver = repositoryResolver;
     }
 
     @Override
@@ -69,17 +77,17 @@ public class Maven implements BuildFeature {
         Collection<String> moduleNames = generatorContext.getModuleNames();
         if (moduleNames.size() > 1) {
             List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
-                    MavenRepository.listOf(micronautRepositories()) :
+                    MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)) :
                     null;
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
         }
+        generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
     }
 
     protected void addMavenWrapper(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         generatorContext.addTemplate("mavenWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(MAVEN_PREFIX + WRAPPER_JAR)));
         generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(MAVEN_PREFIX + WRAPPER_PROPS)));
-        generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(Template.ROOT, WRAPPER_DOWNLOADER, classLoader.getResource(MAVEN_PREFIX + WRAPPER_DOWNLOADER)));
         generatorContext.addTemplate("mavenWrapper", new URLTemplate(Template.ROOT, "mvnw", classLoader.getResource(MAVEN_PREFIX + "mvnw"), true));
         generatorContext.addTemplate("mavenWrapperBat", new URLTemplate(Template.ROOT, "mvnw.bat", classLoader.getResource(MAVEN_PREFIX + "mvnw.cmd"), false));
 
@@ -91,7 +99,7 @@ public class Maven implements BuildFeature {
     }
 
     protected MavenBuild createBuild(GeneratorContext generatorContext) {
-        return dependencyResolver.create(generatorContext);
+        return dependencyResolver.create(generatorContext, repositoryResolver.resolveRepositories(generatorContext));
     }
 
     protected RockerModel pom(GeneratorContext generatorContext, MavenBuild mavenBuild) {

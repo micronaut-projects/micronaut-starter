@@ -40,7 +40,7 @@ class CdkSpec extends CommandSpec {
         result.output.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool] << [Language.values(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
     }
 
 }

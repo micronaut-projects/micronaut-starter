@@ -23,8 +23,16 @@ import software.amazon.awscdk.services.dynamodb.Attribute;
 import software.amazon.awscdk.services.dynamodb.AttributeType;
 import software.amazon.awscdk.services.dynamodb.Table;
 }
+@if (features.contains("snapstart")) {
+import software.amazon.awscdk.services.lambda.CfnFunction;
+import software.constructs.IConstruct;
+}
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
+}
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url")) && features.contains("snapstart")) {
+import software.amazon.awscdk.services.lambda.Alias;
+import software.amazon.awscdk.services.lambda.Version;
 }
 @if (features.contains("amazon-api-gateway-http")) {
 import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
@@ -146,15 +154,29 @@ public class AppStack extends Stack {
                 .environment(environmentVariables)
                 .code(Code.fromAsset(functionPath()))
                 .timeout(Duration.seconds(10))
-                .memorySize(512)
-                .tracing(Tracing.ACTIVE)
+                .memorySize(2048)
                 .logRetention(RetentionDays.ONE_WEEK)
-@if (architecture instanceof Arm) {
-                .architecture(Architecture.ARM_64)
-} else if (architecture instanceof X86) {
+@if (features.contains("snapstart")) {
+                .tracing(Tracing.DISABLED)
                 .architecture(Architecture.X86_64)
+} else {
+                .tracing(Tracing.ACTIVE)
+    @if (architecture instanceof Arm) {
+                .architecture(Architecture.ARM_64)
+    } else if (architecture instanceof X86) {
+                .architecture(Architecture.X86_64)
+    }
 }
                 .build();
+    @if (features.contains("snapstart")) {
+        IConstruct defaultChild = function.getNode().getDefaultChild();
+        if (defaultChild instanceof CfnFunction) {
+            CfnFunction cfnFunction = (CfnFunction) defaultChild;
+            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
+                .applyOn("PublishedVersions")
+                .build());
+        }
+    }
 }
 @if (features.contains("aws-alexa")) {
         function.addPermission("alexa-skills-kit-trigger", Permission.builder()
@@ -165,19 +187,42 @@ public class AppStack extends Stack {
 @if (features.contains("dynamodb")) {
         table.grantReadWriteData(function);
 }
-@if (functionId != null && apiId != null) {
-@if (features.contains("aws-lambda-function-url")) {
-        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
-                .authType(FunctionUrlAuthType.NONE)
-                .build());
+
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url"))) {
+@if (features.contains("snapstart")) {
+        Version currentVersion = function.getCurrentVersion();
+        Alias prodAlias = Alias.Builder.create(this, "ProdAlias")
+                .aliasName("Prod")
+                .version(currentVersion)
+                .build();
 }
 @if (features.contains("amazon-api-gateway")) {
+@if (features.contains("snapstart")) {
+        LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
+                .handler(prodAlias)
+                .build();
+} else {
         LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
                 .handler(function)
                 .build();
 }
+}
+@if (features.contains("aws-lambda-function-url")) {
+@if (features.contains("snapstart")) {
+        FunctionUrl functionUrl = prodAlias.addFunctionUrl(FunctionUrlOptions.builder()
+} else {
+        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
+}
+                .authType(FunctionUrlAuthType.NONE)
+                .build());
+}
 @if (features.contains("amazon-api-gateway-http")) {
+@if (features.contains("snapstart")) {
+        HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", prodAlias)
+} else {
         HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", function)
+}
+
                 .payloadFormatVersion(VERSION_1_0)
                 .build();
         HttpApi api = HttpApi.Builder.create(this, "@(apiId)")

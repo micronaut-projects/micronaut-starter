@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.graalvm.GraalVM
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -33,7 +34,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("software.amazon.awssdk:dynamodb")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test #buildTool dynamodb feature for language=#language with GraalVM'(Language language, BuildTool buildTool) {
@@ -52,7 +53,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("software.amazon.awssdk:url-connection-client")')
 
         where:
-        [language, buildTool] << [Language.values().toList() - Language.GROOVY, [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [GraalVMFeatureValidator.supportedLanguages(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
     }
 
     void 'test maven dynamodb feature for language=#language'(Language language) {
@@ -122,7 +123,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
     """)
 
         where:
-        language << Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     void "dynamodb feature is in the DATABASE category"() {

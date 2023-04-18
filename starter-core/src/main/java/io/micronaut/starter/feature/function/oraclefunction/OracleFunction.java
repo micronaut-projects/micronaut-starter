@@ -22,10 +22,10 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
@@ -37,13 +37,28 @@ import io.micronaut.starter.feature.server.template.kotlinJunit;
 import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 @Primary
-public class OracleFunction extends AbstractFunctionFeature implements CloudFeature {
+public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {
+    public static final String GROUP_ID_COM_FNPROJECT_FN = "com.fnproject.fn";
+    public static final Dependency COM_FNPROJECT_RUNTIME = Dependency.builder()
+            .groupId(GROUP_ID_COM_FNPROJECT_FN)
+            .artifactId("runtime")
+            .runtime()
+            .build();
+    private static final Dependency MICRONAUT_OCI_FUNCTION_HTTP = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function-http")
+            .compile()
+            .build();
 
+    private static final Dependency MICRONAUT_OCI_FUNCTION_HTTP_TEST = MicronautDependencyUtils
+            .ociDependency()
+            .artifactId("micronaut-oraclecloud-function-http-test")
+            .test()
+            .build();
     private final SimpleLogging simpleLogging;
 
     public OracleFunction(SimpleLogging simpleLogging) {
@@ -65,15 +80,12 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addTemplate(
-                "func.yml", new RockerTemplate(
-                        "func.yml",
-                        projectFnFunc.template(generatorContext.getProject()
-                ))
-        );
+        addDependencies(generatorContext);
+        addFuncYamlTemplate(generatorContext);
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "oracle-function-http";
     }
@@ -84,6 +96,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Oracle Cloud Function";
     }
@@ -146,11 +159,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         return spock.template(project, true);
     }
 
-    @Override
-    public Cloud getCloud() {
-        return Cloud.ORACLE;
-    }
-
     @Nullable
     @Override
     public String getMicronautDocumentation() {
@@ -161,5 +169,22 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @NonNull
     public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "oracle_function";
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(COM_FNPROJECT_RUNTIME);
+            generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP);
+            generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP_TEST);
+        }
+    }
+
+    protected void addFuncYamlTemplate(GeneratorContext generatorContext) {
+        generatorContext.addTemplate(
+                "func.yml", new RockerTemplate(
+                        "func.yml",
+                        projectFnFunc.template(generatorContext.getProject()
+                        ))
+        );
     }
 }

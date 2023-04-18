@@ -36,7 +36,7 @@ class JTESpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool] << [Language.values(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
         dsl = buildTool == BuildTool.GRADLE ? "Groovy DSL" : "Kotlin DSL"
     }
 }

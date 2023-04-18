@@ -5,8 +5,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Subject
 
 class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -37,15 +39,19 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
         lambdaFunctionUrl.supports(ApplicationType.FUNCTION)
     }
 
-    void 'Function AppStack log retention is included for #buildTool'() {
+    void 'Function AppStack log retention is included for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [LambdaFunctionUrl.NAME])
+        def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
+    }
+
+    private static Options createOptions(BuildTool buildTool) {
+        new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

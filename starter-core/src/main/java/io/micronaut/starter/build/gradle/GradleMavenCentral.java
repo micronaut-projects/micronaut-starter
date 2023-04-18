@@ -15,11 +15,17 @@
  */
 package io.micronaut.starter.build.gradle;
 
+import io.micronaut.starter.build.MavenCentral;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class GradleMavenCentral extends GradleRepository {
+
+    public GradleMavenCentral() {
+        this(GradleDsl.KOTLIN, MavenCentral.URL);
+    }
 
     public GradleMavenCentral(GradleDsl gradleDsl, String url) {
         super(gradleDsl, url);

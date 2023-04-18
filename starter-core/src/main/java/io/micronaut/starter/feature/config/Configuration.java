@@ -98,6 +98,15 @@ public class Configuration extends LinkedHashMap<String, Object> {
     }
 
     /**
+     * Adds nested configuration
+     * @param nestedConfiguration Nested Configuration
+     * @return this configuration
+     */
+    public Configuration addNested(NestedConfiguration nestedConfiguration) {
+        return addNested(nestedConfiguration.getPath(), nestedConfiguration.getConfiguration());
+    }
+
+    /**
      * Add nested values for the given path.
      *
      * @param values A map of path to value entries
