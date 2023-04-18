@@ -126,7 +126,7 @@ abstract class CommandSpec extends Specification {
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = lang.getDefaults().test,
                          boolean addMicronautGradleEnterpriseFeature = true,
-                         JdkVersion maxJdkVersion = JdkVersion.JDK_11) {
+                         JdkVersion maxJdkVersion = JdkVersion.JDK_17) {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }
