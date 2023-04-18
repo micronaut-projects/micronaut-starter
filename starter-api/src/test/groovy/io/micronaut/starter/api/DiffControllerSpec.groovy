@@ -16,8 +16,8 @@ import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
 
 import jakarta.inject.Inject
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 
 @MicronautTest
 class DiffControllerSpec extends Specification {
