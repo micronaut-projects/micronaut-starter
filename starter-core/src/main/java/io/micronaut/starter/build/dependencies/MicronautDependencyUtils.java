@@ -16,6 +16,8 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.other.HttpClient;
 
 public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
@@ -119,5 +121,15 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder ociDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_OCI);
+    }
+
+    // we might need some dependencies if they weren't already added
+    public static void addExtraDependencies(@NonNull GeneratorContext generatorContext) {
+        if (!generatorContext.hasFeature(HttpClient.class)) {
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
+                    .artifactId("micronaut-http-client")
+                    .compile()
+            );
+        }
     }
 }

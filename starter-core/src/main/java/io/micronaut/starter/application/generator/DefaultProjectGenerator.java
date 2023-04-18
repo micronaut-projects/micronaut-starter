@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.cli;
@@ -91,6 +92,8 @@ public class DefaultProjectGenerator implements ProjectGenerator {
                                 applicationType)));
 
         generatorContext.applyFeatures();
+
+        MicronautDependencyUtils.addExtraDependencies(generatorContext);
 
         try (TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler)) {
             for (Template template: generatorContext.getTemplates().values()) {
