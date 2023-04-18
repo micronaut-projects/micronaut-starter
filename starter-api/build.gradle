@@ -17,8 +17,8 @@ dependencies {
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
-    api "io.micronaut:micronaut-validation"
     api group: 'javax.inject', name: 'javax.inject', version: '1'
+    api("io.micronaut.validation:micronaut-validation")
     implementation "io.projectreactor:reactor-core"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"

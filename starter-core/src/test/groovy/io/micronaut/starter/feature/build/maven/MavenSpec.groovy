@@ -137,7 +137,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
