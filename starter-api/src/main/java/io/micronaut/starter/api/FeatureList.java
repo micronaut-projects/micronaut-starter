@@ -29,14 +29,7 @@ import java.util.List;
 @Schema(description = "A list of features")
 @Introspected
 public class FeatureList extends Linkable {
-    private List<FeatureDTO> features;
-
-    /**
-     * Constructor.
-     */
-    public FeatureList() {
-
-    }
+    private final List<FeatureDTO> features;
 
     /**
      *
@@ -54,11 +47,4 @@ public class FeatureList extends Linkable {
         return features;
     }
 
-    /**
-     *
-     * @param features a list of features.
-     */
-    public void setFeatures(List<FeatureDTO> features) {
-        this.features = features;
-    }
 }
