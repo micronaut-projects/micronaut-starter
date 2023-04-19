@@ -45,7 +45,7 @@ class DataHibernateReactiveSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << featuresNames()
     }
 
     void "test gradle data-hibernate-reactive with java and #db"(String db) {
@@ -66,6 +66,16 @@ class DataHibernateReactiveSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << featuresNames()
+    }
+
+    private static List<String> featuresNames() {
+        [
+                MySQL.NAME,
+                MariaDB.NAME,
+                PostgreSQL.NAME,
+                Oracle.NAME,
+                SQLServer.NAME
+        ]
     }
 }

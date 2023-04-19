@@ -44,7 +44,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << featuresNames()
     }
 
     void "test gradle hibernate-reactive-jpa with java and #db"(String db) {
@@ -65,7 +65,11 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << [
+        db << featuresNames()
+    }
+
+    private static List<String> featuresNames() {
+        [
                 MySQL.NAME,
                 MariaDB.NAME,
                 PostgreSQL.NAME,
