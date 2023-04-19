@@ -5,7 +5,9 @@ import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 import java.nio.file.Files
@@ -42,6 +44,7 @@ class SwaggerUISpec extends CommandSpec {
         return "other"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven #feature.name with #language without security"(Feature feature, Language language) {
         when:
@@ -84,7 +87,7 @@ class SwaggerUISpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
     }
 
-
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
         when:

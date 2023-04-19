@@ -4,8 +4,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.messaging.MessagingFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 import java.util.stream.Collectors
 
@@ -42,6 +44,7 @@ class CreateMessagingSpec extends CommandSpec {
                         .collect(Collectors.toList()))
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void 'test basic create-messaging-app for jms-sqs and #lang and maven'(Language lang,
                                                                            BuildTool buildTool,

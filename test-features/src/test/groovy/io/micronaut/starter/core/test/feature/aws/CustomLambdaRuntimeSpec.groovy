@@ -7,8 +7,10 @@ import io.micronaut.starter.feature.aws.AwsV2Sdk
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 class CustomLambdaRuntimeSpec extends CommandSpec {
@@ -18,6 +20,7 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
         return "lambda-custom-runtime"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven aws-lambda-custom-runtime#desc with #language"(Language language, String feature) {
         when:

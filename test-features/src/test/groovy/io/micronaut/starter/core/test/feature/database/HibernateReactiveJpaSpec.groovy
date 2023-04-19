@@ -11,9 +11,11 @@ import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import io.micronaut.starter.core.test.feature.database.templates.book
+import spock.lang.IgnoreIf
 import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
@@ -24,6 +26,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         return "hibernateReactiveJpa"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven hibernate-reactive-jpa with java and #db"(String db) {
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [HibernateReactiveJpa.NAME, db])

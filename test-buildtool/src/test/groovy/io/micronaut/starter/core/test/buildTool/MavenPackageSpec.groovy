@@ -2,7 +2,9 @@ package io.micronaut.starter.core.test.buildTool
 
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.IgnoreIf
 import spock.lang.Requires
 import spock.lang.Retry
 import spock.lang.Unroll
@@ -16,6 +18,7 @@ class MavenPackageSpec extends CommandSpec {
         return "maven"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void 'test maven JAR packaging for #lang'(Language lang) {
         given:
@@ -32,6 +35,7 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void 'test maven Docker packaging for #lang'(Language lang) {
         given:
@@ -48,6 +52,7 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging for #lang'(Language lang) {
@@ -64,6 +69,7 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging GraalVM check for #lang'(Language lang) {
@@ -80,6 +86,7 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void 'test native-image packaging for #lang'(Language lang) {
         given:
