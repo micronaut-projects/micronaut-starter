@@ -6,16 +6,14 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
-import org.gradle.testkit.runner.UnexpectedBuildFailure
-import spock.lang.Retry
 import spock.lang.Unroll
-
 import java.util.stream.Collectors
 
-import static io.micronaut.starter.options.BuildTool.MAVEN
-
-@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class CreateMessagingSpec extends CommandSpec {
+    private static List<String> EXCLUDED_FEATURES = [
+            'jms-sqs',
+            'jms-aq',
+    ]
 
     @Override
     String getTempDirectoryPrefix() {
@@ -39,7 +37,7 @@ class CreateMessagingSpec extends CommandSpec {
         where:
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
                 beanContext.streamOfType(MessagingFeature.class)
-                        .filter({ f -> !['jms-sqs', 'jms-aq'].contains(f.name)} )
+                        .filter({ f -> !EXCLUDED_FEATURES.contains(f.name)} )
                         .map({  f -> f.getName() })
                         .collect(Collectors.toList()))
     }
