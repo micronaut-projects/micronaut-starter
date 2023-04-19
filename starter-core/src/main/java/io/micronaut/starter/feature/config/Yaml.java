@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Singleton
-public class Yaml implements ConfigurationFeature, DefaultFeature {
+public class Yaml implements ConfigurationFeature {
     public static final String NAME = "yaml";
     private static final String EXTENSION = "yml";
     private static final String YAML_GROUP_ID = "org.yaml";
@@ -43,11 +43,6 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     @NonNull
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
     }
 
     @Override

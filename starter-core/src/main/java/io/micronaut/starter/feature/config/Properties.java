@@ -16,15 +16,19 @@
 package io.micronaut.starter.feature.config;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.Template;
-
 import jakarta.inject.Singleton;
+
+import java.util.Set;
 import java.util.function.Function;
 
 @Singleton
-public class Properties implements ConfigurationFeature {
+public class Properties implements ConfigurationFeature, DefaultFeature {
 
     private static final String EXTENSION = "properties";
 
@@ -46,6 +50,11 @@ public class Properties implements ConfigurationFeature {
     @Override
     public int getOrder() {
         return FeaturePhase.HIGHEST.getOrder();
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
     }
 
     @Override
