@@ -5,9 +5,12 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.CommunityLibraries
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
+@IgnoreIf({ CommunityLibraries.IGNORE })
 class WorkerSpec extends CommandSpec {
 
     @Override
