@@ -133,7 +133,7 @@ MavenBuild mavenBuild
     <plugins>
 @if (features.application() != null || features.contains("oracle-function") || features.contains("aws-lambda")) {
       <plugin>
-        <groupId>io.micronaut.build</groupId>
+        <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
 @if (features.contains("springloaded")
      || features.contains("jrebel")
