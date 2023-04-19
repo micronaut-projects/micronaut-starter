@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
+
 import java.util.Optional;
 
 @Singleton
@@ -103,6 +103,8 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
         if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
             generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
             generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
+        }
+        if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.test());
         }
     }
