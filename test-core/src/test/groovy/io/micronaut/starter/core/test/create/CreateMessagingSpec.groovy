@@ -62,7 +62,7 @@ class CreateMessagingSpec extends CommandSpec {
                         .filter({ f -> f.name == 'jms-sqs'} )
                         .map({  f -> f.getName() })
                         .collect(Collectors.toList()))
-                .stream().filter { it -> it[1] == MAVEN }
+                .stream().filter { it -> it[1] == BuildTool.MAVEN }
     }
 
     @Unroll
@@ -77,14 +77,11 @@ class CreateMessagingSpec extends CommandSpec {
         executeBuild buildTool, 'test'
 
         then:
-        thrown UnexpectedBuildFailure
+        noExceptionThrown()
 
         where:
-        [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
-                beanContext.streamOfType(MessagingFeature.class)
-                        .filter({ f -> f.name == 'jms-sqs'} )
-                        .map({  f -> f.getName() })
-                        .collect(Collectors.toList()))
-                .stream().filter { it -> it[1] != MAVEN }
+        [lang, buildTool, feature] << LanguageBuildCombinations.combinations(Collections.singletonList('jms-sqs'))
+                .stream()
+                .filter { it -> it[1] != BuildTool.MAVEN }
     }
 }
