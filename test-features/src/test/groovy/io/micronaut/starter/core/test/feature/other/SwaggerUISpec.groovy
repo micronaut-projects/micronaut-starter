@@ -63,7 +63,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
+                Language.values()].combinations()
     }
 
     @Unroll
@@ -84,7 +84,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
+                Language.values()].combinations()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
