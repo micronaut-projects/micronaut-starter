@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.kotlin
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -73,50 +76,24 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'dependency is included with maven and feature ktor for language=#language'(Language language) {
+    void 'dependency is included with #buildTool and feature ktor for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['ktor'])
                 .render()
 
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kotlin</groupId>
-      <artifactId>micronaut-ktor</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
-        template.contains("""
-    <dependency>
-      <groupId>io.ktor</groupId>
-      <artifactId>ktor-server-netty</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
-        template.contains("""
-    <dependency>
-      <groupId>io.ktor</groupId>
-      <artifactId>ktor-jackson</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kotlin</groupId>
-      <artifactId>micronaut-kotlin-runtime</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
-        !template.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        verifier.hasDependency("io.micronaut.kotlin", "micronaut-ktor", Scope.COMPILE)
+        verifier.hasDependency("io.ktor", "ktor-server-netty", Scope.COMPILE)
+        verifier.hasDependency("io.ktor", "ktor-serialization-jackson", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.kotlin", "micronaut-kotlin-runtime", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         where:
-        language << supportedLanguages()
+        [language, buildTool] << [supportedLanguages(), BuildTool.values()].combinations()
     }
 
     @Unroll
@@ -145,11 +122,6 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains("mainClass.set(\"example.micronaut.Application\")")
-        template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
-        template.contains("implementation(\"io.ktor:ktor-server-netty\")".toString())
-        template.contains("implementation(\"io.ktor:ktor-jackson\")".toString())
-        template.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
-        !template.contains('implementation "io.micronaut:micronaut-http-server-netty"')
 
         where:
         language << supportedLanguages()
@@ -194,7 +166,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         testSrcDir << supportedLanguages().testSrcDir
     }
 
-    private List<Language> supportedLanguages() {
+    private static List<Language> supportedLanguages() {
         [Language.KOTLIN]
     }
 }

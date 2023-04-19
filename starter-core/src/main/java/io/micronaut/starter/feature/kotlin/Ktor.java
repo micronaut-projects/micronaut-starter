@@ -37,9 +37,8 @@ import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-
-import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
+
 import java.util.Optional;
 
 @Singleton
