@@ -19,7 +19,10 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -35,11 +38,22 @@ import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
 public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, KotlinSpecificFeature {
+
+    public static final String GROUP_ID_IO_KTOR = "io.ktor";
+    public static final String ARTIFACT_ID_KTOR_SERVER_NETTY = "ktor-server-netty";
+    public static final String ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON = "ktor-serialization-jackson";
+    public static final String ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION = "ktor-server-content-negotiation";
+    private final CoordinateResolver coordinateResolver;
+
+    public Ktor(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -99,18 +113,42 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
         generatorContext.addTemplate("jacksonFeature", new RockerTemplate("src/main/kotlin/{packagePath}/JacksonFeature.kt", jacksonFeatureKotlin.template(generatorContext.getProject())));
         generatorContext.addTemplate("nameTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/NameTransformer.kt", nameTransformerKotlin.template(generatorContext.getProject())));
         generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/UppercaseTransformer.kt", uppercaseTransformerKotlin.template(generatorContext.getProject())));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.kotlin")
+
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(MicronautDependencyUtils.kotlinDependency()
                 .artifactId("micronaut-ktor")
                 .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.ktor")
-                .artifactId("ktor-server-netty")
-                .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.ktor")
-                .artifactId("ktor-jackson")
-                .compile());
+
+        coordinateResolver.resolve(ARTIFACT_ID_KTOR_SERVER_NETTY)
+                .map(Coordinate::getVersion)
+                .ifPresent(version -> {
+                    generatorContext.addDependency(Dependency.builder()
+                            .groupId(GROUP_ID_IO_KTOR)
+                            .artifactId(ARTIFACT_ID_KTOR_SERVER_NETTY)
+                            .version(version)
+                            .compile());
+                });
+        coordinateResolver.resolve(ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON)
+                .map(Coordinate::getVersion)
+                .ifPresent(version -> {
+                    generatorContext.addDependency(Dependency.builder()
+                            .groupId(GROUP_ID_IO_KTOR)
+                            .artifactId(ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON)
+                            .version(version)
+                            .compile());
+                });
+        coordinateResolver.resolve(ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION)
+                .map(Coordinate::getVersion)
+                .ifPresent(version -> {
+                    generatorContext.addDependency(Dependency.builder()
+                            .groupId(GROUP_ID_IO_KTOR)
+                            .artifactId(ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION)
+                            .version(version)
+                            .compile());
+                });
     }
 
     @Override

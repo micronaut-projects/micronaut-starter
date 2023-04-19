@@ -5,13 +5,13 @@
 )
 
 @if (project.getPackageName() != null) {
-    package @project.getPackageName()
+package @project.getPackageName()
 }
 
 import com.fasterxml.jackson.databind.SerializationFeature
-import io.ktor.application.install
-import io.ktor.features.ContentNegotiation
-import io.ktor.jackson.jackson
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.jackson.jackson
 import io.micronaut.ktor.KtorApplicationBuilder
 import jakarta.inject.Singleton
 
