@@ -37,6 +37,8 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
 
+    public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
+
     private MicronautDependencyUtils() {
 
     }
@@ -125,5 +127,9 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder ociDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_OCI);
+    }
+
+    public static Dependency.Builder platformDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_PLATFORM);
     }
 }

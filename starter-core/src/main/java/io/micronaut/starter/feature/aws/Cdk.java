@@ -212,8 +212,8 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     private Dependency.Builder bomDependency() {
-        return MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-bom")
+        return MicronautDependencyUtils.platformDependency()
+                .artifactId("micronaut-platform")
                 .version(VersionInfo.getMicronautVersion())
                 .pom();
     }
