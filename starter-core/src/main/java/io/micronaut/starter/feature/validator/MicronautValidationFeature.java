@@ -19,7 +19,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
 @Singleton
