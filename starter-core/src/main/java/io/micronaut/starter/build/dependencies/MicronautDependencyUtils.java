@@ -39,6 +39,8 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
 
+    public static final String GROUP_ID_MICRONAUT_GRPC = "io.micronaut.grpc";
+
     private MicronautDependencyUtils() {
 
     }
@@ -129,7 +131,13 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_OCI);
     }
 
+    @NonNull
     public static Dependency.Builder platformDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_PLATFORM);
+    }
+
+    @NonNull
+    public static Dependency.Builder grpcDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GRPC);
     }
 }
