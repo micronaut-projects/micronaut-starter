@@ -20,7 +20,6 @@ import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends CommandSpec {
-
     @Override
     String getTempDirectoryPrefix() {
         return "hibernateReactiveJpa"
@@ -66,6 +65,12 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << [
+                MySQL.NAME,
+                MariaDB.NAME,
+                PostgreSQL.NAME,
+                Oracle.NAME,
+                SQLServer.NAME
+        ]
     }
 }
