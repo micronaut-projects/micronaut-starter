@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Retry
 import spock.lang.Unroll
@@ -54,7 +55,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         [lang, serializationFeature, build, testFramework] << [
                 Language.values(),
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
-                BuildTool.values(),
+                BuildToolCombinations.buildTools,
                 TestFramework.values()
         ].combinations()
     }
