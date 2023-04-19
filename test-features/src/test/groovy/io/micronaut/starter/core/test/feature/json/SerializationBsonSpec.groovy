@@ -26,10 +26,10 @@ class SerializationBsonSpec extends CommandSpec {
         Files.exists(buildGradlePath(buildTool))
         Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
         Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-bson\")")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-databind\"))")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-core\"))")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).noneMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-databind\"))")
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).noneMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).noneMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-core\"))")
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).noneMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
         output?.contains("BUILD SUCCESS")
 
         where:

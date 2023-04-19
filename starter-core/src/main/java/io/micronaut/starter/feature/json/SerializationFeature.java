@@ -79,7 +79,6 @@ public interface SerializationFeature extends JsonFeature {
         Dependency.Builder builder = MicronautDependencyUtils.serdeDependency()
                 .compile()
                 .artifactId("micronaut-serde-" + getModule());
-        substitutions(generatorContext).forEach(builder::substitution);
         return builder;
     }
 
@@ -92,7 +91,4 @@ public interface SerializationFeature extends JsonFeature {
     }
 
     String getModule();
-
-    @NonNull
-    List<Substitution> substitutions(@NonNull GeneratorContext generatorContext);
 }
