@@ -17,6 +17,7 @@ import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunGraalW
 import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunJavaWorkflow
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.github.WorkflowSpec
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Requires
@@ -102,7 +103,7 @@ class GoogleCloudRunWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
     private String invokeRestApi(Project project){

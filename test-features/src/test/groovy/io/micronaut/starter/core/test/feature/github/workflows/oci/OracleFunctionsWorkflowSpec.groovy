@@ -38,6 +38,7 @@ import io.micronaut.starter.feature.github.workflows.oci.OracleFunctionsGraalWor
 import io.micronaut.starter.feature.github.workflows.oci.OracleFunctionsJavaWorkflow
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.github.WorkflowSpec
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Requires
@@ -135,7 +136,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
     @Unroll
@@ -157,7 +158,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
     @Unroll
@@ -178,7 +179,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
     @Unroll
@@ -199,7 +200,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
     /**
