@@ -37,7 +37,13 @@ import java.util.Set;
 
 @Singleton
 public class Grpc implements DefaultFeature {
-    private final static Dependency DEPENDENCY_MICRONAUT_GRPC_RUNTIME = MicronautDependencyUtils.grpcDependency()
+    private static final Dependency DEPENDENCY_JAVAX_ANNOTATION_API = Dependency.builder()
+            .groupId("javax.annotation")
+            .artifactId("javax.annotation-api")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_GRPC_RUNTIME = MicronautDependencyUtils.grpcDependency()
             .artifactId("micronaut-grpc-runtime")
             .compile()
             .build();
@@ -59,6 +65,7 @@ public class Grpc implements DefaultFeature {
 
     protected void addDependencies(@NonNull GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_GRPC_RUNTIME);
+        generatorContext.addDependency(DEPENDENCY_JAVAX_ANNOTATION_API);
     }
 
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
