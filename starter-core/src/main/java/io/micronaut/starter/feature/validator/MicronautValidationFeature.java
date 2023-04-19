@@ -53,9 +53,4 @@ public class MicronautValidationFeature implements ValidationFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
     }
-
-    @Override
-    public String getCategory() {
-        return Category.VALIDATION;
-    }
 }

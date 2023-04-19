@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.GroovySpecificFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
-import io.micronaut.starter.feature.validator.HibernateValidationFeature;
+import io.micronaut.starter.feature.validator.HibernateValidator;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -37,9 +37,9 @@ public class HibernateGorm implements GroovySpecificFeature, DatabaseDriverConfi
     private static final String PASSWORD_KEY = PREFIX + "password";
 
     private final DatabaseDriverFeature defaultDbFeature;
-    private final HibernateValidationFeature hibernateValidator;
+    private final HibernateValidator hibernateValidator;
 
-    public HibernateGorm(DatabaseDriverFeature defaultDbFeature, HibernateValidationFeature hibernateValidator) {
+    public HibernateGorm(DatabaseDriverFeature defaultDbFeature, HibernateValidator hibernateValidator) {
         this.defaultDbFeature = defaultDbFeature;
         this.hibernateValidator = hibernateValidator;
     }
@@ -69,7 +69,7 @@ public class HibernateGorm implements GroovySpecificFeature, DatabaseDriverConfi
         if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
             featureContext.addFeature(defaultDbFeature);
         }
-        if (!featureContext.isPresent(HibernateValidationFeature.class)) {
+        if (!featureContext.isPresent(HibernateValidator.class)) {
             featureContext.addFeature(hibernateValidator);
         }
     }
