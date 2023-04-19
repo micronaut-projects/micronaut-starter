@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.aws
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -29,7 +30,7 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() - [Language.GROOVY], BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()
 
     }
 
