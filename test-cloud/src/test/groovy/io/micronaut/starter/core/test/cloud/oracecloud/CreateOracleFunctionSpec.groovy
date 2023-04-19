@@ -31,7 +31,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], [Language.GROOVY, Language.JAVA, Language.KOTLIN], [BuildTool.GRADLE])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
     void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(

@@ -32,7 +32,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        lang << Language.values()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -49,7 +49,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        lang << Language.values()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -66,7 +66,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image:ol7-java11-22.3.0")
         
         where:
-        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        lang << Language.values()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -83,7 +83,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("The [graalvm] profile was not activated automatically because you are not using a GraalVM JDK. Activate the profile manually (-Pgraalvm) and try again")
 
         where:
-        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        lang << Language.values()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -99,7 +99,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("org.graalvm.buildtools:native-maven-plugin")
 
         where:
-        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        lang << Language.values()
     }
 
 }

@@ -106,7 +106,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
+                Language.values(),
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }
@@ -129,7 +129,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
+                Language.values(),
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }
