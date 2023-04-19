@@ -19,7 +19,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
             "aws-lambda-s3-event-notification"
     ]
 
-    void 'test AWS Lambda feature validation fails for Java 17 for feature=#feature'() {
+    void 'test AWS Lambda feature validation does not fail for Java 17 for feature=#feature'() {
         when:
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)
@@ -29,8 +29,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
                 .render()
 
         then:
-        def e = thrown(IllegalArgumentException)
-        e.getMessage() == "AWS Lambda does not have a Java 17 runtime"
+        noExceptionThrown()
 
         where:
         [buildtool, feature] << [BuildTool.values().toList(), AWS_LAMBDA_FEATURES].combinations()
