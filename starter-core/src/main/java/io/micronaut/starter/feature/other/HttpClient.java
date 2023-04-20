@@ -17,28 +17,45 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
 
 @Singleton
-public class HttpClient implements DefaultFeature {
+public class HttpClient implements HttpClientFeature, DefaultFeature {
+
+    public static final String NAME = "http-client";
+
+    private final static Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-http-client");
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.DEFAULT &&
-                selectedFeatures.stream().noneMatch(feature -> feature instanceof FunctionFeature);
+        return true;
+    }
+
+    private Scope dependencyScope(GeneratorContext generatorContext) {
+        return (
+                generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) ||
+                (
+                    generatorContext.getApplicationType() == ApplicationType.DEFAULT &&
+                    generatorContext.getFeatures().getFeatures().stream().noneMatch(f -> f instanceof FunctionFeature)
+                )
+        ) ? Scope.COMPILE : Scope.TEST;
     }
 
     @Override
     public String getName() {
-        return "http-client";
+        return NAME;
     }
 
     @Override
@@ -52,28 +69,22 @@ public class HttpClient implements DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLIENT;
-    }
-
-    @Override
     public String getMicronautDocumentation() {
         return "https://docs.micronaut.io/latest/guide/index.html#httpClient";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-http-client")
-                .compile());
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-http-validation")
-                .versionProperty("micronaut.version")
-                .annotationProcessor());
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT.scope(dependencyScope(generatorContext)));
+        if (generatorContext.getApplicationType() ==  ApplicationType.DEFAULT) {
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
+                    .artifactId("micronaut-http-validation")
+                    .versionProperty("micronaut.version")
+                    .annotationProcessor());
+        }
     }
 }

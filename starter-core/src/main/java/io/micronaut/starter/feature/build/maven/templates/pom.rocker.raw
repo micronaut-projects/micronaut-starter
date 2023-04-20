@@ -117,9 +117,6 @@ MavenBuild mavenBuild
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)
 }
-@if (!features.contains("http-client")) {
-@dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false, null)
 }
