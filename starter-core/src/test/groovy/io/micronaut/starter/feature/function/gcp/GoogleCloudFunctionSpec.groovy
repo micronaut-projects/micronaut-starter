@@ -6,8 +6,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import spock.lang.Issue
 import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
@@ -18,7 +20,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     @Shared
     @Subject
-    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
+    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction(new ShadePlugin())
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
@@ -98,25 +100,39 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         testSrcDir << Language.testSrcDirs()
     }
 
+    @Issue("https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32/files")
+    void "for spock is required to add micronaut-servlet-core"() {
+        when:
+        BuildTool buildTool = BuildTool.GRADLE
+        String build = new BuildBuilder(beanContext, buildTool)
+                .features(['google-cloud-function'])
+                .testFramework(TestFramework.SPOCK)
+                .jdkVersion(JdkVersion.JDK_17)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
+
+        then:
+        verifier.hasDependency("io.micronaut.servlet", "micronaut-servlet-core", Scope.TEST)
+    }
+
     void "runtime for gradle and google-cloud-function"() {
         when:
-        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        BuildTool buildTool = BuildTool.GRADLE
+        String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
                 .jdkVersion(JdkVersion.JDK_11)
                 .render()
 
-        then:
-        build.contains('runtime("google_function")')
-        !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
-        !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !build.contains('implementation("io.micronaut:micronaut-http-client")')
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
 
-        where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        then:
+        !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
+
+        and:
+        build.contains('runtime("google_function")')
     }
 
     @Unroll
