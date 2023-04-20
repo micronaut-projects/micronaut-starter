@@ -32,6 +32,6 @@ class CreateOracleRawFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION], Language.values(), [BuildTool.GRADLE])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION], Language.values() as List<Language>, [BuildTool.GRADLE])
     }
 }
