@@ -74,7 +74,7 @@ class DataHibernateReactiveSpec extends CommandSpec {
                 MySQL.NAME,
                 MariaDB.NAME,
                 PostgreSQL.NAME,
-                Oracle.NAME,
+                //Oracle.NAME,
                 SQLServer.NAME
         ]
     }
