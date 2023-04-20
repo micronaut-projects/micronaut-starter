@@ -12,6 +12,7 @@ dependencies {
     testImplementation 'com.google.auth:google-auth-library-oauth2-http:1.12.1'
     testImplementation "com.oracle.oci.sdk:oci-java-sdk-full:1.34.0"
     testImplementation "ch.qos.logback:logback-classic:1.2.11"
+    testImplementation("org.yaml:snakeyaml")
 }
 
 sourceSets {
