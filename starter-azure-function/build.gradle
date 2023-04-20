@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
-    id "com.microsoft.azure.azurefunctions"
+    //id "com.microsoft.azure.azurefunctions"
 }
 
 dependencies {
@@ -15,7 +15,7 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
 }
 
-
+/*
 azurefunctions {
     allowTelemetry = false
     resourceGroup = 'java-functions-group'
@@ -26,4 +26,4 @@ azurefunctions {
         os = 'windows'
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
-}
+}*/
