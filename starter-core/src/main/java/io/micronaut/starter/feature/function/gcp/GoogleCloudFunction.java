@@ -111,6 +111,7 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
 
     protected void addDependencies(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
             generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP);
             generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP_TEST);
         }

@@ -50,11 +50,6 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
             .compile()
             .build();
 
-    private static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()
-            .groupId("com.google.cloud.functions")
-            .artifactId("functions-framework-api");
-
-
     private final GoogleCloudFunction googleCloudFunction;
 
     public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin) {

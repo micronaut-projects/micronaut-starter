@@ -228,6 +228,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
             assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
 
         } else if (buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("com.google.cloud.functions", "functions-framework-api", Scope.COMPILE_ONLY)
             assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
             assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
         }

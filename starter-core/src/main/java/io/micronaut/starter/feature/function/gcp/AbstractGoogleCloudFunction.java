@@ -23,6 +23,9 @@ import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
 public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
+    public static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()
+            .groupId("com.google.cloud.functions")
+            .artifactId("functions-framework-api");
     private static final Dependency DEPENDENCY_MICRONAUT_SERVLET_CORE = MicronautDependencyUtils.servletDependency()
                     .artifactId("micronaut-servlet-core")
                     .test()
