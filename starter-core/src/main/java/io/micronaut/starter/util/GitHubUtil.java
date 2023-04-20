@@ -24,7 +24,6 @@ import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -51,10 +50,10 @@ public class GitHubUtil {
      * @throws IOException if the push to repo fails
      */
     public static void initAndPushToGitHubRepository(
-            @NotNull GitHubRepository repository,
-            @NotNull GitHubUser user,
-            @NotNull Path localPath,
-            @NotNull String authToken) throws IOException {
+            GitHubRepository repository,
+            GitHubUser user,
+            Path localPath,
+            String authToken) throws IOException {
         try {
             final String name = StringUtils.isEmpty(user.getName()) ? user.getLogin() : user.getName();
             final String email = StringUtils.isEmpty(user.getEmail()) ? user.getLogin() : user.getEmail();

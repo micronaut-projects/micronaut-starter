@@ -19,8 +19,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
 
-import jakarta.validation.constraints.NotNull;
-
 /**
  * @author Pavol Gressa
  * @since 2.2
@@ -34,9 +32,9 @@ public class AccessToken {
 
     @JsonCreator
     public AccessToken(
-            @NotNull @JsonProperty("token_type") String tokenType,
-            @NotNull @JsonProperty("scope") String scope,
-            @NotNull @JsonProperty("access_token") String accessToken) {
+            @JsonProperty("token_type") String tokenType,
+            @JsonProperty("scope") String scope,
+            @JsonProperty("access_token") String accessToken) {
         this.tokenType = tokenType;
         this.scope = scope;
         this.accessToken = accessToken;
