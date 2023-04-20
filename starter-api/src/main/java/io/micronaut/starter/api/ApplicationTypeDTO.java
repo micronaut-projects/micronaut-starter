@@ -49,11 +49,11 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
      * @param features The available features
      */
     public ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features) {
-        this.value = type;
-        this.name = type.getName();
-        this.features = features;
-        this.title = type.getTitle();
-        this.description = type.getDescription();
+        this(type,
+                type.getName(),
+                type.getTitle(),
+                type.getDescription(),
+                features);
     }
 
     /**
@@ -83,12 +83,12 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
      */
     @Internal
     ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features, MessageSource messageSource, MessageSource.MessageContext messageContext) {
-        this.value = type;
-        String name = type.getName();
-        this.name = name;
-        this.features = features;
-        this.title = messageSource.getMessage(MESSAGE_PREFIX + name + ".title", messageContext, type.getTitle());
-        this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, type.getDescription());
+        this(type,
+                type.getName(),
+                messageSource.getMessage(MESSAGE_PREFIX + type.getName() + ".title", messageContext, type.getTitle()),
+                messageSource.getMessage(MESSAGE_PREFIX + type.getName() + ".description", messageContext, type.getDescription()),
+                features
+        );
     }
 
     @Schema(description = "The title of the application type")
