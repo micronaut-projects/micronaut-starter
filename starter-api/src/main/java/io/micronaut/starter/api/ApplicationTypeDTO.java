@@ -20,11 +20,13 @@ import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,10 +68,10 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
                        String name,
                        String title,
                        String description,
-                       List<FeatureDTO> features) {
+                       @Nullable List<FeatureDTO> features) {
         this.value = value;
         this.name = name;
-        this.features = features;
+        this.features = features != null ? features : Collections.emptyList();
         this.title = title;
         this.description = description;
     }
