@@ -248,10 +248,14 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
-        assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
-        assert verifier.hasDependency("com.google.cloud.functions", "functions-framework-api")
-        assert verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
+        !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function-http-test", Scope.TEST)
+        verifier.hasDependency("com.google.cloud.functions", "functions-framework-api", Scope.COMPILE_ONLY)
+        if (buildTool.isGradle()) {
+            assert verifier.hasDependency("com.google.cloud.functions", "functions-framework-api", Scope.TEST)
+        }
+
+        verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
