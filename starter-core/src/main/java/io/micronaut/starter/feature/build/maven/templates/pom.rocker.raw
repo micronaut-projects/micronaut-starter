@@ -92,7 +92,6 @@ MavenBuild mavenBuild
 @dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
 }
 }
-@dependency.template("io.micronaut", "micronaut-validation", "compile", null, false, null)
 
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)

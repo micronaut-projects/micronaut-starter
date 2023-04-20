@@ -16,9 +16,8 @@ dependencies {
 @for (GradleDependency dependency : gradleBuild.getDependencies()) {
     @dependency.toSnippet()
 }
-    @dependency.template("io.micronaut", "micronaut-validation", "implementation", null, false)
+
 
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
-}
 }
