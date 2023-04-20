@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut.azure:micronaut-azure-function-http"
-    implementation 'com.microsoft.azure.functions:azure-functions-java-library:2.1.0'
+    implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.0.0'
     implementation "io.micronaut:micronaut-inject"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
 
