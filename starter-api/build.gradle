@@ -17,6 +17,8 @@ dependencies {
     api("io.micronaut.validation:micronaut-validation")
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
+
+    testImplementation("io.micronaut:micronaut-jackson-databind")
     testImplementation "io.micronaut:micronaut-http-server-netty"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
