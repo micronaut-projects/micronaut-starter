@@ -16,6 +16,7 @@ dependencies {
     implementation "io.micronaut:micronaut-inject"
 
     implementation("io.micronaut.servlet:micronaut-servlet-engine")
+    implementation("io.micronaut:micronaut-jackson-databind")
     developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.11"

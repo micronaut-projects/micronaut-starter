@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation project(":starter-api")
+    implementation("io.micronaut:micronaut-jackson-databind")
     implementation "io.micronaut.azure:micronaut-azure-function-http"
     implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.0.0'
     implementation "io.micronaut:micronaut-inject"
