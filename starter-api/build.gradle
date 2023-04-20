@@ -13,7 +13,7 @@ dependencies {
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
-    implementation "io.projectreactor:reactor-core"
+    implementation("io.micronaut.reactor:micronaut-reactor")
     api("io.micronaut.validation:micronaut-validation")
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
