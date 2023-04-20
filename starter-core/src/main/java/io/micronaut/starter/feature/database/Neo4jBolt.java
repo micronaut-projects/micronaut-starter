@@ -15,17 +15,25 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Neo4jBolt implements Feature {
+    private static final Dependency DEPENDENCY_NEO4J_HARNESS = Dependency.builder()
+            .groupId("org.neo4j.test")
+            .artifactId("neo4j-harness")
+            .testRuntime()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return "neo4j-bolt";
     }
@@ -36,6 +44,7 @@ public class Neo4jBolt implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for the Neo4j Bolt Driver";
     }
@@ -43,14 +52,10 @@ public class Neo4jBolt implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.neo4j")
+        generatorContext.addDependency(MicronautDependencyUtils.neo4j()
                 .artifactId("micronaut-neo4j-bolt")
                 .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.neo4j.test")
-                .artifactId("neo4j-harness")
-                .testRuntime());
+        generatorContext.addDependency(DEPENDENCY_NEO4J_HARNESS);
     }
 
     @Override
