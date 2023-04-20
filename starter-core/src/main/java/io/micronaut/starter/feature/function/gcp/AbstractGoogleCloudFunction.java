@@ -37,6 +37,7 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
+        // Maybe this can be removed after https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32/files gets merged and we use a version which contains it
         if (generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_SERVLET_CORE);
         }
