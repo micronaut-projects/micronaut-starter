@@ -4,8 +4,6 @@ plugins {
 
 dependencies {
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
-    annotationProcessor "com.google.code.findbugs:jsr305"
-
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
