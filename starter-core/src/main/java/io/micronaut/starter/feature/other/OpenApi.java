@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -27,7 +29,17 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class OpenApi implements Feature, MicronautServerDependent {
+
+    public static final String ARTIFACT_ID_MICRONAUT_OPENAPI = "micronaut-openapi";
+
+    private static final Dependency DEPENDENCY_SWAGGER_ANNOTATIONS = Dependency.builder()
+            .groupId("io.swagger.core.v3")
+            .artifactId("swagger-annotations")
+            .compile()
+            .build();
+
     @Override
+    @NonNull
     public String getName() {
         return "openapi";
     }
@@ -38,6 +50,7 @@ public class OpenApi implements Feature, MicronautServerDependent {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for OpenAPI (Swagger)";
     }
@@ -49,20 +62,14 @@ public class OpenApi implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.openapi")
-                .artifactId("micronaut-openapi")
+        generatorContext.addDependency(MicronautDependencyUtils.openapi()
+                .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
                 .versionProperty("micronaut.openapi.version")
                 .annotationProcessor());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.swagger.core.v3")
-                .artifactId("swagger-annotations")
-                .compile());
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN &&
-                generatorContext.getLanguage() == Language.GROOVY) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut.openapi")
-                    .artifactId("micronaut-openapi")
+        generatorContext.addDependency(DEPENDENCY_SWAGGER_ANNOTATIONS);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
+            generatorContext.addDependency(MicronautDependencyUtils.openapi()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
                     .compile());
         }
     }

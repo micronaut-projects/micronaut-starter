@@ -37,6 +37,7 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
+    public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
 
     private MicronautDependencyUtils() {
 
@@ -131,5 +132,10 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
+    }
+
+    @NonNull
+    public static Dependency.Builder openapi() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_OPENAPI);
     }
 }
