@@ -136,6 +136,8 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <artifactId>micronaut-inject</artifactId>
       <scope>compile</scope>
     </dependency>
+''')
+        template.contains('''
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-validation</artifactId>
