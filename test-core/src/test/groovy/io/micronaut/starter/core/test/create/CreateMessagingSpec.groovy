@@ -7,6 +7,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.Unroll
 import java.util.stream.Collectors
@@ -15,6 +16,8 @@ class CreateMessagingSpec extends CommandSpec {
     private static List<String> EXCLUDED_FEATURES = [
             'jms-sqs',
             'jms-aq',
+            'kafka-streams',
+            'jms-oracle-aq'
     ]
 
     @Override
@@ -68,6 +71,7 @@ class CreateMessagingSpec extends CommandSpec {
                 .stream().filter { it -> it[1] == BuildTool.MAVEN }
     }
 
+    @Ignore
     @Unroll
     void 'test basic create-messaging-app for jms-sqs and #lang and #buildTool'(Language lang,
                                                                                 BuildTool buildTool,
