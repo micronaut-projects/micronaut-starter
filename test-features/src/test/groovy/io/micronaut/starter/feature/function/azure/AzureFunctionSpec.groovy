@@ -23,6 +23,6 @@ class AzureFunctionSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        buildTool <<  [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool <<  BuildTool.valuesGradle()
     }
 }
