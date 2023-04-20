@@ -100,10 +100,8 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     }
 
     void addDependencies(GeneratorContext generatorContext) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
-            generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
-            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
-        }
+        generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
+        generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.test());
         }
