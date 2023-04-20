@@ -88,39 +88,13 @@ MavenBuild mavenBuild
 
   <dependencies>
 @if (features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null, false, null)
-@dependency.template("org.codehaus.groovy", "groovy", "compile", "${groovyVersion}", false, null)
 @for (processor : mavenBuild.getAnnotationProcessors()) {
 @dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
 }
 }
-@dependency.template("io.micronaut", "micronaut-inject", "compile", null, false, null)
-@if (features.contains("google-cloud-function")) {
-@dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null, false, null)
-    @if (features.contains("google-cloud-function-http")) {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http-test", "test", null, false, null)
-<!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
-@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null, false, null)
-@dependency.template("io.micronaut", "micronaut-http-netty", "compile", null, false, null)
-    } else {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
-    }
-}
 
-@if (features.contains("openapi")) {
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
-}
-}
-@if (features.language().isKotlin()) {
-@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)
-}
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
-}
-@if (features.contains("neo4j-bolt")) {
-@dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false, null)
 }
 
 @for (MavenDependency f : mavenBuild.getDependencies(false)) {
