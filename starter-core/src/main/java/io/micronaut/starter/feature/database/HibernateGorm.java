@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.GroovySpecificFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
-import io.micronaut.starter.feature.validator.HibernateValidator;
+import io.micronaut.starter.feature.other.HibernateValidator;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
