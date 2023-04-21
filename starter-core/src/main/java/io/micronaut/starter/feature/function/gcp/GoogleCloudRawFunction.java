@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
@@ -34,13 +36,19 @@ import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
+
 import java.util.Optional;
 
 @Singleton
 public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public static final String NAME = "google-cloud-function";
+
+    private static final Dependency MICRONAUT_GCP_FUNCTION = MicronautDependencyUtils
+            .gcpDependency()
+            .artifactId("micronaut-gcp-function")
+            .compile()
+            .build();
 
     private final GoogleCloudFunction googleCloudFunction;
 
@@ -82,6 +90,15 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
             }
 
             applyTestTemplate(generatorContext, project, "Function");
+            addDependencies(generatorContext);
+        }
+    }
+
+    void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
+        generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.test());
         }
     }
 

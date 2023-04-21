@@ -13,47 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.validator;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.validator.ValidationFeature;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class HibernateValidator implements ValidationFeature {
+public class MicronautValidationFeature implements ValidationFeature {
+    public static final String NAME = "micronaut-validation";
+
+    private static final Dependency MICRONAUT_VALIDATION_COMPILE = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-validation")
+            .compile()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
-        return "hibernate-validator";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "Hibernate Validator";
+        return "Micronaut Validation";
     }
 
     @Override
+    @NonNull
     public String getDescription() {
-        return "Adds support for the Hibernate Validator";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+        return "Adds support for Micronaut Validation";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.beanvalidation")
-                .artifactId("micronaut-hibernate-validator")
-                .compile());
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-hibernate-validator/latest/guide/index.html";
+        generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
     }
 }

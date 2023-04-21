@@ -1,12 +1,13 @@
-package io.micronaut.starter.feature
+package io.micronaut.starter.feature.validation
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.LanguageSpecificFeature
+import io.micronaut.starter.feature.OneOfFeature
 import io.micronaut.starter.feature.acme.Acme
 import io.micronaut.starter.feature.kotlin.Ktor
 import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.ServerFeature
-import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Unroll

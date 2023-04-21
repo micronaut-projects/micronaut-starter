@@ -2,10 +2,14 @@ package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -27,93 +31,29 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'test swagger with Gradle for language=#language'() {
+    void 'test swagger with Gradle for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['openapi'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, TestFramework.JUNIT, template)
 
         then:
-        template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
-        template.contains("$scope(\"io.micronaut.openapi:micronaut-openapi\")")
+        if (buildTool.isGradle()) { // BuiltTestVerifier still does not support checking annotation processor
+            verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.ANNOTATION_PROCESSOR)
+        }
+        if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.COMPILE)
+        }
+        verifier.hasDependency("io.swagger.core.v3", "swagger-annotations", Scope.COMPILE)
+
+        if (buildTool == BuildTool.MAVEN) {
+            // property is not defined it is inherited via the bom
+            assert !parsePropertySemanticVersion(template, "micronaut.openapi.version").isPresent()
+        }
 
         where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
-        Language.GROOVY | "compileOnly"
-    }
-
-    void 'test maven swagger feature'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['openapi'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        !template.contains("<micronaut.openapi.version>")
-        !template.contains("</micronaut.openapi.version>")
-        template.count('''
-            <path>
-              <groupId>io.micronaut.openapi</groupId>
-              <artifactId>micronaut-openapi</artifactId>
-              <version>${micronaut.openapi.version}</version>
-            </path>
-''') == 1
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['openapi'])
-                .language(Language.KOTLIN)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.openapi</groupId>
-                 <artifactId>micronaut-openapi</artifactId>
-                 <version>${micronaut.openapi.version}</version>
-               </annotationProcessorPath>
-''')
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['openapi'])
-                .language(Language.GROOVY)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.openapi</groupId>
-      <artifactId>micronaut-openapi</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        and: 'property is not defined it is inherited via the bom'
-        !parsePropertySemanticVersion(template, "micronaut.openapi.version").isPresent()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 }

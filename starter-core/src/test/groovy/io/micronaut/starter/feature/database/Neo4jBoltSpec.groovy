@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.database
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -27,38 +30,19 @@ class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixt
         features.contains("neo4j-bolt")
     }
 
-    void "test dependencies are present for gradle"() {
+    void "test dependencies are present for #buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["neo4j-bolt"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut.neo4j:micronaut-neo4j-bolt")')
-        template.contains("testRuntimeOnly(\"org.neo4j.test:neo4j-harness\")")
-    }
+        verifier.hasDependency("io.micronaut.neo4j", "micronaut-neo4j-bolt", Scope.COMPILE)
+        verifier.hasDependency("org.neo4j.test", "neo4j-harness", Scope.TEST_RUNTIME)
 
-    void "test dependencies are present for maven"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['neo4j-bolt'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.neo4j</groupId>
-      <artifactId>micronaut-neo4j-bolt</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.neo4j.test</groupId>
-      <artifactId>neo4j-harness</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        where:
+        buildTool << BuildTool.values()
     }
 
     void "test config"() {
