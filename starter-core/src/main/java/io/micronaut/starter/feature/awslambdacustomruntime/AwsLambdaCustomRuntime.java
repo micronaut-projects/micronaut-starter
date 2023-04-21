@@ -108,6 +108,11 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
 
     private void addDependencies(@NonNull GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
+        if (generatorContext.getFeatures().testFramework().isSpock() &&
+                generatorContext.getBuildTool().isGradle()) {
+            // maven has this in parent pom
+            generatorContext.addDependency(AwsLambda.DEPENDENCY_MICRONAUT_FUNCTION_TEST);
+        }
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {

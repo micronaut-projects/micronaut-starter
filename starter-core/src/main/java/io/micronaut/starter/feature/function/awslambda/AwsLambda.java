@@ -83,6 +83,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
     public static final String REQUEST_HANDLER = "FunctionRequestHandler";
+    public static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_TEST = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-function")
+            .test()
+            .build();
+
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
     private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile().build();
@@ -245,6 +250,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
         if (generatorContext.hasFeature(AwsLambdaSnapstart.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_CRAC);
+        }
+
+        if (generatorContext.getFeatures().testFramework().isSpock() &&
+                generatorContext.getBuildTool().isGradle()) {
+            // maven has this in parent pom
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_TEST);
         }
     }
 

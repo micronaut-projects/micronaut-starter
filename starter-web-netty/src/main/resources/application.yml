@@ -9,9 +9,9 @@ micronaut:
       enabled: true
       configurations:
         web:
-          allowedOrigins:
+          allowed-origins-regex:
             - ${CORS_ALLOWED_ORIGIN:`^http(|s):\/\/micronaut\.io$`}
-          allowedMethods:
+          allowed-methods:
             - GET
   starter:
     github:

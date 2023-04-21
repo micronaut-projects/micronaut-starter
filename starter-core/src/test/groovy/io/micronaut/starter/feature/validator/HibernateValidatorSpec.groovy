@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.other
+package io.micronaut.starter.feature.validator
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.fixture.CommandOutputFixture

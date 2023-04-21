@@ -16,30 +16,4 @@ dependencies {
 @for (GradleDependency dependency : gradleBuild.getDependencies()) {
     @dependency.toSnippet()
 }
-    @dependency.template("io.micronaut", "micronaut-validation", "implementation", null, false)
-@if (features.contains("google-cloud-function")) {
-    @if (!features.contains("google-cloud-function-http")) {
-    @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null, false)
-    @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "implementation", null, false)
-    @dependency.template("com.google.cloud.functions", "functions-framework-api", "testImplementation", null, false)
-    }
-}
-
-@if (features.language().isKotlin()) {
-    @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null, false)
-}
-@if (features.testFramework().isSpock()) {
-    @if (features.contains("aws-lambda") || features.contains("aws-lambda-custom-runtime")) {
-    @dependency.template("io.micronaut","micronaut-function", "testImplementation", null, false)
-    }
-}
-@if (!features.contains("http-client")) {
-    @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
-}
-@if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
-    @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null, false)
-}
-@if (features.contains("neo4j-bolt")) {
-    @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null, false)
-}
 }
