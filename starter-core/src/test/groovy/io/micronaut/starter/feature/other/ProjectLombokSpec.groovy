@@ -5,6 +5,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -71,8 +72,8 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasAnnotationProcessor("org.projectlombok", "lombok")
-        verifier.hasAnnotationProcessor("io.micronaut", "micronaut-inject-java")
+        verifier.hasDependency("org.projectlombok", "lombok", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency("io.micronaut", "micronaut-inject-java", Scope.ANNOTATION_PROCESSOR)
 
         Node project = new XmlParser().parseText(template)
         with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
@@ -85,17 +86,14 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
 
     void 'micronaut-graal dependency is added because it is in the parent pom'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
             .features(['lombok'])
             .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('''
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-graal</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-''')
+        verifier.hasDependency("io.micronaut", "micronaut-graal", Scope.ANNOTATION_PROCESSOR)
+
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.graalvm;
+package io.micronaut.starter.feature.validator;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,50 +25,45 @@ import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class GraalVM implements Feature {
-    public static final String FEATURE_NAME_GRAALVM = "graalvm";
-    public static final String ARTIFACT_ID_MICRONAUT_GRAALVM = "micronaut-graal";
-
-    static final Dependency GRAAL_SVM = Dependency.builder()
-            .groupId("org.graalvm.nativeimage")
-            .artifactId("svm")
-            .compileOnly()
+public class MicronautHttpValidation implements Feature {
+    private static final Dependency DEPENDENCY_MICRONAUT_HTTP_VALIDATION = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-http-validation")
+            .versionProperty("micronaut.version")
+            .annotationProcessor()
             .build();
 
     @Override
     public String getName() {
-        return FEATURE_NAME_GRAALVM;
-    }
-
-    @Override
-    public String getTitle() {
-        return "GraalVM Native Image";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Allows Building a GraalVM Native Image";
+        return "micronaut-http-validation";
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Micronaut HTTP Validation";
+    }
+
+    @Override
+    @NonNull
+    public String getDescription() {
+        return "Adds support for validating route arguments at compile time";
     }
 
     @Override
     public String getCategory() {
-        return Category.PACKAGING;
+        return Category.VALIDATION;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(GRAAL_SVM);
-        }
+        addDependencies(generatorContext);
     }
 
-    public static Dependency.Builder micronautGraalVM() {
-        return MicronautDependencyUtils.coreDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_GRAALVM);
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_VALIDATION);
     }
 }

@@ -4,6 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -38,47 +41,22 @@ class PicocliSpec extends ApplicationContextSpec {
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {
         when:
+        Language language = Language.JAVA
+        BuildTool buildTool = BuildTool.MAVEN
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.JAVA)
                 .applicationType(ApplicationType.CLI)
                 .render()
 
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
         then:
-        template.contains('''\
-            <path>
-              <groupId>info.picocli</groupId>
-              <artifactId>picocli-codegen</artifactId>
-              <version>${picocli.version}</version>
-            </path>
-''')
-        template.count('''\
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-inject-java</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-''') == 0
-        template.count('''\
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-validation</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-''') == 0
-        template.count('''\
-    <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>io.micronaut.picocli</groupId>
-      <artifactId>micronaut-picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
+        verifier.hasDependency("info.picocli", "picocli-codegen", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency("info.picocli", "picocli-codegen", Scope.TEST_ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("io.micronaut", "micronaut-inject-java", Scope.ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("io.micronaut", "micronaut-inject-java", Scope.TEST_ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.TEST_ANNOTATION_PROCESSOR)
+        verifier.hasDependency("io.micronaut.picocli", "micronaut-picocli", Scope.COMPILE)
 
         and: 'property is not defined it is inherited via the bom'
         !parsePropertySemanticVersion(template, "picocli.version").isPresent()
@@ -86,47 +64,20 @@ class PicocliSpec extends ApplicationContextSpec {
 
     void 'test maven cli app Kotlin contains picocli-gen as annotation processor'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.KOTLIN)
+        Language language = Language.KOTLIN
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .applicationType(ApplicationType.CLI)
                 .render()
-
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
         then:
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>info.picocli</groupId>
-                 <artifactId>picocli-codegen</artifactId>
-                 <version>${picocli.version}</version>
-               </annotationProcessorPath>
-''') == 1
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-inject-java</artifactId>
-                 <version>${micronaut.version}</version>
-               </annotationProcessorPath>
-''') == 2
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-validation</artifactId>
-                 <version>${micronaut.version}</version>
-               </annotationProcessorPath>
-''') == 2
-        template.count('''\
-    <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>io.micronaut.picocli</groupId>
-      <artifactId>micronaut-picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
+        verifier.hasDependency("info.picocli", "picocli-codegen", Scope.ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("info.picocli", "picocli-codegen", Scope.TEST_ANNOTATION_PROCESSOR)
+        verifier.hasDependency("io.micronaut", "micronaut-inject-java", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency("io.micronaut", "micronaut-inject-java", Scope.TEST_ANNOTATION_PROCESSOR)
+        !verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency("io.micronaut.picocli", "micronaut-picocli", Scope.COMPILE)
 
         and: 'property is not defined it is inherited via the bom'
         !parsePropertySemanticVersion(template, "picocli.version").isPresent()

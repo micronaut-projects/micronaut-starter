@@ -59,7 +59,7 @@ public class Maven implements BuildFeature {
 
     private static final Dependency MICRONAUT_INJECT = MicronautDependencyUtils
             .coreDependency()
-            .artifactId("micronaut-inject")
+            .artifactId(MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_INJECT)
             .compile()
             .build();
 

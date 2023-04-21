@@ -220,7 +220,19 @@ MavenBuild mavenBuild
             <path>
               <groupId>@processor.getGroupId()</groupId>
               <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
               <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+              <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                <exclusion>
+                  <groupId>@exclusion.getGroupId()</groupId>
+                  <artifactId>@exclusion.getArtifactId()</artifactId>
+                </exclusion>
+}
+              </exclusions>
+}
             </path>
 }
           </annotationProcessorPaths>
@@ -262,7 +274,19 @@ MavenBuild mavenBuild
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+                 <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                   <exclusion>
+                     <groupId>@exclusion.getGroupId()</groupId>
+                     <artifactId>@exclusion.getArtifactId()</artifactId>
+                   </exclusion>
+}
+                 </exclusions>
+}
                </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -301,7 +325,19 @@ MavenBuild mavenBuild
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+                 <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                   <exclusion>
+                     <groupId>@exclusion.getGroupId()</groupId>
+                     <artifactId>@exclusion.getArtifactId()</artifactId>
+                   </exclusion>
+}
+                 </exclusions>
+}
                </annotationProcessorPath>
 }
               </annotationProcessorPaths>

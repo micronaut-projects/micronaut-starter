@@ -130,9 +130,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
                <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-validation</artifactId>
-                 <version>${micronaut.version}</version>
+                 <groupId>io.micronaut.validation</groupId>
+                 <artifactId>micronaut-validation-processor</artifactId>
+                 <version>${micronaut.validation.version}</version>
                </annotationProcessorPath>
               </annotationProcessorPaths>
 ''')
@@ -150,7 +150,8 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>provided</scope>
     </dependency>
 ''')
-        template.contains('''\
+        and: 'validation is not added by default'
+        !template.contains('''\
     <dependency>
       <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>

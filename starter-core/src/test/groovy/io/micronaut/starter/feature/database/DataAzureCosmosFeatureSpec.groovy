@@ -45,7 +45,7 @@ class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements Comma
 
         then:
         verifier.hasDependency("io.micronaut.data", "micronaut-data-azure-cosmos", Scope.COMPILE)
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-document-processor")
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-document-processor", Scope.ANNOTATION_PROCESSOR)
 
         where:
         buildTool << BuildTool.values()

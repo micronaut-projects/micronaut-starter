@@ -32,10 +32,8 @@ import java.util.Set;
 
 @Singleton
 public class HttpClient implements HttpClientFeature, DefaultFeature {
-
     public static final String NAME = "http-client";
-
-    private final static Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-http-client");
 
     @Override
@@ -80,11 +78,5 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT.scope(dependencyScope(generatorContext)));
-        if (generatorContext.getApplicationType() ==  ApplicationType.DEFAULT) {
-            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                    .artifactId("micronaut-http-validation")
-                    .versionProperty("micronaut.version")
-                    .annotationProcessor());
-        }
     }
 }

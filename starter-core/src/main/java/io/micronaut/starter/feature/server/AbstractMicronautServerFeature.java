@@ -16,17 +16,12 @@
 package io.micronaut.starter.feature.server;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 
 public abstract class AbstractMicronautServerFeature implements ServerFeature, MicronautRuntimeFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-http-validation")
-                .versionProperty("micronaut.version")
-                .annotationProcessor());
         addMicronautRuntimeBuildProperty(generatorContext);
         doApply(generatorContext);
     }

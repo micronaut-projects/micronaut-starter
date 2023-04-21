@@ -28,6 +28,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
@@ -38,6 +39,8 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class MavenBuildCreator {
+
+    public static final String PROPERTY_MICRONAUT_CORE_VERSION = "micronaut.core.version";
 
     /**
      * Not used anymore
@@ -53,10 +56,10 @@ public class MavenBuildCreator {
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
-        List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext);
+        List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext, generatorContext.getLanguage());
         BuildProperties buildProperties = generatorContext.getBuildProperties();
-        List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
-        List<Coordinate> testAnnotationProcessorsCoordinates = new ArrayList<>();
+        List<DependencyCoordinate> annotationProcessorsCoordinates = new ArrayList<>();
+        List<DependencyCoordinate> testAnnotationProcessorsCoordinates = new ArrayList<>();
         boolean isKotlin = generatorContext.getLanguage() == Language.KOTLIN;
         MavenCombineAttribute combineAttribute = isKotlin ? MavenCombineAttribute.OVERRIDE : MavenCombineAttribute.APPEND;
         MavenCombineAttribute testCombineAttribute = combineAttribute;
@@ -78,28 +81,18 @@ public class MavenBuildCreator {
             }
         }
 
-        Coordinate injectJava = MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-inject-java")
-                .versionProperty("micronaut.version")
-                .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
-                .buildCoordinate(true);
-        Coordinate validation = MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-validation")
-                .versionProperty("micronaut.version")
-                .buildCoordinate(true);
-        Coordinate mnGraal = MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-graal")
-                .versionProperty("micronaut.version")
-                .buildCoordinate(true);
 
         if (combineAttribute == MavenCombineAttribute.OVERRIDE) {
+            DependencyCoordinate injectJava = MicronautDependencyUtils.injectJava()
+                    .versionProperty(PROPERTY_MICRONAUT_CORE_VERSION)
+                    .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
+                    .buildCoordinate(true);
             annotationProcessorsCoordinates.add(injectJava);
-            annotationProcessorsCoordinates.add(validation);
-            annotationProcessorsCoordinates.add(mnGraal);
-        }
-        if (testCombineAttribute == MavenCombineAttribute.OVERRIDE) {
             testAnnotationProcessorsCoordinates.add(injectJava);
-            testAnnotationProcessorsCoordinates.add(validation);
+
+            DependencyCoordinate mnGraal = GraalVM.micronautGraalVM()
+                    .buildCoordinate(true);
+            annotationProcessorsCoordinates.add(mnGraal);
             testAnnotationProcessorsCoordinates.add(mnGraal);
         }
 

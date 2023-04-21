@@ -15,6 +15,7 @@ dependencies {
     api "io.micronaut:micronaut-http-client"
     implementation("io.micronaut.reactor:micronaut-reactor")
     api("io.micronaut.validation:micronaut-validation")
+    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
 

@@ -46,7 +46,6 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
 
         where:
         appType << ApplicationType.values().toList()
-
     }
 
     void 'test Micronaut Validation feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
@@ -56,31 +55,16 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
                 .language(language)
                 .features(['micronaut-validation'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        assert verifier.hasDependency("io.micronaut", "micronaut-validation", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        if (language != Language.GROOVY) {
+            assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
+        }
+        verifier.hasDependency("jakarta.validation", "validation-api", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
-    }
-
-    @PendingFeature(reason = "Only Micronaut Framework 4 has new dependency coordinates and processor")
-    void 'test Micronaut Validation feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
-        when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .applicationType(ApplicationType.FUNCTION)
-                .language(language)
-                .features(['micronaut-validation'])
-                .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
-
-        then:
-        assert verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
-        assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
-        assert verifier.hasDependency("jakarta.validation", "validation-api", Scope.COMPILE)
-
-        where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 }
