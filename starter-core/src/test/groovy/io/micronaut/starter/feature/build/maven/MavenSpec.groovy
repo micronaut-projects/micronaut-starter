@@ -58,6 +58,19 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         generatorContext.templates.'multi-module-pom'
     }
 
+    void 'enforce plugin is added to pom.xml'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .render()
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+''')
+    }
+
     void 'test use defaults from parent pom'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
