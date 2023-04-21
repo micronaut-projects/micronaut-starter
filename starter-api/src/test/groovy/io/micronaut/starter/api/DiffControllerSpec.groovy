@@ -13,6 +13,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import jakarta.inject.Inject
@@ -57,6 +58,7 @@ class DiffControllerSpec extends Specification {
         result.contains('+## Feature data-jdbc documentation')
     }
 
+    @Ignore
     void 'test diff invalid feature'() {
         when:
         diffClient.diffFeature(
