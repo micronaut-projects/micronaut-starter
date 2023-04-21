@@ -21,6 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.RepositoryResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.build.maven.MavenPlugin;
@@ -55,6 +57,12 @@ public class Maven implements BuildFeature {
 
     protected static final String ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN = "maven-enforcer-plugin";
 
+    private static final Dependency MICRONAUT_INJECT = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-inject")
+            .compile()
+            .build();
+
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
@@ -88,6 +96,7 @@ public class Maven implements BuildFeature {
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
         }
         generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
+        generatorContext.addDependency(MICRONAUT_INJECT);
         addEnforcePlugin(generatorContext);
     }
 

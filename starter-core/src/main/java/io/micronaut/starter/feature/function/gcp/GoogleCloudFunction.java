@@ -18,6 +18,9 @@ package io.micronaut.starter.feature.function.gcp;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
@@ -37,6 +40,18 @@ import jakarta.inject.Singleton;
 public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
 
     public static final String NAME = "google-cloud-function-http";
+
+    private static final Dependency MICRONAUT_GCP_FUNCTION_HTTP = MicronautDependencyUtils
+            .gcpDependency()
+            .artifactId("micronaut-gcp-function-http")
+            .compile()
+            .build();
+
+    private static final Dependency MICRONAUT_GCP_FUNCTION_HTTP_TEST = MicronautDependencyUtils
+            .gcpDependency()
+            .artifactId("micronaut-gcp-function-http-test")
+            .test()
+            .build();
 
     public GoogleCloudFunction(ShadePlugin shadePlugin) {
         super(shadePlugin);
@@ -86,6 +101,20 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
     @Override
     public RockerModel spockTemplate(Project project) {
         return gcpFunctionSpock.template(project);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
+            generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP);
+            generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP_TEST);
+        }
     }
 
     @Override

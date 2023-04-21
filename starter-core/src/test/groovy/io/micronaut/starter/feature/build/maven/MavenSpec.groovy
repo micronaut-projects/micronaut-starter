@@ -102,7 +102,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
 ''')
-        and: 'it contains chidren-specific properties'
+        and: 'it contains children-specific properties'
         template.contains('<packaging>jar</packaging>')
         template.contains('<micronaut.runtime>')
     }
@@ -143,17 +143,26 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains('''
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-inject</artifactId>
-      <scope>compile</scope>
+      <artifactId>micronaut-inject-groovy</artifactId>
+      <scope>provided</scope>
     </dependency>
+''')
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
+''')
+        template.contains('''\
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+''')
+        template.contains('''\
+    <groovyVersion>4.0.11</groovyVersion>
 ''')
     }
 
@@ -161,7 +170,6 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test micronaut runtime for #chosenFeatures'(ApplicationType applicationType,
                                                       List<String> chosenFeatures,
                                                       String runtime) {
-
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(chosenFeatures)

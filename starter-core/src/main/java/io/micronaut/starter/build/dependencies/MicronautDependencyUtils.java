@@ -26,7 +26,9 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
+
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
+    public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
@@ -36,6 +38,8 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
+    public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
+    public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
 
     public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
 
@@ -74,6 +78,10 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder sessionDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
+    }
+
+    public static Dependency.Builder servletDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
     }
 
     @NonNull
@@ -145,5 +153,14 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder jmsDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
+    }
+
+    public static Dependency.Builder neo4j() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
+    }
+
+    @NonNull
+    public static Dependency.Builder openapi() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_OPENAPI);
     }
 }
