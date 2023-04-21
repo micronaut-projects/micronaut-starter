@@ -141,7 +141,6 @@ io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graphql
 io.micronaut.starter.feature.grpc
 io.micronaut.starter.feature.grpc.template
-io.micronaut.starter.feature.httpclient
 io.micronaut.starter.feature.jaxrs
 io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
@@ -203,6 +202,7 @@ io.micronaut.starter.feature.test.template
 io.micronaut.starter.feature.testresources
 io.micronaut.starter.feature.tracing
 io.micronaut.starter.feature.validation
+io.micronaut.starter.feature.validator
 io.micronaut.starter.feature.vertx
 io.micronaut.starter.feature.view
 io.micronaut.starter.feature.websocket
