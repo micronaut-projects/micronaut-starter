@@ -5,7 +5,7 @@ pluginManagement {
     }
     plugins {
         //id "com.microsoft.azure.azurefunctions" version "1.12.1"
-        id 'io.micronaut.application' version '4.0.0-SNAPSHOT'
+        id 'io.micronaut.application' version '4.0.0-M1'
     }
 }
 
