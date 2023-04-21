@@ -17,7 +17,7 @@ dependencies {
     @dependency.toSnippet()
 }
 
-
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null, false)
+}
 }
