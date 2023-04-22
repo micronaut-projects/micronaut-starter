@@ -6,6 +6,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.Template
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 
 class CdkSpec extends CommandSpec {
@@ -15,32 +16,32 @@ class CdkSpec extends CommandSpec {
         "cdk"
     }
 
-    void "test maven cdk feature with #language"(Language language) {
-        when:
-        generateProject(language, BuildTool.MAVEN, [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-        String output = executeMaven("compile")
-
-        then:
-        output.contains("Building foo 1.0-SNAPSHOT")
-        output.contains("Building foo-infra 1.0-SNAPSHOT")
-        output.contains("BUILD SUCCESS")
-
-        where:
-        language << Language.values()
-    }
-
     void "test #buildTool cdk feature with #language"(Language language, BuildTool buildTool) {
         when:
         generateProject(language, buildTool, [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-        BuildResult result = executeGradle("classes")
+
+        BuildResult result
+        String output
+        if (buildTool.isGradle()) {
+            result = executeGradle("classes")
+        } else if (buildTool == BuildTool.MAVEN) {
+            output = executeMaven("compile")
+        }
 
         then:
-        result.output.contains("> Task :$Template.DEFAULT_MODULE:classes")
-        result.output.contains("> Task :$Cdk.INFRA_MODULE:classes")
-        result.output.contains("BUILD SUCCESS")
+        if (buildTool.isGradle()) {
+            assert result
+            assert result.output.contains("> Task :$Template.DEFAULT_MODULE:classes")
+            assert result.output.contains("> Task :$Cdk.INFRA_MODULE:classes")
+            assert result.output.contains("BUILD SUCCESS")
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert output
+            assert output.contains("Building foo 1.0-SNAPSHOT")
+            assert output.contains("Building foo-infra 1.0-SNAPSHOT")
+            assert output.contains("BUILD SUCCESS")
+        }
 
         where:
-        [language, buildTool] << [Language.values(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << LanguageBuildCombinations.combinations()
     }
-
 }

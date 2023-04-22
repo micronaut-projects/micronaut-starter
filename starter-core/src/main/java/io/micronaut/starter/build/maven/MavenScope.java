@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.options.Language;
+
 import java.util.Optional;
 
 public enum MavenScope implements Ordered {
@@ -48,9 +50,12 @@ public enum MavenScope implements Ordered {
     }
 
     @NonNull
-    public static Optional<MavenScope> of(@NonNull Scope scope) {
+    public static Optional<MavenScope> of(@NonNull Scope scope, Language language) {
         switch (scope.getSource()) {
             case MAIN:
+                if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING) && Language.GROOVY == language) {
+                    return Optional.of(MavenScope.PROVIDED);
+                }
                 if (scope.getPhases().contains(Phase.RUNTIME)) {
                     if (scope.getPhases().contains(Phase.COMPILATION)) {
                         return Optional.of(MavenScope.COMPILE);

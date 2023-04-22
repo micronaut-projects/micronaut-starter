@@ -3,6 +3,10 @@ package io.micronaut.starter.feature.awslambdacustomruntime
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Issue
@@ -42,11 +46,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         readme.contains("./gradlew buildNativeLambda -Pmicronaut.runtime=lambda")
 
         where:
-        language << graalSupportedLanguages()
-    }
-
-    private List<Language> graalSupportedLanguages() {
-        Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
@@ -105,27 +105,17 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     @Unroll
     void 'test maven aws-lambda-custom-runtime feature for language=#language and application: #applicationType'(Language language, ApplicationType applicationType) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['aws-lambda-custom-runtime'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-custom-runtime</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime", Scope.COMPILE)
         and: 'http-client dependency is in compile scope'
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
 
         where:
         language        | applicationType
@@ -140,19 +130,15 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/721")
     void 'test maven aws-lambda-custom-runtime include http-client in compile scope: language=#language, application: #applicationType'(Language language, ApplicationType applicationType) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['aws-lambda-custom-runtime'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
 
         where:
         language        | applicationType

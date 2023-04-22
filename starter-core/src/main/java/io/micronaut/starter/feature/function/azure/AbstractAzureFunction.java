@@ -22,12 +22,13 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
+import io.micronaut.starter.feature.function.azure.template.azurefunctions;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKoTest;
@@ -48,10 +49,12 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements CloudFeature {
+public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature, AzureMicronautRuntimeFeature {
+
+    public static final String GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS = "com.microsoft.azure.functions";
+    public static final String ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY = "azure-functions-java-library";
 
     public static final String NAME = "azure-function";
-
     private final CoordinateResolver coordinateResolver;
 
     public AbstractAzureFunction(CoordinateResolver coordinateResolver) {
@@ -70,6 +73,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Microsoft Azure";
     }
@@ -92,6 +96,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.microsoft.azure.azurefunctions")
                     .lookupArtifactId("azure-functions-gradle-plugin")
+                    .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), javaVersionValue(generatorContext).orElse("null"))))
                     .build());
         } else if (buildTool == BuildTool.MAVEN) {
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
@@ -110,15 +115,31 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
         addFunctionTemplate(generatorContext, project);
+
+        addDependencies(generatorContext);
     }
 
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            switch (generatorContext.getJdkVersion()) {
+                case JDK_8:
+                    return Optional.of("Java 8");
+                case JDK_11:
+                    return Optional.of("Java 11");
+                case JDK_17:
+                    return Optional.of("Java 17");
+                default:
+                    return Optional.empty();
+            }
+        }
         switch (generatorContext.getJdkVersion()) {
             case JDK_8:
                 return Optional.of("8");
             case JDK_11:
                 return Optional.of("11");
+            case JDK_17:
+                return Optional.of("17");
             default:
                 return Optional.empty();
         }
@@ -179,14 +200,18 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         }
     }
 
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
+    protected void addDependencies(GeneratorContext generatorContext) {
+        addAzureFunctionsJavaLibraryDependency(generatorContext);
     }
 
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        return "azure_function";
+    protected void addAzureFunctionsJavaLibraryDependency(GeneratorContext generatorContext) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
+                .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(builder.developmentOnly());
+        } else if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(builder.compile());
+        }
     }
 }

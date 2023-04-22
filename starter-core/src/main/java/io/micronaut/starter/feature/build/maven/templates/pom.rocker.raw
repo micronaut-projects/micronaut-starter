@@ -88,74 +88,9 @@ MavenBuild mavenBuild
 
   <dependencies>
 @if (features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null, false, null)
-@dependency.template("org.apache.groovy", "groovy", "compile", "${groovyVersion}", false, null)
 @for (processor : mavenBuild.getAnnotationProcessors()) {
 @dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
 }
-}
-@dependency.template("io.micronaut", "micronaut-inject", "compile", null, false, null)
-@dependency.template("io.micronaut", "micronaut-validation", "compile", null, false, null)
-@if (features.contains("google-cloud-function")) {
-@dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null, false, null)
-    @if (features.contains("google-cloud-function-http")) {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http-test", "test", null, false, null)
-<!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
-@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null, false, null)
-@dependency.template("io.micronaut", "micronaut-http-netty", "compile", null, false, null)
-    } else {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
-    }
-}
-@if (features.contains("azure-function")) {
-@dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null, false, null)
-@if (features.contains("azure-function-http")) {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null, false, null)
-}
-}
-
-@if (features.contains("oracle-function")) {
-@dependency.template("com.fnproject.fn", "runtime", "runtime", null, false, null)
-@if (features.contains("oracle-function-http")) {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null, false, null)
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null, false, null)
-} else {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "api", "compile", null, false, null)
-@dependency.template("com.fnproject.fn", "testing-junit4", "test", null, false, null)
-}
-}
-
-@if (features.contains("graalvm") && features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-graal", "provided", null, false, null)
-}
-@if (features.contains("openapi")) {
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
-}
-}
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null, false, null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null, false, null)
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy-test", "test", null, false, null)
-}
-@if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null, false, null)
-}
-@if (features.language().isKotlin()) {
-@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)
-}
-@if (!features.contains("http-client")) {
-@dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
-}
-@if (features.contains("neo4j-bolt")) {
-@dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false, null)
 }
 
 @for (MavenDependency f : mavenBuild.getDependencies(false)) {
@@ -167,7 +102,7 @@ MavenBuild mavenBuild
     <plugins>
 @if (features.application() != null || features.contains("oracle-function") || features.contains("aws-lambda")) {
       <plugin>
-        <groupId>io.micronaut.build</groupId>
+        <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
 @if (features.contains("springloaded")
      || features.contains("jrebel")
@@ -285,7 +220,19 @@ MavenBuild mavenBuild
             <path>
               <groupId>@processor.getGroupId()</groupId>
               <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
               <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+              <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                <exclusion>
+                  <groupId>@exclusion.getGroupId()</groupId>
+                  <artifactId>@exclusion.getArtifactId()</artifactId>
+                </exclusion>
+}
+              </exclusions>
+}
             </path>
 }
           </annotationProcessorPaths>
@@ -327,7 +274,19 @@ MavenBuild mavenBuild
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+                 <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                   <exclusion>
+                     <groupId>@exclusion.getGroupId()</groupId>
+                     <artifactId>@exclusion.getArtifactId()</artifactId>
+                   </exclusion>
+}
+                 </exclusions>
+}
                </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -366,7 +325,19 @@ MavenBuild mavenBuild
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+                 <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                   <exclusion>
+                     <groupId>@exclusion.getGroupId()</groupId>
+                     <artifactId>@exclusion.getArtifactId()</artifactId>
+                   </exclusion>
+}
+                 </exclusions>
+}
                </annotationProcessorPath>
 }
               </annotationProcessorPaths>

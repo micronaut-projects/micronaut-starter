@@ -9,6 +9,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.template.Writable
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
@@ -64,7 +65,7 @@ class TestcontainersSpec extends CommandSpec {
 
         where:
         [buildTool, driverFeature] << [
-                BuildTool.values().toList(),
+                BuildToolCombinations.buildTools,
                 beanContext.streamOfType(DatabaseDriverFeature)
                         .filter({ f ->  !f.embedded() })
                         .collect(Collectors.toList())

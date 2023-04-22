@@ -18,6 +18,9 @@ package io.micronaut.starter.build;
 import io.micronaut.core.annotation.NonNull;
 
 public class MavenCentral implements Repository {
+
+    public static final String URL = "https://repo.maven.apache.org/maven2";
+
     @Override
     @NonNull
     public String getId() {
@@ -27,6 +30,6 @@ public class MavenCentral implements Repository {
     @Override
     @NonNull
     public String getUrl() {
-        return "https://repo.maven.apache.org/maven2";
+        return URL;
     }
 }

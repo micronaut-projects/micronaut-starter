@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.messaging.nats;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -27,8 +28,14 @@ import java.util.Collections;
 public class Nats implements MessagingFeature {
 
     public static final String NAME = "nats";
+    public static final Dependency MICRONAUT_NATS = Dependency.builder()
+            .groupId("io.micronaut.nats")
+            .artifactId("micronaut-nats")
+            .compile()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return NAME;
     }
@@ -39,6 +46,7 @@ public class Nats implements MessagingFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for Nats.io messaging";
     }
@@ -51,10 +59,7 @@ public class Nats implements MessagingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("nats.default.addresses", Collections.singletonList("nats://localhost:4222"));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.nats")
-                .artifactId("micronaut-nats")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_NATS);
     }
 
     @Override

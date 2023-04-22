@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.picocli;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
@@ -61,7 +62,7 @@ public class Picocli implements DefaultFeature {
                 .versionProperty("picocli.version")
                 .annotationProcessor());
         generatorContext.addDependency(Dependency.builder().groupId("info.picocli").artifactId("picocli").compile());
-        generatorContext.addDependency(Dependency.builder().groupId("io.micronaut.picocli").artifactId("micronaut-picocli").compile());
+        generatorContext.addDependency(MicronautDependencyUtils.picocliDependency().artifactId("micronaut-picocli").compile());
     }
 
     @Override

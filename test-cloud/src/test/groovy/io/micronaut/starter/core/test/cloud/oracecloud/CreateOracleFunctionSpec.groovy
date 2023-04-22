@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Retry
 import spock.lang.Unroll
@@ -31,7 +32,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], [Language.GROOVY, Language.JAVA, Language.KOTLIN], [BuildTool.GRADLE])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
     void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
@@ -54,7 +55,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         [lang, serializationFeature, build, testFramework] << [
                 Language.values(),
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
-                BuildTool.values(),
+                BuildToolCombinations.buildTools,
                 TestFramework.values()
         ].combinations()
     }

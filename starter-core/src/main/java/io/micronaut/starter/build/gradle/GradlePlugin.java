@@ -17,20 +17,22 @@ package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import io.micronaut.starter.feature.build.gradle.templates.settingsPluginManagement;
 
 public class GradlePlugin implements BuildPlugin {
 
@@ -41,7 +43,7 @@ public class GradlePlugin implements BuildPlugin {
     private final Writable extension;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
-    private final boolean requiresSettingsPluginsManagement;
+    private final List<GradleRepository> pluginsManagementRepositories;
     private final Set<String> buildImports;
     private final int order;
 
@@ -51,7 +53,7 @@ public class GradlePlugin implements BuildPlugin {
                         @Nullable String artifactId,
                         @Nullable Writable extension,
                         @Nullable Writable settingsExtension,
-                        boolean requiresSettingsPluginsManagement,
+                        List<GradleRepository> pluginsManagementRepositories,
                         boolean requiresLookup,
                         int order,
                         Set<String> buildImports) {
@@ -61,7 +63,7 @@ public class GradlePlugin implements BuildPlugin {
         this.artifactId = artifactId;
         this.extension = extension;
         this.settingsExtension = settingsExtension;
-        this.requiresSettingsPluginsManagement = requiresSettingsPluginsManagement;
+        this.pluginsManagementRepositories = pluginsManagementRepositories;
         this.requiresLookup = requiresLookup;
         this.order = order;
         this.buildImports = buildImports;
@@ -105,11 +107,9 @@ public class GradlePlugin implements BuildPlugin {
     }
 
     @NonNull
-    public Optional<Writable> getSettingsPluginsManagement() {
-        if (this.requiresSettingsPluginsManagement) {
-            return Optional.of(new RockerWritable(settingsPluginManagement.template()));
-        }
-        return Optional.empty();
+    public List<GradleRepository> getPluginsManagementRepositories() {
+        return CollectionUtils.isEmpty(pluginsManagementRepositories) ?
+                Collections.emptyList() : pluginsManagementRepositories;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, requiresSettingsPluginsManagement, false, order, buildImports);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, pluginsManagementRepositories, false, order, buildImports);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class GradlePlugin implements BuildPlugin {
         private String version;
         private Writable extension;
         private Writable settingsExtension;
-        private boolean requiresSettingsPluginsManagement;
+        private List<GradleRepository> pluginsManagementRepositories;
         private boolean requiresLookup;
         private int order = 0;
         private Set<String> buildImports = new HashSet<>();
@@ -178,7 +178,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         @NonNull
-        public GradlePlugin.Builder buildImports(String ...imports) {
+        public GradlePlugin.Builder buildImports(String... imports) {
             this.buildImports.addAll(Arrays.asList(imports));
             return this;
         }
@@ -188,6 +188,11 @@ public class GradlePlugin implements BuildPlugin {
             this.artifactId = artifactId;
             this.requiresLookup = true;
             return this;
+        }
+
+        @NonNull
+        public Optional<String> getArtifiactId()  {
+            return Optional.ofNullable(artifactId);
         }
 
         @NonNull
@@ -215,13 +220,16 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         @NonNull
-        public GradlePlugin.Builder requiresSettingsPluginsManagement() {
-            this.requiresSettingsPluginsManagement = true;
+        public GradlePlugin.Builder pluginsManagementRepository(GradleRepository repo) {
+            if (this.pluginsManagementRepositories == null) {
+                this.pluginsManagementRepositories = new ArrayList<>();
+            }
+            this.pluginsManagementRepositories.add(repo);
             return this;
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresSettingsPluginsManagement, requiresLookup, order, buildImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, pluginsManagementRepositories, requiresLookup, order, buildImports);
         }
     }
 

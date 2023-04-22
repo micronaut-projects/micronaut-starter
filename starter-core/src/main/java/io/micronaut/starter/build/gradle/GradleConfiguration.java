@@ -97,7 +97,10 @@ public enum GradleConfiguration implements Ordered {
                     return Optional.of(GradleConfiguration.ANNOTATION_PROCESSOR);
                 }
                 if (scope.getPhases().contains(Phase.RUNTIME)) {
-                    if (scope.getPhases().contains(Phase.COMPILATION)) {
+                    if (scope.getPhases().contains(Phase.COMPILATION) && scope.getPhases().contains(Phase.PUBLIC_API)) {
+                        return Optional.of(GradleConfiguration.API);
+
+                    } else if (scope.getPhases().contains(Phase.COMPILATION)) {
                         return Optional.of(GradleConfiguration.IMPLEMENTATION);
                     }
                     return Optional.of(GradleConfiguration.RUNTIME_ONLY);

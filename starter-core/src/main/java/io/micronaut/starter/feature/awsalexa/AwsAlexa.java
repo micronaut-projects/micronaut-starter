@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovySpock;
@@ -69,14 +70,12 @@ import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJuni
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKoTest;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlin;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsAlexa implements Feature, CloudFeature {
+public class AwsAlexa implements Feature, AwsCloudFeature {
     public static final String NAME = "aws-alexa";
 
     @Override
@@ -250,11 +249,6 @@ public class AwsAlexa implements Feature, CloudFeature {
     @Override
     public String getCategory() {
         return Category.IOT;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
     }
 
     @Override

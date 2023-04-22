@@ -85,7 +85,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
         !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
         verifier.hasDependency('io.r2dbc', 'r2dbc-h2', Scope.RUNTIME)
@@ -105,7 +105,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
         !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
         !verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
@@ -143,7 +143,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         isH2 || template.contains('id("io.micronaut.test-resources") version')
 
         and: 'the processor and correct version of micronaut-data-r2dbc is applied'
-        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
         !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
 
@@ -171,7 +171,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency("io.micronaut.data", "micronaut-data-r2dbc", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut.r2dbc", "micronaut-r2dbc-core", Scope.COMPILE)
         verifier.hasDependency("io.r2dbc", "r2dbc-h2", Scope.RUNTIME)
@@ -194,7 +194,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
         !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
         verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, Scope.RUNTIME)
@@ -214,7 +214,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency("io.micronaut.data", "micronaut-data-r2dbc", Scope.COMPILE)
         !verifier.hasDependency("micronaut-r2dbc-core")
         verifier.hasDependency('io.r2dbc', "r2dbc-h2", Scope.RUNTIME)
@@ -247,7 +247,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency("io.micronaut.data", "micronaut-data-r2dbc", "compile")
         !verifier.hasDependency("micronaut-r2dbc-core")
         verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, "runtime")
@@ -281,11 +281,11 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         //src/main
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
-        verifier.hasDependency('io.micronaut.data', "micronaut-data-r2dbc", 'compile')
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency('io.micronaut.data', "micronaut-data-r2dbc", Scope.COMPILE)
         !verifier.hasDependency("micronaut-r2dbc-core")
-        verifier.hasDependency('io.r2dbc', "r2dbc-h2", 'runtime')
-        verifier.hasDependency('com.h2database',"h2", "runtime")
+        verifier.hasDependency('io.r2dbc', "r2dbc-h2", Scope.RUNTIME)
+        verifier.hasDependency('com.h2database',"h2", Scope.RUNTIME)
 
         jdbcFeature.name == 'jdbc-hikari'
         verifier.hasDependency("micronaut-jdbc-hikari")
@@ -311,7 +311,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
 
         then:
-        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
         verifier.hasDependency("io.micronaut.data", "micronaut-data-r2dbc", "compile")
 
         !verifier.hasDependency("micronaut-r2dbc-core")

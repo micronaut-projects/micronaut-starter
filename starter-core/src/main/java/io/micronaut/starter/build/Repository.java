@@ -16,9 +16,8 @@
 package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.util.VersionInfo;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public interface Repository {
@@ -33,12 +32,12 @@ public interface Repository {
         return false;
     }
 
+    /**
+     * @deprecated Use {@link RepositoryResolver} instead.
+     * @return Empty list.
+     */
+    @Deprecated
     static List<Repository> micronautRepositories() {
-        List<Repository> result = new ArrayList<>();
-        result.add(new MavenCentral());
-        if (VersionInfo.isMicronautSnapshot()) {
-            result.add(new MicronautSnapshotRepository());
-        }
-        return result;
+        return Collections.emptyList();
     }
 }

@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: 'adopt'
-          java-version: '8'
+          java-version: '17'
       - name: Set the current release version
         id: release_version
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
@@ -103,10 +103,11 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-musl: 'true'
       - name: Build the JAR
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -114,7 +115,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --static --libc=musl --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -153,8 +154,8 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
@@ -197,8 +198,8 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
@@ -394,6 +395,7 @@ jobs:
       - name: Download ZIP, update versions and checksum
         id: choco
         working-directory: chocolatey
+        shell: pwsh
         run: |
           Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -OutFile 'mn.zip'
 
@@ -417,7 +419,7 @@ jobs:
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
           Get-Content ./tools/chocolateyinstall.ps1
-          echo "nuget_version=$NugetVersion" >> $GITHUB_OUTPUT
+          echo "nuget_version=$NugetVersion" >> $env:GITHUB_OUTPUT
       - name: Create package
         working-directory: chocolatey
         run: choco pack

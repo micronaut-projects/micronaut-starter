@@ -17,10 +17,11 @@ package io.micronaut.starter.feature.camunda
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -34,36 +35,17 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains("https://github.com/camunda-community-hub/micronaut-zeebe-client")
     }
 
-    @Unroll
-    void 'test gradle camunda-zeebe feature for language=#language'() {
+    void "test dependency added for camunda-zeebe feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['camunda-zeebe'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([Zeebe.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.count('implementation("info.novatec:micronaut-zeebe-client-feature:') == 1
+        verifier.hasDependency("info.novatec", "micronaut-zeebe-client-feature", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven camunda-zeebe feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['camunda-zeebe'])
-                .render()
-
-        then:
-        template.count('''\
-    <dependency>
-      <groupId>info.novatec</groupId>
-      <artifactId>micronaut-zeebe-client-feature</artifactId>
- ''') == 1
-        where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 }

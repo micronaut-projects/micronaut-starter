@@ -44,7 +44,6 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         ["datasources.default.url":postgres.getJdbcUrl(),
          "datasources.default.username":postgres.getUsername(),
          "datasources.default.password":postgres.getPassword(),
-         "datasources.default.schema-generate": SchemaGenerate.CREATE.name(),
          "datasources.default.dialect": Dialect.POSTGRES.name()]
     }
 

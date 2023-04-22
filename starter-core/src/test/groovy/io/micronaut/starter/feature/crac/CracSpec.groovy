@@ -5,6 +5,10 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.feature.database.jdbc.Hikari
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -54,19 +58,21 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         desc = expected ? "is supported" : "is not supported"
     }
 
-    void "test #buildTool crac feature for #language adds plugin and dependency"() {
+    void "test #buildTool crac feature for #language adds plugin and dependency"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(["crac"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('id("io.micronaut.crac") version')
-        template.contains('implementation("io.micronaut.crac:micronaut-crac")')
+        verifier.hasDependency("io.micronaut.crac", "micronaut-crac", Scope.COMPILE)
+        verifier.hasBuildPlugin("io.micronaut.crac")
+        verifier.hasBuildPlugin("io.micronaut.application")
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void "test maven crac feature adds dependency"() {

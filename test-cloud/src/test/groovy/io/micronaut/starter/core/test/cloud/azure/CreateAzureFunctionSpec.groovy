@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Requires
 import spock.lang.Retry
@@ -34,7 +35,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, [BuildTool.GRADLE, BuildTool.MAVEN])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
     }
 
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
@@ -57,7 +58,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         [lang, serializationFeature, build, testFramework] << [
                 Language.values(),
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
-                [BuildTool.GRADLE, BuildTool.MAVEN],
+                BuildToolCombinations.buildTools,
                 TestFramework.values()
         ].combinations()
     }

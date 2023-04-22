@@ -121,12 +121,20 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
+        /**
+         * @deprecated Use {@link #builder()} instead.
+         * @return A Gradle Plugin
+         */
+        @Deprecated
         public GradlePlugin build() {
+            return builder().build();
+        }
+
+        public GradlePlugin.Builder builder() {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)))
-                    .build();
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

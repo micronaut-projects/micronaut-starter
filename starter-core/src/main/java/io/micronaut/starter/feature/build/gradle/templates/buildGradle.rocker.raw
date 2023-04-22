@@ -108,19 +108,6 @@ tasks {
     }
 }
 
-@if (features.contains("azure-function")) {
-    azurefunctions {
-        resourceGroup = "java-functions-group"
-        appName = "@project.getName()"
-        pricingTier = "Consumption"
-        region = "westus"
-        runtime {
-          os = "linux"
-        }
-        localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
-}
-}
-
 @if (features.contains("oracle-function")) {
 @if (features.contains("oracle-function-http")) {
     dockerfileNative {

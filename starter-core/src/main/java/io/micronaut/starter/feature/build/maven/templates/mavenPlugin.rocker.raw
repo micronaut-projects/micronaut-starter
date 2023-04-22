@@ -1,0 +1,5 @@
+@args(String groupId, String artifactId)
+<plugin>
+  <groupId>@groupId</groupId>
+  <artifactId>@artifactId</artifactId>
+</plugin>

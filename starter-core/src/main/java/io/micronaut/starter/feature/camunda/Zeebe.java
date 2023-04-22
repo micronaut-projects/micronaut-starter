@@ -26,6 +26,12 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Zeebe implements CamundaCommunityFeature {
 
+    public static final String NAME = "camunda-zeebe";
+
+    private static final Dependency.Builder DEPENDENCY_ZEEBE = Dependency.builder()
+            .lookupArtifactId("micronaut-zeebe-client-feature")
+            .compile();
+
     @NonNull
     @Override
     public String getCommunityFeatureName() {
@@ -45,7 +51,7 @@ public class Zeebe implements CamundaCommunityFeature {
 
     @Override
     public String getDescription() {
-        return "Bringing cloud native process automation to Micronaut: Implement Zeebe Workers for Camunda Cloud or a local broker";
+        return "Bringing cloud native process automation to Micronaut: Implement Zeebe Workers for Camunda Platform 8";
     }
 
     @Override
@@ -55,9 +61,7 @@ public class Zeebe implements CamundaCommunityFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId("micronaut-zeebe-client-feature")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_ZEEBE);
     }
 
     @Override

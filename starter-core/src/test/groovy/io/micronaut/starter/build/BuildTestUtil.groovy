@@ -14,7 +14,13 @@ class BuildTestUtil {
                                       Language language,
                                       TestFramework testFramework,
                                       String template) {
-        buildTool.isGradle() ? new GradleBuildTestVerifier(template, language, testFramework) : new MavenBuildTestVerifier(template)
+        buildTool.isGradle() ? new GradleBuildTestVerifier(template, language, testFramework) : new MavenBuildTestVerifier(template, language)
+    }
+
+    static BuildTestVerifier verifier(BuildTool buildTool,
+                                      Language language,
+                                      String template) {
+        return verifier(buildTool, language, language.getDefaults().getTest(), template)
     }
 
     static BuildTestVerifier verifier(BuildTool buildTool,

@@ -5,18 +5,18 @@
 )
 
 @if (project.getPackageName() != null) {
-    package @project.getPackageName()
+package @project.getPackageName()
 }
 
-import io.ktor.application.call
+import io.ktor.server.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.receive
-import io.ktor.response.respondText
-import io.ktor.routing.post
+import io.ktor.server.request.receive
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.post
 import jakarta.inject.Singleton
 import io.micronaut.ktor.KtorRoutingBuilder
-import javax.validation.ConstraintViolationException
+import jakarta.validation.ConstraintViolationException
 
 @@Singleton
 class HomeRoute(private val nameTransformer: NameTransformer) : KtorRoutingBuilder({

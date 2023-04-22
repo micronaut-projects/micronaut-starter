@@ -33,8 +33,17 @@ public interface GradleEnterpriseConfiguration {
         return "https://gradle.com/terms-of-service";
     }
 
+    /**
+     * @deprecated Use {@link GradleEnterpriseConfiguration#aggreeWithTermsOfService()}
+     * @return Whether terms of service should automatically agreed.
+     */
+    @Deprecated
     @Nullable
     default String getTermsOfServiceAgree() {
-        return "yes";
+        return "true";
+    }
+
+    default Boolean aggreeWithTermsOfService() {
+        return true;
     }
 }

@@ -3,15 +3,11 @@ package io.micronaut.starter.build.gradle
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.build.maven.MavenScope
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-
-import java.util.stream.Stream
+import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
-
     final String template
     final Language language
     final TestFramework testFramework
@@ -23,8 +19,20 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
-    boolean hasAnnotationProcessor(String groupId, String artifactId) {
-        hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+    boolean hasBom(String groupId, String artifactId, Scope scope) {
+        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework).map { it.getConfigurationName() }
+        if (!gradleConfigurationNameOptional.isPresent()){
+            throw new ConfigurationException("cannot match " + scope + " to gradle configuration");
+        }
+        String gradleConfigurationName = gradleConfigurationNameOptional.get()
+        hasBom(groupId, artifactId, gradleConfigurationName)
+    }
+
+    @Override
+    boolean hasBom(String groupId, String artifactId, String scope) {
+        // gradle and gradle kotlin are slightly different `implementation platform(` vs `implementation(platform(`
+        Pattern.compile("""${scope}[\\s(]platform\\("${groupId}:${artifactId}:""")
+                .matcher(template).find()
     }
 
     @Override
@@ -39,8 +47,8 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, String scope) {
-        String expected = """${scope}("${groupId}:${artifactId}")"""
-        template.contains(expected)
+        String regex = /(?s).*${scope}\("${groupId}:${artifactId}(?::.+)?\"\).*/
+        template.matches(Pattern.compile(regex))
     }
 
     @Override
@@ -68,5 +76,10 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasTestResourceDependencyWithGroupId(String expectedGroupId) {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    boolean hasBuildPlugin(String id) {
+        return template.contains("id(\"" + id + "\")")
     }
 }

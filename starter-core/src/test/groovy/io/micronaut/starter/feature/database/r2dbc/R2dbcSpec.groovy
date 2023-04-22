@@ -50,7 +50,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         isH2 || template.contains('id("io.micronaut.test-resources") version')
 
         and: 'the data processor is not applied'
-        !verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        !verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
         !verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
         verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
 
@@ -109,7 +109,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
 
         then:
-        !verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        !verifier.hasDependency("io.micronaut.data", "micronaut-data-processor", Scope.ANNOTATION_PROCESSOR)
         !verifier.hasDependency( "micronaut-data-r2dbc")
         verifier.hasDependency('io.micronaut.r2dbc', "micronaut-r2dbc-core", 'compile')
         verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, 'runtime')

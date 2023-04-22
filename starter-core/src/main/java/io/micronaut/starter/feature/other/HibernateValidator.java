@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@ package io.micronaut.starter.feature.other;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.validator.ValidationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class HibernateValidator implements Feature {
+public class HibernateValidator implements ValidationFeature {
 
     @Override
     public String getName() {
@@ -51,11 +50,6 @@ public class HibernateValidator implements Feature {
                 .groupId("io.micronaut.beanvalidation")
                 .artifactId("micronaut-hibernate-validator")
                 .compile());
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.VALIDATION;
     }
 
     @Override

@@ -15,16 +15,22 @@
  */
 package io.micronaut.starter.feature.function.gcp;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
-public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements CloudFeature, MicronautRuntimeFeature {
+public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
+    public static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()
+            .groupId("com.google.cloud.functions")
+            .artifactId("functions-framework-api");
+    private static final Dependency DEPENDENCY_MICRONAUT_SERVLET_CORE = MicronautDependencyUtils.servletDependency()
+                    .artifactId("micronaut-servlet-core")
+                    .test()
+                    .build();
+
     private final ShadePlugin shadePlugin;
 
     public AbstractGoogleCloudFunction(ShadePlugin shadePlugin) {
@@ -32,20 +38,17 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(ShadePlugin.class)) {
-            featureContext.addFeature(shadePlugin);
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        if (generatorContext.getFeatures().testFramework().isSpock()) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_SERVLET_CORE);
         }
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
-    }
-
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        return "google_function";
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(ShadePlugin.class)) {
+            featureContext.addFeature(shadePlugin);
+        }
     }
 }

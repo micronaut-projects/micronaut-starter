@@ -70,7 +70,8 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
         Map<String, String> props = new TreeMap<>();
 
         props.put("micronaut.version", getVersion().get());
-        props.putAll(bomProperties("io.micronaut", "micronaut-bom", getVersion().get()));
+
+        props.putAll(bomProperties("io.micronaut.platform", "micronaut-platform", getVersion().get()));
 
         for (String extraBomProperty : getExtraBomProperties().get()) {
             String[] groupAndArtifact = extraBomProperty.split(":", 2);

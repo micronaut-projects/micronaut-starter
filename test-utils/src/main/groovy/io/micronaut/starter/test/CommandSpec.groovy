@@ -25,10 +25,12 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.util.VersionInfo
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.AutoCleanup
@@ -40,6 +42,7 @@ import java.nio.file.Files
 import java.time.Duration
 
 abstract class CommandSpec extends Specification {
+    private static final String ENV_JAVA_HOME = "JAVA_HOME"
 
     @Shared
     @AutoCleanup
@@ -96,7 +99,10 @@ abstract class CommandSpec extends Specification {
         String[] args = command.split(" ")
         ProcessBuilder pb = new ProcessBuilder(args)
         Map<String, String> env = pb.environment()
-        env["JAVA_HOME"] = System.getenv("JAVA_HOME")
+        String javaHome = System.getenv(ENV_JAVA_HOME)
+        if (javaHome) {
+            env[ENV_JAVA_HOME] = javaHome
+        }
 
         Process process = pb.directory(dir).start()
 
@@ -119,15 +125,18 @@ abstract class CommandSpec extends Specification {
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = lang.getDefaults().test,
-                         boolean addMicronautGradleEnterpriseFeature = true
-    ) {
+                         boolean addMicronautGradleEnterpriseFeature = true,
+                         JdkVersion maxJdkVersion = JdkVersion.JDK_17) {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }
-
+        JdkVersion jdkVersion = VersionInfo.getJavaVersion();
+        if (jdkVersion.greaterThanEqual(maxJdkVersion)) {
+            jdkVersion = maxJdkVersion
+        }
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, testFramework, buildTool),
+                new Options(lang, testFramework, buildTool, jdkVersion),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),

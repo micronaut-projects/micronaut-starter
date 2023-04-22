@@ -8,7 +8,7 @@
     package @project.getPackageName()
 }
 
-import javax.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotBlank
 import jakarta.inject.Singleton
 
 @@Singleton

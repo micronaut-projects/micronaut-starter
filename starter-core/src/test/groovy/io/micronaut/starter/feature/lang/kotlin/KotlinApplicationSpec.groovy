@@ -4,6 +4,9 @@ import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -50,8 +53,9 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         output.containsKey("src/main/kotlin/example/micronaut/Application.${Language.KOTLIN.extension}".toString())
 
         when:
-        def buildGradle = output[buildTool.getBuildFileName()]
-        def pom = output['pom.xml']
+        String buildGradle = output[buildTool.getBuildFileName()]
+        String pom = output['pom.xml']
+        String template = buildTool.isGradle() ? buildGradle : pom
 
         then:
         if (buildTool.isGradle()) {
@@ -59,17 +63,12 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
             assert buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
             assert buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
             assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
-            assert buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
-
-        } else if (buildTool == BuildTool.MAVEN) {
-            assert pom.contains("""
-    <dependency>
-      <groupId>io.micronaut.kotlin</groupId>
-      <artifactId>micronaut-kotlin-runtime</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
         }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.kotlin", "micronaut-kotlin-runtime", Scope.COMPILE)
+        verifier.hasDependency("com.fasterxml.jackson.module", "jackson-module-kotlin", Scope.RUNTIME)
 
         where:
         [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()

@@ -6,7 +6,6 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.aws.LambdaTrigger
 import spock.lang.Specification
 import org.jline.reader.LineReader
-import spock.lang.Unroll
 
 import java.util.stream.Collectors
 
@@ -31,6 +30,9 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 'aws-lambda-scheduled-event',
                 'aws-lambda-s3-event-notification',
         ] == result
+
+        and:
+        ['amazon-api-gateway', 'amazon-api-gateway-http'] == command.apiTriggerFeatures(command.applicationTypeForCodingStyle(CodingStyle.CONTROLLERS), features)*.name
 
         cleanup:
         applicationContext.close()
@@ -77,7 +79,6 @@ class CreateLambdaBuilderCommandSpec extends Specification {
         *1) 11
         2) 8
      */
-    @Unroll
     void "test prompt"(List<String> answers, ApplicationType expectedApplicationType, Set<String> expectedFeatures) {
         given:
         ApplicationContext applicationContext = ApplicationContext.run();
@@ -92,7 +93,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
 
         then:
         expectedApplicationType == options.applicationType
-        expectedFeatures == options.features
+        expectedFeatures =~ options.features
 
         cleanup:
         applicationContext.close()
@@ -109,7 +110,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda'] as Set<String>
+        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda']
         [
                 "2", // with Controller
                 "1", // Amazon Api Gateway
@@ -120,7 +121,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.FUNCTION | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda'] as Set<String>
+        ]       | ApplicationType.FUNCTION | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda']
         [
                 "2", // with Controller
                 "4", // Scheduled event
@@ -131,7 +132,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.FUNCTION | ['aws-lambda-scheduled-event', 'arm', 'aws-cdk','aws-lambda'] as Set<String>
+        ]       | ApplicationType.FUNCTION | ['aws-lambda-scheduled-event', 'arm', 'aws-cdk','aws-lambda']
         [
                 "1", // with Controller
                 "1", // Amazon Api Gateway
@@ -142,7 +143,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda','graalvm'] as Set<String>
+        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'arm', 'aws-cdk','aws-lambda','graalvm']
         [
                 "1", // with Controller
                 "1", // Amazon Api Gateway
@@ -153,7 +154,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'x86', 'aws-cdk','aws-lambda'] as Set<String>
+        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'x86', 'aws-cdk','aws-lambda']
         [
                 "1", // with Controller
                 "1", // Amazon Api Gateway
@@ -164,9 +165,6 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway','arm','aws-lambda'] as Set<String>
-
-
-
+        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway','arm','aws-lambda']
     }
 }

@@ -14,16 +14,17 @@ sourceSets {
 }
 
 dependencies {
-    api platform("io.micronaut:micronaut-bom:$micronautVersion")
+    api platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
+    api("com.fasterxml.jackson.core:jackson-annotations")
     api "io.github.java-diff-utils:java-diff-utils:4.10"
     api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
-    implementation 'org.yaml:snakeyaml:1.33'
+    implementation("org.yaml:snakeyaml")
     implementation 'com.typesafe:config:1.4.1'
-    implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:1.0.0'
+    implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:2.0.0-M1'
     implementation 'org.apache.commons:commons-compress:1.21'
     testImplementation("org.apache.groovy:groovy-xml")
 }
@@ -31,6 +32,8 @@ dependencies {
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
     version = micronautVersion
     extraBomProperties = [
+            'io.micronaut:micronaut-core',
+            'io.micronaut.logging:micronaut-logging',
             'io.micronaut.grpc:micronaut-grpc',
             'io.micronaut.picocli:micronaut-picocli',
     ]
@@ -40,12 +43,7 @@ def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.i
 sourceSets.main.resources.srcDir(micronautVersionInfo)
 
 rocker {
-    javaVersion = '1.8'
+    javaVersion = '17'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
 
-nohttp {
-    source.exclude "**/pom.rocker.raw"
-    source.exclude "**/genericPom.rocker.raw"
-    source.exclude "**/multimodule.rocker.raw"
-}

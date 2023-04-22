@@ -5,7 +5,9 @@ import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 import java.nio.file.Files
@@ -42,6 +44,7 @@ class SwaggerUISpec extends CommandSpec {
         return "other"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven #feature.name with #language without security"(Feature feature, Language language) {
         when:
@@ -60,7 +63,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
+                Language.values()].combinations()
     }
 
     @Unroll
@@ -81,10 +84,10 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
+                Language.values()].combinations()
     }
 
-
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
         when:
@@ -103,7 +106,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
+                Language.values(),
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }
@@ -126,7 +129,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
+                Language.values(),
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }

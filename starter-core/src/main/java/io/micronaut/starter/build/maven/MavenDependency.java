@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
+import io.micronaut.starter.options.Language;
 
 import java.util.Comparator;
 import java.util.List;
@@ -46,12 +47,12 @@ public class MavenDependency extends DependencyCoordinate {
     @Nullable
     private final MavenScope mavenScope;
 
-    public MavenDependency(@NonNull Dependency dependency) {
+    public MavenDependency(@NonNull Dependency dependency, Language language) {
         super(dependency);
         if (isPom()) {
             mavenScope = MavenScope.IMPORT;
         } else {
-            mavenScope = MavenScope.of(dependency.getScope()).orElse(null);
+            mavenScope = MavenScope.of(dependency.getScope(), language).orElse(null);
         }
     }
 
@@ -85,11 +86,11 @@ public class MavenDependency extends DependencyCoordinate {
     }
 
     @NonNull
-    public static List<MavenDependency> listOf(@NonNull DependencyContext dependencyContext) {
+    public static List<MavenDependency> listOf(@NonNull DependencyContext dependencyContext, Language language) {
         return dependencyContext.getDependencies()
                 .stream()
                 .filter(dep -> dep.getScope() != null && !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
-                .map(MavenDependency::new)
+                .map(dep -> new MavenDependency(dep, language))
                 .sorted(MavenDependency.COMPARATOR)
                 .collect(Collectors.toList());
     }

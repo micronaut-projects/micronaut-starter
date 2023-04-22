@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.stackdriver;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -66,8 +66,7 @@ public class CloudTrace extends GcpFeature implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.gcp")
+        generatorContext.addDependency(MicronautDependencyUtils.gcpDependency()
                 .artifactId("micronaut-gcp-tracing")
                 .compile());
     }

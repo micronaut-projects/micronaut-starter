@@ -32,12 +32,6 @@ public class ApplicationTypeList extends Linkable {
     private List<ApplicationTypeDTO> types;
 
     /**
-     * Constructor.
-     */
-    public ApplicationTypeList() {
-    }
-
-    /**
      *
      * @param types The application types
      */

@@ -26,6 +26,12 @@ import jakarta.inject.Singleton;
 @Singleton
 public class ExternalWorker implements CamundaCommunityFeature {
 
+    public static final String NAME = "camunda-external-worker";
+
+    private static final Dependency.Builder DEPENDENCY_EXTERNAL_WORKER = Dependency.builder()
+            .lookupArtifactId("micronaut-camunda-external-client-feature")
+            .compile();
+
     @NonNull
     @Override
     public String getCommunityFeatureName() {
@@ -40,7 +46,7 @@ public class ExternalWorker implements CamundaCommunityFeature {
 
     @Override
     public String getDescription() {
-        return "Bringing process automation to Micronaut: Implement Camunda External Workers for the Camunda Platform";
+        return "Bringing process automation to Micronaut: Implement Camunda External Workers for the Camunda Platform 7";
     }
 
     @Override
@@ -51,9 +57,7 @@ public class ExternalWorker implements CamundaCommunityFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("camunda.external-client.base-url", "http://localhost:8080/engine-rest");
-        generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId("micronaut-camunda-external-client-feature")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_EXTERNAL_WORKER);
     }
 
     @Override

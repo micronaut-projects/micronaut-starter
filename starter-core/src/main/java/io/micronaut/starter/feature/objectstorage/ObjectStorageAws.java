@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsV2Sdk;
-import io.micronaut.starter.feature.function.Cloud;
 import jakarta.inject.Singleton;
 
 /**
@@ -28,17 +28,12 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageAws implements ObjectStorageFeature {
+public class ObjectStorageAws implements ObjectStorageFeature, AwsCloudFeature {
 
     private final AwsV2Sdk awsV2Sdk;
 
     public ObjectStorageAws(AwsV2Sdk awsV2Sdk) {
         this.awsV2Sdk = awsV2Sdk;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
     }
 
     @Override

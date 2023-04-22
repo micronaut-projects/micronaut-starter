@@ -16,14 +16,7 @@
 package io.micronaut.starter.feature.json;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Substitution;
-import io.micronaut.starter.feature.testresources.TestResources;
-import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
-import java.util.Collections;
-import java.util.List;
 
 @Singleton
 public class SerializationJacksonFeature implements SerializationFeature {
@@ -50,21 +43,4 @@ public class SerializationJacksonFeature implements SerializationFeature {
         return "jackson";
     }
 
-    @Override
-    @NonNull
-    public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
-        // See https://github.com/micronaut-projects/micronaut-test-resources/issues/103
-        if (generatorContext.isFeaturePresent(TestResources.class)) {
-            return Collections.emptyList();
-        }
-
-        String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
-        return Collections.singletonList(Substitution.builder()
-                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
-                        .replacement(MicronautDependencyUtils.serdeDependency()
-                                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JACKSON)
-                                .version(serializationVersion)
-                                .build())
-                        .build());
-    }
 }

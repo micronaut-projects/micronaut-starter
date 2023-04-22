@@ -4,11 +4,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.build.maven.MavenCombineAttribute
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.Gradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -29,6 +25,19 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         maven.isMaven()
     }
 
+    void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
+        when:
+        Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
+
+        where:
+        [lang, apptype] << [ Language.values().toList(), ApplicationType.values()].combinations()
+    }
+
     void "multi-module-pom isn't created for single-module builds"() {
         when:
         Options options = new Options(Language.JAVA, null, BuildTool.MAVEN)
@@ -47,6 +56,19 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         generatorContext.templates.mavenPom
         generatorContext.templates.'multi-module-pom'
+    }
+
+    void 'enforce plugin is added to pom.xml'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .render()
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+''')
     }
 
     void 'test use defaults from parent pom'() {
@@ -80,7 +102,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
 ''')
-        and: 'it contains chidren-specific properties'
+        and: 'it contains children-specific properties'
         template.contains('<packaging>jar</packaging>')
         template.contains('<micronaut.runtime>')
     }
@@ -108,9 +130,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
                <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-validation</artifactId>
-                 <version>${micronaut.version}</version>
+                 <groupId>io.micronaut.validation</groupId>
+                 <artifactId>micronaut-validation-processor</artifactId>
+                 <version>${micronaut.validation.version}</version>
                </annotationProcessorPath>
               </annotationProcessorPaths>
 ''')
@@ -121,17 +143,27 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains('''
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-inject</artifactId>
-      <scope>compile</scope>
+      <artifactId>micronaut-inject-groovy</artifactId>
+      <scope>provided</scope>
     </dependency>
+''')
+        and: 'validation is not added by default'
+        !template.contains('''\
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.validation</groupId>
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
+''')
+        template.contains('''\
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+''')
+        template.contains('''\
+    <groovyVersion>4.0.11</groovyVersion>
 ''')
     }
 
@@ -139,7 +171,6 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test micronaut runtime for #chosenFeatures'(ApplicationType applicationType,
                                                       List<String> chosenFeatures,
                                                       String runtime) {
-
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(chosenFeatures)
@@ -162,4 +193,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+    }
 }

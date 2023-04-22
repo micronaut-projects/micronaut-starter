@@ -5,7 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import spock.lang.Subject
 
-class AwsLambdaS3EventNotificationSpec  extends ApplicationContextSpec {
+class AwsLambdaS3EventNotificationSpec extends ApplicationContextSpec {
 
     @Subject
     AwsLambdaS3EventNotification awsLambdaS3EventNotification = beanContext.getBean(AwsLambdaS3EventNotification)

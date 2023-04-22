@@ -20,7 +20,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.BuildTool;
@@ -79,7 +78,6 @@ public interface SerializationFeature extends JsonFeature {
         Dependency.Builder builder = MicronautDependencyUtils.serdeDependency()
                 .compile()
                 .artifactId("micronaut-serde-" + getModule());
-        substitutions(generatorContext).forEach(builder::substitution);
         return builder;
     }
 
@@ -92,7 +90,4 @@ public interface SerializationFeature extends JsonFeature {
     }
 
     String getModule();
-
-    @NonNull
-    List<Substitution> substitutions(@NonNull GeneratorContext generatorContext);
 }

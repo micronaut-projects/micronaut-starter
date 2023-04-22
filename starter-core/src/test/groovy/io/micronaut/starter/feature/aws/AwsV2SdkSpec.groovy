@@ -53,7 +53,7 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven aws-v2-sdk feature for language=#language'(Language language) {

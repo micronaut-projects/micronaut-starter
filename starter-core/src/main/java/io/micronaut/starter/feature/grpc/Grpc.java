@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.grpc;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
@@ -35,6 +37,16 @@ import java.util.Set;
 
 @Singleton
 public class Grpc implements DefaultFeature {
+    private static final Dependency DEPENDENCY_JAVAX_ANNOTATION_API = Dependency.builder()
+            .groupId("javax.annotation")
+            .artifactId("javax.annotation-api")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_GRPC_RUNTIME = MicronautDependencyUtils.grpcDependency()
+            .artifactId("micronaut-grpc-runtime")
+            .compile()
+            .build();
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
@@ -43,15 +55,17 @@ public class Grpc implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.grpc")
-                .artifactId("micronaut-grpc-runtime")
-                .compile());
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
+    }
+
+    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_GRPC_RUNTIME);
+        generatorContext.addDependency(DEPENDENCY_JAVAX_ANNOTATION_API);
     }
 
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {

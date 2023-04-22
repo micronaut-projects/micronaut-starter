@@ -16,7 +16,7 @@ class GradleDependencyComparatorSpec extends Specification {
             getTestFramework() >> TestFramework.JUNIT
         }
         List<GradleDependency> dependencies = [
-                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-validation").compile(), ctx),
+                dep(Dependency.builder().groupId("io.micronaut.validation").artifactId("micronaut-validation").compile(), ctx),
                 dep(Dependency.builder().groupId("io.swagger.core.v3").artifactId("swagger-annotations").compile(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-runtime").compile(), ctx),
                 dep(Dependency.builder().groupId("jakarta.annotation").artifactId("jakarta.annotation-api").compile(), ctx),
@@ -37,8 +37,8 @@ class GradleDependencyComparatorSpec extends Specification {
         "${str(dependencies[0])}" == 'annotationProcessor("io.micronaut.openapi:micronaut-openapi")'
         "${str(dependencies[1])}" == 'implementation("io.micronaut:micronaut-http-client")'
         "${str(dependencies[2])}" == 'implementation("io.micronaut:micronaut-runtime")'
-        "${str(dependencies[3])}" == 'implementation("io.micronaut:micronaut-validation")'
-        "${str(dependencies[4])}" == 'implementation("io.micronaut.sql:micronaut-jdbc-hikari")'
+        "${str(dependencies[3])}" == 'implementation("io.micronaut.sql:micronaut-jdbc-hikari")'
+        "${str(dependencies[4])}" == 'implementation("io.micronaut.validation:micronaut-validation")'
         "${str(dependencies[5])}" == 'implementation("io.swagger.core.v3:swagger-annotations")'
         "${str(dependencies[6])}" == 'implementation("jakarta.annotation:jakarta.annotation-api")'
         "${str(dependencies[7])}" == 'runtimeOnly("ch.qos.logback:logback-classic")'
@@ -51,8 +51,8 @@ class GradleDependencyComparatorSpec extends Specification {
         dependencies[0].versionCatalog().get() == 'mn.micronaut.openapi'
         dependencies[1].versionCatalog().get() == 'mn.micronaut.http.client'
         dependencies[2].versionCatalog().get() == 'mn.micronaut.runtime'
-        dependencies[3].versionCatalog().get() == 'mn.micronaut.validation'
-        dependencies[4].versionCatalog().get() == 'mn.micronaut.jdbc.hikari'
+        dependencies[3].versionCatalog().get() == 'mn.micronaut.jdbc.hikari'
+        dependencies[4].versionCatalog().get() == 'mn.micronaut.validation'
         and: 'for dependencies whose group id is not io.micronaut returns empty Optional.'
         !dependencies[5].versionCatalog().isPresent()
     }

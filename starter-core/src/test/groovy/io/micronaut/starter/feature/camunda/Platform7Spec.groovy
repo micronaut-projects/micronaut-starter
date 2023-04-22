@@ -17,10 +17,12 @@ package io.micronaut.starter.feature.camunda
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -32,59 +34,37 @@ class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         readme
         readme.contains("https://assertj.github.io/doc/")
-        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-bpm")
+        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-platform-7")
+        readme.contains("https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#jetty")
     }
 
-    @Unroll
-    void 'test gradle camunda-platform7 feature for language=#language'() {
+    void "test dependency added for camunda-platform7 feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['camunda-platform7'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([Platform7.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.count('implementation("info.novatec:micronaut-camunda-bpm-feature:') == 1
-        template.count('testImplementation("org.assertj:assertj-core")') == 1
-        template.count('testImplementation("org.camunda.bpm:camunda-bpm-assert') == 1
-        template.count('runtimeOnly("com.h2database:h2")') == 1
+        verifier.hasDependency("info.novatec", "micronaut-camunda-bpm-feature", Scope.COMPILE)
+        verifier.hasDependency("org.camunda.bpm", "camunda-bpm-assert", Scope.TEST)
+        verifier.hasDependency("org.assertj", "assertj-core", Scope.TEST)
+        verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
-    @Unroll
-    void 'test maven camunda-platform7 feature for language=#language'() {
+    void 'test camunda-platform7 configuration'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['camunda-platform7'])
-                .render()
+        GeneratorContext commandContext = buildGeneratorContext(['camunda-platform7'])
 
         then:
-        template.count('''\
-    <dependency>
-      <groupId>info.novatec</groupId>
-      <artifactId>micronaut-camunda-bpm-feature</artifactId>
- ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-assert</artifactId>
- ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>info.novatec</groupId>
-      <artifactId>micronaut-camunda-bpm-feature</artifactId>
- ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''') == 1
-        where:
-        language << Language.values().toList()
+        commandContext.configuration.get('camunda.admin-user.id'.toString()) == "admin"
+        commandContext.configuration.get('camunda.admin-user.password'.toString()) == "admin"
+        commandContext.configuration.get('camunda.webapps.enabled') == true
+        commandContext.configuration.get('camunda.rest.enabled') == true
+        commandContext.configuration.get('camunda.generic-properties.properties.initialize-telemetry') == true
+        commandContext.configuration.get('camunda.filter.create') == "All tasks"
     }
 }

@@ -38,7 +38,7 @@ class ObjectStorageOracleCloudSpec extends ApplicationContextSpec implements Com
         template.contains('implementation("io.micronaut.objectstorage:micronaut-object-storage-oracle-cloud")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven object-storage-oracle-cloud feature for language=#language'(Language language) {
