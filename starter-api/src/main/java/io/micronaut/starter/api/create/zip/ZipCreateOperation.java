@@ -26,7 +26,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
 
 /**

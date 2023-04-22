@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.server;
+package io.micronaut.starter.test;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.MicronautRuntimeFeature;
-
-public abstract class AbstractMicronautServerFeature implements ServerFeature, MicronautRuntimeFeature {
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        addMicronautRuntimeBuildProperty(generatorContext);
-        doApply(generatorContext);
-    }
-
-    public abstract void doApply(GeneratorContext generatorContext);
+public class CommunityLibraries {
+    public static final boolean IGNORE = true;
 }

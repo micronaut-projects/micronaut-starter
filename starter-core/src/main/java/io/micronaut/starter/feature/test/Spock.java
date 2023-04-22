@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.lang.groovy.Groovy;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -29,7 +30,6 @@ import jakarta.inject.Singleton;
 public class Spock implements TestFeature {
     protected static final String GROUP_ID_SPOCKFRAMEWORK = "org.spockframework";
     protected static final String ARTIFACT_ID_SPOCK_CORE = "spock-core";
-    protected static final String GROUP_ID_CODEHAUS_GROOVY = "org.codehaus.groovy";
     protected static final String ARTIFACT_ID_GROOVY_ALL = "groovy-all";
     protected static final Dependency DEPENDENCY_MICRONAUT_INJECT_GROOVY = MicronautDependencyUtils
             .coreDependency()
@@ -47,7 +47,7 @@ public class Spock implements TestFeature {
             .groupId(GROUP_ID_SPOCKFRAMEWORK)
             .artifactId(ARTIFACT_ID_SPOCK_CORE)
             .exclude(Dependency.builder()
-                    .groupId(GROUP_ID_CODEHAUS_GROOVY)
+                    .groupId(Groovy.GROUP_ID_GROOVY)
                     .artifactId(ARTIFACT_ID_GROOVY_ALL)
                     .build())
             .test()

@@ -9,11 +9,11 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
-      - name: Setup Java 1.8.x
+      - name: Setup Java
         uses: actions/setup-java@v3.9.0
         with:
           distribution: 'adopt'
-          java-version: '8'
+          java-version: '17'
       - name: 'Package Function'
         run: |
           ./gradlew starter-azure-function:azureFunctionsPackage

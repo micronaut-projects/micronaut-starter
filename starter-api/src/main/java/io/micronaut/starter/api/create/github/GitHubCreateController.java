@@ -42,7 +42,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import java.net.URI;
 import java.util.List;
 

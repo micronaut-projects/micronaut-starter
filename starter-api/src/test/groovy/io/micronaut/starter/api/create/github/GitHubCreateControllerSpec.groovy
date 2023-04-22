@@ -2,6 +2,7 @@ package io.micronaut.starter.api.create.github
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Requires
+import io.micronaut.core.util.StringUtils
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
@@ -16,35 +17,21 @@ import io.micronaut.starter.util.GitHubUtil
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.revwalk.RevCommit
 import org.eclipse.jgit.transport.URIish
-import spock.lang.Retry
 import spock.lang.Specification
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-@Retry
 class GitHubCreateControllerSpec extends Specification {
-
-    static Map<String, Object> getConfiguration(MapEntry ...entries) {
-        Map<String, Object> m = [:]
-        m.put("spec.name", "GitHubCreateControllerSpec")
-        m.put("micronaut.server.port", "\${random.port}")
-        m.put("micronaut.http.client.read-timeout", "20s")  // needs huge timeout otherwise it fails in GitHub CI
-        m.put("micronaut.http.services.github-oauth.url", "http://localhost:\${micronaut.server.port}")
-        m.put("micronaut.http.services.github-api-v3.url", "http://localhost:\${micronaut.server.port}")
-        m.put("micronaut.starter.github.clientId", "clientId")
-        m.put("micronaut.starter.github.clientSecret", "clientSecret")
-        entries.each {m.put((String) it.getKey(), it.getValue())}
-        return m
-    }
 
     void "returns redirect with error when repository exists"() {
         given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-                getConfiguration(new MapEntry("micronaut.http.client.follow-redirects", false)))
-
-        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+        EmbeddedServer githubServer = ApplicationContext.run(EmbeddedServer, Collections.singletonMap("spec.name", "GitHubCreateControllerSpec"))
+        Map<String, String> configuration = new HashMap<>(serverConfiguration(githubServer))
+        configuration.put("micronaut.http.client.follow-redirects", StringUtils.FALSE)
+        EmbeddedServer server = ApplicationContext.run(EmbeddedServer, configuration)
+        HttpClient httpClient = server.applicationContext.createBean(HttpClient, server.URL)
 
         when:
         HttpResponse response = httpClient.toBlocking().exchange(HttpRequest.GET("/github/default/foo.bar.existing?code=123&state=123"))
@@ -55,15 +42,17 @@ class GitHubCreateControllerSpec extends Specification {
         response.header(HttpHeaders.LOCATION).startsWith("https://micronaut.io/launch")
 
         cleanup:
-        embeddedServer.close()
+        server.close()
+        githubServer.close()
     }
 
     void "returns redirect to launcher if redirectUri is configured"() {
         given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-                getConfiguration(new MapEntry("micronaut.http.client.follow-redirects", false)))
-
-        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+        EmbeddedServer githubServer = ApplicationContext.run(EmbeddedServer, Collections.singletonMap("spec.name", "GitHubCreateControllerSpec"))
+        Map<String, String> configuration = new HashMap<>(serverConfiguration(githubServer))
+        configuration.put("micronaut.http.client.follow-redirects", StringUtils.FALSE)
+        EmbeddedServer server = ApplicationContext.run(EmbeddedServer, configuration)
+        HttpClient httpClient = server.applicationContext.createBean(HttpClient, server.URL)
 
         when:
         HttpResponse response = httpClient.toBlocking().exchange(HttpRequest.GET("/github/default/foo?code=123&state=123"))
@@ -76,15 +65,17 @@ class GitHubCreateControllerSpec extends Specification {
         response.header(HttpHeaders.LOCATION).startsWith("https://micronaut.io/launch")
 
         cleanup:
-        embeddedServer.close()
+        server.close()
+        githubServer.close()
     }
 
     void "returns github repository details when launcher missing"() {
         given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-                getConfiguration(new MapEntry("micronaut.starter.redirectUri", "")))
-
-        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+        EmbeddedServer githubServer = ApplicationContext.run(EmbeddedServer, Collections.singletonMap("spec.name", "GitHubCreateControllerSpec"))
+        Map<String, String> configuration = new HashMap<>(serverConfiguration(githubServer))
+        configuration.put("micronaut.starter.redirectUri", "")
+        EmbeddedServer server = ApplicationContext.run(EmbeddedServer, configuration)
+        HttpClient httpClient = server.applicationContext.createBean(HttpClient, server.URL)
 
         when:
         GitHubCreateDTO dto = httpClient.toBlocking().retrieve(HttpRequest.GET("/github/default/foo?code=123&state=123"), GitHubCreateDTO.class)
@@ -99,7 +90,8 @@ class GitHubCreateControllerSpec extends Specification {
         commits.get(0).authorIdent.emailAddress == "email"
 
         cleanup:
-        embeddedServer.close()
+        server.close()
+        githubServer.close()
         clonePath.toFile().deleteDir()
     }
 
@@ -172,5 +164,12 @@ class GitHubCreateControllerSpec extends Specification {
                 @QueryValue String state) {
             return new AccessToken("foo", "repo,user", "123")
         }
+    }
+
+    private static Map<String, String> serverConfiguration(EmbeddedServer server) {
+        return Map.of("micronaut.http.services.github-oauth.url", "http://localhost:" + server.port,
+                "micronaut.http.services.github-api-v3.url", "http://localhost:" + server.port,
+                "micronaut.starter.github.client-id", "clientId",
+                "micronaut.starter.github.client-secret", "clientSecret")
     }
 }

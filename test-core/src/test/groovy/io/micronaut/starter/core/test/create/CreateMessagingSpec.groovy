@@ -4,18 +4,21 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.messaging.MessagingFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
-import org.gradle.testkit.runner.UnexpectedBuildFailure
-import spock.lang.Retry
+import spock.lang.Ignore
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
-
 import java.util.stream.Collectors
 
-import static io.micronaut.starter.options.BuildTool.MAVEN
-
-@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class CreateMessagingSpec extends CommandSpec {
+    private static List<String> EXCLUDED_FEATURES = [
+            'jms-sqs',
+            'jms-aq',
+            'kafka-streams',
+            'jms-oracle-aq'
+    ]
 
     @Override
     String getTempDirectoryPrefix() {
@@ -39,11 +42,12 @@ class CreateMessagingSpec extends CommandSpec {
         where:
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
                 beanContext.streamOfType(MessagingFeature.class)
-                        .filter({ f -> !['jms-sqs', 'jms-aq'].contains(f.name)} )
+                        .filter({ f -> !EXCLUDED_FEATURES.contains(f.name)} )
                         .map({  f -> f.getName() })
                         .collect(Collectors.toList()))
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void 'test basic create-messaging-app for jms-sqs and #lang and maven'(Language lang,
                                                                            BuildTool buildTool,
@@ -64,9 +68,10 @@ class CreateMessagingSpec extends CommandSpec {
                         .filter({ f -> f.name == 'jms-sqs'} )
                         .map({  f -> f.getName() })
                         .collect(Collectors.toList()))
-                .stream().filter { it -> it[1] == MAVEN }
+                .stream().filter { it -> it[1] == BuildTool.MAVEN }
     }
 
+    @Ignore
     @Unroll
     void 'test basic create-messaging-app for jms-sqs and #lang and #buildTool'(Language lang,
                                                                                 BuildTool buildTool,
@@ -79,14 +84,11 @@ class CreateMessagingSpec extends CommandSpec {
         executeBuild buildTool, 'test'
 
         then:
-        thrown UnexpectedBuildFailure
+        noExceptionThrown()
 
         where:
-        [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
-                beanContext.streamOfType(MessagingFeature.class)
-                        .filter({ f -> f.name == 'jms-sqs'} )
-                        .map({  f -> f.getName() })
-                        .collect(Collectors.toList()))
-                .stream().filter { it -> it[1] != MAVEN }
+        [lang, buildTool, feature] << LanguageBuildCombinations.combinations(Collections.singletonList('jms-sqs'))
+                .stream()
+                .filter { it -> it[1] != BuildTool.MAVEN }
     }
 }

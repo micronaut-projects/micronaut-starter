@@ -25,6 +25,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
@@ -52,11 +53,16 @@ public class Maven implements BuildFeature {
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     protected static final String MAVEN_PREFIX = "maven/";
 
+    protected static final String GROUP_ID_ORG_APACHE_MAVEN_PLUGINS = "org.apache.maven.plugins";
+
+    protected static final String ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN = "maven-enforcer-plugin";
+
     private static final Dependency MICRONAUT_INJECT = MicronautDependencyUtils
             .coreDependency()
-            .artifactId("micronaut-inject")
+            .artifactId(MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_INJECT)
             .compile()
             .build();
+
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
@@ -91,6 +97,14 @@ public class Maven implements BuildFeature {
         }
         generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
         generatorContext.addDependency(MICRONAUT_INJECT);
+        addEnforcePlugin(generatorContext);
+    }
+
+    protected void addEnforcePlugin(GeneratorContext generatorContext) {
+        generatorContext.addBuildPlugin(MavenPlugin.builder()
+                .groupId(GROUP_ID_ORG_APACHE_MAVEN_PLUGINS)
+                .artifactId(ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN)
+                .build());
     }
 
     protected void addMavenWrapper(GeneratorContext generatorContext) {

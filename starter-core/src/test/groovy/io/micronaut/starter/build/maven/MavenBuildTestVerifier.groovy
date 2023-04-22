@@ -6,23 +6,40 @@ import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.options.Language
 
 @CompileStatic
 class MavenBuildTestVerifier implements BuildTestVerifier {
     final Node project
+    final Language language
 
-    MavenBuildTestVerifier(String template) {
+    MavenBuildTestVerifier(String template, Language language) {
         this.project = new XmlParser().parseText(template)
+        this.language = language
     }
 
     @CompileDynamic
-    @Override
-    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId) {
         String expectedCoordinate = "${groupId}:${artifactId}"
-        project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
-            List<String> coordinates = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
-            coordinates.contains(expectedCoordinate)
+        if (language == Language.KOTLIN) {
+            if (scope == Scope.ANNOTATION_PROCESSOR) {
+                return project.build.plugins.plugin.find { it.artifactId.text() == "kotlin-maven-plugin" }?.executions.execution.find { it.id.text() == 'kapt' }?.with {
+                    List<String> coordinates = configuration.annotationProcessorPaths.annotationProcessorPath.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                    return coordinates.contains(expectedCoordinate)
+                }
+            } else if (scope == Scope.TEST_ANNOTATION_PROCESSOR) {
+                    return project.build.plugins.plugin.find { it.artifactId.text() == "kotlin-maven-plugin" }?.executions.execution.find { it.id.text() == 'test-kapt' }?.with {
+                        List<String> coordinates = configuration.annotationProcessorPaths.annotationProcessorPath.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                        return coordinates.contains(expectedCoordinate)
+                    }
+            }
+        } else if (language == Language.JAVA){
+            return project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+                List<String> coordinates = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                return coordinates.contains(expectedCoordinate)
+            }
         }
+        return false
     }
 
     @Override
@@ -40,8 +57,11 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope) {
-        Optional<String> mavenScopeString = MavenScope.of(scope).map(MavenScope::toString)
-        if (!mavenScopeString.isPresent()){
+        if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
+            return hasAnnotationProcessor(scope, groupId, artifactId)
+        }
+        Optional<String> mavenScopeString = MavenScope.of(scope, language).map(MavenScope::toString)
+        if (!mavenScopeString.isPresent()) {
             throw new ConfigurationException("cannot match " + scope + " to maven scope");
         }
         hasDependency(groupId, artifactId, mavenScopeString.get())

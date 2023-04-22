@@ -6,8 +6,10 @@ import io.micronaut.starter.feature.github.workflows.docker.DockerRegistryWorkfl
 import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.github.WorkflowSpec
 import io.micronaut.starter.util.NameUtils
+import spock.lang.IgnoreIf
 import spock.lang.Requires
 import spock.lang.Shared
 
@@ -68,6 +70,7 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven workflow"() {
         given:
         def project = NameUtils.parse("com.example.maven-java-starter-test")
@@ -100,6 +103,7 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test graalvm maven workflow"() {
         given:
         def project = NameUtils.parse("com.example.maven-graalvm-starter-test")

@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
 
+import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +41,9 @@ public class MavenBuild {
 
     private final MavenCombineAttribute testAnnotationProcessorCombineAttribute;
 
-    private final List<Coordinate> testAnnotationProcessors;
+    private final List<DependencyCoordinate> testAnnotationProcessors;
 
-    private final List<Coordinate> annotationProcessors;
+    private final List<DependencyCoordinate> annotationProcessors;
 
     private final List<MavenDependency> dependencies;
 
@@ -87,8 +88,8 @@ public class MavenBuild {
     }
 
     public MavenBuild(@NonNull String artifactId,
-                      @NonNull List<Coordinate> annotationProcessors,
-                      @NonNull List<Coordinate> testAnnotationProcessors,
+                      @NonNull List<DependencyCoordinate> annotationProcessors,
+                      @NonNull List<DependencyCoordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
                       @NonNull List<MavenPlugin> plugins,
@@ -130,12 +131,12 @@ public class MavenBuild {
     }
 
     @NonNull
-    public List<Coordinate> getAnnotationProcessors() {
+    public List<DependencyCoordinate> getAnnotationProcessors() {
         return annotationProcessors;
     }
 
     @NonNull
-    public List<Coordinate> getTestAnnotationProcessors() {
+    public List<DependencyCoordinate> getTestAnnotationProcessors() {
         return testAnnotationProcessors;
     }
 

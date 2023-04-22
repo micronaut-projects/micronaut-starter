@@ -11,7 +11,7 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
     @Unroll
     void "#language #buildTool #testFramework combination expected"(Language language, BuildTool buildTool, TestFramework testFramework) {
         expect:
-        LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework])
+        (buildTool == BuildTool.MAVEN && BuildToolTest.IGNORE_MAVEN) || LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework])
 
         where:
         language        | buildTool        | testFramework

@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v3.9.0
         with:
           distribution: 'adopt'
-          java-version: '8'
+          java-version: '17'
       - name: Set the current release version
         id: release_version
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
@@ -103,8 +103,8 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-musl: 'true'
@@ -154,8 +154,8 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
@@ -198,8 +198,8 @@ jobs:
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21.3.0'
-          java-version: '11'
+          version: '22.3.1'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File

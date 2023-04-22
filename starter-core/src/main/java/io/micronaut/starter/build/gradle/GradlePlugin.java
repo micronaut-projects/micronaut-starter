@@ -178,7 +178,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         @NonNull
-        public GradlePlugin.Builder buildImports(String ...imports) {
+        public GradlePlugin.Builder buildImports(String... imports) {
             this.buildImports.addAll(Arrays.asList(imports));
             return this;
         }

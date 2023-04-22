@@ -2,8 +2,10 @@ package io.micronaut.starter.core.test.feature.coherence
 
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 class CoherenceDataSpec extends CommandSpec {
@@ -13,6 +15,7 @@ class CoherenceDataSpec extends CommandSpec {
         return "coherenceData"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven coherence-data with #language"(Language language) {
         when:

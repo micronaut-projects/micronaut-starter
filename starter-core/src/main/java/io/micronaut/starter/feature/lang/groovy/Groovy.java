@@ -36,6 +36,7 @@ import java.util.function.Predicate;
 
 @Singleton
 public class Groovy implements LanguageFeature {
+    public static final String GROUP_ID_GROOVY = "org.apache.groovy";
     protected static final Dependency DEPENDENCY_MICRONAUT_GROOVY_RUNTIME = MicronautDependencyUtils.groovyDependency()
             .artifactId("micronaut-runtime-groovy")
             .compile()
@@ -45,7 +46,7 @@ public class Groovy implements LanguageFeature {
             .developmentOnly()
             .build();
     protected static final Dependency DEPENDENCY_GROOVY = new Dependency.Builder()
-            .groupId("org.codehaus.groovy")
+            .groupId(GROUP_ID_GROOVY)
             .artifactId("groovy")
             .versionProperty("groovy.version")
             .compile()

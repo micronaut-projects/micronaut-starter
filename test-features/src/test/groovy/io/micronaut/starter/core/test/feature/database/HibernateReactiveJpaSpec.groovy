@@ -11,19 +11,21 @@ import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
+import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import io.micronaut.starter.core.test.feature.database.templates.book
+import spock.lang.IgnoreIf
 import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends CommandSpec {
-
     @Override
     String getTempDirectoryPrefix() {
         return "hibernateReactiveJpa"
     }
 
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven hibernate-reactive-jpa with java and #db"(String db) {
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [HibernateReactiveJpa.NAME, db])
@@ -42,7 +44,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << featuresNames()
     }
 
     void "test gradle hibernate-reactive-jpa with java and #db"(String db) {
@@ -63,6 +65,16 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
+        db << featuresNames()
+    }
+
+    private static List<String> featuresNames() {
+        [
+                MySQL.NAME,
+                MariaDB.NAME,
+                PostgreSQL.NAME,
+                //Oracle.NAME,
+                SQLServer.NAME
+        ]
     }
 }

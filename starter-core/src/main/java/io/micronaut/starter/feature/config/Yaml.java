@@ -46,6 +46,16 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Yaml";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for using YAML for configuration";
+    }
+
+    @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
     }

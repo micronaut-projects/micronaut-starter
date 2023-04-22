@@ -5,10 +5,8 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Retry
 import spock.lang.Unroll
 
-@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class KtorSpec extends CommandSpec {
 
     @Unroll

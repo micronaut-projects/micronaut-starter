@@ -58,6 +58,19 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         generatorContext.templates.'multi-module-pom'
     }
 
+    void 'enforce plugin is added to pom.xml'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .render()
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+''')
+    }
+
     void 'test use defaults from parent pom'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -117,9 +130,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
                <annotationProcessorPath>
-                 <groupId>io.micronaut</groupId>
-                 <artifactId>micronaut-validation</artifactId>
-                 <version>${micronaut.version}</version>
+                 <groupId>io.micronaut.validation</groupId>
+                 <artifactId>micronaut-validation-processor</artifactId>
+                 <version>${micronaut.validation.version}</version>
                </annotationProcessorPath>
               </annotationProcessorPaths>
 ''')
@@ -137,13 +150,20 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>provided</scope>
     </dependency>
 ''')
-        template.contains('''\
+        and: 'validation is not added by default'
+        !template.contains('''\
     <dependency>
-      <groupId>org.codehaus.groovy</groupId>
+      <groupId>io.micronaut.validation</groupId>
+      <artifactId>micronaut-validation</artifactId>
+      <scope>compile</scope>
+    </dependency>
+''')
+        template.contains('''\
+      <groupId>org.apache.groovy</groupId>
       <artifactId>groovy</artifactId>
 ''')
         template.contains('''\
-    <groovyVersion>3.0.13</groovyVersion>
+    <groovyVersion>4.0.11</groovyVersion>
 ''')
     }
 

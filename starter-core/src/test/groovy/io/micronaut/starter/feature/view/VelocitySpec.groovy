@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.view
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,39 +24,18 @@ class VelocitySpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'test gradle views-velocity feature for language=#language'() {
+    void 'test #buildTool views-velocity feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['views-velocity'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.views:micronaut-views-velocity")')
+        verifier.hasDependency("io.micronaut.views", "micronaut-views-velocity", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
-
-    @Unroll
-    void 'test maven views-velocity feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['views-velocity'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.views</groupId>
-      <artifactId>micronaut-views-velocity</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
-    }
-
 }

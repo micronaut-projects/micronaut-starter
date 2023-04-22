@@ -160,7 +160,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         template.contains('''\
       <plugin>
-        <groupId>io.micronaut.build</groupId>
+        <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
       </plugin>
 ''')

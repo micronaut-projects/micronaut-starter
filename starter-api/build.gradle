@@ -4,11 +4,7 @@ plugins {
 
 dependencies {
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
-    annotationProcessor "com.google.code.findbugs:jsr305"
-
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
-    api platform("io.micronaut:micronaut-bom:$micronautVersion")
-
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }
@@ -17,11 +13,13 @@ dependencies {
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
-    api "io.micronaut:micronaut-validation"
-    api group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation "io.projectreactor:reactor-core"
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    api("io.micronaut.validation:micronaut-validation")
+    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
+
+    testImplementation("io.micronaut:micronaut-jackson-databind")
     testImplementation "io.micronaut:micronaut-http-server-netty"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"

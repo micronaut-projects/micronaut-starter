@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 
 public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
+    public static final String ARTIFACT_ID_MICRONAUT_INJECT = "micronaut-inject";
+    public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
@@ -40,6 +42,13 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
     public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
+    public static final String GROUP_ID_IO_MICRONAUT_VALIDATION = "io.micronaut.validation";
+
+    public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
+
+    public static final String GROUP_ID_MICRONAUT_GRPC = "io.micronaut.grpc";
+    public static final String GROUP_ID_IO_MICRONAUT_JMS = "io.micronaut.jms";
+    public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
 
     private MicronautDependencyUtils() {
 
@@ -71,13 +80,12 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
-<<<<<<< HEAD
     public static Dependency.Builder sessionDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
-=======
+    }
+
     public static Dependency.Builder servletDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
->>>>>>> 3.10.x
     }
 
     @NonNull
@@ -137,6 +145,20 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder platformDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_PLATFORM);
+    }
+
+    @NonNull
+    public static Dependency.Builder grpcDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GRPC);
+    }
+
+    @NonNull
+    public static Dependency.Builder jmsDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
+    }
+
     public static Dependency.Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
     }
@@ -144,5 +166,20 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder openapi() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_OPENAPI);
+    }
+
+    @NonNull
+    public static Dependency.Builder validationDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_VALIDATION);
+    }
+
+    @NonNull
+    public static Dependency.Builder injectJava() {
+        return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_INJECT_JAVA);
+    }
+
+    @NonNull
+    public static Dependency.Builder picocliDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
     }
 }

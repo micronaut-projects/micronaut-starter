@@ -19,11 +19,6 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
-    boolean hasAnnotationProcessor(String groupId, String artifactId) {
-        hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
-    }
-
-    @Override
     boolean hasBom(String groupId, String artifactId, Scope scope) {
         Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework).map { it.getConfigurationName() }
         if (!gradleConfigurationNameOptional.isPresent()){

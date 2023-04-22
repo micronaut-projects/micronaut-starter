@@ -212,8 +212,8 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     private Dependency.Builder bomDependency() {
-        return MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-bom")
+        return MicronautDependencyUtils.platformDependency()
+                .artifactId("micronaut-platform")
                 .version(VersionInfo.getMicronautVersion())
                 .pom();
     }
@@ -230,7 +230,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     private MavenBuild infrastructureMavenBuild(GeneratorContext generatorContext) {
-        List<MavenDependency> dependencies = MavenDependency.listOf(dependencyContext);
+        List<MavenDependency> dependencies = MavenDependency.listOf(dependencyContext, generatorContext.getLanguage());
         List<MavenPlugin> plugins = Arrays.asList(
                 MavenPlugin.builder()
                         .artifactId("maven-compiler-plugin")
