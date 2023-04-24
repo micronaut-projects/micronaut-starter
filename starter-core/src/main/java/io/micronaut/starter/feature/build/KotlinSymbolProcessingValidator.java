@@ -35,9 +35,6 @@ public class KotlinSymbolProcessingValidator implements FeatureValidator {
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance)) {
-            if (options.getLanguage() != Language.KOTLIN) {
-                throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) only supports Kotlin");
-            }
             if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance) && !options.getBuildTool().isGradle()) {
                 throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) is only supported by Gradle");
             }

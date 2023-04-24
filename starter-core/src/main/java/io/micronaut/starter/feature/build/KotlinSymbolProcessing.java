@@ -18,8 +18,6 @@ package io.micronaut.starter.feature.build;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
 import jakarta.inject.Singleton;
 
@@ -33,7 +31,7 @@ public class KotlinSymbolProcessing implements KotlinSpecificFeature {
 
     @Override
     public String getCategory() {
-        return Category.DEV_TOOLS;
+        return Category.LANGUAGES;
     }
 
     @Override
@@ -61,7 +59,7 @@ public class KotlinSymbolProcessing implements KotlinSpecificFeature {
     public String getThirdPartyDocumentation() {
         return "https://kotlinlang.org/docs/ksp-overview.html";
     }
-    
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;

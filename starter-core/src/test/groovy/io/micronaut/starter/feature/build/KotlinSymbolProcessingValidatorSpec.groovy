@@ -11,17 +11,10 @@ class KotlinSymbolProcessingValidatorSpec  extends ApplicationContextSpec implem
     void 'test feature ksp is only supported for Kotlin and Gradle'() {
         String featureName = 'ksp'
         when:
-        getFeatures([featureName], Language.GROOVY, TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN)
-
-        then:
-        IllegalArgumentException ex = thrown()
-        ex.message.contains("Kotlin Symbol Processing (KSP) only supports Kotlin")
-
-        when:
         getFeatures([featureName], Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN)
 
         then:
-        ex = thrown()
+        IllegalArgumentException ex = thrown()
         ex.message.contains("Kotlin Symbol Processing (KSP) is only supported by Gradle")
 
         when:
