@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.test;
 
+import io.micronaut.starter.feature.CommunityFeatureValidator;
+
 public class CommunityLibraries {
-    public static final boolean IGNORE = true;
+    public static final boolean IGNORE = !CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES;
 }

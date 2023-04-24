@@ -3,11 +3,14 @@ package io.micronaut.starter.feature.agorapulse.gru
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
-import spock.lang.Unroll
+import spock.lang.Requires
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class GruHttpSpec extends ApplicationContextSpec {
+
     void "Gru-http Feature override Feature->getThirdPartyDocumentation"() {
         given:
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
@@ -39,8 +42,7 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
     }
 
-    @Unroll("#buildTool with feature agorapulse-gru-http adds dependency for #buildTool")
-    void "verify agorapulse-gru-http feature dependencies"(BuildTool buildTool) {
+    void "#buildTool with feature agorapulse-gru-http adds dependency for #buildTool"(BuildTool buildTool) {
         given:
         String groupId = 'com.agorapulse'
         String artifactId = 'gru-micronaut'

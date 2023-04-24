@@ -4,11 +4,13 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
+import spock.lang.Requires
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class SlackSpec extends ApplicationContextSpec {
 
     void "Slack Feature override Feature->getThirdPartyDocumentation"() {
@@ -34,8 +36,7 @@ class SlackSpec extends ApplicationContextSpec {
         assert feature.supports(ApplicationType.DEFAULT)
     }
 
-    @Unroll('#buildTool with feature micronaut-slack adds dependency #groupId:#artifactId for #language')
-    void "verify micronaut-slack feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    void "#buildTool with feature micronaut-slack adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-slack']
         String coordinate = "${groupId}:${artifactId}"

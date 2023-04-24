@@ -4,12 +4,15 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
+import spock.lang.Requires
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class ConsoleSpec extends ApplicationContextSpec {
+
     void "Micronaut-console Feature override Feature->getThirdPartyDocumentation"() {
         given:
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
@@ -41,8 +44,7 @@ class ConsoleSpec extends ApplicationContextSpec {
         }
     }
 
-    @Unroll("#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language")
-    void "verify agorapulse-micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    void "#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-console']
         String coordinate = "${groupId}:${artifactId}"
