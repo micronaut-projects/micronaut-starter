@@ -91,6 +91,7 @@ public class MavenBuildCreator {
             testAnnotationProcessorsCoordinates.add(injectJava);
 
             DependencyCoordinate mnGraal = GraalVM.micronautGraalVM()
+                    .versionProperty(PROPERTY_MICRONAUT_CORE_VERSION)
                     .buildCoordinate(true);
             annotationProcessorsCoordinates.add(mnGraal);
             testAnnotationProcessorsCoordinates.add(mnGraal);
