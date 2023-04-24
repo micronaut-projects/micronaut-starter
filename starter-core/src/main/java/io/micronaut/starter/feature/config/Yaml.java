@@ -28,7 +28,6 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 import jakarta.inject.Singleton;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -38,6 +37,11 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     private static final String EXTENSION = "yml";
     private static final String YAML_GROUP_ID = "org.yaml";
     private static final String SNAKEYAML_ARTIFACT_ID = "snakeyaml";
+    private static final Dependency DEPENDENCY_YAML = Dependency.builder()
+            .groupId(YAML_GROUP_ID)
+            .artifactId(SNAKEYAML_ARTIFACT_ID)
+            .runtime()
+            .build();
 
     @Override
     @NonNull
@@ -62,41 +66,24 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        // As a config feature, we're processed last, after the build tools.
-        // Add the `org.yaml:snakeyaml` dependency before that.
+        // as a config feature, we're processed last, after the build tools.
+        //  We need to add the dependency before that.
+        featureContext.addFeature(new Feature() {
+            @Override
+            public String getName() {
+                return "yaml-build";
+            }
 
-        if (isVisible()) {
-            featureContext.addFeature(new Feature() {
-                @Override
-                @NonNull
-                public String getName() {
-                    return "yaml-build";
-                }
+            @Override
+            public boolean supports(ApplicationType applicationType) {
+                return true;
+            }
 
-                @Override
-                public boolean supports(ApplicationType applicationType) {
-                    return true;
-                }
-
-                @Override
-                public void apply(GeneratorContext generatorContext) {
-                    addDependencies(generatorContext);
-                }
-
-                private void addDependencies(GeneratorContext generatorContext) {
-                    Arrays.asList(
-                            snakeYamlDependency().runtime(),
-                            snakeYamlDependency().testRuntime()
-                    ).forEach(generatorContext::addDependency);
-                }
-            });
-        }
-    }
-
-    private static Dependency.Builder snakeYamlDependency() {
-        return Dependency.builder()
-                .groupId(YAML_GROUP_ID)
-                .artifactId(SNAKEYAML_ARTIFACT_ID);
+            @Override
+            public void apply(GeneratorContext generatorContext) {
+                generatorContext.addDependency(DEPENDENCY_YAML);
+            }
+        });
     }
 
     @Override

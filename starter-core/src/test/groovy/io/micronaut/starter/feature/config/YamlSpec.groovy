@@ -1,10 +1,15 @@
 package io.micronaut.starter.feature.config
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
@@ -31,14 +36,30 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
         description = applicationType.name
     }
 
+    @Unroll
+    void "test dependency added for yaml feature for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([Yaml.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("org.yaml", "snakeyaml", Scope.RUNTIME)
+        !verifier.hasDependency("org.yaml", "snakeyaml", Scope.TEST_RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
     void "test configuration files generated for yaml feature"() {
         when:
-        GeneratorContext generatorContext = buildGeneratorContext([], { context ->
+        GeneratorContext generatorContext = buildGeneratorContext([Yaml.NAME], { context ->
             context.getBootstrapConfiguration().put("abc", 123)
             context.getConfiguration("test", new ApplicationConfiguration("test", "test")).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
         }, new Options())
-        def output = generate(ApplicationType.DEFAULT, generatorContext)
+        Map<String, String> output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
         output["src/main/resources/application.yml"].contains '''\
