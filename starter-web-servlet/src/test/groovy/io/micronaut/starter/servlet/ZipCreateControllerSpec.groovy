@@ -8,13 +8,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import spock.lang.Retry
 import spock.lang.Specification
 
 import jakarta.inject.Inject
 
 @MicronautTest
-@Retry
 class ZipCreateControllerSpec extends Specification {
 
     @Inject
