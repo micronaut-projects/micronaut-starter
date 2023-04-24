@@ -24,7 +24,7 @@ import jakarta.inject.Singleton;
 import java.util.function.Function;
 
 @Singleton
-public class Properties implements ConfigurationFeature {
+public class Properties implements DefaultConfigurationFeature {
 
     private static final String EXTENSION = "properties";
 

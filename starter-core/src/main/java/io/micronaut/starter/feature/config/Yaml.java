@@ -19,20 +19,17 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 import jakarta.inject.Singleton;
 
-import java.util.Set;
 import java.util.function.Function;
 
 @Singleton
-public class Yaml implements ConfigurationFeature, DefaultFeature {
+public class Yaml implements ConfigurationFeature {
     public static final String NAME = "yaml";
     private static final String EXTENSION = "yml";
     private static final String YAML_GROUP_ID = "org.yaml";
@@ -57,11 +54,6 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     @Override
     public String getDescription() {
         return "Adds support for using YAML for configuration";
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
     }
 
     @Override

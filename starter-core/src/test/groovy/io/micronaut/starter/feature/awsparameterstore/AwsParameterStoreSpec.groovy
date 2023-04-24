@@ -21,8 +21,8 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
 
     void 'test src/main/resources/boostrap.yml with feature aws-parameter-store contains config'() {
         when:
-        def output = generate(['aws-parameter-store'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate(['yaml', 'aws-parameter-store'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap

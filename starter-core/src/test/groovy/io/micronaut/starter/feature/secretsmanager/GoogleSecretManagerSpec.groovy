@@ -22,8 +22,8 @@ class GoogleSecretManagerSpec extends ApplicationContextSpec implements CommandO
 
     void 'test src/main/resources/boostrap.yml with feature gcp-secrets-manager contains config'() {
         when:
-        def output = generate(['gcp-secrets-manager'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate(['yaml', 'gcp-secrets-manager'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap

@@ -20,8 +20,8 @@ class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test feature flyway contains configuration'() {
         when:
-        def output = generate(['flyway'])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['yaml', 'flyway'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config

@@ -7,8 +7,8 @@ class NettySpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test default netty server contains netty config for max order'() {
         when:
-        def output = generate([])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['yaml'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config

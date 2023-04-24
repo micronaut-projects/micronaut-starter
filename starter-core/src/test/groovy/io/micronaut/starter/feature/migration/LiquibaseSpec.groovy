@@ -20,10 +20,10 @@ class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixt
 
     void 'test feature liquibase contains configuration'() {
         when:
-        def output = generate(['liquibase'])
-        def changelog = output["src/main/resources/db/liquibase-changelog.xml"]
-        def schema = output["src/main/resources/db/changelog/01-schema.xml"]
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['yaml', 'liquibase'])
+        String changelog = output["src/main/resources/db/liquibase-changelog.xml"]
+        String schema = output["src/main/resources/db/changelog/01-schema.xml"]
+        String config = output["src/main/resources/application.yml"]
 
         then:
         changelog

@@ -131,8 +131,8 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
 
     void "test render config"() {
         when:
-        def output = generate(['data-jdbc'])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['yaml', 'data-jdbc'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config

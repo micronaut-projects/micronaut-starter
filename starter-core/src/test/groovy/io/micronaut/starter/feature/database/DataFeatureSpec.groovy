@@ -8,8 +8,8 @@ class DataFeatureSpec extends ApplicationContextSpec implements CommandOutputFix
 
     void 'Data Feature with migration has expected config'(List<String> features) {
         when:
-        def output = generate(features)
-        def appConfig = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(features)
+        String appConfig = output["src/main/resources/application.yml"]
 
         then:
         appConfig
@@ -18,23 +18,23 @@ class DataFeatureSpec extends ApplicationContextSpec implements CommandOutputFix
 
         where:
         features                                  | _
-        ['data-jdbc',  'flyway',    'mariadb']    | _
-        ['data-jdbc',  'flyway',    'mysql']      | _
-        ['data-jdbc',  'flyway',    'oracle']     | _
-        ['data-jdbc',  'flyway',    'postgres']   | _
-        ['data-jpa',   'flyway',    'mysql']      | _
-        ['data-jpa',   'flyway',    'postgres']   | _
-        ['data-r2dbc', 'flyway',    'mysql']      | _
-        ['data-r2dbc', 'flyway',    'postgres']   | _
-        ['data-r2dbc', 'flyway',    'sqlserver']  | _
-        ['data-jdbc',  'liquibase', 'mariadb']    | _
-        ['data-jdbc',  'liquibase', 'mysql']      | _
-        ['data-jdbc',  'liquibase', 'oracle']     | _
-        ['data-jdbc',  'liquibase', 'postgres']   | _
-        ['data-jpa',   'liquibase', 'mysql']      | _
-        ['data-jpa',   'liquibase', 'postgres']   | _
-        ['data-r2dbc', 'liquibase', 'mysql']      | _
-        ['data-r2dbc', 'liquibase', 'postgres']   | _
-        ['data-r2dbc', 'liquibase', 'sqlserver']  | _
+        ['yaml', 'data-jdbc',  'flyway',    'mariadb']    | _
+        ['yaml', 'data-jdbc',  'flyway',    'mysql']      | _
+        ['yaml', 'data-jdbc',  'flyway',    'oracle']     | _
+        ['yaml', 'data-jdbc',  'flyway',    'postgres']   | _
+        ['yaml', 'data-jpa',   'flyway',    'mysql']      | _
+        ['yaml', 'data-jpa',   'flyway',    'postgres']   | _
+        ['yaml', 'data-r2dbc', 'flyway',    'mysql']      | _
+        ['yaml', 'data-r2dbc', 'flyway',    'postgres']   | _
+        ['yaml', 'data-r2dbc', 'flyway',    'sqlserver']  | _
+        ['yaml', 'data-jdbc',  'liquibase', 'mariadb']    | _
+        ['yaml', 'data-jdbc',  'liquibase', 'mysql']      | _
+        ['yaml', 'data-jdbc',  'liquibase', 'oracle']     | _
+        ['yaml', 'data-jdbc',  'liquibase', 'postgres']   | _
+        ['yaml', 'data-jpa',   'liquibase', 'mysql']      | _
+        ['yaml', 'data-jpa',   'liquibase', 'postgres']   | _
+        ['yaml', 'data-r2dbc', 'liquibase', 'mysql']      | _
+        ['yaml', 'data-r2dbc', 'liquibase', 'postgres']   | _
+        ['yaml', 'data-r2dbc', 'liquibase', 'sqlserver']  | _
     }
 }

@@ -22,8 +22,8 @@ class CoherenceGrpcClientSpec extends BeanContextSpec implements CommandOutputFi
 
     void 'test configuration with feature coherence-grpc-client'() {
         when:
-        def output = generate(['coherence-grpc-client'])
-        def configuration = output['src/main/resources/application.yml']
+        Map<String, String> output = generate(['yaml', 'coherence-grpc-client'])
+        String configuration = output['src/main/resources/application.yml']
 
         then:
         configuration

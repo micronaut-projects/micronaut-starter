@@ -22,8 +22,8 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test configuration with feature coherence-session'() {
         when:
-        def output = generate(['coherence-session'])
-        def configuration = output['src/main/resources/application.yml']
+        Map<String, String> output = generate(['yaml', 'coherence-session'])
+        String configuration = output['src/main/resources/application.yml']
 
         then:
         configuration

@@ -52,10 +52,10 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
     void 'test ATP config file'() {
         when:
-        def output = generate(ApplicationType.DEFAULT,
+        Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['oracle-cloud-atp'])
-        def config = output["src/main/resources/application.yml"]
+                ['yaml', 'oracle-cloud-atp'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config.contains("datasources") //default jdbc is added
@@ -71,10 +71,10 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
     void 'test ATP config file no jdbc config'() {
         when:
-        def output = generate(ApplicationType.DEFAULT,
+        Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['jdbc-hikari', 'oracle-cloud-atp'])
-        def config = output["src/main/resources/application.yml"]
+                ['yaml', 'jdbc-hikari', 'oracle-cloud-atp'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         !config.contains('driver-class-name')
@@ -83,10 +83,10 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/912")
     void 'test default database driver not present in config'() {
         when:
-        def output = generate(ApplicationType.DEFAULT,
+        Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['oracle-cloud-atp', "data-jdbc"])
-        def config = output["src/main/resources/application.yml"]
+                ['yaml', 'oracle-cloud-atp', "data-jdbc"])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         !config.contains('dialect: H2')
@@ -94,10 +94,10 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
     void 'test config with a driver config feature'() {
         when:
-        def output = generate(ApplicationType.DEFAULT,
+        Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['oracle-cloud-atp', "data-jdbc"])
-        def config = output["src/main/resources/application.yml"]
+                ['yaml', 'oracle-cloud-atp', "data-jdbc"])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config.contains("""

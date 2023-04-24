@@ -168,9 +168,9 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'feature data-jpa contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {
         when:
-        def output = generate(features)
-        def appConfig = output["src/main/resources/application.yml"]
-        def testConfig = output["src/test/resources/application-test.yml"]
+        Map<String, String> output = generate(features)
+        String appConfig = output["src/main/resources/application.yml"]
+        String testConfig = output["src/test/resources/application-test.yml"]
 
         then:
         appConfig
@@ -182,9 +182,9 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         where:
         features                  | prod            | test
-        ['data-jpa']              | 'auto: update'  | 'auto: create-drop'
-        ['data-jpa', 'flyway']    | "auto: none"    | 'auto: none'
-        ['data-jpa', 'liquibase'] | "auto: none"    | 'auto: none'
+        ['yaml', 'data-jpa']              | 'auto: update'  | 'auto: create-drop'
+        ['yaml', 'data-jpa', 'flyway']    | "auto: none"    | 'auto: none'
+        ['yaml', 'data-jpa', 'liquibase'] | "auto: none"    | 'auto: none'
 
     }
 }

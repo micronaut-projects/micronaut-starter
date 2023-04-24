@@ -38,8 +38,8 @@ class JAsyncSQLSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'configuration includes defaults for feature jasync-sql'() {
         when:
-        def output = generate(['jasync-sql','mysql'])
-        def configuration = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['yaml', 'jasync-sql','mysql'])
+        String configuration = output["src/main/resources/application.yml"]
 
         then:
         configuration.contains("""
@@ -54,7 +54,7 @@ jasync:
 """)
 
         when:
-        output = generate(['jasync-sql','postgres'])
+        output = generate(['yaml', 'jasync-sql','postgres'])
         configuration = output["src/main/resources/application.yml"]
 
         then:

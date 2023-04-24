@@ -22,8 +22,8 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
 
     void 'test configuration with feature coherence-distributed-configuration'() {
         when:
-        def output = generate(['coherence-distributed-configuration'])
-        def configuration = output['src/main/resources/bootstrap.yml']
+        Map<String, String> output = generate(['yaml', 'coherence-distributed-configuration'])
+        String configuration = output['src/main/resources/bootstrap.yml']
 
         then:
         configuration

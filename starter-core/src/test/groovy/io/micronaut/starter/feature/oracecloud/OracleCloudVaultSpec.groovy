@@ -25,8 +25,8 @@ class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'test src/main/resources/boostrap.yml with feature oracle-cloud-vault contains config'() {
         when:
-        def output = generate(['oracle-cloud-vault'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate(['yaml', 'oracle-cloud-vault'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap

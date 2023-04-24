@@ -45,8 +45,8 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
 
     void 'test Oracle Cloud SDK config file'() {
         when:
-        def output = generate(['oracle-cloud-sdk'])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate(['oracle-cloud-sdk', 'yaml'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config.contains('oci.config.profile: DEFAULT')
