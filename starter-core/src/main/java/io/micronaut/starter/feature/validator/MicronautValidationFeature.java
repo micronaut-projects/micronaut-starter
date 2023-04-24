@@ -64,6 +64,11 @@ public class MicronautValidationFeature implements ValidationFeature {
         addDependencies(generatorContext);
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-validation/latest/guide/";
+    }
+
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
         generatorContext.addDependency(DEPENDENCY_VALIDATON_API);

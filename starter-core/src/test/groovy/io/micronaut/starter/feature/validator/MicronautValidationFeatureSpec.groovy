@@ -19,7 +19,6 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
     @Subject
     MicronautValidationFeature micronautValidationFeature = beanContext.getBean(MicronautValidationFeature)
 
-    @PendingFeature(reason = "Only Micronaut Framework 4 has docs")
     void 'test readme.md with feature http-session contains links to micronaut docs'() {
         when:
         def output = generate(['micronaut-validation'])
