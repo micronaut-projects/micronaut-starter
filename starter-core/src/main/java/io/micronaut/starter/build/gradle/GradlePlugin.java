@@ -35,6 +35,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class GradlePlugin implements BuildPlugin {
+    public static final int ORDER = -10;
 
     private final GradleFile gradleFile;
     private final String id;
@@ -67,6 +68,14 @@ public class GradlePlugin implements BuildPlugin {
         this.requiresLookup = requiresLookup;
         this.order = order;
         this.buildImports = buildImports;
+    }
+
+    public static GradlePlugin of(String id, String lookupArtifactId) {
+        return GradlePlugin.builder()
+                .id(id)
+                .lookupArtifactId(lookupArtifactId)
+                .order(ORDER)
+                .build();
     }
 
     @Nullable

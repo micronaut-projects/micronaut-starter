@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.gradle.GradleBuild;
@@ -29,7 +28,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.feature.build.KotlinBuildPlugins;
 import io.micronaut.starter.feature.build.MicronautBuildPlugin;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
@@ -41,7 +39,6 @@ import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Collections;
@@ -57,26 +54,15 @@ public class Gradle implements BuildFeature {
     protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
 
-    protected final KotlinBuildPlugins kotlinBuildPlugins;
     protected final GradleBuildCreator dependencyResolver;
     protected final MicronautBuildPlugin micronautBuildPlugin;
     protected final RepositoryResolver repositoryResolver;
 
-    @Deprecated
     public Gradle(GradleBuildCreator dependencyResolver,
                   MicronautBuildPlugin micronautBuildPlugin,
-                  KotlinBuildPlugins kotlinBuildPlugins) {
-        this(dependencyResolver, micronautBuildPlugin, kotlinBuildPlugins, new DefaultRepositoryResolver());
-    }
-
-    @Inject
-    public Gradle(GradleBuildCreator dependencyResolver,
-                  MicronautBuildPlugin micronautBuildPlugin,
-                  KotlinBuildPlugins kotlinBuildPlugins,
                   RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
         this.micronautBuildPlugin = micronautBuildPlugin;
-        this.kotlinBuildPlugins = kotlinBuildPlugins;
         this.repositoryResolver = repositoryResolver;
     }
 
@@ -89,9 +75,6 @@ public class Gradle implements BuildFeature {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(micronautBuildPlugin);
-        if (kotlinBuildPlugins.shouldApply(featureContext)) {
-            featureContext.addFeature(kotlinBuildPlugins);
-        }
     }
 
     @Override

@@ -12,7 +12,6 @@ import io.micronaut.starter.build.dependencies.Coordinate
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.dependencies.DefaultPomDependencyVersionResolver
 import io.micronaut.starter.build.gradle.GradleBuildCreator
-import io.micronaut.starter.feature.build.KotlinBuildPlugins
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -41,8 +40,8 @@ class GradleReplacementSpec extends BeanContextSpec implements CommandOutputFixt
     @Replaces(Gradle.class)
     @Singleton
     static class GradleReplacement extends Gradle  {
-        GradleReplacement(GradleBuildCreator dependencyResolver, MicronautBuildPlugin micronautBuildPlugin, KotlinBuildPlugins kotlinBuildPlugins, RepositoryResolver repositoryResolver) {
-            super(dependencyResolver, micronautBuildPlugin, kotlinBuildPlugins, repositoryResolver);
+        GradleReplacement(GradleBuildCreator dependencyResolver, MicronautBuildPlugin micronautBuildPlugin, RepositoryResolver repositoryResolver) {
+            super(dependencyResolver, micronautBuildPlugin, repositoryResolver);
         }
 
         @Override
