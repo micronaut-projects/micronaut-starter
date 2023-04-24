@@ -18,7 +18,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains("https://docs.micronaut.io/latest/guide/index.html#httpClient")
+        readme.contains("https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient")
     }
 
     void "dependency added for http-client feature in the main classpath"(BuildTool buildTool, List<String> features) {

@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -38,7 +39,7 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return true;
+        return selectedFeatures.stream().noneMatch(f -> f instanceof HttpClientJdk);
     }
 
     private Scope dependencyScope(GeneratorContext generatorContext) {
@@ -68,7 +69,7 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#httpClient";
+        return "https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient";
     }
 
     @Override
