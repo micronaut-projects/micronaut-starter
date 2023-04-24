@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.migration
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -20,7 +21,7 @@ class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixt
 
     void 'test feature liquibase contains configuration'() {
         when:
-        Map<String, String> output = generate(['yaml', 'liquibase'])
+        Map<String, String> output = generate([Yaml.NAME, 'liquibase'])
         String changelog = output["src/main/resources/db/liquibase-changelog.xml"]
         String schema = output["src/main/resources/db/changelog/01-schema.xml"]
         String config = output["src/main/resources/application.yml"]

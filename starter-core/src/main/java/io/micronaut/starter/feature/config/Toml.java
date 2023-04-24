@@ -30,6 +30,7 @@ import java.util.function.Function;
 @Singleton
 public class Toml implements ConfigurationFeature {
 
+    public static final String NAME = "toml";
     private static final String EXTENSION = "toml";
 
     @Override
@@ -59,7 +60,7 @@ public class Toml implements ConfigurationFeature {
 
     @Override
     public String getName() {
-        return "toml";
+        return NAME;
     }
 
     @Override

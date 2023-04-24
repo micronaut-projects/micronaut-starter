@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.awsparameterstore
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,7 +22,7 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
 
     void 'test src/main/resources/boostrap.yml with feature aws-parameter-store contains config'() {
         when:
-        Map<String, String> output = generate(['yaml', 'aws-parameter-store'])
+        Map<String, String> output = generate([Yaml.NAME, 'aws-parameter-store'])
         String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:

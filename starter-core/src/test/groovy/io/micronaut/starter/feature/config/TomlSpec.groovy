@@ -22,7 +22,7 @@ class TomlSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test configuration files generated for properties feature"() {
         when:
-        GeneratorContext generatorContext = buildGeneratorContext(['toml'], { context ->
+        GeneratorContext generatorContext = buildGeneratorContext([Toml.NAME], { context ->
             context.getBootstrapConfiguration().put("abc", 123)
             context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)

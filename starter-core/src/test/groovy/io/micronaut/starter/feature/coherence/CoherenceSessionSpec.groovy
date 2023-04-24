@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.coherence
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -22,7 +23,7 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test configuration with feature coherence-session'() {
         when:
-        Map<String, String> output = generate(['yaml', 'coherence-session'])
+        Map<String, String> output = generate([Yaml.NAME, 'coherence-session'])
         String configuration = output['src/main/resources/application.yml']
 
         then:

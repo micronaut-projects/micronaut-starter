@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -38,7 +39,7 @@ class JAsyncSQLSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'configuration includes defaults for feature jasync-sql'() {
         when:
-        Map<String, String> output = generate(['yaml', 'jasync-sql','mysql'])
+        Map<String, String> output = generate([Yaml.NAME, 'jasync-sql', 'mysql'])
         String configuration = output["src/main/resources/application.yml"]
 
         then:
@@ -54,7 +55,7 @@ jasync:
 """)
 
         when:
-        output = generate(['yaml', 'jasync-sql','postgres'])
+        output = generate([Yaml.NAME, 'jasync-sql','postgres'])
         configuration = output["src/main/resources/application.yml"]
 
         then:

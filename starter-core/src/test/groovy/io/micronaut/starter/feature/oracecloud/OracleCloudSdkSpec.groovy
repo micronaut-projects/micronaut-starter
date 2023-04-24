@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.oracecloud
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -45,7 +46,7 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
 
     void 'test Oracle Cloud SDK config file'() {
         when:
-        Map<String, String> output = generate(['oracle-cloud-sdk', 'yaml'])
+        Map<String, String> output = generate(['oracle-cloud-sdk', Yaml.NAME])
         String config = output["src/main/resources/application.yml"]
 
         then:

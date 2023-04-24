@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.oracecloud
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -54,7 +55,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['yaml', 'oracle-cloud-atp'])
+                [Yaml.NAME, 'oracle-cloud-atp'])
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -73,7 +74,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['yaml', 'jdbc-hikari', 'oracle-cloud-atp'])
+                [Yaml.NAME, 'jdbc-hikari', 'oracle-cloud-atp'])
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -85,7 +86,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['yaml', 'oracle-cloud-atp', "data-jdbc"])
+                [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -96,7 +97,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['yaml', 'oracle-cloud-atp', "data-jdbc"])
+                [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
         String config = output["src/main/resources/application.yml"]
 
         then:

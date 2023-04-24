@@ -5,6 +5,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -168,7 +169,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'feature data-jpa contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {
         when:
-        Map<String, String> output = generate(features)
+        Map<String, String> output = generate([Yaml.NAME] + features)
         String appConfig = output["src/main/resources/application.yml"]
         String testConfig = output["src/test/resources/application-test.yml"]
 
@@ -182,9 +183,8 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         where:
         features                  | prod            | test
-        ['yaml', 'data-jpa']              | 'auto: update'  | 'auto: create-drop'
-        ['yaml', 'data-jpa', 'flyway']    | "auto: none"    | 'auto: none'
-        ['yaml', 'data-jpa', 'liquibase'] | "auto: none"    | 'auto: none'
-
+        ['data-jpa']              | 'auto: update'  | 'auto: create-drop'
+        ['data-jpa', 'flyway']    | "auto: none"    | 'auto: none'
+        ['data-jpa', 'liquibase'] | "auto: none"    | 'auto: none'
     }
 }
