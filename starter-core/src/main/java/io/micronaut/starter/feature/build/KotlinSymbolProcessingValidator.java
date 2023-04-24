@@ -19,6 +19,7 @@ import java.util.Set;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -33,11 +34,13 @@ public class KotlinSymbolProcessingValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (options.getLanguage() != Language.KOTLIN) {
-            throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) only supports Kotlin");
-        }
-        if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance) && !options.getBuildTool().isGradle()) {
-            throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) is only supported by Gradle");
+        if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance)) {
+            if (options.getLanguage() != Language.KOTLIN) {
+                throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) only supports Kotlin");
+            }
+            if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance) && !options.getBuildTool().isGradle()) {
+                throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) is only supported by Gradle");
+            }
         }
     }
 }
