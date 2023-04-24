@@ -20,10 +20,11 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.KotlinSpecificFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class KotlinSymbolProcessing implements Feature {
+public class KotlinSymbolProcessing implements KotlinSpecificFeature {
     @Override
     @NonNull
     public String getName() {
@@ -60,12 +61,7 @@ public class KotlinSymbolProcessing implements Feature {
     public String getThirdPartyDocumentation() {
         return "https://kotlinlang.org/docs/ksp-overview.html";
     }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        Feature.super.processSelectedFeatures(featureContext);
-    }
-
+    
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
