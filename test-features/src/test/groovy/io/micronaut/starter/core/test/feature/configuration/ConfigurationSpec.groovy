@@ -1,5 +1,8 @@
 package io.micronaut.starter.core.test.feature.configuration
 
+import io.micronaut.starter.feature.config.Properties
+import io.micronaut.starter.feature.config.Toml
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
@@ -8,6 +11,7 @@ import io.micronaut.starter.template.StringTemplate
 import io.micronaut.starter.test.CommandSpec
 
 class ConfigurationSpec extends CommandSpec {
+
     @Override
     String getTempDirectoryPrefix() {
         return "configuration"
@@ -15,7 +19,7 @@ class ConfigurationSpec extends CommandSpec {
 
     def 'test configuration format #format'(String format) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, format == 'yaml' ? [] : [format])
+        generateProject(Language.JAVA, BuildTool.GRADLE, format == Properties.NAME ? [] : [format])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write('src/test/java/ConfigTest.java', new StringTemplate('src/test/java/ConfigTest.java', '''
 import io.micronaut.context.ApplicationContext;
@@ -38,6 +42,6 @@ public class ConfigTest {
         output?.contains("BUILD SUCCESS")
 
         where:
-        format << ['toml', 'yaml', 'properties']
+        format << [Toml.NAME, Yaml.NAME, Properties.NAME]
     }
 }

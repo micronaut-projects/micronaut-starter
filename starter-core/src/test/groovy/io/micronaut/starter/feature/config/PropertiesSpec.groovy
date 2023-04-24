@@ -31,9 +31,9 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
         description = applicationType.name
     }
 
-    void "test configuration files generated for properties feature"() {
+    void "test configuration files generated for default properties feature"() {
         when:
-        GeneratorContext generatorContext = buildGeneratorContext(['properties'], { context ->
+        GeneratorContext generatorContext = buildGeneratorContext([], { context ->
             context.getBootstrapConfiguration().put("abc", 123)
             context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)

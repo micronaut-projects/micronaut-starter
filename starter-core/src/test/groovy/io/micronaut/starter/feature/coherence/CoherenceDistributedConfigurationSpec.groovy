@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.coherence
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -22,8 +23,8 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
 
     void 'test configuration with feature coherence-distributed-configuration'() {
         when:
-        def output = generate(['coherence-distributed-configuration'])
-        def configuration = output['src/main/resources/bootstrap.yml']
+        Map<String, String> output = generate([Yaml.NAME, 'coherence-distributed-configuration'])
+        String configuration = output['src/main/resources/bootstrap.yml']
 
         then:
         configuration

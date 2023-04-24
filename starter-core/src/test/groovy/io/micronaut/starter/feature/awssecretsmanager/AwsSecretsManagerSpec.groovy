@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.awssecretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,8 +22,8 @@ class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOut
 
     void 'test src/main/resources/boostrap.yml with feature aws-secrets-manager contains config'() {
         when:
-        def output = generate(['aws-secrets-manager'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate([Yaml.NAME, 'aws-secrets-manager'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap

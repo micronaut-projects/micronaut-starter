@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.migration
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -20,8 +21,8 @@ class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test feature flyway contains configuration'() {
         when:
-        def output = generate(['flyway'])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate([Yaml.NAME, 'flyway'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config

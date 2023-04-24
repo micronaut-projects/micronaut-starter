@@ -24,13 +24,14 @@ import jakarta.inject.Singleton;
 import java.util.function.Function;
 
 @Singleton
-public class Properties implements ConfigurationFeature {
+public class Properties implements DefaultConfigurationFeature {
 
+    public static final String NAME = "properties";
     private static final String EXTENSION = "properties";
 
     @Override
     public String getName() {
-        return "properties";
+        return NAME;
     }
 
     @Override

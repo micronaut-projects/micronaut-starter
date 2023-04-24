@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.secretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -22,8 +23,8 @@ class GoogleSecretManagerSpec extends ApplicationContextSpec implements CommandO
 
     void 'test src/main/resources/boostrap.yml with feature gcp-secrets-manager contains config'() {
         when:
-        def output = generate(['gcp-secrets-manager'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate([Yaml.NAME, 'gcp-secrets-manager'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap
