@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,44 +18,44 @@ package io.micronaut.starter.feature.discovery;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.k8s.KubernetesClient;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryKubernetes extends DiscoveryCore {
+public class DiscoveryCore implements DiscoveryFeature {
+    protected static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT = Dependency.builder()
+            .groupId("io.micronaut.discovery")
+            .artifactId("micronaut-discovery-client")
+            .compile()
+            .build();
 
-    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_K8S = Dependency.builder()
-            .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
-            .artifactId("micronaut-kubernetes-discovery-client")
+    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CORE = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-discovery-core")
             .compile()
             .build();
 
     @NonNull
     @Override
     public String getName() {
-        return "discovery-kubernetes";
+        return "discovery-core";
     }
 
     @Override
     public String getTitle() {
-        return "Kubernetes Service Discovery";
+        return "Micronaut Service Discovery";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Service Discovery with Kubernetes";
+        return "Adds support for Service Discovery with Micronaut";
     }
 
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_K8S);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_CORE);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#service-discovery";
+        return "https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/";
     }
 }
