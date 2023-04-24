@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
@@ -24,6 +25,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class KotlinSymbolProcessing implements Feature {
     @Override
+    @NonNull
     public String getName() {
         return "ksp";
     }
@@ -44,6 +46,7 @@ public class KotlinSymbolProcessing implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for processing source code at compilation time with Kotlin Symbol Processing (KSP).";
     }
