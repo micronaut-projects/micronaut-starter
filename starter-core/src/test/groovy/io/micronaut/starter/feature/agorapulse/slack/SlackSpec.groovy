@@ -4,9 +4,11 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 import spock.lang.Unroll
 
 class SlackSpec extends ApplicationContextSpec {
@@ -34,6 +36,7 @@ class SlackSpec extends ApplicationContextSpec {
         assert feature.supports(ApplicationType.DEFAULT)
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     @Unroll('#buildTool with feature micronaut-slack adds dependency #groupId:#artifactId for #language')
     void "verify micronaut-slack feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
@@ -67,6 +70,7 @@ class SlackSpec extends ApplicationContextSpec {
         Language.KOTLIN | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-slack-http'
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify micronaut-slack configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack'])
@@ -75,6 +79,7 @@ class SlackSpec extends ApplicationContextSpec {
         commandContext.configuration.get('slack.bot-token').toString().startsWith('xoxb-')
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify micronaut-slack configuration with caffeine'() {
         when:
             GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'cache-caffeine'])
@@ -82,6 +87,7 @@ class SlackSpec extends ApplicationContextSpec {
             commandContext.configuration.get('micronaut.caches.slack-events.expire-after-write') == '10m'
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify micronaut-slack configuration with redis'() {
         when:
             GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'redis-lettuce'])
@@ -89,6 +95,7 @@ class SlackSpec extends ApplicationContextSpec {
             commandContext.configuration.get('redis.caches.slack-events.expire-after-write') == '10m'
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify micronaut-slack configuration with ehcache'() {
         when:
             GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'cache-ehcache'])

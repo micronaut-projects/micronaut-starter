@@ -3,8 +3,10 @@ package io.micronaut.starter.feature.agorapulse.gru
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
+import spock.lang.Requires
 import spock.lang.Unroll
 
 class GruHttpSpec extends ApplicationContextSpec {
@@ -39,6 +41,7 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     @Unroll("#buildTool with feature agorapulse-gru-http adds dependency for #buildTool")
     void "verify agorapulse-gru-http feature dependencies"(BuildTool buildTool) {
         given:

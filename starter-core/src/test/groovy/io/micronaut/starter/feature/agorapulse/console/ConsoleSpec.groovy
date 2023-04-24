@@ -4,9 +4,11 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 import spock.lang.Unroll
 
 class ConsoleSpec extends ApplicationContextSpec {
@@ -41,6 +43,7 @@ class ConsoleSpec extends ApplicationContextSpec {
         }
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     @Unroll("#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language")
     void "verify agorapulse-micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
@@ -80,6 +83,7 @@ class ConsoleSpec extends ApplicationContextSpec {
         Language.KOTLIN | BuildTool.MAVEN           | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify agorapulse-micronaut-console configuration'() {
         when:
             GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-console'])

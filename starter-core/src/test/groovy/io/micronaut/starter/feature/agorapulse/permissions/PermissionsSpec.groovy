@@ -3,9 +3,11 @@ package io.micronaut.starter.feature.agorapulse.permissions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 import spock.lang.Unroll
 
 class PermissionsSpec extends ApplicationContextSpec {
@@ -35,6 +37,7 @@ class PermissionsSpec extends ApplicationContextSpec {
         }
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     @Unroll("#buildTool with feature micronaut-permissions adds dependency #groupId:#artifactId for #language")
     void "verify micronaut-permissions feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:

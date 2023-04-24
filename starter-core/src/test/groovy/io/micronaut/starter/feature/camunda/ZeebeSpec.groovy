@@ -20,11 +20,14 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import spock.lang.Requires
 
 class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'test readme.md with feature camunda-zeebe contains links to micronaut docs'() {
         when:
         def output = generate(['camunda-zeebe'])
@@ -35,6 +38,7 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains("https://github.com/camunda-community-hub/micronaut-zeebe-client")
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void "test dependency added for camunda-zeebe feature"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)

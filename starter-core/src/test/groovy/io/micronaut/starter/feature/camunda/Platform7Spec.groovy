@@ -21,11 +21,14 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import spock.lang.Requires
 
 class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'test readme.md with feature camunda-platform7 contains links to micronaut docs'() {
         when:
         def output = generate(['camunda-platform7'])
@@ -38,6 +41,7 @@ class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixtu
         readme.contains("https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#jetty")
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void "test dependency added for camunda-platform7 feature"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -55,6 +59,7 @@ class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixtu
         buildTool << BuildTool.values()
     }
 
+    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'test camunda-platform7 configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['camunda-platform7'])
