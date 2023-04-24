@@ -9,9 +9,10 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
-import spock.lang.Unroll
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class ConsoleSpec extends ApplicationContextSpec {
+
     void "Micronaut-console Feature override Feature->getThirdPartyDocumentation"() {
         given:
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
@@ -43,9 +44,7 @@ class ConsoleSpec extends ApplicationContextSpec {
         }
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
-    @Unroll("#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language")
-    void "verify agorapulse-micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    void "#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-console']
         String coordinate = "${groupId}:${artifactId}"
@@ -83,7 +82,6 @@ class ConsoleSpec extends ApplicationContextSpec {
         Language.KOTLIN | BuildTool.MAVEN           | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'verify agorapulse-micronaut-console configuration'() {
         when:
             GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-console'])

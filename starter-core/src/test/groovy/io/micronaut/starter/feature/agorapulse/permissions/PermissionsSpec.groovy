@@ -8,8 +8,8 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
-import spock.lang.Unroll
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class PermissionsSpec extends ApplicationContextSpec {
 
     void "Permissions Feature override Feature->getThirdPartyDocumentation"() {
@@ -37,9 +37,7 @@ class PermissionsSpec extends ApplicationContextSpec {
         }
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
-    @Unroll("#buildTool with feature micronaut-permissions adds dependency #groupId:#artifactId for #language")
-    void "verify micronaut-permissions feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    void "#buildTool with feature micronaut-permissions adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-permissions']
         String coordinate = "${groupId}:${artifactId}"

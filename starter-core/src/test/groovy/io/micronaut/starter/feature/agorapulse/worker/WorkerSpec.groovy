@@ -8,8 +8,8 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
-import spock.lang.Unroll
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class WorkerSpec extends ApplicationContextSpec {
 
     void "Worker Feature override Feature->getThirdPartyDocumentation"() {
@@ -43,9 +43,7 @@ class WorkerSpec extends ApplicationContextSpec {
         }
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
-    @Unroll("#buildTool with feature agorapulse-micronaut-worker adds dependency #groupId:#artifactId for #language")
-    void "verify agorapulse-micronaut-worker feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    void "#buildTool with feature agorapulse-micronaut-worker adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-worker']
         String coordinate = "${groupId}:${artifactId}"

@@ -26,9 +26,9 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import spock.lang.Requires
 
+@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'test readme.md with feature camunda-external-worker contains links to micronaut docs'() {
         when:
         def output = generate(['camunda-external-worker'])
@@ -39,7 +39,6 @@ class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutput
         readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-external-client")
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void "test dependency added for camunda-external-worker feature"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -54,7 +53,6 @@ class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutput
         buildTool << BuildTool.values()
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void 'test camunda-external-worker configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['camunda-external-worker'])
