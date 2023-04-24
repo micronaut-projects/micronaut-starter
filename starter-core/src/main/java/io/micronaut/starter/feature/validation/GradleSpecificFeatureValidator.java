@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.build;
-
-import java.util.Set;
+package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Language;
+import io.micronaut.starter.feature.GradleSpecificFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class KotlinSymbolProcessingValidator implements FeatureValidator {
+public class GradleSpecificFeatureValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
 
@@ -34,10 +32,8 @@ public class KotlinSymbolProcessingValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance)) {
-            if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance) && !options.getBuildTool().isGradle()) {
-                throw new IllegalArgumentException("Kotlin Symbol Processing (KSP) is only supported by Gradle");
-            }
+        if (features.stream().anyMatch(GradleSpecificFeature.class::isInstance) && !options.getBuildTool().isGradle()) {
+            throw new IllegalArgumentException("Feature only supported by Gradle");
         }
     }
 }

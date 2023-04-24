@@ -16,44 +16,45 @@
 package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.GradleSpecificFeature;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class KotlinSymbolProcessing implements KotlinSupportFeature, GradleSpecificFeature {
+public class Kapt implements KotlinSupportFeature, DefaultFeature {
 
     @Override
     @NonNull
     public String getName() {
-        return "ksp";
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
+        return "kapt";
     }
 
     @Override
     public String getTitle() {
-        return "Kotlin Symbol Processing (KSP)";
+        return "Kotlin Annotation Processing (KAPT)";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Adds support for processing source code at compilation time with Kotlin Symbol Processing (KSP).";
+        return "Adds the Kapt compiler plugin for Kotlin, which includes support for Java annotation processors.";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/#kotlin";
+        return "https://docs.micronaut.io/snapshot/guide/#kapt";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://kotlinlang.org/docs/ksp-overview.html";
+        return "https://kotlinlang.org/docs/kapt.html";
     }
 
     @Override
@@ -65,7 +66,12 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, GradleSpeci
     public void addBuildPlugins(@NonNull GeneratorContext generatorContext) {
         KotlinSupportFeature.super.addBuildPlugins(generatorContext);
         if (KotlinSupportFeature.shouldApply(generatorContext)) {
-            generatorContext.addBuildPlugin(GradlePlugin.of("com.google.devtools.ksp", "com.google.devtools.ksp.gradle.plugin"));
+            generatorContext.addBuildPlugin(GradlePlugin.of("org.jetbrains.kotlin.kapt", "kotlin-gradle-plugin"));
         }
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.KOTLIN && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }

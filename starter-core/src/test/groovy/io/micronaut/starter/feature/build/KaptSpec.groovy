@@ -14,59 +14,59 @@ import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 
-class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
-    KotlinSymbolProcessing ksp = beanContext.getBean(KotlinSymbolProcessing)
+    Kapt kapt = beanContext.getBean(Kapt)
 
-    void "ksp isOneOfFeature "() {
+    void "kapt isOneOfFeature "() {
         expect:
-        ksp instanceof OneOfFeature
+        kapt instanceof OneOfFeature
     }
 
     void "ksp does not requires kotlin"() {
         expect:
-        !(ksp instanceof LanguageSpecificFeature)
+        !(kapt instanceof LanguageSpecificFeature)
     }
 
-    void 'ksp feature is in the cloud category'() {
+    void 'kapt feature is in the cloud category'() {
         expect:
-        ksp.category == Category.LANGUAGES
+        kapt.category == Category.LANGUAGES
     }
 
-    void 'ksp feature is preview'() {
+    void 'kapt feature is not preview'() {
         expect:
-        ksp.isPreview()
+        !kapt.isPreview()
     }
 
-    void 'ksp supports every application type'(ApplicationType applicationType) {
+    void 'kapt supports every application type'(ApplicationType applicationType) {
         expect:
-        ksp.supports(applicationType)
+        kapt.supports(applicationType)
 
         where:
         applicationType << ApplicationType.values()
     }
 
-    void 'ksp defines documentation'() {
+    void 'kapt defines documentation'() {
         expect:
-        ksp.micronautDocumentation
-        ksp.thirdPartyDocumentation
+        kapt.micronautDocumentation
+        kapt.thirdPartyDocumentation
     }
 
-    void "test #buildTool ksp feature adds build plugin"(BuildTool buildTool) {
+    void "test #buildTool kapt feature adds build plugin"(BuildTool buildTool) {
         when:
         Language language = Language.KOTLIN
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features(["ksp"])
+                .features(["kapt"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         verifier.hasBuildPlugin("org.jetbrains.kotlin.jvm")
-        verifier.hasBuildPlugin("com.google.devtools.ksp")
+        !verifier.hasBuildPlugin("com.google.devtools.ksp")
         verifier.hasBuildPlugin("org.jetbrains.kotlin.plugin.allopen")
-        !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
+        verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
 
         where:
         buildTool << BuildTool.valuesGradle()
