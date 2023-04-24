@@ -33,6 +33,7 @@ import java.util.Set;
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
 
+    private static final boolean USE_JANSI = false;
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
             .artifactId("logback-classic")
@@ -76,7 +77,10 @@ public class Logback implements LoggingFeature, DefaultFeature {
         if (generatorContext.getOperatingSystem() == OperatingSystem.WINDOWS) {
             return false;
         }
-        return !generatorContext.getFeatures().hasFeature(AwsLambda.class);
+        if (generatorContext.getFeatures().hasFeature(AwsLambda.class)) {
+            return false;
+        }
+        return USE_JANSI;
     }
 
     @Override
