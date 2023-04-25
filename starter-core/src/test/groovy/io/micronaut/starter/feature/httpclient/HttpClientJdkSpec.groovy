@@ -16,8 +16,8 @@ class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture
 
     void 'test readme.md with feature http-client-jdk contains links to micronaut and 3rd party docs'() {
         when:
-        def output = generate(['http-client-jdk'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['http-client-jdk'])
+        String readme = output["README.md"]
 
         then:
         readme
