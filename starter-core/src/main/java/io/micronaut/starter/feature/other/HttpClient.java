@@ -39,7 +39,7 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(f -> f instanceof HttpClientJdk);
+        return selectedFeatures.stream().noneMatch(HttpClientJdk.class::isInstance);
     }
 
     private Scope dependencyScope(GeneratorContext generatorContext) {
