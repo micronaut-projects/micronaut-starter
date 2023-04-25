@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.httpclient;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -56,12 +56,11 @@ public class HttpClientJdk implements HttpClientFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.FUNCTION;
+    public void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
+    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
     }
 }

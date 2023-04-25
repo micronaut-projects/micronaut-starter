@@ -41,16 +41,11 @@ class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture
         buildTool << BuildTool.values().toList()
     }
 
-    void "http-client-jdk does not support applicationType FUNCTION"() {
-        expect:
-        !httpClientJdk.supports(ApplicationType.FUNCTION)
-    }
-
     void "http-client-jdk supports #applicationType application type"(ApplicationType applicationType) {
         expect:
         httpClientJdk.supports(applicationType)
 
         where:
-        applicationType << (ApplicationType.values() - ApplicationType.FUNCTION)
+        applicationType << ApplicationType.values()
     }
 }
