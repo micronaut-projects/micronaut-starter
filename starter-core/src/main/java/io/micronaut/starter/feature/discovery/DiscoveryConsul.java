@@ -22,12 +22,14 @@ import io.micronaut.starter.feature.consul.Consul;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryConsul extends DiscoveryCore {
+public class DiscoveryConsul implements DiscoveryFeature {
 
     private final Consul consul;
+    private final DiscoveryClient discoveryClient;
 
-    public DiscoveryConsul(Consul consul) {
+    public DiscoveryConsul(Consul consul, DiscoveryClient discoveryClient) {
         this.consul = consul;
+        this.discoveryClient = discoveryClient;
     }
 
     @NonNull
@@ -48,16 +50,13 @@ public class DiscoveryConsul extends DiscoveryCore {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Consul.class)) {
-            featureContext.addFeature(consul);
-        }
+        featureContext.addFeatureIfNotPresent(Consul.class, consul);
+        featureContext.addFeatureIfNotPresent(DiscoveryClient.class, discoveryClient);
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
-        generatorContext.addDependency(DiscoveryCore.DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT);
     }
 
     @Override

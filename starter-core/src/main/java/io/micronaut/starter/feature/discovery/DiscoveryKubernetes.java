@@ -18,12 +18,12 @@ package io.micronaut.starter.feature.discovery;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.KubernetesClient;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryKubernetes extends DiscoveryCore {
-
+public class DiscoveryKubernetes implements DiscoveryFeature {
     private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_K8S = Dependency.builder()
             .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
             .artifactId("micronaut-kubernetes-discovery-client")
@@ -48,7 +48,6 @@ public class DiscoveryKubernetes extends DiscoveryCore {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_K8S);

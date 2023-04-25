@@ -25,31 +25,31 @@ import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryCore implements Feature {
-    private static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE = "micronaut-discovery-core";
-    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CORE = MicronautDependencyUtils.coreDependency()
-            .artifactId(ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE)
+public class DiscoveryClient implements Feature {
+    private static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CLIENT = "micronaut-discovery-client";
+    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT = MicronautDependencyUtils.discovery()
+            .artifactId(ARTIFACT_ID_MICRONAUT_DISCOVERY_CLIENT)
             .compile()
             .build();
 
     @NonNull
     @Override
     public String getName() {
-        return "discovery-core";
+        return "discovery-client";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Discovery Core";
+        return "Micronaut Discovery Client";
     }
 
     @Override
     public String getDescription() {
-        return "Adds micronaut-discovery-core dependency for base service discovery features.";
+        return "Adds micronaut-discovery-client dependency which provides an implmentation of the DiscoveryClient API.";
     }
 
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_CORE);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT);
     }
 
     @Override

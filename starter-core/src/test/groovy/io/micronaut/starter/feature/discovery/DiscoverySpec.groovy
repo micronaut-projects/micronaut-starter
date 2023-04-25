@@ -17,14 +17,14 @@ class DiscoverySpec extends ApplicationContextSpec implements CommandOutputFixtu
         getFeatures(["discovery-consul", "discovery-eureka"])
 
         then:
-        def ex = thrown(IllegalArgumentException)
+        IllegalArgumentException ex = thrown()
         ex.message.contains("There can only be one of the following features selected")
     }
 
     void 'test readme.md with feature discovery-core contains links to micronaut docs'() {
         when:
-        def output = generate(['discovery-core'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['discovery-core'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -32,13 +32,13 @@ class DiscoverySpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'test gradle discovery-core feature for language=#language and buildTool=#buildTool'() {
+    void 'test gradle discovery-core feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['discovery-consul'])
+                .features(['discovery-core'])
                 .language(language)
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)

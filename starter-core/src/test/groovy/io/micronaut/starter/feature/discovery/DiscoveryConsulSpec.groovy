@@ -35,8 +35,10 @@ class DiscoveryConsulSpec extends ApplicationContextSpec  implements CommandOutp
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client", Scope.COMPILE)
+
+        and: 'It does not define a dependency on micronaut-discovery-core since it is pulled transitively'
+        !verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()

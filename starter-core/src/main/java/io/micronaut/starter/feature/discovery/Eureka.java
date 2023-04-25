@@ -16,10 +16,16 @@
 package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Eureka extends DiscoveryCore {
+public class Eureka implements DiscoveryFeature {
+    private final DiscoveryClient discoveryClient;
+
+    public Eureka(DiscoveryClient discoveryClient) {
+        this.discoveryClient = discoveryClient;
+    }
 
     @Override
     public String getName() {
@@ -37,10 +43,12 @@ public class Eureka extends DiscoveryCore {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.addDependency(DiscoveryCore.DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT);
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(DiscoveryClient.class, discoveryClient);
+    }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("eureka.client.registration.enabled", true);
         generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
     }
