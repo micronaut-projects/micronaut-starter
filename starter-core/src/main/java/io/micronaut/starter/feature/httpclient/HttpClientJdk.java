@@ -21,6 +21,9 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+
 @Singleton
 public class HttpClientJdk implements HttpClientFeature {
     public static final String NAME = "http-client-jdk";
@@ -56,11 +59,8 @@ public class HttpClientJdk implements HttpClientFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        addDependencies(generatorContext);
-    }
-
-    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
+    @NonNull
+    public List<Dependency> getDependencies(@NonNull GeneratorContext generatorContext) {
+        return Collections.singletonList(DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
     }
 }
