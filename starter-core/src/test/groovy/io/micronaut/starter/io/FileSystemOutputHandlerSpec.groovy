@@ -3,8 +3,8 @@ package io.micronaut.starter.io
 import io.micronaut.starter.template.StringTemplate
 import spock.lang.Specification
 
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import java.util.stream.Collectors
 
 class FileSystemOutputHandlerSpec extends Specification {
 
@@ -19,7 +19,8 @@ class FileSystemOutputHandlerSpec extends Specification {
         fileSystemOutputHandler.write("test.template", stringTemplate2);
         String result
         try (InputStream is = Files.newInputStream(new File(path).toPath())) {
-            result = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            result = reader.lines().collect(Collectors.joining(System.lineSeparator()));
             Files.delete(new File(path).toPath())
         }
         then:
