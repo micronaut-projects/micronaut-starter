@@ -74,16 +74,24 @@ java {
 tasks {
 @if (features.language().isKotlin()) {
     compileKotlin {
-        kotlinOptions {
-            jvmTarget = "@features.getTargetJdk()"
+        compilerOptions {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk())
+} else {
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk()
+}
         }
     }
 }
 
 @if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
     compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = "@features.getTargetJdk()"
+        compilerOptions {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk())
+} else {
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk()
+}
         }
     }
 }

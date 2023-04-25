@@ -65,8 +65,8 @@ java {
         then:
         template.contains("sourceCompatibility = JavaVersion.toVersion(\"17\")")
         template.contains('''
-        kotlinOptions {
-            jvmTarget = "17"
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
 ''')
 

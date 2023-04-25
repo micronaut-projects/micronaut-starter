@@ -72,6 +72,6 @@ public class Kapt implements KotlinSupportFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.KOTLIN && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
+        return KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }
