@@ -45,7 +45,7 @@ class RxJava3Spec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'dependency is included with gradle and feature rxjava3 for language=#language'(Language language, BuildTool buildTool) {
+    void 'dependency is included with #buildTool and feature rxjava3 for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
