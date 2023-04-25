@@ -35,7 +35,5 @@ class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])
-                .stream()
-                .filter { it -> !(it[0] == ApplicationType.FUNCTION && it[1] == Language.GROOVY) }
     }
 }
