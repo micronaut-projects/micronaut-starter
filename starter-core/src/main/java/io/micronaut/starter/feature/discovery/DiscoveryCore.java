@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,45 +16,54 @@
 package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.k8s.KubernetesClient;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryKubernetes implements DiscoveryFeature {
-    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_K8S = Dependency.builder()
-            .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
-            .artifactId("micronaut-kubernetes-discovery-client")
+public class DiscoveryCore implements Feature {
+    private static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE = "micronaut-discovery-core";
+    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CORE = MicronautDependencyUtils.coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE)
             .compile()
             .build();
 
     @NonNull
     @Override
     public String getName() {
-        return "discovery-kubernetes";
+        return "discovery-core";
     }
 
     @Override
     public String getTitle() {
-        return "Kubernetes Service Discovery";
+        return "Micronaut Discovery Core";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Service Discovery with Kubernetes";
+        return "Adds micronaut-discovery-core dependency for base service discovery features.";
     }
 
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_K8S);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_CORE);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#service-discovery";
+        return "https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.SERVICE_DISCOVERY;
     }
 }

@@ -25,9 +25,9 @@ import java.util.Set;
 @Singleton
 public class CommunityFeatureValidator implements FeatureValidator {
     public static final boolean ENABLE_COMMUNITY_FEATURES = false;
+
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-
     }
 
     @Override
