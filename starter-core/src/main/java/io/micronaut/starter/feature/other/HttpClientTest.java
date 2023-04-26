@@ -35,6 +35,7 @@ public class HttpClientTest implements DefaultFeature {
             .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
             .test()
             .build();
+
     @Override
     public String getName() {
         return "http-client-test";
