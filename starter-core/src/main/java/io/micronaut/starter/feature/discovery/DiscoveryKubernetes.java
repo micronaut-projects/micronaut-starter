@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.discovery;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.KubernetesClient;
 import jakarta.inject.Singleton;
 
