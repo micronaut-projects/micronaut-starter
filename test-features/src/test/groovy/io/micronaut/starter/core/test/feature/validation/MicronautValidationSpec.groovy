@@ -5,7 +5,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
-import spock.lang.Issue
 import spock.lang.PendingFeature
 import spock.lang.Unroll
 
