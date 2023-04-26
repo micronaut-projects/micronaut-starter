@@ -58,8 +58,10 @@ scram-client = "2.1"
 slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
+jakarta-validation-api = "3.0.2"
 
 [libraries]
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }

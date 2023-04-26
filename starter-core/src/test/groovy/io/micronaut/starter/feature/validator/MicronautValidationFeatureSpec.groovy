@@ -21,8 +21,8 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
 
     void 'test readme.md with feature http-session contains links to micronaut docs'() {
         when:
-        def output = generate(['micronaut-validation'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['validation'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -52,7 +52,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
-                .features(['micronaut-validation'])
+                .features(['validation'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
