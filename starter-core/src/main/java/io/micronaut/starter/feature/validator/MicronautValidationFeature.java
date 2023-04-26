@@ -39,7 +39,7 @@ public class MicronautValidationFeature implements ValidationFeature {
             .compile()
             .build();
 
-    public static final String ARTIFACT_ID_VALIDATION_API = "validation-api";
+    public static final String ARTIFACT_ID_VALIDATION_API = "jakarta.validation-api";
     private static final Dependency.Builder DEPENDENCY_VALIDATON_API = Dependency.builder()
             .groupId("jakarta.validation")
             .artifactId(ARTIFACT_ID_VALIDATION_API)
