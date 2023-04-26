@@ -60,7 +60,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         if (language != Language.GROOVY) {
             assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
         }
-        verifier.hasDependency("jakarta.validation", "validation-api", Scope.COMPILE)
+        verifier.hasDependency("jakarta.validation", "jakarta.validation-api", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()

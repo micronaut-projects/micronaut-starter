@@ -32,14 +32,14 @@ public class MicronautValidationFeature implements ValidationFeature {
     public static final String NAME = "validation";
     public static final String ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR = "micronaut-validation-processor";
 
-    public static final String ARTIFACT_ID_MICRONAUT_VALIDATION = "validation";
+    public static final String ARTIFACT_ID_MICRONAUT_VALIDATION = "micronaut-validation";
     private static final Dependency MICRONAUT_VALIDATION_COMPILE = MicronautDependencyUtils
             .validationDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_VALIDATION)
             .compile()
             .build();
 
-    public static final String ARTIFACT_ID_VALIDATION_API = "jakarta.validation-api";
+    private static final String ARTIFACT_ID_VALIDATION_API = "jakarta.validation-api";
     private static final Dependency.Builder DEPENDENCY_VALIDATON_API = Dependency.builder()
             .groupId("jakarta.validation")
             .artifactId(ARTIFACT_ID_VALIDATION_API)
