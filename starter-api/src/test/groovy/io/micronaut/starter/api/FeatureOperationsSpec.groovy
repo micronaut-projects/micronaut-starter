@@ -1,6 +1,6 @@
 package io.micronaut.starter.api
 
-import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
+import io.micronaut.starter.feature.build.MicronautGradleEnterprise
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
