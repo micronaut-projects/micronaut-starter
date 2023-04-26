@@ -64,10 +64,10 @@ public interface KotlinSupportFeature extends OneOfFeature {
     }
 
     static boolean shouldApply(LanguageFeature languageFeature, TestFeature testFeature) {
-        return languageFeature.isKotlin() || testFeature.isKotlinTestFramework();
+        return languageFeature.isKotlin() || (testFeature != null && testFeature.isKotlinTestFramework());
     }
 
     static boolean shouldApply(Language language, TestFramework testFramework) {
-        return language == Language.KOTLIN || testFramework.isKotlinTestFramework();
+        return language == Language.KOTLIN || (testFramework != null && testFramework.isKotlinTestFramework());
     }
 }
