@@ -16,20 +16,22 @@
 package io.micronaut.starter.feature.reactor;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.reactive.ReactiveHttpClientFeature;
 import jakarta.inject.Singleton;
 
-@Singleton
-public class ReactorHttpClient implements Feature {
+import java.util.Collections;
+import java.util.List;
 
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
+@Singleton
+public class ReactorHttpClient implements ReactiveHttpClientFeature {
+    public static final String ARTIFACT_ID_MICRONAUT_REACTOR_HTTP_CLIENT = "micronaut-reactor-http-client";
+    public static final Dependency DEPENDENCY_MICRONAUT_REACTOR_HTTP_CLIENT = Dependency.builder()
+            .groupId(Reactor.MICRONAUT_REACTOR_GROUP_ID)
+            .artifactId(ARTIFACT_ID_MICRONAUT_REACTOR_HTTP_CLIENT)
+            .compile()
+            .build();
 
     @NonNull
     @Override
@@ -38,21 +40,18 @@ public class ReactorHttpClient implements Feature {
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    public String getTitle() {
+        return "Reactor HTTP Client";
     }
 
     @Override
-    public String getCategory() {
-        return Category.CLIENT;
+    @NonNull
+    public String getDescription() {
+        return "Version of the Http client which supports Project Reactor";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(Reactor.MICRONAUT_REACTOR_GROUP_ID)
-                .artifactId("micronaut-reactor-http-client")
-                .compile());
+    public List<Dependency> getDependencies(GeneratorContext generatorContext) {
+        return Collections.singletonList(DEPENDENCY_MICRONAUT_REACTOR_HTTP_CLIENT);
     }
-
 }

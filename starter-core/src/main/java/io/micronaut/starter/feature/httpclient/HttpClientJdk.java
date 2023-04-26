@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.httpclient;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import jakarta.inject.Singleton;
 
 import java.util.Collections;
 import java.util.List;
 
 @Singleton
-public class HttpClient implements HttpClientFeature {
-    public static final String NAME = "http-client";
-    public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT = "micronaut-http-client";
-    public static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
-            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
+public class HttpClientJdk implements HttpClientFeature {
+    public static final String NAME = "http-client-jdk";
+
+    private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-http-client-jdk")
             .compile()
             .build();
 
@@ -41,22 +40,27 @@ public class HttpClient implements HttpClientFeature {
 
     @Override
     public String getTitle() {
-        return "HTTP Client";
+        return "HTTP Client Jdk";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Micronaut HTTP client";
+        return "Adds support for the Micronaut HTTP client based on the Java HTTP Client";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient";
+        return "https://docs.micronaut.io/latest/guide/index.html#jdkHttpClient";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://openjdk.org/groups/net/httpclient/intro.html";
     }
 
     @Override
     @NonNull
     public List<Dependency> getDependencies(@NonNull GeneratorContext generatorContext) {
-        return Collections.singletonList(DEPENDENCY_MICRONAUT_HTTP_CLIENT);
+        return Collections.singletonList(DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
     }
 }

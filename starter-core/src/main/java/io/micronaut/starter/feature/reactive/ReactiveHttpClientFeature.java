@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.httpclient;
+package io.micronaut.starter.feature.reactive;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.Feature;
 
 import java.util.List;
 
-public interface HttpClientFeature  extends OneOfFeature {
-    @Override
-    default Class<?> getFeatureClass() {
-        return HttpClientFeature.class;
-    }
-
+/**
+ * Marker feature for Reactive features adding an HTTP Client.
+ */
+public interface ReactiveHttpClientFeature extends Feature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;

@@ -47,7 +47,7 @@ MavenBuild mavenBuild
 
 } else {
   <parent>
-    <groupId>io.micronaut</groupId>
+    <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
     <version>@VersionInfo.getMicronautVersion()</version>
   </parent>

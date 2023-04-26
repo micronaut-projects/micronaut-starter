@@ -10,6 +10,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -40,7 +41,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "multi-module-pom isn't created for single-module builds"() {
         when:
-        Options options = new Options(Language.JAVA, null, BuildTool.MAVEN)
+        Options options = new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN)
         GeneratorContext generatorContext = buildGeneratorContext([], options, ApplicationType.DEFAULT)
 
         then:
@@ -50,7 +51,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "multi-module-pom is created for multi-module builds"() {
         when:
-        Options options = new Options(Language.JAVA, null, BuildTool.MAVEN)
+        Options options = new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN)
         GeneratorContext generatorContext = buildGeneratorContext(['aws-cdk'], options, ApplicationType.DEFAULT)
 
         then:
@@ -58,7 +59,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         generatorContext.templates.'multi-module-pom'
     }
 
-    void 'enforce plugin is added to pom.xml'() {
+    void 'enforcer plugin is added to pom.xml'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .render()
@@ -78,7 +79,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then: 'parent pom is used'
         template.contains("""
   <parent>
-    <groupId>io.micronaut</groupId>
+    <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
     <version>${VersionInfo.micronautVersion}</version>
   </parent>
