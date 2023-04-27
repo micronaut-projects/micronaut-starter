@@ -64,7 +64,7 @@ public class DataJpa implements JpaFeature, DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
+        generatorContext.addDependency(dataProcessorDependency(generatorContext));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-hibernate-jpa")

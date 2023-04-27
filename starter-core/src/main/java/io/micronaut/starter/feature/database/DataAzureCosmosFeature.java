@@ -93,7 +93,7 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
                 Arrays.asList(
                         DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
                         DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA,
-                        DEPENDENCY_MICRONAUT_DATA_PROCESSOR) :
+                        dataProcessorDependency(generatorContext).build()) :
                 Arrays.asList(
                         DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
                         DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA);

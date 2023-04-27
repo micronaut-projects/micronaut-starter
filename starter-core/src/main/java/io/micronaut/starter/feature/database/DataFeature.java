@@ -23,9 +23,12 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.options.BuildTool;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA;
 
 public interface DataFeature extends OneOfFeature {
 
@@ -51,6 +54,22 @@ public interface DataFeature extends OneOfFeature {
         }
         conf.put("datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
+    }
+
+    default Dependency.Builder dataProcessorDependency(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            return MicronautDependencyUtils
+                    .dataDependency()
+                    .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
+                    .versionProperty(MICRONAUT_DATA_VERSION)
+                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                    .annotationProcessor(true);
+        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            return MicronautDependencyUtils
+                    .moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, MICRONAUT_DATA_VERSION, true)
+                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
+        }
+        throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
     }
 
     @Override
