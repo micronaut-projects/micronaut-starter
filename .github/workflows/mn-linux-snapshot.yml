@@ -18,7 +18,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1
         with:
-          version: 'latest'
+          version: '22.3.2'
           java-version: '17'
           native-image-musl: 'true'
           components: 'native-image'

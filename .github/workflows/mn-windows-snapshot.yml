@@ -18,7 +18,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1
         with:
-          version: 'latest'
+          version: '22.3.2'
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,10 +35,10 @@ jobs:
         run: ./starter-cli/build/native/nativeCompile/mn.exe create-app test
       - name: "✅ Verify Build (CMD)"
         shell: cmd
-        run: "starter-cli\build\native\nativeCompile\mn --version"
+        run: starter-cli\\build\\native\\nativeCompile\\mn --version
       - name: "✅ Verify Create App (CMD)"
         shell: cmd
-        run: "starter-cli\build\native\nativeCompile\mn create-app test2"
+        run: starter-cli\\build\\native\\nativeCompile\\mn create-app test2
       - name: "🤐 ZIP Archive"
         run: |
           New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
