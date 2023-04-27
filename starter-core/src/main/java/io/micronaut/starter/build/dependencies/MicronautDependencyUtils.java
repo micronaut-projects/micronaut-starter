@@ -180,6 +180,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder inject() {
+        return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_INJECT);
+    }
+
+    @NonNull
     public static Dependency.Builder picocliDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
     }
@@ -187,5 +192,22 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder discovery() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
+    }
+
+    @NonNull
+    public static Dependency.Builder moduleMavenAnnotationProcessor(
+            String groupId, String artifactId, String propertyName) {
+        return moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder moduleMavenAnnotationProcessor(
+            String groupId, String artifactId, String propertyName, boolean requiresPriority) {
+        return Dependency.builder()
+                .groupId(groupId)
+                .artifactId(artifactId)
+                .annotationProcessor(requiresPriority)
+                .versionProperty(propertyName)
+                .exclude(inject().build());
     }
 }
