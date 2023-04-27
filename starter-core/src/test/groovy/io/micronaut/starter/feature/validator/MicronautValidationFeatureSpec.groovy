@@ -10,7 +10,6 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -21,8 +20,8 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
 
     void 'test readme.md with feature http-session contains links to micronaut docs'() {
         when:
-        def output = generate(['micronaut-validation'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['validation'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -52,7 +51,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
-                .features(['micronaut-validation'])
+                .features(['validation'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
@@ -61,7 +60,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         if (language != Language.GROOVY) {
             assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
         }
-        verifier.hasDependency("jakarta.validation", "validation-api", Scope.COMPILE)
+        verifier.hasDependency("jakarta.validation", "jakarta.validation-api", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
