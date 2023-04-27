@@ -27,10 +27,13 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_OPENAPI;
+
 @Singleton
 public class OpenApi implements Feature, MicronautServerDependent {
 
     public static final String ARTIFACT_ID_MICRONAUT_OPENAPI = "micronaut-openapi";
+    private static final String OPENAPI_VERSION_MAVEN_PROPERTY = "micronaut.openapi.version";
 
     private static final Dependency DEPENDENCY_SWAGGER_ANNOTATIONS = Dependency.builder()
             .groupId("io.swagger.core.v3")
@@ -62,10 +65,7 @@ public class OpenApi implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.openapi()
-                .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
-                .versionProperty("micronaut.openapi.version")
-                .annotationProcessor());
+        generatorContext.addDependency(micronautOpenApiProcessor(generatorContext));
         generatorContext.addDependency(DEPENDENCY_SWAGGER_ANNOTATIONS);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
             generatorContext.addDependency(MicronautDependencyUtils.openapi()
@@ -73,6 +73,20 @@ public class OpenApi implements Feature, MicronautServerDependent {
                     .compile());
         }
     }
+
+    public static Dependency.Builder micronautOpenApiProcessor(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            return MicronautDependencyUtils
+                    .openapi()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
+                    .annotationProcessor();
+        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            return MicronautDependencyUtils
+                    .moduleMavenAnnotationProcessor(GROUP_ID_IO_MICRONAUT_OPENAPI, ARTIFACT_ID_MICRONAUT_OPENAPI, OPENAPI_VERSION_MAVEN_PROPERTY);
+        }
+        throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
+    }
+
 
     @Override
     public String getCategory() {
