@@ -4,6 +4,9 @@ import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -11,6 +14,12 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Issue
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL
+import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
+import static io.micronaut.starter.feature.database.DataJdbc.MICRONAUT_DATA_JDBC_ARTIFACT
+import static io.micronaut.starter.feature.database.jdbc.Hikari.MICRONAUT_JDBC_HIKARI_ARTIFACT
 
 class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -53,37 +62,13 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['data-jdbc'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        //src/main
-        template.contains('''
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-jdbc</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jdbc-hikari</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''')
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_JDBC_ARTIFACT, Scope.COMPILE )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
+        verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
@@ -149,14 +134,10 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
             .language(Language.GROOVY)
             .features(["data-jdbc"])
             .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-''')
+
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY )
     }
 }
