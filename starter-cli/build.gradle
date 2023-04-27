@@ -57,7 +57,7 @@ graalvmNative {
             imageName = "mn"
             if (project.hasProperty("musl")) {
                 logger.lifecycle("Using musl libc")
-                buildArgs('--libc=musl')
+                buildArgs("--libc=musl", "--static")
             }
             mainClass = "io.micronaut.starter.cli.MicronautStarter"
         }
