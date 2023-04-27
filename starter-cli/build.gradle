@@ -1,5 +1,6 @@
 plugins {
     id 'io.micronaut.internal.build.starter-cli-module'
+    alias(templateLibs.plugins.micronaut.application)
 }
 
 ext {
@@ -44,6 +45,23 @@ dependencies {
     testImplementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.apache.groovy:groovy-xml'
     implementation("org.jline:jline:3.19.0")
+}
+
+graalvmNative {
+    toolchainDetection = false
+
+    binaries {
+        main {
+            // Main options
+            sharedLibrary = false
+            imageName = "mn"
+            if (project.hasProperty("musl")) {
+                logger.lifecycle("Using musl libc")
+                buildArgs('--libc=musl')
+            }
+            mainClass = "io.micronaut.starter.cli.MicronautStarter"
+        }
+    }
 }
 
 application {
