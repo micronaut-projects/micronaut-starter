@@ -6,13 +6,9 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.PendingFeature
-import spock.lang.Unroll
-
-import java.util.stream.Collectors
 
 class MicronautValidationSpec extends CommandSpec {
 
-    @Unroll
     void 'test validation feature for #lang and #buildTool'(Language lang, BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, [MicronautValidationFeature.NAME])
@@ -24,14 +20,10 @@ class MicronautValidationSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, buildTool] << LanguageBuildCombinations.combinations()
-                .stream()
-                .filter(l -> !failingCombination((List) l))
-                .collect(Collectors.toList())
+        [lang, buildTool] << LanguageBuildCombinations.combinations().findAll { !failingCombination(it) }
     }
 
     @PendingFeature
-    @Unroll
     void 'test validation feature for #lang and #buildTool'(Language lang, BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, [MicronautValidationFeature.NAME])
@@ -43,10 +35,7 @@ class MicronautValidationSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, buildTool] << LanguageBuildCombinations.combinations()
-                .stream()
-                .filter(l -> failingCombination((List) l))
-                .collect(Collectors.toList())
+        [lang, buildTool] << LanguageBuildCombinations.combinations().findAll { failingCombination(it) }
     }
 
     boolean failingCombination(List l) {
