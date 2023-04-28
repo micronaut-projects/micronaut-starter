@@ -60,7 +60,7 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(dataProcessorDependency(generatorContext));
+        generatorContext.addDependency(dataProcessorDependency(generatorContext.getBuildTool()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
                 .artifactId(MICRONAUT_DATA_JDBC_ARTIFACT)

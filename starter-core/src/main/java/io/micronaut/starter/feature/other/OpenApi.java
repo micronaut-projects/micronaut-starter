@@ -87,7 +87,6 @@ public class OpenApi implements Feature, MicronautServerDependent {
         throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
     }
 
-
     @Override
     public String getCategory() {
         return Category.API;

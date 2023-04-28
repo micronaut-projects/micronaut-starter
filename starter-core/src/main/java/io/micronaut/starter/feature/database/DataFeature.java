@@ -35,12 +35,6 @@ public interface DataFeature extends OneOfFeature {
     String SCHEMA_GENERATE_KEY = "datasources.default.schema-generate";
     String MICRONAUT_DATA_VERSION = "micronaut.data.version";
     String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
-    Dependency DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
-            .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-            .versionProperty(MICRONAUT_DATA_VERSION)
-            .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-            .annotationProcessor(true)
-            .build();
 
     @Override
     default Class<?> getFeatureClass() {
@@ -56,20 +50,21 @@ public interface DataFeature extends OneOfFeature {
         return conf;
     }
 
-    default Dependency.Builder dataProcessorDependency(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+    default Dependency dataProcessorDependency(BuildTool buildTool) {
+        if (buildTool.isGradle()) {
             return MicronautDependencyUtils
                     .dataDependency()
                     .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-                    .versionProperty(MICRONAUT_DATA_VERSION)
                     .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-                    .annotationProcessor(true);
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+                    .annotationProcessor(true)
+                    .build();
+        } else if (buildTool == BuildTool.MAVEN) {
             return MicronautDependencyUtils
                     .moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, MICRONAUT_DATA_VERSION, true)
-                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
+                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                    .build();
         }
-        throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
+        throw new RuntimeException("build tool " + buildTool.getName() + " not supported");
     }
 
     @Override
