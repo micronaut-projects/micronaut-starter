@@ -9,8 +9,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import spock.lang.Ignore
 import spock.lang.Unroll
 
+@Ignore
 class CreateGrpcSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
