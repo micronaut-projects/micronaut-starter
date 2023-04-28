@@ -5,6 +5,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -131,8 +132,8 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
 
     void "test render config"() {
         when:
-        def output = generate(['data-jdbc'])
-        def config = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate([Yaml.NAME, 'data-jdbc'])
+        String config = output["src/main/resources/application.yml"]
 
         then:
         config

@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.feature.other
 
 import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
 import io.micronaut.starter.options.BuildTool
@@ -8,7 +9,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -45,10 +45,9 @@ class SwaggerUISpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven #feature.name with #language without security"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [feature.getName()])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature.getName()])
         String output = executeMaven("compile")
 
         then:
@@ -66,10 +65,9 @@ class SwaggerUISpec extends CommandSpec {
                 Language.values()].combinations()
     }
 
-    @Unroll
     void "test gradle #feature.name with #language without security"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName()])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature.getName()])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -88,10 +86,9 @@ class SwaggerUISpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
         when:
-        generateProject(language, BuildTool.MAVEN, [feature.getName(), securityFeature.getName()])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature.getName(), securityFeature.getName()])
         String output = executeMaven("compile")
 
         then:
@@ -111,10 +108,9 @@ class SwaggerUISpec extends CommandSpec {
         ].combinations()
     }
 
-    @Unroll
     void "test gradle #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName(), securityFeature.getName()])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature.getName(), securityFeature.getName()])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -149,7 +145,6 @@ class SwaggerUISpec extends CommandSpec {
         assert openAPIProperties.get("rapidoc.sort-endpoints-by") == "method"
 
         openAPIPropertiesInputStream.close()
-
     }
 
     void checkControllerFile(Language language) {

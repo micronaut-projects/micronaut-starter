@@ -1,4 +1,4 @@
-@import io.micronaut.starter.feature.build.gradle.GradleEnterpriseConfiguration
+@import io.micronaut.starter.feature.build.GradleEnterpriseConfiguration
 @args (GradleEnterpriseConfiguration config)
 gradleEnterprise {
 @if (config.getServer() != null) {

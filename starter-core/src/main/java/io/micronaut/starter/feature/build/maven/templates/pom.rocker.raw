@@ -47,7 +47,7 @@ MavenBuild mavenBuild
 
 } else {
   <parent>
-    <groupId>io.micronaut</groupId>
+    <groupId>io.micronaut.platform</groupId>
     <artifactId>micronaut-parent</artifactId>
     <version>@VersionInfo.getMicronautVersion()</version>
   </parent>
@@ -277,16 +277,6 @@ MavenBuild mavenBuild
 @if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
 }
-@if (processor.getExclusions() != null) {
-                 <exclusions>
-@for (exclusion : processor.getExclusions()) {
-                   <exclusion>
-                     <groupId>@exclusion.getGroupId()</groupId>
-                     <artifactId>@exclusion.getArtifactId()</artifactId>
-                   </exclusion>
-}
-                 </exclusions>
-}
                </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -327,16 +317,6 @@ MavenBuild mavenBuild
                  <artifactId>@processor.getArtifactId()</artifactId>
 @if (processor.getVersion() != null) {
                  <version>@processor.getVersion()</version>
-}
-@if (processor.getExclusions() != null) {
-                 <exclusions>
-@for (exclusion : processor.getExclusions()) {
-                   <exclusion>
-                     <groupId>@exclusion.getGroupId()</groupId>
-                     <artifactId>@exclusion.getArtifactId()</artifactId>
-                   </exclusion>
-}
-                 </exclusions>
 }
                </annotationProcessorPath>
 }

@@ -26,7 +26,7 @@ class LanguageBuildCombinations {
      * @return a List where each element is the list is a triple of [{@link io.micronaut.starter.options.Language}, {@link io.micronaut.starter.options.BuildTool}]
      */
     @Memoized
-    static List combinations(List<String> features = null) {
+    static List<List> combinations(List<String> features = null) {
         features ? [Language.values(), BuildToolCombinations.buildTools, features].combinations() : [Language.values(), BuildToolCombinations.buildTools].combinations()
     }
 }

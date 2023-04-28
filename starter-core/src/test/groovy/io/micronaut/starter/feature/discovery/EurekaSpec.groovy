@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.discovery
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,39 +24,22 @@ class EurekaSpec extends ApplicationContextSpec implements CommandOutputFixture 
     }
 
     @Unroll
-    void 'test gradle discovery-eureka feature for language=#language'() {
+    void 'test gradle discovery-eureka feature for language=#language and buildTool=#buildTool'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['discovery-eureka'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
+        verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client", Scope.COMPILE)
+
+        and: 'It does not define a dependency on micronaut-discovery-core since it is pulled transitively'
+        !verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven discovery-eureka feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['discovery-eureka'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.discovery</groupId>
-      <artifactId>micronaut-discovery-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 
     void 'test discovery-eureka configuration'() {

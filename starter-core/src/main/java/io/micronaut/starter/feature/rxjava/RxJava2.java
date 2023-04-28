@@ -30,6 +30,10 @@ import jakarta.inject.Singleton;
 @Singleton
 public class RxJava2 implements Feature {
     public static final String MICRONAUT_RXJAVA2_GROUP_ID = "io.micronaut.rxjava2";
+    public static final Dependency DEPENDENCY_MICRONAUT_RXJAVA2 = Dependency.builder()
+            .groupId(MICRONAUT_RXJAVA2_GROUP_ID)
+            .artifactId("micronaut-rxjava2")
+            .compile().build();
 
     private final RxJava2HttpServerNetty rxJava2HttpServerNetty;
     private final RxJava2HttpClient rxJava2HttpClient;
@@ -82,10 +86,7 @@ public class RxJava2 implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_RXJAVA2_GROUP_ID)
-                .artifactId("micronaut-rxjava2")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_RXJAVA2);
     }
 
 }

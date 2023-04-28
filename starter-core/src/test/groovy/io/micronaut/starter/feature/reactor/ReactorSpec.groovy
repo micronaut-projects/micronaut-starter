@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.reactor
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -49,47 +52,19 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'dependency is included with maven and feature reactor for language=#language'(Language language) {
+    void 'dependency is included with #buildTool and feature reactor for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['reactor'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['http-client', 'reactor'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.reactor</groupId>
-      <artifactId>micronaut-reactor</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.reactor</groupId>
-      <artifactId>micronaut-reactor-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'dependency is included with gradle and feature reactor for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['reactor'])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.reactor:micronaut-reactor")')
-        template.contains('implementation("io.micronaut.reactor:micronaut-reactor-http-client")')
+        verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor-http-client", Scope.COMPILE)
 
         where:
-        language << Language.values()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
     }
 }

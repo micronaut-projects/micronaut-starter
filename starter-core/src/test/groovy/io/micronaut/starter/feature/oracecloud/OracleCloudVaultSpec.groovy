@@ -2,9 +2,9 @@ package io.micronaut.starter.feature.oracecloud
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
-import org.yaml.snakeyaml.Yaml
 import spock.lang.Unroll
 
 import static io.micronaut.starter.options.BuildTool.GRADLE
@@ -25,8 +25,8 @@ class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'test src/main/resources/boostrap.yml with feature oracle-cloud-vault contains config'() {
         when:
-        def output = generate(['oracle-cloud-vault'])
-        def bootstrap = output["src/main/resources/bootstrap.yml"]
+        Map<String, String> output = generate([Yaml.NAME, 'oracle-cloud-vault'])
+        String bootstrap = output["src/main/resources/bootstrap.yml"]
 
         then:
         bootstrap
@@ -48,7 +48,8 @@ oci:
 ''')
 
         when: 'verify YAML types are correct'
-        Map<String, Object> bootstrapYml = new Yaml().load(bootstrap)
+
+        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
 
         then:
         bootstrapYml.oci.vault.config.enabled

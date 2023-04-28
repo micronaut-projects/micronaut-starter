@@ -2,14 +2,15 @@ package io.micronaut.starter.feature.database
 
 
 import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 
 class DataFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Data Feature with migration has expected config'(List<String> features) {
         when:
-        def output = generate(features)
-        def appConfig = output["src/main/resources/application.yml"]
+        Map<String, String> output = generate([Yaml.NAME] + features)
+        String appConfig = output["src/main/resources/application.yml"]
 
         then:
         appConfig

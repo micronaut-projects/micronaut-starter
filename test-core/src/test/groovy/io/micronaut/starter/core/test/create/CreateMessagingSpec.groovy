@@ -16,7 +16,6 @@ class CreateMessagingSpec extends CommandSpec {
     private static List<String> EXCLUDED_FEATURES = [
             'jms-sqs',
             'jms-aq',
-            'kafka-streams',
             'jms-oracle-aq'
     ]
 
