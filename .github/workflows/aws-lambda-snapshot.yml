@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3.9.0
+        with:
+          distribution: 'adopt'
+          java-version: '17'
       - name: Run Tests
         run: ./gradlew starter-api:test starter-aws-lambda:test --refresh-dependencies
         env:
