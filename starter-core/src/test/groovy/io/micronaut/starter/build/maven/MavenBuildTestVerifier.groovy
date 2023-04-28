@@ -4,9 +4,11 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
+import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.Language
+import org.eclipse.jgit.ignore.internal.Strings
 
 @CompileStatic
 class MavenBuildTestVerifier implements BuildTestVerifier {
@@ -98,6 +100,18 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     boolean hasDependency(String expectedGroupId, String expectedArtifactId) {
         project.dependencies.dependency.findAll { it.artifactId.text() == expectedArtifactId }.any {
             it.groupId.text() == expectedGroupId
+        }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasDependencyWithExclusion(String groupId, String artifactId, Scope scope, String excludedGroupId, String excludedArtifactId) {
+        return project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+            String expectedDependency = "${groupId}:${artifactId}"
+            List<String> coordinates = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            String expectedExclusion = "${excludedGroupId}:${excludedArtifactId}"
+            List<String> exclusions = configuration.annotationProcessorPaths.path.exclusions.exclusion.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            return coordinates.contains(expectedDependency) && exclusions.contains(expectedExclusion)
         }
     }
 
