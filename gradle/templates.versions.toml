@@ -14,8 +14,9 @@ agorapulse-micronaut-console = "2.0.1-micronaut-3.0"
 agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
 agorapulse-micronaut-slack = "1.0.4-micronaut-3.0"
 agorapulse-micronaut-worker = "1.2.2-micronaut-3.0"
-apigatewayv2 = "2.42.1-alpha.0"
-apigatewayv2-integrations = "2.44.0-alpha.0"
+aws-cdk-lib = "2.77.0"
+apigatewayv2 = "2.77.0-alpha.0"
+apigatewayv2-integrations = "2.77.0-alpha.0"
 appengine-gradle-plugin = "2.4.5"
 asciidoctor-gradle-jvm = "3.3.2"
 asciidoctor-maven-plugin = "2.2.2"
@@ -63,6 +64,7 @@ agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", ve
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
 agorapulse-micronaut-slack = { module = "com.agorapulse:micronaut-slack-http", version.ref = "agorapulse-micronaut-slack" }
 agorapulse-micronaut-worker = { module = "com.agorapulse:micronaut-worker", version.ref = "agorapulse-micronaut-worker" }
+aws-cdk-lib = { module = 'software.amazon.awscdk:aws-cdk-lib', version.ref = 'aws-cdk-lib' }
 apigatewayv2-alpha = { module = "software.amazon.awscdk:apigatewayv2-alpha", version.ref = "apigatewayv2" }
 apigatewayv2-integrations-alpha = { module = "software.amazon.awscdk:apigatewayv2-integrations-alpha", version.ref = "apigatewayv2-integrations" }
 appengine-gradle-plugin = { module = "com.google.cloud.tools:appengine-gradle-plugin", version.ref = "appengine-gradle-plugin" }
