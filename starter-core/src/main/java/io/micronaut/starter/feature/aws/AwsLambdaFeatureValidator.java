@@ -56,10 +56,10 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
         return Stream.of(JdkVersion.values())
                 .filter(AwsLambdaFeatureValidator::supports)
                 .findFirst()
-                .orElse(JdkVersion.JDK_11);
+                .orElse(JdkVersion.JDK_17);
     }
     
-    public static boolean supports(JdkVersion jdkVersions) {
-        return !jdkVersions.greaterThanEqual(JdkVersion.JDK_17);
+    public static boolean supports(JdkVersion jdkVersion) {
+        return jdkVersion == JdkVersion.JDK_8 || jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
     }
 }
