@@ -5,10 +5,11 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.IgnoreIf
+import spock.lang.Requires
 import spock.lang.Unroll
 
 class SQLServerSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -40,6 +41,7 @@ class SQLServerSpec extends ApplicationContextSpec implements CommandOutputFixtu
         output["src/main/resources/application.properties"].contains("test-resources.containers.mssql.accept-license=false\n")
     }
 
+    @Requires({ jvm.current.isJava11Compatible() })
     void 'test for test-resources the accept-license property is set to false with hibernate reactive=#hibernateReactiveFeature'(
             String hibernateReactiveFeature) {
         when:
