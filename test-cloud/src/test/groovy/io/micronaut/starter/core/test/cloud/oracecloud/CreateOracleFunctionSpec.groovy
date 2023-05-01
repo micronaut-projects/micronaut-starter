@@ -7,10 +7,8 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Ignore
 import spock.lang.Retry
 
-@Ignore("[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project foo: Fatal error compiling: java.lang.NoSuchMethodError: Micronaut method io.micronaut.context.AbstractInitializableBeanDefinition.getEvaluatedExpressionValueForMethodArgument(int,int) not found. Most likely reason for this issue is that you are running a newer version of Micronaut with code compiled against an older version. Please recompile the offending classes -> [Help 1]")
 @Retry // can fail on CI due to port binding race condition, so retry
 class CreateOracleFunctionSpec extends CommandSpec{
     @Override
@@ -59,5 +57,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 BuildToolCombinations.buildTools,
                 TestFramework.values()
         ].combinations()
+        .stream()
+        .filter(it -> it[2] != BuildTool.MAVEN)
     }
 }
