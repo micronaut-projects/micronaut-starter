@@ -8,7 +8,6 @@ import spock.lang.Unroll
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 
-@Ignore('''Method too large: com/azure/resourcemanager/appservice/implementation/WebAppsClientImpl.$deserializeLambda\$ (Ljava/lang/invoke/SerializedLambda;)Ljava/lang/Object;''')
 class AzureFunctionSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
