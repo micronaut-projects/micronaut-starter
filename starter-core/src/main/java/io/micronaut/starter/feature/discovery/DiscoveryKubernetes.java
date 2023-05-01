@@ -23,6 +23,11 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class DiscoveryKubernetes implements DiscoveryFeature {
+    private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_K8S = Dependency.builder()
+            .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
+            .artifactId("micronaut-kubernetes-discovery-client")
+            .compile()
+            .build();
 
     @NonNull
     @Override
@@ -44,10 +49,7 @@ public class DiscoveryKubernetes implements DiscoveryFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
-                .artifactId("micronaut-kubernetes-discovery-client")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_K8S);
     }
 
     @Override

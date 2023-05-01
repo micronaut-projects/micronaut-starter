@@ -49,6 +49,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GRPC = "io.micronaut.grpc";
     public static final String GROUP_ID_IO_MICRONAUT_JMS = "io.micronaut.jms";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
+    public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
 
     private MicronautDependencyUtils() {
 
@@ -181,5 +182,10 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder picocliDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
+    }
+
+    @NonNull
+    public static Dependency.Builder discovery() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
     }
 }

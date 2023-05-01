@@ -6,10 +6,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Retry
 import spock.lang.Unroll
 
-@Retry // can fail on CI due to port binding race condition, so retry
 class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
 
     @Override
@@ -35,7 +33,5 @@ class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])
-                .stream()
-                .filter { it -> !(it[0] == ApplicationType.FUNCTION && it[1] == Language.GROOVY) }
     }
 }

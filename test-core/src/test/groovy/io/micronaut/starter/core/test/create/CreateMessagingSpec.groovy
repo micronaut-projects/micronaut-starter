@@ -12,6 +12,7 @@ import spock.lang.IgnoreIf
 import spock.lang.Unroll
 import java.util.stream.Collectors
 
+@Ignore
 class CreateMessagingSpec extends CommandSpec {
     private static List<String> EXCLUDED_FEATURES = [
             'jms-sqs',

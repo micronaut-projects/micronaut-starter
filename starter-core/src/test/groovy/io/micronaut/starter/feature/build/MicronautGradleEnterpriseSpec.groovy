@@ -1,8 +1,9 @@
-package io.micronaut.starter.feature.build.gradle
+package io.micronaut.starter.feature.build
 
 import groovy.namespace.QName
 import groovy.xml.XmlParser
 import io.micronaut.context.annotation.Replaces
+import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
@@ -23,6 +24,11 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
     @Subject
     MicronautGradleEnterprise micronautGradleEnterprise = beanContext.getBean(MicronautGradleEnterprise.class)
 
+    @Override
+    Map<String, Object> getConfiguration() {
+        ["spec.name": "MicronautGradleEnterpriseSpec"]
+    }
+
     void "if you add micronaut-gradle-enterprise it is configured for #buildTool"() {
         given:when:
         BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
@@ -33,27 +39,32 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
 
-        then:
+        then: 'we have 3 plugin repositories as in the replacement below'
         micronautGradleEnterprise.pluginsManagementRepositories().size() == 3
+
+        and: 'we have a single plugin management block'
         settings.count('pluginManagement {') == 1
-        settings.contains('    repositories {')
-        settings.count('        gradlePluginPortal()') == 1
-        settings.count('        mavenCentral()') == 1
-        settings.contains('    }')
-        settings.contains('}')
+
+        and: 'duplicate repositories are not added'
+        settings.contains('''pluginManagement {
+          |    repositories {
+          |        gradlePluginPortal()
+          |        mavenCentral()
+          |    }
+          |}'''.stripMargin())
+
         settings.contains('plugins {')
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert settings.contains('    id("io.micronaut.build.internal.gradle-enterprise") version("')
         } else if (buildTool == BuildTool.GRADLE) {
             assert settings.contains('    id "io.micronaut.build.internal.gradle-enterprise" version "')
         }
-        settings.contains('}')
 
         where:
         buildTool << BuildTool.valuesGradle()
     }
 
-    void "io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise is not visible"() {
+    void "io.micronaut.starter.feature.build.MicronautGradleEnterprise is not visible"() {
         expect:
         !beanContext.getBean(MicronautGradleEnterprise).isVisible()
     }
@@ -109,6 +120,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     @Singleton
     @Replaces(MicronautGradleEnterprise.class)
+    @Requires(property = "spec.name", value = "MicronautGradleEnterpriseSpec")
     static class MicronautGradleEnterpriseReplacement extends MicronautGradleEnterprise {
         @Override
         protected List<GradleRepository> pluginsManagementRepositories() {

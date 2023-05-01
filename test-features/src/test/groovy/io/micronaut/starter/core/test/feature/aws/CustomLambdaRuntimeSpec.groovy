@@ -53,7 +53,7 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
         [
                 Language.JAVA,
                 Language.KOTLIN,
-                //Language.GROOVY,
+                Language.GROOVY,
         ]
     }
 }

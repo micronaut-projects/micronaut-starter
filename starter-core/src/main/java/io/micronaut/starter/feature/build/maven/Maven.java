@@ -97,10 +97,10 @@ public class Maven implements BuildFeature {
         }
         generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
         generatorContext.addDependency(MICRONAUT_INJECT);
-        addEnforcePlugin(generatorContext);
+        addEnforcerPlugin(generatorContext);
     }
 
-    protected void addEnforcePlugin(GeneratorContext generatorContext) {
+    protected void addEnforcerPlugin(GeneratorContext generatorContext) {
         generatorContext.addBuildPlugin(MavenPlugin.builder()
                 .groupId(GROUP_ID_ORG_APACHE_MAVEN_PLUGINS)
                 .artifactId(ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN)

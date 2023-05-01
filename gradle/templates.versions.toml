@@ -45,7 +45,7 @@ ksp = "1.8.20-1.0.10"
 log4j = "2.19.0"
 log4j-slf4j = "2.17.2"
 micronaut-aot = "2.0.0-M1"
-micronaut-build-plugins = "6.4.1"
+micronaut-build-plugins = "6.4.2"
 micronaut-gradle-plugin = "4.0.0-M1"
 mockk = "1.9.3"
 protobuf-gradle-plugin = "0.9.2"
@@ -58,8 +58,10 @@ scram-client = "2.1"
 slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
+jakarta-validation-api = "3.0.2"
 
 [libraries]
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }

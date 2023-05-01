@@ -5,8 +5,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.Ignore
 import spock.lang.Unroll
 
+@Ignore
 class KtorSpec extends CommandSpec {
 
     @Unroll

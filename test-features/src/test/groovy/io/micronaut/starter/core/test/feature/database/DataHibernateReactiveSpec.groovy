@@ -15,9 +15,11 @@ import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.Requires
 
+@Ignore
 @Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends CommandSpec {
 

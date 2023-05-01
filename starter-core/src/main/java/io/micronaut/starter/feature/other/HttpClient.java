@@ -15,41 +15,24 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Scope;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
-import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
-import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 @Singleton
-public class HttpClient implements HttpClientFeature, DefaultFeature {
+public class HttpClient implements HttpClientFeature {
     public static final String NAME = "http-client";
-    private static final Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
-            .artifactId("micronaut-http-client");
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return true;
-    }
-
-    private Scope dependencyScope(GeneratorContext generatorContext) {
-        return (
-                generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) ||
-                (
-                    generatorContext.getApplicationType() == ApplicationType.DEFAULT &&
-                    generatorContext.getFeatures().getFeatures().stream().noneMatch(f -> f instanceof FunctionFeature)
-                )
-        ) ? Scope.COMPILE : Scope.TEST;
-    }
+    public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT = "micronaut-http-client";
+    public static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
+            .compile()
+            .build();
 
     @Override
     public String getName() {
@@ -68,15 +51,12 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#httpClient";
+        return "https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        addDependencies(generatorContext);
-    }
-
-    protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT.scope(dependencyScope(generatorContext)));
+    @NonNull
+    public List<Dependency> getDependencies(@NonNull GeneratorContext generatorContext) {
+        return Collections.singletonList(DEPENDENCY_MICRONAUT_HTTP_CLIENT);
     }
 }

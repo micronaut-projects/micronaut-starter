@@ -15,9 +15,14 @@
  */
 package io.micronaut.starter.feature.httpclient;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
+
+import java.util.List;
 
 public interface HttpClientFeature  extends OneOfFeature {
     @Override
@@ -34,4 +39,16 @@ public interface HttpClientFeature  extends OneOfFeature {
     default String getCategory() {
         return Category.CLIENT;
     }
+
+    @Override
+    default void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
+    }
+
+    default void addDependencies(GeneratorContext generatorContext) {
+        getDependencies(generatorContext).forEach(generatorContext::addDependency);
+    }
+
+    @NonNull
+    List<Dependency> getDependencies(@NonNull GeneratorContext generatorContext);
 }

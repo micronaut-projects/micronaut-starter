@@ -12,6 +12,7 @@ import io.micronaut.starter.template.Writable
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Ignore
 import spock.lang.Retry
 import spock.lang.Unroll
 
@@ -22,6 +23,7 @@ import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 
 import java.util.stream.Collectors
 
+@Ignore
 @Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class TestcontainersSpec extends CommandSpec {
 

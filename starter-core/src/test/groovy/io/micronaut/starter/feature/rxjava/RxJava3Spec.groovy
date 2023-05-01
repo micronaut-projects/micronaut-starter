@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.rxjava
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -42,46 +45,19 @@ class RxJava3Spec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'dependency is included with maven and feature rxjava3 for language=#language'(Language language) {
+    void 'dependency is included with #buildTool and feature rxjava3 for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['rxjava3'])
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
+                .features(['http-client', 'rxjava3'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.rxjava3</groupId>
-      <artifactId>micronaut-rxjava3</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.rxjava3</groupId>
-      <artifactId>micronaut-rxjava3-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'dependency is included with gradle and feature rxjava3 for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['rxjava3'])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.rxjava3:micronaut-rxjava3")')
-        template.contains('implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client")')
+        verifier.hasDependency("io.micronaut.rxjava3", "micronaut-rxjava3", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.rxjava3", "micronaut-rxjava3-http-client", Scope.COMPILE)
 
         where:
-        language << Language.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 }

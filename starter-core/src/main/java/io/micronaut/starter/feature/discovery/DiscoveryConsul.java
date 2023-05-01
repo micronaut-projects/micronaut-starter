@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.consul.Consul;
 import jakarta.inject.Singleton;
@@ -26,9 +25,11 @@ import jakarta.inject.Singleton;
 public class DiscoveryConsul implements DiscoveryFeature {
 
     private final Consul consul;
+    private final DiscoveryClient discoveryClient;
 
-    public DiscoveryConsul(Consul consul) {
+    public DiscoveryConsul(Consul consul, DiscoveryClient discoveryClient) {
         this.consul = consul;
+        this.discoveryClient = discoveryClient;
     }
 
     @NonNull
@@ -49,18 +50,13 @@ public class DiscoveryConsul implements DiscoveryFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Consul.class)) {
-            featureContext.addFeature(consul);
-        }
+        featureContext.addFeatureIfNotPresent(Consul.class, consul);
+        featureContext.addFeatureIfNotPresent(DiscoveryClient.class, discoveryClient);
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.discovery")
-                .artifactId("micronaut-discovery-client")
-                .compile());
     }
 
     @Override
