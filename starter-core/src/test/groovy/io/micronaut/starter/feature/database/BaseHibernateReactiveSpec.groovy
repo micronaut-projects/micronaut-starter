@@ -8,19 +8,14 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.database.jdbc.Hikari
 import io.micronaut.starter.options.BuildTool
 
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_INJECT
 import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
 
 abstract class BaseHibernateReactiveSpec extends ApplicationContextSpec {
 
     boolean containsDataProcessor(String template) {
-        mavenVerifier(template).hasDependencyWithExclusion(
-                GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT,
-                Scope.ANNOTATION_PROCESSOR,
-                GROUP_ID_MICRONAUT, ARTIFACT_ID_MICRONAUT_INJECT)
+        mavenVerifier(template).hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
     }
 
     boolean containsDataHibernateJpa(String template) {

@@ -56,12 +56,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        if (buildTool.isGradle()) {
-            verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
-        } else if (buildTool == BuildTool.MAVEN) {
-            verifier.hasDependencyWithExclusion("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR,
-            "io.micronaut", "micronaut-inject")
-        }
+        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
         if (language != Language.GROOVY) {
             assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
         }
