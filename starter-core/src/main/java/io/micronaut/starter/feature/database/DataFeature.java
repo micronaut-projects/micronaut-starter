@@ -50,18 +50,22 @@ public interface DataFeature extends OneOfFeature {
         return conf;
     }
 
-    default Dependency dataProcessorDependency(BuildTool buildTool) {
+    static Dependency dataProcessorDependency(BuildTool buildTool) {
+        return dataProcessorDependency(buildTool, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
+    }
+
+    static Dependency dataProcessorDependency(BuildTool buildTool, String artifactId, int order) {
         if (buildTool.isGradle()) {
             return MicronautDependencyUtils
                     .dataDependency()
-                    .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                    .artifactId(artifactId)
+                    .order(order)
                     .annotationProcessor(true)
                     .build();
         } else if (buildTool == BuildTool.MAVEN) {
             return MicronautDependencyUtils
-                    .moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, MICRONAUT_DATA_VERSION, true)
-                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                    .moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_DATA, artifactId, MICRONAUT_DATA_VERSION, true)
+                    .order(order)
                     .build();
         }
         throw new RuntimeException("build tool " + buildTool.getName() + " not supported");

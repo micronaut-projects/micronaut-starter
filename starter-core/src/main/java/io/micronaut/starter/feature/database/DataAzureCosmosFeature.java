@@ -91,11 +91,11 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
     protected List<Dependency> getDependencies(GeneratorContext generatorContext) {
         return (generatorContext.getBuildTool() == BuildTool.MAVEN) ?
                 Arrays.asList(
-                        DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
+                        DataDocumentFeature.dataDocumentProcessorDependency(generatorContext.getBuildTool()),
                         DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA,
-                        dataProcessorDependency(generatorContext.getBuildTool())) :
+                        DataFeature.dataProcessorDependency(generatorContext.getBuildTool())) :
                 Arrays.asList(
-                        DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
+                        DataDocumentFeature.dataDocumentProcessorDependency(generatorContext.getBuildTool()),
                         DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA);
     }
 

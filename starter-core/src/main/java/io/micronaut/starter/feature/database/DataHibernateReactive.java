@@ -64,7 +64,7 @@ public class DataHibernateReactive extends HibernateReactiveFeature implements D
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addDependency(dataProcessorDependency(generatorContext.getBuildTool()));
+        generatorContext.addDependency(DataFeature.dataProcessorDependency(generatorContext.getBuildTool()));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE);
     }
 }
