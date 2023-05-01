@@ -104,7 +104,7 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
         return Optional.empty();
     }
 
-    public Map<String, Object> getAdditionalConfig() {
+    public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {
         return Collections.emptyMap();
     }
 

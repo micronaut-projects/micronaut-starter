@@ -45,7 +45,7 @@ public interface DatabaseDriverConfigurationFeature extends Feature {
         }
         Optional.ofNullable(dbFeature.getDriverClass()).ifPresent(driver -> config.put(getDriverKey(), driver));
         dbFeature.getDbType().ifPresent(dbType -> config.put(PROPERTY_DATASOURCES_DEFAULT_DB_TYPE, dbType.toString()));
-        final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig();
+        final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig(generatorContext);
         if (!additionalConfig.isEmpty()) {
             config.putAll(additionalConfig);
         }
