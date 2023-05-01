@@ -2,46 +2,40 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SQLServerSpec extends ApplicationContextSpec {
+class SQLServerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
-    void 'test gradle sqlserver feature for language=#language'() {
+    void 'test #buildTool sqlserver feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['sqlserver'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")')
+        verifier.hasDependency("com.microsoft.sqlserver", "mssql-jdbc", Scope.RUNTIME)
+        if (buildTool.isGradle()) {
+            assert verifier.hasBuildPlugin("io.micronaut.test-resources")
+        }
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
     }
 
-    @Unroll
-    void 'test maven sqlserver feature for language=#language'() {
+    void 'test for test-resources the accept-license property is set to true'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['sqlserver'])
-                .language(language)
-                .render()
+        Map<String, String> output = generate(["sqlserver"])
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>mssql-jdbc</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
+        output["src/main/resources/application.properties"].contains("test-resources.containers.mssql.accept-license=true\n")
     }
-
 }

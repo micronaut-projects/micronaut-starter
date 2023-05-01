@@ -1,10 +1,12 @@
 package io.micronaut.starter.feature.database
 
+import groovy.xml.XmlSlurper
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
@@ -14,7 +16,9 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import spock.lang.Issue
 import spock.lang.Requires
-import groovy.xml.XmlSlurper
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
+import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
 
 @Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
@@ -345,14 +349,9 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
                 .jdkVersion(JdkVersion.JDK_11)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-''')
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY)
     }
 }

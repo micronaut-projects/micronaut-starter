@@ -15,11 +15,9 @@ import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.Requires
 
-@Ignore
 @Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends CommandSpec {
 
@@ -35,12 +33,6 @@ class DataHibernateReactiveSpec extends CommandSpec {
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
 
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
-
         String output = executeMaven("-DtrimStackTrace=false compile test")
 
         then:
@@ -55,12 +47,6 @@ class DataHibernateReactiveSpec extends CommandSpec {
         generateProject(Language.JAVA, BuildTool.GRADLE, [DataHibernateReactive.NAME, db])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
-
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
 
         BuildResult result = executeGradle("test")
 

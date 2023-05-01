@@ -25,6 +25,8 @@ import jakarta.inject.Singleton;
 public class DataJdbc implements DataFeature {
 
     public static final String NAME = "data-jdbc";
+
+    public static final String MICRONAUT_DATA_JDBC_ARTIFACT = "micronaut-data-jdbc";
     private final Data data;
     private final JdbcFeature jdbcFeature;
 
@@ -58,10 +60,10 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
+        generatorContext.addDependency(DataFeature.dataProcessorDependency(generatorContext.getBuildTool()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-jdbc")
+                .artifactId(MICRONAUT_DATA_JDBC_ARTIFACT)
                 .compile());
 
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);

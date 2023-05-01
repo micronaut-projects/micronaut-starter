@@ -77,9 +77,12 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
+    private static final String ARTIFACT_ID_AWS_CDK_LIB = "aws-cdk-lib";
+    private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
+    private final CoordinateResolver coordinateResolver;
 
     @Deprecated
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -89,6 +92,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     @Deprecated
     public Cdk(CoordinateResolver coordinateResolver,
                Arm arm) {
+        this.coordinateResolver = coordinateResolver;
         this.defaultCpuArchitecture = arm;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.repositoryResolver = new DefaultRepositoryResolver();
@@ -104,6 +108,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public Cdk(CoordinateResolver coordinateResolver,
                X86 x86,
                RepositoryResolver repositoryResolver) {
+        this.coordinateResolver = coordinateResolver;
         this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.repositoryResolver = repositoryResolver;
@@ -163,7 +168,9 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                         "0.1",
                         handler,
                         generatorContext.getFeatures().hasGraalvm(),
-                        generatorContext.getFeatures().hasAotBuildPlugin())));
+                        generatorContext.getFeatures().hasAotBuildPlugin(),
+                        generatorContext.getJdkVersion()))
+        );
         buildRockerModel(generatorContext).ifPresent(rockerModel -> {
             generatorContext.addTemplate("cdk-build",
                     new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
@@ -191,7 +198,18 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         dependencyContext.addDependency(bomDependency().compile());
         dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
+                        .exclude(Dependency.builder()
+                                .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
+                                .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
+                                .build())
                 .compile());
+        coordinateResolver.resolve(ARTIFACT_ID_AWS_CDK_LIB)
+                .ifPresent(coordinate -> dependencyContext.addDependency(Dependency.builder()
+                        .groupId(coordinate.getGroupId())
+                        .artifactId(coordinate.getArtifactId())
+                        .version(coordinate.getVersion())
+                        .compile()
+                        .build()));
         dependencyContext.addDependency(bomDependency().test());
         dependencyContext.addDependency(Dependency.builder()
                 .groupId("org.junit.jupiter")

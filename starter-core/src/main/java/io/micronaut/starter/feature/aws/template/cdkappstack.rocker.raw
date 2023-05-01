@@ -5,7 +5,8 @@
 @import io.micronaut.starter.feature.architecture.CpuArchitecture;
 @import io.micronaut.starter.feature.architecture.X86;
 @import io.micronaut.starter.feature.architecture.Arm;
-@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
+@import io.micronaut.starter.options.JdkVersion;
+@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized, JdkVersion jdkVersion)
 
 package @project.getPackageName();
 
@@ -17,6 +18,9 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
+@if (!nativeImage) {
+import software.amazon.awscdk.services.lambda.Runtime;
+}
 import software.amazon.awscdk.services.lambda.Architecture;
 @if (features.contains("dynamodb")) {
 import software.amazon.awscdk.services.dynamodb.Attribute;
@@ -148,6 +152,15 @@ public class AppStack extends Stack {
                 @nativeImage,
                 this,
                 "@(functionId)")
+@if (!nativeImage) {
+@if (jdkVersion == JdkVersion.JDK_8) {
+                .runtime(Runtime.JAVA_8)
+} else if (jdkVersion == JdkVersion.JDK_11) {
+                .runtime(Runtime.JAVA_11)
+} else if (jdkVersion == JdkVersion.JDK_17) {
+                .runtime(Runtime.JAVA_17)
+}
+}
 @if (applicationType == ApplicationType.FUNCTION) {
                 .handler("@(handler)")
 }

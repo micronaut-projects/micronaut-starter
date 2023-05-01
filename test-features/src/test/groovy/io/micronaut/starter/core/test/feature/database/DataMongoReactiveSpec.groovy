@@ -9,7 +9,6 @@ import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
-@Ignore
 class DataMongoReactiveSpec extends CommandSpec {
 
     @Override
@@ -17,6 +16,7 @@ class DataMongoReactiveSpec extends CommandSpec {
         return "dataMongodbReactive"
     }
 
+    @Ignore('An exception java.lang.IncompatibleClassChangeError: class io.micronaut.http.filter.GenericHttpFilter$TerminalWithReactorContext cannot extend sealed interface io.micronaut.http.filter.GenericHttpFilter [enable DEBUG level for full stacktrace] was thrown by a user handler exceptionCaught() method while handling the following exception: java.lang.NoSuchFieldError: ROUTE')
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven data-mongodb-reactive with #language"(Language language) {
