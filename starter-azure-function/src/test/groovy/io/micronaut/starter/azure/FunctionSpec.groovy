@@ -10,7 +10,6 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import io.micronaut.starter.util.ZipUtil
-import spock.lang.Ignore
 import spock.lang.Specification
 
 class FunctionSpec extends Specification {
@@ -26,7 +25,6 @@ class FunctionSpec extends Specification {
         responseMessage.status.value() == HttpStatus.OK.code
     }
 
-    @Ignore("ZipUtils::isZip fails")
     void "test create app"() {
         given:
         Function function = new Function()
