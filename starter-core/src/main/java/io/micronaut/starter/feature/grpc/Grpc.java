@@ -26,6 +26,8 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.discovery.DiscoveryCore;
 import io.micronaut.starter.feature.grpc.template.proto;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
@@ -47,6 +49,17 @@ public class Grpc implements DefaultFeature {
             .artifactId("micronaut-grpc-runtime")
             .compile()
             .build();
+
+    private final DiscoveryCore discoveryCore;
+
+    public Grpc(DiscoveryCore discoveryCore) {
+        this.discoveryCore = discoveryCore;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(DiscoveryCore.class, discoveryCore);
+    }
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
