@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature;
 
 /**
- * A feature that only works with with {@link io.micronaut.starter.options.BuildTool#isGradle()}.
+ * A feature that only works with {@link io.micronaut.starter.options.BuildTool#isGradle()}.
  *
  * @author Sergio del Amo
  * @since 4.0.0

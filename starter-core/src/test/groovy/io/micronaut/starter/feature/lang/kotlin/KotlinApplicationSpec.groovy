@@ -61,7 +61,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         if (buildTool.isGradle()) {
             assert buildGradle
             assert buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
-            assert buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
+            assert buildGradle.contains('id("com.google.devtools.ksp")')
             assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
         }
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)

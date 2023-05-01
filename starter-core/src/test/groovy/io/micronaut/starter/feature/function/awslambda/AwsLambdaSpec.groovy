@@ -310,7 +310,7 @@ tasks.named("dockerfileNative") {
         ].combinations()
     }
 
-    void "kotlin.kapt plugin is applied before micronaut library plugin"() {
+    void "kotlin.ksp plugin is applied before micronaut library plugin"() {
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
@@ -320,9 +320,9 @@ tasks.named("dockerfileNative") {
         String buildGradle = output['build.gradle.kts']
 
         then:
-        buildGradle.contains('org.jetbrains.kotlin.kapt')
+        buildGradle.contains('com.google.devtools.ksp')
         buildGradle.contains('io.micronaut.library')
-        buildGradle.indexOf('org.jetbrains.kotlin.kapt') < buildGradle.indexOf('io.micronaut.library')
+        buildGradle.indexOf('com.google.devtools.ksp') < buildGradle.indexOf('io.micronaut.library')
     }
 
     @Unroll
