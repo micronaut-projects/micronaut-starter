@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.aws
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
@@ -28,15 +31,16 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .language(language)
                 .features([DynamoDb.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
-        template.contains('implementation("software.amazon.awssdk:dynamodb")')
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
+        verifier.hasDependency("software.amazon.awssdk", "dynamodb", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
     }
-
+    
     void 'test #buildTool dynamodb feature for language=#language with GraalVM'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -44,59 +48,31 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .features([DynamoDb.NAME, GraalVM.FEATURE_NAME_GRAALVM])
                 .render()
         String mapNotation = buildTool == BuildTool.GRADLE ? ':' : ' ='
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
         then:
-        template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         template.contains("""    implementation("software.amazon.awssdk:dynamodb") {
                             |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "apache-client")
                             |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "netty-nio-client")
                             |    }""".stripMargin())
-        template.contains('implementation("software.amazon.awssdk:url-connection-client")')
+        verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
 
         where:
         [language, buildTool] << [GraalVMFeatureValidator.supportedLanguages(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
     }
 
-    void 'test maven dynamodb feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features([DynamoDb.NAME])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-sdk-v2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>software.amazon.awssdk</groupId>
-      <artifactId>dynamodb</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        where:
-        language << Language.values().toList()
-    }
-
     void 'test maven dynamodb feature for language=#language with GraalVM'(Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features([DynamoDb.NAME, GraalVM.FEATURE_NAME_GRAALVM])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-sdk-v2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         template.contains("""
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
@@ -114,13 +90,8 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         </exclusions>
     </dependency>
 """)
-        template.contains("""
-    <dependency>
-      <groupId>software.amazon.awssdk</groupId>
-      <artifactId>url-connection-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
+        verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
