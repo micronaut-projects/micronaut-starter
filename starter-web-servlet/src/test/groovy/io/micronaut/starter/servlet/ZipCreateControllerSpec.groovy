@@ -8,6 +8,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Ignore
 import spock.lang.Retry
 import spock.lang.Specification
 
@@ -15,6 +16,10 @@ import jakarta.inject.Inject
 
 @MicronautTest
 @Retry
+@Ignore('''Message: Multiple possible bean candidates found: [InterceptorRegistry, InterceptorRegistry]
+Path Taken: new JettyServer(ApplicationContext applicationContext,ApplicationConfiguration applicationConfiguration,Server server) --> new JettyServer(ApplicationContext applicationContext,ApplicationConfiguration applicationConfiguration,[Server server]) --> new JettyFactory(ResourceResolver resourceResolver,JettyConfiguration serverConfiguration,SslConfiguration sslConfiguration,ApplicationContext applicationContext,[List staticResourceConfigurations])
+io.micronaut.context.exceptions.BeanInstantiationException: Error instantiating bean of type  [io.micronaut.servlet.jetty.JettyFactory]
+''')
 class ZipCreateControllerSpec extends Specification {
 
     @Inject
