@@ -17,9 +17,8 @@ package io.micronaut.starter.feature.database.jdbc;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -27,6 +26,7 @@ import jakarta.inject.Singleton;
 public class Hikari extends JdbcFeature {
 
     public static final String NAME = "jdbc-hikari";
+    public static final String MICRONAUT_JDBC_HIKARI_ARTIFACT = "micronaut-jdbc-hikari";
 
     public Hikari(DatabaseDriverFeature dbFeature) {
         super(dbFeature);
@@ -50,9 +50,8 @@ public class Hikari extends JdbcFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.sql")
-                .artifactId("micronaut-jdbc-hikari")
+        generatorContext.addDependency(MicronautDependencyUtils.sqlDependency()
+                .artifactId(MICRONAUT_JDBC_HIKARI_ARTIFACT)
                 .compile());
     }
 }
