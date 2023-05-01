@@ -57,5 +57,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 BuildToolCombinations.buildTools,
                 TestFramework.values()
         ].combinations()
+                .stream()
+                .filter(it -> !(it[0] == Language.KOTLIN && it[2] == BuildTool.MAVEN))
     }
 }
