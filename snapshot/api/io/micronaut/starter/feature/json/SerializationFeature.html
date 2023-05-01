@@ -99,8 +99,11 @@ extends <a href="JsonFeature.html" title="interface in io.micronaut.starter.feat
 <div class="col-second even-row-color"><code><a href="#ARTIFACT_ID_MICRONAUT_JACKSON_CORE" class="member-name-link">ARTIFACT_ID_MICRONAUT_JACKSON_CORE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#MICRONAUT_SERIALIZATION" class="member-name-link">MICRONAUT_SERIALIZATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR" class="member-name-link">ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#MICRONAUT_SERIALIZATION" class="member-name-link">MICRONAUT_SERIALIZATION</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.starter.feature.json.JsonFeature">Fields inherited from interface&nbsp;io.micronaut.starter.feature.json.<a href="JsonFeature.html" title="interface in io.micronaut.starter.feature.json">JsonFeature</a></h3>
@@ -147,7 +150,7 @@ extends <a href="JsonFeature.html" title="interface in io.micronaut.starter.feat
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#serdeModule(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">serdeModule</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#serdeProcessor()" class="member-name-link">serdeProcessor</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#serdeProcessor(io.micronaut.starter.options.BuildTool)" class="member-name-link">serdeProcessor</a><wbr>(<a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
@@ -198,6 +201,20 @@ extends <a href="JsonFeature.html" title="interface in io.micronaut.starter.feat
 <dd>
 <ul class="see-list">
 <li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.json.SerializationFeature.ARTIFACT_ID_MICRONAUT_JACKSON_CORE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR">
+<h3>ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.json.SerializationFeature.ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -300,10 +317,10 @@ extends <a href="JsonFeature.html" title="interface in io.micronaut.starter.feat
 </section>
 </li>
 <li>
-<section class="detail" id="serdeProcessor()">
+<section class="detail" id="serdeProcessor(io.micronaut.starter.options.BuildTool)">
 <h3>serdeProcessor</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></span>&nbsp;<span class="element-name">serdeProcessor</span>()</div>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></span>&nbsp;<span class="element-name">serdeProcessor</span><wbr><span class="parameters">(<a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</span></div>
 </section>
 </li>
 <li>
