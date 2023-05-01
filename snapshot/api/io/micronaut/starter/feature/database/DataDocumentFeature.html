@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
 <div class="nav-list-search"><label for="search-input">SEARCH:</label>
@@ -98,12 +98,9 @@ extends <a href="DataFeature.html" title="interface in io.micronaut.starter.feat
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></div>
-<div class="col-second even-row-color"><code><a href="#DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR" class="member-name-link">DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT" class="member-name-link">MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT" class="member-name-link">MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.starter.feature.database.DataFeature">Fields inherited from interface&nbsp;io.micronaut.starter.feature.database.<a href="DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></h3>
@@ -117,9 +114,20 @@ extends <a href="DataFeature.html" title="interface in io.micronaut.starter.feat
 <li>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="caption"><span>Static Methods</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#dataDocumentProcessorDependency(io.micronaut.starter.options.BuildTool)" class="member-name-link">dataDocumentProcessorDependency</a><wbr>(<a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
+</div>
+</div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.database.DataFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.database.<a href="DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></h3>
-<code><a href="DataFeature.html#dataProcessorDependency(io.micronaut.starter.options.BuildTool)">dataProcessorDependency</a>, <a href="DataFeature.html#getCategory()">getCategory</a>, <a href="DataFeature.html#getDatasourceConfig(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.feature.database.DatabaseDriverFeature)">getDatasourceConfig</a>, <a href="DataFeature.html#getFeatureClass()">getFeatureClass</a>, <a href="DataFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
+<code><a href="DataFeature.html#getCategory()">getCategory</a>, <a href="DataFeature.html#getDatasourceConfig(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.feature.database.DatabaseDriverFeature)">getDatasourceConfig</a>, <a href="DataFeature.html#getFeatureClass()">getFeatureClass</a>, <a href="DataFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
@@ -151,10 +159,18 @@ extends <a href="DataFeature.html" title="interface in io.micronaut.starter.feat
 </dl>
 </section>
 </li>
+</ul>
+</section>
+</li>
+<!-- ============ METHOD DETAIL ========== -->
 <li>
-<section class="detail" id="DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR">
-<h3>DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></span>&nbsp;<span class="element-name">DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR</span></div>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="dataDocumentProcessorDependency(io.micronaut.starter.options.BuildTool)">
+<h3>dataDocumentProcessorDependency</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></span>&nbsp;<span class="element-name">dataDocumentProcessorDependency</span><wbr><span class="parameters">(<a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</span></div>
 </section>
 </li>
 </ul>
