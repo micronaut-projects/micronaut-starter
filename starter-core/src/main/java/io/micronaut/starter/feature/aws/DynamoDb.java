@@ -35,6 +35,8 @@ import io.micronaut.starter.feature.aws.template.ciawsregionconditionJava;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionKotlin;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.starter.feature.validator.MicronautValidationFeature;
+import io.micronaut.starter.feature.validator.ValidationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -44,16 +46,17 @@ public class DynamoDb implements AwsFeature {
     public static final String NAME = "dynamodb";
 
     private final AwsV2Sdk awsV2Sdk;
+    private final MicronautValidationFeature micronautValidation;
 
-    public DynamoDb(AwsV2Sdk awsV2Sdk) {
+    public DynamoDb(AwsV2Sdk awsV2Sdk, MicronautValidationFeature micronautValidation) {
         this.awsV2Sdk = awsV2Sdk;
+        this.micronautValidation = micronautValidation;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(AwsV2Sdk.class)) {
-            featureContext.addFeature(awsV2Sdk);
-        }
+        featureContext.addFeatureIfNotPresent(AwsV2Sdk.class, awsV2Sdk);
+        featureContext.addFeatureIfNotPresent(ValidationFeature.class, micronautValidation);
     }
 
     @Override

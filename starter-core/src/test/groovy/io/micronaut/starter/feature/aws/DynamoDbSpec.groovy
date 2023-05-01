@@ -37,6 +37,10 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         verifier.hasDependency("software.amazon.awssdk", "dynamodb", Scope.COMPILE)
 
+        and: 'validation feature is applied since the rocker templates of dynamodb use annotations'
+        verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
     }

@@ -6,10 +6,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Ignore
 import spock.lang.Unroll
 
-@Ignore
 class CreateAwsLambdaDynamoDbSpec extends CommandSpec {
 
     @Override
