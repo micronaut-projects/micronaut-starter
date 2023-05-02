@@ -16,7 +16,10 @@ import jakarta.inject.Inject
 
 @MicronautTest
 @Retry
-@Ignore("ERROR i.m.http.server.RouteExecutor - Unexpected error occurred: Receiver class io.micronaut.servlet.engine.bind.DefaultServletBinderRegistry does not define or inherit an implementation of the resolved method 'java.util.Optional findArgumentBinder(io.micronaut.core.type.Argument)' of interface io.micronaut.http.bind.RequestBinderRegistry. java.lang.AbstractMethodError: Receiver class io.micronaut.servlet.engine.bind.DefaultServletBinderRegistry does not define or inherit an implementation of the resolved method 'java.util.Optional findArgumentBinder(io.micronaut.core.type.Argument)' of interface io.micronaut.http.bind.RequestBinderRegistry.")
+@Ignore('''Message: Multiple possible bean candidates found: [InterceptorRegistry, InterceptorRegistry]
+Path Taken: new JettyServer(ApplicationContext applicationContext,ApplicationConfiguration applicationConfiguration,Server server) --> new JettyServer(ApplicationContext applicationContext,ApplicationConfiguration applicationConfiguration,[Server server]) --> new JettyFactory(ResourceResolver resourceResolver,JettyConfiguration serverConfiguration,SslConfiguration sslConfiguration,ApplicationContext applicationContext,[List staticResourceConfigurations])
+io.micronaut.context.exceptions.BeanInstantiationException: Error instantiating bean of type  [io.micronaut.servlet.jetty.JettyFactory]
+''')
 class ZipCreateControllerSpec extends Specification {
 
     @Inject

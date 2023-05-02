@@ -16,7 +16,8 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.dependencies.Priority;
+import io.micronaut.starter.options.BuildTool;
 
 /**
  * Marker features for data document features such as {@link DataMongo} and {@link DataAzureCosmosFeature}.
@@ -25,9 +26,8 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
  */
 public interface DataDocumentFeature extends DataFeature {
     String MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT = "micronaut-data-document-processor";
-    Dependency DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR = MicronautDependencyUtils.dataDependency()
-            .artifactId(MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT)
-            .versionProperty(MICRONAUT_DATA_VERSION)
-            .annotationProcessor(true)
-            .build();
+
+    static Dependency dataDocumentProcessorDependency(BuildTool buildTool) {
+        return DataFeature.dataProcessorDependency(buildTool, MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT, Priority.MICRONAUT_DATA_DOCUMENT_PROCESSOR.getOrder());
+    }
 }

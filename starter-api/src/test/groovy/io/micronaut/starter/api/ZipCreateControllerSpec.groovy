@@ -16,7 +16,6 @@ import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
-import spock.lang.Ignore
 import spock.lang.Specification
 
 @MicronautTest
@@ -37,13 +36,12 @@ class ZipCreateControllerSpec extends Specification {
         eventListener.fired
     }
 
-    @Ignore
     void "test default create app - bad project name"() {
         when:
         client.createApp("tes%*&*t", Collections.emptyList(), null, null, null)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
         e.status == HttpStatus.BAD_REQUEST
         e.getResponse().getBody(Map).get()._embedded.errors[0].message.contains("name: must match")
     }

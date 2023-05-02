@@ -21,7 +21,9 @@ public enum Priority {
 
     LOMBOK,
     MICRONAUT_INJECT_JAVA,
-    MICRONAUT_DATA_PROCESSOR;
+    MICRONAUT_DATA_PROCESSOR,
+
+    MICRONAUT_DATA_DOCUMENT_PROCESSOR;
 
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE + ordinal();

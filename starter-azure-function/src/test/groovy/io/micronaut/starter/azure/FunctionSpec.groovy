@@ -13,14 +13,6 @@ import io.micronaut.starter.util.ZipUtil
 import spock.lang.Ignore
 import spock.lang.Specification
 
-@Ignore("""
-i.m.http.server.RouteExecutor - Unexpected error occurred: Receiver class io.micronaut.azure.function.http.AzureBinderRegistry does not define or inherit an implementation of the resolved method 'java.util.Optional findArgumentBinder(io.micronaut.core.type.Argument)' of interface io.micronaut.http.bind.RequestBinderRegistry.
-java.lang.AbstractMethodError: Receiver class io.micronaut.azure.function.http.AzureBinderRegistry does not define or inherit an implementation of the resolved method 'java.util.Optional findArgumentBinder(io.micronaut.core.type.Argument)' of interface io.micronaut.http.bind.RequestBinderRegistry.
-\tat io.micronaut.web.router.DefaultMethodBasedRouteInfo.resolveArgumentBindersInternal(DefaultMethodBasedRouteInfo.java:130)
-\tat io.micronaut.web.router.DefaultMethodBasedRouteInfo.resolveArgumentBinders(DefaultMethodBasedRouteInfo.java:116)
-\tat io.micronaut.web.router.AbstractRouteMatch.fulfillBeforeFilters(AbstractRouteMatch.java:294)
-\tat io.micronaut.http.server.binding.RequestArgumentSatisfier.fulfillArgumentRequirementsBeforeFilters(RequestArgumentSatisfier.java:57)
-""")
 class FunctionSpec extends Specification {
 
     void "test list features"() {
@@ -34,6 +26,7 @@ class FunctionSpec extends Specification {
         responseMessage.status.value() == HttpStatus.OK.code
     }
 
+    @Ignore("ZipUtils::isZip fails")
     void "test create app"() {
         given:
         Function function = new Function()
