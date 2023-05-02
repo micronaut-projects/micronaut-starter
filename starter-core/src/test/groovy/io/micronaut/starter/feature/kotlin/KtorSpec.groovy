@@ -26,7 +26,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature ktor contains links to micronaut docs'() {
         when:
         Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        def output = generate(ApplicationType.DEFAULT, options, ['ktor'])
+        def output = generate(ApplicationType.DEFAULT, options, [Ktor.NAME])
         def readme = output["README.md"]
 
         then:
@@ -80,7 +80,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features(['ktor'])
+                .features([Ktor.NAME])
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
@@ -105,7 +105,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['ktor'])
+                .features([Ktor.NAME])
                 .render()
 
         then:
@@ -120,7 +120,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'dependency is included with gradle and feature ktor for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['ktor'])
+                .features([Ktor.NAME])
                 .language(language)
                 .render()
 
@@ -135,7 +135,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['ktor'])
+                .features([Ktor.NAME])
                 .language(language)
                 .render()
 
@@ -153,7 +153,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, BuildTool.MAVEN),
-                ['ktor']
+                [Ktor.NAME]
         )
 
         then:

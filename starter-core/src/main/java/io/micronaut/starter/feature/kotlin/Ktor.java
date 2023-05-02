@@ -44,6 +44,7 @@ import java.util.Optional;
 @Singleton
 public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, KotlinSpecificFeature {
 
+    public static final String NAME = "ktor";
     public static final String GROUP_ID_IO_KTOR = "io.ktor";
     public static final String ARTIFACT_ID_KTOR_SERVER_NETTY = "ktor-server-netty-jvm";
     public static final String ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON = "ktor-serialization-jackson-jvm";
@@ -79,7 +80,7 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     @NonNull
     @Override
     public String getName() {
-        return "ktor";
+        return NAME;
     }
 
     @Override

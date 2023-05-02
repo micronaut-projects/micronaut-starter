@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.create
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.kotlin.Ktor
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
@@ -10,7 +11,7 @@ class KtorSpec extends CommandSpec {
 
     void 'create-app with feature ktor for #lang and #buildTool starts successfully'(Language lang, BuildTool buildTool) {
         given:
-        generateProject(lang, buildTool, ['ktor'] as List<String>, ApplicationType.DEFAULT)
+        generateProject(lang, buildTool, [Ktor.NAME] as List<String>, ApplicationType.DEFAULT)
 
         when:
         String output = executeBuild(buildTool, "test")
