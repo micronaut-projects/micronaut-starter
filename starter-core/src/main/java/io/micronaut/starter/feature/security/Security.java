@@ -22,13 +22,15 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Security extends SecurityFeature {
 
+    public static final String NAME = "security";
+
     public Security(SecurityAnnotations securityAnnotations) {
         super(securityAnnotations);
     }
 
     @Override
     public String getName() {
-        return "security";
+        return NAME;
     }
 
     @Override
