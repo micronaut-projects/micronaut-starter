@@ -31,8 +31,6 @@ dependencies {
 
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
     version = micronautVersion
-    // TODO: remove this once we have a release
-    platformVersion = micronautPlatformVersion
     extraBomProperties = [
             'io.micronaut:micronaut-core',
             'io.micronaut.logging:micronaut-logging',

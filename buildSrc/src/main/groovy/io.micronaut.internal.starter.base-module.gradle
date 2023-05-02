@@ -7,18 +7,6 @@ repositories {
     maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
 }
 
-////////////////////////////////////////////////////////////////////////
-// TODO: Remove this once we have platform and core on the same release
-ext {
-    micronautPlatformVersion = "4.0.0-M1"
-}
-configurations.all {
-    resolutionStrategy {
-        force "io.micronaut.platform:micronaut-platform:${micronautPlatformVersion}"
-    }
-}
-////////////////////////////////////////////////////////////////////////
-
 version project.projectVersion
 group "io.micronaut.starter"
 ext {
