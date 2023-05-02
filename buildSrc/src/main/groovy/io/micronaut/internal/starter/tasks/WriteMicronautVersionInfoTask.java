@@ -46,6 +46,10 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
     @Input
     public abstract Property<String> getVersion();
 
+    // TODO: Remove this once we have parity in the micronaut-core and platform versions
+    @Input
+    public abstract Property<String> getPlatformVersion();
+
     @Input abstract ListProperty<String> getExtraBomProperties();
 
     @OutputDirectory
@@ -53,6 +57,7 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
 
     public WriteMicronautVersionInfoTask() {
         getOutputs().doNotCacheIf("snapshot version", spec -> getVersion().get().endsWith("SNAPSHOT"));
+        getPlatformVersion().convention(getVersion());
     }
 
     @TaskAction
@@ -69,10 +74,15 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
     private Map<String, String> generateProperties() {
         Map<String, String> props = new TreeMap<>();
 
-        props.put("micronaut.version", getVersion().get());
+        String micronautVersion = getVersion().get();
+        props.put("micronaut.version", micronautVersion);
 
-        props.putAll(bomProperties("io.micronaut.platform", "micronaut-platform", getVersion().get()));
+        String micronautPlatformVersion = getPlatformVersion().get();
+        props.putAll(bomProperties("io.micronaut.platform", "micronaut-platform", micronautPlatformVersion));
 
+        if (!micronautVersion.equals(micronautPlatformVersion)) {
+            getProject().getLogger().warn("Micronaut version {} is different from platform version {}. This must be fixed prior to release", micronautVersion, micronautPlatformVersion);
+        }
         for (String extraBomProperty : getExtraBomProperties().get()) {
             String[] groupAndArtifact = extraBomProperty.split(":", 2);
             String groupId = groupAndArtifact[0];
