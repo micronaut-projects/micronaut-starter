@@ -35,7 +35,7 @@ class FunctionSpec extends Specification {
         then:
         response.status.value() == HttpStatus.CREATED.code
         response.getHeader(HttpHeaders.CONTENT_DISPOSITION).contains("test.zip")
-        ZipUtil.isZip(response.body.toString().bytes)
+        ZipUtil.isZip(response.body as byte[])
     }
 
     static AzureHttpResponseMessage invoke(AzureHttpFunction function, HttpRequestMessageBuilder<?> builder) {
