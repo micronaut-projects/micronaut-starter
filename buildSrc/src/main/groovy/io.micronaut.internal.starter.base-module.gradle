@@ -15,6 +15,7 @@ ext {
 
 configurations.all {
     resolutionStrategy {
+        force "io.micronaut:micronaut-core-bom:${rootProject.micronautCoreVersion}"
         eachDependency { DependencyResolveDetails details ->
             if (details.requested.group == "org.apache.groovy") {
                 details.useVersion(groovyVersion)
