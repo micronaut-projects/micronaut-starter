@@ -3,7 +3,6 @@ package io.micronaut.starter.feature.function.azure
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Ignore
 import spock.lang.Unroll
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
