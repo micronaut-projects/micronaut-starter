@@ -77,6 +77,9 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'dependency is included with #buildTool and feature ktor for language=#language'(Language language, BuildTool buildTool) {
+        given:
+        def platformSuffix = buildTool == BuildTool.MAVEN ? '-jvm' : ''
+
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
@@ -87,9 +90,13 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         verifier.hasDependency("io.micronaut.kotlin", "micronaut-ktor", Scope.COMPILE)
-        verifier.hasDependency("io.ktor", "ktor-server-netty", Scope.COMPILE)
-        verifier.hasDependency("io.ktor", "ktor-serialization-jackson", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.kotlin", "micronaut-kotlin-runtime", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
+
+        verifier.hasDependency("io.ktor", "ktor-server-netty" + platformSuffix, Scope.COMPILE)
+        verifier.hasDependency("io.ktor", "ktor-serialization-jackson" + platformSuffix, Scope.COMPILE)
+        verifier.hasDependency("io.ktor", "ktor-server-content-negotiation" + platformSuffix, Scope.COMPILE)
+
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         where:
