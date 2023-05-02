@@ -35,6 +35,7 @@ import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
 import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
@@ -121,12 +122,16 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
                 .artifactId("micronaut-ktor")
                 .compile());
 
+        generatorContext.addDependency(MicronautDependencyUtils.validationDependency()
+                .artifactId("micronaut-validation")
+                .compile());
+
         coordinateResolver.resolve(ARTIFACT_ID_KTOR_SERVER_NETTY)
                 .map(Coordinate::getVersion)
                 .ifPresent(version -> {
                     generatorContext.addDependency(Dependency.builder()
                             .groupId(GROUP_ID_IO_KTOR)
-                            .artifactId(ARTIFACT_ID_KTOR_SERVER_NETTY)
+                            .artifactId(mavenArtifactFix(generatorContext.getBuildTool(), ARTIFACT_ID_KTOR_SERVER_NETTY))
                             .version(version)
                             .compile());
                 });
@@ -135,7 +140,7 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
                 .ifPresent(version -> {
                     generatorContext.addDependency(Dependency.builder()
                             .groupId(GROUP_ID_IO_KTOR)
-                            .artifactId(ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON)
+                            .artifactId(mavenArtifactFix(generatorContext.getBuildTool(), ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON))
                             .version(version)
                             .compile());
                 });
@@ -144,10 +149,18 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
                 .ifPresent(version -> {
                     generatorContext.addDependency(Dependency.builder()
                             .groupId(GROUP_ID_IO_KTOR)
-                            .artifactId(ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION)
+                            .artifactId(mavenArtifactFix(generatorContext.getBuildTool(), ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION))
                             .version(version)
                             .compile());
                 });
+    }
+
+    /**
+     * Maven dependencies require a platform suffix for maven.
+     * <a href="https://ktor.io/docs/server-dependencies.html#core-dependencies">As described here</a>.
+     */
+    private String mavenArtifactFix(BuildTool buildTool, String artifact) {
+        return buildTool == BuildTool.MAVEN ? artifact + "-jvm" : artifact;
     }
 
     @Override
