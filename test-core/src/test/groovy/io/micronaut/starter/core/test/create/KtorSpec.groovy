@@ -5,11 +5,9 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Unroll
 
 class KtorSpec extends CommandSpec {
 
-    @Unroll
     void 'create-app with feature ktor for #lang and #buildTool starts successfully'(Language lang, BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, ['ktor'] as List<String>, ApplicationType.DEFAULT)
