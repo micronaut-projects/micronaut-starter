@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
@@ -24,8 +23,6 @@ import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP;
@@ -135,9 +132,14 @@ public class SQLServer extends DatabaseDriverFeature {
     }
 
     @Override
-    public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {
-        return generatorContext.hasFeature(TestResources.class) ?
-                Collections.singletonMap("test-resources.containers.mssql.accept-license", StringUtils.TRUE) :
-                Collections.emptyMap();
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        if (generatorContext.hasFeature(TestResources.class)) {
+            generatorContext.getConfiguration().put("test-resources.containers.mssql.accept-license", acceptLicense());
+        }
+    }
+
+    protected boolean acceptLicense() {
+        return false;
     }
 }
