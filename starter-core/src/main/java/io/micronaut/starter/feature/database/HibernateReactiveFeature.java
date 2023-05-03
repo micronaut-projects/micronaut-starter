@@ -19,6 +19,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 public abstract class HibernateReactiveFeature extends EaseTestingFeature implements JpaFeature {
 
+    private static final String ORACLE_12C_DIALECT = "org.hibernate.dialect.Oracle12cDialect";
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
@@ -48,6 +50,7 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
                         Hbm2ddlAuto.UPDATE.toString());
 
         generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
+        Optional<DbType> optionalDbType = dbFeature.getDbType();
         if (!generatorContext.isFeaturePresent(TestResources.class)) {
             Optional<MigrationFeature> migrationFeature = generatorContext.getFeatures().getFeature(MigrationFeature.class);
             generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL,
@@ -57,9 +60,15 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
             generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
                     migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
         } else {
-            dbFeature.getDbType().ifPresent(type ->
+            optionalDbType.ifPresent(type ->
                     generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString())
             );
+        }
+        if (optionalDbType.isPresent()) {
+            DbType dbType = optionalDbType.get();
+            if (dbType == DbType.ORACLEXE) {
+                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_12C_DIALECT);
+            }
         }
     }
 
