@@ -16,19 +16,26 @@
 package io.micronaut.starter.feature.rxjava;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.reactive.ReactiveHttpClientFeature;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+
 @Singleton
-public class RxJava3HttpClient implements Feature {
+public class RxJava3HttpClient implements ReactiveHttpClientFeature {
+
+    private static final String ARTIFACT_ID_MICRONAUT_RXJAVA_3_HTTP_CLIENT = "micronaut-rxjava3-http-client";
+    private static final Dependency DEPENDENCY_MICRONAUT_RXJAVA3_HTTP_CLIENT = Dependency.builder()
+            .groupId(RxJava3.MICRONAUT_RXJAVA3_GROUP_ID)
+            .artifactId(ARTIFACT_ID_MICRONAUT_RXJAVA_3_HTTP_CLIENT)
+            .compile().build();
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+    public List<Dependency> getDependencies(GeneratorContext generatorContext) {
+        return Collections.singletonList(DEPENDENCY_MICRONAUT_RXJAVA3_HTTP_CLIENT);
     }
 
     @NonNull
@@ -38,21 +45,13 @@ public class RxJava3HttpClient implements Feature {
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    @NonNull
+    public String getTitle() {
+        return "RxJava 3 HTTP Client";
     }
 
     @Override
-    public String getCategory() {
-        return Category.CLIENT;
+    public String getDescription() {
+        return "RxJava 3 variation of the Micronaut HTTP client.";
     }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(RxJava3.MICRONAUT_RXJAVA3_GROUP_ID)
-                .artifactId("micronaut-rxjava3-http-client")
-                .compile());
-    }
-
 }

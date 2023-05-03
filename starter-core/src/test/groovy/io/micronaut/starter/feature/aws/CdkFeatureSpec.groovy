@@ -9,7 +9,6 @@ import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -62,9 +61,11 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'architecture defaults to X86 for  #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [Cdk.NAME])
+        Options options = createOptions(buildTool)
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options, [Cdk.NAME])
 
         then:
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(Runtime.JAVA_${options.getJavaVersion().majorVersion()})")
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.architecture(Architecture.X86_64)')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 

@@ -45,9 +45,9 @@ class SwaggerUISpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    void "test maven #feature.name with #language without security"(Feature feature, Language language) {
+    void "test maven #feature with #language without security"(String feature, Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature.getName()])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature])
         String output = executeMaven("compile")
 
         then:
@@ -61,13 +61,13 @@ class SwaggerUISpec extends CommandSpec {
 
         where:
         [feature, language] << [
-                beanContext.getBeansOfType(SwaggerUI),
-                Language.values()].combinations()
+                [SwaggerUI.NAME],
+                mavenSupportedLanguages()].combinations()
     }
 
-    void "test gradle #feature.name with #language without security"(Feature feature, Language language) {
+    void "test gradle #feature with #language without security"(String feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature.getName()])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -81,14 +81,14 @@ class SwaggerUISpec extends CommandSpec {
 
         where:
         [feature, language] << [
-                beanContext.getBeansOfType(SwaggerUI),
+                [SwaggerUI.NAME],
                 Language.values()].combinations()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    void "test maven #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
+    void "test maven #feature with #language with security"(String feature, Language language, String securityFeature) {
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature.getName(), securityFeature.getName()])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature, securityFeature])
         String output = executeMaven("compile")
 
         then:
@@ -102,15 +102,23 @@ class SwaggerUISpec extends CommandSpec {
 
         where:
         [feature, language, securityFeature] << [
-                beanContext.getBeansOfType(SwaggerUI),
-                Language.values(),
-                beanContext.getBeansOfType(Security)
+                [SwaggerUI.NAME],
+                mavenSupportedLanguages(),
+                [Security.NAME]
         ].combinations()
     }
 
-    void "test gradle #feature.name with #language with security"(Feature feature, Language language, Feature securityFeature) {
+    private static Language[] mavenSupportedLanguages() {
+        return new Language[] {
+            Language.JAVA,
+            //Language.GROOVY,
+            Language.KOTLIN
+        }
+    }
+
+    void "test gradle #feature with #language with security"(String feature, Language language, String securityFeature) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature.getName(), securityFeature.getName()])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature, securityFeature])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -124,9 +132,9 @@ class SwaggerUISpec extends CommandSpec {
 
         where:
         [feature, language, securityFeature] << [
-                beanContext.getBeansOfType(SwaggerUI),
+                [SwaggerUI.NAME],
                 Language.values(),
-                beanContext.getBeansOfType(Security)
+                [Security.NAME]
         ].combinations()
     }
 

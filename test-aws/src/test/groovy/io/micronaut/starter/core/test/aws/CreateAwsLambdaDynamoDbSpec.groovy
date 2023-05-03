@@ -6,7 +6,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Retry
 import spock.lang.Unroll
 
 class CreateAwsLambdaDynamoDbSpec extends CommandSpec {

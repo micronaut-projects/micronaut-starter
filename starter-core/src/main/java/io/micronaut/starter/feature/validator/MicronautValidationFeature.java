@@ -17,30 +17,39 @@ package io.micronaut.starter.feature.validator;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_INJECT;
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT;
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_VALIDATION;
 
 @Singleton
 public class MicronautValidationFeature implements ValidationFeature {
-    public static final String NAME = "micronaut-validation";
+    public static final String NAME = "validation";
     public static final String ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR = "micronaut-validation-processor";
 
+    public static final String ARTIFACT_ID_MICRONAUT_VALIDATION = "micronaut-validation";
     private static final Dependency MICRONAUT_VALIDATION_COMPILE = MicronautDependencyUtils
             .validationDependency()
-            .artifactId("micronaut-validation")
+            .artifactId(ARTIFACT_ID_MICRONAUT_VALIDATION)
             .compile()
             .build();
 
-    private static final Dependency DEPENDENCY_VALIDATON_API = Dependency.builder()
+    private static final String ARTIFACT_ID_VALIDATION_API = "jakarta.validation-api";
+    private static final String VALIDATION_VERSION_MAVEN_PROPERTY = "micronaut.validation.version";
+    private static final Dependency.Builder DEPENDENCY_VALIDATON_API = Dependency.builder()
             .groupId("jakarta.validation")
-            .artifactId("validation-api")
-            .compile()
-            .build();
+            .artifactId(ARTIFACT_ID_VALIDATION_API)
+            .compile();
+
+    private final CoordinateResolver coordinateResolver;
+
+    public MicronautValidationFeature(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @Override
     @NonNull
@@ -64,24 +73,30 @@ public class MicronautValidationFeature implements ValidationFeature {
         addDependencies(generatorContext);
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-validation/latest/guide/";
+    }
+
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
-        generatorContext.addDependency(DEPENDENCY_VALIDATON_API);
         generatorContext.addDependency(micronautValidationProcessor(generatorContext).build());
+        coordinateResolver.resolve(ARTIFACT_ID_VALIDATION_API)
+                .map(Coordinate::getVersion)
+                .ifPresent(version -> generatorContext.addDependency(DEPENDENCY_VALIDATON_API.version(version)));
     }
 
     public static Dependency.Builder micronautValidationProcessor(GeneratorContext generatorContext) {
-        Dependency.Builder builder = MicronautDependencyUtils
-                .validationDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR)
-                .annotationProcessor();
-
         if (generatorContext.getBuildTool().isGradle()) {
-            return builder;
+            return MicronautDependencyUtils
+                    .validationDependency()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR)
+                    .annotationProcessor();
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            return builder
-                    .versionProperty("micronaut.validation.version")
-                    .exclude(Dependency.builder().groupId(GROUP_ID_MICRONAUT).artifactId(ARTIFACT_ID_MICRONAUT_INJECT).build());
+            return MicronautDependencyUtils.moduleMavenAnnotationProcessor(
+                    GROUP_ID_IO_MICRONAUT_VALIDATION,
+                    ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR,
+                    VALIDATION_VERSION_MAVEN_PROPERTY);
         }
         throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
     }

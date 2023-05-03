@@ -64,7 +64,7 @@ public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSup
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
+        generatorContext.addDependency(DataFeature.dataProcessorDependency(generatorContext.getBuildTool()));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
 
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);

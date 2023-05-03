@@ -7,7 +7,7 @@ class ValidationFeatureSpec extends ApplicationContextSpec implements CommandOut
 
     void 'test only one of the validation features can be selected'() {
         when:
-        generate(['hibernate-validator', 'micronaut-validation'])
+        generate(['hibernate-validator', 'validation'])
 
         then:
         def e = thrown(IllegalArgumentException)

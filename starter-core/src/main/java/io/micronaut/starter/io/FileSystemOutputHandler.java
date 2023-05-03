@@ -96,7 +96,11 @@ public class FileSystemOutputHandler implements OutputHandler {
         File targetFile = new File(applicationDirectory, path);
         targetFile.getParentFile().mkdirs();
         if (!append) {
-            targetFile.createNewFile();
+            boolean created = targetFile.createNewFile();
+            if (!created) {
+                targetFile.delete();
+                targetFile.createNewFile();
+            }
         }
         try (OutputStream os = Files.newOutputStream(targetFile.toPath(), append ? StandardOpenOption.APPEND : StandardOpenOption.CREATE)) {
             contents.write(os);

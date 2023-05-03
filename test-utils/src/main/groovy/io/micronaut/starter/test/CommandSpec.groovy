@@ -20,7 +20,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
-import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
+import io.micronaut.starter.feature.build.MicronautGradleEnterprise
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler

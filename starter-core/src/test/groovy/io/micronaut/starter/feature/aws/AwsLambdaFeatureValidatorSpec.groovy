@@ -19,7 +19,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
             "aws-lambda-s3-event-notification"
     ]
 
-    void 'test AWS Lambda feature validation does not fail for Java 17 for feature=#feature'() {
+    void 'test AWS Lambda feature validation does not fail for Java 17 and java runtime for feature=#feature'() {
         when:
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)

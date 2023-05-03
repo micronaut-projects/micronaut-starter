@@ -23,21 +23,18 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.options.BuildTool;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA;
 
 public interface DataFeature extends OneOfFeature {
 
     String SCHEMA_GENERATE_KEY = "datasources.default.schema-generate";
     String MICRONAUT_DATA_VERSION = "micronaut.data.version";
     String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
-    Dependency DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
-            .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-            .versionProperty(MICRONAUT_DATA_VERSION)
-            .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-            .annotationProcessor(true)
-            .build();
 
     @Override
     default Class<?> getFeatureClass() {
@@ -51,6 +48,27 @@ public interface DataFeature extends OneOfFeature {
         }
         conf.put("datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
+    }
+
+    static Dependency dataProcessorDependency(BuildTool buildTool) {
+        return dataProcessorDependency(buildTool, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
+    }
+
+    static Dependency dataProcessorDependency(BuildTool buildTool, String artifactId, int order) {
+        if (buildTool.isGradle()) {
+            return MicronautDependencyUtils
+                    .dataDependency()
+                    .artifactId(artifactId)
+                    .order(order)
+                    .annotationProcessor(true)
+                    .build();
+        } else if (buildTool == BuildTool.MAVEN) {
+            return MicronautDependencyUtils
+                    .moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_DATA, artifactId, MICRONAUT_DATA_VERSION, true)
+                    .order(order)
+                    .build();
+        }
+        throw new RuntimeException("build tool " + buildTool.getName() + " not supported");
     }
 
     @Override

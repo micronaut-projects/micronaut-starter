@@ -44,10 +44,11 @@ import java.util.Optional;
 @Singleton
 public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, KotlinSpecificFeature {
 
+    public static final String NAME = "ktor";
     public static final String GROUP_ID_IO_KTOR = "io.ktor";
-    public static final String ARTIFACT_ID_KTOR_SERVER_NETTY = "ktor-server-netty";
-    public static final String ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON = "ktor-serialization-jackson";
-    public static final String ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION = "ktor-server-content-negotiation";
+    public static final String ARTIFACT_ID_KTOR_SERVER_NETTY = "ktor-server-netty-jvm";
+    public static final String ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON = "ktor-serialization-jackson-jvm";
+    public static final String ARTIFACT_ID_KTOR_SERVER_CONTENT_NEGOTIATION = "ktor-server-content-negotiation-jvm";
     private final CoordinateResolver coordinateResolver;
 
     public Ktor(CoordinateResolver coordinateResolver) {
@@ -79,7 +80,7 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     @NonNull
     @Override
     public String getName() {
-        return "ktor";
+        return NAME;
     }
 
     @Override
@@ -119,6 +120,10 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     protected void addDependencies(@NonNull GeneratorContext generatorContext) {
         generatorContext.addDependency(MicronautDependencyUtils.kotlinDependency()
                 .artifactId("micronaut-ktor")
+                .compile());
+
+        generatorContext.addDependency(MicronautDependencyUtils.validationDependency()
+                .artifactId("micronaut-validation")
                 .compile());
 
         coordinateResolver.resolve(ARTIFACT_ID_KTOR_SERVER_NETTY)

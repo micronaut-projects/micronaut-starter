@@ -33,12 +33,6 @@ class DataHibernateReactiveSpec extends CommandSpec {
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
 
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
-
         String output = executeMaven("-DtrimStackTrace=false compile test")
 
         then:
@@ -53,12 +47,6 @@ class DataHibernateReactiveSpec extends CommandSpec {
         generateProject(Language.JAVA, BuildTool.GRADLE, [DataHibernateReactive.NAME, db])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
-
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
 
         BuildResult result = executeGradle("test")
 

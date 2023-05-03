@@ -14,8 +14,9 @@ agorapulse-micronaut-console = "2.0.1-micronaut-3.0"
 agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
 agorapulse-micronaut-slack = "1.0.4-micronaut-3.0"
 agorapulse-micronaut-worker = "1.2.2-micronaut-3.0"
-apigatewayv2 = "2.42.1-alpha.0"
-apigatewayv2-integrations = "2.44.0-alpha.0"
+aws-cdk-lib = "2.77.0"
+apigatewayv2 = "2.77.0-alpha.0"
+apigatewayv2-integrations = "2.77.0-alpha.0"
 appengine-gradle-plugin = "2.4.5"
 asciidoctor-gradle-jvm = "3.3.2"
 asciidoctor-maven-plugin = "2.2.2"
@@ -45,7 +46,7 @@ ksp = "1.8.20-1.0.10"
 log4j = "2.19.0"
 log4j-slf4j = "2.17.2"
 micronaut-aot = "2.0.0-M1"
-micronaut-build-plugins = "6.4.1"
+micronaut-build-plugins = "6.4.2"
 micronaut-gradle-plugin = "4.0.0-M1"
 mockk = "1.9.3"
 protobuf-gradle-plugin = "0.9.2"
@@ -58,13 +59,16 @@ scram-client = "2.1"
 slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
+jakarta-validation-api = "3.0.2"
 
 [libraries]
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
 agorapulse-micronaut-slack = { module = "com.agorapulse:micronaut-slack-http", version.ref = "agorapulse-micronaut-slack" }
 agorapulse-micronaut-worker = { module = "com.agorapulse:micronaut-worker", version.ref = "agorapulse-micronaut-worker" }
+aws-cdk-lib = { module = 'software.amazon.awscdk:aws-cdk-lib', version.ref = 'aws-cdk-lib' }
 apigatewayv2-alpha = { module = "software.amazon.awscdk:apigatewayv2-alpha", version.ref = "apigatewayv2" }
 apigatewayv2-integrations-alpha = { module = "software.amazon.awscdk:apigatewayv2-integrations-alpha", version.ref = "apigatewayv2-integrations" }
 appengine-gradle-plugin = { module = "com.google.cloud.tools:appengine-gradle-plugin", version.ref = "appengine-gradle-plugin" }
@@ -103,9 +107,9 @@ log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
 log4j-over-slf4j = { module = "org.slf4j:log4j-over-slf4j", version.ref = "slf4j" }
 log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j-impl", version.ref = "log4j" }
-ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
-ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
-ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson-jvm", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 micronaut-aot = { module = "io.micronaut.aot:micronaut-aot-core", version.ref = "micronaut-aot" }
 micronaut-build-plugins = { module = "io.micronaut.build.internal:micronaut-gradle-plugins", version.ref = "micronaut-build-plugins" }
 micronaut-crac-plugin = { module = "io.micronaut.gradle:micronaut-crac-plugin", version.ref = "micronaut-gradle-plugin" }

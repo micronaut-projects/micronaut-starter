@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.build.gradle
+package io.micronaut.starter.feature.build
 
 import groovy.namespace.QName
 import groovy.xml.XmlParser

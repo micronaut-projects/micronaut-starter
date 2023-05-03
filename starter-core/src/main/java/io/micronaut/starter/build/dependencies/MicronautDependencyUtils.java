@@ -18,8 +18,13 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 
 public final class MicronautDependencyUtils {
-    public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT = "micronaut-inject";
+    public static final Dependency MICRONAUT_INJECT = coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_INJECT)
+            .compile()
+            .build();
+
+    public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
@@ -49,6 +54,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GRPC = "io.micronaut.grpc";
     public static final String GROUP_ID_IO_MICRONAUT_JMS = "io.micronaut.jms";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
+    public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
 
     private MicronautDependencyUtils() {
 
@@ -181,5 +187,30 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder picocliDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
+    }
+
+    @NonNull
+    public static Dependency.Builder discovery() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
+    }
+
+    @NonNull
+    public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
+                                                                    @NonNull String artifactId,
+                                                                    @NonNull String propertyName) {
+        return moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
+                                                                    @NonNull String artifactId,
+                                                                    @NonNull String propertyName,
+                                                                    boolean requiresPriority) {
+        return Dependency.builder()
+                .groupId(groupId)
+                .artifactId(artifactId)
+                .annotationProcessor(requiresPriority)
+                .versionProperty(propertyName)
+                .exclude(MICRONAUT_INJECT);
     }
 }
