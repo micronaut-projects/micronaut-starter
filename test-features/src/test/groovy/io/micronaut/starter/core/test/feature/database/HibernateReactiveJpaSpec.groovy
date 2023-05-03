@@ -1,7 +1,12 @@
 package io.micronaut.starter.core.test.feature.database
 
 import io.micronaut.starter.core.test.feature.database.templates.book
-import io.micronaut.starter.feature.database.*
+import io.micronaut.starter.feature.database.HibernateReactiveJpa
+import io.micronaut.starter.feature.database.MariaDB
+import io.micronaut.starter.feature.database.MySQL
+import io.micronaut.starter.feature.database.Oracle
+import io.micronaut.starter.feature.database.PostgreSQL
+import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
