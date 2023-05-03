@@ -27,11 +27,12 @@ import java.util.Optional;
 
 public abstract class HibernateReactiveFeature extends EaseTestingFeature implements JpaFeature {
 
-    private static final String ORACLE_12C_DIALECT = "org.hibernate.dialect.Oracle12cDialect";
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
+    private static final String ORACLE_12C_DIALECT = "org.hibernate.dialect.Oracle12cDialect";
+    
     HibernateReactiveFeature(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
     }
