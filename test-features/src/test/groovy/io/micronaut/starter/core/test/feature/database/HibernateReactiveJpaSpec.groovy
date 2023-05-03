@@ -1,5 +1,6 @@
 package io.micronaut.starter.core.test.feature.database
 
+import io.micronaut.starter.core.test.feature.database.templates.book
 import io.micronaut.starter.feature.database.HibernateReactiveJpa
 import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MySQL
@@ -13,7 +14,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import io.micronaut.starter.core.test.feature.database.templates.book
 import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
@@ -30,12 +30,6 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
 
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
-
         String output = executeMaven("compile test")
 
         then:
@@ -50,12 +44,6 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         generateProject(Language.JAVA, BuildTool.GRADLE, [HibernateReactiveJpa.NAME, db])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
-
-        // If SqlServer, we need to accept the license
-        if (db == SQLServer.NAME) {
-            new File(dir, "src/test/resources/").mkdirs()
-            fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
-        }
 
         BuildResult result = executeGradle("test")
 

@@ -136,7 +136,7 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     }
 
     @Override
-    public Map<String, Object> getAdditionalConfig() {
+    public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {
         Map<String, Object> config = new LinkedHashMap<>(2);
         config.put("datasources.default.ocid", "");
         config.put("datasources.default.walletPassword", "");
