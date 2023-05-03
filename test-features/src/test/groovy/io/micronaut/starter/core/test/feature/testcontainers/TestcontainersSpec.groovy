@@ -43,11 +43,6 @@ class TestcontainersSpec extends CommandSpec {
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
         fsoh.write("src/main/test/example/micronaut/BookRepositoryTest.java", new RockerWritable(bookRepositoryTest.template()))
 
-        // If SqlServer, we need to accept the license
-        if (driverFeature instanceof SQLServer) {
-            fsoh.write("/src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) }, true)
-        }
-
         String output = null
         if (driverFeature.getName() == "oracle" || driverFeature.getName() == "oracle-cloud-atp") {
             output = "BUILD SUCCESS"
