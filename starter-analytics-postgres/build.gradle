@@ -1,6 +1,5 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
-    id 'com.google.cloud.tools.jib' version '3.2.0'
     id "application"
 }
 
@@ -24,3 +23,7 @@ dependencies {
 }
 
 mainClassName = 'io.micronaut.starter.analytics.postgres.Main'
+
+tasks.named("dockerBuild") {
+    images = ["gcr.io/${System.getenv("GCLOUD_PROJECT")}/micronaut-starter-analytics:snapshot"]
+}
