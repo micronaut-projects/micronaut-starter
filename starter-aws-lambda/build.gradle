@@ -17,6 +17,9 @@ dependencies {
 application {
     mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
 }
+micronaut {
+    runtime("lambda_provided")
+}
 
 graalvmNative {
     binaries {
