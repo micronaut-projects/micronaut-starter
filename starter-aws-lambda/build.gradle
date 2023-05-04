@@ -28,3 +28,7 @@ graalvmNative {
         }
     }
 }
+
+tasks.named("dockerfileNative") {
+    baseImage = "amazonlinux:2"
+}
