@@ -30,7 +30,7 @@ dependencies {
     compileOnly "org.graalvm.nativeimage:svm"
 
     implementation "org.fusesource.jansi:jansi:1.18"
-    implementation "org.yaml:snakeyaml:1.33"
+    implementation "org.yaml:snakeyaml"
 
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
