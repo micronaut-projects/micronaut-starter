@@ -92,3 +92,7 @@ sdkman {
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
     ]
 }
+
+tasks.register('sdkRelease') {
+    dependsOn((projectVersion.endsWith("-SNAPSHOT") || projectVersion.contains("-M") || projectVersion.contains("-R")) ? 'sdkMinorRelease' : 'sdkMajorRelease')
+}
