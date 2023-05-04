@@ -17,6 +17,7 @@ dependencies {
     implementation("com.google.cloud.sql:postgres-socket-factory:1.11.1")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.flyway:micronaut-flyway")
+    runtimeOnly("org.yaml:snakeyaml")
     testCompileOnly("io.micronaut:micronaut-inject-groovy")
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("io.micronaut.test:micronaut-test-spock")
