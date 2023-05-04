@@ -10,7 +10,7 @@ micronaut {
 
 dependencies {
     implementation project(":starter-api")
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
+    runtimeOnly "ch.qos.logback:logback-classic"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
 }
 
