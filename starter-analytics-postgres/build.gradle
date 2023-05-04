@@ -12,7 +12,7 @@ dependencies {
     implementation "io.micronaut:micronaut-http-server-netty"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
     implementation("io.micronaut.data:micronaut-data-jdbc")
-    implementation 'org.postgresql:postgresql:42.6.20'
+    implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'com.google.cloud.sql:postgres-socket-factory:1.11.1'
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation 'io.micronaut.flyway:micronaut-flyway'
@@ -20,7 +20,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "org.testcontainers:postgresql"
-    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "ch.qos.logback:logback-classic"
 }
 
 mainClassName = 'io.micronaut.starter.analytics.postgres.Main'
