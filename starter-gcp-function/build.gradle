@@ -16,12 +16,12 @@ dependencies {
 
     implementation "io.micronaut.gcp:micronaut-gcp-function-http"
     compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.4'
-    developmentOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
+    developmentOnly 'com.google.cloud.functions:functions-framework-api:1.0.4'
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation 'com.google.cloud.functions:functions-framework-api:1.0.1'
+    testImplementation 'com.google.cloud.functions:functions-framework-api:1.0.4'
     testImplementation "io.micronaut.test:micronaut-test-spock"
     invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.2'
 }
