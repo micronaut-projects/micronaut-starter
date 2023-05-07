@@ -47,7 +47,7 @@ class OpenTelemetryAnnotationsSpec extends ApplicationContextSpec implements Com
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['tracing-opentelemetry-annotations'])
+                .features(['tracing-opentelemetry-annotations', 'kapt'])
                 .render()
 
         then:

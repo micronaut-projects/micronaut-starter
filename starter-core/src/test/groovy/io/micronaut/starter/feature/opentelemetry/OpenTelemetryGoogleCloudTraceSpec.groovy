@@ -29,7 +29,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp'])
+                .features(['tracing-opentelemetry-gcp', 'kapt'])
                 .render()
 
         then:
@@ -48,7 +48,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp'])
+                .features(['tracing-opentelemetry-gcp', 'kapt'])
                 .render()
 
         then:
@@ -69,7 +69,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
+                .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging', 'kapt'])
                 .render()
 
         then:
@@ -102,7 +102,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp'])
+                .features(['tracing-opentelemetry-gcp', 'kapt'])
                 .render()
 
         then:

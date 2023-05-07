@@ -28,7 +28,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger'])
+                .features(['tracing-opentelemetry-jaeger', 'kapt'])
                 .render()
 
         then:
@@ -47,7 +47,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger'])
+                .features(['tracing-opentelemetry-jaeger', 'kapt'])
                 .render()
 
         then:
@@ -68,7 +68,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger'])
+                .features(['tracing-opentelemetry-jaeger', 'kapt'])
                 .render()
 
         then:

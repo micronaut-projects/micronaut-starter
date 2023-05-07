@@ -23,21 +23,22 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
 
     void 'test KSP feature'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE),
-                ["ksp"]
+                ["ksp", "security"]
         )
-        def buildGradle = output[BuildTool.GRADLE.getBuildFileName()]
+        String buildGradle = output[BuildTool.GRADLE.getBuildFileName()]
 
         then:
         output.containsKey("src/main/kotlin/example/micronaut/Application.${Language.KOTLIN.extension}".toString())
         buildGradle
         buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
-        !buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
+        !buildGradle.contains('kapt')
         buildGradle.contains('id("com.google.devtools.ksp")')
         buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
         buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
+        buildGradle.contains("ksp(\"io.micronaut.security:micronaut-security-annotations\")")
     }
 
     @Unroll

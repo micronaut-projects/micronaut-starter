@@ -87,7 +87,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-xray'])
+                .features(['tracing-opentelemetry-xray', 'kapt'])
                 .render()
 
         then:
@@ -106,7 +106,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-xray'])
+                .features(['tracing-opentelemetry-xray', 'kapt'])
                 .render()
 
         then:
@@ -127,7 +127,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-xray'])
+                .features(['tracing-opentelemetry-xray', 'kapt'])
                 .render()
 
         then:

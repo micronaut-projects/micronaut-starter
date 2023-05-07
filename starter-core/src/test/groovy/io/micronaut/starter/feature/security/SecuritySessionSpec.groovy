@@ -25,7 +25,7 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['security-session'])
+                .features(['security-session', 'kapt'])
                 .render()
 
         then:

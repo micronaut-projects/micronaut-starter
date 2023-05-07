@@ -34,7 +34,7 @@ class GradleConfigurationSpec extends Specification {
 
     void "#source #phases should return #configuration"() {
         expect:
-        configuration == GradleConfiguration.of(new Scope(source, phases), Language.JAVA, TestFramework.JUNIT).get()
+        configuration == GradleConfiguration.of(new Scope(source, phases), Language.JAVA, TestFramework.JUNIT, null).get()
 
         where:
         source      | phases                                               || configuration

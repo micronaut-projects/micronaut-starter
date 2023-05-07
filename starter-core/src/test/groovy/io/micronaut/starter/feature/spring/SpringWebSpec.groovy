@@ -65,7 +65,7 @@ class SpringWebSpec extends ApplicationContextSpec {
     void 'test spring-web with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-web'])
+                .features(['spring-web', 'kapt'])
                 .language(language)
                 .render()
 

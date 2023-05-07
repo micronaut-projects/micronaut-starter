@@ -24,7 +24,7 @@ class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['security'])
+                .features(['security', 'kapt'])
                 .render()
 
         then:

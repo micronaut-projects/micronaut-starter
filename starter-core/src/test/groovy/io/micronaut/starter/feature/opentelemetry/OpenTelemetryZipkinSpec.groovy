@@ -28,7 +28,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin'])
+                .features(['tracing-opentelemetry-zipkin', 'kapt'])
                 .render()
 
         then:
@@ -47,7 +47,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin'])
+                .features(['tracing-opentelemetry-zipkin', 'kapt'])
                 .render()
 
         then:
@@ -68,7 +68,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin'])
+                .features(['tracing-opentelemetry-zipkin', 'kapt'])
                 .render()
 
         then:
