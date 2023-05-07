@@ -31,4 +31,4 @@ jobs:
       - name: Deploy to Cloud Function
         run: |
           cd starter-gcp-function/build/libs
-          gcloud functions deploy ${{ secrets.GCLOUD_SNAPSHOT_FUNCTION_NAME }} --trigger-http --project ${{ secrets.GCLOUD_FUNCTION_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11
+          gcloud functions deploy ${{ secrets.GCLOUD_SNAPSHOT_FUNCTION_NAME }} --trigger-http --project ${{ secrets.GCLOUD_FUNCTION_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java17

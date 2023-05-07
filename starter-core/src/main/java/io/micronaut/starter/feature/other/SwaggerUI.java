@@ -34,6 +34,7 @@ import java.util.Map;
 
 @Singleton
 public class SwaggerUI implements Feature, MicronautServerDependent {
+    public static final String NAME = "swagger-ui";
 
     private final OpenApi openApiFeature;
 
@@ -43,7 +44,7 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
 
     @Override
     public String getName() {
-        return "swagger-ui";
+        return NAME;
     }
 
     @Override
@@ -90,11 +91,7 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(OpenApi.class)) {
-            featureContext.addFeature(
-                    openApiFeature
-            );
-        }
+        featureContext.addFeatureIfNotPresent(OpenApi.class, openApiFeature);
     }
 
     @Override

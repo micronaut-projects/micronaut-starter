@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.server
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.kotlin.Ktor
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -13,7 +14,7 @@ class MicronautServerDependentValidatorSpec extends BeanContextSpec  implements 
     void 'test third part server validation fails with micronaut server features'() {
         when:
         Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        generate(ApplicationType.DEFAULT, options, ['ktor', 'management', 'tracing-zipkin'])
+        generate(ApplicationType.DEFAULT, options, [Ktor.NAME, 'management', 'tracing-zipkin'])
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -23,7 +24,7 @@ class MicronautServerDependentValidatorSpec extends BeanContextSpec  implements 
     void 'test third part server validation fails with some micronaut server features'() {
         when:
         Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        generate(ApplicationType.DEFAULT, options, ['ktor', 'management', 'tracing-zipkin', 'kafka'])
+        generate(ApplicationType.DEFAULT, options, [Ktor.NAME, 'management', 'tracing-zipkin', 'kafka'])
 
         then:
         def e = thrown(IllegalArgumentException)

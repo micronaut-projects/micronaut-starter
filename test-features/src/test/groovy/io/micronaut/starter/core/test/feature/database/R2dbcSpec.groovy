@@ -11,7 +11,6 @@ import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.IgnoreIf
 
-@Ignore
 class R2dbcSpec extends CommandSpec {
 
     @Override
@@ -19,6 +18,7 @@ class R2dbcSpec extends CommandSpec {
         return "r2dbc"
     }
 
+    @Ignore('''IncompatibleClassChangeError: class io.micronaut.http.filter.GenericHttpFilter$TerminalWithReactorContext cannot extend sealed interface io.micronaut.http.filter.GenericHttpFilter' [enable DEBUG level for full stacktrace] was thrown by a user handler's exceptionCaught() method while handling the following exception: java.lang.NoSuchFieldError: ROUTE io.micronaut.http.server.RouteExecutor.setRouteAttributes(RouteExecutor.java:190)''')
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven r2dbc with #language"(Language language) {
         when:

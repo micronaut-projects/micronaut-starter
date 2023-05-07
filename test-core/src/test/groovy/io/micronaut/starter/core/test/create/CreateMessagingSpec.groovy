@@ -13,7 +13,6 @@ import java.util.stream.Collectors
 class CreateMessagingSpec extends CommandSpec {
     private static List<String> EXCLUDED_FEATURES = [
             'jms-aq',
-            'jms-oracle-aq'
     ]
 
     @Override

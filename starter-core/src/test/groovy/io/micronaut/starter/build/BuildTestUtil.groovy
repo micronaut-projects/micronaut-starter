@@ -20,13 +20,12 @@ class BuildTestUtil {
     static BuildTestVerifier verifier(BuildTool buildTool,
                                       Language language,
                                       String template) {
-        return verifier(buildTool, language, language.getDefaults().getTest(), template)
+        verifier(buildTool, language, language.getDefaults().getTest(), template)
     }
 
     static BuildTestVerifier verifier(BuildTool buildTool,
                                       String template) {
         Language language = Language.DEFAULT_OPTION
-        TestFramework testFramework = language.defaults.test
-        verifier(buildTool, language, testFramework, template)
+        verifier(buildTool, language, template)
     }
 }

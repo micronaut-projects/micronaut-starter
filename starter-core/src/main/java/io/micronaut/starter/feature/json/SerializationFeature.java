@@ -23,12 +23,16 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.BuildTool;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SERDE;
 
 public interface SerializationFeature extends JsonFeature {
     String MICRONAUT_SERIALIZATION = "micronaut.serialization";
     String ARTIFACT_ID_MICRONAUT_JACKSON_CORE = "micronaut-jackson-core";
+    String ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR = "micronaut-serde-processor";
 
     @Override
     default String getCategory() {
@@ -54,7 +58,7 @@ public interface SerializationFeature extends JsonFeature {
     @NonNull
     default List<Dependency.Builder> dependencies(@NonNull GeneratorContext generatorContext) {
         List<Dependency.Builder> dependencyList = new ArrayList<>();
-        dependencyList.add(serdeProcessor());
+        dependencyList.add(serdeProcessor(generatorContext.getBuildTool()));
         dependencyList.add(serdeModule(generatorContext));
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             dependencyList.add(micronautRuntimeDependency(generatorContext));
@@ -82,11 +86,15 @@ public interface SerializationFeature extends JsonFeature {
     }
 
     @NonNull
-    default Dependency.Builder serdeProcessor() {
-        return MicronautDependencyUtils.serdeDependency()
-                .annotationProcessor()
-                .artifactId("micronaut-serde-processor")
-                .versionProperty("micronaut.serialization.version");
+    default Dependency.Builder serdeProcessor(BuildTool buildTool) {
+        if (buildTool.isGradle()) {
+            return MicronautDependencyUtils.serdeDependency()
+                    .annotationProcessor()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR);
+        } else if (buildTool == BuildTool.MAVEN) {
+            return MicronautDependencyUtils.moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_SERDE, ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR, "micronaut.serialization.version");
+        }
+        throw new RuntimeException("build tool " + buildTool.getName() + " not supported");
     }
 
     String getModule();

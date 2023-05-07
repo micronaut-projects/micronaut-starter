@@ -6,11 +6,9 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import io.micronaut.starter.util.ZipUtil
-import spock.lang.Ignore
 import spock.lang.Requires
 import spock.lang.Specification
 
-@Ignore(" Unexpected error occurred: Receiver class io.micronaut.gcp.function.http.GoogleBinderRegistry does not define or inherit an implementation of the resolved method 'java.util.Optional findArgumentBinder(io.micronaut.core.type.Argument)' of interface io.micronaut.http.bind.RequestBinderRegistry.")
 @Requires({ jvm.current.isJava11Compatible() })
 class FunctionSpec extends Specification {
 
