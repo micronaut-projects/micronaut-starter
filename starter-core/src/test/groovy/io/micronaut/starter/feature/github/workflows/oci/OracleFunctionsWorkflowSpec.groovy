@@ -48,7 +48,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         where:
         [buildTool, jdkVersion] << [
                 [BuildTool.GRADLE, BuildTool.MAVEN],
-                JdkVersion.values()
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS
         ].combinations()
     }
 
@@ -56,7 +56,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     void 'test github graalvm workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [OracleFunctionsGraalWorkflow.NAME])
         def workflow = output[".github/workflows/oracle-cloud-functions-graalvm.yml"]
 
@@ -73,7 +73,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     void 'test http function pom.xml configuration for #feature'(String feature) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [OracleFunctionsJavaWorkflow.NAME])
         def pom = output["pom.xml"]
 
@@ -98,7 +98,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     void 'test graalvm http function pom.xml configuration'() {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [OracleFunctionsGraalWorkflow.NAME])
         def pom = output["pom.xml"]
 
@@ -158,7 +158,6 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
 
         where:
         jdkVersion        | graalVersion
-        JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_11 | JdkVersion.JDK_11
+        JdkVersion.JDK_17 | JdkVersion.JDK_17
     }
 }

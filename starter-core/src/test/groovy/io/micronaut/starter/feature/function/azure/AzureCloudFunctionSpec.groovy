@@ -8,6 +8,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
@@ -28,7 +29,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                JdkVersion.values(),
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS,
                 ['azure-function']
         ].combinations()
     }

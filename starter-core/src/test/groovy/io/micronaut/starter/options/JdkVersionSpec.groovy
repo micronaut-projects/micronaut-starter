@@ -15,7 +15,7 @@ class JdkVersionSpec extends Specification {
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message == "Unsupported JDK version: 3. Supported values are [8, 11, 17]"
+        ex.message.startsWith("Unsupported JDK version: 3. Supported values are ")
     }
 
     void "greaterThanOrEqual"() {

@@ -24,7 +24,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     void 'test graalvm github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [GoogleCloudRunGraalWorkflow.NAME])
         def workflow = output[".github/workflows/google-cloud-run-graalvm.yml"]
 
@@ -40,7 +40,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [GoogleCloudRunJavaWorkflow.NAME])
         println(output)
         def workflow = output[".github/workflows/google-cloud-run.yml"]
@@ -90,8 +90,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
 
         where:
         jdkVersion | graalVersion
-        JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_11 | JdkVersion.JDK_11
         JdkVersion.JDK_17 | JdkVersion.JDK_17
     }
 
@@ -110,7 +108,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         where:
         [buildTool, jdkVersion] << [
                 [BuildTool.GRADLE, BuildTool.MAVEN],
-                JdkVersion.values()
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS
         ].combinations()
     }
 }

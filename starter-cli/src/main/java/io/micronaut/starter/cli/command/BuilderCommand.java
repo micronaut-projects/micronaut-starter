@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import org.jline.reader.EndOfFileException;
@@ -97,13 +98,18 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
     }
 
     protected JdkVersion getJdkVersion(LineReader reader) {
+        List<String> candidates = new JdkVersionCandidates();
+        JdkVersion defaultOption = MicronautJdkVersionConfiguration.DEFAULT_OPTION;
+        if (candidates.size() == 1) {
+            return defaultOption;
+        }
         out("Choose the target JDK. (enter for default)");
-        return getEnumOption(
-                JdkVersion.class,
-                jdkVersion -> Integer.toString(jdkVersion.majorVersion()),
-                JdkVersion.DEFAULT_OPTION,
+        return JdkVersion.valueOf(Integer.parseInt(getListOption(
+                candidates,
+                s -> s,
+                String.valueOf(defaultOption.majorVersion()),
                 reader
-        );
+        )));
     }
 
     protected int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {

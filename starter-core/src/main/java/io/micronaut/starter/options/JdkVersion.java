@@ -17,27 +17,35 @@ package io.micronaut.starter.options;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * JDK versions.
- *
+ * <a href="https://www.java.com/releases/">Releases</a>
  * @author graemerocher
  * @since 1.0.0
  */
 public enum JdkVersion {
-    JDK_8(8),
-    JDK_11(11),
-    JDK_17(17);
+    JDK_8(8, true),
+    JDK_9(9, false),
+    JDK_10(9, false),
+    JDK_11(11, true),
+    JDK_12(12, false),
+    JDK_13(13, false),
+    JDK_14(14, false),
+    JDK_15(15, false),
+    JDK_16(16, false),
+    JDK_17(17, true),
+    JDK_19(19, false),
+    JDK_20(20, false);
 
-    public static final JdkVersion DEFAULT_OPTION = JDK_17;
-
-    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList());
+    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
 
     private final int majorVersion;
+    private final boolean lts;
 
-    JdkVersion(int majorVersion) {
+    JdkVersion(int majorVersion, boolean lts) {
         this.majorVersion = majorVersion;
+        this.lts = lts;
     }
 
     public static JdkVersion valueOf(int majorVersion) {
@@ -50,6 +58,10 @@ public enum JdkVersion {
 
     public int majorVersion() {
         return majorVersion;
+    }
+
+    public boolean isLts() {
+        return lts;
     }
 
     public boolean greaterThanEqual(JdkVersion jdk) {

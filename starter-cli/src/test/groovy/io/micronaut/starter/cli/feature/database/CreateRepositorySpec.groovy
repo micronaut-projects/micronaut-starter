@@ -9,6 +9,7 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.AutoCleanup
@@ -69,7 +70,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
     void "test creating a repository for #language and #driverFeature.name"(Language language, DatabaseDriverFeature driverFeature) {
         boolean forceJava11 = driverFeature.name == "oracle-cloud-atp" && VersionInfo.getJavaVersion() == JdkVersion.JDK_8
         if (forceJava11) {
-            generateProject(new Options(language, null, BuildTool.GRADLE, JdkVersion.JDK_11),
+            generateProject(new Options(language, null, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                     ['data-jdbc', driverFeature.getName()])
         } else {
             generateProject(language, BuildTool.GRADLE, ['data-jdbc', driverFeature.getName()])

@@ -7,13 +7,14 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 
 class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jooq contains links to micronaut docs'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options().withJavaVersion(JdkVersion.JDK_11), ['jooq'])
+        def output = generate(ApplicationType.DEFAULT, new Options().withJavaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION), ['jooq'])
         def readme = output["README.md"]
 
         then:
@@ -26,7 +27,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['jooq'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         then:
@@ -41,7 +42,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['jooq'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         then:

@@ -153,11 +153,7 @@ public class AppStack extends Stack {
                 this,
                 "@(functionId)")
 @if (!nativeImage) {
-@if (jdkVersion == JdkVersion.JDK_8) {
-                .runtime(Runtime.JAVA_8)
-} else if (jdkVersion == JdkVersion.JDK_11) {
-                .runtime(Runtime.JAVA_11)
-} else if (jdkVersion == JdkVersion.JDK_17) {
+@if (jdkVersion == JdkVersion.JDK_17) {
                 .runtime(Runtime.JAVA_17)
 }
 }

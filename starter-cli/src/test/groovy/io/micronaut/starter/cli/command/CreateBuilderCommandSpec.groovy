@@ -39,9 +39,7 @@ Choose your preferred build tool. (enter for default)
  3) Maven
 
 Choose the target JDK. (enter for default)
- 1) 8
-*2) 11
- 3) 17
+ 1) 17
      */
     @Unroll
     void "test prompt"(List<String> answers,
@@ -78,91 +76,77 @@ Choose the target JDK. (enter for default)
                 "1", // Java
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "2", // CLI
                 "1", // Java
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.CLI | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.CLI | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "3", // FUNCTION
                 "1", // Java
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.FUNCTION | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.FUNCTION | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "4", // GRPC
                 "1", // Java
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.GRPC | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.GRPC | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "5", // MESSAGING
                 "1", // Java
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.MESSAGING | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.MESSAGING | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "1", // Default
                 "2", // Groovy
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.GROOVY | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.GROOVY | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "1", // Default
                 "3", // Kotlin
                 "1", // JUnit
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.KOTLIN | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.KOTLIN | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "1", // Default
                 "1", // Java
                 "2", // Spock
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.SPOCK | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.SPOCK | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "1", // Default
                 "1", // Java
                 "3", // KoTest
                 "1", // Gradle
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.KOTEST | BuildTool.GRADLE | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.KOTEST | BuildTool.GRADLE | JdkVersion.JDK_17
         [
                 "1", // Default
                 "1", // Java
                 "1", // JUnit
                 "2", // Gradle Kotlin
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE_KOTLIN | JdkVersion.JDK_8
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE_KOTLIN | JdkVersion.JDK_17
         [
                 "1", // Default
                 "1", // Java
                 "1", // JUnit
                 "3", // Maven
-                "1", // JDK 8
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.MAVEN | JdkVersion.JDK_8
-        [
-                "1", // Default
-                "1", // Java
-                "1", // JUnit
-                "1", // Gradle
-                "2", // JDK 11
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_11
-        [
-                "1", // Default
-                "1", // Java
-                "1", // JUnit
-                "1", // Gradle
-                "3", // JDK 17
-        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.GRADLE | JdkVersion.JDK_17
+                "1", // JDK 17
+        ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.MAVEN | JdkVersion.JDK_17
     }
 }
