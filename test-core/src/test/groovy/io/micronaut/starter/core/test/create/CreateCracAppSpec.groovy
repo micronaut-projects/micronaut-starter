@@ -13,7 +13,7 @@ class CreateCracAppSpec extends CommandSpec {
 
     void 'test basic create-app for #lang and #buildTool with CRaC'(Language lang, BuildTool buildTool) {
         given:
-        generateProject(lang, buildTool, [Crac.NAME])
+        generateProject(lang, buildTool, [Crac.NAME, 'kapt'])
 
         when:
         String output = executeBuild(buildTool, "test")

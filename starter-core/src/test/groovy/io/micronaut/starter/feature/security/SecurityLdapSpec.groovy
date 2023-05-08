@@ -24,7 +24,7 @@ class SecurityLdapSpec extends ApplicationContextSpec implements CommandOutputFi
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['security-ldap'])
+                .features(['security-ldap', 'kapt'])
                 .render()
 
         then:

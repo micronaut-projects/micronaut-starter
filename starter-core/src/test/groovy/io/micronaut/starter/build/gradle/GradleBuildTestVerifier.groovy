@@ -20,7 +20,7 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasBom(String groupId, String artifactId, Scope scope) {
-        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework).map { it.getConfigurationName() }
+        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework, null).map { it.getConfigurationName() }
         if (!gradleConfigurationNameOptional.isPresent()){
             throw new ConfigurationException("cannot match " + scope + " to gradle configuration");
         }
@@ -37,7 +37,7 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope) {
-        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework).map { it.getConfigurationName() }
+        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework, null).map { it.getConfigurationName() }
         if (!gradleConfigurationNameOptional.isPresent()){
             throw new ConfigurationException("cannot match " + scope + " to gradle configuration");
         }

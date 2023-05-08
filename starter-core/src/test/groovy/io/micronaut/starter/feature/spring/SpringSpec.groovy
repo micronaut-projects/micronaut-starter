@@ -58,7 +58,7 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
     void 'test spring with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring'])
+                .features(['spring', 'kapt'])
                 .language(language)
                 .render()
         then:

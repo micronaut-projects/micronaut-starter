@@ -56,7 +56,7 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
     void 'test spring-data-jdbc with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-data-jdbc'])
+                .features(['spring-data-jdbc', 'kapt'])
                 .language(language)
                 .render()
 

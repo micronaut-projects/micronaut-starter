@@ -29,7 +29,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features([DynamoDb.NAME])
+                .features([DynamoDb.NAME, 'kapt'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 

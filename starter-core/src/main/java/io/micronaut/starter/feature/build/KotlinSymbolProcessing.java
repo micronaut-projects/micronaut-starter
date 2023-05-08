@@ -16,13 +16,19 @@
 package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.GradleSpecificFeature;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class KotlinSymbolProcessing implements KotlinSupportFeature, GradleSpecificFeature {
+public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeature, GradleSpecificFeature {
 
     @Override
     @NonNull
@@ -67,5 +73,11 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, GradleSpeci
         if (KotlinSupportFeature.shouldApply(generatorContext)) {
             generatorContext.addBuildPlugin(GradlePlugin.of("com.google.devtools.ksp", "com.google.devtools.ksp.gradle.plugin"));
         }
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getBuildTool().isGradle() &&
+                KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }

@@ -48,7 +48,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['microstream'])
+                .features(['microstream', 'kapt'])
                 .render()
 
         then:
@@ -71,7 +71,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['microstream-rest'])
+                .features(['microstream-rest', 'kapt'])
                 .render()
 
         then:

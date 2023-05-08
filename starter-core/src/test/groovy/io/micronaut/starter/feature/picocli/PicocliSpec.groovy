@@ -22,6 +22,7 @@ class PicocliSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
                 .applicationType(ApplicationType.CLI)
+                .features(['kapt'])
                 .render()
 
         then:
