@@ -29,11 +29,12 @@ import java.util.Set;
 
 @Singleton
 public class Kapt implements KotlinSupportFeature, DefaultFeature {
-
+    public static final String NAME = "kapt";
+    
     @Override
     @NonNull
     public String getName() {
-        return "kapt";
+        return NAME;
     }
 
     @Override

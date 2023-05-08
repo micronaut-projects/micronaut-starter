@@ -24,7 +24,7 @@ class DekorateSpec extends CommandSpec {
     @Unroll
     void "test maven dekorate platform #feature.name with #language"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [feature.getName()])
+        generateProject(language, BuildTool.MAVEN, [feature.getName(), 'kapt'])
         String output =  executeMaven("compile")
         String manifestName = feature.getName().replaceFirst("dekorate-", "")
 
@@ -43,7 +43,7 @@ class DekorateSpec extends CommandSpec {
     @Unroll
     void "test maven dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [feature.getName()])
+        generateProject(language, BuildTool.MAVEN, [feature.getName(), 'kapt'])
         String output =  executeMaven("compile")
 
         then:
@@ -60,7 +60,7 @@ class DekorateSpec extends CommandSpec {
     @Unroll
     void "test gradle dekorate platform #feature.name with #language"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName()])
+        generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])
         String output =  executeGradle("compileJava")?.output
         String manifestName = feature.getName().replaceFirst("dekorate-", "")
 
@@ -83,7 +83,7 @@ class DekorateSpec extends CommandSpec {
     @Unroll
     void "test gradle dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName()])
+        generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])
         String output =  executeGradle("compileJava")?.output
 
         then:

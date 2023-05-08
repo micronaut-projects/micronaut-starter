@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.create
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.messaging.MessagingFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -26,7 +27,7 @@ class CreateMessagingSpec extends CommandSpec {
                                                                                  String feature) {
         given:
         ApplicationType applicationType = ApplicationType.MESSAGING
-        generateProject(lang, buildTool, [feature], applicationType)
+        generateProject(lang, buildTool, [feature, Kapt.NAME], applicationType)
 
         when:
         String output = executeBuild(buildTool, "test")
