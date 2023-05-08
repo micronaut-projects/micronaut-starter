@@ -141,7 +141,6 @@ io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graphql
 io.micronaut.starter.feature.grpc
 io.micronaut.starter.feature.grpc.template
-io.micronaut.starter.feature.httpclient
 io.micronaut.starter.feature.jaxrs
 io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
