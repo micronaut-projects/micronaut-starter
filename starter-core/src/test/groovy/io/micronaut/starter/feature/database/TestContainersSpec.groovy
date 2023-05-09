@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 
 import java.util.stream.Collectors
@@ -385,12 +386,12 @@ class TestContainersSpec extends ApplicationContextSpec {
     void "test there is a dependency for every non embedded driver feature"() {
         when:
         String mavenTemplate = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([TestContainers.NAME, driverFeature.getName()])
                 .render()
 
         String gradleTemplate = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([TestContainers.NAME, driverFeature.getName()])
                 .render()
 

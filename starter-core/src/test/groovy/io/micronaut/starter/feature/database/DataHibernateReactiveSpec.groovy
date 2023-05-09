@@ -14,6 +14,7 @@ import io.micronaut.starter.feature.testresources.DbType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Issue
 import spock.lang.Requires
 
@@ -76,7 +77,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
 
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
 
@@ -96,7 +97,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
     void "test dependencies are present for gradle with #db (#client)"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([DataHibernateReactive.NAME, db])
                 .render()
 
@@ -131,7 +132,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
     void "test dependencies are present for gradle with #db (#client) and #migration"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([DataHibernateReactive.NAME, db, migration])
                 .render()
 
@@ -173,7 +174,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .language(Language.KOTLIN)
                 .render()
 
@@ -185,7 +186,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([DataHibernateReactive.NAME, db])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
@@ -225,7 +226,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         BuildTool buildTool = BuildTool.MAVEN
         String template = new BuildBuilder(beanContext, buildTool)
                 .features([DataHibernateReactive.NAME, db, migration])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -270,7 +271,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .language(Language.KOTLIN)
                 .render()
         def xml = new XmlSlurper().parseText(template)
@@ -346,7 +347,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.GROOVY)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)

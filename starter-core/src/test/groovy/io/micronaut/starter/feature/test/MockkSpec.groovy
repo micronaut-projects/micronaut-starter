@@ -10,6 +10,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
@@ -24,7 +25,7 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mockk contains links to 3rd party docs'() {
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11, Collections.emptyMap())
+        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION, Collections.emptyMap())
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['mockk'])
         String readme = output["README.md"]
 
@@ -53,7 +54,7 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test mockk feature is added automatically for Maven and Kotest for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .language(language)
                 .features([])
                 .testFramework(TestFramework.KOTEST)

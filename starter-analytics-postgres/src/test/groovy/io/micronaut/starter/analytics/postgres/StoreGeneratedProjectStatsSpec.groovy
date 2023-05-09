@@ -15,6 +15,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
@@ -58,7 +59,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
                 Language.KOTLIN,
                 BuildTool.MAVEN,
                 TestFramework.SPOCK,
-                JdkVersion.JDK_11
+                MicronautJdkVersionConfiguration.DEFAULT_OPTION
         )
         generated.setSelectedFeatures([new SelectedFeature("google-cloud-function")])
 

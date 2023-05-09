@@ -35,7 +35,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['aws-lambda-custom-runtime', 'graalvm']
         )
 

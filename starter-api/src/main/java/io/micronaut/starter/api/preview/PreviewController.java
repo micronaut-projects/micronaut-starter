@@ -34,6 +34,7 @@ import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -96,7 +97,7 @@ public class PreviewController extends AbstractCreateController implements Previ
                             lang,
                             test != null ? test.toTestFramework() : null,
                             build == null ? BuildTool.DEFAULT_OPTION : build,
-                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
+                            javaVersion == null ? MicronautJdkVersionConfiguration.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,
