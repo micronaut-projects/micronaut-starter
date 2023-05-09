@@ -25,27 +25,26 @@ import java.util.List;
  * @since 1.0.0
  */
 public enum JdkVersion {
-    JDK_8(8, true),
-    JDK_9(9, false),
-    JDK_10(9, false),
-    JDK_11(11, true),
-    JDK_12(12, false),
-    JDK_13(13, false),
-    JDK_14(14, false),
-    JDK_15(15, false),
-    JDK_16(16, false),
-    JDK_17(17, true),
-    JDK_19(19, false),
-    JDK_20(20, false);
+    JDK_8(8),
+    JDK_9(9),
+    JDK_10(10),
+    JDK_11(11),
+    JDK_12(12),
+    JDK_13(13),
+    JDK_14(14),
+    JDK_15(15),
+    JDK_16(16),
+    JDK_17(17),
+    JDK_18(18),
+    JDK_19(19),
+    JDK_20(20);
 
     private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
 
     private final int majorVersion;
-    private final boolean lts;
 
-    JdkVersion(int majorVersion, boolean lts) {
+    JdkVersion(int majorVersion) {
         this.majorVersion = majorVersion;
-        this.lts = lts;
     }
 
     public static JdkVersion valueOf(int majorVersion) {
@@ -58,10 +57,6 @@ public enum JdkVersion {
 
     public int majorVersion() {
         return majorVersion;
-    }
-
-    public boolean isLts() {
-        return lts;
     }
 
     public boolean greaterThanEqual(JdkVersion jdk) {
