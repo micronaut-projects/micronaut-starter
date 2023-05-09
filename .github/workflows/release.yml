@@ -42,7 +42,7 @@ jobs:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew docs
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -359,37 +359,37 @@ jobs:
         run: |
           gcloud components install beta --quiet
           gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
-  homebrew:
-    name: Update Homebrew cask
-    needs: [macos]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          repository: micronaut-projects/homebrew-tap
-      - name: Download ZIP
-        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
-      - name: Calculate SHA256
-        id: sha
-        run: |
-          s=$(sha256sum mn.zip | awk  '{ print $1 }')
-          echo "SHA256 is: $s"
-          echo "sha=${s}" >> $GITHUB_OUTPUT
-      - name: Update Cask file
-        env:
-          SHA: ${{ steps.sha.outputs.sha }}
-        run: |
-          sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
-          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
-          cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
-          commit_user_name: micronaut-build
-          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+#  homebrew:
+#    name: Update Homebrew cask
+#    needs: [macos]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout https://github.com/micronaut-projects/homebrew-tap
+#        uses: actions/checkout@v3
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#          repository: micronaut-projects/homebrew-tap
+#      - name: Download ZIP
+#        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
+#      - name: Calculate SHA256
+#        id: sha
+#        run: |
+#          s=$(sha256sum mn.zip | awk  '{ print $1 }')
+#          echo "SHA256 is: $s"
+#          echo "sha=${s}" >> $GITHUB_OUTPUT
+#      - name: Update Cask file
+#        env:
+#          SHA: ${{ steps.sha.outputs.sha }}
+#        run: |
+#          sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
+#          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+#          cat Casks/micronaut.rb
+#      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
+#        with:
+#          commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
+#          commit_user_name: micronaut-build
+#          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
   chocolatey:
     name: Bump Chocolatey package
     runs-on: windows-latest
