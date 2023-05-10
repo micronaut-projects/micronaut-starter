@@ -130,3 +130,4 @@ zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature
 # We use the Gradle plugin both in generated projects and our own build
 # so we share the version here
 micronaut-application = { id = "io.micronaut.application", version.ref = "micronaut-gradle-plugin" }
+micronaut-crac = { id = "io.micronaut.crac", version.ref = "micronaut-gradle-plugin" }

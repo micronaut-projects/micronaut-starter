@@ -2,6 +2,7 @@ plugins {
     id "io.micronaut.internal.starter.convention"
     id "com.github.johnrengelman.shadow"
     alias(templateLibs.plugins.micronaut.application)
+    alias(templateLibs.plugins.micronaut.crac)
 }
 
 ext.publish = false
@@ -13,6 +14,7 @@ micronaut {
 dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut.gcp:micronaut-gcp-http-client"
+    implementation "io.micronaut.crac:micronaut-crac"
     runtimeOnly "ch.qos.logback:logback-classic"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
