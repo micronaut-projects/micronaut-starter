@@ -9,6 +9,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
@@ -52,12 +53,12 @@ class SelectOptionsTest extends Specification {
 
         then: "We get all the jdk version options"
         def jdkVersionOpts = selectOptions.jdkVersion.options
-        jdkVersionOpts.size() == JdkVersion.values().size()
+        jdkVersionOpts.size() == MicronautJdkVersionConfiguration.SUPPORTED_JDKS.size()
 
         then: "We get the correct JdkVersion default"
-        selectOptions.jdkVersion.defaultOption.value == JdkVersion.DEFAULT_OPTION
+        selectOptions.jdkVersion.defaultOption.value == MicronautJdkVersionConfiguration.DEFAULT_OPTION
 
-        JdkVersion.values().each { jdkVer ->
+        MicronautJdkVersionConfiguration.SUPPORTED_JDKS.each { jdkVer ->
             then: "We can find the ${jdkVer.name()} jdk version"
             jdkVersionOpts.find {so -> jdkVer == so.value} != null
         }

@@ -6,6 +6,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
@@ -14,10 +15,10 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
     @Unroll
     void 'test github-workflow-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, int jdkVersion, String workflowName) {
         when:
-        def output = generate(ApplicationType.DEFAULT,
+        Map<String, String> output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion)),
                 [GithubCiWorkflowFeature.NAME])
-        def workflow = output[".github/workflows/${workflowName}"]
+        String workflow = output[".github/workflows/${workflowName}"]
 
         then:
         workflow
@@ -28,14 +29,8 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
 
         where:
         buildTool               | jdkVersion | workflowName
-        BuildTool.GRADLE        | 8          | "gradle.yml"
-        BuildTool.GRADLE        | 11         | "gradle.yml"
         BuildTool.GRADLE        | 17         | "gradle.yml"
-        BuildTool.GRADLE_KOTLIN | 8          | "gradle.yml"
-        BuildTool.GRADLE_KOTLIN | 11         | "gradle.yml"
         BuildTool.GRADLE_KOTLIN | 17         | "gradle.yml"
-        BuildTool.MAVEN         | 8          | "maven.yml"
-        BuildTool.MAVEN         | 11         | "maven.yml"
         BuildTool.MAVEN         | 17         | "maven.yml"
     }
 
@@ -43,7 +38,7 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
     void 'test github-workflow-ci wrapper validation and upload is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.DEFAULT_OPTION),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [GithubCiWorkflowFeature.NAME])
         def workflow = output[".github/workflows/gradle.yml"]
 

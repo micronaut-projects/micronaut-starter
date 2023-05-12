@@ -17,22 +17,29 @@ package io.micronaut.starter.options;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * JDK versions.
- *
+ * <a href="https://www.java.com/releases/">Releases</a>
  * @author graemerocher
  * @since 1.0.0
  */
 public enum JdkVersion {
     JDK_8(8),
+    JDK_9(9),
+    JDK_10(10),
     JDK_11(11),
-    JDK_17(17);
+    JDK_12(12),
+    JDK_13(13),
+    JDK_14(14),
+    JDK_15(15),
+    JDK_16(16),
+    JDK_17(17),
+    JDK_18(18),
+    JDK_19(19),
+    JDK_20(20);
 
-    public static final JdkVersion DEFAULT_OPTION = JDK_17;
-
-    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList());
+    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
 
     private final int majorVersion;
 

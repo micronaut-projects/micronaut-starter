@@ -33,6 +33,7 @@ import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
 import org.slf4j.Logger;
@@ -90,7 +91,7 @@ public abstract class AbstractCreateController {
                     new Options(lang,
                             testFramework != null ? testFramework.toTestFramework() : language.getDefaults().getTest(),
                             buildTool == null ? language.getDefaults().getBuild() : buildTool,
-                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
+                            javaVersion == null ? MicronautJdkVersionConfiguration.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(userAgent),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP

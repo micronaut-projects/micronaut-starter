@@ -31,6 +31,6 @@ application {
 }
 
 tasks.named<DockerBuildImage>("dockerBuild") {
-    images.add("gcr.io/${System.getenv("GCLOUD_PROJECT")}/micronaut-starter-analytics:snapshot")
+    images.add("gcr.io/${System.getenv("GCLOUD_PROJECT")}/micronaut-starter-analytics:${System.getenv("DOCKER_TAG")}")
 }
 

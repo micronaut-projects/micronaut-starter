@@ -26,7 +26,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['google-cloud-function']
         )
         def readme = output["README.md"]
@@ -79,7 +79,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['google-cloud-function']
         )
         def readme = output["README.md"]
@@ -121,7 +121,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
@@ -186,7 +186,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['google-cloud-function',serialization]
         )
 
@@ -202,7 +202,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         generate(
             ApplicationType.DEFAULT,
-            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
             ['google-cloud-function','graalvm']
         )
 
@@ -218,7 +218,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -244,7 +244,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.FUNCTION)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

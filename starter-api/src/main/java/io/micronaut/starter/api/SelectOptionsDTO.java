@@ -25,7 +25,7 @@ import io.micronaut.starter.api.options.LanguageSelectOptions;
 import io.micronaut.starter.api.options.TestFrameworkSelectOptions;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.JdkVersionConfiguration;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -93,7 +93,9 @@ public class SelectOptionsDTO {
      * Build the options
      * @return the supported options
      */
-    public static SelectOptionsDTO make(MessageSource messageSource, MessageSource.MessageContext messageContext) {
+    public static SelectOptionsDTO make(MessageSource messageSource,
+                                        MessageSource.MessageContext messageContext,
+                                        JdkVersionConfiguration jdkVersionConfiguration) {
 
         List<ApplicationTypeDTO> applications = Arrays.stream(ApplicationType.values())
                 .map(it -> new ApplicationTypeDTO(it, null, messageSource, messageContext))
@@ -104,13 +106,13 @@ public class SelectOptionsDTO {
                 new ApplicationTypeDTO(ApplicationType.DEFAULT_OPTION, null, messageSource, messageContext)
         );
 
-        List<JdkVersionDTO> jdkVersions = Arrays.stream(JdkVersion.values())
+        List<JdkVersionDTO> jdkVersions = jdkVersionConfiguration.getSupportedJdkVersions().stream()
                 .map(it -> new JdkVersionDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
         JdkVersionSelectOptions jdkVersionOpts = new JdkVersionSelectOptions(
                 jdkVersions,
-                new JdkVersionDTO(JdkVersion.DEFAULT_OPTION, messageSource, messageContext)
+                new JdkVersionDTO(jdkVersionConfiguration.getDefaultJdkVersion(), messageSource, messageContext)
         );
 
         List<LanguageDTO> languages = Arrays.stream(Language.values())

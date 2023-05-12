@@ -9,6 +9,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
@@ -176,7 +177,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(chosenFeatures)
                 .language(Language.JAVA)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")

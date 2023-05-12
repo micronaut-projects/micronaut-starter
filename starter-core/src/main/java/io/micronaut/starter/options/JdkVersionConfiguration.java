@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.cli.command;
+package io.micronaut.starter.options;
 
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
+import io.micronaut.context.annotation.DefaultImplementation;
+import io.micronaut.core.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class JdkVersionCandidates extends ArrayList<String> {
+@DefaultImplementation(MicronautJdkVersionConfiguration.class)
+public interface JdkVersionConfiguration {
 
-    public JdkVersionCandidates() {
-        super(MicronautJdkVersionConfiguration.SUPPORTED_JDKS.stream().map(JdkVersion::majorVersion).map(Object::toString).collect(Collectors.toList()));
-    }
+    @NonNull
+    List<JdkVersion> getSupportedJdkVersions();
+
+    @NonNull
+    JdkVersion getDefaultJdkVersion();
 }

@@ -23,7 +23,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.SelectOptionsDTO;
 
-import jakarta.inject.Inject;
+import io.micronaut.starter.options.JdkVersionConfiguration;
 import jakarta.inject.Singleton;
 
 /**
@@ -34,8 +34,13 @@ import jakarta.inject.Singleton;
 @Controller("/select-options")
 public class SelectOptionsController implements SelectOptionsOperations {
 
-    @Inject
-    MessageSource messageSource;
+    private final MessageSource messageSource;
+    private final JdkVersionConfiguration jdkVersionConfiguration;
+
+    public SelectOptionsController(MessageSource messageSource, JdkVersionConfiguration jdkVersionConfiguration) {
+        this.messageSource = messageSource;
+        this.jdkVersionConfiguration = jdkVersionConfiguration;
+    }
 
     /**
      * Gets select options for the starter
@@ -46,7 +51,7 @@ public class SelectOptionsController implements SelectOptionsOperations {
     @Get(uri = "/", produces = MediaType.APPLICATION_JSON)
     public SelectOptionsDTO selectOptions(RequestInfo requestInfo) {
         MessageSource.MessageContext context = MessageSource.MessageContext.of(requestInfo.getLocale());
-        return SelectOptionsDTO.make(messageSource, context);
+        return SelectOptionsDTO.make(messageSource, context, jdkVersionConfiguration);
     }
 
     @Singleton

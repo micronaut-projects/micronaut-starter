@@ -39,7 +39,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         def readme = output["README.md"]
@@ -67,7 +67,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['oracle-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         then:
@@ -81,7 +81,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
@@ -111,7 +111,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
