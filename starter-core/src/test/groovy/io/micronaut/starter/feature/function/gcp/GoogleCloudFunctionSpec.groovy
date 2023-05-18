@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.json.JacksonDatabindFeature
 import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -20,7 +21,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     @Shared
     @Subject
-    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction(new ShadePlugin())
+    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction(new ShadePlugin(), new JacksonDatabindFeature())
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
@@ -112,6 +113,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
 
         then:
+        verifier.hasDependency("io.micronaut", "micronaut-jackson-databind", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.servlet", "micronaut-servlet-core", Scope.TEST)
     }
 
@@ -127,6 +129,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
 
         then:
+        verifier.hasDependency("io.micronaut", "micronaut-jackson-databind", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)

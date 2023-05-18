@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,17 @@
 package io.micronaut.starter.feature.json;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.gcp.AbstractGoogleCloudFunction;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class SerializationJacksonFeature implements SerializationFeature {
+public class SerializationJacksonFeature implements SerializationFeature, DefaultFeature {
     private static final String ARTIFACT_ID_MICRONAUT_SERDE_JACKSON = "micronaut-serde-jackson";
 
     @Override
@@ -41,6 +48,12 @@ public class SerializationJacksonFeature implements SerializationFeature {
     @Override
     public String getModule() {
         return "jackson";
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return selectedFeatures.stream().noneMatch(feature ->
+                feature instanceof JsonFeature || feature instanceof AbstractGoogleCloudFunction);
     }
 
 }
