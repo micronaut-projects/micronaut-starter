@@ -98,11 +98,13 @@ public class GeneratorContext implements DependencyContext {
         this.operatingSystem = operatingSystem;
         this.features = new Features(this, features, options);
         this.options = options;
-        String micronautVersion = VersionInfo.getMicronautVersion();
-        if (options.getBuildTool().isGradle()) {
-            buildProperties.put("micronautVersion", micronautVersion);
-        } else if (options.getBuildTool() == BuildTool.MAVEN) {
-            buildProperties.put("micronaut.version", micronautVersion);
+        if (options.getFramework().equals(Options.FRAMEWORK_MICRONAUT)) {
+            String micronautVersion = VersionInfo.getMicronautVersion();
+            if (options.getBuildTool().isGradle()) {
+                buildProperties.put("micronautVersion", micronautVersion);
+            } else if (options.getBuildTool() == BuildTool.MAVEN) {
+                buildProperties.put("micronaut.version", micronautVersion);
+            }
         }
         this.coordinateResolver = coordinateResolver;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
@@ -240,6 +242,14 @@ public class GeneratorContext implements DependencyContext {
     @NonNull
     public TestFramework getTestFramework() {
         return options.getTestFramework();
+    }
+
+    /**
+     * @return The framework
+     */
+    @NonNull
+    public String getFramework() {
+        return options.getFramework();
     }
 
     /**

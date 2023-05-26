@@ -16,11 +16,11 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
+import io.micronaut.starter.template.RockerWritable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,23 +47,17 @@ public class MicronautApplicationGradlePlugin {
         private List<String> dockerBuildImages;
         private List<String> dockerBuildNativeImages;
         private List<String> additionalTestResourceModules;
-        private BuildTool buildTool;
         private boolean incremental;
-        private  String packageName;
         private boolean sharedTestResources;
+        private GeneratorContext generatorContext;
 
-        public Builder buildTool(BuildTool buildTool) {
-            this.buildTool = buildTool;
+        public Builder generatorContext(GeneratorContext generatorContext) {
+            this.generatorContext = generatorContext;
             return this;
         }
 
         public Builder incremental(boolean incremental) {
             this.incremental = incremental;
-            return this;
-        }
-
-        public Builder packageName(String packageName) {
-            this.packageName = packageName;
             return this;
         }
 
@@ -121,20 +115,11 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
-        /**
-         * @deprecated Use {@link #builder()} instead.
-         * @return A Gradle Plugin
-         */
-        @Deprecated
-        public GradlePlugin build() {
-            return builder().build();
-        }
-
         public GradlePlugin.Builder builder() {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)));
+                    .extension(new RockerWritable(micronautGradle.template(generatorContext.getApplicationType(), generatorContext.getFeatures(), dsl, generatorContext.getBuildTool(), dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, generatorContext.getProject().getPackageName(), additionalTestResourceModules, sharedTestResources)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

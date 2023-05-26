@@ -17,6 +17,7 @@ package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -31,9 +32,6 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
 
     public DefaultRepositoryResolver() {
         addRepository(new MavenCentral());
-        if (VersionInfo.isMicronautSnapshot()) {
-            addRepository(new MicronautSnapshotRepository());
-        }
     }
 
     @Override
@@ -48,6 +46,9 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
     }
 
     private void addFeatureWhichRequireRepositories(GeneratorContext generatorContext) {
+        if (generatorContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT)) {
+            addRepository(new MicronautSnapshotRepository());
+        }
         generatorContext.getFeatures()
                 .getFeatures()
                 .stream()

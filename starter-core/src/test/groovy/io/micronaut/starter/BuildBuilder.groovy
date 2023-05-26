@@ -26,6 +26,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
     private List<String> features
     private Language language
     private TestFramework testFramework
+    private String framework
     private ApplicationType applicationType
     private JdkVersion jdkVersion
     private Project project
@@ -50,6 +51,11 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
 
     BuildBuilder testFramework(TestFramework testFramework) {
         this.testFramework = testFramework
+        this
+    }
+
+    BuildBuilder framework(String framework) {
+        this.framework = framework
         this
     }
 
@@ -82,7 +88,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
         Project project = getProject()
         JdkVersion jdkVersion = this.jdkVersion ?: MicronautJdkVersionConfiguration.DEFAULT_OPTION
-        Options options = new Options(language, testFramework, buildTool, jdkVersion)
+        Options options = new Options(language, testFramework, buildTool, jdkVersion, Collections.emptyMap(), framework)
         Features features = getFeatures(featureNames, options, type)
 
         if (buildTool.isGradle()) {

@@ -69,7 +69,7 @@ public class ContextFactory {
         availableFeatures.getAllFeatures()
                 .filter(DefaultFeature.class::isInstance)
                 .sorted(OrderUtil.COMPARATOR.reversed())
-                .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, newOptions, features))
+                .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, newOptions, features) && ((DefaultFeature) f).getTargetFramework().equals(newOptions.getFramework()))
                 .forEach(features::add);
 
         featureValidator.validatePreProcessing(newOptions, applicationType, features);

@@ -46,14 +46,22 @@ import java.util.stream.Collectors;
 @Introspected
 public class CodeGenConfig {
 
+    private String framework = Options.FRAMEWORK_MICRONAUT;
     private ApplicationType applicationType;
     private String defaultPackage;
     private TestFramework testFramework;
     private Language sourceLanguage;
     private BuildTool buildTool;
     private List<String> features;
-
     private boolean legacy;
+
+    public String getFramework() {
+        return framework;
+    }
+
+    public void setFramework(String framework) {
+        this.framework = framework;
+    }
 
     public ApplicationType getApplicationType() {
         return applicationType;
@@ -176,7 +184,7 @@ public class CodeGenConfig {
                             .filter(f -> f.shouldApply(
                                     codeGenConfig.getApplicationType(),
                                     new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
-                                    new HashSet<>()))
+                                    new HashSet<>()) && (f.getTargetFramework().equals(codeGenConfig.getFramework())))
                             .map(Feature::getName)
                             .collect(Collectors.toList()));
 

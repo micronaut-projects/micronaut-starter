@@ -74,7 +74,9 @@ public class Gradle implements BuildFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(micronautBuildPlugin);
+        if (featureContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT)) {
+            featureContext.addFeature(micronautBuildPlugin);
+        }
     }
 
     @Override

@@ -2,12 +2,26 @@
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.application.ApplicationType;
+@import io.micronaut.starter.feature.Features;
+@import io.micronaut.starter.build.gradle.GradleBuild;
+
 @args(
-    GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative,
-    List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
-    String runtime, String testRuntime,
-    String aotVersion, boolean incremental, String packageName,
-    List<String> additionalTestResourceModules, boolean sharedTestResources
+    ApplicationType applicationType,
+    Features features,
+    GradleDsl dsl,
+    BuildTool build,
+    Dockerfile dockerfile,
+    Dockerfile dockerfileNative,
+    List<String> dockerBuilderImages,
+    List<String> dockerBuilderNativeImages,
+    String runtime,
+    String testRuntime,
+    String aotVersion,
+    boolean incremental,
+    String packageName,
+    List<String> additionalTestResourceModules,
+    boolean sharedTestResources
 )
 micronaut {
 @if(runtime != null) {
@@ -128,3 +142,6 @@ dockerBuild {
     ]
 }
 }
+@graalvmNative.template(packageName, applicationType, features, dsl)
+
+

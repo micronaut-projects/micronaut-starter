@@ -47,4 +47,8 @@ public interface DefaultFeature extends Feature {
     boolean shouldApply(ApplicationType applicationType,
                         Options options,
                         Set<Feature> selectedFeatures);
+
+    default String getTargetFramework() {
+        return Options.FRAMEWORK_MICRONAUT;
+    }
 }

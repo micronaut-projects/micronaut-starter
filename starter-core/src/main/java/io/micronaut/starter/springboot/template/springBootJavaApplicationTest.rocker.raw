@@ -1,0 +1,17 @@
+@import io.micronaut.starter.application.Project
+
+@args (Project project)
+
+package @project.getPackageName();
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@@SpringBootTest
+class ApplicationTest {
+
+	@@Test
+	void contextLoads() {
+	}
+
+}

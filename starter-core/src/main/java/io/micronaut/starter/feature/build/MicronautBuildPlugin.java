@@ -129,9 +129,8 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext, String id) {
         MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder()
-                .buildTool(generatorContext.getBuildTool())
-                .incremental(true)
-                .packageName(generatorContext.getProject().getPackageName());
+                .generatorContext(generatorContext)
+                .incremental(true);
         Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
         if (gradleDsl.isPresent()) {
             builder = builder.dsl(gradleDsl.get());

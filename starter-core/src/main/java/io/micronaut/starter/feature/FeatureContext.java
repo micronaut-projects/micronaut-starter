@@ -97,6 +97,10 @@ public class FeatureContext {
         return options.getLanguage();
     }
 
+    public String getFramework() {
+        return options.getFramework();
+    }
+
     public TestFramework getTestFramework() {
         return options.getTestFramework();
     }

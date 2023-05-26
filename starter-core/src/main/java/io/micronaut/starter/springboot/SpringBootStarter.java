@@ -17,36 +17,47 @@ package io.micronaut.starter.springboot;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.GradleSpecificFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
 
 @Singleton
-public class SpringDependencyManagementGradlePlugin implements GradleSpecificFeature, SpringDefaultFeature {
-    private static final String ARTIFACT_ID = "dependency-management-plugin";
+public class SpringBootStarter implements SpringDefaultFeature {
+    public static final String NAME = "spring-boot-starter";
+    private static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";
+    private static final String ARTIFACT_ID_SPRING_BOOT_STARTER = "spring-boot-starter";
+    private static final Dependency.Builder DEPENDENCY_SPRINGBOOT_STARTER = Dependency.builder()
+            .groupId(GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT)
+            .artifactId(ARTIFACT_ID_SPRING_BOOT_STARTER)
+            .compile();
+    private static final String ARTIFACT_ID_SPRING_BOOT_STARTER_TEST = "spring-boot-starter-test";
+    private static final Dependency.Builder DEPENDENCY_SPRINGBOOT_STARTER_TEST = Dependency.builder()
+            .groupId(GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT)
+            .artifactId(ARTIFACT_ID_SPRING_BOOT_STARTER_TEST)
+            .test();
 
     @Override
     public String getName() {
-        return "spring-dependency-management-gradle-plugin";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "Spring Dependency Management Plugin Gradle Plugin";
+        return "Spring Boot Starter";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the Spring Dependency Management Plugin Gradle Plugin that provides Maven-like dependency management and exclusions.";
+        return "Adds Spring Boot Starter dependencies";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.spring.io/dependency-management-plugin/docs/current-SNAPSHOT/reference/html/";
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_SPRINGBOOT_STARTER);
+        generatorContext.addDependency(DEPENDENCY_SPRINGBOOT_STARTER_TEST);
     }
 
     @Override
@@ -55,19 +66,7 @@ public class SpringDependencyManagementGradlePlugin implements GradleSpecificFea
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id("io.spring.dependency-management")
-                    .lookupArtifactId(ARTIFACT_ID)
-                    .build());
-        }
-    }
-
-    @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return options.getBuildTool().isGradle();
     }
-
 }
