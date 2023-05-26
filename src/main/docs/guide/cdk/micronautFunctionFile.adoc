@@ -1,0 +1,6 @@
+api:aws.cdk.function.MicronautFunctionFile[] has a fluid API to ease generating the file name of the asset.
+
+[source, java]
+----
+include::starter-aws-cdk/src/test/java/io/micronaut/docs/aws/cdk/function/MicronautFunctionFileExample.java[tag=micronautFunctionFile,indent=0]
+----

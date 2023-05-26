@@ -25,7 +25,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class AnnotationApi implements Feature {
-    private final static Dependency DEPENDENCY_JAKARTA_ANNOTATON_API = Dependency.builder()
+    private static final Dependency DEPENDENCY_JAKARTA_ANNOTATON_API = Dependency.builder()
             .groupId("jakarta.annotation")
             .artifactId("jakarta.annotation-api")
             .compile()
