@@ -24,6 +24,7 @@ rootProject.name = 'micronaut-starter'
 
 include 'starter-core'
 include 'starter-cli'
+include 'starter-aws-cdk'
 include 'starter-api'
 include 'starter-web-netty'
 include 'starter-web-servlet'
