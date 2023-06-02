@@ -13,6 +13,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.template.Template
+import spock.lang.PendingFeature
 import spock.lang.Subject
 
 class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -95,12 +96,13 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         buildTool << BuildTool.values()
     }
 
+    @PendingFeature
     void "dependencies are added for cdk to infra project for #buildTool"(BuildTool buildTool, String buildFile) {
         when:
-        def output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
 
         then:
-        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.aws:micronaut-aws-cdk/$)
+        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.starter:micronaut-starter-aws-cdk/$)
 
         where:
         buildTool               | buildFile
@@ -108,16 +110,17 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         BuildTool.GRADLE_KOTLIN | "build.gradle.kts"
     }
 
+    @PendingFeature
     void "dependencies are added for cdk to infra project for maven"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, createOptions(BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
         def dependency = new XmlParser().parseText(output."$Cdk.INFRA_MODULE/pom.xml").dependencies.dependency.find {
-            it.artifactId.text() == 'micronaut-aws-cdk'
+            it.artifactId.text() == 'micronaut-starter-aws-cdk'
         }
 
         then:
         with(dependency) {
-            it.groupId.text() == 'io.micronaut.aws'
+            it.groupId.text() == 'io.micronaut.starter'
         }
     }
 

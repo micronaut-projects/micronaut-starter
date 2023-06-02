@@ -79,6 +79,20 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String MAIN_CLASS_NAME = "Main";
     private static final String ARTIFACT_ID_AWS_CDK_LIB = "aws-cdk-lib";
     private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
+    private static final String ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK = "micronaut-starter-aws-cdk";
+    private static final Dependency DEPENDENCY_CDK =
+            MicronautDependencyUtils.awsDependency()
+                    .artifactId("micronaut-aws-cdk")
+                    .version("4.0.0-M2")
+//            MicronautDependencyUtils.starterDependency()
+//                    .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
+                    .exclude(Dependency.builder()
+                            .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
+                            .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
+                            .build())
+                    .compile()
+                    .build();
+
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
@@ -196,13 +210,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
     private void populateDependencies(GeneratorContext generatorContext) {
         dependencyContext.addDependency(bomDependency().compile());
-        dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
-                .artifactId("micronaut-aws-cdk")
-                        .exclude(Dependency.builder()
-                                .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
-                                .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
-                                .build())
-                .compile());
+        dependencyContext.addDependency(DEPENDENCY_CDK);
         coordinateResolver.resolve(ARTIFACT_ID_AWS_CDK_LIB)
                 .ifPresent(coordinate -> dependencyContext.addDependency(Dependency.builder()
                         .groupId(coordinate.getGroupId())
