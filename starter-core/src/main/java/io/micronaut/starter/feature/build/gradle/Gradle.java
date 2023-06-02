@@ -25,10 +25,8 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.feature.build.MicronautBuildPlugin;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
@@ -55,14 +53,11 @@ public class Gradle implements BuildFeature {
     protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
 
     protected final GradleBuildCreator dependencyResolver;
-    protected final MicronautBuildPlugin micronautBuildPlugin;
     protected final RepositoryResolver repositoryResolver;
 
     public Gradle(GradleBuildCreator dependencyResolver,
-                  MicronautBuildPlugin micronautBuildPlugin,
                   RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
-        this.micronautBuildPlugin = micronautBuildPlugin;
         this.repositoryResolver = repositoryResolver;
     }
 
@@ -70,13 +65,6 @@ public class Gradle implements BuildFeature {
     @NonNull
     public String getName() {
         return "gradle";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT)) {
-            featureContext.addFeature(micronautBuildPlugin);
-        }
     }
 
     @Override

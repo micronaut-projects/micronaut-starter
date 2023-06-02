@@ -46,7 +46,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
-    @Option(names = "---framework", hidden = true, defaultValue = Options.FRAMEWORK_MICRONAUT)
+    @Option(names = {"--framework"}, hidden = true, defaultValue = Options.FRAMEWORK_MICRONAUT)
     protected String framework;
 
     @ReflectiveAccess

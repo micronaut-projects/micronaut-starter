@@ -2,7 +2,7 @@ package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.gradle.GradleConfiguration
-import io.micronaut.starter.feature.build.KotlinSymbolProcessing
+import io.micronaut.starter.build.gradle.KotlinSymbolProcessingFeature
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
@@ -53,7 +53,7 @@ class GradleConfigurationSpec extends Specification {
     void "if ksp present #source #phases should return #configuration"(boolean ksp, Source source, List<Phase> phases, GradleConfiguration configuration) {
         given:
         def generatorContext = Stub(GeneratorContext) {
-            isFeaturePresent(KotlinSymbolProcessing.class) >> ksp
+            isFeaturePresent(KotlinSymbolProcessingFeature.class) >> ksp
         }
         expect:
         configuration == GradleConfiguration.of(new Scope(source, phases), Language.KOTLIN, TestFramework.JUNIT, generatorContext).get()

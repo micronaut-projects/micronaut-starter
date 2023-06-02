@@ -1,0 +1,49 @@
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.Property
+@import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.maven.MavenBuild
+@import io.micronaut.starter.build.maven.MavenDependency
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.util.VersionInfo
+
+@args (
+ApplicationType applicationType,
+Project project,
+Features features,
+MavenBuild mavenBuild
+)
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <repositories>
+@mavenBuild.renderRepositories(4)
+  </repositories>
+
+@if (mavenBuild.hasPomDependency()) {
+  <dependencyManagement>
+    <dependencies>
+@for (MavenDependency f : mavenBuild.getDependencies(true)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), true, f.getExclusions())
+}
+    </dependencies>
+  </dependencyManagement>
+}
+
+  <dependencies>
+@if (features.language().isGroovy()) {
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+@dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
+}
+}
+
+@for (MavenDependency f : mavenBuild.getDependencies(false)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false, f.getExclusions())
+}
+  </dependencies>
+
+@profiles.template(mavenBuild.getProfiles())
+</project>

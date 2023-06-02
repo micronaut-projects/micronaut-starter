@@ -1,0 +1,124 @@
+/*
+ * Copyright 2017-2023 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.starter.fixture
+
+import io.micronaut.context.BeanContext
+import io.micronaut.inject.qualifiers.Qualifiers
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.ContextFactory
+import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.Source
+import io.micronaut.starter.feature.AvailableFeatures
+import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.feature.FeatureContext
+import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.validation.FeatureValidator
+import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
+
+import java.util.function.Consumer
+
+trait ContextFixture {
+
+    abstract BeanContext getBeanContext()
+
+    String getGradleAnnotationProcessorScope(Language language, Source source = Source.MAIN) {
+        if (language == Language.JAVA) {
+            if (source == Source.MAIN) {
+                return "annotationProcessor"
+            } else if (source == Source.TEST) {
+                return "testAnnotationProcessor"
+            }
+        } else if (language == Language.KOTLIN) {
+            "kapt"
+        } else if (language == Language.GROOVY) {
+            if (source == Source.MAIN) {
+                return "compileOnly"
+            } else if (source == Source.TEST) {
+                return "testCompileOnly"
+            }
+        }
+    }
+
+    Features getFeatures(List<String> features,
+                         Language language = null,
+                         TestFramework testFramework = null,
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
+        Options options = new Options(language, testFramework, buildTool)
+        return getFeatures(features, options, applicationType)
+    }
+
+    Features getFeatures(List<String> features,
+                         Options options,
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
+        FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
+        featureContext.processSelectedFeatures()
+        Set<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
+        beanContext.getBean(FeatureValidator).validatePostProcessing(featureContext.getOptions(), applicationType, finalFeatures)
+        return new Features(buildGeneratorContext(features, options, applicationType), finalFeatures, options)
+    }
+
+    FeatureContext buildFeatureContext(List<String> selectedFeatures,
+                                       Options options = new Options(null, null, BuildTool.GRADLE),
+                                       ApplicationType applicationType = ApplicationType.DEFAULT) {
+
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
+
+        ContextFactory factory = beanContext.getBean(ContextFactory)
+
+        factory.createFeatureContext(availableFeatures,
+                selectedFeatures,
+                applicationType,
+                options,
+                OperatingSystem.LINUX)
+    }
+
+    GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
+                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           ApplicationType applicationType = ApplicationType.DEFAULT) {
+        if (this instanceof ProjectFixture) {
+            ContextFactory factory = beanContext.getBean(ContextFactory)
+            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
+            GeneratorContext generatorContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
+            generatorContext.applyFeatures()
+            return generatorContext
+        } else {
+            throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
+        }
+    }
+
+    GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
+                                           Consumer<GeneratorContext> mutate,
+                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           ApplicationType applicationType = ApplicationType.DEFAULT) {
+        if (this instanceof ProjectFixture) {
+            ContextFactory factory = beanContext.getBean(ContextFactory)
+            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
+            GeneratorContext generatorContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
+            mutate.accept(generatorContext)
+            generatorContext.applyFeatures()
+            return generatorContext
+        } else {
+            throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
+        }
+    }
+
+}

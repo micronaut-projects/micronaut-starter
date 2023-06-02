@@ -4,7 +4,6 @@
 @import io.micronaut.starter.build.gradle.GradleDsl
 @import io.micronaut.starter.build.gradle.GradlePlugin
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.util.VersionInfo
 
@@ -27,14 +26,6 @@ plugins {
 version = "0.1"
 group = "@project.getPackageName()"
 
-@if (features.contains("asciidoctor")) {
-@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-apply(from="gradle/asciidoc.gradle")
-} else {
-apply from: "gradle/asciidoc.gradle"
-}
-}
-
 @if(features.language().isKotlin() && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 val kotlinVersion=project.properties.get("kotlinVersion")
 }
@@ -45,32 +36,16 @@ repositories {
 
 @dependencies.template(applicationType, project, features, gradleBuild)
 
-
-@if (features.mainClass().isPresent()) {
-application {
-    mainClass.set("@features.mainClass().get()")
-}
-} else if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
-application {
-    mainClass.set("com.fnproject.fn.runtime.EntryPoint")
-}
-}
-
+@if (features.language().isJava() || features.language().isGroovy()) {
 java {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
 @if (!features.language().isKotlin()) {
     targetCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
 }
 }
+}
 
-@if (features.language().isKotlin() ||
-    features.testFramework().isKotlinTestFramework() ||
-    features.contains("jrebel") ||
-    features.contains("springloaded") ||
-    features.contains("azure-function") ||
-    features.contains("oracle-function") ||
-    features.contains("jib") ||
-    features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+@if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
 tasks {
 @if (features.language().isKotlin()) {
     compileKotlin {
@@ -95,131 +70,9 @@ tasks {
         }
     }
 }
-
-@if (features.contains("jrebel")) {
-    run {
-        dependsOn(generateRebel)
-    }
-}
-
-@if (features.contains("springloaded")) {
-    run {
-        jvmArgs("-noverify", "-javaagent:agent/springloaded-1.2.8.RELEASE.jar")
-    }
-}
-
-@if (features.contains("jrebel")) {
-    run {
-        if (project.hasProperty("rebelAgent")) {
-            jvmArgs(rebelAgent)
-        }
-    }
-}
-
-@if (features.contains("oracle-function")) {
-@if (features.contains("oracle-function-http")) {
-    dockerfileNative {
-      args("-XX:MaximumHeapSizePercent=80")
-    }
-} else {
-    dockerfileNative {
-        args("-XX:MaximumHeapSizePercent=80")
-        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
-    }
-
-    dockerfile {
-        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
-    }
-}
-
-    dockerBuild {
-        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-        } else {
-            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
-            } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
-            }
-        }
-    }
-
-    dockerBuildNative {
-        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-        } else {
-            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
-            } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
-            }
-        }
-    }
-} else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-    dockerBuild {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-    }
-
-    dockerBuildNative {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-    }
-}
-
-@if (features.contains("jib")) {
-    jib {
-        to {
-            image = "gcr.io/myapp/jib-image"
-        }
-    }
-}
-
 }
 }
 
-
-@if (features.contains("grpc")) {
-sourceSets {
-    main {
-        java {
-            srcDirs("build/generated/source/proto/main/grpc")
-            srcDirs("build/generated/source/proto/main/java")
-        }
-    }
-}
-
-@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")"
-    }
-    plugins {
-        id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")"
-        }
-    }
-    generateProtoTasks {
-        ofSourceSet("main").forEach {
-            it.plugins {
-                // Apply the "grpc" plugin whose spec is defined above, without options.
-                id("grpc")
-            }
-        }
-    }
-}
-} else {
-protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")" }
-    plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")" }
-    }
-    generateProtoTasks {
-        all()*.plugins { grpc {} }
-    }
-}
-}
-}
 @gradleBuild.renderExtensions()
 
 @gradleBuild.renderSubstitutions()

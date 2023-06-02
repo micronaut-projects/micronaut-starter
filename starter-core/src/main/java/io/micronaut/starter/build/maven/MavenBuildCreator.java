@@ -28,7 +28,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
-import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
@@ -90,7 +89,8 @@ public class MavenBuildCreator {
             annotationProcessorsCoordinates.add(injectJava);
             testAnnotationProcessorsCoordinates.add(injectJava);
 
-            DependencyCoordinate mnGraal = GraalVM.micronautGraalVM()
+            DependencyCoordinate mnGraal = MicronautDependencyUtils.coreDependency()
+                    .artifactId("micronaut-graal")
                     .versionProperty(PROPERTY_MICRONAUT_CORE_VERSION)
                     .buildCoordinate(true);
             annotationProcessorsCoordinates.add(mnGraal);
