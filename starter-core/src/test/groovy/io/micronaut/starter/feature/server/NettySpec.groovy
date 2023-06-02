@@ -6,14 +6,14 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 
 class NettySpec extends BeanContextSpec  implements CommandOutputFixture {
 
-    void 'test default netty server contains netty config for max order'() {
+    void 'test default netty server does not contain netty config for max order'() {
         when:
         Map<String, String> output = generate([Yaml.NAME])
         String config = output["src/main/resources/application.yml"]
 
         then:
         config
-        config.contains('''\
+        !config.contains('''\
 netty:
   default:
     allocator:
