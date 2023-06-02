@@ -18,7 +18,6 @@ package io.micronaut.starter.build;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.Options;
-import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;

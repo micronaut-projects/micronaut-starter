@@ -18,19 +18,18 @@ package io.micronaut.starter.springboot;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.springboot.template.springBootJavaApplication;
+import io.micronaut.starter.springboot.template.springBootJavaApplicationTest;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.springboot.template.springBootJavaApplication;
-import io.micronaut.starter.springboot.template.springBootJavaApplicationTest;
+
 import java.util.Set;
 
 @Named(SpringBootFramework.FRAMEWORK_SPRING_BOOT)
@@ -60,7 +59,6 @@ public class SpringBootJava implements LanguageFeature {
             featureContext.addFeature(javaGradlePlugin);
         }
     }
-
 
     @Override
     public boolean isJava() {
