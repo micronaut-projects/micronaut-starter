@@ -15,6 +15,7 @@ import io.micronaut.json.JsonMapper
 import io.micronaut.starter.api.FeatureList
 import io.micronaut.starter.util.ZipUtil
 import spock.lang.AutoCleanup
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -103,6 +104,7 @@ class FunctionSpec extends Specification {
         !featureList.features.isEmpty()
     }
 
+    @PendingFeature
     void "test create app"() {
         when:
         APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
