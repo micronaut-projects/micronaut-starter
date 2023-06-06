@@ -125,7 +125,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         def readme = output["README.md"]
 
@@ -156,7 +156,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
-                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']
         def readme = output["README.md"]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,22 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.*;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovy;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJava;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJavaJunit;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKoTest;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlin;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionSpock;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
+import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
+
 import java.util.Optional;
 
 /**
@@ -55,8 +64,8 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
 
     private final GoogleCloudFunction googleCloudFunction;
 
-    public GoogleCloudEventsFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin) {
-        super(shadePlugin);
+    public GoogleCloudEventsFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin, JacksonDatabindFeature jacksonDatabindFeature) {
+        super(shadePlugin, jacksonDatabindFeature);
         this.googleCloudFunction = googleCloudFunction;
     }
 
