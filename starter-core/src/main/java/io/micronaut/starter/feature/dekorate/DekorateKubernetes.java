@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,10 @@ public class DekorateKubernetes extends AbstractDekoratePlatformFeature {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder kubernetes = Dependency.builder()
                 .groupId("io.dekorate")
-                .artifactId("kubernetes-annotations")
+                .lookupArtifactId("kubernetes-annotations")
                 .template();
 
-        generatorContext.addDependency(kubernetes.versionProperty("dekorate.version").annotationProcessor());
+        generatorContext.addDependency(kubernetes.annotationProcessor());
         generatorContext.addDependency(kubernetes.compile());
     }
 }

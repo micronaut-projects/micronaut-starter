@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,10 +68,10 @@ public class DekoratePrometheus extends AbstractDekorateServiceFeature {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder prometheus = Dependency.builder()
                 .groupId("io.dekorate")
-                .artifactId("prometheus-annotations")
+                .lookupArtifactId("prometheus-annotations")
                 .template();
 
-        generatorContext.addDependency(prometheus.versionProperty("dekorate.version").annotationProcessor());
+        generatorContext.addDependency(prometheus.annotationProcessor());
         generatorContext.addDependency(prometheus.compile());
     }
 

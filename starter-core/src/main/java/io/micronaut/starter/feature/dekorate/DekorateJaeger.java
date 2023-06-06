@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,10 +61,10 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder jaeger = Dependency.builder()
                 .groupId("io.dekorate")
-                .artifactId("jaeger-annotations")
+                .lookupArtifactId("jaeger-annotations")
                 .template();
 
-        generatorContext.addDependency(jaeger.versionProperty("dekorate.version").annotationProcessor());
+        generatorContext.addDependency(jaeger.annotationProcessor());
         generatorContext.addDependency(jaeger.compile());
     }
 }
