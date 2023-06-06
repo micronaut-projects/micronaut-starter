@@ -28,10 +28,11 @@ jobs:
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v1.1.1
         with:
+          project_id: ${{ secrets.GCLOUD_PROJECT }}
           service_account_email: ${{ secrets.GCLOUD_EMAIL }}
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
       - name: Configure Docker to use Google Cloud Platform
-        run: "gcloud auth configure-docker --quiet"
+        run: gcloud auth configure-docker --quiet
       - name: Push image to Google Cloud Container Registry
         run: |
           ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
