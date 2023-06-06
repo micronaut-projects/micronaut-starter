@@ -8,7 +8,7 @@ dependencies {
     testImplementation project(":starter-core")
     testImplementation 'com.azure:azure-identity:1.9.1'
     testImplementation 'com.azure.resourcemanager:azure-resourcemanager-containerinstance:2.27.0'
-    testImplementation 'com.google.apis:google-api-services-run:v1-rev20201113-1.31.0'
+    testImplementation 'com.google.apis:google-api-services-run:v2-rev20230528-2.0.0'
     testImplementation 'com.google.auth:google-auth-library-oauth2-http:1.17.0'
     testImplementation "com.oracle.oci.sdk:oci-java-sdk-full:1.34.0"
     testImplementation "ch.qos.logback:logback-classic:1.4.7"
