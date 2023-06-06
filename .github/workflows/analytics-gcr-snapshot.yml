@@ -40,5 +40,4 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Deploy to Cloud Run
         run: |
-          gcloud components install --quiet
           gcloud run deploy micronaut-starter-analytics-staging --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:snapshot --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
