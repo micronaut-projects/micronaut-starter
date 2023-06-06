@@ -19,7 +19,7 @@ dependencies {
     implementation("io.micronaut:micronaut-jackson-databind")
     developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
+    runtimeOnly "ch.qos.logback:logback-classic:1.4.7"
     testImplementation "io.micronaut.servlet:micronaut-http-server-jetty"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
