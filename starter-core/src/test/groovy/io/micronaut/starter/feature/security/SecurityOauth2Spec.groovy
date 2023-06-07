@@ -26,7 +26,7 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['security-oauth2'])
+                .features(['security-oauth2', 'kapt'])
                 .render()
 
         then:

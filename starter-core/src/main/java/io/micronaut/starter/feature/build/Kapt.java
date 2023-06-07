@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -28,11 +29,12 @@ import java.util.Set;
 
 @Singleton
 public class Kapt implements KotlinSupportFeature, DefaultFeature {
-
+    public static final String NAME = "kapt";
+    
     @Override
     @NonNull
     public String getName() {
-        return "kapt";
+        return NAME;
     }
 
     @Override
@@ -71,6 +73,7 @@ public class Kapt implements KotlinSupportFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
+        return options.getBuildTool() == BuildTool.MAVEN &&
+                KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }

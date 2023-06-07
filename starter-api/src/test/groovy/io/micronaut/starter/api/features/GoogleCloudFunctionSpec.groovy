@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.gcp.GoogleCloudEventsFunction
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
 import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Requires
 import spock.lang.Specification
@@ -27,7 +28,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 null,
-                JdkVersion.JDK_11,
+                MicronautJdkVersionConfiguration.DEFAULT_OPTION,
                 new RequestInfo("http://localhost", "", null, Locale.ENGLISH, "")
         )
 
@@ -46,7 +47,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 null,
-                JdkVersion.JDK_11,
+                MicronautJdkVersionConfiguration.DEFAULT_OPTION,
                 new RequestInfo("http://localhost", "", null, Locale.ENGLISH, "")
         )
 

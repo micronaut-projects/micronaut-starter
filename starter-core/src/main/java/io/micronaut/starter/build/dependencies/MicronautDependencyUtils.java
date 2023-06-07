@@ -42,6 +42,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_DATA = "io.micronaut.data";
     public static final String GROUP_ID_MICRONAUT_SQL = "io.micronaut.sql";
 
+    public static final String GROUP_ID_MICRONAUT_STARTER = "io.micronaut.starter";
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
@@ -68,6 +69,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder awsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AWS);
+    }
+
+    @NonNull
+    public static Dependency.Builder starterDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_STARTER);
     }
 
     @NonNull

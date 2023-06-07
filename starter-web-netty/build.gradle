@@ -22,10 +22,12 @@ dependencies {
 application {
     mainClass = "io.micronaut.starter.netty.Application"
 }
-
+tasks.named('dockerfileNative') {
+    // https://www.graalvm.org/latest/docs/getting-started/container-images/
+    baseImage("ghcr.io/graalvm/jdk:ol8-java17-22.3.2")
+}
 
 tasks.named("dockerBuildNative") {
-    
     images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
 }
 

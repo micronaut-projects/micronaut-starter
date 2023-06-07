@@ -12,6 +12,7 @@ import io.micronaut.starter.feature.testresources.DbType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
@@ -72,7 +73,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
 
@@ -93,7 +94,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([HibernateReactiveJpa.NAME, db])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         then:
@@ -128,7 +129,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([HibernateReactiveJpa.NAME, db, migration])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
 
         then:
@@ -168,7 +169,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([HibernateReactiveJpa.NAME, MySQL.NAME])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .language(Language.KOTLIN)
                 .render()
 
@@ -180,7 +181,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([HibernateReactiveJpa.NAME, db])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
@@ -221,7 +222,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         BuildTool buildTool = BuildTool.MAVEN
         String template = new BuildBuilder(beanContext, buildTool)
                 .features([HibernateReactiveJpa.NAME, db, migration])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -267,7 +268,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([HibernateReactiveJpa.NAME, MySQL.NAME])
-                .jdkVersion(JdkVersion.JDK_11)
+                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .language(Language.KOTLIN)
                 .render()
 

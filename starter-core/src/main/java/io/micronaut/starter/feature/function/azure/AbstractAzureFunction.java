@@ -123,10 +123,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             switch (generatorContext.getJdkVersion()) {
-                case JDK_8:
-                    return Optional.of("Java 8");
-                case JDK_11:
-                    return Optional.of("Java 11");
                 case JDK_17:
                     return Optional.of("Java 17");
                 default:
@@ -134,10 +130,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             }
         }
         switch (generatorContext.getJdkVersion()) {
-            case JDK_8:
-                return Optional.of("8");
-            case JDK_11:
-                return Optional.of("11");
             case JDK_17:
                 return Optional.of("17");
             default:

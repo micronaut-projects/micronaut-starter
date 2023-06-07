@@ -10,6 +10,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Subject
@@ -42,7 +43,7 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'arm plus cdk feature sets lambda function architecture'() {
         when:
 
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, Arm.NAME])
 
         then:

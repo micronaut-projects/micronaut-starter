@@ -58,7 +58,8 @@ public class GradleDependency extends DependencyCoordinate {
         gradleConfiguration = GradleConfiguration.of(
                 dependency.getScope(),
                 generatorContext.getLanguage(),
-                generatorContext.getTestFramework()
+                generatorContext.getTestFramework(),
+                generatorContext
         ).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
         isKotlinDSL = generatorContext.getBuildTool().getGradleDsl().filter(f -> f == GradleDsl.KOTLIN).isPresent();

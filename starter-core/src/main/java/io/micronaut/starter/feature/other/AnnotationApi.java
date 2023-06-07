@@ -15,18 +15,21 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.util.Set;
-
 @Singleton
-public class AnnotationApi implements Feature, DefaultFeature {
+public class AnnotationApi implements Feature {
+    private static final Dependency DEPENDENCY_JAKARTA_ANNOTATON_API = Dependency.builder()
+            .groupId("jakarta.annotation")
+            .artifactId("jakarta.annotation-api")
+            .compile()
+            .build();
 
     @Override
     public String getName() {
@@ -34,13 +37,24 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    public String getTitle() {
+        return "Jakarta Annotations API";
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getJavaVersion().majorVersion() >= 9;
+    public String getCategory() {
+        return Category.API;
+    }
+
+    @Override
+    @NonNull
+    public String getDescription() {
+        return "Adds Jakarta annotations API dependency. For example, to use @PostConstruct or @PreDestroy";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://jakarta.ee/specifications/annotations/";
     }
 
     @Override
@@ -50,9 +64,6 @@ public class AnnotationApi implements Feature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("jakarta.annotation")
-                .artifactId("jakarta.annotation-api")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_JAKARTA_ANNOTATON_API);
     }
 }

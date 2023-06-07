@@ -33,6 +33,7 @@ import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
@@ -111,7 +112,7 @@ public class DiffController implements DiffOperations {
                     language,
                     test != null ? test : language.getDefaults().getTest(),
                     build != null ? build : language.getDefaults().getBuild(),
-                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
+                    javaVersion != null ? javaVersion : MicronautJdkVersionConfiguration.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
@@ -163,7 +164,7 @@ public class DiffController implements DiffOperations {
                     language,
                     test != null ? test : language.getDefaults().getTest(),
                     build != null ? build : language.getDefaults().getBuild(),
-                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
+                    javaVersion != null ? javaVersion : MicronautJdkVersionConfiguration.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(

@@ -6,6 +6,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
@@ -15,7 +16,7 @@ class AWSWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     void 'test aws-workflow-ci wrapper validation and upload is created for Gradle'() {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.DEFAULT_OPTION),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [AWSCiWorkflowFeature.NAME])
         def workflow = output["buildspec.yml"]
 
@@ -29,7 +30,7 @@ class AWSWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     void 'test gcp-workflow-ci wrapper validation and upload is created for Maven'() {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.DEFAULT_OPTION),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [AWSCiWorkflowFeature.NAME])
         def workflow = output["buildspec.yml"]
 

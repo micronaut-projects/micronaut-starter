@@ -7,6 +7,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
@@ -17,7 +18,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     void 'test oci-devops-build-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion.majorVersion())),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
                 [OCICiWorkflowFeature.NAME])
         def workflow = output["build_spec.yml"]
 
@@ -49,7 +50,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildTool.values(), JdkVersion.values()].combinations()
+        [buildTool, jdkVersion] << [BuildTool.values(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 
     @Unroll
@@ -89,6 +90,6 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildTool.values(), JdkVersion.values()].combinations()
+        [buildTool, jdkVersion] << [BuildTool.values(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 }

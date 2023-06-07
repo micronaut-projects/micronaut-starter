@@ -51,18 +51,12 @@ MavenBuild mavenBuild
     <artifactId>micronaut-parent</artifactId>
     <version>@VersionInfo.getMicronautVersion()</version>
   </parent>
-
 }
 
   <properties>
     <packaging>jar</packaging>
     <jdk.version>@features.getTargetJdk()</jdk.version>
-@if (features.javaVersion() == JdkVersion.JDK_8) {
-    <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
-    <!-- <release.version>@features.javaVersion().majorVersion()</release.version> -->
-} else {
     <release.version>@features.javaVersion().majorVersion()</release.version>
-}
 @for (Property prop : mavenBuild.getProperties()) {
 @if (prop.isComment()) {
     <!--@prop.getComment()-->

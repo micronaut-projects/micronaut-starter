@@ -16,14 +16,14 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class JdkVersionCandidates extends ArrayList<String> {
 
     public JdkVersionCandidates() {
-        super(Stream.of(JdkVersion.values()).map(JdkVersion::majorVersion).map(Object::toString).collect(Collectors.toList()));
+        super(MicronautJdkVersionConfiguration.SUPPORTED_JDKS.stream().map(JdkVersion::majorVersion).map(Object::toString).collect(Collectors.toList()));
     }
 }

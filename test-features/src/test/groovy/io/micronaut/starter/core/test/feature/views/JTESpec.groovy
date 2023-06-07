@@ -19,7 +19,7 @@ class JTESpec extends CommandSpec {
     @Unroll
     void "test maven views-jte with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["views-jte"])
+        generateProject(language, BuildTool.MAVEN, ["views-jte", "kapt"])
         String output = executeMaven("compile")
 
         then:
@@ -32,7 +32,7 @@ class JTESpec extends CommandSpec {
     @Unroll
     void "test gradle views-jte with #language and #dsl"(Language language, BuildTool buildTool, String dsl) {
         when:
-        generateProject(language, buildTool, ["views-jte"])
+        generateProject(language, buildTool, ["views-jte", "kapt"])
         BuildResult result = executeGradle("compileJava")
 
         then:

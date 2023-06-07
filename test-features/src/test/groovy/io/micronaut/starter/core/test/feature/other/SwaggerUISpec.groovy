@@ -47,7 +47,7 @@ class SwaggerUISpec extends CommandSpec {
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven #feature with #language without security"(String feature, Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, 'kapt', feature])
         String output = executeMaven("compile")
 
         then:
@@ -67,7 +67,7 @@ class SwaggerUISpec extends CommandSpec {
 
     void "test gradle #feature with #language without security"(String feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, 'kapt', feature])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -88,7 +88,7 @@ class SwaggerUISpec extends CommandSpec {
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven #feature with #language with security"(String feature, Language language, String securityFeature) {
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, feature, securityFeature])
+        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, 'kapt', feature, securityFeature])
         String output = executeMaven("compile")
 
         then:
@@ -118,7 +118,7 @@ class SwaggerUISpec extends CommandSpec {
 
     void "test gradle #feature with #language with security"(String feature, Language language, String securityFeature) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, feature, securityFeature])
+        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, 'kapt', feature, securityFeature])
         String output = executeGradle("compileJava")?.output
 
         then:

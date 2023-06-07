@@ -33,7 +33,7 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
     void 'test java github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [AzureContainerInstanceJavaWorkflow.NAME])
         def workflow = output[".github/workflows/azure-container-instance.yml"]
 
@@ -87,8 +87,6 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
 
         where:
         jdkVersion | graalVersion
-        JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_11 | JdkVersion.JDK_11
         JdkVersion.JDK_17 | JdkVersion.JDK_17
     }
 }

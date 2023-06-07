@@ -119,7 +119,7 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['graalvm', 'aws-lambda']
         )
 

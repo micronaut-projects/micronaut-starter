@@ -55,7 +55,7 @@ class SpringBootSpec extends ApplicationContextSpec {
     void 'test spring-boot with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-boot'])
+                .features(['spring-boot', 'kapt'])
                 .language(language)
                 .render()
 

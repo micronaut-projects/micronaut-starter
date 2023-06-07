@@ -81,7 +81,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         TestFramework testFramework = this.testFramework ?: language.defaults.test
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
         Project project = getProject()
-        JdkVersion jdkVersion = this.jdkVersion ?: JdkVersion.JDK_8
+        JdkVersion jdkVersion = this.jdkVersion ?: MicronautJdkVersionConfiguration.DEFAULT_OPTION
         Options options = new Options(language, testFramework, buildTool, jdkVersion)
         Features features = getFeatures(featureNames, options, type)
 

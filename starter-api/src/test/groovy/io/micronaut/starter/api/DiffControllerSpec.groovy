@@ -70,8 +70,9 @@ class DiffControllerSpec extends Specification {
         )
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
+        e.getResponse().getBody(Map).isPresent()
         e.getResponse().getBody(Map).get()._embedded.errors[0].message == 'The requested feature does not exist: junkkkkk'
     }
 

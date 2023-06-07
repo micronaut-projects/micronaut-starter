@@ -5,13 +5,15 @@ plugins {
 
 micronaut {
     version micronautVersion
-    runtime "lambda"
+    runtime("lambda_provided")
 }
 
 dependencies {
-    implementation project(":starter-api")
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation(project(":starter-api"))
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
 }
 
 application {
@@ -24,4 +26,13 @@ graalvmNative {
             imageName = 'application'
         }
     }
+}
+
+tasks.named("dockerfileNative") {
+    baseImage = "amazonlinux:2"
+    args(
+            "-XX:MaximumHeapSizePercent=80",
+            "-Dio.netty.allocator.numDirectArenas=0",
+            "-Dio.netty.noPreferDirect=true"
+    )
 }

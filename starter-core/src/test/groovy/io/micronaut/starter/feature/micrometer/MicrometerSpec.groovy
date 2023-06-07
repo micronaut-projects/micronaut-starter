@@ -135,7 +135,7 @@ class MicrometerSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['micrometer-annotation'])
+                .features(['micrometer-annotation', 'kapt'])
                 .render()
 
         then:

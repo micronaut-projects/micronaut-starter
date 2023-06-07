@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
-    //id "com.microsoft.azure.azurefunctions"
+    id "com.microsoft.azure.azurefunctions"
 }
 
 dependencies {
@@ -9,13 +9,13 @@ dependencies {
     implementation "io.micronaut.azure:micronaut-azure-function-http"
     implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.0.0'
     implementation "io.micronaut:micronaut-inject"
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
+    runtimeOnly "ch.qos.logback:logback-classic:1.4.7"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
 }
 
-/*
+
 azurefunctions {
     allowTelemetry = false
     resourceGroup = 'java-functions-group'
@@ -26,4 +26,4 @@ azurefunctions {
         os = 'windows'
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
-}*/
+}

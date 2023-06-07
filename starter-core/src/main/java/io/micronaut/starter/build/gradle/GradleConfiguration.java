@@ -71,13 +71,6 @@ public enum GradleConfiguration implements Ordered {
     @NonNull
     public static Optional<GradleConfiguration> of(@NonNull Scope scope,
                                                    @NonNull Language language,
-                                                   @NonNull TestFramework testFramework) {
-        return of(scope, language, testFramework, null);
-    }
-
-    @NonNull
-    public static Optional<GradleConfiguration> of(@NonNull Scope scope,
-                                                   @NonNull Language language,
                                                    @NonNull TestFramework testFramework,
                                                    @Nullable GeneratorContext generatorContext) {
         switch (scope.getSource()) {

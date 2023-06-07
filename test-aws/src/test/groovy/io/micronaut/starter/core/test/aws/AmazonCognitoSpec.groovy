@@ -22,6 +22,9 @@ class AmazonCognitoSpec extends CommandSpec {
                                                                                                                              TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito']
+        if (build.isGradle()) {
+            features.add('kapt')
+        }
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
@@ -42,6 +45,9 @@ class AmazonCognitoSpec extends CommandSpec {
                                                                                                                     TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito', 'aws-lambda']
+        if (build.isGradle()) {
+            features.add('kapt')
+        }
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:

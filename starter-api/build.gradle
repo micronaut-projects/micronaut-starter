@@ -1,27 +1,25 @@
 plugins {
-    id 'io.micronaut.internal.build.starter-openapi-module'
+    id("io.micronaut.internal.build.starter-openapi-module")
 }
 
 dependencies {
-    annotationProcessor "io.micronaut.openapi:micronaut-openapi"
-    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion")
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }
     implementation("io.swagger.core.v3:swagger-annotations")
-    api "io.micronaut:micronaut-inject"
-    api "io.micronaut:micronaut-runtime"
-    api "io.micronaut:micronaut-http"
-    api "io.micronaut:micronaut-http-client"
+    api("io.micronaut:micronaut-inject")
+    api("io.micronaut:micronaut-http")
+    api("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.reactor:micronaut-reactor")
     api("io.micronaut.validation:micronaut-validation")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
-
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
     testImplementation("io.micronaut:micronaut-jackson-databind")
-    testImplementation "io.micronaut:micronaut-http-server-netty"
-    testImplementation "io.micronaut:micronaut-http-client"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "ch.qos.logback:logback-classic:1.2.11"
+    testImplementation("io.micronaut:micronaut-http-server-netty")
+    testImplementation("io.micronaut:micronaut-http-client")
+    testImplementation("io.micronaut.test:micronaut-test-spock")
+    testImplementation("ch.qos.logback:logback-classic")
 }

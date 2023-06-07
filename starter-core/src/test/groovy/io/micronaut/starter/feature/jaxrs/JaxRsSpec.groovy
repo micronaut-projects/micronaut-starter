@@ -23,7 +23,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
     void 'test jax-rs with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['jax-rs'])
+                .features(['jax-rs', 'kapt'])
                 .language(language)
                 .render()
 

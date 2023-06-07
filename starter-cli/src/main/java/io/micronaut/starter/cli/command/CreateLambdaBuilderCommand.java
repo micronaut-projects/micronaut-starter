@@ -161,8 +161,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         switch (deployment) {
             case NATIVE_EXECUTABLE:
                 return new JdkVersion[] {
-                        JdkVersion.JDK_17,
-                        JdkVersion.JDK_11,
+                        JdkVersion.JDK_17
                 };
             default:
             case FAT_JAR:

@@ -25,7 +25,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['security-jwt'])
+                .features(['security-jwt', 'kapt'])
                 .render()
 
         then:

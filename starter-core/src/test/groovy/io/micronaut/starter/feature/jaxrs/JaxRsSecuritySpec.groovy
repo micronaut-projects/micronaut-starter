@@ -23,7 +23,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
     void 'test jax-rs-security with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['security', 'jax-rs'])
+                .features(['security', 'jax-rs', 'kapt'])
                 .language(language)
                 .render()
 

@@ -34,7 +34,7 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     void 'test swagger with #buildTool for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['openapi'])
+                .features(['openapi', 'kapt'])
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, TestFramework.JUNIT, template)

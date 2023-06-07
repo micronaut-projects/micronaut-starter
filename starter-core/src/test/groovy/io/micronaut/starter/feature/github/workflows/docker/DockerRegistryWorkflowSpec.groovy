@@ -31,7 +31,7 @@ Add the following GitHub secrets:
     void 'test github workflow is created for #buildTool'(BuildTool buildTool, String workflowName) {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [DockerRegistryWorkflow.NAME])
         def workflow = output[".github/workflows/${workflowName}"]
 
@@ -48,7 +48,7 @@ Add the following GitHub secrets:
     void 'test push to docker workflow for maven'() {
         when:
         def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [DockerRegistryWorkflow.NAME])
         def maven = output['.github/workflows/maven.yml']
 
@@ -83,6 +83,6 @@ Add the following GitHub secrets:
         workflow.contains("java-version: ${version.majorVersion()}")
 
         where:
-        version << JdkVersion.values()
+        version << MicronautJdkVersionConfiguration.SUPPORTED_JDKS
     }
 }

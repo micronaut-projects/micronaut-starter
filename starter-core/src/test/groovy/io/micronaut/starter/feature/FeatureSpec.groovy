@@ -90,7 +90,7 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     private static JdkVersion javaVersionForFeature(String feature) {
-        feature == 'azure-function' ? JdkVersion.JDK_8 : JdkVersion.JDK_11
+        MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {

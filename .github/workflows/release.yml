@@ -4,7 +4,7 @@ on:
     types: [published]
 jobs:
   build:
-    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
+    name: Release artifacts to Maven Central & SDKMAN, and publish documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -13,9 +13,9 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
       - name: Set up JDK
-        uses: actions/setup-java@v3.9.0
+        uses: actions/setup-java@v3.11.0
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: '17'
       - name: Set the current release version
         id: release_version
@@ -100,30 +100,30 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-      - name: Setup GraalVM CE
+      - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '22.3.1'
+          version: '22.3.2'
           java-version: '17'
+          native-image-musl: 'true'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-musl: 'true'
-      - name: Build the JAR
+      - name: "📸 Build the Native Image (with libc=musl)"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: ./gradlew micronaut-cli:shadowJar --no-daemon
-      - name: Build Native Image
-        run: native-image --static --libc=musl --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
-      - name: Verify Build
-        run: ./mn --version
-      - name: Package Build
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
+      - name: "👷‍♀️Package Build"
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
           mkdir -p "mn-linux-amd64-${VERSION}/bin"
-          mv ./mn "mn-linux-amd64-${VERSION}/bin"
+          mv ./starter-cli/build/native/nativeCompile/mn "mn-linux-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-linux-amd64-${VERSION}/"
           zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
@@ -151,29 +151,29 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-      - name: Setup GraalVM CE
+      - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '22.3.1'
+          version: '22.3.2'
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build the JAR
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: ./gradlew micronaut-cli:shadowJar --no-daemon
-      - name: Build Native Image
-        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
-      - name: Verify Build
-        run: ./mn --version
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
       - name: Package Build
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
           mkdir -p "mn-darwin-amd64-${VERSION}/bin"
-          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
+          mv ./starter-cli/build/native/nativeCompile/mn "mn-darwin-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
           zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
@@ -195,37 +195,34 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - name: Setup GraalVM CE
+      - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '22.3.1'
+          version: '22.3.2'
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build JAR File
-        shell: powershell
-        run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-      - name: Build Native Image
+      - name: "✅ Verify Build (Powershell)"
         shell: powershell
-        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
-      - name: Verify Build (Powershell)
-        run: ./mn.exe --version
-      - name: Verify Create App (Powershell)
-        run: ./mn.exe create-app test
-      - name: Verify Build (CMD)
+        run: ./starter-cli/build/native/nativeCompile/mn.exe --version
+      - name: "✅ Verify Create App (Powershell)"
+        run: ./starter-cli/build/native/nativeCompile/mn.exe create-app test
+      - name: "✅ Verify Build (CMD)"
         shell: cmd
-        run: mn --version
-      - name: Verify Create App (CMD)
+        run: starter-cli\\build\\native\\nativeCompile\\mn --version
+      - name: "✅ Verify Create App (CMD)"
         shell: cmd
-        run: mn create-app test2
-      - name: ZIP Archive
+        run: starter-cli\\build\\native\\nativeCompile\\mn create-app test2
+      - name: "🤐 ZIP Archive"
         run: |
           New-Item ./mn-win-amd64-${{ github.event.release.tag_name }}/bin -ItemType Directory -ea 0
-          Move-Item -Path ./mn.exe -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}/bin
+          Move-Item -Path ./starter-cli/build/native/nativeCompile/mn.exe -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}/bin
           Copy-Item ./LICENSE -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}
           Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
@@ -247,6 +244,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Set the current release version
         id: release_version
         run: |
@@ -260,7 +262,7 @@ jobs:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: ./gradlew sdkMajorRelease --no-daemon
+        run: ./gradlew sdkRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
@@ -270,6 +272,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Set the current release version
         id: release_version
         run: |
@@ -286,7 +293,7 @@ jobs:
         run: |
           ./gradlew starter-web-netty:dockerBuildNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
       - name: Authenticate into Google Cloud Platform
-        uses: google-github-actions/setup-gcloud@v0.2.1
+        uses: google-github-actions/setup-gcloud@v1.1.1
         with:
           service_account_email: ${{ secrets.GCLOUD_EMAIL }}
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
@@ -299,10 +306,10 @@ jobs:
         env:
           release_version: ${{ steps.release_version.outputs.release_version }}
         run: |
-          gcloud components install beta --quiet
-          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          gcloud components install --quiet
+          gcloud run deploy micronaut-starter-prev --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
           version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
-          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          gcloud run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
   analytics:
     name: Release Analytics Job
     runs-on: ubuntu-latest
@@ -312,6 +319,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Set the current release version
         id: release_version
         run: |
@@ -319,10 +331,11 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Authenticate into Google Cloud Platform
-        uses: google-github-actions/setup-gcloud@v0.2.1
+        uses: google-github-actions/setup-gcloud@v1.1.1
         with:
           service_account_email: ${{ secrets.GCLOUD_EMAIL }}
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
       - name: Configure Docker to use Google Cloud Platform
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
@@ -331,18 +344,21 @@ jobs:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-      - name: Build Docker image
+          PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
+
+      - name: Build Docker image and Push it GCR
         run:
-          ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}
+          ./gradlew dockerPush
         env:
+          DOCKER_TAG: ${{ steps.release_version.outputs.release_version }}
+          GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Deploy to Cloud Run
         run: |
-          gcloud components install beta --quiet
-          gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
-
+          gcloud components install --quiet
+          gcloud run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
   homebrew:
     name: Update Homebrew cask
     needs: [macos]
