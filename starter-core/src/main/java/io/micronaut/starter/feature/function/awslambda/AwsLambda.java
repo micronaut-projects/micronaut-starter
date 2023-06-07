@@ -59,7 +59,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.feature.json.JsonFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.json.SerializationJacksonFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
@@ -110,6 +111,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final AwsLambdaCustomRuntime customRuntime;
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
+    private final HttpClient httpClient;
 
     private final AwsLambdaEventsSerde awsLambdaEventsSerde;
 
@@ -120,6 +122,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
                      AwsLambdaSnapstart snapstart,
+                     HttpClient httpClient,
                      AwsLambdaEventsSerde awsLambdaEventsSerde,
                      DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
                      FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
@@ -127,6 +130,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = x86;
         this.snapstart = snapstart;
+        this.httpClient = httpClient;
         this.awsLambdaEventsSerde = awsLambdaEventsSerde;
         this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
         this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
@@ -148,6 +152,10 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                 )
         ) {
             featureContext.addFeature(customRuntime);
+        }
+
+        if (featureContext.isPresent(GraalVM.class) && !featureContext.isPresent(HttpClientFeature.class)) {
+            featureContext.addFeature(httpClient);
         }
 
         if (shouldAddSnapstartFeature(featureContext)) {

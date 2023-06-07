@@ -455,7 +455,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_provided")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+        template.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
