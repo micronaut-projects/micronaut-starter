@@ -23,7 +23,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature is in the cloud category'() {
         expect:
-        amazonApiGatewayHttp.category == Category.CLOUD
+        amazonApiGatewayHttp.category == Category.SERVERLESS
     }
 
     void 'amazon-api-gateway-http feature is an instance of AwsApiFeature'() {
