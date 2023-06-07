@@ -167,9 +167,12 @@ class GitHubCreateControllerSpec extends Specification {
     }
 
     private static Map<String, String> serverConfiguration(EmbeddedServer server) {
-        return Map.of("micronaut.http.services.github-oauth.url", "http://localhost:" + server.port,
-                "micronaut.http.services.github-api-v3.url", "http://localhost:" + server.port,
-                "micronaut.starter.github.client-id", "clientId",
-                "micronaut.starter.github.client-secret", "clientSecret")
+        [
+                "micronaut.http.services.github-oauth.url" : "http://localhost:" + server.port,
+                "micronaut.http.services.github-api-v3.url": "http://localhost:" + server.port,
+                "micronaut.starter.github.client-id"       : "clientId",
+                "micronaut.starter.github.client-secret"   : "clientSecret",
+                "micronaut.codec.json.additional-types"    : "application/vnd.github.v3+json"
+        ]
     }
 }
