@@ -1,15 +1,13 @@
 package io.micronaut.aws.cdk.function
 
-import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 import io.micronaut.starter.application.ApplicationType
-import software.amazon.awscdk.assertions.Template
-import software.amazon.awscdk.services.lambda.Function
-import software.amazon.awscdk.services.lambda.Code
-import spock.lang.Shared
-import spock.lang.Specification
-import software.amazon.awscdk.services.lambda.Runtime
 import software.amazon.awscdk.Stack
-import spock.lang.Unroll;
+import software.amazon.awscdk.assertions.Template
+import software.amazon.awscdk.services.lambda.Code
+import software.amazon.awscdk.services.lambda.Function
+import software.amazon.awscdk.services.lambda.Runtime
+import spock.lang.Specification
+import spock.lang.Unroll
 
 class MicronautFunctionSpec extends Specification {
 
@@ -31,7 +29,7 @@ class MicronautFunctionSpec extends Specification {
         noExceptionThrown()
         runtime == function.runtime
         if (applicationType == ApplicationType.DEFAULT) {
-            template.hasResourceProperties("AWS::Lambda::Function", ["Handler": handler != null ? handler : MicronautLambdaHandler.class.getName()])
+            template.hasResourceProperties("AWS::Lambda::Function", ["Handler": handler != null ? handler : "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction"])
         }
 
         where:

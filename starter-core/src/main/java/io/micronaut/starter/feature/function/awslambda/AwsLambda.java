@@ -79,7 +79,6 @@ import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, AwsMicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
-    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
     public static final String REQUEST_HANDLER = "FunctionRequestHandler";
     public static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_TEST = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-function")

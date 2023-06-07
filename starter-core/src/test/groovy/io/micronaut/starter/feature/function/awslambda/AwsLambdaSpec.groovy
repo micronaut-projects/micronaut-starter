@@ -68,7 +68,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         where:
         applicationType             | handler
-        ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.MicronautLambdaHandler'
+        ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction'
         ApplicationType.FUNCTION    | 'example.micronaut.FunctionRequestHandler'
     }
 
