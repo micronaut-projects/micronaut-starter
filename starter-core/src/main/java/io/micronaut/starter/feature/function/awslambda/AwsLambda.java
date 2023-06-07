@@ -32,6 +32,7 @@ import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
+import io.micronaut.starter.feature.aws.AwsLambdaEventsSerde;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
@@ -58,6 +59,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.feature.json.JsonFeature;
+import io.micronaut.starter.feature.json.SerializationJacksonFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -108,6 +111,8 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
 
+    private final AwsLambdaEventsSerde awsLambdaEventsSerde;
+
     private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
     private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
@@ -115,12 +120,14 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
                      AwsLambdaSnapstart snapstart,
+                     AwsLambdaEventsSerde awsLambdaEventsSerde,
                      DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
                      FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = x86;
         this.snapstart = snapstart;
+        this.awsLambdaEventsSerde = awsLambdaEventsSerde;
         this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
         this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
     }
@@ -145,6 +152,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
         if (shouldAddSnapstartFeature(featureContext)) {
             featureContext.addFeature(snapstart);
+        }
+        if (featureContext.isPresent(SerializationJacksonFeature.class)) {
+            featureContext.addFeature(awsLambdaEventsSerde);
         }
     }
 
