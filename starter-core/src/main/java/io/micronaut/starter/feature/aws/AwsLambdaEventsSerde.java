@@ -30,6 +30,7 @@ public class AwsLambdaEventsSerde implements AwsFeature {
     private static final Dependency DEPENDENCY_MICRONAUT_AWS_LAMBDA_EVENTS_SERDE = MicronautDependencyUtils.awsDependency()
             .artifactId("micronaut-aws-lambda-events-serde")
             .compile()
+            .version("4.0.0-M8")
             .build();
 
     @Override
