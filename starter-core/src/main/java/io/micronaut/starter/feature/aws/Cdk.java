@@ -40,7 +40,6 @@ import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
-import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
@@ -63,7 +62,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -98,27 +96,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private final RepositoryResolver repositoryResolver;
     private final CoordinateResolver coordinateResolver;
 
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver) {
-        this(coordinateResolver, new X86());
-    }
-
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver,
-               Arm arm) {
-        this.coordinateResolver = coordinateResolver;
-        this.defaultCpuArchitecture = arm;
-        this.dependencyContext = new DependencyContextImpl(coordinateResolver);
-        this.repositoryResolver = new DefaultRepositoryResolver();
-    }
-
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver,
-               X86 x86) {
-        this(coordinateResolver, x86, new DefaultRepositoryResolver());
-    }
-
-    @Inject
     public Cdk(CoordinateResolver coordinateResolver,
                X86 x86,
                RepositoryResolver repositoryResolver) {

@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.build
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin
 import jakarta.inject.Singleton
 
@@ -10,6 +11,10 @@ import jakarta.inject.Singleton
 @Singleton
 @Replaces(MicronautBuildPlugin)
 class DockerBuildNativeGoogleCloudContainerRegistry extends MicronautBuildPlugin {
+
+    DockerBuildNativeGoogleCloudContainerRegistry(CoordinateResolver coordinateResolver) {
+        super(coordinateResolver)
+    }
 
     @Override
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {

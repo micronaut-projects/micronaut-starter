@@ -27,7 +27,6 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
@@ -66,7 +65,6 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -114,46 +112,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
     private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime) {
-        this(shadePlugin, customRuntime, new X86(), new AwsLambdaSnapstart());
-    }
-
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     Arm arm) {
-        this.shadePlugin = shadePlugin;
-        this.customRuntime = customRuntime;
-        this.defaultCpuArchitecture = arm;
-        this.snapstart = new AwsLambdaSnapstart();
-        this.defaultAwsLambdaHandlerProvider = new DefaultAwsLambdaHandlerProvider();
-        this.functionAwsLambdaHandlerProvider = new FunctionAwsLambdaHandlerProvider();
-    }
-
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     X86 x86) {
-        this(shadePlugin, customRuntime, x86, new AwsLambdaSnapstart());
-    }
-
-    @Inject
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     X86 x86,
-                     AwsLambdaSnapstart snapstart) {
-        this(shadePlugin,
-                customRuntime,
-                x86,
-                snapstart,
-                new DefaultAwsLambdaHandlerProvider(),
-                new FunctionAwsLambdaHandlerProvider());
-    }
-
-    @Inject
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
