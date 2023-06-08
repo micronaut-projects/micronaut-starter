@@ -145,39 +145,39 @@ implements <a href="ZipCreateOperation.html" title="interface in io.micronaut.st
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createApp(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String)" class="member-name-link">createApp</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
  @Pattern(regexp="[\\w\\d-_\\.]+") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates an application, generating a ZIP file as the response.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createZip(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String)" class="member-name-link">createZip</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
  @Pattern(regexp="[\\w\\d-_]+") @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates the default application type using the name of the given Zip.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateAppIntoZipFile(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String)" class="member-name-link">generateAppIntoZipFile</a><wbr>(@NotNull <a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFilename(io.micronaut.starter.application.Project)" class="member-name-link">getFilename</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFilename(io.micronaut.starter.application.Project)" class="member-name-link">getFilename</a><wbr>(@NonNull <a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -251,17 +251,17 @@ implements <a href="ZipCreateOperation.html" title="interface in io.micronaut.st
  @Pattern(regexp="[\\w\\d-_\\.]+")
  @Pattern(regexp="[\\w\\d-_\\.]+") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
  @Nullable
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
  @Nullable
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
  @Nullable
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
  @Nullable
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
  @Nullable @Header("User-Agent")
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
 <div class="block">Creates an application, generating a ZIP file as the response.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -288,17 +288,17 @@ implements <a href="ZipCreateOperation.html" title="interface in io.micronaut.st
  @Pattern(regexp="[\\w\\d-_]+") @NotBlank
  @Pattern(regexp="[\\w\\d-_]+") @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
  @Nullable
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
  @Nullable
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
  @Nullable
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
  @Nullable
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
  @Nullable @Header("User-Agent")
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
 <div class="block">Creates the default application type using the name of the given Zip.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -321,25 +321,25 @@ implements <a href="ZipCreateOperation.html" title="interface in io.micronaut.st
  @NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
  @Nullable
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
  @Nullable
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
  @Nullable
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
  @Nullable
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFilename(io.micronaut.starter.application.Project)">
 <h3>getFilename</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFilename</span><wbr><span class="parameters">(@NonNull
- <a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</span></div>
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFilename</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>project</code> - The project</dd>

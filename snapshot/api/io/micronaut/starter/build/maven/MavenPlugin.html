@@ -142,13 +142,13 @@ implements <a href="../BuildPlugin.html" title="interface in io.micronaut.starte
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArtifactId()" class="member-name-link">getArtifactId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBuildTool()" class="member-name-link">getBuildTool</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="../../template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExtension()" class="member-name-link">getExtension</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -256,7 +256,7 @@ implements <a href="../BuildPlugin.html" title="interface in io.micronaut.starte
 <section class="detail" id="getBuildTool()">
 <h3>getBuildTool</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a></span>&nbsp;<span class="element-name">getBuildTool</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a></span>&nbsp;<span class="element-name">getBuildTool</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../BuildPlugin.html#getBuildTool()">getBuildTool</a></code>&nbsp;in interface&nbsp;<code><a href="../BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a></code></dd>
@@ -267,7 +267,7 @@ implements <a href="../BuildPlugin.html" title="interface in io.micronaut.starte
 <section class="detail" id="getExtension()">
 <h3>getExtension</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></span>&nbsp;<span class="element-name">getExtension</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="../../template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></span>&nbsp;<span class="element-name">getExtension</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../BuildPlugin.html#getExtension()">getExtension</a></code>&nbsp;in interface&nbsp;<code><a href="../BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a></code></dd>
@@ -278,7 +278,7 @@ implements <a href="../BuildPlugin.html" title="interface in io.micronaut.starte
 <section class="detail" id="getArtifactId()">
 <h3>getArtifactId</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getArtifactId</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getArtifactId</span>()</div>
 </section>
 </li>
 </ul>

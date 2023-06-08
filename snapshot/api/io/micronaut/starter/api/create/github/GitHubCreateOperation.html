@@ -100,17 +100,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>io.micronaut.http.HttpResponse&lt;<a href="GitHubCreateDTO.html" title="class in io.micronaut.starter.api.create.github">GitHubCreateDTO</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createApp(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String,java.lang.String,java.lang.String,io.micronaut.starter.api.RequestInfo)" class="member-name-link">createApp</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createApp(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String,java.lang.String,java.lang.String,io.micronaut.starter.api.RequestInfo)" class="member-name-link">createApp</a><wbr>(@NonNull <a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
  @Pattern(regexp="[\\w\\d-_\\.]+") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;state,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent,
- <a href="../../RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</code></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;state,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent,
+ @NonNull <a href="../../RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Creates and push application to GitHub repository.</div>
 </div>
@@ -132,27 +132,27 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createApp(io.micronaut.starter.application.ApplicationType,java.lang.String,java.util.List,io.micronaut.starter.options.BuildTool,io.micronaut.starter.api.TestFramework,io.micronaut.starter.options.Language,io.micronaut.starter.options.JdkVersion,java.lang.String,java.lang.String,java.lang.String,io.micronaut.starter.api.RequestInfo)">
 <h3>createApp</h3>
 <div class="member-signature"><span class="return-type">io.micronaut.http.HttpResponse&lt;<a href="GitHubCreateDTO.html" title="class in io.micronaut.starter.api.create.github">GitHubCreateDTO</a>&gt;</span>&nbsp;<span class="element-name">createApp</span><wbr><span class="parameters">(@NonNull
- <a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ @NonNull <a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
  @Pattern(regexp="[\\w\\d-_\\.]+")
  @Pattern(regexp="[\\w\\d-_\\.]+") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;features,
  @Nullable
- <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+ @Nullable <a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
  @Nullable
- <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
+ @Nullable <a href="../../TestFramework.html" title="enum class in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
  @Nullable
- <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ @Nullable <a href="../../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
  @Nullable
- <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+ @Nullable <a href="../../../options/JdkVersion.html" title="enum class in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;state,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;state,
  @Nullable @Header("User-Agent")
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userAgent,
  @NonNull
- <a href="../../RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</span></div>
+ @NonNull <a href="../../RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</span></div>
 <div class="block">Creates and push application to GitHub repository.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

@@ -113,7 +113,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.build.dependencies.Dependency,io.micronaut.starter.options.Language)" class="member-name-link">MavenDependency</a><wbr>(<a href="../dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&nbsp;dependency,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.build.dependencies.Dependency,io.micronaut.starter.options.Language)" class="member-name-link">MavenDependency</a><wbr>(@NonNull <a href="../dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&nbsp;dependency,
  <a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -133,14 +133,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MavenScope.html" title="enum class in io.micronaut.starter.build.maven">MavenScope</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="MavenScope.html" title="enum class in io.micronaut.starter.build.maven">MavenScope</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMavenScope()" class="member-name-link">getMavenScope</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#listOf(io.micronaut.starter.build.dependencies.DependencyContext,io.micronaut.starter.options.Language)" class="member-name-link">listOf</a><wbr>(<a href="../dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies">DependencyContext</a>&nbsp;dependencyContext,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#listOf(io.micronaut.starter.build.dependencies.DependencyContext,io.micronaut.starter.options.Language)" class="member-name-link">listOf</a><wbr>(@NonNull <a href="../dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies">DependencyContext</a>&nbsp;dependencyContext,
  <a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
@@ -181,7 +181,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(io.micronaut.starter.build.dependencies.Dependency,io.micronaut.starter.options.Language)">
 <h3>MavenDependency</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MavenDependency</span><wbr><span class="parameters">(@NonNull
- <a href="../dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&nbsp;dependency,
+ @NonNull <a href="../dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&nbsp;dependency,
  <a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</span></div>
 </section>
 </li>
@@ -197,7 +197,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMavenScope()">
 <h3>getMavenScope</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MavenScope.html" title="enum class in io.micronaut.starter.build.maven">MavenScope</a></span>&nbsp;<span class="element-name">getMavenScope</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="MavenScope.html" title="enum class in io.micronaut.starter.build.maven">MavenScope</a></span>&nbsp;<span class="element-name">getMavenScope</span>()</div>
 </section>
 </li>
 <li>
@@ -224,8 +224,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="listOf(io.micronaut.starter.build.dependencies.DependencyContext,io.micronaut.starter.options.Language)">
 <h3>listOf</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">listOf</span><wbr><span class="parameters">(@NonNull
- <a href="../dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies">DependencyContext</a>&nbsp;dependencyContext,
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">listOf</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="../dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies">DependencyContext</a>&nbsp;dependencyContext,
  <a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</span></div>
 </section>
 </li>

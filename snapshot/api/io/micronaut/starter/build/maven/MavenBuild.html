@@ -89,23 +89,23 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">MavenBuild</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,io.micronaut.starter.build.maven.MavenCombineAttribute,io.micronaut.starter.build.maven.MavenCombineAttribute,java.util.Collection)" class="member-name-link">MavenBuild</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;annotationProcessors,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;testAnnotationProcessors,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;&nbsp;properties,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories,
+ @NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;annotationProcessorCombineAttribute,
+ @NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;testAnnotationProcessorCombineAttribute,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;&nbsp;profiles)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,io.micronaut.starter.build.maven.MavenCombineAttribute,io.micronaut.starter.build.maven.MavenCombineAttribute,java.util.Collection)" class="member-name-link">MavenBuild</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;annotationProcessors,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;testAnnotationProcessors,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;&nbsp;properties,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories,
- <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;annotationProcessorCombineAttribute,
- <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;testAnnotationProcessorCombineAttribute,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;&nbsp;profiles)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.List,java.util.List,java.util.List)" class="member-name-link">MavenBuild</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.List,java.util.List,java.util.List)" class="member-name-link">MavenBuild</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">MavenBuild</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -124,37 +124,37 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAnnotationProcessorCombineAttribute()" class="member-name-link">getAnnotationProcessorCombineAttribute</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAnnotationProcessors()" class="member-name-link">getAnnotationProcessors</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArtifactId()" class="member-name-link">getArtifactId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDependencies()" class="member-name-link">getDependencies</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDependencies(boolean)" class="member-name-link">getDependencies</a><wbr>(boolean&nbsp;pom)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfiles()" class="member-name-link">getProfiles</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProperties()" class="member-name-link">getProperties</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTestAnnotationProcessorCombineAttribute()" class="member-name-link">getTestAnnotationProcessorCombineAttribute</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTestAnnotationProcessors()" class="member-name-link">getTestAnnotationProcessors</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasPomDependency()" class="member-name-link">hasPomDependency</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderPlugins(int)" class="member-name-link">renderPlugins</a><wbr>(int&nbsp;indentationSpaces)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderRepositories(int)" class="member-name-link">renderRepositories</a><wbr>(int&nbsp;indentationSpaces)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
@@ -184,38 +184,38 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.util.List,java.util.List,java.util.List)">
 <h3>MavenBuild</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MavenBuild</span><wbr><span class="parameters">(@NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories)</span></div>
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,io.micronaut.starter.build.maven.MavenCombineAttribute,io.micronaut.starter.build.maven.MavenCombineAttribute,java.util.Collection)">
 <h3>MavenBuild</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MavenBuild</span><wbr><span class="parameters">(@NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;artifactId,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;annotationProcessors,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;annotationProcessors,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;testAnnotationProcessors,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;&nbsp;testAnnotationProcessors,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;&nbsp;dependencies,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;&nbsp;properties,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;&nbsp;properties,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenPlugin.html" title="class in io.micronaut.starter.build.maven">MavenPlugin</a>&gt;&nbsp;plugins,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenRepository.html" title="class in io.micronaut.starter.build.maven">MavenRepository</a>&gt;&nbsp;repositories,
  @NonNull
- <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;annotationProcessorCombineAttribute,
+ @NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;annotationProcessorCombineAttribute,
  @NonNull
- <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;testAnnotationProcessorCombineAttribute,
+ @NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a>&nbsp;testAnnotationProcessorCombineAttribute,
  @NonNull
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;&nbsp;profiles)</span></div>
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;&nbsp;profiles)</span></div>
 </section>
 </li>
 </ul>
@@ -230,56 +230,56 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getArtifactId()">
 <h3>getArtifactId</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getArtifactId</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getArtifactId</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="renderRepositories(int)">
 <h3>renderRepositories</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">renderRepositories</span><wbr><span class="parameters">(int&nbsp;indentationSpaces)</span></div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">renderRepositories</span><wbr><span class="parameters">(int&nbsp;indentationSpaces)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="renderPlugins(int)">
 <h3>renderPlugins</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">renderPlugins</span><wbr><span class="parameters">(int&nbsp;indentationSpaces)</span></div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">renderPlugins</span><wbr><span class="parameters">(int&nbsp;indentationSpaces)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAnnotationProcessors()">
 <h3>getAnnotationProcessors</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</span>&nbsp;<span class="element-name">getAnnotationProcessors</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</span>&nbsp;<span class="element-name">getAnnotationProcessors</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTestAnnotationProcessors()">
 <h3>getTestAnnotationProcessors</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</span>&nbsp;<span class="element-name">getTestAnnotationProcessors</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a>&gt;</span>&nbsp;<span class="element-name">getTestAnnotationProcessors</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfiles()">
 <h3>getProfiles</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;</span>&nbsp;<span class="element-name">getProfiles</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;</span>&nbsp;<span class="element-name">getProfiles</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDependencies()">
 <h3>getDependencies</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">getDependencies</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">getDependencies</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDependencies(boolean)">
 <h3>getDependencies</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">getDependencies</span><wbr><span class="parameters">(boolean&nbsp;pom)</span></div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a>&gt;</span>&nbsp;<span class="element-name">getDependencies</span><wbr><span class="parameters">(boolean&nbsp;pom)</span></div>
 </section>
 </li>
 <li>
@@ -292,7 +292,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getProperties()">
 <h3>getProperties</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</span>&nbsp;<span class="element-name">getProperties</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</span>&nbsp;<span class="element-name">getProperties</span>()</div>
 </section>
 </li>
 <li>
@@ -305,7 +305,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTestAnnotationProcessorCombineAttribute()">
 <h3>getTestAnnotationProcessorCombineAttribute</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a></span>&nbsp;<span class="element-name">getTestAnnotationProcessorCombineAttribute</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="MavenCombineAttribute.html" title="enum class in io.micronaut.starter.build.maven">MavenCombineAttribute</a></span>&nbsp;<span class="element-name">getTestAnnotationProcessorCombineAttribute</span>()</div>
 </section>
 </li>
 </ul>
