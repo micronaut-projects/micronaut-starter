@@ -17,10 +17,18 @@ package io.micronaut.starter.feature.email;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class JavamailFeature extends EmailFeature {
+
+    private static final Dependency ECLIPSE_ANGUS = Dependency.builder()
+            .groupId("org.eclipse.angus")
+            .artifactId("angus-mail")
+            .runtime()
+            .build();
 
     public JavamailFeature(TemplateEmailFeature templateEmailFeature) {
         super(templateEmailFeature);
@@ -43,6 +51,12 @@ public class JavamailFeature extends EmailFeature {
     }
 
     @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        generatorContext.addDependency(ECLIPSE_ANGUS);
+    }
+
+    @Override
     @Nullable
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-email/latest/guide/index.html#javamail";
@@ -51,6 +65,6 @@ public class JavamailFeature extends EmailFeature {
     @Override
     @Nullable
     public String getThirdPartyDocumentation() {
-        return "https://javaee.github.io/javamail/";
+        return "https://jakartaee.github.io/mail-api/";
     }
 }
