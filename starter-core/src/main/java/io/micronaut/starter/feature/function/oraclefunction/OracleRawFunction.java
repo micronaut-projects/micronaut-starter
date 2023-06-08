@@ -32,7 +32,6 @@ import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleR
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlin;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
-import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -61,14 +60,10 @@ public class OracleRawFunction extends OracleFunction {
             .build();
 
     private final OracleFunction httpFunction;
-    private final JacksonDatabindFeature jacksonDatabindFeature;
-
     public OracleRawFunction(SimpleLogging simpleLogging,
-                             OracleFunction httpFunction,
-                             JacksonDatabindFeature jacksonDatabindFeature) {
+                             OracleFunction httpFunction) {
         super(simpleLogging);
         this.httpFunction = httpFunction;
-        this.jacksonDatabindFeature = jacksonDatabindFeature;
     }
 
     @Override
@@ -85,8 +80,6 @@ public class OracleRawFunction extends OracleFunction {
             );
         }
         super.processSelectedFeatures(featureContext);
-        // Requires Jackson due to https://github.com/micronaut-projects/micronaut-oracle-cloud/issues/603
-        featureContext.addFeatureIfNotPresent(JacksonDatabindFeature.class, jacksonDatabindFeature);
     }
 
     @Override
