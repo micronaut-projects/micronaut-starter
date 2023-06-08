@@ -29,7 +29,6 @@ import io.micronaut.starter.feature.database.jdbc.Hikari;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
@@ -53,12 +52,6 @@ public class R2dbc implements R2dbcFeature {
     private final DatabaseDriverFeature defaultDbFeature;
     private final Hikari hikari;
 
-    @Deprecated
-    public R2dbc(DatabaseDriverFeature defaultDbFeature) {
-        this(defaultDbFeature, new Hikari(defaultDbFeature));
-    }
-
-    @Inject
     public R2dbc(DatabaseDriverFeature defaultDbFeature, Hikari hikari) {
         this.defaultDbFeature = defaultDbFeature;
         this.hikari = hikari;

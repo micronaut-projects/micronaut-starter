@@ -17,9 +17,6 @@ package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
 
-import java.util.Collections;
-import java.util.List;
-
 public interface Repository {
 
     @NonNull
@@ -30,14 +27,5 @@ public interface Repository {
 
     default boolean isSnapshot() {
         return false;
-    }
-
-    /**
-     * @deprecated Use {@link RepositoryResolver} instead.
-     * @return Empty list.
-     */
-    @Deprecated
-    static List<Repository> micronautRepositories() {
-        return Collections.emptyList();
     }
 }

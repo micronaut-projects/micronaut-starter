@@ -13,8 +13,9 @@ import com.amazonaws.services.lambda.runtime.events.ScheduledEvent
 } else if (features.contains("aws-lambda-s3-event-notification")) {
 import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotification;
 } else {
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.databind.ObjectMapper
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import io.micronaut.json.JsonMapper;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import jakarta.inject.Inject
@@ -34,15 +35,15 @@ class FunctionRequestHandler : MicronautRequestHandler<S3EventNotification, Void
 } else {
 class FunctionRequestHandler : MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent>() {
     @@Inject
-    lateinit var objectMapper: ObjectMapper
+    lateinit var objectMapper: JsonMapper
 
     override fun execute(input: APIGatewayProxyRequestEvent): APIGatewayProxyResponseEvent {
         val response = APIGatewayProxyResponseEvent()
         try {
-            val json = objectMapper.writeValueAsString(mapOf("message" to "Hello World"))
+            val json = String(objectMapper.writeValueAsBytes(mapOf("message" to "Hello World")))
             response.statusCode = 200
             response.body = json
-        } catch (e: JsonProcessingException) {
+        } catch (e: IOException) {
             response.statusCode = 500
         }
         return response

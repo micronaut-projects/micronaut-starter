@@ -18,9 +18,7 @@ dependencies {
     compileOnly("com.google.cloud.functions:functions-framework-api")
     developmentOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     developmentOnly("com.google.cloud.functions:functions-framework-api")
-
     runtimeOnly "ch.qos.logback:logback-classic:1.4.7"
-
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation("com.google.cloud.functions:functions-framework-api")
     testImplementation "io.micronaut.test:micronaut-test-spock"

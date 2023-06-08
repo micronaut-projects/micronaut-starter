@@ -16,6 +16,7 @@
 package io.micronaut.aws.cdk.function;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.amazon.awscdk.services.lambda.Function;
 
@@ -25,8 +26,6 @@ import software.amazon.awscdk.services.lambda.Function;
  * @since 3.4.0
  */
 public final class MicronautFunction {
-
-    private static final String HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
 
     private MicronautFunction() {
 
@@ -47,7 +46,7 @@ public final class MicronautFunction {
         switch (applicationType) {
             case DEFAULT:
                 return Function.Builder.create(scope, id)
-                        .handler(HANDLER)
+                        .handler(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER)
                         .runtime(runtime(graalVMNative));
             case FUNCTION:
                 return Function.Builder.create(scope, id)

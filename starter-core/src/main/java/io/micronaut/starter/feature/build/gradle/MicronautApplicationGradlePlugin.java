@@ -121,15 +121,6 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
-        /**
-         * @deprecated Use {@link #builder()} instead.
-         * @return A Gradle Plugin
-         */
-        @Deprecated
-        public GradlePlugin build() {
-            return builder().build();
-        }
-
         public GradlePlugin.Builder builder() {
             return GradlePlugin.builder()
                     .id(id)
