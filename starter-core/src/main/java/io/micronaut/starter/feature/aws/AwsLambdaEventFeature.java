@@ -27,6 +27,6 @@ public interface AwsLambdaEventFeature extends OneOfFeature, AwsFeature {
 
     @Override
     default String getCategory() {
-        return Category.CLOUD;
+        return Category.SERVERLESS;
     }
 }

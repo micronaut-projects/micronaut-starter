@@ -157,9 +157,7 @@ public class AppStack extends Stack {
                 .runtime(Runtime.JAVA_17)
 }
 }
-@if (applicationType == ApplicationType.FUNCTION) {
                 .handler("@(handler)")
-}
                 .environment(environmentVariables)
                 .code(Code.fromAsset(functionPath()))
                 .timeout(Duration.seconds(10))

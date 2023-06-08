@@ -5,12 +5,12 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
@@ -68,7 +68,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         where:
         applicationType             | handler
-        ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.MicronautLambdaHandler'
+        ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction'
         ApplicationType.FUNCTION    | 'example.micronaut.FunctionRequestHandler'
     }
 
@@ -128,6 +128,32 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
+
+        where:
+        language << Language.values()
+        buildTool << BuildTool.values()
+    }
+
+    @Unroll
+    void "aws-lambda adds micronaut-aws-lambda-events-serde since serde-jackson is the default json feature for #language and #buildTool"(Language language, BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, language, ['aws-lambda'], ApplicationType.DEFAULT)
+
+        then:
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
+
+        where:
+        language << Language.values()
+        buildTool << BuildTool.values()
+    }
+
+    @Unroll
+    void "aws-lambda does not add micronaut-aws-lambda-events-serde when jackson-databind feature is added for #language and #buildTool"(Language language, BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, language, ['aws-lambda', 'jackson-databind'], ApplicationType.DEFAULT)
+
+        then:
+        !verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
 
         where:
         language << Language.values()
@@ -429,7 +455,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_provided")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+        template.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()

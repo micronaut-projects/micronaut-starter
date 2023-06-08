@@ -19,7 +19,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.MavenCentral;
 import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -33,7 +32,6 @@ import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,18 +39,6 @@ import java.util.stream.Collectors;
 public class MavenBuildCreator {
 
     public static final String PROPERTY_MICRONAUT_CORE_VERSION = "micronaut.core.version";
-
-    /**
-     * Not used anymore
-     *
-     * @param generatorContext Generator Context
-     * @return a Maven Build
-     */
-    @Deprecated
-    @NonNull
-    public MavenBuild create(GeneratorContext generatorContext) {
-        return create(generatorContext, Collections.singletonList(new MavenCentral()));
-    }
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
@@ -117,15 +103,5 @@ public class MavenBuildCreator {
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles());
-    }
-
-    /**
-     * @deprecated Not used anymore
-     * @return Empty list
-     */
-    @Deprecated
-    @NonNull
-    protected List<MavenRepository> getRepositories() {
-        return Collections.emptyList();
     }
 }

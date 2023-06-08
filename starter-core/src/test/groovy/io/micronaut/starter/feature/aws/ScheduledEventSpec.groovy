@@ -12,7 +12,7 @@ class ScheduledEventSpec extends ApplicationContextSpec {
 
     void 'aws-lambda-scheduled-event feature is in the cloud category'() {
         expect:
-        awsLambdaScheduledEvent.category == Category.CLOUD
+        awsLambdaScheduledEvent.category == Category.SERVERLESS
     }
 
     void 'aws-lambda-scheduled-event feature is an instance of AwsLambdaEventFeature'() {

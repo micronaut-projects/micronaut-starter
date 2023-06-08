@@ -22,6 +22,8 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -58,7 +60,7 @@ public class HttpClientTest implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class)) {
+        if (generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) || (generatorContext.getFeatures().hasFeature(AwsLambda.class) && generatorContext.getFeatures().hasFeature(GraalVM.class))) {
             generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
         } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);

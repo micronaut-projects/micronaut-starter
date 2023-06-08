@@ -23,7 +23,6 @@ import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.S01SonatypeSnapshots;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.DefaultPomDependencyVersionResolver;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
@@ -39,7 +38,6 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -53,12 +51,6 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
 
     protected final CoordinateResolver coordinateResolver;
 
-    @Deprecated
-    public MicronautBuildPlugin() {
-        this(new DefaultPomDependencyVersionResolver());
-    }
-
-    @Inject
     public MicronautBuildPlugin(CoordinateResolver coordinateResolver) {
         this.coordinateResolver = coordinateResolver;
     }
@@ -196,17 +188,6 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         }
 
         return Optional.empty();
-    }
-
-    /**
-     *
-     * @deprecated Not used Generator Context
-     * @param generatorContext Generator Context
-     * @return Micronaut Library Gradle Plugin
-     */
-    @Deprecated
-    protected GradlePlugin micronautLibraryGradlePlugin(GeneratorContext generatorContext) {
-        return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).builder().build();
     }
 
     protected GradlePlugin.Builder micronautLibraryGradlePluginBuilder(GeneratorContext generatorContext) {

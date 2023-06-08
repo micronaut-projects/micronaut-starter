@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.MavenBuild;
@@ -38,7 +37,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.util.VersionInfo;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Collection;
@@ -59,12 +57,6 @@ public class Maven implements BuildFeature {
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
-    @Deprecated
-    public Maven(MavenBuildCreator dependencyResolver) {
-        this(dependencyResolver, new DefaultRepositoryResolver());
-    }
-
-    @Inject
     public Maven(MavenBuildCreator dependencyResolver, RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
         this.repositoryResolver = repositoryResolver;
