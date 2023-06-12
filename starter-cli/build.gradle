@@ -25,7 +25,7 @@ dependencies {
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
     api "com.fizzed:rocker-runtime:$rockerVersion"
 
-    implementation "org.slf4j:slf4j-nop:1.7.36"
+    implementation "org.slf4j:slf4j-nop:2.0.7"
 
     compileOnly "org.graalvm.nativeimage:svm"
 
