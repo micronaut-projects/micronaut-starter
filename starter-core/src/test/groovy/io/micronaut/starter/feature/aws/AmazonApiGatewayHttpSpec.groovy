@@ -6,7 +6,6 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -48,9 +47,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature has dependencies, imports and code'() {
         when:
-
-
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options,
                 [Cdk.NAME, AmazonApiGatewayHttp.NAME])
 
         then:
@@ -60,14 +57,15 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
         when:
         String appStack = output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java"
 
+        appStack.contains('io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction')
+
         then:
         appStack.contains($/import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi/$)
         appStack.contains($/import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration/$)
-        appStack.contains($/import static software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion.VERSION_1_0/$)
+        !appStack.contains($/import static software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion.VERSION_1_0/$)
 
         appStack.contains('''
         HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", prodAlias)
-                .payloadFormatVersion(VERSION_1_0)
                 .build();
         HttpApi api = HttpApi.Builder.create(this, "micronaut-function-api")
                 .defaultIntegration(integration)
