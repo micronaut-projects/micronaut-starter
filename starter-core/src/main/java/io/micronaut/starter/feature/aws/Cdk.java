@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
