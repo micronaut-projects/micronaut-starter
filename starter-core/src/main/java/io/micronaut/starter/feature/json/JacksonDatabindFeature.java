@@ -18,16 +18,10 @@ package io.micronaut.starter.feature.json;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.util.Set;
-
 @Singleton
-public class JacksonDatabindFeature implements JsonFeature, DefaultFeature {
+public class JacksonDatabindFeature implements JsonFeature {
     @Override
     public String getName() {
         return "jackson-databind";
@@ -56,10 +50,5 @@ public class JacksonDatabindFeature implements JsonFeature, DefaultFeature {
     @Override
     public String getTitle() {
         return "Jackson Databind Integration";
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getLanguage().equals(Language.GROOVY) && applicationType.equals(ApplicationType.FUNCTION);
     }
 }
