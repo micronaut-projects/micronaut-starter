@@ -20,7 +20,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
@@ -55,7 +54,6 @@ import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -79,11 +77,9 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
     private static final String ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK = "micronaut-starter-aws-cdk";
     private static final Dependency DEPENDENCY_CDK =
-            MicronautDependencyUtils.awsDependency()
-                    .artifactId("micronaut-aws-cdk")
-                    .version("4.0.0-M2")
-//            MicronautDependencyUtils.starterDependency()
-//                    .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
+            MicronautDependencyUtils.starterDependency()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
+                    .version(VersionInfo.getStarterVersion())
                     .exclude(Dependency.builder()
                             .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
                             .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
@@ -141,7 +137,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
-        String handler = resolveHandler(generatorContext);
+        String handler = HandlerClassFeature.resolveHandler(generatorContext);
         Language lang = Language.JAVA;
         addAppStackTest(generatorContext, lang, handler);
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
@@ -176,13 +172,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
-    }
-
-    @NonNull
-    private String resolveHandler(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getFeature(HandlerClassFeature.class)
-                .map(f -> f.handlerClass(generatorContext))
-                .orElse(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
     }
 
     private void populateDependencies(GeneratorContext generatorContext) {

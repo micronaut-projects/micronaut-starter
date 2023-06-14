@@ -53,7 +53,7 @@ import java.util.List;
  * @since 2.2
  */
 @Controller
-@ExecuteOn(TaskExecutors.IO)
+@ExecuteOn(TaskExecutors.BLOCKING)
 @Requires(beans = {GitHubCreateService.class, GitHubRedirectService.class})
 public class GitHubCreateController implements GitHubCreateOperation {
 

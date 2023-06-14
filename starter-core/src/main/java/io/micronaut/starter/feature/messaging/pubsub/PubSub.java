@@ -19,12 +19,11 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.gcp.GcpFeature;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class PubSub extends GcpFeature implements MessagingFeature {
+public class PubSub implements MessagingFeature {
 
     public static final String NAME = "gcp-pubsub";
 
@@ -57,7 +56,6 @@ public class PubSub extends GcpFeature implements MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
         generatorContext.addDependency(MicronautDependencyUtils.gcpDependency()
                 .artifactId("micronaut-gcp-pubsub")
                 .compile());
