@@ -20,11 +20,10 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
-import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class GoogleSecretManager extends GcpFeature implements DistributedConfigFeature {
+public class GoogleSecretManager implements DistributedConfigFeature {
 
     @NonNull
     @Override
@@ -44,7 +43,6 @@ public class GoogleSecretManager extends GcpFeature implements DistributedConfig
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
         generatorContext.addDependency(gcpSecretManagerDependency());
         populateBootstrapForDistributedConfiguration(generatorContext);
     }
