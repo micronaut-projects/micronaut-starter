@@ -75,6 +75,19 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
     }
 
 
+    void "dependencies are added for cdk to infra project for #buildTool"(BuildTool buildTool, String buildFile) {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+
+        then:
+        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.starter:micronaut-starter-aws-cdk/$)
+
+        where:
+        buildTool               | buildFile
+        BuildTool.GRADLE        | "build.gradle"
+        BuildTool.GRADLE_KOTLIN | "build.gradle.kts"
+    }
+
     void 'Function AppStack with Alexa Skills is included for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [Cdk.NAME,AwsAlexa.NAME])
@@ -96,21 +109,6 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         buildTool << BuildTool.values()
     }
 
-    @PendingFeature
-    void "dependencies are added for cdk to infra project for #buildTool"(BuildTool buildTool, String buildFile) {
-        when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-
-        then:
-        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.starter:micronaut-starter-aws-cdk/$)
-
-        where:
-        buildTool               | buildFile
-        BuildTool.GRADLE        | "build.gradle"
-        BuildTool.GRADLE_KOTLIN | "build.gradle.kts"
-    }
-
-    @PendingFeature
     void "dependencies are added for cdk to infra project for maven"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])

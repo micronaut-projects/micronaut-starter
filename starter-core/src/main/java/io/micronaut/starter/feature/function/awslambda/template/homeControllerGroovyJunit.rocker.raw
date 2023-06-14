@@ -1,7 +1,8 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project
+Project project,
+String handler
 )
 
 @if (project.getPackageName() != null) {
@@ -12,9 +13,15 @@ import com.amazonaws.services.lambda.runtime.ClientContext
 import com.amazonaws.services.lambda.runtime.CognitoIdentity
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.LambdaLogger
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse
+import io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction
+}
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import org.junit.jupiter.api.AfterAll
@@ -23,14 +30,21 @@ import org.junit.jupiter.api.Test
 import static org.junit.jupiter.api.Assertions.assertEquals
 
 class HomeControllerTest {
-
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
     private static ApiGatewayProxyRequestEventFunction handler
 
     @@BeforeAll
-    static void setupSpec() {
+    public static void setupSpec() {
         handler = new ApiGatewayProxyRequestEventFunction()
     }
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+    private static APIGatewayV2HTTPEventFunction handler
 
+    @@BeforeAll
+    public static void setupSpec() {
+        handler = new APIGatewayV2HTTPEventFunction()
+    }
+}
     @@AfterAll
     static void cleanupSpec() {
         handler.getApplicationContext().close()
@@ -38,11 +52,21 @@ class HomeControllerTest {
 
     @@Test
     void testHandler() {
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
         APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
         request.path = "/"
         request.httpMethod = HttpMethod.GET.toString()
-
         APIGatewayProxyResponseEvent response = handler.handleRequest(request, lambdaContext)
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+        APIGatewayV2HTTPEvent request = new APIGatewayV2HTTPEvent()
+        request.setRequestContext(APIGatewayV2HTTPEvent.RequestContext.builder()
+                .withHttp(APIGatewayV2HTTPEvent.RequestContext.Http.builder()
+                        .withPath("/")
+                        .withMethod(HttpMethod.GET.toString())
+                        .build()
+                ).build())
+        APIGatewayV2HTTPResponse response = handler.handleRequest(request, lambdaContext)
+}
         assertEquals(HttpStatus.OK.code, response.statusCode)
         assertEquals("{\"message\":\"Hello World\"}",  response.body)
     }

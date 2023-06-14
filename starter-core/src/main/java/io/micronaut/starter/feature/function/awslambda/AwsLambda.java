@@ -274,11 +274,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HomeController");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project),
-                homeControllerJavaJunit.template(project),
-                homeControllerGroovyJunit.template(project),
-                homeControllerKotlinJunit.template(project),
-                homeControllerKoTest.template(project));
+        String handler = HandlerClassFeature.resolveHandler(generatorContext);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project, handler),
+                homeControllerJavaJunit.template(project, handler),
+                homeControllerGroovyJunit.template(project, handler),
+                homeControllerKotlinJunit.template(project, handler),
+                homeControllerKoTest.template(project, handler));
         generatorContext.addTemplate("testHomeController", testSource, provider);
     }
 
