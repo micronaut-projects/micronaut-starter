@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">DefaultAwsLambdaHandlerProvider</a></code>, <code><a href="awslambda/FunctionAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">FunctionAwsLambdaHandlerProvider</a></code></dd>
+<dd><code><a href="awslambda/ApiGatewayV2AwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">ApiGatewayV2AwsLambdaHandlerProvider</a></code>, <code><a href="awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">DefaultAwsLambdaHandlerProvider</a></code>, <code><a href="awslambda/FunctionAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">FunctionAwsLambdaHandlerProvider</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">HandlerClassFeature</span><span class="extends-implements">
@@ -126,6 +126,9 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
  @NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
  @Nullable <a href="DocumentationLink.html" title="class in io.micronaut.starter.feature.function">DocumentationLink</a>&nbsp;documentationLink)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#resolveHandler(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">resolveHandler</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -191,6 +194,14 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
 <dt>Returns:</dt>
 <dd>The handler class</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resolveHandler(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>resolveHandler</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">static</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">resolveHandler</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 </ul>
