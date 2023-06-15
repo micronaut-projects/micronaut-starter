@@ -22,10 +22,12 @@ import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.RepositoryResolver;
+import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.dependencies.StarterCoordinates;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleDependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
@@ -76,26 +78,25 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String ARTIFACT_ID_AWS_CDK_LIB = "aws-cdk-lib";
     private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
     private static final String ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK = "micronaut-starter-aws-cdk";
-    private static final Dependency DEPENDENCY_CDK =
-            MicronautDependencyUtils.starterDependency()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
-                    .version(VersionInfo.getStarterVersion())
-                    .exclude(Dependency.builder()
-                            .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
-                            .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
-                            .build())
-                    .compile()
-                    .build();
-
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
     private final CoordinateResolver coordinateResolver;
+    private final Dependency DEPENDENCY_CDK;
 
     public Cdk(CoordinateResolver coordinateResolver,
                X86 x86,
                RepositoryResolver repositoryResolver) {
         this.coordinateResolver = coordinateResolver;
+        DEPENDENCY_CDK = MicronautDependencyUtils.starterDependency()
+                        .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
+                        .version(coordinateResolver.resolve(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK).map(Coordinate::getVersion).orElseThrow())
+                    .exclude(Dependency.builder()
+                .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
+                .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
+                .build())
+                .compile()
+                .build();
         this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.repositoryResolver = repositoryResolver;
