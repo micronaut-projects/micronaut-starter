@@ -7,7 +7,6 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Ignore
 import spock.lang.Retry
 
 @Retry // can fail on CI due to port binding race condition, so retry
@@ -35,7 +34,6 @@ class CreateOracleFunctionSpec extends CommandSpec{
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
-    @Ignore
     void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
             Language lang,
             String serializationFeature,
@@ -60,6 +58,8 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 TestFramework.values()
         ].combinations()
                 .stream()
-                .filter(it -> !(it[0] == Language.KOTLIN && it[2] == BuildTool.MAVEN))
+                .filter(it -> !(
+                it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)
+                ))
     }
 }
