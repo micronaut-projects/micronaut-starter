@@ -14,9 +14,9 @@ agorapulse-micronaut-console = "2.0.2-micronaut-3.0"
 agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
 agorapulse-micronaut-slack = "1.0.4-micronaut-3.0"
 agorapulse-micronaut-worker = "1.2.6-micronaut-3.0"
-aws-cdk-lib = "2.77.0"
-apigatewayv2 = "2.77.0-alpha.0"
-apigatewayv2-integrations = "2.77.0-alpha.0"
+aws-cdk-lib = "2.84.0"
+apigatewayv2 = "2.84.0-alpha.0"
+apigatewayv2-integrations = "2.84.0-alpha.0"
 appengine-gradle-plugin = "2.4.5"
 asciidoctor-gradle-jvm = "3.3.2"
 asciidoctor-maven-plugin = "2.2.2"
@@ -60,8 +60,10 @@ slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
+micronaut-starter-aws-cdk = "4.0.0-M3"
 
 [libraries]
+micronaut-starter-aws-cdk = { module = "io.micronaut.starter:micronaut-starter-aws-cdk", version.ref = "micronaut-starter-aws-cdk" }
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }

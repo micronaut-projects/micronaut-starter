@@ -25,12 +25,12 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.starter.analytics.Generated;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller("/analytics")
-@ExecuteOn(TaskExecutors.IO)
+@ExecuteOn(TaskExecutors.BLOCKING)
 public class AnalyticsController {
 
     private final ApplicationRepository applicationRepository;
@@ -75,7 +75,7 @@ public class AnalyticsController {
      */
     @Post("/report")
     @Transactional
-    @ExecuteOn(TaskExecutors.IO)
+    @ExecuteOn(TaskExecutors.BLOCKING)
     HttpStatus applicationGenerated(@NonNull @Body Generated generated) {
         Application application = new Application(
                 generated.getType(),

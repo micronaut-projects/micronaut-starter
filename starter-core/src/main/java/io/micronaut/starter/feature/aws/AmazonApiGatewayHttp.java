@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.awslambda.ApiGatewayV2AwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
@@ -23,8 +25,17 @@ import jakarta.inject.Singleton;
 public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements AwsApiFeature {
     public static final String NAME = "amazon-api-gateway-http";
 
-    public AmazonApiGatewayHttp(AwsLambda awsLambda) {
+    private final ApiGatewayV2AwsLambdaHandlerProvider apiGatewayV2AwsLambdaHandlerProvider;
+
+    public AmazonApiGatewayHttp(AwsLambda awsLambda, ApiGatewayV2AwsLambdaHandlerProvider apiGatewayV2AwsLambdaHandlerProvider) {
         super(awsLambda);
+        this.apiGatewayV2AwsLambdaHandlerProvider = apiGatewayV2AwsLambdaHandlerProvider;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
+        featureContext.addFeatureIfNotPresent(ApiGatewayV2AwsLambdaHandlerProvider.class, apiGatewayV2AwsLambdaHandlerProvider);
     }
 
     @Override
