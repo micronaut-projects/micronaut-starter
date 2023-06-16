@@ -7,13 +7,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Ignore
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 import java.nio.file.Files
 import java.nio.file.Paths
-
 
 class DekorateSpec extends CommandSpec {
 
@@ -22,9 +19,7 @@ class DekorateSpec extends CommandSpec {
         return "dekorate"
     }
 
-    @Ignore
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven dekorate platform #feature.name with #language"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [feature.getName(), 'kapt'])
@@ -42,9 +37,7 @@ class DekorateSpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN]].combinations()
     }
 
-    @Ignore
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [feature.getName(), 'kapt'])
@@ -61,8 +54,6 @@ class DekorateSpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN]].combinations()
     }
 
-    @Ignore
-    @Unroll
     void "test gradle dekorate platform #feature.name with #language"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])
@@ -85,8 +76,6 @@ class DekorateSpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN]].combinations()
     }
 
-    @Ignore
-    @Unroll
     void "test gradle dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,10 +62,10 @@ public class DekorateHalkyon extends AbstractDekorateServiceFeature {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder halkyon = Dependency.builder()
                 .groupId("io.dekorate")
-                .artifactId("halkyon-annotations")
+                .lookupArtifactId("halkyon-annotations")
                 .template();
 
-        generatorContext.addDependency(halkyon.versionProperty("dekorate.version").annotationProcessor());
+        generatorContext.addDependency(halkyon.annotationProcessor());
         generatorContext.addDependency(halkyon.compile());
     }
 }

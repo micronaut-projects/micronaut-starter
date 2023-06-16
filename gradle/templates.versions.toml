@@ -30,6 +30,7 @@ bom-opentelemetry = "1.14.0-alpha"
 bpm-assert = "7.19.0"
 bpm-micronaut = "2.14.0"
 camunda-micronaut-client = "2.12.0"
+dekorate = "3.6.1"
 gradle-enterprise = "3.11.3"
 gradle-enterprise-maven-custom-data = "1.11.1"
 gradle-enterprise-maven-extension = "1.15.5"
@@ -89,6 +90,13 @@ bom-opentelemetry-instrumentation = { module = "io.opentelemetry.instrumentation
 bpm-assert = { module = "org.camunda.bpm:camunda-bpm-assert", version.ref = "bpm-assert" }
 bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version.ref = "bpm-micronaut" }
 camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
+dekorate-halkyon = { module = "io.dekorate:halkyon-annotations", version.ref = "dekorate" }
+dekorate-jaeger = { module = "io.dekorate:jaeger-annotations", version.ref = "dekorate" }
+dekorate-knative = { module = "io.dekorate:knative-annotations", version.ref = "dekorate" }
+dekorate-kubernetes = { module = "io.dekorate:kubernetes-annotations", version.ref = "dekorate" }
+dekorate-openshift = { module = "io.dekorate:openshift-annotations", version.ref = "dekorate" }
+dekorate-prometheus = { module = "io.dekorate:prometheus-annotations", version.ref = "dekorate" }
+dekorate-servicecatalog = { module = "io.dekorate:servicecatalog-annotations", version.ref = "dekorate" }
 gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
 gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
