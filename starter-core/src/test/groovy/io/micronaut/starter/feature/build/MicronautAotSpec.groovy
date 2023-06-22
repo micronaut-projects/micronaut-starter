@@ -44,7 +44,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         then:
         output.contains(AOT_PLUGIN)
-        output.contains("\"micronaut.security.jwks.enabled\",\"true\"")
+        output.contains("\"micronaut.security.jwks.enabled\",\"false\"")
 
         where:
         language << Language.values().toList()
