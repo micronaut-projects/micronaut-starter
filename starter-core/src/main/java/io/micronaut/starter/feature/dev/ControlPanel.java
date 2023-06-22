@@ -57,6 +57,11 @@ public class ControlPanel implements Feature {
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(CONTROL_PANEL_DEPENDENCY.artifactId("micronaut-control-panel-ui"));
         ApplicationConfiguration devConfig = generatorContext.getConfiguration(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
