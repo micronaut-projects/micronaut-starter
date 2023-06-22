@@ -53,7 +53,7 @@ public class ControlPanel implements Feature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
