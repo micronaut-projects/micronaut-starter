@@ -60,7 +60,7 @@ slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
-micronaut-starter-aws-cdk = "4.0.0-SNAPSHOT"
+micronaut-starter-aws-cdk = "4.0.0-M4"
 
 [libraries]
 micronaut-starter-aws-cdk = { module = "io.micronaut.starter:micronaut-starter-aws-cdk", version.ref = "micronaut-starter-aws-cdk" }
