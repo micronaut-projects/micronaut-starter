@@ -5,6 +5,8 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.build.maven.templates.aot
 import io.micronaut.starter.feature.graalvm.GraalVM
+import io.micronaut.starter.feature.security.SecurityJWT
+import io.micronaut.starter.feature.security.SecurityOAuth2
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -22,6 +24,31 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     private static final String GRADLE_PLUGIN_VERSION = StarterCoordinates.MICRONAUT_GRADLE_PLUGIN.version
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
+
+    void 'application with aot and oauth adds security aot keys  language=#language'(Language language) {
+        when:
+        String output = build(GRADLE, language, [MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+
+        then:
+        output.contains(AOT_PLUGIN)
+        output.contains("\"micronaut.security.jwks.enabled\",\"true\"")
+        output.contains("\"micronaut.security.openid-configuration.enabled\",\"true\"")
+
+        where:
+        language << Language.values().toList()
+    }
+
+    void 'application with aot and jwt adds security jwks aot key language=#language'(Language language) {
+        when:
+        String output = build(GRADLE, language, [MicronautAot.FEATURE_NAME_AOT, SecurityJWT.NAME])
+
+        then:
+        output.contains(AOT_PLUGIN)
+        output.contains("\"micronaut.security.jwks.enabled\",\"true\"")
+
+        where:
+        language << Language.values().toList()
+    }
 
     @Unroll
     void 'application with gradle and feature micronaut-aot for language=#language'() {
@@ -143,11 +170,11 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output["aot-native-image.properties"] == expectedAotNativeImage
     }
 
-    private String build(BuildTool buildTool, Language language) {
+    private String build(BuildTool buildTool, Language language, List<String> features = [MicronautAot.FEATURE_NAME_AOT]) {
         new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .applicationType(DEFAULT)
-                .features([MicronautAot.FEATURE_NAME_AOT])
+                .features(features)
                 .render()
     }
 

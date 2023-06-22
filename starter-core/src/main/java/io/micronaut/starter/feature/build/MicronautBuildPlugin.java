@@ -37,6 +37,8 @@ import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
+import io.micronaut.starter.feature.security.SecurityJWT;
+import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.DbType;
 import jakarta.inject.Singleton;
 
@@ -48,6 +50,8 @@ import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 public class MicronautBuildPlugin implements BuildPluginFeature {
     public static final String MICRONAUT_GRADLE_DOCS_URL = "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/";
     public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
+    public static final String AOT_KEY_SECURITY_JWKS = "micronaut.security.jwks.enabled";
+    public static final String AOT_KEY_SECURITY_OPENID = "micronaut.security.openid-configuration.enabled";
 
     protected final CoordinateResolver coordinateResolver;
 
@@ -150,6 +154,12 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
+            if (generatorContext.getFeatures().hasFeature(SecurityJWT.class) || generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
+                builder.aotKey(AOT_KEY_SECURITY_JWKS);
+            }
+            if (generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
+                builder.aotKey(AOT_KEY_SECURITY_OPENID);
+            }
         }
         return builder.id(id);
     }

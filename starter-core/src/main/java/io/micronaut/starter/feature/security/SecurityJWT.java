@@ -25,6 +25,8 @@ import java.util.Optional;
 @Singleton
 public class SecurityJWT extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
+    public static final String NAME = "security-jwt";
+
     public static final int ORDER = 0;
 
     public SecurityJWT(SecurityAnnotations securityAnnotations) {
@@ -33,7 +35,7 @@ public class SecurityJWT extends SecurityFeature implements SecurityAuthenticati
 
     @Override
     public String getName() {
-        return "security-jwt";
+        return NAME;
     }
 
     @Override

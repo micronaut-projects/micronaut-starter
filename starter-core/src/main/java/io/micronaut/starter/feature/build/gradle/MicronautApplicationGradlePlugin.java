@@ -45,6 +45,7 @@ public class MicronautApplicationGradlePlugin {
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
+        private List<String> aotKeys;
         private List<String> dockerBuildNativeImages;
         private List<String> additionalTestResourceModules;
         private BuildTool buildTool;
@@ -121,11 +122,19 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
+        public Builder aotKey(String aotKey) {
+            if (aotKeys == null) {
+                aotKeys = new ArrayList<>();
+            }
+            aotKeys.add(aotKey);
+            return this;
+        }
+
         public GradlePlugin.Builder builder() {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)));
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {
