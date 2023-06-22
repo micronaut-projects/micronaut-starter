@@ -1,4 +1,5 @@
 @import java.util.List
+@import java.util.Map
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.build.gradle.GradleDsl
@@ -9,7 +10,7 @@
     String aotVersion, boolean incremental, String packageName,
     List<String> additionalTestResourceModules,
     boolean sharedTestResources,
-    List<String> aotKeys
+    Map<String, String> aotKeys
 )
 micronaut {
 @if(runtime != null) {
@@ -64,8 +65,8 @@ micronaut {
         optimizeNetty = true
 }
 @if(aotKeys != null) {
-@for (int i = 0; i < aotKeys.size(); i++) {
-        configurationProperties.put("@(aotKeys.get(i))","true")
+@for (String keyName : aotKeys.keySet()) {
+        configurationProperties.put("@(keyName)","@(aotKeys.get(keyName))")
 }
 }
     }

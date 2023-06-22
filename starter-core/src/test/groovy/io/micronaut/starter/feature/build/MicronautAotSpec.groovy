@@ -31,8 +31,8 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         then:
         output.contains(AOT_PLUGIN)
-        output.contains("\"micronaut.security.jwks.enabled\",\"true\"")
-        output.contains("\"micronaut.security.openid-configuration.enabled\",\"true\"")
+        output.contains("\"micronaut.security.jwks.enabled\",\"false\"")
+        output.contains("\"micronaut.security.openid-configuration.enabled\",\"false\"")
 
         where:
         language << Language.values().toList()

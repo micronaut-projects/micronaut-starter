@@ -155,10 +155,10 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
             if (generatorContext.getFeatures().hasFeature(SecurityJWT.class) || generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
-                builder.aotKey(AOT_KEY_SECURITY_JWKS);
+                builder.aotKey(AOT_KEY_SECURITY_JWKS, false);
             }
             if (generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
-                builder.aotKey(AOT_KEY_SECURITY_OPENID);
+                builder.aotKey(AOT_KEY_SECURITY_OPENID, false);
             }
         }
         return builder.id(id);

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -23,7 +24,9 @@ import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MicronautApplicationGradlePlugin {
 
@@ -45,7 +48,7 @@ public class MicronautApplicationGradlePlugin {
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
-        private List<String> aotKeys;
+        private Map<String, String> aotKeys;
         private List<String> dockerBuildNativeImages;
         private List<String> additionalTestResourceModules;
         private BuildTool buildTool;
@@ -122,11 +125,11 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
-        public Builder aotKey(String aotKey) {
+        public Builder aotKey(String aotKey, boolean value) {
             if (aotKeys == null) {
-                aotKeys = new ArrayList<>();
+                aotKeys = new HashMap<>();
             }
-            aotKeys.add(aotKey);
+            aotKeys.put(aotKey, value ? StringUtils.TRUE : StringUtils.FALSE);
             return this;
         }
 
