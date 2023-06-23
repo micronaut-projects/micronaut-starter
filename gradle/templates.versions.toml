@@ -40,6 +40,7 @@ jruby = "9.3.8.0"
 json-bind = "2.0.0"
 jte-gradle-plugin= "2.2.6"
 jte-maven-plugin= "2.2.6"
+jobrunr = "6.2.2"
 kotest = "4.2.5"
 kotlin = "1.6.21"
 log4j = "2.19.0"
@@ -59,6 +60,7 @@ slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 
 [libraries]
+jobrunr = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
