@@ -24,7 +24,7 @@ dependencies {
     api "org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r"
     implementation("org.yaml:snakeyaml")
     implementation 'com.typesafe:config:1.4.2'
-    implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:2.0.0-M1'
+    implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:2.0.0-SNAPSHOT'
     implementation 'org.apache.commons:commons-compress:1.21'
     testImplementation("org.apache.groovy:groovy-xml")
 }
