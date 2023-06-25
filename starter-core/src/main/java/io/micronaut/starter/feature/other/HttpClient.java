@@ -35,7 +35,7 @@ public class HttpClient implements HttpClientFeature, DefaultFeature {
 
     public static final String NAME = "http-client";
 
-    private final static Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-http-client");
 
     @Override
