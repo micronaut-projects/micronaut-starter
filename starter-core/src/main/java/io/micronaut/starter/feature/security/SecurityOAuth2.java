@@ -25,6 +25,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
+    public static final String NAME = "security-oauth2";
     public static final int ORDER = SecurityJWT.ORDER + 10;
 
     public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
@@ -34,7 +35,7 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
     @NonNull
     @Override
     public String getName() {
-        return "security-oauth2";
+        return NAME;
     }
 
     @Override

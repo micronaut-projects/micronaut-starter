@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -23,7 +24,9 @@ import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MicronautApplicationGradlePlugin {
 
@@ -45,6 +48,7 @@ public class MicronautApplicationGradlePlugin {
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
+        private Map<String, String> aotKeys;
         private List<String> dockerBuildNativeImages;
         private List<String> additionalTestResourceModules;
         private BuildTool buildTool;
@@ -121,11 +125,19 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
+        public Builder aotKey(String aotKey, boolean value) {
+            if (aotKeys == null) {
+                aotKeys = new HashMap<>();
+            }
+            aotKeys.put(aotKey, value ? StringUtils.TRUE : StringUtils.FALSE);
+            return this;
+        }
+
         public GradlePlugin.Builder builder() {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)));
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {
