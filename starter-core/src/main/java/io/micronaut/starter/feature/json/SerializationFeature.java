@@ -60,21 +60,7 @@ public interface SerializationFeature extends JsonFeature {
         List<Dependency.Builder> dependencyList = new ArrayList<>();
         dependencyList.add(serdeProcessor(generatorContext.getBuildTool()));
         dependencyList.add(serdeModule(generatorContext));
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            dependencyList.add(micronautRuntimeDependency(generatorContext));
-        }
         return dependencyList;
-    }
-
-    @NonNull
-    default Dependency.Builder micronautRuntimeDependency(@NonNull GeneratorContext generatorContext) {
-        Dependency.Builder runtime = MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-runtime")
-                .compile();
-        if (!generatorContext.isFeaturePresent(TestResources.class)) {
-            runtime.exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
-        }
-        return runtime;
     }
 
     @NonNull
