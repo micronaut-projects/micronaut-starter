@@ -177,7 +177,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw clean package azure-functions:run";
         } else {
-            return "gradlew clean azureFunctionsRun";
+            return "gradlew azureFunctionsRun";
         }
     }
 
@@ -186,7 +186,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw clean package azure-functions:deploy";
         } else if (buildTool.isGradle()) {
-            return "gradlew clean azureFunctionsDeploy";
+            return "gradlew azureFunctionsDeploy";
         } else {
             throw new IllegalStateException("Unsupported build tool");
         }
