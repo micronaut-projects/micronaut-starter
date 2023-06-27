@@ -50,6 +50,8 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
             .test()
             .build();
 
+    public static final String NAME = "azure-function-http";
+
     public AzureHttpFunction(CoordinateResolver coordinateResolver) {
         super(coordinateResolver);
     }
@@ -57,7 +59,7 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     @NonNull
     @Override
     public String getName() {
-        return "azure-function-http";
+        return NAME;
     }
 
     @Override
