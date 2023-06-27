@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.cloud.azure
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.azure.AbstractAzureFunction
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -20,7 +21,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
                                                                                                                 BuildTool build,
                                                                                                                 TestFramework testFramework) {
         given:
-        List<String> features = ['azure-function']
+        List<String> features = [AbstractAzureFunction.NAME]
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
@@ -40,7 +41,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
             TestFramework testFramework
     ) {
         given:
-        List<String> features = ['azure-function'] + serializationFeature
+        List<String> features = [AbstractAzureFunction.NAME] + serializationFeature
         generateProject(lang, build, features, ApplicationType.DEFAULT, testFramework)
 
         when:
