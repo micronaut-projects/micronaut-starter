@@ -3,7 +3,6 @@ package io.micronaut.starter.feature.build
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.dependencies.StarterCoordinates
-import io.micronaut.starter.feature.build.maven.templates.aot
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityOAuth2
@@ -58,8 +57,8 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         output.contains(AOT_PLUGIN)
         output.contains('aot {')
-        output.contains('optimizeServiceLoading = true')
-        output.contains('convertYamlToJava = true')
+        output.contains('optimizeServiceLoading = false')
+        output.contains('convertYamlToJava = false')
         output.contains('precomputeOperations = true')
         output.contains('cacheEnvironment = true')
         output.contains('optimizeClassLoading = true')
@@ -78,8 +77,8 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         output.contains(AOT_PLUGIN)
         output.contains('aot {')
-        output.contains('optimizeServiceLoading.set(true)')
-        output.contains('convertYamlToJava.set(true)')
+        output.contains('optimizeServiceLoading.set(false)')
+        output.contains('convertYamlToJava.set(false)')
         output.contains('precomputeOperations.set(true)')
         output.contains('cacheEnvironment.set(true)')
         output.contains('optimizeClassLoading.set(true)')
@@ -132,19 +131,6 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         language << Language.values().toList()
     }
 
-    @Unroll
-    void 'aot-#packaging properties file is correct'(String packaging) {
-        when:
-        String aotProperties = aot.template(packaging).render().toString()
-        String expected = getClass().getResource("/expected-aot-${packaging}.properties").text
-
-        then:
-        aotProperties == expected
-
-        where:
-        packaging << ['jar', 'native-image']
-    }
-
     void 'aot properties file is generated when aot feature is selected'() {
         given:
         def output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT])
@@ -152,7 +138,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         expect:
         output.containsKey('aot-jar.properties')
-        output["aot-jar.properties"] == expected
+        output["aot-jar.properties"].trim() == expected.trim()
         !output.containsKey('aot-native-image.properties')
     }
 
@@ -164,10 +150,32 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         expect:
         output.containsKey('aot-jar.properties')
-        output["aot-jar.properties"] == expectedAotJar
+        output["aot-jar.properties"].trim() == expectedAotJar.trim()
 
         output.containsKey('aot-native-image.properties')
-        output["aot-native-image.properties"] == expectedAotNativeImage
+        output["aot-native-image.properties"].trim() == expectedAotNativeImage.trim()
+    }
+
+    void 'aot properties files are generated when aot security-jwt features are selected'() {
+        when:
+        Map<String,String> output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT, SecurityJWT.NAME])
+        then:
+        output.containsKey('aot-jar.properties')
+        output["aot-jar.properties"].contains("It fetches remote Json Web Key Set at Build Time. https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#aotJwks")
+        output["aot-jar.properties"].contains("micronaut.security.jwks.enabled=false")
+    }
+
+    void 'aot properties files are generated when aot security-aotuh2 features are selected'() {
+        when:
+        Map<String,String> output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+
+        then:
+        output.containsKey('aot-jar.properties')
+        output["aot-jar.properties"].contains("It fetches remote Json Web Key Set at Build Time. https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#aotJwks")
+        output["aot-jar.properties"].contains("micronaut.security.jwks.enabled=false")
+
+        output["aot-jar.properties"].contains("It fetches OpenID Connect metadata at Build time. https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#aotOpenidConfiguration")
+        output["aot-jar.properties"].contains("micronaut.security.openid-configuration.enabled=false")
     }
 
     private String build(BuildTool buildTool, Language language, List<String> features = [MicronautAot.FEATURE_NAME_AOT]) {

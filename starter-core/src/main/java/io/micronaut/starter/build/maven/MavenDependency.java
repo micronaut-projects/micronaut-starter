@@ -89,7 +89,7 @@ public class MavenDependency extends DependencyCoordinate {
     public static List<MavenDependency> listOf(@NonNull DependencyContext dependencyContext, Language language) {
         return dependencyContext.getDependencies()
                 .stream()
-                .filter(dep -> dep.getScope() != null && !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
+                .filter(dep -> dep.getScope() != null && !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING) && !dep.getScope().getPhases().contains(Phase.AOT_PLUGIN))
                 .map(dep -> new MavenDependency(dep, language))
                 .sorted(MavenDependency.COMPARATOR)
                 .collect(Collectors.toList());

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.feature.build;
 
-public enum Phase {
-    ANNOTATION_PROCESSING,
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 
-    AOT_PLUGIN,
-    PUBLIC_API,
-    COMPILATION,
-    NATIVE_IMAGE_COMPILATION,
-    DEVELOPMENT,
-    RUNTIME,
-    OPENREWRITE,
-    TEST_RESOURCES_SERVICE,
+public record MicronautAotOptimization(@NonNull String key, Object value, @Nullable String comment) {
 }

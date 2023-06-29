@@ -61,8 +61,10 @@ zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
 micronaut-starter-aws-cdk = "4.0.0-M4"
+micronaut-security-aot = "4.0.0-M8"
 
 [libraries]
+micronaut-security-aot = { module = "io.micronaut.security:micronaut-security-aot", version.ref = "micronaut-security-aot" }
 micronaut-starter-aws-cdk = { module = "io.micronaut.starter:micronaut-starter-aws-cdk", version.ref = "micronaut-starter-aws-cdk" }
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }

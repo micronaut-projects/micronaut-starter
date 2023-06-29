@@ -44,7 +44,8 @@ public enum GradleConfiguration implements Ordered {
     TEST_RUNTIME_ONLY("testRuntimeOnly", 13),
     DEVELOPMENT_ONLY("developmentOnly", 14),
     OPENREWRITE("rewrite", 15),
-    TEST_RESOURCES_SERVICE("testResourcesService", 16);
+    TEST_RESOURCES_SERVICE("testResourcesService", 16),
+    AOT_PLUGIN("aotPlugins", 17);
 
     private final String configurationName;
     private final int order;
@@ -112,6 +113,9 @@ public enum GradleConfiguration implements Ordered {
                 }
                 if (scope.getPhases().contains(Phase.TEST_RESOURCES_SERVICE)) {
                     return Optional.of(GradleConfiguration.TEST_RESOURCES_SERVICE);
+                }
+                if (scope.getPhases().contains(Phase.AOT_PLUGIN)) {
+                    return Optional.of(GradleConfiguration.AOT_PLUGIN);
                 }
                 break;
             case TEST:

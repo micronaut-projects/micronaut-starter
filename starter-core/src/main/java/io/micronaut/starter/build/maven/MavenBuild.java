@@ -55,6 +55,8 @@ public class MavenBuild {
 
     private final List<MavenRepository> repositories;
 
+    private final List<DependencyCoordinate> aotDependencies;
+
     @NonNull
     private final String artifactId;
 
@@ -68,6 +70,7 @@ public class MavenBuild {
                 Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
+                Collections.emptyList(),
                 Collections.emptyList());
     }
 
@@ -84,6 +87,7 @@ public class MavenBuild {
                 repositories,
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
+                Collections.emptyList(),
                 Collections.emptyList());
     }
 
@@ -96,7 +100,8 @@ public class MavenBuild {
                       @NonNull List<MavenRepository> repositories,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute,
-                      @NonNull Collection<Profile> profiles) {
+                      @NonNull Collection<Profile> profiles,
+                      @NonNull List<DependencyCoordinate> aotDependencies) {
         this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
@@ -107,6 +112,7 @@ public class MavenBuild {
         this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
         this.profiles = profiles;
+        this.aotDependencies = aotDependencies;
     }
 
     @NonNull
@@ -174,5 +180,9 @@ public class MavenBuild {
     @NonNull
     public MavenCombineAttribute getTestAnnotationProcessorCombineAttribute() {
         return testAnnotationProcessorCombineAttribute;
+    }
+
+    public List<DependencyCoordinate> getAotDependencies() {
+        return aotDependencies;
     }
 }
