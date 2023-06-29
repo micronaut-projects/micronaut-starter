@@ -27,7 +27,7 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageAzure implements ObjectStorageFeature, AzureCloudFeature {
+public class ObjectStorageAzure implements CloudObjectStorageFeature, AzureCloudFeature {
 
     @Override
     @NonNull

@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageOracleCloud implements ObjectStorageFeature, OracleCloudFeature {
+public class ObjectStorageOracleCloud implements CloudObjectStorageFeature, OracleCloudFeature {
 
     private final OracleCloudSdk oracleCloudSdk;
 

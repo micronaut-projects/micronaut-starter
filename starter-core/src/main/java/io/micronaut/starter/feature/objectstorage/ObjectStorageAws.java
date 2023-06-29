@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageAws implements ObjectStorageFeature, AwsCloudFeature {
+public class ObjectStorageAws implements CloudObjectStorageFeature, AwsCloudFeature {
 
     private final AwsV2Sdk awsV2Sdk;
 

@@ -20,9 +20,7 @@ import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.CloudFeature;
 
 /**
  * Base class for Object Storage features.
@@ -30,16 +28,13 @@ import io.micronaut.starter.feature.function.CloudFeature;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
-public interface ObjectStorageFeature extends Feature, CloudFeature {
+public interface ObjectStorageFeature extends Feature {
+
+    String PREAMBLE = "Micronaut Object Storage provides a uniform API to create, read and delete objects in the major cloud providers.";
 
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    default String getCategory() {
-        return Category.CLOUD;
     }
 
     @Override
@@ -61,8 +56,7 @@ public interface ObjectStorageFeature extends Feature, CloudFeature {
     @Override
     @NonNull
     default String getDescription() {
-        return "Micronaut Object Storage provides a uniform API to create, read and delete objects in the major cloud providers. This feature adds the "
-                + getCloudProvider() + " implementation";
+        return PREAMBLE + " This feature adds the " + getCloudProvider() + " implementation";
     }
 
     @Override

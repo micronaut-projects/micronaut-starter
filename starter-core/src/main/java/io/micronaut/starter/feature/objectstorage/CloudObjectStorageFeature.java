@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,13 @@
  */
 package io.micronaut.starter.feature.objectstorage;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
-import jakarta.inject.Singleton;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.function.CloudFeature;
 
-/**
- * Google Cloud implementation of {@link ObjectStorageFeature}.
- *
- * @author Álvaro Sánchez-Mariscal
- * @since 3.7.0
- */
-@Singleton
-public class ObjectStorageGcp implements CloudObjectStorageFeature, GcpCloudFeature {
+public interface CloudObjectStorageFeature extends ObjectStorageFeature, CloudFeature {
 
     @Override
-    @NonNull
-    public String getCloudProvider() {
-        return getCloud().name();
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://cloud.google.com/storage";
+    default String getCategory() {
+        return Category.CLOUD;
     }
 }
