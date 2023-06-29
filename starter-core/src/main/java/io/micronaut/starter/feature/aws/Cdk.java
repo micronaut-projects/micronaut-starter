@@ -256,6 +256,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
+                Collections.emptyList(),
                 Collections.emptyList());
     }
 

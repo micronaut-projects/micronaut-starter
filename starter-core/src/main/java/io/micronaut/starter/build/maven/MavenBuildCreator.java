@@ -26,6 +26,7 @@ import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
+import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -104,6 +105,7 @@ public class MavenBuildCreator {
                 MavenRepository.listOf(repositories),
                 combineAttribute,
                 testCombineAttribute,
-                generatorContext.getProfiles());
+                generatorContext.getProfiles(),
+                generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList());
     }
 }
