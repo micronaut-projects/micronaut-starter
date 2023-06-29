@@ -28,6 +28,8 @@ import java.util.Set;
 
 public class Options implements ConvertibleValues<Object> {
 
+    public static final String FRAMEWORK_MICRONAUT = "Micronaut";
+    private final String framework;
     private final Language language;
     private final TestFramework testFramework;
     private final BuildTool buildTool;
@@ -63,11 +65,20 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
+        this(language, testFramework, buildTool, javaVersion, additionalOptions, FRAMEWORK_MICRONAUT);
+    }
+
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions, String framework) {
         this.javaVersion = javaVersion;
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
         this.additionalOptions = new ConvertibleValuesMap<>(additionalOptions);
+        this.framework = framework == null ? FRAMEWORK_MICRONAUT : framework;
+    }
+
+    public String getFramework() {
+        return framework;
     }
 
     public Language getLanguage() {
@@ -106,18 +117,22 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options withLanguage(Language language) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap(), framework == null ? FRAMEWORK_MICRONAUT : framework);
     }
 
     public Options withTestFramework(TestFramework testFramework) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap(), framework == null ? FRAMEWORK_MICRONAUT : framework);
     }
 
     public Options withBuildTool(BuildTool buildTool) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap(), framework == null ? FRAMEWORK_MICRONAUT : framework);
     }
 
     public Options withJavaVersion(JdkVersion javaVersion) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap(), framework == null ? FRAMEWORK_MICRONAUT : framework);
+    }
+
+    public Options withFramework(String framework) {
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap(), framework);
     }
 }

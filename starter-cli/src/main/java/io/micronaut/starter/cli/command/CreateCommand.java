@@ -46,6 +46,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
+    @Option(names = {"--framework"}, hidden = true, defaultValue = Options.FRAMEWORK_MICRONAUT)
+    protected String framework;
+
+    @ReflectiveAccess
     @Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
     protected String name;
 
@@ -126,8 +130,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
-
+        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions(), framework);
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }
 

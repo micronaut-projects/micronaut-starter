@@ -23,6 +23,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -63,7 +64,7 @@ public class JavaApplication implements JavaApplicationFeature  {
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
         return generatorContext.getApplicationType() == ApplicationType.DEFAULT
-                || !generatorContext.getFeatures().hasFunctionFeature();
+                || !generatorContext.getFeatures().hasFeature(FunctionFeature.class);
     }
 
     protected void addApplication(GeneratorContext generatorContext) {

@@ -6,9 +6,11 @@
 @if (properties != null && !properties.isEmpty()) {
   <properties>
 @for (Property prop : properties) {
-@if (!prop.isComment()) {
+  @if (prop.isComment()) {
+    <!--@prop.getComment()-->
+  } else {
     <@(prop.getKey())>@(prop.getValue())</@(prop.getKey())>
-}
+  }
 }
   </properties>
 }

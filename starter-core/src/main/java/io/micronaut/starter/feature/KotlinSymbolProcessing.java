@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.gradle.KotlinSymbolProcessingFeature;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.GradleSpecificFeature;
@@ -28,7 +29,7 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeature, GradleSpecificFeature {
+public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeature, GradleSpecificFeature, KotlinSymbolProcessingFeature {
 
     @Override
     @NonNull

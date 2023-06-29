@@ -36,6 +36,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -46,14 +48,22 @@ import java.util.stream.Collectors;
 @Introspected
 public class CodeGenConfig {
 
+    private String framework = Options.FRAMEWORK_MICRONAUT;
     private ApplicationType applicationType;
     private String defaultPackage;
     private TestFramework testFramework;
     private Language sourceLanguage;
     private BuildTool buildTool;
     private List<String> features;
-
     private boolean legacy;
+
+    public String getFramework() {
+        return framework;
+    }
+
+    public void setFramework(String framework) {
+        this.framework = framework;
+    }
 
     public ApplicationType getApplicationType() {
         return applicationType;
@@ -170,15 +180,13 @@ public class CodeGenConfig {
                         return null;
                     }
 
-                    codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
-                            .filter(f -> f instanceof DefaultFeature)
-                            .map(DefaultFeature.class::cast)
-                            .filter(f -> f.shouldApply(
-                                    codeGenConfig.getApplicationType(),
-                                    new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
-                                    new HashSet<>()))
-                            .map(Feature::getName)
-                            .collect(Collectors.toList()));
+
+                    List<Feature> featureList = new ArrayList<>();
+                    Options options = new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion(), Collections.emptyMap(), codeGenConfig.getFramework());
+                    ApplicationType applicationType = codeGenConfig.getApplicationType();
+                    DefaultFeature.forEach(availableFeatures.getAllFeatures(), applicationType, options, new HashSet<>(), featureList::add);
+                    codeGenConfig.setFeatures(featureList.stream().map(Feature::getName).toList());
+
 
                     consoleOutput.warning("This project is using Micronaut CLI v2 but is still using the v1 micronaut-cli.yml format");
                     consoleOutput.warning("To replace the configuration with the new format, run `mn update-cli-config`");

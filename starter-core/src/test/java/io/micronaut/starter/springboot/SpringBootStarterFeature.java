@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.application;
+package io.micronaut.starter.springboot;
 
-import io.micronaut.starter.feature.BaseAvailableFeatures;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
-import jakarta.inject.Named;
-import jakarta.inject.Singleton;
-import java.util.List;
+public interface SpringBootStarterFeature extends Feature {
 
-@Named("default")
-@Singleton
-public class DefaultAvailableFeatures extends BaseAvailableFeatures {
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 
-    public DefaultAvailableFeatures(List<Feature> features) {
-        super(features, ApplicationType.DEFAULT);
+    @Override
+    default boolean isVisible() {
+        return false;
     }
 }

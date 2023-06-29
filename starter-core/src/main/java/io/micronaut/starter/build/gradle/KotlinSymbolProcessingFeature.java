@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.application;
+package io.micronaut.starter.build.gradle;
 
-import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
-import jakarta.inject.Named;
-import jakarta.inject.Singleton;
-import java.util.List;
-
-@Named("default")
-@Singleton
-public class DefaultAvailableFeatures extends BaseAvailableFeatures {
-
-    public DefaultAvailableFeatures(List<Feature> features) {
-        super(features, ApplicationType.DEFAULT);
+public interface KotlinSymbolProcessingFeature extends Feature {
+    @Override
+    default String getThirdPartyDocumentation() {
+        return "https://kotlinlang.org/docs/ksp-overview.html";
     }
 }

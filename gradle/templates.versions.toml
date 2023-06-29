@@ -60,10 +60,15 @@ slf4j = "1.7.36"
 zeebe-micronaut-client = "1.14.0"
 ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
+spring-boot-gradle-plugin = "3.1.1"
+spring-dependency-management-plugin = "1.1.0"
 micronaut-starter-aws-cdk = "4.0.0-M4"
 micronaut-security-aot = "4.0.0-M8"
-
+spring-boot-starter-parent="3.1.1"
 [libraries]
+spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
+spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
+spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
 micronaut-security-aot = { module = "io.micronaut.security:micronaut-security-aot", version.ref = "micronaut-security-aot" }
 micronaut-starter-aws-cdk = { module = "io.micronaut.starter:micronaut-starter-aws-cdk", version.ref = "micronaut-starter-aws-cdk" }
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }

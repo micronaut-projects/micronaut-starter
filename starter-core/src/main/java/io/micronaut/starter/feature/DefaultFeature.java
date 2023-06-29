@@ -15,10 +15,14 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.options.Options;
 
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * A default feature is one that should be applied to a
@@ -47,4 +51,18 @@ public interface DefaultFeature extends Feature {
     boolean shouldApply(ApplicationType applicationType,
                         Options options,
                         Set<Feature> selectedFeatures);
+
+    default String getTargetFramework() {
+        return Options.FRAMEWORK_MICRONAUT;
+    }
+
+    static void forEach(Stream<Feature> featureStream, ApplicationType applicationType, Options options, Set<Feature> features, Consumer<Feature> featureConsumer) {
+        featureStream
+                    .filter(DefaultFeature.class::isInstance)
+                    .sorted(OrderUtil.COMPARATOR.reversed())
+                    .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, options, features) && (
+                            ((DefaultFeature) f).getTargetFramework().equals(options.getFramework()) || f instanceof BuildFeature
+                    ))
+                    .forEach(featureConsumer);
+    }
 }

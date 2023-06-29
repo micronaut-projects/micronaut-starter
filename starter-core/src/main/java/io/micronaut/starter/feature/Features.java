@@ -16,9 +16,6 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.build.MicronautAot;
-import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -59,18 +56,6 @@ public class Features extends ArrayList<String> {
         }
         this.javaVersion = options.getJavaVersion();
         this.buildTool = options.getBuildTool();
-    }
-
-    public boolean hasFunctionFeature() {
-        return hasFeature(FunctionFeature.class);
-    }
-
-    public boolean hasGraalvm() {
-        return hasFeature(GraalVM.class);
-    }
-
-    public boolean hasAotBuildPlugin() {
-        return hasFeature(MicronautAot.class);
     }
 
     public boolean hasFeature(Class<?> clazz) {
