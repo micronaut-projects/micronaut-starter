@@ -47,6 +47,11 @@ public class EnforcerPlugin implements DefaultFeature {
     }
 
     @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
     @NonNull
     public String getDescription() {
         return "Adds the Maven Enforcer plugin which provides goals to control certain environmental constraints such as Maven version, JDK version and OS family along with many more built-in rules and user created rules.";
