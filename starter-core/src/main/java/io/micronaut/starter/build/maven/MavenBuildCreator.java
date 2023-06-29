@@ -28,6 +28,7 @@ import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -74,13 +75,14 @@ public class MavenBuildCreator {
                     .buildCoordinate(true);
             annotationProcessorsCoordinates.add(injectJava);
             testAnnotationProcessorsCoordinates.add(injectJava);
-
-            DependencyCoordinate mnGraal = MicronautDependencyUtils.coreDependency()
-                    .artifactId("micronaut-graal")
-                    .versionProperty(PROPERTY_MICRONAUT_CORE_VERSION)
-                    .buildCoordinate(true);
-            annotationProcessorsCoordinates.add(mnGraal);
-            testAnnotationProcessorsCoordinates.add(mnGraal);
+            if (generatorContext.getFramework().equalsIgnoreCase(Options.FRAMEWORK_MICRONAUT)) {
+                DependencyCoordinate mnGraal = MicronautDependencyUtils.coreDependency()
+                        .artifactId("micronaut-graal")
+                        .versionProperty(PROPERTY_MICRONAUT_CORE_VERSION)
+                        .buildCoordinate(true);
+                annotationProcessorsCoordinates.add(mnGraal);
+                testAnnotationProcessorsCoordinates.add(mnGraal);
+            }
         }
 
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
