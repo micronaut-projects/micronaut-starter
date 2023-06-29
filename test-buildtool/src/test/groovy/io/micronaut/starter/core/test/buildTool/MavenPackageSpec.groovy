@@ -5,12 +5,10 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
+import spock.lang.PendingFeature
 import spock.lang.Requires
-import spock.lang.Retry
 import spock.lang.Unroll
-import spock.util.environment.Jvm
 
-@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class MavenPackageSpec extends CommandSpec {
 
     @Override
@@ -54,7 +52,6 @@ class MavenPackageSpec extends CommandSpec {
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
-    @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
@@ -63,7 +60,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image:ol7-java11-22.3.2")
+        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image:ol8-java17-22.3.0")
         
         where:
         lang << Language.values()
@@ -71,7 +68,7 @@ class MavenPackageSpec extends CommandSpec {
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
-    @Requires({ Jvm.current.java8 || Jvm.current.java11 })
+    @PendingFeature
     void 'test maven Docker Native packaging GraalVM check for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])

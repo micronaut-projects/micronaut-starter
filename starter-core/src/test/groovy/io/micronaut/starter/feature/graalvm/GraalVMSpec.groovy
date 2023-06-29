@@ -10,7 +10,6 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-@Requires({ jvm.isJava8() || jvm.isJava11() })
 class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
@@ -63,7 +62,7 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-graal</artifactId>
-              <version>\${micronaut.version}</version>
+              <version>\${micronaut.core.version}</version>
             </path>
 """)
         template.contains("""
@@ -91,7 +90,7 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
                  <artifactId>micronaut-graal</artifactId>
-                 <version>${micronaut.version}</version>
+                 <version>${micronaut.core.version}</version>
                </annotationProcessorPath>
 ''')
         template.contains("""

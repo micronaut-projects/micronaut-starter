@@ -8,7 +8,6 @@ import io.micronaut.starter.util.VersionInfo
 import spock.lang.Requires
 import spock.lang.Unroll
 
-@Requires({ jvm.isJava8() || jvm.isJava11() })
 class GraalVMDockerRegistryWorkflowSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test github workflow readme'() {
