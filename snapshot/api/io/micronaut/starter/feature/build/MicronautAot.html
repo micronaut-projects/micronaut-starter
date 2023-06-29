@@ -129,6 +129,18 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAotBuildProperties(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addAotBuildProperties</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAotConfigurationPropertiesFiles(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addAotConfigurationPropertiesFiles</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAotGradlePlugin(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addAotGradlePlugin</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAotPluginsDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addAotPluginsDependencies</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -153,9 +165,13 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MicronautAotOptimization.html" title="class in io.micronaut.starter.feature.build">MicronautAotOptimization</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#optimizations(boolean,io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">optimizations</a><wbr>(boolean&nbsp;graalvm,
+ <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
  application types.</div>
 </div>
@@ -323,6 +339,37 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <dt>Parameters:</dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addAotBuildProperties(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>addAotBuildProperties</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAotBuildProperties</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addAotGradlePlugin(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>addAotGradlePlugin</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAotGradlePlugin</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addAotConfigurationPropertiesFiles(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>addAotConfigurationPropertiesFiles</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAotConfigurationPropertiesFiles</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addAotPluginsDependencies(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>addAotPluginsDependencies</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAotPluginsDependencies</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="optimizations(boolean,io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>optimizations</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="MicronautAotOptimization.html" title="class in io.micronaut.starter.feature.build">MicronautAotOptimization</a>&gt;</span>&nbsp;<span class="element-name">optimizations</span><wbr><span class="parameters">(boolean&nbsp;graalvm,
+ <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 </ul>

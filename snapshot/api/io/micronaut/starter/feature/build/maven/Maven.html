@@ -96,14 +96,8 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN" class="member-name-link">ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../../../build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#dependencyResolver" class="member-name-link">dependencyResolver</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#GROUP_ID_ORG_APACHE_MAVEN_PLUGINS" class="member-name-link">GROUP_ID_ORG_APACHE_MAVEN_PLUGINS</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../../../build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a></code></div>
+<div class="col-second even-row-color"><code><a href="#dependencyResolver" class="member-name-link">dependencyResolver</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#MAVEN_PREFIX" class="member-name-link">MAVEN_PREFIX</a></code></div>
@@ -152,47 +146,44 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addEnforcerPlugin(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addEnforcerPlugin</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGitIgnore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addGitIgnore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addGitIgnore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addGitIgnore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addMavenWrapper(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addMavenWrapper</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addMavenWrapper(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addMavenWrapper</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPom(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addPom</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPom(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addPom</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature that means the feature was explicitly selected,
  included by default as a result of <a href="../../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
  or added explicitly by another feature through <a href="../../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../../build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createBuild(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">createBuild</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../../build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createBuild(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">createBuild</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gitIgnore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gitIgnore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMaven()" class="member-name-link">isMaven</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gitIgnore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gitIgnore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pom(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.build.maven.MavenBuild)" class="member-name-link">pom</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
- <a href="../../../build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a>&nbsp;mavenBuild)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMaven()" class="member-name-link">isMaven</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)" class="member-name-link">shouldApply</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pom(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.build.maven.MavenBuild)" class="member-name-link">pom</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
+ <a href="../../../build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a>&nbsp;mavenBuild)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)" class="member-name-link">shouldApply</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
  <a href="../../../options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determines if the feature should be applied to the project.</div>
 </div>
 </div>
@@ -278,34 +269,6 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 </section>
 </li>
 <li>
-<section class="detail" id="GROUP_ID_ORG_APACHE_MAVEN_PLUGINS">
-<h3>GROUP_ID_ORG_APACHE_MAVEN_PLUGINS</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">GROUP_ID_ORG_APACHE_MAVEN_PLUGINS</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#io.micronaut.starter.feature.build.maven.Maven.GROUP_ID_ORG_APACHE_MAVEN_PLUGINS">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN">
-<h3>ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#io.micronaut.starter.feature.build.maven.Maven.ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="dependencyResolver">
 <h3>dependencyResolver</h3>
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../../build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a></span>&nbsp;<span class="element-name">dependencyResolver</span></div>
@@ -377,12 +340,6 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <dt>Parameters:</dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="addEnforcerPlugin(io.micronaut.starter.application.generator.GeneratorContext)">
-<h3>addEnforcerPlugin</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addEnforcerPlugin</span><wbr><span class="parameters">(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 <li>
