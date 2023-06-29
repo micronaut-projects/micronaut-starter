@@ -80,16 +80,17 @@ public class DefaultProjectGenerator implements ProjectGenerator {
         features.addAll(generatorContext.getFeatures());
         features.sort(Comparator.comparing(Function.identity()));
 
-        generatorContext.addTemplate("micronautCli",
-                new RockerTemplate(Template.ROOT,
-                        "micronaut-cli.yml",
-                        cli.template(generatorContext.getLanguage(),
-                                generatorContext.getTestFramework(),
-                                generatorContext.getBuildTool(),
-                                generatorContext.getProject(),
-                                features,
-                                applicationType)));
-
+        if (generatorContext.isMicronautFramework()) {
+            generatorContext.addTemplate("micronautCli",
+                    new RockerTemplate(Template.ROOT,
+                            "micronaut-cli.yml",
+                            cli.template(generatorContext.getLanguage(),
+                                    generatorContext.getTestFramework(),
+                                    generatorContext.getBuildTool(),
+                                    generatorContext.getProject(),
+                                    features,
+                                    applicationType)));
+        }
         generatorContext.applyFeatures();
 
         try (TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler)) {

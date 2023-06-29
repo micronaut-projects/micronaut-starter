@@ -1,27 +1,36 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.maven.ParentPom
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency
-
-@args (Project project, MavenBuild mavenBuild)
+@import io.micronaut.starter.build.Property;
+@args (ParentPom parentPom, MavenBuild mavenBuild)
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>@project.getPackageName()</groupId>
-    <artifactId>@(project.getName())-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+@if (parentPom != null) {
+@io.micronaut.starter.feature.build.maven.templates.parentPom.template(parentPom)
+}
   <artifactId>@mavenBuild.getArtifactId()</artifactId>
 @properties.template(mavenBuild.getProperties())
-  <build>
-    <plugins>
-@mavenBuild.renderPlugins(6)
-    </plugins>
-  </build>
+@if(mavenBuild.getProperties() != null) {
+  <properties>
+  @for (Property prop : mavenBuild.getProperties()) {
+  @if (prop.isComment()) {
+      <!--@prop.getComment()-->
+  } else {
+      <@prop.getKey()>@prop.getValue()</@prop.getKey()>
+  }
+  }
+    </properties>
+}
   <dependencies>
 @for (MavenDependency f : mavenBuild.getDependencies(false)) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false, f.getExclusions())
 }
   </dependencies>
+  <build>
+    <plugins>
+@mavenBuild.renderPlugins(6)
+    </plugins>
+  </build>
 </project>

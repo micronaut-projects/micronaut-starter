@@ -25,8 +25,8 @@ import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.springboot.template.springBootJavaApplication;
-import io.micronaut.starter.springboot.template.springBootJavaApplicationTest;
+import io.micronaut.starter.feature.springboot.template.springBootJavaApplication;
+import io.micronaut.starter.feature.springboot.template.springBootJavaApplicationTest;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
@@ -86,7 +86,7 @@ public class SpringBootJava implements LanguageFeature {
     }
 
     protected void addApplicationTest(GeneratorContext generatorContext) {
-        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/ApplicationTest");
+        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/Application");
         generatorContext.addTemplate("ApplicationTest",
                 new RockerTemplate(testSourcePath, springBootJavaApplicationTest.template(generatorContext.getProject())));
     }

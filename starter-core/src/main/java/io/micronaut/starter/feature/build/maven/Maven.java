@@ -25,9 +25,12 @@ import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
+import io.micronaut.starter.build.maven.ParentPom;
+import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
+import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
@@ -71,18 +74,29 @@ public class Maven implements BuildFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addMavenWrapper(generatorContext);
-        addPom(generatorContext);
-        addGitIgnore(generatorContext);
-        Collection<String> moduleNames = generatorContext.getModuleNames();
-        if (moduleNames.size() > 1) {
-            List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
-                    MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)) :
-                    null;
-            generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
+        if (generatorContext.isMicronautFramework()) {
+            addPom(generatorContext);
+            addGitIgnore(generatorContext);
+            Collection<String> moduleNames = generatorContext.getModuleNames();
+            if (moduleNames.size() > 1) {
+                List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
+                        MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)) :
+                        null;
+                generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
+            }
+            generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
+            generatorContext.addDependency(MicronautDependencyUtils.MICRONAUT_INJECT);
+            addEnforcerPlugin(generatorContext);
+        } else {
+            generateNoneMicronautFrameworkBuild(generatorContext);
         }
-        generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
-        generatorContext.addDependency(MicronautDependencyUtils.MICRONAUT_INJECT);
-        addEnforcerPlugin(generatorContext);
+    }
+
+    protected void generateNoneMicronautFrameworkBuild(GeneratorContext generatorContext) {
+        MavenBuild mavenBuild = createBuild(generatorContext);
+        ParentPom parentPom = generatorContext.getFeature(ParentPomFeature.class).map(ParentPomFeature::getParentPom).orElse(null);
+        RockerModel rockerModel = genericPom.template(parentPom, mavenBuild);
+        generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", rockerModel));
     }
 
     protected void addEnforcerPlugin(GeneratorContext generatorContext) {

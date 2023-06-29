@@ -415,4 +415,8 @@ public class GeneratorContext implements DependencyContext {
     public <T extends Feature> boolean hasFeature(Class<T> featureClass) {
         return getFeature(featureClass).isPresent();
     }
+
+    public boolean isMicronautFramework() {
+        return getFramework().equalsIgnoreCase(Options.FRAMEWORK_MICRONAUT);
+    }
 }

@@ -37,6 +37,7 @@ import io.micronaut.starter.build.maven.MavenCombineAttribute;
 import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
+import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
@@ -56,7 +57,6 @@ import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -217,7 +217,8 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         populateDependencies(generatorContext);
         RockerModel rockerModel = null;
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
+            ParentPom parentPom = new ParentPom(generatorContext.getProject().getPackageName(), generatorContext.getProject().getName() + "-parent", "1.0-SNAPSHOT", false);
+            rockerModel = genericPom.template(parentPom, infrastructureMavenBuild(generatorContext));
         } else if (generatorContext.getBuildTool().isGradle()) {
             rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME, null, null);
         }

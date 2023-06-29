@@ -63,8 +63,9 @@ jakarta-validation-api = "3.0.2"
 spring-boot-gradle-plugin = "3.1.1"
 spring-dependency-management-plugin = "1.1.0"
 micronaut-starter-aws-cdk = "4.0.0-M4"
-
+spring-boot-starter-parent="3.1.1"
 [libraries]
+spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
 spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
 micronaut-starter-aws-cdk = { module = "io.micronaut.starter:micronaut-starter-aws-cdk", version.ref = "micronaut-starter-aws-cdk" }

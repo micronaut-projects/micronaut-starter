@@ -40,8 +40,8 @@ class GradleReplacementSpec extends BeanContextSpec implements CommandOutputFixt
     @Replaces(Gradle.class)
     @Singleton
     static class GradleReplacement extends Gradle  {
-        GradleReplacement(GradleBuildCreator dependencyResolver, MicronautBuildPlugin micronautBuildPlugin, RepositoryResolver repositoryResolver) {
-            super(dependencyResolver, micronautBuildPlugin, repositoryResolver);
+        GradleReplacement(GradleBuildCreator dependencyResolver, RepositoryResolver repositoryResolver) {
+            super(dependencyResolver, repositoryResolver);
         }
 
         @Override

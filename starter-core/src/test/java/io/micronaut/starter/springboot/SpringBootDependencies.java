@@ -18,7 +18,7 @@ package io.micronaut.starter.springboot;
 import io.micronaut.starter.build.dependencies.Dependency;
 
 public final class SpringBootDependencies {
-    private static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";
+    public static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";
     private static final String ARTIFACT_ID_SPRING_BOOT_STARTER = "spring-boot-starter";
     private static final String ARTIFACT_ID_SPRING_BOOT_STARTER_WEB = "spring-boot-starter-web";
     private static final String ARTIFACT_ID_SPRING_BOOT_STARTER_TEST = "spring-boot-starter-test";

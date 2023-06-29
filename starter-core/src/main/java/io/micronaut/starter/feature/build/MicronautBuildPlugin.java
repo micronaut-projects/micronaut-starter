@@ -27,6 +27,8 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.gradle.GradleRepository;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
@@ -40,14 +42,16 @@ import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
 @Singleton
-public class MicronautBuildPlugin implements BuildPluginFeature {
+public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature {
     public static final String MICRONAUT_GRADLE_DOCS_URL = "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/";
     public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
     public static final String AOT_KEY_SECURITY_JWKS = "micronaut.security.jwks.enabled";
@@ -75,7 +79,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
     }
-
+    
     @NonNull
     protected GradlePlugin gradlePlugin(@NonNull GeneratorContext generatorContext) {
         GradlePlugin.Builder builder = null;
@@ -215,9 +219,12 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         return false;
     }
 
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getBuildTool().isGradle();
+    }
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
-
 }

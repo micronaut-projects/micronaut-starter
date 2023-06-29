@@ -25,12 +25,11 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.feature.build.MicronautBuildPlugin;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
+import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
 import io.micronaut.starter.options.BuildTool;
@@ -53,16 +52,14 @@ public class Gradle implements BuildFeature {
 
     protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
+    protected static final String DEFAULT_VERSION = "0.1";
 
     protected final GradleBuildCreator dependencyResolver;
-    protected final MicronautBuildPlugin micronautBuildPlugin;
     protected final RepositoryResolver repositoryResolver;
 
     public Gradle(GradleBuildCreator dependencyResolver,
-                  MicronautBuildPlugin micronautBuildPlugin,
                   RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
-        this.micronautBuildPlugin = micronautBuildPlugin;
         this.repositoryResolver = repositoryResolver;
     }
 
@@ -73,18 +70,25 @@ public class Gradle implements BuildFeature {
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(micronautBuildPlugin);
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.isMicronautFramework()) {
+            addGradleInitFiles(generatorContext);
+            extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
+            GradleBuild build = createBuild(generatorContext);
+            addBuildFile(generatorContext, build);
+            addGitignore(generatorContext);
+            addGradleProperties(generatorContext);
+            addSettingsFile(generatorContext, build);
+        } else {
+            generateNoneMicronautFrameworkBuild(generatorContext);
+        }
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        addGradleInitFiles(generatorContext);
-        extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
+    protected void generateNoneMicronautFrameworkBuild(GeneratorContext generatorContext) {
         GradleBuild build = createBuild(generatorContext);
-        addBuildFile(generatorContext, build);
-        addGitignore(generatorContext);
-        addGradleProperties(generatorContext);
+        RockerModel rockerModel = genericBuildGradle.template(generatorContext.getProject(), build, generatorContext.getFeatures().mainClass().orElse(null), DEFAULT_VERSION, generatorContext.getProject().getPackageName());
+        generatorContext.addTemplate("build.gradle",
+                new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
         addSettingsFile(generatorContext, build);
     }
 
