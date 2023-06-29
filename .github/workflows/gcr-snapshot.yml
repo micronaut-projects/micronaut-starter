@@ -24,7 +24,7 @@ jobs:
           PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
       - name: Build Docker image
         run: |
-          ./gradlew starter-web-netty:dockerBuildNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
+          ./gradlew starter-web-netty:dockerBuild -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
