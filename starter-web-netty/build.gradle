@@ -14,6 +14,10 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut.gcp:micronaut-gcp-http-client"
     runtimeOnly "ch.qos.logback:logback-classic"
+
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut:micronaut-http-client"
