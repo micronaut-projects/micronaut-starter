@@ -59,10 +59,11 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageAws.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAws</a> (implements io.micronaut.starter.feature.aws.<a href="../aws/AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a>, io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>)</li>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageAzure.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAzure</a> (implements io.micronaut.starter.feature.function.azure.<a href="../function/azure/AzureCloudFeature.html" title="interface in io.micronaut.starter.feature.function.azure">AzureCloudFeature</a>, io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>)</li>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageGcp.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageGcp</a> (implements io.micronaut.starter.feature.function.gcp.<a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a>, io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>)</li>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageOracleCloud.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageOracleCloud</a> (implements io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>, io.micronaut.starter.feature.function.oraclefunction.<a href="../function/oraclefunction/OracleCloudFeature.html" title="interface in io.micronaut.starter.feature.function.oraclefunction">OracleCloudFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageAws.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAws</a> (implements io.micronaut.starter.feature.aws.<a href="../aws/AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a>, io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageAzure.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAzure</a> (implements io.micronaut.starter.feature.function.azure.<a href="../function/azure/AzureCloudFeature.html" title="interface in io.micronaut.starter.feature.function.azure">AzureCloudFeature</a>, io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageGcp.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageGcp</a> (implements io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a>, io.micronaut.starter.feature.function.gcp.<a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageLocal.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageLocal</a> (implements io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageOracleCloud.html" class="type-name-link" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageOracleCloud</a> (implements io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a>, io.micronaut.starter.feature.function.oraclefunction.<a href="../function/oraclefunction/OracleCloudFeature.html" title="interface in io.micronaut.starter.feature.function.oraclefunction">OracleCloudFeature</a>)</li>
 </ul>
 </li>
 </ul>
@@ -72,14 +73,18 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>
 <ul>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a> (also extends io.micronaut.starter.feature.<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a> (also extends io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>)</li>
 </ul>
 </li>
 <li class="circle">io.micronaut.core.naming.Described
 <ul>
 <li class="circle">io.micronaut.starter.feature.<a href="../Feature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">Feature</a> (also extends io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered)
 <ul>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -88,7 +93,11 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">io.micronaut.starter.feature.<a href="../Feature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">Feature</a> (also extends io.micronaut.core.naming.Described, io.micronaut.core.order.Ordered)
 <ul>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,7 +106,11 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">io.micronaut.starter.feature.<a href="../Feature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">Feature</a> (also extends io.micronaut.core.naming.Described, io.micronaut.core.naming.Named)
 <ul>
-<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a> (also extends io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

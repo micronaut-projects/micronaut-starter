@@ -198,6 +198,7 @@ io.micronaut.starter.feature.security
 io.micronaut.starter.feature.server
 io.micronaut.starter.feature.server.template
 io.micronaut.starter.feature.spring
+io.micronaut.starter.feature.springboot.template
 io.micronaut.starter.feature.stackdriver
 io.micronaut.starter.feature.test
 io.micronaut.starter.feature.test.template

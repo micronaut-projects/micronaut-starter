@@ -77,13 +77,13 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a></code>, <code><a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a></code>, <code><a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a></code>, <code><a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">ObjectStorageGcp</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a>, <a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a></span></div>
+implements <a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a>, <a href="../function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a></span></div>
 <div class="block">Google Cloud implementation of <a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage"><code>ObjectStorageFeature</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -98,6 +98,9 @@ implements <a href="ObjectStorageFeature.html" title="interface in io.micronaut.
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-io.micronaut.starter.feature.objectstorage.ObjectStorageFeature">Fields inherited from interface&nbsp;io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a></h3>
+<code><a href="ObjectStorageFeature.html#PREAMBLE">PREAMBLE</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
 <code>HIGHEST_PRECEDENCE, LOWEST_PRECEDENCE</code></div>
@@ -140,6 +143,9 @@ implements <a href="ObjectStorageFeature.html" title="interface in io.micronaut.
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.objectstorage.CloudObjectStorageFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.objectstorage.<a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a></h3>
+<code><a href="CloudObjectStorageFeature.html#getCategory()">getCategory</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
 <div class="inherited-list">
@@ -150,7 +156,7 @@ implements <a href="ObjectStorageFeature.html" title="interface in io.micronaut.
 <code><a href="../function/gcp/GcpCloudFeature.html#getCloud()">getCloud</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.objectstorage.ObjectStorageFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.objectstorage.<a href="ObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">ObjectStorageFeature</a></h3>
-<code><a href="ObjectStorageFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="ObjectStorageFeature.html#getCategory()">getCategory</a>, <a href="ObjectStorageFeature.html#getDescription()">getDescription</a>, <a href="ObjectStorageFeature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="ObjectStorageFeature.html#getName()">getName</a>, <a href="ObjectStorageFeature.html#getTitle()">getTitle</a>, <a href="ObjectStorageFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
+<code><a href="ObjectStorageFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="ObjectStorageFeature.html#getDescription()">getDescription</a>, <a href="ObjectStorageFeature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="ObjectStorageFeature.html#getName()">getName</a>, <a href="ObjectStorageFeature.html#getTitle()">getTitle</a>, <a href="ObjectStorageFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
 </section>
 </li>
 </ul>

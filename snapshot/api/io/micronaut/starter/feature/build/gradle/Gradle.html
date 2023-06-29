@@ -99,14 +99,14 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <div class="col-first even-row-color"><code>static final boolean</code></div>
 <div class="col-second even-row-color"><code><a href="#DEFAULT_USER_VERSION_CATALOGUE" class="member-name-link">DEFAULT_USER_VERSION_CATALOGUE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#dependencyResolver" class="member-name-link">dependencyResolver</a></code></div>
+<div class="col-first odd-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_VERSION" class="member-name-link">DEFAULT_VERSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected static final <a href="../../../build/gradle/GradlePlugin.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin</a></code></div>
-<div class="col-second even-row-color"><code><a href="#GROOVY_GRADLE_PLUGIN" class="member-name-link">GROOVY_GRADLE_PLUGIN</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a></code></div>
+<div class="col-second even-row-color"><code><a href="#dependencyResolver" class="member-name-link">dependencyResolver</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../MicronautBuildPlugin.html" title="class in io.micronaut.starter.feature.build">MicronautBuildPlugin</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#micronautBuildPlugin" class="member-name-link">micronautBuildPlugin</a></code></div>
+<div class="col-first odd-row-color"><code>protected static final <a href="../../../build/gradle/GradlePlugin.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#GROOVY_GRADLE_PLUGIN" class="member-name-link">GROOVY_GRADLE_PLUGIN</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../../../build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a></code></div>
 <div class="col-second even-row-color"><code><a href="#repositoryResolver" class="member-name-link">repositoryResolver</a></code></div>
@@ -131,8 +131,7 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.build.gradle.GradleBuildCreator,io.micronaut.starter.feature.build.MicronautBuildPlugin,io.micronaut.starter.build.RepositoryResolver)" class="member-name-link">Gradle</a><wbr>(<a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a>&nbsp;dependencyResolver,
- <a href="../MicronautBuildPlugin.html" title="class in io.micronaut.starter.feature.build">MicronautBuildPlugin</a>&nbsp;micronautBuildPlugin,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.build.gradle.GradleBuildCreator,io.micronaut.starter.build.RepositoryResolver)" class="member-name-link">Gradle</a><wbr>(<a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a>&nbsp;dependencyResolver,
  <a href="../../../build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a>&nbsp;repositoryResolver)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -183,26 +182,23 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../build/gradle/GradlePlugin.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extraPlugins(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">extraPlugins</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateNoneMicronautFrameworkBuild(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">generateNoneMicronautFrameworkBuild</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gitignore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gitignore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../build/Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gradleProperties(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gradleProperties</a><wbr>(@NonNull <a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gitignore(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gitignore</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isGradle()" class="member-name-link">isGradle</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../build/Property.html" title="interface in io.micronaut.starter.build">Property</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#gradleProperties(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">gradleProperties</a><wbr>(@NonNull <a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">If this method is called for a given feature then that feature was explicitly selected
- or was included by default as a result of <a href="../../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
-</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isGradle()" class="member-name-link">isGradle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)" class="member-name-link">shouldApply</a><wbr>(<a href="../../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
  <a href="../../../options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
@@ -220,11 +216,14 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.build.BuildFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.build.<a href="../BuildFeature.html" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></h3>
 <code><a href="../BuildFeature.html#getOrder()">getOrder</a>, <a href="../BuildFeature.html#isMaven()">isMaven</a>, <a href="../BuildFeature.html#isVisible()">isVisible</a>, <a href="../BuildFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.DefaultFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></h3>
+<code><a href="../../DefaultFeature.html#getTargetFramework()">getTargetFramework</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../Feature.html#getCategory()">getCategory</a>, <a href="../../Feature.html#getDescription()">getDescription</a>, <a href="../../Feature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../../Feature.html#getTitle()">getTitle</a>, <a href="../../Feature.html#isCommunity()">isCommunity</a>, <a href="../../Feature.html#isPreview()">isPreview</a></code></div>
+<code><a href="../../Feature.html#getCategory()">getCategory</a>, <a href="../../Feature.html#getDescription()">getDescription</a>, <a href="../../Feature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../../Feature.html#getTitle()">getTitle</a>, <a href="../../Feature.html#isCommunity()">isCommunity</a>, <a href="../../Feature.html#isPreview()">isPreview</a>, <a href="../../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code></div>
 </section>
 </li>
 </ul>
@@ -285,15 +284,23 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 </section>
 </li>
 <li>
-<section class="detail" id="dependencyResolver">
-<h3>dependencyResolver</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a></span>&nbsp;<span class="element-name">dependencyResolver</span></div>
+<section class="detail" id="DEFAULT_VERSION">
+<h3>DEFAULT_VERSION</h3>
+<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DEFAULT_VERSION</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#io.micronaut.starter.feature.build.gradle.Gradle.DEFAULT_VERSION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="micronautBuildPlugin">
-<h3>micronautBuildPlugin</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../MicronautBuildPlugin.html" title="class in io.micronaut.starter.feature.build">MicronautBuildPlugin</a></span>&nbsp;<span class="element-name">micronautBuildPlugin</span></div>
+<section class="detail" id="dependencyResolver">
+<h3>dependencyResolver</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a></span>&nbsp;<span class="element-name">dependencyResolver</span></div>
 </section>
 </li>
 <li>
@@ -311,10 +318,9 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.starter.build.gradle.GradleBuildCreator,io.micronaut.starter.feature.build.MicronautBuildPlugin,io.micronaut.starter.build.RepositoryResolver)">
+<section class="detail" id="&lt;init&gt;(io.micronaut.starter.build.gradle.GradleBuildCreator,io.micronaut.starter.build.RepositoryResolver)">
 <h3>Gradle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Gradle</span><wbr><span class="parameters">(<a href="../../../build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a>&nbsp;dependencyResolver,
- <a href="../MicronautBuildPlugin.html" title="class in io.micronaut.starter.feature.build">MicronautBuildPlugin</a>&nbsp;micronautBuildPlugin,
  <a href="../../../build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a>&nbsp;repositoryResolver)</span></div>
 </section>
 </li>
@@ -344,27 +350,6 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 </section>
 </li>
 <li>
-<section class="detail" id="processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">
-<h3>processSelectedFeatures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processSelectedFeatures</span><wbr><span class="parameters">(<a href="../../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">Feature</a></code></span></div>
-<div class="block">If this method is called for a given feature then that feature was explicitly selected
- or was included by default as a result of <a href="../../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.
-
- This method can be implemented to allow features to modify the list of features
- that will apply to the project. The methods <a href="../../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>
- and <a href="../../FeatureContext.html#exclude(io.micronaut.starter.feature.FeaturePredicate)"><code>FeatureContext.exclude(FeaturePredicate)</code></a> are the primary ways to add and
- remove features from the context. <a href="../../FeatureContext.html#isPresent(java.lang.Class)"><code>FeatureContext.isPresent(Class)</code></a> can be used
- to determine the existence of other features in order to make decisions.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>featureContext</code> - The feature context</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="apply(io.micronaut.starter.application.generator.GeneratorContext)">
 <h3>apply</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span><wbr><span class="parameters">(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
@@ -384,6 +369,12 @@ implements <a href="../BuildFeature.html" title="interface in io.micronaut.start
 <dt>Parameters:</dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generateNoneMicronautFrameworkBuild(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>generateNoneMicronautFrameworkBuild</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">generateNoneMicronautFrameworkBuild</span><wbr><span class="parameters">(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 <li>

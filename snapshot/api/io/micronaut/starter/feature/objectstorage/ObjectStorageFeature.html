@@ -51,7 +51,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -74,15 +74,19 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code>io.micronaut.core.naming.Described</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code></dd>
+<dd><code>io.micronaut.core.naming.Described</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code></dd>
+</dl>
+<dl class="notes">
+<dt>All Known Subinterfaces:</dt>
+<dd><code><a href="CloudObjectStorageFeature.html" title="interface in io.micronaut.starter.feature.objectstorage">CloudObjectStorageFeature</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="ObjectStorageAws.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAws</a></code>, <code><a href="ObjectStorageAzure.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAzure</a></code>, <code><a href="ObjectStorageGcp.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageGcp</a></code>, <code><a href="ObjectStorageOracleCloud.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageOracleCloud</a></code></dd>
+<dd><code><a href="ObjectStorageAws.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAws</a></code>, <code><a href="ObjectStorageAzure.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageAzure</a></code>, <code><a href="ObjectStorageGcp.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageGcp</a></code>, <code><a href="ObjectStorageLocal.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageLocal</a></code>, <code><a href="ObjectStorageOracleCloud.html" title="class in io.micronaut.starter.feature.objectstorage">ObjectStorageOracleCloud</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ObjectStorageFeature</span><span class="extends-implements">
-extends <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></span></div>
+extends <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></span></div>
 <div class="block">Base class for Object Storage features.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -97,6 +101,15 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PREAMBLE" class="member-name-link">PREAMBLE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
 <code>HIGHEST_PRECEDENCE, LOWEST_PRECEDENCE</code></div>
@@ -120,29 +133,26 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
  included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
  or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getCategory()" class="member-name-link">getCategory</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCloudProvider()" class="member-name-link">getCloudProvider</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getMicronautDocumentation()" class="member-name-link">getMicronautDocumentation</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCloudProvider()" class="member-name-link">getCloudProvider</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getMicronautDocumentation()" class="member-name-link">getMicronautDocumentation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
  application types.</div>
 </div>
@@ -150,20 +160,39 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.function.CloudFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.function.<a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></h3>
-<code><a href="../function/CloudFeature.html#getCloud()">getCloud</a></code></div>
-<div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../Feature.html#getOrder()">getOrder</a>, <a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()">isVisible</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code></div>
+<code><a href="../Feature.html#getCategory()">getCategory</a>, <a href="../Feature.html#getOrder()">getOrder</a>, <a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()">isVisible</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code></div>
 </section>
 </li>
 </ul>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="PREAMBLE">
+<h3>PREAMBLE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREAMBLE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.objectstorage.ObjectStorageFeature.PREAMBLE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
@@ -184,18 +213,6 @@ extends <a href="../Feature.html" title="interface in io.micronaut.starter.featu
 <dd><code>applicationType</code> - The application type</dd>
 <dt>Returns:</dt>
 <dd>True if the feature can be selected by the user</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getCategory()">
-<h3>getCategory</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCategory</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../Feature.html#getCategory()">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-<dt>Returns:</dt>
-<dd>The <a href="../Category.html" title="class in io.micronaut.starter.feature"><code>Category</code></a> to which the feature belongs to.</dd>
 </dl>
 </section>
 </li>
