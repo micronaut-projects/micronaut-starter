@@ -6,7 +6,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
 import spock.lang.PendingFeature
-import spock.lang.Requires
 import spock.lang.Unroll
 
 class MavenPackageSpec extends CommandSpec {

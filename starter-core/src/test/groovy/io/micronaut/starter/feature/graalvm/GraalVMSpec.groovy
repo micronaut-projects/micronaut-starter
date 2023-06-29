@@ -5,7 +5,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
-import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
