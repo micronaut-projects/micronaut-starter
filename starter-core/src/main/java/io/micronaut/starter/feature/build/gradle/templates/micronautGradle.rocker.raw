@@ -1,0 +1,112 @@
+@import java.util.List
+@import java.util.Map
+@import io.micronaut.starter.feature.build.gradle.Dockerfile
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args(
+    GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative,
+    List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
+    String runtime, String testRuntime,
+    String aotVersion, boolean incremental, String packageName,
+    List<String> additionalTestResourceModules,
+    boolean sharedTestResources,
+    Map<String, String> aotKeys
+)
+micronaut {
+@if(runtime != null) {
+    runtime("@(runtime)")
+}
+@if(testRuntime != null) {
+    testRuntime("@(testRuntime)")
+}
+@if(incremental) {
+    processing {
+        incremental(true)
+        annotations("@(packageName).*")
+    }
+}
+@if (additionalTestResourceModules != null || sharedTestResources) {
+    testResources {
+        @if(additionalTestResourceModules != null) {
+            @for (String module : additionalTestResourceModules) {
+        additionalModules.add("@module")
+            }
+        }
+        @if(sharedTestResources) {
+            @if (dsl == GradleDsl.KOTLIN) {
+        sharedServer.set(true)
+            }
+            @if (dsl == GradleDsl.GROOVY) {
+        sharedServer = true
+            }
+        }
+    }
+}
+@if(aotVersion != null) {
+@io.micronaut.starter.feature.build.gradle.templates.aotExtension.template(dsl, aotKeys)
+}
+}
+
+@if(dockerfile != null) {
+dockerfile {
+@if(dockerfile.getBaseImage() != null) {
+    baseImage("@(dockerfile.getBaseImage())")
+}
+@if (dockerfile.getArgs() != null) {
+    args(
+    @for (int i = 0; i < dockerfile.getArgs().size(); i++) {
+        "@(dockerfile.getArgs().get(i))"@if (i < (dockerfile.getArgs().size() -1)) {,}
+    }
+    )
+}
+}
+}
+
+@if(dockerfileNative != null) {
+@if(build == BuildTool.GRADLE) {
+@raw("\ntasks.named(\"dockerfileNative\") {\n")
+}
+@if(build == BuildTool.GRADLE_KOTLIN) {
+@raw("\ntasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>(\"dockerfileNative\") {\n")
+}
+
+@if(dockerfileNative.getBaseImage() != null) {
+@if(build == BuildTool.GRADLE) {
+    baseImage = "@(dockerfileNative.getBaseImage())"
+}
+@if(build == BuildTool.GRADLE_KOTLIN) {
+    baseImage.set("@(dockerfileNative.getBaseImage())")
+}
+}
+
+@if (dockerfileNative.getArgs() != null) {
+    args(
+    @for (int i = 0; i < dockerfileNative.getArgs().size(); i++) {
+        "@(dockerfileNative.getArgs().get(i))"@if (i < (dockerfileNative.getArgs().size() -1)) {,}
+    }
+    )
+}
+
+@raw("}\n")
+
+}
+
+@if(dockerBuilderNativeImages != null) {
+dockerBuildNative {
+    images = [
+    @for (int i = 0; i < dockerBuilderNativeImages.size(); i++) {
+        "@(dockerBuilderNativeImages.get(i))"@if (i < (dockerBuilderNativeImages.size() -1)) {,}
+    }
+    ]
+}
+}
+
+@if(dockerBuilderImages != null) {
+dockerBuild {
+    images = [
+    @for (int i = 0; i < dockerBuilderImages.size(); i++) {
+        "@(dockerBuilderImages.get(i))"@if (i < (dockerBuilderImages.size() -1)) {,}
+    }
+    ]
+}
+}

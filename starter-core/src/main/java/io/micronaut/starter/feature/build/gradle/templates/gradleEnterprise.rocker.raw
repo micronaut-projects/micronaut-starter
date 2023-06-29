@@ -1,0 +1,20 @@
+@import io.micronaut.starter.feature.build.GradleEnterpriseConfiguration
+@args (GradleEnterpriseConfiguration config)
+gradleEnterprise {
+@if (config.getServer() != null) {
+    server = "@(config.getServer())"
+}
+@if (config.allowTrustedServer() != null && config.allowTrustedServer()) {
+     allowUntrustedServer = true
+}
+@if (config.getTermsOfServiceUrl() != null || config.aggreeWithTermsOfService() != null) {
+    buildScan {
+@if (config.getTermsOfServiceUrl() != null) {
+         termsOfServiceUrl = "@(config.getTermsOfServiceUrl())"
+}
+@if (config.getServer() == null && config.aggreeWithTermsOfService()) {
+         termsOfServiceAgree = "yes"
+}
+    }
+}
+}
