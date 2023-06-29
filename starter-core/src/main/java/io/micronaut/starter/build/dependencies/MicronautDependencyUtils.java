@@ -56,6 +56,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_JMS = "io.micronaut.jms";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
+    public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
 
     private MicronautDependencyUtils() {
 
@@ -218,5 +219,10 @@ public final class MicronautDependencyUtils {
                 .annotationProcessor(requiresPriority)
                 .versionProperty(propertyName)
                 .exclude(MICRONAUT_INJECT);
+    }
+
+    @NonNull
+    public static Dependency.Builder controlPanelDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
     }
 }

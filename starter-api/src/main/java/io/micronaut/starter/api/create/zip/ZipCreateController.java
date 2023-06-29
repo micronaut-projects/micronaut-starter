@@ -59,7 +59,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Controller
-@ExecuteOn(TaskExecutors.IO)
+@ExecuteOn(TaskExecutors.BLOCKING)
 public class ZipCreateController extends AbstractCreateController implements ZipCreateOperation {
 
     public static final String MEDIA_TYPE_APPLICATION_ZIP = "application/zip";

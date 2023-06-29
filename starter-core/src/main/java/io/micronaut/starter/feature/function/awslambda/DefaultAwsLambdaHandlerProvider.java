@@ -23,7 +23,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class DefaultAwsLambdaHandlerProvider implements HandlerClassFeature {
-    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
+    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction";
 
     @Override
     @NonNull

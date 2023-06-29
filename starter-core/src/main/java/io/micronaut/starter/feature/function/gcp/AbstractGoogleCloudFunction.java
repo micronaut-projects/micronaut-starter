@@ -20,6 +20,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
+import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
 public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
@@ -32,9 +33,13 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
                     .build();
 
     private final ShadePlugin shadePlugin;
+    private final JacksonDatabindFeature jacksonDatabindFeature;
 
-    public AbstractGoogleCloudFunction(ShadePlugin shadePlugin) {
+    public AbstractGoogleCloudFunction(
+            ShadePlugin shadePlugin,
+            JacksonDatabindFeature jacksonDatabindFeature) {
         this.shadePlugin = shadePlugin;
+        this.jacksonDatabindFeature = jacksonDatabindFeature;
     }
 
     @Override
@@ -49,6 +54,9 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(ShadePlugin.class)) {
             featureContext.addFeature(shadePlugin);
+        }
+        if (!featureContext.isPresent(JacksonDatabindFeature.class)) {
+            featureContext.addFeature(jacksonDatabindFeature);
         }
     }
 }

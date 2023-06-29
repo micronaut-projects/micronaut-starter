@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
+import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
@@ -53,8 +54,8 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
             .test()
             .build();
 
-    public GoogleCloudFunction(ShadePlugin shadePlugin) {
-        super(shadePlugin);
+    public GoogleCloudFunction(ShadePlugin shadePlugin, JacksonDatabindFeature jacksonDatabindFeature) {
+        super(shadePlugin, jacksonDatabindFeature);
     }
 
     @NonNull

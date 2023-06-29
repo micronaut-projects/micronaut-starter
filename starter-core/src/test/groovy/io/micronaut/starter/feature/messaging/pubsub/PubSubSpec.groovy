@@ -46,9 +46,6 @@ class PubSubSpec extends ApplicationContextSpec {
         then:
         template.count('implementation("io.micronaut.gcp:micronaut-gcp-pubsub")') == 1
 
-        and:
-        template.count('nativeImageCompileOnly("com.google.cloud:native-image-support")') == 1
-
         where:
         language << [Language.JAVA, Language.KOTLIN]
     }
@@ -68,25 +65,6 @@ class PubSubSpec extends ApplicationContextSpec {
       <artifactId>micronaut-gcp-pubsub</artifactId>
       <scope>compile</scope>
     </dependency>
-''') == 1
-
-        and:
-        template.count('''
-        <profile>
-            <id>graalVM</id>
-            <activation>
-                <property>
-                    <name>packaging</name>
-                    <value>native-image</value>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.google.cloud</groupId>
-                    <artifactId>native-image-support</artifactId>
-               </dependency>
-            </dependencies>
-        </profile>
 ''') == 1
 
         where:

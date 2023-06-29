@@ -48,9 +48,6 @@ micronaut:
         then:
         template.count('implementation("io.micronaut.gcp:micronaut-gcp-secret-manager")') == 1
 
-        and:
-        !template.contains('nativeImageCompileOnly("com.google.cloud:native-image-support")')
-
         where:
         language << Language.values().toList()
     }
@@ -65,9 +62,6 @@ micronaut:
 
         then:
         template.count('implementation("io.micronaut.gcp:micronaut-gcp-secret-manager")') == 1
-
-        and:
-        template.count('nativeImageCompileOnly("com.google.cloud:native-image-support")') == 1
 
         where:
         language << [Language.JAVA, Language.KOTLIN]
@@ -90,24 +84,6 @@ micronaut:
     </dependency>
 ''') == 1
 
-        and:
-        !template.contains('''
-        <profile>
-          <id>graalVM</id>
-          <activation>
-            <property>
-              <name>packaging</name>
-              <value>native-image</value>
-            </property>
-          </activation>
-          <dependencies>
-            <dependency>
-              <groupId>com.google.cloud</groupId>
-              <artifactId>native-image-support</artifactId>
-            </dependency>
-          </dependencies>
-        </profile>
-''')
         where:
         language << Language.values().toList()
     }
@@ -127,25 +103,6 @@ micronaut:
       <artifactId>micronaut-gcp-secret-manager</artifactId>
       <scope>compile</scope>
     </dependency>
-''') == 1
-
-        and:
-        template.count('''\
-        <profile>
-            <id>graalVM</id>
-            <activation>
-                <property>
-                    <name>packaging</name>
-                    <value>native-image</value>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.google.cloud</groupId>
-                    <artifactId>native-image-support</artifactId>
-               </dependency>
-            </dependencies>
-        </profile>
 ''') == 1
 
         where:

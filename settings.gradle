@@ -4,8 +4,8 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id "com.microsoft.azure.azurefunctions" version "1.12.1"
-        id 'io.micronaut.application' version '4.0.0-M2'
+        id 'com.microsoft.azure.azurefunctions' version '1.12.1'
+        id 'io.micronaut.application' version '4.0.0-M6'
     }
 }
 

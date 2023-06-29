@@ -6,5 +6,5 @@ dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":starter-core")
     testImplementation project(":micronaut-cli")
-    testImplementation "ch.qos.logback:logback-classic:1.2.11"
+    testImplementation "ch.qos.logback:logback-classic:1.4.8"
 }

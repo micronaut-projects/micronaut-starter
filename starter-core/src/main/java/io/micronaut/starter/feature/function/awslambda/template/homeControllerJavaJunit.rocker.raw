@@ -1,20 +1,30 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project
+Project project,
+String handler
 )
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName();
 }
-
-import com.amazonaws.serverless.exceptions.ContainerInitializationException;
-import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext;
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
-import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.services.lambda.runtime.ClientContext;
+import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.micronaut.function.aws.proxy.MicronautLambdaHandler;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction;
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
+import io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction;
+}
+
+import io.micronaut.http.HttpMethod;
+import io.micronaut.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,31 +32,102 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomeControllerTest {
-
-    private static MicronautLambdaHandler handler;
-    private static Context lambdaContext = new MockLambdaContext();
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
+    private static ApiGatewayProxyRequestEventFunction handler;
 
     @@BeforeAll
     public static void setupSpec() {
-        try {
-            handler = new MicronautLambdaHandler();
-        } catch (ContainerInitializationException e) {
-            e.printStackTrace();
-        }
+        handler = new ApiGatewayProxyRequestEventFunction();
     }
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+    private static APIGatewayV2HTTPEventFunction handler;
 
+    @@BeforeAll
+    public static void setupSpec() {
+        handler = new APIGatewayV2HTTPEventFunction();
+    }
+}
     @@AfterAll
     public static void cleanupSpec() {
         handler.getApplicationContext().close();
     }
 
     @@Test
-    void testHandler() throws JsonProcessingException {
-        AwsProxyRequest request = new AwsProxyRequest();
-        request.setHttpMethod("GET");
+    void testHandler() {
+@if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
+        APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent();
         request.setPath("/");
-        AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
-        assertEquals(200, response.getStatusCode());
+        request.setHttpMethod(HttpMethod.GET.toString());
+        APIGatewayProxyResponseEvent response = handler.handleRequest(request, lambdaContext);
+} else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
+        APIGatewayV2HTTPEvent request = new APIGatewayV2HTTPEvent();
+        request.setRequestContext(APIGatewayV2HTTPEvent.RequestContext.builder()
+                .withHttp(APIGatewayV2HTTPEvent.RequestContext.Http.builder()
+                        .withPath("/")
+                        .withMethod(HttpMethod.GET.toString())
+                        .build()
+                ).build());
+        APIGatewayV2HTTPResponse response = handler.handleRequest(request, lambdaContext);
+}
+        assertEquals(HttpStatus.OK.getCode(), response.getStatusCode());
         assertEquals("{\"message\":\"Hello World\"}",  response.getBody());
     }
+
+   static final Context lambdaContext = new Context() {
+
+        @@Override
+        public String getAwsRequestId() {
+            return null;
+        }
+
+        @@Override
+        public String getLogGroupName() {
+            return null;
+        }
+
+        @@Override
+        public String getLogStreamName() {
+            return null;
+        }
+
+        @@Override
+        public String getFunctionName() {
+            return null;
+        }
+
+        @@Override
+        public String getFunctionVersion() {
+            return null;
+        }
+
+        @@Override
+        public String getInvokedFunctionArn() {
+            return null;
+        }
+
+        @@Override
+        public CognitoIdentity getIdentity() {
+            return null;
+        }
+
+        @@Override
+        public ClientContext getClientContext() {
+            return null;
+        }
+
+        @@Override
+        public int getRemainingTimeInMillis() {
+            return 0;
+        }
+
+        @@Override
+        public int getMemoryLimitInMB() {
+            return 0;
+        }
+
+        @@Override
+        public LambdaLogger getLogger() {
+            return null;
+        }
+    };
 }

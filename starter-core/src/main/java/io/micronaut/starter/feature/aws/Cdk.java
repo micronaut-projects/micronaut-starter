@@ -20,9 +20,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.RepositoryResolver;
+import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
@@ -40,7 +40,6 @@ import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
-import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
@@ -65,7 +64,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -82,49 +80,25 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String ARTIFACT_ID_AWS_CDK_LIB = "aws-cdk-lib";
     private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
     private static final String ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK = "micronaut-starter-aws-cdk";
-    private static final Dependency DEPENDENCY_CDK =
-            MicronautDependencyUtils.awsDependency()
-                    .artifactId("micronaut-aws-cdk")
-                    .version("4.0.0-M2")
-//            MicronautDependencyUtils.starterDependency()
-//                    .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
-                    .exclude(Dependency.builder()
-                            .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
-                            .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
-                            .build())
-                    .compile()
-                    .build();
-
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
     private final CoordinateResolver coordinateResolver;
+    private final Dependency DEPENDENCY_CDK;
 
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver) {
-        this(coordinateResolver, new X86());
-    }
-
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver,
-               Arm arm) {
-        this.coordinateResolver = coordinateResolver;
-        this.defaultCpuArchitecture = arm;
-        this.dependencyContext = new DependencyContextImpl(coordinateResolver);
-        this.repositoryResolver = new DefaultRepositoryResolver();
-    }
-
-    @Deprecated
-    public Cdk(CoordinateResolver coordinateResolver,
-               X86 x86) {
-        this(coordinateResolver, x86, new DefaultRepositoryResolver());
-    }
-
-    @Inject
     public Cdk(CoordinateResolver coordinateResolver,
                X86 x86,
                RepositoryResolver repositoryResolver) {
         this.coordinateResolver = coordinateResolver;
+        DEPENDENCY_CDK = MicronautDependencyUtils.starterDependency()
+                        .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
+                        .version(coordinateResolver.resolve(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK).map(Coordinate::getVersion).orElseThrow())
+                    .exclude(Dependency.builder()
+                .groupId(GROUP_ID_SOFTWARE_AMAZON_AWSCDK)
+                .artifactId(ARTIFACT_ID_AWS_CDK_LIB)
+                .build())
+                .compile()
+                .build();
         this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.repositoryResolver = repositoryResolver;
@@ -166,7 +140,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
-        String handler = resolveHandler(generatorContext);
+        String handler = HandlerClassFeature.resolveHandler(generatorContext);
         Language lang = Language.JAVA;
         addAppStackTest(generatorContext, lang, handler);
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
@@ -201,13 +175,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
-    }
-
-    @NonNull
-    private String resolveHandler(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getFeature(HandlerClassFeature.class)
-                .map(f -> f.handlerClass(generatorContext))
-                .orElse(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
     }
 
     private void populateDependencies(GeneratorContext generatorContext) {

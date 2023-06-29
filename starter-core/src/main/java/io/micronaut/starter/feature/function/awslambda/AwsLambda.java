@@ -27,12 +27,12 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
+import io.micronaut.starter.feature.aws.AwsLambdaEventsSerde;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
@@ -59,6 +59,9 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.other.HttpClient;
+import io.micronaut.starter.feature.json.SerializationJacksonFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -66,7 +69,6 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -81,7 +83,6 @@ import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, AwsMicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
-    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
     public static final String REQUEST_HANDLER = "FunctionRequestHandler";
     public static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_TEST = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-function")
@@ -110,60 +111,27 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final AwsLambdaCustomRuntime customRuntime;
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
+    private final HttpClient httpClient;
+
+    private final AwsLambdaEventsSerde awsLambdaEventsSerde;
 
     private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
     private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime) {
-        this(shadePlugin, customRuntime, new X86(), new AwsLambdaSnapstart());
-    }
-
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     Arm arm) {
-        this.shadePlugin = shadePlugin;
-        this.customRuntime = customRuntime;
-        this.defaultCpuArchitecture = arm;
-        this.snapstart = new AwsLambdaSnapstart();
-        this.defaultAwsLambdaHandlerProvider = new DefaultAwsLambdaHandlerProvider();
-        this.functionAwsLambdaHandlerProvider = new FunctionAwsLambdaHandlerProvider();
-    }
-
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     X86 x86) {
-        this(shadePlugin, customRuntime, x86, new AwsLambdaSnapstart());
-    }
-
-    @Inject
-    @Deprecated
-    public AwsLambda(ShadePlugin shadePlugin,
-                     AwsLambdaCustomRuntime customRuntime,
-                     X86 x86,
-                     AwsLambdaSnapstart snapstart) {
-        this(shadePlugin,
-                customRuntime,
-                x86,
-                snapstart,
-                new DefaultAwsLambdaHandlerProvider(),
-                new FunctionAwsLambdaHandlerProvider());
-    }
-
-    @Inject
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
                      AwsLambdaSnapstart snapstart,
+                     HttpClient httpClient,
+                     AwsLambdaEventsSerde awsLambdaEventsSerde,
                      DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
                      FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = x86;
         this.snapstart = snapstart;
+        this.httpClient = httpClient;
+        this.awsLambdaEventsSerde = awsLambdaEventsSerde;
         this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
         this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
     }
@@ -186,8 +154,15 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
             featureContext.addFeature(customRuntime);
         }
 
+        if (featureContext.isPresent(GraalVM.class) && !featureContext.isPresent(HttpClientFeature.class)) {
+            featureContext.addFeature(httpClient);
+        }
+
         if (shouldAddSnapstartFeature(featureContext)) {
             featureContext.addFeature(snapstart);
+        }
+        if (featureContext.isPresent(SerializationJacksonFeature.class)) {
+            featureContext.addFeature(awsLambdaEventsSerde);
         }
     }
 
@@ -299,11 +274,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HomeController");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project),
-                homeControllerJavaJunit.template(project),
-                homeControllerGroovyJunit.template(project),
-                homeControllerKotlinJunit.template(project),
-                homeControllerKoTest.template(project));
+        String handler = HandlerClassFeature.resolveHandler(generatorContext);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project, handler),
+                homeControllerJavaJunit.template(project, handler),
+                homeControllerGroovyJunit.template(project, handler),
+                homeControllerKotlinJunit.template(project, handler),
+                homeControllerKoTest.template(project, handler));
         generatorContext.addTemplate("testHomeController", testSource, provider);
     }
 

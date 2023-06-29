@@ -12,7 +12,7 @@ class AwsLambdaS3EventNotificationSpec extends ApplicationContextSpec {
 
     void 'aws-lambda-s3-event-notification feature is in the cloud category'() {
         expect:
-        awsLambdaS3EventNotification.category == Category.CLOUD
+        awsLambdaS3EventNotification.category == Category.SERVERLESS
     }
 
     void 'aws-lambda-s3-event-notification feature is an instance of AwsLambdaEventFeature'() {

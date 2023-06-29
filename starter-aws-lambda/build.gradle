@@ -9,9 +9,11 @@ micronaut {
 }
 
 dependencies {
-    implementation project(":starter-api")
-    runtimeOnly "ch.qos.logback:logback-classic"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation(project(":starter-api"))
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
 }
 
 application {

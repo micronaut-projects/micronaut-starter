@@ -9,6 +9,9 @@ dependencies {
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("io.micronaut:micronaut-graal")
 
+    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
+    implementation("io.micronaut.validation:micronaut-validation")
+
     implementation(project(":starter-core"))
     implementation("io.micronaut:micronaut-http-server-netty")
     runtimeOnly("ch.qos.logback:logback-classic")

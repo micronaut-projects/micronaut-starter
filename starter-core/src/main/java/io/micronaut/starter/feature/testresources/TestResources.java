@@ -35,11 +35,12 @@ import jakarta.inject.Singleton;
 public class TestResources implements Feature {
 
     public static final String MICRONAUT_TEST_RESOURCES_ENABLED = "micronaut.test.resources.enabled";
+    public static final String NAME = "test-resources";
 
     @Override
     @NonNull
     public String getName() {
-        return "test-resources";
+        return NAME;
     }
 
     @Override
@@ -79,6 +80,10 @@ public class TestResources implements Feature {
         } else {
             BuildProperties buildProperties = generatorContext.getBuildProperties();
             buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.testresources")
+                    .artifactId("micronaut-test-resources-client")
+                    .developmentOnly());
         }
     }
 

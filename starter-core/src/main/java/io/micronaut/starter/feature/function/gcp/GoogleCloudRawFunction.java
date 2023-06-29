@@ -32,6 +32,7 @@ import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionJava
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKoTest;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
+import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -52,8 +53,8 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
 
     private final GoogleCloudFunction googleCloudFunction;
 
-    public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin) {
-        super(shadePlugin);
+    public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin, JacksonDatabindFeature jacksonDatabindFeature) {
+        super(shadePlugin, jacksonDatabindFeature);
         this.googleCloudFunction = googleCloudFunction;
     }
 
