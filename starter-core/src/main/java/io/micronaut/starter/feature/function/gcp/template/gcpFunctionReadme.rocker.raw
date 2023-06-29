@@ -39,9 +39,9 @@ Now run:
 
 ```bash
 @if(isFunction){
-$ gcloud functions deploy @project.getName() --entry-point @if(project.getPackageName() != null){@(project.getPackageName()).}Function --runtime java11 --trigger-http
+$ gcloud functions deploy @project.getName() --entry-point @if(project.getPackageName() != null){@(project.getPackageName()).}Function --runtime java17 --trigger-http
 } else {
-$ gcloud functions deploy @project.getName() --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
+$ gcloud functions deploy @project.getName() --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java17 --trigger-http
 }
 ```
 

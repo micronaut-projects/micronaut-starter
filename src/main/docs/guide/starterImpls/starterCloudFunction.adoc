@@ -39,7 +39,7 @@ Now run:
 
 [source,bash]
 ----
-$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
+$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java17 --trigger-http
 ----
 
 Choose unauthenticated access if you don't need auth.
