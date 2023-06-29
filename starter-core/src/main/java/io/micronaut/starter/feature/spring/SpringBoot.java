@@ -17,14 +17,13 @@ package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.RequiresMavenLocal;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SpringBoot extends SpringFeature implements RequiresMavenLocal {
+public class SpringBoot extends SpringFeature {
 
     public SpringBoot(Spring spring) {
         super(spring);
