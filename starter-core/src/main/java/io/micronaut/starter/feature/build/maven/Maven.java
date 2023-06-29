@@ -23,7 +23,6 @@ import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
-import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.build.maven.ParentPomFeature;
@@ -52,11 +51,6 @@ public class Maven implements BuildFeature {
     protected static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     protected static final String MAVEN_PREFIX = "maven/";
-
-    protected static final String GROUP_ID_ORG_APACHE_MAVEN_PLUGINS = "org.apache.maven.plugins";
-
-    protected static final String ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN = "maven-enforcer-plugin";
-
     protected final MavenBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
@@ -97,13 +91,6 @@ public class Maven implements BuildFeature {
         ParentPom parentPom = generatorContext.getFeature(ParentPomFeature.class).map(ParentPomFeature::getParentPom).orElse(null);
         RockerModel rockerModel = genericPom.template(parentPom, mavenBuild);
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", rockerModel));
-    }
-
-    protected void addEnforcerPlugin(GeneratorContext generatorContext) {
-        generatorContext.addBuildPlugin(MavenPlugin.builder()
-                .groupId(GROUP_ID_ORG_APACHE_MAVEN_PLUGINS)
-                .artifactId(ARTIFACT_ID_MAVEN_ENFORCER_PLUGIN)
-                .build());
     }
 
     protected void addMavenWrapper(GeneratorContext generatorContext) {
