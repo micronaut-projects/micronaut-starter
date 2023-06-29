@@ -26,7 +26,7 @@ dependencies {
     api("org.yaml:snakeyaml")
     implementation("com.typesafe:config:1.4.2")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
-    implementation 'org.apache.commons:commons-compress:1.21'
+    implementation 'org.apache.commons:commons-compress:1.23.0'
     testImplementation("org.apache.groovy:groovy-xml")
 }
 
