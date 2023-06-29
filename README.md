@@ -8,7 +8,7 @@ Generates Micronaut applications.
 
 ## Installation
 
-The CLI application comes in various flavours from a universal Java applications to native applications for Windows, Linux and OS X. These are available for direct download on the [releases page](https://github.com/micronaut-projects/micronaut-starter/releases). For installation see the [Micronaut documentation](https://docs.micronaut.io/2.0.x/guide/index.html#buildCLI).
+The CLI application comes in various flavours from a universal Java applications to native applications for Windows, Linux and OS X. These are available for direct download on the [releases page](https://github.com/micronaut-projects/micronaut-starter/releases). For installation see the [Micronaut documentation](https://docs.micronaut.io/latest/guide/index.html#buildCLI).
 
 If you prefer not to install an application to create Micronaut applications you can do so with `curl` directly from the API:
 
