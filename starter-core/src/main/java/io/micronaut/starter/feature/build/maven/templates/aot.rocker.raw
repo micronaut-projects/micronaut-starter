@@ -1,0 +1,17 @@
+@import java.util.List
+@import io.micronaut.starter.feature.build.MicronautAotOptimization
+@args (
+String packaging,
+List<MicronautAotOptimization> optimizations
+)
+# AOT configuration properties for @packaging packaging
+# Please review carefully the optimizations enabled below
+# Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+
+@for (MicronautAotOptimization optimization : optimizations) {
+@if (optimization.comment() != null) {
+# @(optimization.comment())
+@(optimization.key())=@(optimization.value())
+
+}
+}

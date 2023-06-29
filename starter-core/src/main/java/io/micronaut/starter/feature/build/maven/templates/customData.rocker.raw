@@ -1,0 +1,1 @@
+buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null

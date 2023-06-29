@@ -1,0 +1,511 @@
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.Property
+@import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.maven.MavenBuild
+@import io.micronaut.starter.build.maven.MavenDependency
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.feature.database.Data
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.DatabaseDriverFeatureDependencies
+@import io.micronaut.starter.feature.database.HibernateReactiveFeature
+@import io.micronaut.starter.feature.database.HibernateReactiveFeature
+@import io.micronaut.starter.feature.database.JpaFeature
+@import io.micronaut.starter.feature.database.r2dbc.R2dbc
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
+@import io.micronaut.starter.feature.migration.MigrationFeature
+@import io.micronaut.starter.feature.testresources.TestResources
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.util.VersionInfo
+
+@args (
+ApplicationType applicationType,
+Project project,
+Features features,
+MavenBuild mavenBuild
+)
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+@if (!features.contains("aws-cdk")) {
+  <groupId>@project.getPackageName()</groupId>
+}
+  <artifactId>@mavenBuild.getArtifactId()</artifactId>
+  <version>0.1</version>
+  <packaging>${packaging}</packaging>
+
+@if (features.contains("aws-cdk")) {
+  <parent>
+    <groupId>@project.getPackageName()</groupId>
+    <artifactId>@(project.getName())-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+} else {
+  <parent>
+    <groupId>io.micronaut.platform</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>@VersionInfo.getMicronautVersion()</version>
+  </parent>
+}
+
+  <properties>
+    <packaging>jar</packaging>
+    <jdk.version>@features.getTargetJdk()</jdk.version>
+    <release.version>@features.javaVersion().majorVersion()</release.version>
+@for (Property prop : mavenBuild.getProperties()) {
+@if (prop.isComment()) {
+    <!--@prop.getComment()-->
+} else {
+    <@prop.getKey()>@prop.getValue()</@prop.getKey()>
+}
+}
+  </properties>
+
+  <repositories>
+@mavenBuild.renderRepositories(4)
+  </repositories>
+
+@if (mavenBuild.hasPomDependency()) {
+  <dependencyManagement>
+    <dependencies>
+@for (MavenDependency f : mavenBuild.getDependencies(true)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), true, f.getExclusions())
+}
+    </dependencies>
+  </dependencyManagement>
+}
+
+  <dependencies>
+@if (features.language().isGroovy()) {
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+@dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
+}
+}
+
+@for (MavenDependency f : mavenBuild.getDependencies(false)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false, f.getExclusions())
+}
+  </dependencies>
+
+  <build>
+    <plugins>
+@if (features.application() != null || features.contains("oracle-function") || features.contains("aws-lambda")) {
+      <plugin>
+        <groupId>io.micronaut.maven</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+@if (!mavenBuild.getAotDependencies().isEmpty()
+     || features.contains("springloaded")
+     || features.contains("jrebel")
+     || features.contains("oracle-function")
+     || features.contains("micronaut-aot")
+     || features.isFeaturePresent(TestResources.class)
+     || features.isFeaturePresent(SharedTestResourceFeature.class)
+     || (features.isFeaturePresent(DatabaseDriverFeature.class)
+          && (!features.isFeaturePresent(Data.class)
+               || features.isFeaturePresent(HibernateReactiveFeature.class)
+               || features.isFeaturePresent(R2dbc.class)))
+) {
+          <configuration>
+@if (!mavenBuild.getAotDependencies().isEmpty()) {
+@io.micronaut.starter.feature.build.maven.templates.aotDependencies.template(mavenBuild.getAotDependencies())
+}
+@if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
+            <shared>true</shared>
+}
+@if (features.isFeaturePresent(TestResources.class) &&
+    features.isFeaturePresent(DatabaseDriverFeature.class) &&
+     (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+){
+@with? (String resourceName = features
+    .getFeature(DatabaseDriverFeature.class)
+    .flatMap(DatabaseDriverFeature::getDbType)
+    .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : features.isFeaturePresent(HibernateReactiveFeature.class) ? dbType.getHibernateReactiveTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
+    .orElse(null)) {
+            <testResourcesDependencies>
+              <dependency>
+                <groupId>io.micronaut.testresources</groupId>
+                <artifactId>micronaut-test-resources-@resourceName</artifactId>
+              </dependency>
+@if ((features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+     && features.isFeaturePresent(DatabaseDriverFeature.class)
+     && !features.isFeaturePresent(MigrationFeature.class)
+) {
+@with? (Dependency driver = features.getFeature(DatabaseDriverFeature.class)
+                                                      .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
+                                                      .map(Dependency.Builder::build)
+                                                      .orElse(null)) {
+@dependency.template(driver.getGroupId(), driver.getArtifactId(), null, null, false, null)
+}
+}
+            </testResourcesDependencies>
+}
+}
+@if (features.contains("springloaded") || features.contains("jrebel")) {
+            <jvmArguments>
+@if (features.contains("springloaded")) {
+              <jvmArgument>-noverify</jvmArgument>
+              <jvmArgument>-javaagent:${session.executionRootDirectory}/agent/springloaded-1.2.8.RELEASE.jar</jvmArgument>
+}
+@if (features.contains("jrebel")) {
+              <jvmArgument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArgument>
+}
+            </jvmArguments>
+}
+@if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+            <nativeImageBuildArgs>
+              <arg>-H:+StaticExecutableWithDynamicLibC</arg>
+              <arg>-Dfn.handler=${function.entrypoint}</arg>
+              <arg>--initialize-at-build-time=@project.getPackageName()</arg>
+            </nativeImageBuildArgs>
+            <appArguments>
+              <arg>${function.entrypoint}</arg>
+            </appArguments>
+}
+@if (features.contains("micronaut-aot")) {
+            <configFile>aot-${packaging}.properties</configFile>
+}
+          </configuration>
+}
+      </plugin>
+}
+
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock()) {
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Spec.*</include>
+            <include>**/*Test.*</include>
+          </includes>
+        </configuration>
+@if (features.testFramework().isKotlinTestFramework()) {
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+          </dependency>
+        </dependencies>
+}
+      </plugin>
+}
+@mavenBuild.renderPlugins(6)
+@if (features.contains("google-cloud-function")) {
+       <plugin>
+         <groupId>com.google.cloud.functions</groupId>
+         <artifactId>function-maven-plugin</artifactId>
+         <configuration>
+           <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
+         </configuration>
+        </plugin>
+}
+@if (features.language().isJava()) {
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!-- Uncomment to enable incremental compilation -->
+          <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
+
+          <annotationProcessorPaths @mavenBuild.getAnnotationProcessorCombineAttribute()>
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+            <path>
+              <groupId>@processor.getGroupId()</groupId>
+              <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
+              <version>@processor.getVersion()</version>
+}
+@if (processor.getExclusions() != null) {
+              <exclusions>
+@for (exclusion : processor.getExclusions()) {
+                <exclusion>
+                  <groupId>@exclusion.getGroupId()</groupId>
+                  <artifactId>@exclusion.getArtifactId()</artifactId>
+                </exclusion>
+}
+              </exclusions>
+}
+            </path>
+}
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
+            <arg>-Amicronaut.processing.module=@project.getName()</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+} else if (features.language().isKotlin()) {
+      <plugin>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <version>${kotlinVersion}</version>
+        <configuration>
+          <jvmTarget>${jdk.version}</jvmTarget>
+          <compilerPlugins>
+@if (features.isFeaturePresent(JpaFeature.class)) {
+            <plugin>jpa</plugin>
+}
+            <plugin>all-open</plugin>
+          </compilerPlugins>
+          <pluginOptions>
+            <option>all-open:annotation=io.micronaut.aop.Around</option>
+          </pluginOptions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>kapt</id>
+            <goals>
+              <goal>kapt</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+              </sourceDirs>
+              <annotationProcessorPaths @mavenBuild.getAnnotationProcessorCombineAttribute()>
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+               <annotationProcessorPath>
+                 <groupId>@processor.getGroupId()</groupId>
+                 <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
+                 <version>@processor.getVersion()</version>
+}
+               </annotationProcessorPath>
+}
+              </annotationProcessorPaths>
+              <annotationProcessorArgs>
+                <annotationProcessorArg>micronaut.processing.group=@project.getPackageName()</annotationProcessorArg>
+                <annotationProcessorArg>micronaut.processing.module=@project.getPropertyName()</annotationProcessorArg>
+              </annotationProcessorArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                @if (features.contains("grpc")) {
+                <sourceDir>${project.build.directory}/generated-sources/</sourceDir>
+                }
+              </sourceDirs>
+            </configuration>
+          </execution>
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isJunit()) {
+          <execution>
+            <id>test-kapt</id>
+            <goals>
+              <goal>test-kapt</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+              </sourceDirs>
+              <annotationProcessorPaths @mavenBuild.getTestAnnotationProcessorCombineAttribute()>
+@for (processor : mavenBuild.getTestAnnotationProcessors()) {
+               <annotationProcessorPath>
+                 <groupId>@processor.getGroupId()</groupId>
+                 <artifactId>@processor.getArtifactId()</artifactId>
+@if (processor.getVersion() != null) {
+                 <version>@processor.getVersion()</version>
+}
+               </annotationProcessorPath>
+}
+              </annotationProcessorPaths>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                <sourceDir>${project.basedir}/target/generated-sources/kapt/test</sourceDir>
+              </sourceDirs>
+            </configuration>
+          </execution>
+}
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-allopen</artifactId>
+            <version>${kotlinVersion}</version>
+          </dependency>
+@if (features.isFeaturePresent(JpaFeature.class)) {
+          <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-noarg</artifactId>
+            <version>${kotlinVersion}</version>
+          </dependency>
+}
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <proc>none</proc>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>java-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>java-test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>1.13.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>generateStubs</goal>
+              <goal>compile</goal>
+              <goal>removeStubs</goal>
+              <goal>addTestSources</goal>
+              <goal>generateTestStubs</goal>
+              <goal>compileTests</goal>
+              <goal>removeTestStubs</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.language().isGroovy()) {
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <property>
+                  <name>groovy.target.directory</name>
+                  <value>${project.build.directory}/classes</value>
+                </property>
+                <property>
+                  <name>groovy.parameters</name>
+                  <value>true</value>
+                </property>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.contains("jrebel")) {
+      <plugin>
+        <groupId>org.zeroturnaround</groupId>
+        <artifactId>jrebel-maven-plugin</artifactId>
+        <version>1.1.8</version>
+        <executions>
+          <execution>
+            <id>generate-rebel-xml</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.contains("grpc")) {
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+      </plugin>
+}
+@if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow) || features.contains("oracle-function")) {
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <image>${jib.docker.image}:${jib.docker.tag}</image>
+          </to>
+  @if(applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+          <container>
+            <args>${function.entrypoint}</args>
+            <mainClass>${exec.mainClass}</mainClass>
+          </container>
+  }
+        </configuration>
+      </plugin>
+}
+    </plugins>
+  </build>
+
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
+  <pluginRepositories>
+    @if (VersionInfo.isStarterSnapshot()) {
+    <pluginRepository>
+       <id>central</id>
+       <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+       <id>ossrh</id>
+       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+       <snapshots>
+           <enabled>true</enabled>
+       </snapshots>
+    </pluginRepository>
+    }
+  </pluginRepositories>
+} else if (VersionInfo.isStarterSnapshot()) {
+    <pluginRepositories>
+       <pluginRepository>
+           <id>central</id>
+           <url>https://repo.maven.apache.org/maven2</url>
+       </pluginRepository>
+       <pluginRepository>
+           <id>ossrh</id>
+           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+           <snapshots>
+               <enabled>true</enabled>
+           </snapshots>
+       </pluginRepository>
+    </pluginRepositories>
+}
+@profiles.template(mavenBuild.getProfiles())
+</project>
