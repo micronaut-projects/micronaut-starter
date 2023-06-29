@@ -22,9 +22,7 @@ plugins {
 
 rootProject.name = 'micronaut-starter'
 
-include 'starter-spring-boot'
 include 'starter-core'
-include 'starter-features'
 include 'starter-cli'
 include 'starter-aws-cdk'
 include 'starter-api'
@@ -42,7 +40,6 @@ include 'test-core'
 include 'test-cloud'
 include 'test-features'
 include 'test-utils'
-include 'test-utils-starter-core'
 include 'test-cli'
 
 project(':starter-cli').name = "micronaut-cli"
