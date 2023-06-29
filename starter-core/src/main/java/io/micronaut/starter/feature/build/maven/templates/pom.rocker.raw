@@ -98,7 +98,8 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded")
+@if (!mavenBuild.getAotDependencies().isEmpty()
+     || features.contains("springloaded")
      || features.contains("jrebel")
      || features.contains("oracle-function")
      || features.contains("micronaut-aot")
@@ -110,6 +111,9 @@ MavenBuild mavenBuild
                || features.isFeaturePresent(R2dbc.class)))
 ) {
           <configuration>
+@if (!mavenBuild.getAotDependencies().isEmpty()) {
+@io.micronaut.starter.feature.build.maven.templates.aotDependencies.template(mavenBuild.getAotDependencies())
+}
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
             <shared>true</shared>
 }

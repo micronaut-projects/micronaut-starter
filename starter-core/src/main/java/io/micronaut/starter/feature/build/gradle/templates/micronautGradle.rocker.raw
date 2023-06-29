@@ -43,33 +43,7 @@ micronaut {
     }
 }
 @if(aotVersion != null) {
-    aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-@if (dsl == GradleDsl.KOTLIN) {
-        optimizeServiceLoading.set(true)
-        convertYamlToJava.set(true)
-        precomputeOperations.set(true)
-        cacheEnvironment.set(true)
-        optimizeClassLoading.set(true)
-        deduceEnvironment.set(true)
-        optimizeNetty.set(true)
-}
-@if (dsl == GradleDsl.GROOVY) {
-        optimizeServiceLoading = true
-        convertYamlToJava = true
-        precomputeOperations = true
-        cacheEnvironment = true
-        optimizeClassLoading = true
-        deduceEnvironment = true
-        optimizeNetty = true
-}
-@if(aotKeys != null) {
-@for (String keyName : aotKeys.keySet()) {
-        configurationProperties.put("@(keyName)","@(aotKeys.get(keyName))")
-}
-}
-    }
+@io.micronaut.starter.feature.build.gradle.templates.aotExtension.template(dsl, aotKeys)
 }
 }
 
