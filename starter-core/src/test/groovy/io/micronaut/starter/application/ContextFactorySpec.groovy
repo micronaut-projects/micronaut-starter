@@ -1,11 +1,8 @@
-package io.micronaut.starter.feature
+package io.micronaut.starter.application
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.ContextFactory
-import io.micronaut.starter.application.DefaultAvailableFeatures
 import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext

@@ -1,11 +1,10 @@
-package io.micronaut.starter.feature
+package io.micronaut.starter.build
 
 import groovy.xml.XmlParser
 import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.RequiresMavenLocal
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import jakarta.inject.Singleton
