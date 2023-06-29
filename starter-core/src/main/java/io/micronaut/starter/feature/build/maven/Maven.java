@@ -80,7 +80,6 @@ public class Maven implements BuildFeature {
             }
             generatorContext.addHelpLink("Micronaut Maven Plugin documentation", MICRONAUT_MAVEN_DOCS_URL);
             generatorContext.addDependency(MicronautDependencyUtils.MICRONAUT_INJECT);
-            addEnforcerPlugin(generatorContext);
         } else {
             generateNoneMicronautFrameworkBuild(generatorContext);
         }
