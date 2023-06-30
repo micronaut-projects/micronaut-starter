@@ -38,6 +38,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
 
+    public static final String NAME = "azure-function-http";
+
     private static final Dependency MICRONAUT_AZURE_FUNCTION_HTTP = MicronautDependencyUtils
             .azureDependency()
             .artifactId("micronaut-azure-function-http")
@@ -49,8 +51,6 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
             .artifactId("micronaut-azure-function-http-test")
             .test()
             .build();
-
-    public static final String NAME = "azure-function-http";
 
     public AzureHttpFunction(CoordinateResolver coordinateResolver) {
         super(coordinateResolver);
