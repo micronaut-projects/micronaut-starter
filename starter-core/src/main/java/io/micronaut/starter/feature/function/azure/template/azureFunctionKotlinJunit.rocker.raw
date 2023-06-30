@@ -9,7 +9,6 @@ package @project.getPackageName();
 }
 
 import com.microsoft.azure.functions.HttpStatus
-import io.micronaut.azure.function.http.HttpRequestMessageBuilder
 import io.micronaut.http.HttpMethod
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions

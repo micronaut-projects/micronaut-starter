@@ -9,7 +9,7 @@ package @project.getPackageName();
 }
 
 import com.microsoft.azure.functions.HttpStatus
-import io.micronaut.azure.function.http.HttpRequestMessageBuilder
+import com.microsoft.azure.functions.HttpResponseMessage
 import io.micronaut.http.HttpMethod
 import spock.lang.*
 
@@ -20,8 +20,7 @@ class @project.getClassName()FunctionSpec extends Specification {
 
     void "test function"() {
         when:"The function is executed"
-        HttpRequestMessageBuilder.AzureHttpResponseMessage response =
-            function.request(HttpMethod.GET, "/@project.getPropertyName()")
+        HttpResponseMessage response = function.request(HttpMethod.GET, "/@project.getPropertyName()")
                     .invoke()
 
 

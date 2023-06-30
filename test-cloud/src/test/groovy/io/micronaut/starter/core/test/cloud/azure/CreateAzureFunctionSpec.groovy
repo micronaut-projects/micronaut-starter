@@ -1,18 +1,14 @@
 package io.micronaut.starter.core.test.cloud.azure
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.azure.AbstractAzureFunction
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Requires
-import spock.lang.Retry
-import spock.util.environment.Jvm
 
-@Retry // can fail on CI due to port binding race condition, so retry
-@Requires({ Jvm.current.java8 || Jvm.current.java11 })
 class CreateAzureFunctionSpec extends CommandSpec {
 
     @Override
@@ -25,7 +21,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
                                                                                                                 BuildTool build,
                                                                                                                 TestFramework testFramework) {
         given:
-        List<String> features = ['azure-function']
+        List<String> features = [AbstractAzureFunction.NAME]
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
@@ -45,7 +41,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
             TestFramework testFramework
     ) {
         given:
-        List<String> features = ['azure-function'] + serializationFeature
+        List<String> features = [AbstractAzureFunction.NAME] + serializationFeature
         generateProject(lang, build, features, ApplicationType.DEFAULT, testFramework)
 
         when:

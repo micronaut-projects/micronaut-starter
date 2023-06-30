@@ -21,6 +21,7 @@ dependencies {
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut:micronaut-http-client"
+    testRuntimeOnly("io.micronaut.serde:micronaut-serde-jackson")
 }
 
 application {
