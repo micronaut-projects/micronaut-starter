@@ -144,7 +144,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
         output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
         output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
-                .contains("HttpRequestMessageBuilder")
+                .contains("response = function.request")
 
         where:
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
@@ -178,7 +178,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
         output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
         output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
-              .contains("HttpRequestMessageBuilder")
+              .contains("response = function.request")
 
         where:
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
