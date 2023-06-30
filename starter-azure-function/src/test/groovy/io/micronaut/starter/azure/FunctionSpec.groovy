@@ -2,8 +2,6 @@ package io.micronaut.starter.azure
 
 import com.microsoft.azure.functions.HttpResponseMessage
 import io.micronaut.azure.function.http.AzureHttpFunction
-import io.micronaut.azure.function.http.AzureHttpResponseMessage
-import io.micronaut.azure.function.http.AzureHttpResponseMessageAdapter
 import io.micronaut.azure.function.http.DefaultExecutionContext
 import io.micronaut.azure.function.http.HttpRequestMessageBuilder
 import io.micronaut.http.HttpHeaders
@@ -19,7 +17,7 @@ class FunctionSpec extends Specification {
         Function function = new Function()
 
         when:
-        AzureHttpResponseMessage responseMessage = invoke(function, function.request(HttpMethod.GET, '/application-types/default/features'))
+        HttpResponseMessage responseMessage = invoke(function, function.request(HttpMethod.GET, '/application-types/default/features'))
 
         then:
         responseMessage.status.value() == HttpStatus.OK.code
@@ -30,7 +28,7 @@ class FunctionSpec extends Specification {
         Function function = new Function()
 
         when:
-        AzureHttpResponseMessage response = invoke(function, function.request(HttpMethod.GET, "/create/default/test"))
+        HttpResponseMessage response = invoke(function, function.request(HttpMethod.GET, "/create/default/test"))
 
         then:
         response.status.value() == HttpStatus.CREATED.code
@@ -38,11 +36,10 @@ class FunctionSpec extends Specification {
         ZipUtil.isZip(response.body as byte[])
     }
 
-    static AzureHttpResponseMessage invoke(AzureHttpFunction function, HttpRequestMessageBuilder<?> builder) {
-        HttpResponseMessage result = function.route(
+    static HttpResponseMessage invoke(AzureHttpFunction function, HttpRequestMessageBuilder<?> builder) {
+        function.route(
                 builder.buildEncoded(),
                 new DefaultExecutionContext()
         );
-        return new AzureHttpResponseMessageAdapter(result);
     }
 }
