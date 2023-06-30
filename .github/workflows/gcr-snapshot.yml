@@ -35,7 +35,7 @@ jobs:
         run: gcloud auth configure-docker --quiet
       - name: Push image to Google Cloud Container Registry
         run: |
-          ./gradlew starter-web-netty:dockerPush -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
+          ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
       - name: Deploy to Cloud Run
         run: |
           gcloud components install beta --quiet

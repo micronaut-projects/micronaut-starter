@@ -301,7 +301,7 @@ jobs:
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to Google Cloud Container Registry
         run: |
-          ./gradlew starter-web-netty:dockerPush -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
+          ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
       - name: Deploy to Cloud Run
         env:
           release_version: ${{ steps.release_version.outputs.release_version }}
