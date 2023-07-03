@@ -1,11 +1,11 @@
 package io.micronaut.starter.core.test.buildTool
 
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
-import spock.lang.PendingFeature
 import spock.lang.Unroll
 
 class MavenPackageSpec extends CommandSpec {
@@ -56,30 +56,14 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
+        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm")
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image:ol8-java17-22.3.0")
-        
-        where:
-        lang << Language.values()
-    }
-
-    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
-    @PendingFeature
-    void 'test maven Docker Native packaging GraalVM check for #lang'(Language lang) {
-        given:
-        generateProject(lang, BuildTool.MAVEN, [])
-
-        when:
-        String output = executeMaven( "package -Dpackaging=docker-native", 30)
-
-        then:
-        output.contains("The [graalvm] profile was not activated automatically because you are not using a GraalVM JDK. Activate the profile manually (-Pgraalvm) and try again")
+        output.contains("Successfully tagged foo:latest")
+        output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -92,10 +76,11 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=native-image")
 
         then:
-        output.contains("org.graalvm.buildtools:native-maven-plugin")
+        output.contains("GraalVM Native Image: Generating 'foo' (executable)...")
+        output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
     }
 
 }
