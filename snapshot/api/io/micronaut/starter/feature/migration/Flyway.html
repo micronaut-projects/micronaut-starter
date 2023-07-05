@@ -97,6 +97,30 @@ implements <a href="MigrationFeature.html" title="interface in io.micronaut.star
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ARTIFACT_ID_FLYWAY_MYSQL" class="member-name-link">ARTIFACT_ID_FLYWAY_MYSQL</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ARTIFACT_ID_FLYWAY_ORACLE" class="member-name-link">ARTIFACT_ID_FLYWAY_ORACLE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ARTIFACT_ID_FLYWAY_SQLSERVER" class="member-name-link">ARTIFACT_ID_FLYWAY_SQLSERVER</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ARTIFACT_ID_MICRONAUT_FLYWAY" class="member-name-link">ARTIFACT_ID_MICRONAUT_FLYWAY</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEPENDENCY_FLYWAY_MYSQL" class="member-name-link">DEPENDENCY_FLYWAY_MYSQL</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEPENDENCY_FLYWAY_ORACLE" class="member-name-link">DEPENDENCY_FLYWAY_ORACLE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEPENDENCY_FLYWAY_SQLSERVER" class="member-name-link">DEPENDENCY_FLYWAY_SQLSERVER</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#GROUP_ID_FLYWAYDB" class="member-name-link">GROUP_ID_FLYWAYDB</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#NAME" class="member-name-link">NAME</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -129,30 +153,33 @@ implements <a href="MigrationFeature.html" title="interface in io.micronaut.star
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addDependencies</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature that means the feature was explicitly selected,
  included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
  or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMicronautDocumentation()" class="member-name-link">getMicronautDocumentation</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMicronautDocumentation()" class="member-name-link">getMicronautDocumentation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThirdPartyDocumentation()" class="member-name-link">getThirdPartyDocumentation</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThirdPartyDocumentation()" class="member-name-link">getThirdPartyDocumentation</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -191,6 +218,94 @@ implements <a href="MigrationFeature.html" title="interface in io.micronaut.star
 </ul>
 </dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ARTIFACT_ID_MICRONAUT_FLYWAY">
+<h3>ARTIFACT_ID_MICRONAUT_FLYWAY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_MICRONAUT_FLYWAY</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.migration.Flyway.ARTIFACT_ID_MICRONAUT_FLYWAY">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="GROUP_ID_FLYWAYDB">
+<h3>GROUP_ID_FLYWAYDB</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">GROUP_ID_FLYWAYDB</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.migration.Flyway.GROUP_ID_FLYWAYDB">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ARTIFACT_ID_FLYWAY_MYSQL">
+<h3>ARTIFACT_ID_FLYWAY_MYSQL</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_FLYWAY_MYSQL</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.migration.Flyway.ARTIFACT_ID_FLYWAY_MYSQL">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ARTIFACT_ID_FLYWAY_SQLSERVER">
+<h3>ARTIFACT_ID_FLYWAY_SQLSERVER</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_FLYWAY_SQLSERVER</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.migration.Flyway.ARTIFACT_ID_FLYWAY_SQLSERVER">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ARTIFACT_ID_FLYWAY_ORACLE">
+<h3>ARTIFACT_ID_FLYWAY_ORACLE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ARTIFACT_ID_FLYWAY_ORACLE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.migration.Flyway.ARTIFACT_ID_FLYWAY_ORACLE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEPENDENCY_FLYWAY_MYSQL">
+<h3>DEPENDENCY_FLYWAY_MYSQL</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></span>&nbsp;<span class="element-name">DEPENDENCY_FLYWAY_MYSQL</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="DEPENDENCY_FLYWAY_ORACLE">
+<h3>DEPENDENCY_FLYWAY_ORACLE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></span>&nbsp;<span class="element-name">DEPENDENCY_FLYWAY_ORACLE</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="DEPENDENCY_FLYWAY_SQLSERVER">
+<h3>DEPENDENCY_FLYWAY_SQLSERVER</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></span>&nbsp;<span class="element-name">DEPENDENCY_FLYWAY_SQLSERVER</span></div>
 </section>
 </li>
 </ul>
@@ -299,6 +414,12 @@ implements <a href="MigrationFeature.html" title="interface in io.micronaut.star
 <dt>Parameters:</dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addDependencies(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>addDependencies</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDependencies</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 </ul>
