@@ -71,12 +71,12 @@ public class Gradle implements BuildFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addGradleInitFiles(generatorContext);
+        addGitignore(generatorContext);
         if (generatorContext.isMicronautFramework()) {
-            addGradleInitFiles(generatorContext);
             extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
             GradleBuild build = createBuild(generatorContext);
             addBuildFile(generatorContext, build);
-            addGitignore(generatorContext);
             addGradleProperties(generatorContext);
             addSettingsFile(generatorContext, build);
         } else {

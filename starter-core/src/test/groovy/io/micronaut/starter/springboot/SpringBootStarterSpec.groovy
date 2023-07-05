@@ -73,6 +73,12 @@ class SpringBootStarterSpec extends ApplicationContextSpec implements CommandOut
 
         then:
         output
+        output.containsKey('.gitignore')
+        output.containsKey('gradlew')
+        output.containsKey('gradlew.bat')
+        output.containsKey('gradle/wrapper/gradle-wrapper.jar')
+        output.containsKey('gradle/wrapper/gradle-wrapper.properties')
+
         output['build.gradle']
         !output['gradle.properties']
         output['src/test/java/example/micronaut/ApplicationTest.java']
