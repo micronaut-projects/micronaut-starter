@@ -3,12 +3,13 @@ package io.micronaut.starter.feature.tracing
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
-
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -24,39 +25,21 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
     }
 
     @Unroll
-    void 'test gradle tracing-zipkin feature for language=#language'() {
+    void 'test gradle tracing-zipkin feature for language=#language'(Language language, BuildTool buildTool) {
+        given:
+        String feature = 'tracing-zipkin'
         when:
-        String template = new BuildBuilder(beanContext, GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([feature])
                 .language(language)
-                .features(['tracing-zipkin'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains 'implementation("io.micronaut.tracing:micronaut-tracing-zipkin")'
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-brave-http", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven tracing-zipkin feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, MAVEN)
-                .language(language)
-                .features(['tracing-zipkin'])
-                .render()
-
-        then:
-        template.contains '''
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-zipkin</artifactId>
-      <scope>compile</scope>
-    </dependency>
-'''
-
-        where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test tracing-zipkin configuration'() {
