@@ -10,6 +10,8 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -26,6 +28,33 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-validation/latest/guide/")
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1914")
+    void 'jakarta.validation:jakarta.validation-api for gradle should not include version'() {
+        when:
+        Map<String, String> output = generate(['validation'])
+        String build = output["build.gradle"]
+
+        then:
+        build
+        build.contains('implementation("jakarta.validation:jakarta.validation-api")')
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1914")
+    void 'jakarta.validation:jakarta.validation-api for maven should not include version'() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN),['validation'])
+        String pom = output["pom.xml"]
+
+        then:
+        pom
+        pom.contains('''
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <scope>compile</scope>
+    </dependency>''')
     }
 
     void "test Micronaut Validation belongs to Validation category"() {

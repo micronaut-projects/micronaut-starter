@@ -17,8 +17,6 @@ package io.micronaut.starter.feature.validator;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.BuildTool;
@@ -40,16 +38,10 @@ public class MicronautValidationFeature implements ValidationFeature {
 
     private static final String ARTIFACT_ID_VALIDATION_API = "jakarta.validation-api";
     private static final String VALIDATION_VERSION_MAVEN_PROPERTY = "micronaut.validation.version";
-    private static final Dependency.Builder DEPENDENCY_VALIDATON_API = Dependency.builder()
+    private static final Dependency.Builder DEPENDENCY_VALIDATION_API = Dependency.builder()
             .groupId("jakarta.validation")
             .artifactId(ARTIFACT_ID_VALIDATION_API)
             .compile();
-
-    private final CoordinateResolver coordinateResolver;
-
-    public MicronautValidationFeature(CoordinateResolver coordinateResolver) {
-        this.coordinateResolver = coordinateResolver;
-    }
 
     @Override
     @NonNull
@@ -81,9 +73,7 @@ public class MicronautValidationFeature implements ValidationFeature {
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_VALIDATION_COMPILE);
         generatorContext.addDependency(micronautValidationProcessor(generatorContext).build());
-        coordinateResolver.resolve(ARTIFACT_ID_VALIDATION_API)
-                .map(Coordinate::getVersion)
-                .ifPresent(version -> generatorContext.addDependency(DEPENDENCY_VALIDATON_API.version(version)));
+        generatorContext.addDependency(DEPENDENCY_VALIDATION_API);
     }
 
     public static Dependency.Builder micronautValidationProcessor(GeneratorContext generatorContext) {
