@@ -21,6 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -63,12 +65,16 @@ public class MicroStream implements MicroStreamFeature {
                 .artifactId("micronaut-microstream")
                 .build()
         );
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId("micronaut-microstream-annotations")
-                .build()
-        );
+        // For Groovy and Maven we only require the annotation in provided scope (from the processor below)
+        // Adding it in both compile, and provided via the processor results in a build failure
+        if (generatorContext.getBuildTool() != BuildTool.MAVEN || generatorContext.getLanguage() != Language.GROOVY) {
+            generatorContext.addDependency(Dependency.builder()
+                    .compile()
+                    .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
+                    .artifactId("micronaut-microstream-annotations")
+                    .build()
+            );
+        }
         generatorContext.addDependency(Dependency.builder()
                 .annotationProcessor()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)

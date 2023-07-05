@@ -122,11 +122,18 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
     """)
-        template.contains("""
+        (language != Language.GROOVY) == template.contains("""
     <dependency>
       <groupId>io.micronaut.microstream</groupId>
       <artifactId>micronaut-microstream-annotations</artifactId>
       <scope>compile</scope>
+    </dependency>
+""")
+        (language == Language.GROOVY) == template.contains("""
+    <dependency>
+      <groupId>io.micronaut.microstream</groupId>
+      <artifactId>micronaut-microstream-annotations</artifactId>
+      <scope>provided</scope>
     </dependency>
 """)
         if (language == Language.KOTLIN) {
@@ -164,11 +171,18 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
     """)
-        template.contains("""
+        (language != Language.GROOVY) == template.contains("""
     <dependency>
       <groupId>io.micronaut.microstream</groupId>
       <artifactId>micronaut-microstream-annotations</artifactId>
       <scope>compile</scope>
+    </dependency>
+""")
+        (language == Language.GROOVY) == template.contains("""
+    <dependency>
+      <groupId>io.micronaut.microstream</groupId>
+      <artifactId>micronaut-microstream-annotations</artifactId>
+      <scope>provided</scope>
     </dependency>
 """)
         template.contains("""
