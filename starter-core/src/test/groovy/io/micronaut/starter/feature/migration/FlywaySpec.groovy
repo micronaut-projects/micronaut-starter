@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.migration
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -34,59 +37,82 @@ flyway:
 """)
     }
 
-    void "test the dependency is added to the gradle build"() {
+
+    void "test dependency added for AOP feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['flyway'])
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway'])
 
         then:
-        template.contains('implementation("io.micronaut.flyway:micronaut-flyway")')
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+
+        where:
+        buildTool << BuildTool.values()
     }
 
-    void "test the dependency is added to the maven build"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['flyway'])
+    private BuildTestVerifier verifier(BuildTool buildTool, List<String> features) {
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(features)
                 .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.flyway</groupId>
-      <artifactId>micronaut-flyway</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        BuildTestUtil.verifier(buildTool, template)
     }
 
-    void "test the flyway-mysql dependency is added to the gradle build"() {
+    void "test the flyway-mysql dependency is added to the gradle build"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['flyway', 'mysql'])
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'mysql'])
 
         then:
-        template.contains('runtimeOnly("org.flywaydb:flyway-mysql")')
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-mysql", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
     }
 
-    void "test the flyway-mysql dependency is added to the gradle build when mariadb is selected"() {
+    void "test the flyway-mysql dependency is added to the gradle build when mariadb is selected"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['flyway', 'mariadb'])
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'mariadb'])
 
         then:
-        template.contains('runtimeOnly("org.flywaydb:flyway-mysql")')
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-mysql", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
     }
 
-    void "test the flyway-sqlserver dependency is added to the gradle build"() {
+    void "test the flyway-sqlserver dependency is added to the gradle build when sqlserver is selected"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['flyway', 'sqlserver'])
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'sqlserver'])
 
         then:
-        template.contains('runtimeOnly("org.flywaydb:flyway-sqlserver")')
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-sqlserver", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "test the flyway-database-oracle dependency is added to the gradle build when oracle-cloud-atp is selected"(BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'oracle-cloud-atp'])
+
+        then:
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-database-oracle", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "test the flyway-database-oracle dependency is added to the gradle build when oracle is selected"(BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'oracle'])
+
+        then:
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-database-oracle", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
     }
 }
