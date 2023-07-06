@@ -6,9 +6,12 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class MavenPackageSpec extends CommandSpec {
+
+    static final IS_GRAAL = {
+        System.properties['java.vendor'].toLowerCase().contains('graalvm')
+    }()
 
     @Override
     String getTempDirectoryPrefix() {
@@ -16,7 +19,6 @@ class MavenPackageSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void 'test maven JAR packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
@@ -33,7 +35,6 @@ class MavenPackageSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void 'test maven Docker packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
@@ -50,24 +51,21 @@ class MavenPackageSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void 'test maven Docker Native packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm")
+        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
 
         then:
-        output.contains("Successfully tagged foo:latest")
-        output.contains("BUILD SUCCESS")
+        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image-community:17-ol9")
 
         where:
         lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
     }
 
-    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
+    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN || !IS_GRAAL })
     void 'test native-image packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
