@@ -39,6 +39,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -151,6 +152,9 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
             databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
                     .map(dbType -> getModuleName(generatorContext, dbType))
                     .ifPresent(builder::addAdditionalTestResourceModules);
+        }
+        if (generatorContext.hasFeature(TestResources.class)) {
+            builder = builder.hasTestResources();
         }
         if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
             builder = builder.withSharedTestResources();

@@ -7,7 +7,7 @@
     List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
     String runtime, String testRuntime,
     String aotVersion, boolean incremental, String packageName,
-    List<String> additionalTestResourceModules, boolean sharedTestResources
+    boolean hasTestResources, List<String> additionalTestResourceModules, boolean sharedTestResources
 )
 micronaut {
 @if(runtime != null) {
@@ -22,7 +22,7 @@ micronaut {
         annotations("@(packageName).*")
     }
 }
-@if (additionalTestResourceModules != null || sharedTestResources) {
+@if (hasTestResources && (additionalTestResourceModules != null || sharedTestResources)) {
     testResources {
         @if(additionalTestResourceModules != null) {
             @for (String module : additionalTestResourceModules) {
