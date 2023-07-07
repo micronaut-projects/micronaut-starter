@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.maven.GroovyMavenPlugin;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.groovy.Groovy;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -52,6 +54,19 @@ public class Spock implements TestFeature {
                     .build())
             .test()
             .build();
+
+    protected final GroovyMavenPlugin groovyMavenPlugin;
+
+    public Spock(GroovyMavenPlugin groovyMavenPlugin) {
+        this.groovyMavenPlugin = groovyMavenPlugin;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getBuildTool() == BuildTool.MAVEN) {
+            featureContext.addFeature(groovyMavenPlugin);
+        }
+    }
 
     @Override
     @NonNull
