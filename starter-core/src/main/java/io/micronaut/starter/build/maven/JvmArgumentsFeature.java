@@ -32,7 +32,6 @@ public interface JvmArgumentsFeature {
     @NonNull
     List<String> getJvmArguments();
 
-
     @Nullable
     static String getJvmArguments(@NonNull Collection<Feature> features) {
         List<String> jvmArgumentsList = features
