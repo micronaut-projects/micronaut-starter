@@ -111,9 +111,12 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <div class="col-first even-row-color"><code>protected static final <a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></div>
 <div class="col-second even-row-color"><code><a href="#DEPENDENCY_SPOCK_CORE_EXCLUDING_GROOVY_ALL" class="member-name-link">DEPENDENCY_SPOCK_CORE_EXCLUDING_GROOVY_ALL</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#GROUP_ID_SPOCKFRAMEWORK" class="member-name-link">GROUP_ID_SPOCKFRAMEWORK</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#groovyMavenPlugin" class="member-name-link">groovyMavenPlugin</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#GROUP_ID_SPOCKFRAMEWORK" class="member-name-link">GROUP_ID_SPOCKFRAMEWORK</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
@@ -128,7 +131,7 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Spock</a>()</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.build.maven.GroovyMavenPlugin)" class="member-name-link">Spock</a><wbr>(<a href="../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a>&nbsp;groovyMavenPlugin)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -155,6 +158,12 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../options/TestFramework.html" title="enum class in io.micronaut.starter.options">TestFramework</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTestFramework()" class="member-name-link">getTestFramework</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
+</div>
 </div>
 </div>
 </div>
@@ -169,7 +178,7 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../Feature.html#getCategory()">getCategory</a>, <a href="../Feature.html#getDescription()">getDescription</a>, <a href="../Feature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#getTitle()">getTitle</a>, <a href="../Feature.html#isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()">isPreview</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code></div>
+<code><a href="../Feature.html#getCategory()">getCategory</a>, <a href="../Feature.html#getDescription()">getDescription</a>, <a href="../Feature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#getTitle()">getTitle</a>, <a href="../Feature.html#isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()">isPreview</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.test.TestFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.test.<a href="TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></h3>
 <code><a href="TestFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="TestFeature.html#getOrder()">getOrder</a>, <a href="TestFeature.html#isJunit()">isJunit</a>, <a href="TestFeature.html#isKoTest()">isKoTest</a>, <a href="TestFeature.html#isKotlinTestFramework()">isKotlinTestFramework</a>, <a href="TestFeature.html#isSpock()">isSpock</a>, <a href="TestFeature.html#isVisible()">isVisible</a>, <a href="TestFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)">shouldApply</a>, <a href="TestFeature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
@@ -244,6 +253,12 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></span>&nbsp;<span class="element-name">DEPENDENCY_SPOCK_CORE_EXCLUDING_GROOVY_ALL</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="groovyMavenPlugin">
+<h3>groovyMavenPlugin</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a></span>&nbsp;<span class="element-name">groovyMavenPlugin</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -253,9 +268,9 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(io.micronaut.starter.build.maven.GroovyMavenPlugin)">
 <h3>Spock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Spock</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Spock</span><wbr><span class="parameters">(<a href="../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a>&nbsp;groovyMavenPlugin)</span></div>
 </section>
 </li>
 </ul>
@@ -266,6 +281,27 @@ implements <a href="TestFeature.html" title="interface in io.micronaut.starter.f
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">
+<h3>processSelectedFeatures</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processSelectedFeatures</span><wbr><span class="parameters">(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.
+
+ This method can be implemented to allow features to modify the list of features
+ that will apply to the project. The methods <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>
+ and <a href="../FeatureContext.html#exclude(io.micronaut.starter.feature.FeaturePredicate)"><code>FeatureContext.exclude(FeaturePredicate)</code></a> are the primary ways to add and
+ remove features from the context. <a href="../FeatureContext.html#isPresent(java.lang.Class)"><code>FeatureContext.isPresent(Class)</code></a> can be used
+ to determine the existence of other features in order to make decisions.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>featureContext</code> - The feature context</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getName()">
 <h3>getName</h3>

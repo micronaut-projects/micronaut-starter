@@ -108,9 +108,12 @@ implements <a href="../LanguageFeature.html" title="interface in io.micronaut.st
 <div class="col-first odd-row-color"><code>protected static final <a href="../../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#DEPENDENCY_MICRONAUT_INJECT_GROOVY" class="member-name-link">DEPENDENCY_MICRONAUT_INJECT_GROOVY</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#GROUP_ID_GROOVY" class="member-name-link">GROUP_ID_GROOVY</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a></code></div>
+<div class="col-second even-row-color"><code><a href="#groovyMavenPlugin" class="member-name-link">groovyMavenPlugin</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#GROUP_ID_GROOVY" class="member-name-link">GROUP_ID_GROOVY</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
@@ -125,8 +128,8 @@ implements <a href="../LanguageFeature.html" title="interface in io.micronaut.st
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,io.micronaut.starter.feature.test.Spock)" class="member-name-link">Groovy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt;&nbsp;applicationFeatures,
- <a href="../../test/Spock.html" title="class in io.micronaut.starter.feature.test">Spock</a>&nbsp;spock)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,io.micronaut.starter.build.maven.GroovyMavenPlugin)" class="member-name-link">Groovy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt;&nbsp;applicationFeatures,
+ <a href="../../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a>&nbsp;groovyMavenPlugin)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -241,6 +244,12 @@ implements <a href="../LanguageFeature.html" title="interface in io.micronaut.st
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt;</span>&nbsp;<span class="element-name">applicationFeatures</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="groovyMavenPlugin">
+<h3>groovyMavenPlugin</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a></span>&nbsp;<span class="element-name">groovyMavenPlugin</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -250,10 +259,10 @@ implements <a href="../LanguageFeature.html" title="interface in io.micronaut.st
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.List,io.micronaut.starter.feature.test.Spock)">
+<section class="detail" id="&lt;init&gt;(java.util.List,io.micronaut.starter.build.maven.GroovyMavenPlugin)">
 <h3>Groovy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Groovy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt;&nbsp;applicationFeatures,
- <a href="../../test/Spock.html" title="class in io.micronaut.starter.feature.test">Spock</a>&nbsp;spock)</span></div>
+ <a href="../../../build/maven/GroovyMavenPlugin.html" title="class in io.micronaut.starter.build.maven">GroovyMavenPlugin</a>&nbsp;groovyMavenPlugin)</span></div>
 </section>
 </li>
 </ul>
