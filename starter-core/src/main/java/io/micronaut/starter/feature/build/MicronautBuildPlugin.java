@@ -36,6 +36,7 @@ import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
@@ -133,6 +134,13 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 .buildTool(generatorContext.getBuildTool())
                 .incremental(true)
                 .packageName(generatorContext.getProject().getPackageName());
+        generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(f -> f instanceof LambdaRuntimeMainClass)
+                .map(f -> ((LambdaRuntimeMainClass) f).getLambdaRuntimeMainClass())
+                .findFirst()
+                .ifPresent(builder::lambdaRuntimeMainClass);
         Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
         if (gradleDsl.isPresent()) {
             builder = builder.dsl(gradleDsl.get());

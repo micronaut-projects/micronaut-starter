@@ -5,7 +5,6 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -41,7 +40,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
     void 'Function AppStack log retention is included for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
@@ -49,6 +48,25 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
         where:
         buildTool << BuildTool.values()
+    }
+
+    void 'lambda runtime main class configuration is present for #buildTool'(BuildTool buildTool) {
+        when:
+        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
+
+        then:
+        if (buildTool == BuildTool.GRADLE) {
+            assert output['app/build.gradle']
+            assert output['app/build.gradle'].contains('nativeLambda {')
+            assert output['app/build.gradle'].contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+        } else if (buildTool == BuildTool.GRADLE) {
+            assert output['app/build.gradle.kts']
+            assert output['app/build.gradle.kts'].contains('nativeLambda {')
+            assert output['app/build.gradle.kts'].contains('lambdaRuntimeClassName.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     private static Options createOptions(BuildTool buildTool) {
