@@ -49,7 +49,10 @@ graalvmNative {
             sharedLibrary = false
             imageName = 'micronaut-starter'
             mainClass = 'io.micronaut.starter.netty.Application'
-            buildArgs.add('--static --libc=musl')
+            if (project.hasProperty("musl")) {
+                logger.lifecycle("Using musl libc")
+                buildArgs("--libc=musl", "--static")
+            }
         }
     }
 }
