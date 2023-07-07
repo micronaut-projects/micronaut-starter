@@ -16,4 +16,21 @@ class GroovySpec extends ApplicationContextSpec {
         then:
         template.contains('id("groovy")')
     }
+
+    void 'test groovy with Maven applies gmavenplus plugin'() {
+        given:
+        Language language = Language.GROOVY
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .render()
+
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+      </plugin>
+''')
+    }
 }

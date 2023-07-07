@@ -76,4 +76,22 @@ java {
         Language.JAVA   | TestFramework.KOTEST
     }
 
+    void 'test spock with Maven applies gmavenplus plugin'() {
+        given:
+        Language language = Language.JAVA
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .testFramework(TestFramework.SPOCK)
+                .render()
+
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+      </plugin>
+''')
+    }
+
 }
