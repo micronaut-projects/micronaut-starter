@@ -42,6 +42,7 @@ import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -145,15 +146,19 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         if (testRuntimeOptional.isPresent()) {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
-        Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
-        if ((!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
-                && databaseDriverFeature.isPresent()) {
-            databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
-                    .map(dbType -> getModuleName(generatorContext, dbType))
-                    .ifPresent(builder::addAdditionalTestResourceModules);
-        }
-        if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
-            builder = builder.withSharedTestResources();
+        if (generatorContext.getFeatures().hasFeature(TestResources.class)) {
+            Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
+            if (
+                    (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) &&
+                            databaseDriverFeature.isPresent()
+            ) {
+                databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
+                        .map(dbType -> getModuleName(generatorContext, dbType))
+                        .ifPresent(builder::addAdditionalTestResourceModules);
+            }
+            if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
+                builder = builder.withSharedTestResources();
+            }
         }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
