@@ -79,13 +79,13 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="AwsApiFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsApiFeature</a></code>, <code><a href="AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a></code>, <code><a href="AwsFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsFeature</a></code>, <code><a href="AwsLambdaEventFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsLambdaEventFeature</a></code>, <code><a href="LambdaTrigger.html" title="interface in io.micronaut.starter.feature.aws">LambdaTrigger</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="AwsApiFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsApiFeature</a></code>, <code><a href="AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a></code>, <code><a href="AwsFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsFeature</a></code>, <code><a href="AwsLambdaEventFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsLambdaEventFeature</a></code>, <code><a href="LambdaTrigger.html" title="interface in io.micronaut.starter.feature.aws">LambdaTrigger</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../function/LambdaRuntimeMainClass.html" title="interface in io.micronaut.starter.feature.function">LambdaRuntimeMainClass</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">AmazonApiGatewayHttp</span>
 <span class="extends-implements">extends <a href="AwsLambdaRelatedFeature.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaRelatedFeature</a>
-implements <a href="AwsApiFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsApiFeature</a></span></div>
+implements <a href="AwsApiFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsApiFeature</a>, <a href="../function/LambdaRuntimeMainClass.html" title="interface in io.micronaut.starter.feature.function">LambdaRuntimeMainClass</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -141,17 +141,20 @@ implements <a href="AwsApiFeature.html" title="interface in io.micronaut.starter
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLambdaRuntimeMainClass()" class="member-name-link">getLambdaRuntimeMainClass</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </div>
@@ -286,6 +289,16 @@ implements <a href="AwsApiFeature.html" title="interface in io.micronaut.starter
 <dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="../Feature.html#getDescription()">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLambdaRuntimeMainClass()">
+<h3>getLambdaRuntimeMainClass</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLambdaRuntimeMainClass</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../function/LambdaRuntimeMainClass.html#getLambdaRuntimeMainClass()">getLambdaRuntimeMainClass</a></code>&nbsp;in interface&nbsp;<code><a href="../function/LambdaRuntimeMainClass.html" title="interface in io.micronaut.starter.feature.function">LambdaRuntimeMainClass</a></code></dd>
 </dl>
 </section>
 </li>
