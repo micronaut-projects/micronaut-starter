@@ -19,11 +19,11 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.maven.GroovyMavenPlugin;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
+import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -53,12 +53,8 @@ public class Groovy implements LanguageFeature {
             .build();
     protected final List<GroovyApplicationFeature> applicationFeatures;
 
-    protected final GroovyMavenPlugin groovyMavenPlugin;
-
-    public Groovy(List<GroovyApplicationFeature> applicationFeatures,
-                  GroovyMavenPlugin groovyMavenPlugin) {
+    public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
         this.applicationFeatures = applicationFeatures;
-        this.groovyMavenPlugin = groovyMavenPlugin;
     }
 
     @Override
@@ -68,9 +64,6 @@ public class Groovy implements LanguageFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getBuildTool() == BuildTool.MAVEN) {
-            featureContext.addFeature(groovyMavenPlugin);
-        }
         processSelectedFeatured(featureContext, feature -> true);
     }
 
