@@ -17,11 +17,15 @@ package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Jrebel implements ReloadingFeature {
 
+    private static final String GROUP_ID_ORG_ZEROTURNAROUND = "org.zeroturnaround";
+    private static final String ARTIFACT_ID_JREBEL_MAVEN_PLUGIN = "jrebel-maven-plugin";
+    
     @Override
     public String getName() {
         return "jrebel";
@@ -47,6 +51,11 @@ public class Jrebel implements ReloadingFeature {
                     .lookupArtifactId("gradle-jrebel-plugin")
                     .build());
             generatorContext.addHelpLink("JRebel Gradle Plugin", "https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel");
+        } else {
+            generatorContext.addBuildPlugin(MavenPlugin.builder()
+                    .groupId(GROUP_ID_ORG_ZEROTURNAROUND)
+                    .artifactId(ARTIFACT_ID_JREBEL_MAVEN_PLUGIN)
+                    .build());
         }
     }
 
