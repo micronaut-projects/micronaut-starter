@@ -146,19 +146,21 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         if (testRuntimeOptional.isPresent()) {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
-        Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
-        if ((!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
-                && databaseDriverFeature.isPresent()) {
-            databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
-                    .map(dbType -> getModuleName(generatorContext, dbType))
-                    .ifPresent(builder::addAdditionalTestResourceModules);
-        }
         if (generatorContext.hasFeature(TestResources.class)) {
-            builder = builder.hasTestResources();
+            Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
+            if (
+                    (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) &&
+                            databaseDriverFeature.isPresent()
+            ) {
+                databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
+                        .map(dbType -> getModuleName(generatorContext, dbType))
+                        .ifPresent(builder::addAdditionalTestResourceModules);
+            }
+            if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
+                builder = builder.withSharedTestResources();
+            }
         }
-        if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
-            builder = builder.withSharedTestResources();
-        }
+
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
