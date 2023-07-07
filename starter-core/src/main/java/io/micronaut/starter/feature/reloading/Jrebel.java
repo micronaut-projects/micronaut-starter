@@ -18,10 +18,15 @@ package io.micronaut.starter.feature.reloading;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.starter.build.maven.JvmArgumentsFeature;
 import jakarta.inject.Singleton;
+import java.util.Collections;
+import java.util.List;
 
 @Singleton
-public class Jrebel implements ReloadingFeature {
+public class Jrebel implements ReloadingFeature, JvmArgumentsFeature {
+
+    private static final String JVM_ARGUMENT_AGENT_PATH = "-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib";
 
     private static final String GROUP_ID_ORG_ZEROTURNAROUND = "org.zeroturnaround";
     private static final String ARTIFACT_ID_JREBEL_MAVEN_PLUGIN = "jrebel-maven-plugin";
@@ -45,7 +50,7 @@ public class Jrebel implements ReloadingFeature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
-            generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
+            generatorContext.getBuildProperties().addComment("rebelAgent=" + JVM_ARGUMENT_AGENT_PATH);
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("org.zeroturnaround.gradle.jrebel")
                     .lookupArtifactId("gradle-jrebel-plugin")
@@ -62,5 +67,10 @@ public class Jrebel implements ReloadingFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://docs.micronaut.io/latest/guide/index.html#jrebel";
+    }
+
+    @Override
+    public List<String> getJvmArguments() {
+        return Collections.singletonList(JVM_ARGUMENT_AGENT_PATH);
     }
 }

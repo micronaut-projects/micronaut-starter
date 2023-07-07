@@ -21,6 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.maven.JvmArgumentsFeature;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.build.maven.MavenRepository;
@@ -115,8 +116,8 @@ public class Maven implements BuildFeature {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                mavenBuild
-        );
+                mavenBuild,
+                JvmArgumentsFeature.getJvmArguments(generatorContext.getFeatures().getFeatures()));
     }
 
     protected void addGitIgnore(GeneratorContext generatorContext) {

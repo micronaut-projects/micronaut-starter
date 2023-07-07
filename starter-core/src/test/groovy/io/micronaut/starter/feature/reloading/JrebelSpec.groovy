@@ -21,9 +21,11 @@ class JrebelSpec extends ApplicationContextSpec  implements CommandOutputFixture
         readme.contains("[JRebel Gradle Plugin](https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel)")
     }
 
+
     void 'test jrebel with Maven applies jrebel plugin'() {
         given:
         Language language = Language.JAVA
+
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
@@ -37,6 +39,10 @@ class JrebelSpec extends ApplicationContextSpec  implements CommandOutputFixture
         <artifactId>jrebel-maven-plugin</artifactId>
       </plugin>
 ''')
+        template.contains("<jvmArguments>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArguments>")
+
+        where:
+        language << Language.values()
     }
 
     @Unroll
