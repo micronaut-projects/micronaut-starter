@@ -25,7 +25,8 @@
 ApplicationType applicationType,
 Project project,
 Features features,
-MavenBuild mavenBuild
+MavenBuild mavenBuild,
+String jvmArguments
 )
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -91,7 +92,6 @@ MavenBuild mavenBuild
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false, f.getExclusions())
 }
   </dependencies>
-
   <build>
     <plugins>
 @if (features.application() != null || features.contains("oracle-function") || features.contains("aws-lambda")) {
@@ -99,8 +99,7 @@ MavenBuild mavenBuild
         <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
 @if (!mavenBuild.getAotDependencies().isEmpty()
-     || features.contains("springloaded")
-     || features.contains("jrebel")
+     || jvmArguments != null
      || features.contains("oracle-function")
      || features.contains("micronaut-aot")
      || features.isFeaturePresent(TestResources.class)
@@ -145,16 +144,8 @@ MavenBuild mavenBuild
             </testResourcesDependencies>
 }
 }
-@if (features.contains("springloaded") || features.contains("jrebel")) {
-            <jvmArguments>
-@if (features.contains("springloaded")) {
-              <jvmArgument>-noverify</jvmArgument>
-              <jvmArgument>-javaagent:${session.executionRootDirectory}/agent/springloaded-1.2.8.RELEASE.jar</jvmArgument>
-}
-@if (features.contains("jrebel")) {
-              <jvmArgument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArgument>
-}
-            </jvmArguments>
+@if (jvmArguments != null) {
+            <jvmArguments>@(jvmArguments)</jvmArguments>
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
             <nativeImageBuildArgs>

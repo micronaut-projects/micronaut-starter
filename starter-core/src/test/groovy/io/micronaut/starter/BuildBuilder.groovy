@@ -9,6 +9,7 @@ import io.micronaut.starter.build.DefaultRepositoryResolver
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradleBuildCreator
+import io.micronaut.starter.build.maven.JvmArgumentsFeature
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenBuildCreator
 import io.micronaut.starter.feature.Features
@@ -99,7 +100,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         } else if (buildTool == BuildTool.MAVEN) {
             MavenBuild build = mavenBuild(options, features, project, type)
             if (render) {
-                return pom.template(type, project, features, build).render().toString()
+                return pom.template(type, project, features, build, JvmArgumentsFeature.getJvmArguments(features.getFeatures())).render().toString()
             }
             return build
         }
