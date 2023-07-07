@@ -17,12 +17,13 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.ApiGatewayV2AwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements AwsApiFeature {
+public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements AwsApiFeature, LambdaRuntimeMainClass {
     public static final String NAME = "amazon-api-gateway-http";
 
     private final ApiGatewayV2AwsLambdaHandlerProvider apiGatewayV2AwsLambdaHandlerProvider;
@@ -53,5 +54,10 @@ public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements Aws
     @NonNull
     public String getDescription() {
         return "This features combines with the CDK to define an API Gateway HTTP API";
+    }
+
+    @Override
+    public String getLambdaRuntimeMainClass() {
+        return "io.micronaut.function.aws.runtime.APIGatewayV2HTTPEventMicronautLambdaRuntime";
     }
 }

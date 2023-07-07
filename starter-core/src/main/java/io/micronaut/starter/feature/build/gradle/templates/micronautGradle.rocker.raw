@@ -4,13 +4,21 @@
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.build.gradle.GradleDsl
 @args(
-    GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative,
-    List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
-    String runtime, String testRuntime,
-    String aotVersion, boolean incremental, String packageName,
+    GradleDsl dsl,
+    BuildTool build,
+    Dockerfile dockerfile,
+    Dockerfile dockerfileNative,
+    List<String> dockerBuilderImages,
+    List<String> dockerBuilderNativeImages,
+    String runtime,
+    String testRuntime,
+    String aotVersion,
+    boolean incremental,
+    String packageName,
     List<String> additionalTestResourceModules,
     boolean sharedTestResources,
-    Map<String, String> aotKeys
+    Map<String, String> aotKeys,
+    String lambdaRuntimeMainClass
 )
 micronaut {
 @if(runtime != null) {
@@ -18,6 +26,16 @@ micronaut {
 }
 @if(testRuntime != null) {
     testRuntime("@(testRuntime)")
+}
+@if(lambdaRuntimeMainClass != null) {
+    nativeLambda {
+@if (dsl == GradleDsl.KOTLIN) {
+        lambdaRuntimeClassName.set("@(lambdaRuntimeMainClass)")
+}
+@if (dsl == GradleDsl.GROOVY) {
+        lambdaRuntimeClassName = "@(lambdaRuntimeMainClass)"
+}
+    }
 }
 @if(incremental) {
     processing {
