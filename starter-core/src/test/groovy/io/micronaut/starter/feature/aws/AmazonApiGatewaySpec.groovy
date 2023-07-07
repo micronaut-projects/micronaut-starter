@@ -75,4 +75,23 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         def ex = thrown IllegalArgumentException
         ex.message.contains('There can only be one of the following features selected: [')
     }
+
+    void 'lambda runtime main class configuration is present for amazon-api-gateway and build #buildTool'(BuildTool buildTool) {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [AmazonApiGateway.NAME])
+
+        then:
+        if (buildTool == BuildTool.GRADLE) {
+            assert output['build.gradle']
+            assert output['build.gradle'].contains('nativeLambda {')
+            assert output['build.gradle'].contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+        } else if (buildTool == BuildTool.GRADLE) {
+            assert output['build.gradle.kts']
+            assert output['build.gradle.kts'].contains('nativeLambda {')
+            assert output['build.gradle.kts'].contains('lambdaRuntimeClassName.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
 }

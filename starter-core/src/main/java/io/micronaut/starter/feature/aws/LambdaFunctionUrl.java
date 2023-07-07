@@ -17,10 +17,11 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature {
+public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature, LambdaRuntimeMainClass {
 
     public static final String NAME = "aws-lambda-function-url";
 
@@ -54,4 +55,10 @@ public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature {
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.FUNCTION;
     }
+
+    @Override
+    public String getLambdaRuntimeMainClass() {
+        return "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
+    }
 }
+
