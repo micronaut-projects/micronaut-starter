@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>micronaut</id>
-    <version>4.0.0-M5</version>
+    <version>4.0.0-RC1</version>
     <packageSourceUrl>https://github.com/micronaut-projects/micronaut-starter/tree/master/chocolatey</packageSourceUrl>
     <owners>Álvaro Sánchez-Mariscal</owners>
     <title>micronaut (Install)</title>
