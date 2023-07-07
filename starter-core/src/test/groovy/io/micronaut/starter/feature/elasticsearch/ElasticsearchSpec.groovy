@@ -7,7 +7,6 @@ import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Requires
 import spock.lang.Unroll
 
 class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -67,7 +66,6 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
     }
 
     @Unroll
-    @Requires({ jvm.isJava8() || jvm.isJava11() })
     void 'test gradle elasticsearch and graalvm features for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -85,7 +83,6 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
     }
 
     @Unroll
-    @Requires({ jvm.isJava8() || jvm.isJava11() })
     void 'test maven elasticsearch and graalvm features for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
