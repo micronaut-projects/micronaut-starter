@@ -1,17 +1,23 @@
 package io.micronaut.starter.feature.build
 
+import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.dependencies.StarterCoordinates
+import io.micronaut.starter.feature.DefaultFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityOAuth2
+import io.micronaut.starter.feature.test.Mockito
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import jakarta.inject.Inject
 import spock.lang.Unroll
+
+import javax.security.auth.Subject
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
 import static io.micronaut.starter.options.BuildTool.GRADLE
@@ -23,6 +29,10 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     private static final String GRADLE_PLUGIN_VERSION = StarterCoordinates.MICRONAUT_GRADLE_PLUGIN.version
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
+
+    @spock.lang.Subject
+    @Inject
+    MicronautAot feature = beanContext.getBean(MicronautAot)
 
     void 'application with aot and oauth adds security aot keys  language=#language'(Language language) {
         when:
@@ -134,7 +144,14 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         then:
         output.contains("<micronaut.aot.packageName>example.micronaut.aot.generated</micronaut.aot.packageName>")
-        output.contains("<micronaut.aot.enabled>true</micronaut.aot.enabled>")
+
+        when:
+        String expected = "<micronaut.aot.enabled>${(feature instanceof DefaultFeature ? StringUtils.FALSE : StringUtils.TRUE)}</micronaut.aot.enabled>"
+
+        then:
+        output.contains(expected)
+
+        and:
         output.contains('<configFile>aot-${packaging}.properties</configFile>')
 
         where:

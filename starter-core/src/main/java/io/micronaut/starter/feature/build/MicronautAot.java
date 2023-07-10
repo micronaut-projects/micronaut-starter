@@ -94,7 +94,7 @@ public class MicronautAot implements DefaultFeature {
 
     protected void addAotBuildProperties(GeneratorContext generatorContext) {
         BuildProperties buildProperties = generatorContext.getBuildProperties();
-        buildProperties.put("micronaut.aot.enabled", StringUtils.TRUE);
+        buildProperties.put("micronaut.aot.enabled", StringUtils.FALSE);
         buildProperties.put("micronaut.aot.packageName", generatorContext.getProject().getPackageName() + ".aot.generated");
     }
 
