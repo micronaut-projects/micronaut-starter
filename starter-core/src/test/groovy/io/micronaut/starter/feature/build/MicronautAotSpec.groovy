@@ -70,6 +70,16 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     }
 
     @Unroll
+    void 'AOT is enabled by default'() {
+        when:
+        String output = build(GRADLE_KOTLIN, Language.JAVA, [])
+
+        then:
+        output.contains(AOT_PLUGIN)
+        output.contains('aot {')
+    }
+
+    @Unroll
     void 'application with gradle and feature micronaut-aot for language=#language and Kotlin DSL'() {
         when:
         String output = build(GRADLE_KOTLIN, language)
