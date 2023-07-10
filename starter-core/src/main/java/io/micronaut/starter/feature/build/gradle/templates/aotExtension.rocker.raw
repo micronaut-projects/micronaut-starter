@@ -1,9 +1,9 @@
 @import io.micronaut.starter.build.gradle.GradleDsl
 @import java.util.Map
 @args(GradleDsl dsl, Map<String, String> aotKeys)
-aot {
-   // Please review carefully the optimizations enabled below
-  // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+    aot {
+    // Please review carefully the optimizations enabled below
+    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
 @if (dsl == GradleDsl.KOTLIN) {
         optimizeServiceLoading.set(false)
         convertYamlToJava.set(false)
@@ -27,4 +27,4 @@ aot {
         configurationProperties.put("@(keyName)","@(aotKeys.get(keyName))")
 }
 }
-}
+    }
