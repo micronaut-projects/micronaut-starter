@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.messaging.mqtt
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -13,8 +16,8 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mqtt contains links to micronaut docs'() {
         when:
-        def output = generate([feature])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([feature])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -22,53 +25,46 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         where:
         feature << beanContext.streamOfType(MqttFeature)
-                .map{f -> f.getName()}
+                .map {f -> f.getName() }
                 .collect(Collectors.toList())
     }
 
-    void "test dependencies are present for gradle"() {
+    void "test dependencies are present for #buildTool"(BuildTool buildTool, String feature, String dependency, boolean hasTestResources) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features([feature])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
-        template.contains('id("io.micronaut.test-resources") version') == (dependency == 'mqttv5')
-        template.contains('sharedServer = true') == (dependency == 'mqttv5')
+        verifier.hasDependency("io.micronaut.mqtt", "micronaut-${dependency}", Scope.COMPILE)
 
-        where:
-        feature  | dependency
-        "mqtt"   | "mqttv5"
-        "mqttv3" | "mqttv3"
-    }
-
-    void "test dependencies are present for maven"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([feature])
-                .render()
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.mqtt</groupId>
-      <artifactId>micronaut-${dependency}</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("<$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>true</$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>") == (dependency == 'mqttv5')
-        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
+        if (hasTestResources) {
+            if (buildTool.isGradle()) {
+                assert verifier.hasBuildPlugin("io.micronaut.test-resources")
+            } else if (buildTool == BuildTool.MAVEN) {
+                assert template.contains("<$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>true</$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>")
+                assert template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-''') == (dependency == 'mqttv5')
+''')
+            }
+        }
 
         where:
-        feature  | dependency
-        "mqtt"   | "mqttv5"
-        "mqttv3" | "mqttv3"
+        buildTool               | feature       | dependency | hasTestResources
+        BuildTool.GRADLE        | "mqtt-hivemq" | "mqtt-hivemq" | true
+        BuildTool.GRADLE_KOTLIN | "mqtt-hivemq" | "mqtt-hivemq" | true
+        BuildTool.MAVEN         | "mqtt-hivemq" | "mqtt-hivemq" | true
+        BuildTool.GRADLE        | "mqtt"        | "mqttv5"   | true
+        BuildTool.GRADLE_KOTLIN | "mqtt"        | "mqttv5"   | true
+        BuildTool.MAVEN         | "mqtt"        | "mqttv5"   | true
+        BuildTool.GRADLE        | "mqttv3"      | "mqttv3"   | false
+        BuildTool.GRADLE_KOTLIN | "mqttv3"      | "mqttv3"   | false
+        BuildTool.MAVEN         | "mqttv3"      | "mqttv3"   | false
     }
 
-    void "test config"() {
+    void "test config"(String feature) {
         when:
         GeneratorContext ctx = buildGeneratorContext([feature])
 
