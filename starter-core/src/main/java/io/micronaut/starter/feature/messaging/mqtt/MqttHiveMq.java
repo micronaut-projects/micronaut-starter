@@ -28,6 +28,10 @@ import jakarta.inject.Singleton;
 public class MqttHiveMq extends EaseTestingFeature implements MqttFeature, SharedTestResourceFeature {
 
     public static final String NAME = "mqtt-hivemq";
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_MQTT_HIVEMQ = Dependency.builder()
+            .groupId("io.micronaut.mqtt")
+            .artifactId("micronaut-mqtt-hivemq")
+            .compile();
 
     public MqttHiveMq(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
@@ -52,9 +56,16 @@ public class MqttHiveMq extends EaseTestingFeature implements MqttFeature, Share
     @Override
     public void apply(GeneratorContext generatorContext) {
         MqttFeature.super.apply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.mqtt")
-                .artifactId("micronaut-mqtt-hivemq")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_MQTT_HIVEMQ);
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/index.html#hiveMq";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/hivemq/hivemq-mqtt-client";
     }
 }
