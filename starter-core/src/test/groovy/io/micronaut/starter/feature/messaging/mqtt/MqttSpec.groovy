@@ -60,7 +60,7 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-          </configuration>''') == (dependency == 'mqttv5')
+''') == (dependency == 'mqttv5')
 
         where:
         feature  | dependency
