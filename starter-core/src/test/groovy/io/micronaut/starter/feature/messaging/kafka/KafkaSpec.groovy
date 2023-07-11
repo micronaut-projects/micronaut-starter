@@ -62,7 +62,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-          </configuration>''')
+''')
     }
 
     void "test config"() {

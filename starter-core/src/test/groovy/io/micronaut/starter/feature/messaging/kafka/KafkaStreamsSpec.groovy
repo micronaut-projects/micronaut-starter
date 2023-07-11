@@ -83,7 +83,7 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-          </configuration>''')
+''')
     }
 
     void "test config"() {

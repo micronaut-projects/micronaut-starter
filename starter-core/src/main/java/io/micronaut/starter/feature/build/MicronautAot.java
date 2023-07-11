@@ -26,19 +26,22 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
-public class MicronautAot implements Feature {
+public class MicronautAot implements DefaultFeature {
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
 
     private static final String GRADLE_PLUGIN_ID = "io.micronaut.aot";
@@ -91,7 +94,7 @@ public class MicronautAot implements Feature {
 
     protected void addAotBuildProperties(GeneratorContext generatorContext) {
         BuildProperties buildProperties = generatorContext.getBuildProperties();
-        buildProperties.put("micronaut.aot.enabled", StringUtils.TRUE);
+        buildProperties.put("micronaut.aot.enabled", StringUtils.FALSE);
         buildProperties.put("micronaut.aot.packageName", generatorContext.getProject().getPackageName() + ".aot.generated");
     }
 
@@ -150,5 +153,10 @@ public class MicronautAot implements Feature {
             optimizations.add(new MicronautAotOptimization("micronaut.security.openid-configuration.enabled", false, "It fetches OpenID Connect metadata at Build time. https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#aotOpenidConfiguration"));
         }
         return optimizations;
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return true;
     }
 }
