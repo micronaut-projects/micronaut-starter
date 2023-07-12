@@ -37,7 +37,6 @@ public class Core implements Feature {
             .runtime()
             .build();
 
-
     @Override
     public String getName() {
         return "micrometer";
