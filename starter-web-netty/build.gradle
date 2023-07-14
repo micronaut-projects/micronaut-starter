@@ -25,9 +25,7 @@ application {
     mainClass = "io.micronaut.starter.netty.Application"
 }
 
-
 tasks.named("dockerBuildNative") {
-    
     images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
 }
 
