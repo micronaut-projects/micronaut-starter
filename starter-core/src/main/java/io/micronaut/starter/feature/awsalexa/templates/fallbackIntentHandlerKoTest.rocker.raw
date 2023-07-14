@@ -19,7 +19,7 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
-import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 @@MicronautTest
 class FallbackIntentHandlerTest(private val handler: FallbackIntentHandler): StringSpec({

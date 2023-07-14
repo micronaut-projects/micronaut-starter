@@ -194,7 +194,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         if (generatorContext.getFeatures().testFramework().isJunit()) {
             return Optional.of("junit5");
         } else if (generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {
-            return Optional.of("kotest");
+            return Optional.of("kotest5");
         } else if (generatorContext.getFeatures().testFramework().isSpock()) {
             return Optional.of("spock2");
         }
