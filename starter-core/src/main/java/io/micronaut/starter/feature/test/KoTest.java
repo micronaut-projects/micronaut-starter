@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,10 +53,6 @@ public class KoTest implements TestFeature {
 
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
         if (generatorContext.getBuildTool() == MAVEN) {
-            generatorContext.addDependency(new Dependency.Builder()
-                    .groupId("io.mockk")
-                    .artifactId("mockk")
-                    .test());
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_KOTEST5);
             generatorContext.addDependency(Dependency.builder()
                     .lookupArtifactId(ARTIFACT_ID_KOTEST_RUNNER_JUNIT_5_JVM)
