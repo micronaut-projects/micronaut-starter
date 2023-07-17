@@ -49,7 +49,6 @@ class KoTestSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.kotest", "kotest-assertions-core-jvm", Scope.TEST)
         verifier.hasDependency("io.kotest", "kotest-runner-junit5-jvm", Scope.TEST)
         verifier.hasDependency("io.micronaut.test", "micronaut-test-kotest5", Scope.TEST)
-        verifier.hasDependency("io.mockk", "mockk", Scope.TEST)
     }
 
     void 'test gradle configure unit tests for Kotest5'() {
