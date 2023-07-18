@@ -32,8 +32,7 @@ import java.util.stream.Collectors
  * created as GitHub Secrets. For required variables see see {@link GoogleCloudRunWorkflowSpec#envVariables()}
  */
 @Requires({
-    GoogleCloudRunWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
-    jvm.isJava11()
+    GoogleCloudRunWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) }
 })
 
 class GoogleCloudRunWorkflowSpec extends WorkflowSpec {

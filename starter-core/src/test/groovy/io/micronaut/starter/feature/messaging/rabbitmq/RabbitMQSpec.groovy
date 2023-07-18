@@ -46,7 +46,7 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-          </configuration>''')
+''')
     }
 
     void "test config"() {

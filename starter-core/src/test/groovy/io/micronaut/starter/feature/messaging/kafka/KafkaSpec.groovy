@@ -26,7 +26,24 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
-        template.contains('sharedServer = true')
+        template.contains("""
+    testResources {
+        sharedServer = true
+    }""")
+    }
+
+    void "test resources config is not present if testContainers feature is added"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['kafka', 'testcontainers'])
+                .render()
+
+        then:
+        template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
+        !template.contains("""
+    testResources {
+        sharedServer = true
+    }""")
     }
 
     void "test dependencies are present for maven"() {
@@ -45,7 +62,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
-          </configuration>''')
+''')
     }
 
     void "test config"() {

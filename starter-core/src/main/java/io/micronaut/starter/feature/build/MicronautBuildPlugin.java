@@ -36,12 +36,14 @@ import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -132,6 +134,13 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 .buildTool(generatorContext.getBuildTool())
                 .incremental(true)
                 .packageName(generatorContext.getProject().getPackageName());
+        generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(f -> f instanceof LambdaRuntimeMainClass)
+                .map(f -> ((LambdaRuntimeMainClass) f).getLambdaRuntimeMainClass())
+                .findFirst()
+                .ifPresent(builder::lambdaRuntimeMainClass);
         Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
         if (gradleDsl.isPresent()) {
             builder = builder.dsl(gradleDsl.get());
@@ -145,15 +154,19 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         if (testRuntimeOptional.isPresent()) {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
-        Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
-        if ((!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
-                && databaseDriverFeature.isPresent()) {
-            databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
-                    .map(dbType -> getModuleName(generatorContext, dbType))
-                    .ifPresent(builder::addAdditionalTestResourceModules);
-        }
-        if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
-            builder = builder.withSharedTestResources();
+        if (generatorContext.getFeatures().hasFeature(TestResources.class)) {
+            Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
+            if (
+                    (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) &&
+                            databaseDriverFeature.isPresent()
+            ) {
+                databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
+                        .map(dbType -> getModuleName(generatorContext, dbType))
+                        .ifPresent(builder::addAdditionalTestResourceModules);
+            }
+            if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
+                builder = builder.withSharedTestResources();
+            }
         }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");

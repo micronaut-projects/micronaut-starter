@@ -4,11 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class MySQLSpec extends ApplicationContextSpec {
 
-    @Unroll
     void 'test gradle mysql feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -29,7 +27,26 @@ class MySQLSpec extends ApplicationContextSpec {
         language << Language.values().toList()
     }
 
-    @Unroll
+    void 'testresources not configured for Gradle with testContainers feature and language=#language'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['mysql', 'testcontainers'])
+                .language(language)
+                .render()
+
+        then:
+        template.contains('runtimeOnly("mysql:mysql-connector-java")')
+
+        and:
+        !template.contains("""
+    testResources {
+        additionalModules.add("jdbc-mysql")
+    }""")
+
+        where:
+        language << Language.values().toList()
+    }
+
     void 'test maven mysql feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

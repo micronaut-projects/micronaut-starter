@@ -57,8 +57,7 @@ import static com.oracle.bmc.auth.SimpleAuthenticationDetailsProvider.SimpleAuth
  * as GitHub Secrets, see {@link OracleFunctionsWorkflowSpec#envVariables()}
  */
 @Requires({
-    OracleFunctionsWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
-      jvm.isJava11()
+    OracleFunctionsWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) }
 })
 @Slf4j
 class OracleFunctionsWorkflowSpec extends WorkflowSpec {

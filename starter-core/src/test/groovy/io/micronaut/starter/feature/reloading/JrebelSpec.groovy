@@ -20,6 +20,23 @@ class JrebelSpec extends ApplicationContextSpec  implements CommandOutputFixture
         readme.contains("https://docs.micronaut.io/latest/guide/index.html#jrebel")
         readme.contains("[JRebel Gradle Plugin](https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel)")
     }
+    
+    void 'test jrebel with Maven applies jrebel plugin'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.JAVA)
+                .features(['jrebel'])
+                .render()
+
+        then:
+        template.contains('''\
+      <plugin>
+        <groupId>org.zeroturnaround</groupId>
+        <artifactId>jrebel-maven-plugin</artifactId>
+      </plugin>
+''')
+        template.contains("<jvmArguments>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArguments>")
+    }
 
     @Unroll
     void 'test jrebel with Gradle for language=#language'(Language language) {
