@@ -15,7 +15,7 @@ import io.micronaut.context.annotation.Property
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 private const val TEST_SIGNING_SECRET = "s3cr3t"
 private val SIGNATURE_GENERATOR = SlackSignature.Generator(TEST_SIGNING_SECRET)
