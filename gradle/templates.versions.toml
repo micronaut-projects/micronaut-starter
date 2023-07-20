@@ -62,8 +62,8 @@ ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
 spring-boot-gradle-plugin = "3.1.1"
 spring-dependency-management-plugin = "1.1.0"
-micronaut-starter-aws-cdk = "4.0.0-RC1"
 micronaut-security-aot = "4.0.0"
+micronaut-starter-aws-cdk = "4.0.0"
 spring-boot-starter-parent="3.1.1"
 [libraries]
 spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
