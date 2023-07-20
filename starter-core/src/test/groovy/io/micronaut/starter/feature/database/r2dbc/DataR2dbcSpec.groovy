@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.database.DataJdbcSpec
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.H2
 import io.micronaut.starter.feature.database.MariaDB
@@ -221,13 +222,9 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME)
         jdbcFeature.name == 'jdbc-hikari'
         !verifier.hasDependency("io.micronaut.sql","micronaut-jdbc-hikari")
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        buildTool.isGradle() || semanticVersionOptional.isPresent()
+        if (buildTool == BuildTool.MAVEN) {
+            DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
+        }
 
         where:
         buildTool << BuildTool.values()
@@ -258,13 +255,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         verifier.hasTestResourceDependency("micronaut-test-resources-$testResourcesModuleName")
         verifier.hasTestResourceDependency(jdbcDriverDependency.groupId, jdbcDriverDependency.artifactId)
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
 
         where:
         db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
@@ -289,13 +280,8 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         jdbcFeature.name == 'jdbc-hikari'
         verifier.hasDependency("micronaut-jdbc-hikari")
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        and:
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
     }
 
     void "test migration dependencies are present for maven and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -325,13 +311,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         and: 'The hikari pool is added for the migration'
         jdbcFeature.name == 'jdbc-hikari'
         verifier.hasDependency("micronaut-jdbc-hikari")
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
 
         where:
         db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
