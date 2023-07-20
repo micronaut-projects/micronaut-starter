@@ -20,6 +20,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
@@ -28,7 +29,7 @@ import jakarta.inject.Singleton;
 public class MicronautHttpValidation implements Feature {
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_VALIDATION = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-http-validation")
-            .versionProperty("micronaut.version")
+            .versionProperty(MavenBuildCreator.PROPERTY_MICRONAUT_CORE_VERSION)
             .annotationProcessor()
             .build();
 
