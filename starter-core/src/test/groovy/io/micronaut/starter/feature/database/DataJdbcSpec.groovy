@@ -70,12 +70,15 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )
 
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+        assertTemplateDoesNotContainMicronautDataVersionProperty(template)
+    }
 
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+    static void assertTemplateDoesNotContainMicronautDataVersionProperty(String template) {
+        assert template.contains('<version>${micronaut.data.version}</version>')
+        assert !template.contains("<micronaut.data.version>")
+        assert !template.contains("</micronaut.data.version>")
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+        assert !semanticVersionOptional.isPresent()
     }
 
     void "test config for #buildTool for features #features"(BuildTool buildTool,

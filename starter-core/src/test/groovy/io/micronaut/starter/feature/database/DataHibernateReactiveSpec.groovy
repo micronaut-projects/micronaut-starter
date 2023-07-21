@@ -204,13 +204,8 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         and: 'test resources module is correct, and driver is added to the plugin dependencies'
         verifier.hasTestResourceDependency("micronaut-test-resources-$testResourcesModule")
         verifier.hasTestResourceDependency(migrationDriver.groupId, migrationDriver.artifactId)
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        and:
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
 
         where:
         db              | client                                    | testResourcesModule                                        | migrationDriver
@@ -245,13 +240,8 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         and: 'test resources module is correct, and driver is not added to the plugin dependencies'
         verifier.hasTestResourceDependency("micronaut-test-resources-$testResourcesModule")
         !verifier.hasTestResourceDependencyWithGroupId(migrationDriver.groupId)
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        and:
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
 
         where:
         db              | client                                    | migration      | testResourcesModule                                        | migrationDriver

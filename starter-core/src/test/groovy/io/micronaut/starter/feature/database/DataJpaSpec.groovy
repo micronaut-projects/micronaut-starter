@@ -70,13 +70,8 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, "micronaut-data-hibernate-jpa", Scope.COMPILE )
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        and:
+        DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
