@@ -40,6 +40,7 @@ public class Category {
     public static final String MESSAGING            = "Messaging";
     public static final String OTHER                = "Other";
     public static final String PACKAGING            = "Packaging";
+    public static final String JOB_PROCESSING       = "Job Processing";
     public static final String REACTIVE             = "Reactive";
     public static final String RESILIENCE           = "Resilience";
     public static final String SEARCH               = "Search Engine";

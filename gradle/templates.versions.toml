@@ -36,6 +36,7 @@ gradle-enterprise-maven-extension = "1.15.5"
 gradle-jrebel-plugin = "1.1.10"
 gradle-shadow-plugin = "7.1.2"
 jib-gradle-plugin = "2.8.0"
+jobrunr = "6.2.3"
 jruby = "9.3.8.0"
 json-bind = "2.0.0"
 jte-gradle-plugin= "2.2.6"
@@ -89,6 +90,7 @@ gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
+jobrunr-micronaut = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
 jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
 json-bind = { module = "jakarta.json.bind:jakarta.json.bind-api", version.ref = "json-bind" }
 jte-gradle-plugin = { module = "gg.jte:jte-gradle-plugin", version.ref = "jte-gradle-plugin" }
