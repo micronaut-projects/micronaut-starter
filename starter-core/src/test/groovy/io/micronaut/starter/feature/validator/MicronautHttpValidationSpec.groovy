@@ -47,22 +47,14 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
     }
 
     void "dependency added for micronaut-http-validation is aligned with micronaut core version"() {
-        given:
-        GeneratorContext context = Mock()
-        List<Dependency> dependencies = []
-
         when:
-        micronautHttpValidation.apply(context)
+        String template = new BuildBuilder(beanContext, buildTool).features(['micronaut-http-validation']).render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        1 * context.addDependency(_) >> (args) -> { dependencies << args[0] }
-        0 * _
+        verifier.hasDependency("io.micronaut", "micronaut-http-validation", Scope.ANNOTATION_PROCESSOR, 'micronaut.core.version', true)
 
-        and:
-        dependencies.stream().anyMatch {
-            it.artifactId == "micronaut-http-validation" &&
-            it.versionProperty == "micronaut.core.version" &&
-            it.scope == Scope.ANNOTATION_PROCESSOR
-        }
+        where:
+        buildTool << BuildTool.values()
     }
 }

@@ -42,6 +42,31 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
         return false
     }
 
+    @CompileDynamic
+    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId, String version, boolean isProperty) {
+        String v = isProperty ? '${' + version + '}' : version
+        String expectedCoordinate = "${groupId}:${artifactId}:${v}"
+        if (language == Language.KOTLIN) {
+            if (scope == Scope.ANNOTATION_PROCESSOR) {
+                return project.build.plugins.plugin.find { it.artifactId.text() == "kotlin-maven-plugin" }?.executions.execution.find { it.id.text() == 'kapt' }?.with {
+                    List<String> coordinates = configuration.annotationProcessorPaths.annotationProcessorPath.collect { "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}".toString() }
+                    return coordinates.contains(expectedCoordinate)
+                }
+            } else if (scope == Scope.TEST_ANNOTATION_PROCESSOR) {
+                return project.build.plugins.plugin.find { it.artifactId.text() == "kotlin-maven-plugin" }?.executions.execution.find { it.id.text() == 'test-kapt' }?.with {
+                    List<String> coordinates = configuration.annotationProcessorPaths.annotationProcessorPath.collect { "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}".toString() }
+                    return coordinates.contains(expectedCoordinate)
+                }
+            }
+        } else if (language == Language.JAVA){
+            return project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+                List<String> coordinates = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}".toString() }
+                return coordinates.contains(expectedCoordinate)
+            }
+        }
+        return false
+    }
+
     @Override
     boolean hasBom(String groupId, String artifactId, Scope scope) {
         hasBom(groupId, artifactId, "")
@@ -90,6 +115,29 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     boolean hasDependency(String expectedGroupId, String expectedArtifactId, String expectedScope) {
         project.dependencies.dependency.findAll { it.artifactId.text() == expectedArtifactId }.any {
             it.scope.text() == expectedScope && it.groupId.text() == expectedGroupId
+        }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasDependency(String groupId, String artifactId, Scope scope, String version, boolean isProperty) {
+        if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
+            return hasAnnotationProcessor(scope, groupId, artifactId, version, isProperty)
+        }
+        return MavenScope.of(scope, language)
+                .map {hasDependency(groupId, artifactId, it.toString(), version, isProperty) }
+                .orElseThrow { new ConfigurationException("cannot match " + scope + " to maven scope") }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasDependency(String expectedGroupId, String expectedArtifactId, String expectedScope, String expectedVersion, boolean isProperty) {
+        if (isProperty) {
+            // Only annotation processors keep version properties
+            return hasDependency(expectedGroupId, expectedArtifactId, expectedScope)
+        }
+        return project.dependencies.dependency.findAll { it.artifactId.text() == expectedArtifactId }.any {
+            it.scope.text() == expectedScope && it.groupId.text() == expectedGroupId && it.version.text() == expectedVersion
         }
     }
 

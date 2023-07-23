@@ -15,6 +15,10 @@ interface BuildTestVerifier {
 
     boolean hasDependency(String groupId, String artifactId, String scope)
 
+    boolean hasDependency(String groupId, String artifactId, Scope scope, String version, boolean isProperty)
+
+    boolean hasDependency(String groupId, String artifactId, String scope, String version, boolean isProperty)
+
     boolean hasDependency(String groupId, String artifactId)
 
     boolean hasTestResourceDependency(String groupId, String artifactId)

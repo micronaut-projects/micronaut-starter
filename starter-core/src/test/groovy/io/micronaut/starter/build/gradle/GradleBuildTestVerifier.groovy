@@ -52,6 +52,23 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
+    boolean hasDependency(String groupId, String artifactId, Scope scope, String version, boolean isProperty) {
+        return GradleConfiguration.of(scope, language, testFramework, null)
+                .map { hasDependency(groupId, artifactId, it.getConfigurationName(), version, isProperty) }
+                .orElseThrow { new ConfigurationException("cannot match " + scope + " to gradle configuration") }
+    }
+
+    @Override
+    boolean hasDependency(String groupId, String artifactId, String scope, String version, boolean isProperty) {
+        if (isProperty) {
+            // Gradle will use the version specified in the BOM
+            return hasDependency(groupId, artifactId, scope)
+        }
+        String regex = /(?s).*${scope}\("${groupId}:${artifactId}:${version}\"\).*/
+        template.matches(Pattern.compile(regex))
+    }
+
+    @Override
     boolean hasDependency(String groupId, String artifactId) {
         GradleConfiguration.values().collect { it.getConfigurationName() }.any( {scope ->
             hasDependency(groupId, artifactId, scope)
