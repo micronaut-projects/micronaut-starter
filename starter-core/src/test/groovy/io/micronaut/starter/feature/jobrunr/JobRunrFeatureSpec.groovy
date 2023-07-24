@@ -38,7 +38,7 @@ class JobRunrFeatureSpec extends ApplicationContextSpec implements CommandOutput
 
     void "JobRunr is jp=b processing category"() {
         expect:
-        jobRunrFeature.category == Category.JOB_PROCESSING
+        jobRunrFeature.category == Category.SCHEDULING
     }
 
     void "test dependency added for jobrunr feature for build tool #buildTool"(BuildTool buildTool) {

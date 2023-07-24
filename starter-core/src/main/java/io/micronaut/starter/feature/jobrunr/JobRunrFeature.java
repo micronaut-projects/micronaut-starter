@@ -62,7 +62,7 @@ public class JobRunrFeature implements CommunityFeature {
 
     @Override
     public String getCategory() {
-        return Category.JOB_PROCESSING;
+        return Category.SCHEDULING;
     }
 
     @Override
