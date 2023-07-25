@@ -2,7 +2,6 @@ package io.micronaut.starter.analytics.postgres
 
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Requires
-import io.micronaut.context.env.Environment
 import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Consumes
@@ -27,9 +26,7 @@ import java.util.concurrent.CompletableFuture
 import static io.micronaut.starter.analytics.postgres.ExcelGenerator.ExcelColumn.*
 
 @Property(name = "spec.name", value = "GenerateExcelSpec")
-@MicronautTest(
-        transactional = false,
-        environments = Environment.GOOGLE_COMPUTE)
+@MicronautTest(transactional = false)
 @spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class GenerateExcelSpec extends Specification implements TestPropertyProvider {
 

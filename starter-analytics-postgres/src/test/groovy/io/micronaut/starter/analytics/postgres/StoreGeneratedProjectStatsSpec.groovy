@@ -1,10 +1,8 @@
 package io.micronaut.starter.analytics.postgres
 
-import io.micronaut.context.env.Environment
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
-import io.micronaut.data.runtime.config.SchemaGenerate
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
@@ -13,7 +11,6 @@ import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.analytics.SelectedFeature
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
@@ -29,9 +26,7 @@ import spock.lang.Specification
 import jakarta.inject.Inject
 import java.util.concurrent.CompletableFuture
 
-@MicronautTest(
-        transactional = false,
-        environments = Environment.GOOGLE_COMPUTE)
+@MicronautTest(transactional = false)
 @spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
 
