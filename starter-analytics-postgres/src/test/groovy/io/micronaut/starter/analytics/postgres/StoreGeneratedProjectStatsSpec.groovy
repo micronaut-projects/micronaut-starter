@@ -11,6 +11,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.analytics.SelectedFeature
 import io.micronaut.starter.application.ApplicationType
@@ -28,6 +29,7 @@ import spock.lang.Specification
 
 import jakarta.inject.Inject
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 
 @Property(name = "spec.name", value = "StoreGeneratedProjectStatsSpec")
 @Property(name = "api-keys.test.name", value = "Mr. Tester")
@@ -73,8 +75,8 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         unauthorizedClient.applicationGenerated(generated).get()
 
         then:
-        Exception e = thrown()
-        e.cause.message == "Unauthorized"
+        ExecutionException e = thrown()
+        (e.cause as HttpClientResponseException).status == HttpStatus.UNAUTHORIZED
     }
 
     void "test save generation data with a wrong api key"() {
@@ -92,8 +94,8 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         wrongApiKeyClient.applicationGenerated(generated).get()
 
         then:
-        Exception e = thrown()
-        e.cause.message == "Unauthorized"
+        ExecutionException e = thrown()
+        (e.cause as HttpClientResponseException).status == HttpStatus.UNAUTHORIZED
     }
 
     void "test save generation data"() {
