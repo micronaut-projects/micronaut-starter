@@ -24,6 +24,8 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.starter.analytics.Generated;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 
 @Controller("/analytics")
 @ExecuteOn(TaskExecutors.BLOCKING)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 public class AnalyticsController {
 
     private final ApplicationRepository applicationRepository;
