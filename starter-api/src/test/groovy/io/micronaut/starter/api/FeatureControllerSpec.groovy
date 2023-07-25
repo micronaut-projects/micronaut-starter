@@ -41,7 +41,12 @@ class FeatureControllerSpec extends Specification {
                 'agorapulse-micronaut-permissions',
                 'agorapulse-micronaut-slack',
                 'agorapulse-micronaut-worker',
+<<<<<<< HEAD
                 'camunda-zeebe'
+=======
+                'camunda-zeebe',
+                'jobrunr-jobrunr'
+>>>>>>> cf88adc756 (Add JobRunr community feature. (#1973))
         ].sort()
     }
 
