@@ -87,7 +87,6 @@ public class AnalyticsController {
      */
     @Post("/report")
     @Transactional
-    @ExecuteOn(TaskExecutors.BLOCKING)
     HttpStatus applicationGenerated(@NonNull @Body Generated generated) {
         Application application = new Application(
                 generated.getType(),
@@ -112,7 +111,6 @@ public class AnalyticsController {
      * @throws IOException if the spreadsheet cannot be written to the buffer.
      */
     @Get("/excel")
-    @ExecuteOn(TaskExecutors.BLOCKING)
     @Produces(MediaType.MICROSOFT_EXCEL_OPEN_XML)
     HttpResponse<StreamedFile> generateExcel() throws IOException {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
