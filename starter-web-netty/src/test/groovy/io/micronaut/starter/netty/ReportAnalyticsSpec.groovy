@@ -8,6 +8,7 @@ import io.micronaut.core.annotation.NonNull
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
@@ -29,7 +30,7 @@ import java.util.concurrent.CompletableFuture
         value =  "http://localhost:8080/analytics/report")
 @Property(
         name = "micronaut.http.services.analytics.token",
-        value =  "false")
+        value =  "test-api-key")
 class ReportAnalyticsSpec extends Specification {
 
     @Inject
@@ -68,7 +69,8 @@ class ReportAnalyticsSpec extends Specification {
     static class AnalyticsController {
         Generated generated
         @Post("/analytics/report")
-        CompletableFuture<HttpStatus> applicationGenerated(@NonNull @Body Generated generated) {
+        CompletableFuture<HttpStatus> applicationGenerated(@Header xApiKey, @NonNull @Body Generated generated) {
+            if (xApiKey != 'test-api-key') return CompletableFuture.completedFuture(HttpStatus.UNAUTHORIZED)
             this.generated = generated
             return CompletableFuture.completedFuture(HttpStatus.OK)
         }
