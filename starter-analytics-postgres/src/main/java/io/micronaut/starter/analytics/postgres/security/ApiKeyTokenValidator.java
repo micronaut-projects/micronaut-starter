@@ -19,6 +19,7 @@ import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.token.validator.TokenValidator;
+import io.micronaut.starter.analytics.postgres.AnalyticsController;
 import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 
@@ -40,7 +41,7 @@ class ApiKeyTokenValidator implements TokenValidator<HttpRequest<?>> {
     public Publisher<Authentication> validateToken(String token, HttpRequest<?> request) {
         return Optional.ofNullable(request)
                 .map(HttpRequest::getPath)
-                .filter(path -> path.startsWith("/analytics"))
+                .filter(path -> path.startsWith(AnalyticsController.PATH))
                 .flatMap(path -> apiKeyRepository.findByApiKey(token))
                 .map(Authentication::build)
                 .map(Publishers::just)

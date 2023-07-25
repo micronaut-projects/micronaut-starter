@@ -147,7 +147,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
     }
 
     @Requires(property = "spec.name", value = "StoreGeneratedProjectStatsSpec")
-    @Client("/analytics")
+    @Client(AnalyticsController.PATH)
     @Header(name = "X-API-KEY", value = "wonderful")
     static interface AnalyticsClient {
         @Post("/report")
@@ -155,14 +155,14 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
     }
 
     @Requires(property = "spec.name", value = "StoreGeneratedProjectStatsSpec")
-    @Client("/analytics")
+    @Client(AnalyticsController.PATH)
     static interface UnauthorizedAnalyticsClient {
         @Post("/report")
         CompletableFuture<HttpStatus> applicationGenerated(@NonNull @Body Generated generated);
     }
 
     @Requires(property = "spec.name", value = "StoreGeneratedProjectStatsSpec")
-    @Client("/analytics")
+    @Client(AnalyticsController.PATH)
     @Header(name = "X-API-KEY", value = "WRONG!")
     static interface WrongApiKeyClient {
         @Post("/report")

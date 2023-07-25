@@ -31,10 +31,12 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller("/analytics")
+@Controller(AnalyticsController.PATH)
 @ExecuteOn(TaskExecutors.BLOCKING)
 @Secured(SecurityRule.IS_AUTHENTICATED)
 public class AnalyticsController {
+
+    public static final String PATH = "/analytics";
 
     private final ApplicationRepository applicationRepository;
     private final FeatureRepository featureRepository;
