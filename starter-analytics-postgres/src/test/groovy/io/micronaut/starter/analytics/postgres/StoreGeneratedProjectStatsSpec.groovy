@@ -20,6 +20,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
+import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -31,6 +32,7 @@ import java.util.concurrent.CompletableFuture
 @MicronautTest(
         transactional = false,
         environments = Environment.GOOGLE_COMPUTE)
+@spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
 
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")

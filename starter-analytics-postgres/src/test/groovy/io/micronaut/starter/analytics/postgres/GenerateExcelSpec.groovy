@@ -16,6 +16,7 @@ import jakarta.inject.Inject
 import org.apache.poi.ss.usermodel.DateUtil
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -29,6 +30,7 @@ import static io.micronaut.starter.analytics.postgres.ExcelGenerator.ExcelColumn
 @MicronautTest(
         transactional = false,
         environments = Environment.GOOGLE_COMPUTE)
+@spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class GenerateExcelSpec extends Specification implements TestPropertyProvider {
 
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
