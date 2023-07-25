@@ -75,15 +75,15 @@ public class ExcelGenerator {
     }
 
     private enum ExcelColumn {
-        ID("id", CellType.NUMERIC, numeric(Application::getId)),
-        FEATURES("features", CellType.STRING, features(Application::getFeatures)),
+        DATE_CREATED("date_created", CellType.NUMERIC, date(Application::getDateCreated), CELL_STYLE_DATE_TIME),
         TYPE("type", CellType.STRING, symbol(Application::getType)),
         LANGUAGE("language", CellType.STRING, symbol(Application::getLanguage)),
-        BUILD_TOOL("buildTool", CellType.STRING, symbol(Application::getBuildTool)),
-        TEST_FRAMEWORK("testFramework", CellType.STRING, symbol(Application::getTestFramework)),
-        JDK_VERSION("jdkVersion", CellType.NUMERIC, jdkVersion(Application::getJdkVersion)),
-        MICRONAUT_VERSION("micronautVersion", CellType.STRING, string(Application::getMicronautVersion)),
-        DATE_CREATED("dateCreated", CellType.NUMERIC, date(Application::getDateCreated), CELL_STYLE_DATE_TIME);
+        BUILD_TOOL("build_tool", CellType.STRING, symbol(Application::getBuildTool)),
+        TEST_FRAMEWORK("test_framework", CellType.STRING, symbol(Application::getTestFramework)),
+        JDK_VERSION("jdk_version", CellType.NUMERIC, jdkVersion(Application::getJdkVersion)),
+        MICRONAUT_VERSION("micronaut_version", CellType.STRING, string(Application::getMicronautVersion)),
+        ID("id", CellType.NUMERIC, numeric(Application::getId)),
+        FEATURES("features", CellType.STRING, features(Application::getFeatures));
 
         final String title;
         final CellType type;
