@@ -1,5 +1,7 @@
 package io.micronaut.starter.analytics.postgres
 
+import io.micronaut.context.annotation.Property
+import io.micronaut.context.annotation.Requires
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
@@ -26,6 +28,7 @@ import spock.lang.Specification
 import jakarta.inject.Inject
 import java.util.concurrent.CompletableFuture
 
+@Property(name = "spec.name", value = "StoreGeneratedProjectStatsSpec")
 @MicronautTest(transactional = false)
 @spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
@@ -99,6 +102,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         featureRepository.topTestFrameworks()
     }
 
+    @Requires(property = "spec.name", value = "StoreGeneratedProjectStatsSpec")
     @Client("/analytics")
     static interface AnalyticsClient {
         @Post("/report")
