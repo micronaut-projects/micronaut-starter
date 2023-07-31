@@ -16,7 +16,6 @@
 package io.micronaut.starter.analytics.postgres;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -113,7 +112,7 @@ public class AnalyticsController {
     @Produces(MediaType.MICROSOFT_EXCEL_OPEN_XML)
     HttpResponse<StreamedFile> generateExcel() throws IOException {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            excelGenerator.generateExcel(applicationRepository.list(Pageable.UNPAGED)).write(out);
+            excelGenerator.generateExcel().write(out);
             return HttpResponse.ok()
                     .body(new StreamedFile(new ByteArrayInputStream(out.toByteArray()), MediaType.MICROSOFT_EXCEL_OPEN_XML_TYPE)
                     .attach("applications." + MediaType.EXTENSION_XLSX));

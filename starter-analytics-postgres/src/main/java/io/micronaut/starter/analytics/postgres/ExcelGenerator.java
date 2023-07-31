@@ -15,7 +15,10 @@
  */
 package io.micronaut.starter.analytics.postgres;
 
-import io.micronaut.core.annotation.NonNull;
+import io.micronaut.context.annotation.Value;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.data.model.Slice;
+import io.micronaut.data.model.Sort;
 import io.micronaut.starter.options.JdkVersion;
 import jakarta.inject.Singleton;
 import org.apache.poi.ss.usermodel.*;
@@ -45,12 +48,22 @@ public class ExcelGenerator {
 
     private static final Function<Workbook, CellStyle> CELL_STYLE_NULL = workbook -> null;
 
+    private final ApplicationRepository applicationRepository;
+    private final int pageSize;
+
+    public ExcelGenerator(
+            ApplicationRepository applicationRepository,
+            @Value("${excel.fetch.page.size:50}") int pageSize) {
+        this.applicationRepository = applicationRepository;
+        this.pageSize = pageSize;
+    }
+
     /**
      * Generates an Excel spreadsheet containing all the given applications.
      *
      * @return An Excel spreadsheet.
      */
-    public Workbook generateExcel(@NonNull Collection<Application> applications) {
+    public Workbook generateExcel() {
         final Workbook workbook = new XSSFWorkbook();
         final Sheet sheet = workbook.createSheet(SHEET_NAME);
         int rownum = 0;
@@ -63,13 +76,17 @@ public class ExcelGenerator {
             headers.createCell(column.ordinal(), CellType.STRING).setCellValue(column.title);
         }
         // Data
-        for (Application app : applications) {
-            Row data = sheet.createRow(rownum++);
-            for (ExcelColumn column : ExcelColumn.values()) {
-                final Cell cell = data.createCell(column.ordinal(), column.type);
-                column.setter.accept(app, cell);
-                Optional.ofNullable(column.styler.apply(workbook)).ifPresent(cell::setCellStyle);
+        Slice<Application> applications = applicationRepository.list(Pageable.from(0, pageSize, Sort.of(Sort.Order.asc("id"))));
+        while (!applications.isEmpty()) {
+            for (Application app : applications) {
+                Row data = sheet.createRow(rownum++);
+                for (ExcelColumn column : ExcelColumn.values()) {
+                    final Cell cell = data.createCell(column.ordinal(), column.type);
+                    column.setter.accept(app, cell);
+                    Optional.ofNullable(column.styler.apply(workbook)).ifPresent(cell::setCellStyle);
+                }
             }
+            applications = applicationRepository.list(applications.nextPageable());
         }
         return workbook;
     }

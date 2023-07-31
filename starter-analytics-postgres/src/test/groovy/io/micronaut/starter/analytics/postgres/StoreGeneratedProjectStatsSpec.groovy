@@ -70,7 +70,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         status == HttpStatus.ACCEPTED
 
         when:
-        Application application = repository.list(Pageable.UNPAGED)[0]
+        Application application = repository.list(Pageable.UNPAGED).getContent()[0]
 
         then:
         application.type == generated.type
