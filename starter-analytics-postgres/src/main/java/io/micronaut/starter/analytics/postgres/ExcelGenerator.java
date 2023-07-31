@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.analytics.postgres;
 
-import io.micronaut.context.annotation.Value;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.data.model.Slice;
 import io.micronaut.data.model.Sort;
@@ -49,13 +48,11 @@ public class ExcelGenerator {
     private static final Function<Workbook, CellStyle> CELL_STYLE_NULL = workbook -> null;
 
     private final ApplicationRepository applicationRepository;
-    private final int pageSize;
+    private final StarterAnalyticsConfiguration configuration;
 
-    public ExcelGenerator(
-            ApplicationRepository applicationRepository,
-            @Value("${excel.fetch.page.size:50}") int pageSize) {
+    public ExcelGenerator(ApplicationRepository applicationRepository, StarterAnalyticsConfiguration configuration) {
         this.applicationRepository = applicationRepository;
-        this.pageSize = pageSize;
+        this.configuration = configuration;
     }
 
     /**
@@ -76,7 +73,7 @@ public class ExcelGenerator {
             headers.createCell(column.ordinal(), CellType.STRING).setCellValue(column.title);
         }
         // Data
-        Slice<Application> applications = applicationRepository.list(Pageable.from(0, pageSize, Sort.of(Sort.Order.asc("id"))));
+        Slice<Application> applications = applicationRepository.list(Pageable.from(0, configuration.getPageSize(), Sort.of(Sort.Order.asc("id"))));
         while (!applications.isEmpty()) {
             for (Application app : applications) {
                 Row data = sheet.createRow(rownum++);
