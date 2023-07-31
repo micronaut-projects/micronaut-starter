@@ -51,8 +51,6 @@ public class MicronautApplicationGradlePlugin {
         private boolean incremental;
         private  String packageName;
         private boolean sharedTestResources;
-        private boolean hasTestResources;
-
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
             return this;
@@ -147,7 +145,8 @@ public class MicronautApplicationGradlePlugin {
                             aotVersion,
                             incremental,
                             packageName,
-                            hasTestResources, additionalTestResourceModules, sharedTestResources
+                            additionalTestResourceModules,
+                            sharedTestResources
                     )));
         }
 
@@ -158,11 +157,6 @@ public class MicronautApplicationGradlePlugin {
 
         public Builder withSharedTestResources() {
             this.sharedTestResources = true;
-            return this;
-        }
-
-        public Builder hasTestResources() {
-            this.hasTestResources = true;
             return this;
         }
     }
