@@ -18,6 +18,7 @@ package io.micronaut.starter.analytics.postgres;
 import io.micronaut.data.annotation.Join;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.Pageable;
+import io.micronaut.data.model.Slice;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.PageableRepository;
 
@@ -37,5 +38,5 @@ public interface ApplicationRepository extends PageableRepository<Application, L
      * @return The application and the features
      */
     @Join("features")
-    List<Application> list(Pageable pageable);
+    Slice<Application> list(Pageable pageable);
 }

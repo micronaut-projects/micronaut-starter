@@ -1,10 +1,10 @@
 package io.micronaut.starter.analytics.postgres
 
-import io.micronaut.context.env.Environment
+import io.micronaut.context.annotation.Property
+import io.micronaut.context.annotation.Requires
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
-import io.micronaut.data.runtime.config.SchemaGenerate
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
@@ -13,13 +13,13 @@ import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.analytics.SelectedFeature
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
+import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -28,9 +28,9 @@ import spock.lang.Specification
 import jakarta.inject.Inject
 import java.util.concurrent.CompletableFuture
 
-@MicronautTest(
-        transactional = false,
-        environments = Environment.GOOGLE_COMPUTE)
+@Property(name = "spec.name", value = "StoreGeneratedProjectStatsSpec")
+@MicronautTest(transactional = false)
+@spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
 
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
@@ -70,7 +70,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         status == HttpStatus.ACCEPTED
 
         when:
-        Application application = repository.list(Pageable.UNPAGED)[0]
+        Application application = repository.list(Pageable.UNPAGED).getContent()[0]
 
         then:
         application.type == generated.type
@@ -102,6 +102,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         featureRepository.topTestFrameworks()
     }
 
+    @Requires(property = "spec.name", value = "StoreGeneratedProjectStatsSpec")
     @Client("/analytics")
     static interface AnalyticsClient {
         @Post("/report")

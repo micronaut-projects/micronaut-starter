@@ -16,16 +16,23 @@
 package io.micronaut.starter.analytics.postgres;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.http.server.types.files.StreamedFile;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.starter.analytics.Generated;
 
 import jakarta.transaction.Transactional;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,12 +42,15 @@ public class AnalyticsController {
 
     private final ApplicationRepository applicationRepository;
     private final FeatureRepository featureRepository;
+    private final ExcelGenerator excelGenerator;
 
     public AnalyticsController(
             ApplicationRepository applicationRepository,
-            FeatureRepository featureRepository) {
+            FeatureRepository featureRepository,
+            ExcelGenerator excelGenerator) {
         this.applicationRepository = applicationRepository;
         this.featureRepository = featureRepository;
+        this.excelGenerator = excelGenerator;
     }
 
     @Get("/top/features")
@@ -75,7 +85,6 @@ public class AnalyticsController {
      */
     @Post("/report")
     @Transactional
-    @ExecuteOn(TaskExecutors.BLOCKING)
     HttpStatus applicationGenerated(@NonNull @Body Generated generated) {
         Application application = new Application(
                 generated.getType(),
@@ -92,5 +101,21 @@ public class AnalyticsController {
 
         featureRepository.saveAll(features);
         return HttpStatus.ACCEPTED;
+    }
+
+    /**
+     * Generates an Excel spreadsheet containing all the applications stored in the repository.
+     * @return an Excel spreadsheet.
+     * @throws IOException if the spreadsheet cannot be written to the buffer.
+     */
+    @Get("/excel")
+    @Produces(MediaType.MICROSOFT_EXCEL_OPEN_XML)
+    HttpResponse<StreamedFile> generateExcel() throws IOException {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            excelGenerator.generateExcel().write(out);
+            return HttpResponse.ok()
+                    .body(new StreamedFile(new ByteArrayInputStream(out.toByteArray()), MediaType.MICROSOFT_EXCEL_OPEN_XML_TYPE)
+                    .attach("applications." + MediaType.EXTENSION_XLSX));
+        }
     }
 }
