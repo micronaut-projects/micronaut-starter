@@ -46,7 +46,7 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
     }
 
     private void addFeatureWhichRequireRepositories(GeneratorContext generatorContext) {
-        if (addSnapshotRepository(generatorContext)) {
+        if (shouldAddSnapshotRepository(generatorContext)) {
             addRepository(new MicronautSnapshotRepository());
         }
         generatorContext.getFeatures()
