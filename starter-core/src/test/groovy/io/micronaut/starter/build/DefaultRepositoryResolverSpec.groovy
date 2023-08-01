@@ -13,7 +13,7 @@ class DefaultRepositoryResolverSpec extends Specification {
             getFramework() >> 'Foo'
         }
         expect:
-        !resolver.addSnapshotRepository(generatorContext)
+        !resolver.shouldAddSnapshotRepository(generatorContext)
     }
 
     void "do not generate snapshot repository if not Micronaut Framework"() {
