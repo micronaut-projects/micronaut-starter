@@ -18,6 +18,7 @@ package io.micronaut.starter.build;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
     }
 
     private void addFeatureWhichRequireRepositories(GeneratorContext generatorContext) {
-        if (generatorContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT)) {
+        if (addSnapshotRepository(generatorContext)) {
             addRepository(new MicronautSnapshotRepository());
         }
         generatorContext.getFeatures()
@@ -57,5 +58,9 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
                         addRepository(repository);
                     }
                 });
+    }
+
+    boolean addSnapshotRepository(GeneratorContext generatorContext) {
+        return generatorContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT) && VersionInfo.isMicronautSnapshot();
     }
 }
