@@ -17,12 +17,12 @@ package io.micronaut.starter.build.maven;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.MavenSpecificFeature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class GroovyMavenPlusPlugin implements Feature {
+public class GroovyMavenPlusPlugin implements MavenSpecificFeature {
 
     private static final String GROUP_ID_GMAVEN = "org.codehaus.gmavenplus";
     private static final String ARTIFACT_ID_GMAVEN = "gmavenplus-plugin";
