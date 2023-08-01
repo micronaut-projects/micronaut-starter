@@ -23,7 +23,7 @@ class DefaultRepositoryResolverSpec extends Specification {
             getFramework() >> 'Micronaut'
         }
         expect:
-        VersionInfo.isMicronautSnapshot() == resolver.addSnapshotRepository(generatorContext)
+        VersionInfo.isMicronautSnapshot() == resolver.shouldAddSnapshotRepository(generatorContext)
     }
 
 }
