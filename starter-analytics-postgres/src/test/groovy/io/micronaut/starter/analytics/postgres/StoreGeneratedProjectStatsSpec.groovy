@@ -2,7 +2,6 @@ package io.micronaut.starter.analytics.postgres
 
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Requires
-import io.micronaut.context.env.Environment
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
@@ -22,6 +21,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
+import org.testcontainers.DockerClientFactory
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -34,9 +34,8 @@ import java.util.concurrent.ExecutionException
 @Property(name = "spec.name", value = "StoreGeneratedProjectStatsSpec")
 @Property(name = "api-keys.test.name", value = "Mr. Tester")
 @Property(name = "api-keys.test.key", value = "wonderful")
-@MicronautTest(
-        transactional = false,
-        environments = Environment.GOOGLE_COMPUTE)
+@MicronautTest(transactional = false)
+@spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
 
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
@@ -116,7 +115,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         status == HttpStatus.ACCEPTED
 
         when:
-        Application application = repository.list(Pageable.UNPAGED)[0]
+        Application application = repository.list(Pageable.UNPAGED).getContent()[0]
 
         then:
         application.type == generated.type
