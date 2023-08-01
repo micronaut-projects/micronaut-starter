@@ -60,7 +60,7 @@ public class DefaultRepositoryResolver implements RepositoryResolver {
                 });
     }
 
-    boolean addSnapshotRepository(GeneratorContext generatorContext) {
+    boolean shouldAddSnapshotRepository(GeneratorContext generatorContext) {
         return generatorContext.getFramework().equals(Options.FRAMEWORK_MICRONAUT) && VersionInfo.isMicronautSnapshot();
     }
 }
