@@ -10,7 +10,7 @@ import spock.lang.Specification
 @Property(name = "spec.name", value = "ReportAnalyticsNoApiKeySpec")
 @Property(
         name = "micronaut.http.services.analytics.url",
-        value = "http://localhost:8080/analytics/report")
+        value = "http://localhost:8080")
 class ReportAnalyticsNoApiKeySpec extends Specification {
 
     @Inject
