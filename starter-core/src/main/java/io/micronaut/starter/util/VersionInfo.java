@@ -88,7 +88,7 @@ public class VersionInfo {
     public static Map<String, String> getDependencyVersions() {
         Map<String, String> map = new LinkedHashMap<>();
         VERSIONS.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().toString()))
-                .forEach((entry) -> map.put(entry.getKey().toString(), entry.getValue().toString()));
+                .forEach(entry -> map.put(entry.getKey().toString(), entry.getValue().toString()));
         return Collections.unmodifiableMap(map);
     }
 

@@ -42,8 +42,10 @@ public enum TestFramework {
             case KOTLINTEST:
             case KOTEST:
                 return io.micronaut.starter.options.TestFramework.KOTEST;
-            default:
             case JUNIT:
+                return io.micronaut.starter.options.TestFramework.JUNIT;
+            case JUNIT:
+            default:
                 return io.micronaut.starter.options.TestFramework.JUNIT;
         }
     }

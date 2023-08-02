@@ -137,7 +137,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         generatorContext.getFeatures()
                 .getFeatures()
                 .stream()
-                .filter(f -> f instanceof LambdaRuntimeMainClass)
+                .filter(LambdaRuntimeMainClass.class::isInstance)
                 .map(f -> ((LambdaRuntimeMainClass) f).getLambdaRuntimeMainClass())
                 .findFirst()
                 .ifPresent(builder::lambdaRuntimeMainClass);

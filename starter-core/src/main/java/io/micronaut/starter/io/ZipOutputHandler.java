@@ -77,7 +77,7 @@ public class ZipOutputHandler implements OutputHandler {
     public void write(String path, Template contents) throws IOException {
         ZipArchiveEntry zipEntry = new ZipArchiveEntry(directory != null ? StringUtils.prependUri(directory, path) : path);
         if (contents.isExecutable()) {
-            zipEntry.setUnixMode(UnixStat.FILE_FLAG | 0755);
+            zipEntry.setUnixMode(UnixStat.FILE_FLAG | 493);
         }
         zipOutputStream.putArchiveEntry(zipEntry);
         contents.write(zipOutputStream);

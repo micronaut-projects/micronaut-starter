@@ -85,7 +85,7 @@ public class Yaml implements ConfigurationFeature {
 
     @Override
     public Function<Configuration, Template> createTemplate() {
-        return (config) -> new YamlTemplate(config.getFullPath(EXTENSION), config);
+        return config -> new YamlTemplate(config.getFullPath(EXTENSION), config);
     }
 
     @Override

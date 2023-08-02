@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
 public class Log4j2 implements LoggingFeature {
     public static final String NAME = "log4j2";
 
-    private final String GROUP_ID = "org.apache.logging.log4j";
+    private final String groupId = "org.apache.logging.log4j";
 
     @Override
     @NonNull
@@ -55,21 +55,21 @@ public class Log4j2 implements LoggingFeature {
 
     private void populateDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID)
+                .groupId(groupId)
                 .artifactId("log4j-bom")
                 .version(VersionInfo.getBomVersion("log4j"))
                 .pom()
                 .compile());
         generatorContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID)
+                .groupId(groupId)
                 .artifactId("log4j-api")
                 .compile());
         generatorContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID)
+                .groupId(groupId)
                 .artifactId("log4j-core")
                 .runtime());
         generatorContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID)
+                .groupId(groupId)
                 .artifactId("log4j-slf4j-impl")
                 .runtime());
     }

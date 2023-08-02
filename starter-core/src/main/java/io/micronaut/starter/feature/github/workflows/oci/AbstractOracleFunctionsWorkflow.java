@@ -56,7 +56,7 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
     public static final String WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS = "120";
 
     private final OracleRawFunction oracleRawFunction;
-    private boolean isGraal;
+    private final boolean isGraal;
 
     public AbstractOracleFunctionsWorkflow(OracleRawFunction oracleRawFunction, boolean isGraal) {
         this.oracleRawFunction = oracleRawFunction;

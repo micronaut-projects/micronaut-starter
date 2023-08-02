@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -83,7 +84,7 @@ public class Mockk implements MockingFeature, DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return isValid(selectedFeatures, options::getBuildTool, t -> t == BuildTool.MAVEN, BuildFeature.class, BuildFeature::isMaven)
                 && isValid(selectedFeatures, options::getLanguage, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
-                && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
+                && isValid(selectedFeatures, options::getTestFramework, TestFramework::isKotlinTestFramework, TestFeature.class, TestFeature::isKotlinTestFramework);
     }
 
     private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures,

@@ -82,7 +82,7 @@ public class Config4k implements ConfigurationFeature, KotlinSpecificFeature {
 
     @Override
     public Function<Configuration, Template> createTemplate() {
-        return (config) -> new Config4kTemplate(config.getFullPath(EXTENSION), config);
+        return config -> new Config4kTemplate(config.getFullPath(EXTENSION), config);
     }
 
 }

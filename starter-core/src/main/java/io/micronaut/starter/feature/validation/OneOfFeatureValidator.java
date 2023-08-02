@@ -30,7 +30,7 @@ public class OneOfFeatureValidator implements FeatureValidator {
 
     private void validate(Set<Feature> features) {
         Set<Class<?>> oneOfFeatures = features.stream()
-                .filter(feature -> feature instanceof OneOfFeature)
+                .filter(OneOfFeature.class::isInstance)
                 .map(OneOfFeature.class::cast)
                 .map(OneOfFeature::getFeatureClass)
                 .collect(Collectors.toSet());

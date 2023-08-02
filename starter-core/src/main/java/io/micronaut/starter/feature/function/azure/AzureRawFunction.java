@@ -52,7 +52,7 @@ public class AzureRawFunction extends AbstractAzureFunction {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.exclude(feature -> feature instanceof ShadePlugin);
+        featureContext.exclude(ShadePlugin.class::isInstance);
         if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
             featureContext.addFeature(httpFunction);
         }

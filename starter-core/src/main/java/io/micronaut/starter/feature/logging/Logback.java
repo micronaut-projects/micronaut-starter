@@ -59,7 +59,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(f -> f instanceof LoggingFeature);
+        return selectedFeatures.stream().noneMatch(LoggingFeature.class::isInstance);
     }
 
     @Override

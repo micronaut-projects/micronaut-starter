@@ -81,7 +81,7 @@ public class GradleRepository implements Writable  {
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        String content = (getGradleDsl() == GradleDsl.KOTLIN ? kotlinDslRepository() : groovyDslRepository());
+        String content = getGradleDsl() == GradleDsl.KOTLIN ? kotlinDslRepository() : groovyDslRepository();
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));
     }
 

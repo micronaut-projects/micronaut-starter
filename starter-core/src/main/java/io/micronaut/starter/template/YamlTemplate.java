@@ -71,7 +71,7 @@ public class YamlTemplate extends DefaultTemplate {
             int index = key.indexOf('.');
             if (index != -1) {
                 String[] keys = DOT_PATTERN.split(key);
-                if (!keys[0].equals("micronaut") && config.keySet().stream().filter(k -> k.startsWith(keys[0] + ".")).count() == 1) {
+                if (!"micronaut".equals(keys[0]) && config.keySet().stream().filter(k -> k.startsWith(keys[0] + ".")).count() == 1) {
                     finalMap.put(key, value);
                 } else {
                     for (int i = 0; i < keys.length - 1; i++) {
@@ -82,7 +82,7 @@ public class YamlTemplate extends DefaultTemplate {
                         }
                         Object next = finalMap.get(subKey);
                         if (next instanceof Map) {
-                            finalMap = ((Map<String, Object>) next);
+                            finalMap = (Map<String, Object>) next;
                         }
                     }
                     finalMap.put(keys[keys.length - 1], value);

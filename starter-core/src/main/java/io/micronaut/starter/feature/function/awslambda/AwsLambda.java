@@ -312,7 +312,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == FUNCTION &&
-                selectedFeatures.stream().filter(feature -> feature instanceof CloudFeature)
+                selectedFeatures.stream().filter(CloudFeature.class::isInstance)
                         .noneMatch(cloudFeature -> ((CloudFeature) cloudFeature).getCloud() != getCloud());
     }
 

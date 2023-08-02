@@ -154,15 +154,15 @@ public class CodeGenConfig {
                 if (map.containsKey("profile")) {
                     codeGenConfig.legacy = true;
                     String profile = map.get("profile").toString();
-                    if (profile.equals("service")) {
+                    if ("service".equals(profile)) {
                         codeGenConfig.setApplicationType(ApplicationType.DEFAULT);
-                    } else if (profile.equals("cli")) {
+                    } else if ("cli".equals(profile)) {
                         codeGenConfig.setApplicationType(ApplicationType.CLI);
-                    } else if (profile.equals("function-aws") || profile.equals("function-aws-alexa")) {
+                    } else if ("function-aws".equals(profile) || "function-aws-alexa".equals(profile)) {
                         codeGenConfig.setApplicationType(ApplicationType.FUNCTION);
-                    } else if (profile.equals("grpc")) {
+                    } else if ("grpc".equals(profile)) {
                         codeGenConfig.setApplicationType(ApplicationType.GRPC);
-                    } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
+                    } else if ("kafka".equals(profile) || "rabbitmq".equals(profile)) {
                         codeGenConfig.setApplicationType(ApplicationType.MESSAGING);
                     } else {
                         return null;

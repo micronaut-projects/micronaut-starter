@@ -34,7 +34,7 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof AwsLambda) && features.stream().noneMatch(f -> f instanceof GraalVM)) {
+        if (features.stream().anyMatch(AwsLambda.class::isInstance) && features.stream().noneMatch(GraalVM.class::isInstance)) {
             JdkVersion javaVersion = options.getJavaVersion();
             if (!supports(options.getJavaVersion())) {
                 throw new IllegalArgumentException(String.format("AWS Lambda does not have a Java %s runtime", javaVersion.majorVersion()));

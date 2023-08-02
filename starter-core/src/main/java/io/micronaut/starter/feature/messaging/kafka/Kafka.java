@@ -65,7 +65,7 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.MESSAGING &&
-                selectedFeatures.stream().noneMatch(feature -> feature instanceof MessagingFeature);
+                selectedFeatures.stream().noneMatch(MessagingFeature.class::isInstance);
     }
 
     @Override

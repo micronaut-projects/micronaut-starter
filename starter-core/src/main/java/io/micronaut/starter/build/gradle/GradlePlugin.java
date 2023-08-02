@@ -169,7 +169,7 @@ public class GradlePlugin implements BuildPlugin {
         private Writable settingsExtension;
         private List<GradleRepository> pluginsManagementRepositories;
         private boolean requiresLookup;
-        private int order = 0;
+        private int order;
         private Set<String> buildImports = new HashSet<>();
 
         private Builder() { }

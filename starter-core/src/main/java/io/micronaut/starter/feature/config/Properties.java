@@ -51,7 +51,7 @@ public class Properties implements DefaultConfigurationFeature {
 
     @Override
     public Function<Configuration, Template> createTemplate() {
-        return (config) -> new PropertiesTemplate(config.getFullPath(EXTENSION), config);
+        return config -> new PropertiesTemplate(config.getFullPath(EXTENSION), config);
     }
 
     @Override

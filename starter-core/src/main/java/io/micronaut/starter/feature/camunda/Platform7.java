@@ -79,7 +79,7 @@ public class Platform7 implements CamundaCommunityFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.exclude(feature -> feature instanceof Netty);
+        featureContext.exclude(Netty.class::isInstance);
         featureContext.addFeatureIfNotPresent(DatabaseDriverFeature.class, defaultDbFeature);
         featureContext.addFeatureIfNotPresent(Jetty.class, jetty);
         featureContext.addFeatureIfNotPresent(AssertJ.class, assertJ);

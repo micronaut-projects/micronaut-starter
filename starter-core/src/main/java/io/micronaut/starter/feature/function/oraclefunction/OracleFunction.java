@@ -69,11 +69,11 @@ public class OracleFunction extends AbstractFunctionFeature implements OracleClo
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(SimpleLogging.class)) {
             featureContext.addFeature(simpleLogging);
-            featureContext.exclude(feature -> feature instanceof Logback);
+            featureContext.exclude(Logback.class::isInstance);
         }
 
         if (featureContext.isPresent(ServerFeature.class)) {
-            featureContext.exclude(feature -> feature instanceof ServerFeature);
+            featureContext.exclude(ServerFeature.class::isInstance);
         }
     }
 

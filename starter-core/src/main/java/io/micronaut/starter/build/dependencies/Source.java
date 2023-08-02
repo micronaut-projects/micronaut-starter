@@ -17,5 +17,5 @@ package io.micronaut.starter.build.dependencies;
 
 public enum Source {
     MAIN,
-    TEST;
+    TEST
 }

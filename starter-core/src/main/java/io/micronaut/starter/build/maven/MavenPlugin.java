@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class MavenPlugin implements BuildPlugin {
 
-    private String artifactId;
+    private final String artifactId;
     private final Writable extension;
     private final int order;
 
@@ -95,7 +95,7 @@ public class MavenPlugin implements BuildPlugin {
         private String artifactId;
         private String groupId;
         private Writable extension;
-        private int order = 0;
+        private int order;
 
         private Builder() {
         }

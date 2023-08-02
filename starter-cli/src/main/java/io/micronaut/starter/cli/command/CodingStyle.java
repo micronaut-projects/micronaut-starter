@@ -20,7 +20,7 @@ public enum CodingStyle {
     CONTROLLERS("With @Controller classes, routes with methods annotated with @Get ..."),
     HANDLER("Functional style with a Handler class with input and output");
 
-    private String description;
+    private final String description;
 
     CodingStyle(String description) {
         this.description = description;
