@@ -84,7 +84,7 @@ public class Mockk implements MockingFeature, DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return isValid(selectedFeatures, options::getBuildTool, t -> t == BuildTool.MAVEN, BuildFeature.class, BuildFeature::isMaven)
                 && isValid(selectedFeatures, options::getLanguage, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
-                && isValid(selectedFeatures, options::getTestFramework, TestFramework::isKotlinTestFramework, TestFeature.class, TestFeature::isKotlinTestFramework);
+                && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
     }
 
     private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures,
