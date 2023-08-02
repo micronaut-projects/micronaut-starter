@@ -164,11 +164,6 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                         JdkVersion.JDK_17
                 };
             case FAT_JAR:
-                List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
-                JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
-                supportedJdks.toArray(arr);
-                return arr;
-            case FAT_JAR:
             default:
                 List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
                 JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
@@ -181,8 +176,6 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         switch (codingStyle) {
             case HANDLER:
                 return ApplicationType.FUNCTION;
-            case CONTROLLERS:
-                return ApplicationType.DEFAULT;
             case CONTROLLERS:
             default:
                 return ApplicationType.DEFAULT;
