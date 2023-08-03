@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.starter.analytics.Generated;
@@ -28,6 +29,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Requires(property = AnalyticsClient.SERVICE_ANALYTICS)
 @Client("analytics")
+@Header(name = "X-API-KEY", value = "${micronaut.http.services.analytics.token}")
 public interface AnalyticsClient extends AnalyticsOperations {
 
     String SERVICE_ANALYTICS = "micronaut.http.services.analytics";

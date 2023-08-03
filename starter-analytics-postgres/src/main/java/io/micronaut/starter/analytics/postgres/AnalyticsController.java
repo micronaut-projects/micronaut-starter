@@ -28,6 +28,8 @@ import io.micronaut.http.server.types.files.StreamedFile;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.starter.analytics.Generated;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import jakarta.transaction.Transactional;
 import java.io.ByteArrayInputStream;
@@ -36,9 +38,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller("/analytics")
+@Controller(AnalyticsController.PATH)
 @ExecuteOn(TaskExecutors.BLOCKING)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 public class AnalyticsController {
+
+    public static final String PATH = "/analytics";
 
     private final ApplicationRepository applicationRepository;
     private final FeatureRepository featureRepository;

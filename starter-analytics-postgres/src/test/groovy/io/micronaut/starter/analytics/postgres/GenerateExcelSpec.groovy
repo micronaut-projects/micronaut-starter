@@ -6,6 +6,7 @@ import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Consumes
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.*
@@ -26,6 +27,8 @@ import java.util.concurrent.CompletableFuture
 import static io.micronaut.starter.analytics.postgres.ExcelGenerator.ExcelColumn.*
 
 @Property(name = "spec.name", value = "GenerateExcelSpec")
+@Property(name = "api-keys.test.name", value = "Mr. Tester")
+@Property(name = "api-keys.test.key", value = "wonderful")
 @MicronautTest(transactional = false)
 @spock.lang.Requires({ DockerClientFactory.instance().isDockerAvailable() })
 class GenerateExcelSpec extends Specification implements TestPropertyProvider {
@@ -95,6 +98,7 @@ class GenerateExcelSpec extends Specification implements TestPropertyProvider {
 
     @Requires(property = "spec.name", value = "GenerateExcelSpec")
     @Client("/analytics")
+    @Header(name = "X-API-KEY", value = "wonderful")
     static interface AnalyticsClient {
 
         @Get("/excel")
