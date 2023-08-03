@@ -15,7 +15,6 @@ abstract class GradlePropertiesNextSnapshot extends DefaultTask {
     abstract RegularFileProperty getGradleProperties()
 
     GradlePropertiesNextSnapshot() {
-        propertyName.convention('micronautCoreVersion')
         getGradleProperties().convention(getProject().getLayout().getProjectDirectory().file("gradle.properties"))
     }
 
