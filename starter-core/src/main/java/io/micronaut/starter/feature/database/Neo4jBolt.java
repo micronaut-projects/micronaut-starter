@@ -32,6 +32,19 @@ public class Neo4jBolt implements Feature {
             .testRuntime()
             .build();
 
+    private static final Dependency DEPENDENCY_JAVAX_ANNOTATION_API = Dependency.builder()
+            .groupId("javax.annotation")
+            .artifactId("javax.annotation-api")
+            .testRuntime()
+            .build();
+
+    private static final Dependency DEPENDENCY_JAVAX_VALIDATION_API = Dependency.builder()
+            .groupId("javax.validation")
+            .artifactId("validation-api")
+            .version("2.0.1.Final")
+            .testRuntime()
+            .build();
+
     @Override
     @NonNull
     public String getName() {
@@ -56,6 +69,8 @@ public class Neo4jBolt implements Feature {
                 .artifactId("micronaut-neo4j-bolt")
                 .compile());
         generatorContext.addDependency(DEPENDENCY_NEO4J_HARNESS);
+        generatorContext.addDependency(DEPENDENCY_JAVAX_ANNOTATION_API);
+        generatorContext.addDependency(DEPENDENCY_JAVAX_VALIDATION_API);
     }
 
     @Override
