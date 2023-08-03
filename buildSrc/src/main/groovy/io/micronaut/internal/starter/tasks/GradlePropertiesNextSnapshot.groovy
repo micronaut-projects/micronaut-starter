@@ -19,7 +19,7 @@ abstract class GradlePropertiesNextSnapshot extends DefaultTask {
     }
 
     @TaskAction
-    def greet() {
+    def changePropertiesFile() {
         File propertiesFile = getGradleProperties().get().asFile
         Properties properties = new Properties()
         propertiesFile.withInputStream {
