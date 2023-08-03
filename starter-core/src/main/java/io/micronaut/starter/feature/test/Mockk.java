@@ -27,7 +27,6 @@ import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
-import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
