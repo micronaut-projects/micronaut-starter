@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="annotations">@Requires(property="micronaut.http.services.analytics")
 @Client("analytics")
+@Header(name="X-API-KEY",
+        value="${micronaut.http.services.analytics.token}")
 </span><span class="modifiers">public interface </span><span class="element-name type-name-label">AnalyticsClient</span><span class="extends-implements">
 extends <a href="../../api/analytics/AnalyticsOperations.html" title="interface in io.micronaut.starter.api.analytics">AnalyticsOperations</a></span></div>
 </section>
