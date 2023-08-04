@@ -452,3 +452,32 @@ jobs:
           commit_user_name: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
           commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+  backtosnapshots:
+    name: Core and Platform to Snapshot Versions
+    runs-on: ubuntu-latest
+    needs: [chocolatey, sdkman, gcr, homebrew]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: gradle/wrapper-validation-action@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Back to Micronaut Core snapshot
+        continue-on-error: true
+        run: ./gradlew micronautCoreNextSnapshot
+      - name: Back to Micronaut Platform snapshot
+        continue-on-error: true
+        run: ./gradlew micronautPlatformNextSnapshot
+      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        continue-on-error: true
+        with:
+          commit_message: Back Core and Platform version to snapshot
+          commit_user_name: micronaut-build
+          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+          file_pattern: gradle.properties
