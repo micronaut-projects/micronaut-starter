@@ -4,6 +4,10 @@ import io.micronaut.context.env.Environment
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -19,6 +23,21 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth")
+    }
+
+    void "test dependencies added for security-oauth2 feature"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([SecurityOAuth2.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-oauth2", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
+
+        where:
+        buildTool << BuildTool.values()
     }
 
     @Unroll

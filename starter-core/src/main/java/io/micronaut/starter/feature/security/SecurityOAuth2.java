@@ -19,7 +19,11 @@ import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.other.HttpClient;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -28,8 +32,23 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
     public static final String NAME = "security-oauth2";
     public static final int ORDER = SecurityJWT.ORDER + 10;
 
+    private final HttpClient httpClient;
+
+    @Deprecated
     public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
+        this(securityAnnotations, new HttpClient());
+    }
+
+    @Inject
+    public SecurityOAuth2(SecurityAnnotations securityAnnotations, HttpClient httpClient) {
         super(securityAnnotations);
+        this.httpClient = httpClient;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
+        featureContext.addFeatureIfNotPresent(HttpClientFeature.class, httpClient);
     }
 
     @NonNull
