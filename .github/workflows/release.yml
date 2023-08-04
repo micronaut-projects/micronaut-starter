@@ -470,15 +470,9 @@ jobs:
       - name: Back to Micronaut Core snapshot
         continue-on-error: true
         run: ./gradlew micronautCoreNextSnapshot
-        with:
-          distribution: 'temurin'
-          java-version: '17'
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-        with:
-          distribution: 'temurin'
-          java-version: '17'
       - uses: stefanzweifel/git-auto-commit-action@v4.16.0
         continue-on-error: true
         with:
