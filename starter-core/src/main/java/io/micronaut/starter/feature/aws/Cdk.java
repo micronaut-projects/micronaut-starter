@@ -84,13 +84,13 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
     private final CoordinateResolver coordinateResolver;
-    private final Dependency DEPENDENCY_CDK;
+    private final Dependency dependencyCdk;
 
     public Cdk(CoordinateResolver coordinateResolver,
                X86 x86,
                RepositoryResolver repositoryResolver) {
         this.coordinateResolver = coordinateResolver;
-        DEPENDENCY_CDK = MicronautDependencyUtils.starterDependency()
+        dependencyCdk = MicronautDependencyUtils.starterDependency()
                         .artifactId(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK)
                         .version(coordinateResolver.resolve(ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK).map(Coordinate::getVersion).orElseThrow())
                     .exclude(Dependency.builder()
@@ -179,7 +179,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
     private void populateDependencies(GeneratorContext generatorContext) {
         dependencyContext.addDependency(bomDependency().compile());
-        dependencyContext.addDependency(DEPENDENCY_CDK);
+        dependencyContext.addDependency(dependencyCdk);
         coordinateResolver.resolve(ARTIFACT_ID_AWS_CDK_LIB)
                 .ifPresent(coordinate -> dependencyContext.addDependency(Dependency.builder()
                         .groupId(coordinate.getGroupId())

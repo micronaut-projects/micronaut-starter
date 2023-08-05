@@ -51,7 +51,7 @@ public class SecuritySession extends SecurityFeature implements SecurityAuthenti
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        featureContext.exclude(feature -> feature instanceof HttpSession);
+        featureContext.exclude(HttpSession.class::isInstance);
     }
 
     @Override

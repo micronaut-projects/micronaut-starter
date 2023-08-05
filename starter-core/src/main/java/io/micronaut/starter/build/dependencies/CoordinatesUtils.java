@@ -59,22 +59,22 @@ public final class CoordinatesUtils {
                     boolean pom = false;
                     for (int x = 0; x < childNodes.getLength(); x++) {
                         Node child = childNodes.item(x);
-                        if (child.getNodeName().equals("version")) {
+                        if ("version".equals(child.getNodeName())) {
                             if (valueOfNode(child).isPresent()) {
                                 version = valueOfNode(child).get();
                             }
                         }
-                        if (child.getNodeName().equals("groupId")) {
+                        if ("groupId".equals(child.getNodeName())) {
                             if (valueOfNode(child).isPresent()) {
                                 groupId = valueOfNode(child).get();
                             }
                         }
-                        if (child.getNodeName().equals("artifactId")) {
+                        if ("artifactId".equals(child.getNodeName())) {
                             if (valueOfNode(child).isPresent()) {
                                 artifactId = valueOfNode(child).get();
                             }
                         }
-                        if (child.getNodeName().equals("type")) {
+                        if ("type".equals(child.getNodeName())) {
                             if (valueOfNode(child).isPresent()) {
                                 pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
                             }

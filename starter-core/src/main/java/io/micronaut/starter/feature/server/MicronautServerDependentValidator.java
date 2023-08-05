@@ -34,9 +34,9 @@ public class MicronautServerDependentValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
 
-        features.stream().filter(f -> f instanceof ThirdPartyServerFeature).findFirst().ifPresent(feature -> {
+        features.stream().filter(ThirdPartyServerFeature.class::isInstance).findFirst().ifPresent(feature -> {
             List<String> dependents = features.stream()
-            .filter(f -> f instanceof MicronautServerDependent)
+            .filter(MicronautServerDependent.class::isInstance)
             .map(Feature::getName)
             .sorted()
             .collect(Collectors.toList());

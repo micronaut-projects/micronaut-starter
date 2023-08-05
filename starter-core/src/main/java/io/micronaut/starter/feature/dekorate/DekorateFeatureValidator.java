@@ -47,12 +47,12 @@ public class DekorateFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof AbstractDekorateFeature)) {
+        if (features.stream().anyMatch(AbstractDekorateFeature.class::isInstance)) {
             if (options.getLanguage() == Language.GROOVY) {
                 throw new IllegalArgumentException("Dekorate is not supported in Groovy applications");
             }
 
-            if (features.stream().noneMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
+            if (features.stream().noneMatch(AbstractDekoratePlatformFeature.class::isInstance)) {
                 throw new IllegalArgumentException(String.format("At least one of %s features must be selected in order to use Dekorate properly",
                         dekoratePlatformFeatures.stream().map(Feature::getName).collect(Collectors.toList())));
             }

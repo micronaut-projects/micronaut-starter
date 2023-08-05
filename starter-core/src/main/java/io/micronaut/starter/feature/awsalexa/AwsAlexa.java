@@ -95,7 +95,7 @@ public class AwsAlexa implements Feature, AwsCloudFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return (applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT);
+        return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;
     }
 
     @Override

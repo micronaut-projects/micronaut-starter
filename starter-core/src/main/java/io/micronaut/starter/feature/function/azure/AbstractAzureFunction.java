@@ -38,6 +38,7 @@ import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunction
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -87,7 +88,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        ApplicationType type = generatorContext.getApplicationType();
         loadTemplates(generatorContext);
         Project project = generatorContext.getProject();
         BuildTool buildTool = generatorContext.getBuildTool();
@@ -122,18 +122,16 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            switch (generatorContext.getJdkVersion()) {
-                case JDK_17:
-                    return Optional.of("Java 17");
-                default:
-                    return Optional.empty();
+            if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+                return Optional.of("Java 17");
+            } else {
+                return Optional.empty();
             }
         }
-        switch (generatorContext.getJdkVersion()) {
-            case JDK_17:
-                return Optional.of("17");
-            default:
-                return Optional.empty();
+        if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+            return Optional.of("17");
+        } else {
+            return Optional.empty();
         }
     }
 

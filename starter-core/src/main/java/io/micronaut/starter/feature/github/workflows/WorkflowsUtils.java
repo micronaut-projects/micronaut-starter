@@ -47,15 +47,15 @@ public class WorkflowsUtils {
     public static RockerTemplate createExampleController(Project project, Language language) {
         RockerModel model = null;
         switch (language) {
-            default:
-            case JAVA:
-                model = javaController.template(project);
-                break;
             case KOTLIN:
                 model = kotlinController.template(project);
                 break;
             case GROOVY:
                 model = groovyController.template(project);
+                break;
+            case JAVA:
+            default:
+                model = javaController.template(project);
                 break;
         }
         return new RockerTemplate(language.getSrcDir() + "/{packagePath}/{className}Controller." + language.getExtension(), model);

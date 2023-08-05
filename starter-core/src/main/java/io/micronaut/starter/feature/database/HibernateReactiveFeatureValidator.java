@@ -69,7 +69,7 @@ public class HibernateReactiveFeatureValidator implements FeatureValidator {
         return features
                 .stream()
                 .filter(DatabaseDriverFeature.class::isInstance)
-                .map(it -> (DatabaseDriverFeature) it)
+                .map(DatabaseDriverFeature.class::cast)
                 .anyMatch(HibernateReactiveFeatureValidator::supportsHibernateReactive);
     }
 

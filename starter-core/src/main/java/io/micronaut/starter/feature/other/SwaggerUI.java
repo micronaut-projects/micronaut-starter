@@ -71,12 +71,12 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
 
         if (generatorContext.isFeaturePresent(Security.class)) {
-            Map<String, String> swaggerAccess = new HashMap<String, String>() {{
+            Map<String, String> swaggerAccess = new HashMap<>() {{
                 put("pattern", "/swagger/**");
                 put("access", "isAnonymous()");
             }};
 
-            Map<String, String> swaggerUiAccess = new HashMap<String, String>() {{
+            Map<String, String> swaggerUiAccess = new HashMap<>() {{
                 put("pattern", "/swagger-ui/**");
                 put("access", "isAnonymous()");
             }};

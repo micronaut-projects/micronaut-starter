@@ -64,10 +64,9 @@ public interface SerializationFeature extends JsonFeature {
 
     @NonNull
     default Dependency.Builder serdeModule(@NonNull GeneratorContext generatorContext) {
-        Dependency.Builder builder = MicronautDependencyUtils.serdeDependency()
+        return MicronautDependencyUtils.serdeDependency()
                 .compile()
                 .artifactId("micronaut-serde-" + getModule());
-        return builder;
     }
 
     @NonNull

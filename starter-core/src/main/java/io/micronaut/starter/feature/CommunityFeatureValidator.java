@@ -32,7 +32,7 @@ public class CommunityFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof CommunityFeature) && !ENABLE_COMMUNITY_FEATURES) {
+        if (features.stream().anyMatch(CommunityFeature.class::isInstance) && !ENABLE_COMMUNITY_FEATURES) {
             throw new IllegalArgumentException("Community features are not yet supported.");
         }
     }

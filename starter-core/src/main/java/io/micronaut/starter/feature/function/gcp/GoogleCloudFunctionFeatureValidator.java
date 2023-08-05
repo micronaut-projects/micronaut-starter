@@ -31,8 +31,8 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof AbstractGoogleCloudFunction)) {
-            if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
+        if (features.stream().anyMatch(AbstractGoogleCloudFunction.class::isInstance)) {
+            if (features.stream().anyMatch(GraalVM.class::isInstance)) {
                 throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
                     "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
             }
@@ -44,7 +44,7 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction)) {
+        if (features.stream().anyMatch(GoogleCloudFunction.class::isInstance)) {
             if (options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
                 throw new IllegalArgumentException("Google Cloud Function needs at least JDK 11");
             }

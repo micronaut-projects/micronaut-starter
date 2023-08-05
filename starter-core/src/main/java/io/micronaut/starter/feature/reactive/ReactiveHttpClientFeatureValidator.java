@@ -28,8 +28,8 @@ import java.util.Set;
 public class ReactiveHttpClientFeatureValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof ReactiveHttpClientFeature)) {
-            if (features.stream().anyMatch(f -> f instanceof HttpClientJdk)) {
+        if (features.stream().anyMatch(ReactiveHttpClientFeature.class::isInstance)) {
+            if (features.stream().anyMatch(HttpClientJdk.class::isInstance)) {
                 throw new IllegalArgumentException("http-client-jdk feature is not compatible with a reactive HTTP Client");
             }
         }

@@ -163,8 +163,8 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 return new JdkVersion[] {
                         JdkVersion.JDK_17
                 };
-            default:
             case FAT_JAR:
+            default:
                 List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
                 JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
                 supportedJdks.toArray(arr);
@@ -176,8 +176,8 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         switch (codingStyle) {
             case HANDLER:
                 return ApplicationType.FUNCTION;
-            default:
             case CONTROLLERS:
+            default:
                 return ApplicationType.DEFAULT;
 
         }
@@ -268,7 +268,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 YesOrNo.YES,
                 reader) == YesOrNo.YES ?
                 features.stream()
-                        .filter(f -> f instanceof Cdk)
+                        .filter(Cdk.class::isInstance)
                         .findFirst() : Optional.empty() ;
     }
 
@@ -282,7 +282,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     protected List<Feature> triggerFeatures(Collection<Feature> features) {
         return features.stream()
-                .filter(f -> f instanceof LambdaTrigger)
+                .filter(LambdaTrigger.class::isInstance)
                 .sorted((o1, o2) -> {
                     if (o1 instanceof AwsApiFeature && (o2 instanceof AwsApiFeature)) {
                         return o2.getTitle().compareTo(o1.getTitle());

@@ -179,7 +179,7 @@ public class GeneratorContext implements DependencyContext {
      * @return Application Configuration
      */
     @NonNull public ApplicationConfiguration getConfiguration(String env, ApplicationConfiguration defaultConfig) {
-        return applicationEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
+        return applicationEnvironmentConfiguration.computeIfAbsent(env, key -> defaultConfig);
     }
 
     /**
@@ -191,7 +191,7 @@ public class GeneratorContext implements DependencyContext {
     }
 
     @NonNull public BootstrapConfiguration getBootstrapConfiguration(String env, BootstrapConfiguration defaultConfig) {
-        return bootstrapEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
+        return bootstrapEnvironmentConfiguration.computeIfAbsent(env, key -> defaultConfig);
     }
 
     /**

@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
 public class Log4j2 implements LoggingFeature {
     public static final String NAME = "log4j2";
 
-    private final String GROUP_ID = "org.apache.logging.log4j";
+    private static final String GROUP_ID = "org.apache.logging.log4j";
 
     @Override
     @NonNull

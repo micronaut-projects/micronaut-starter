@@ -90,7 +90,7 @@ public class Configuration extends LinkedHashMap<String, Object> {
                     map.put(token, value);
                 } else {
                     //noinspection unchecked
-                    map = (LinkedHashMap<String, Object>) map.computeIfAbsent(token, (key) -> new LinkedHashMap<>(5));
+                    map = (LinkedHashMap<String, Object>) map.computeIfAbsent(token, key -> new LinkedHashMap<>(5));
                 }
             }
         }

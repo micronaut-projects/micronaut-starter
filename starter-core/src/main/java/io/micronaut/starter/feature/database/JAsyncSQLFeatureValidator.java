@@ -27,7 +27,7 @@ import java.util.Set;
 public class JAsyncSQLFeatureValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof JAsyncSQLFeature)) {
+        if (features.stream().anyMatch(JAsyncSQLFeature.class::isInstance)) {
             if (features.stream().noneMatch(f -> (f instanceof MySQL || f instanceof PostgreSQL))) {
                 throw new IllegalArgumentException("jasync-sql requires either mysql or postgres");
             }

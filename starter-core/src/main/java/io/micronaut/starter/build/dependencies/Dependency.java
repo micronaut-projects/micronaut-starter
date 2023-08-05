@@ -209,12 +209,12 @@ public final class Dependency {
         private String version;
         private String versionProperty;
         private boolean requiresLookup;
-        private int order = 0;
-        private boolean template = false;
-        private boolean annotationProcessorPriority = false;
-        private boolean pom = false;
-        private List<Dependency> exclusions = null;
-        private List<Substitution> substitutions = null;
+        private int order;
+        private boolean template;
+        private boolean annotationProcessorPriority;
+        private boolean pom;
+        private List<Dependency> exclusions;
+        private List<Substitution> substitutions;
 
         public Builder scope(@NonNull Scope scope) {
             if (template) {

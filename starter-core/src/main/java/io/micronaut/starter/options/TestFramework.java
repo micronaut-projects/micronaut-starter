@@ -29,7 +29,7 @@ public enum TestFramework {
 
     public static final TestFramework DEFAULT_OPTION = JUNIT;
 
-    private String title;
+    private final String title;
 
     TestFramework(String title) {
         this.title = title;

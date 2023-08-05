@@ -36,7 +36,7 @@ public interface JvmArgumentsFeature {
     static String getJvmArguments(@NonNull Collection<Feature> features) {
         List<String> jvmArgumentsList = features
                 .stream()
-                .filter(f -> f instanceof JvmArgumentsFeature)
+                .filter(JvmArgumentsFeature.class::isInstance)
                 .map(f -> ((JvmArgumentsFeature) f).getJvmArguments())
                 .flatMap(Collection::stream)
                 .toList();

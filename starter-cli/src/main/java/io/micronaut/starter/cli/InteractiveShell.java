@@ -81,7 +81,7 @@ public class InteractiveShell {
                     if (line.matches("^\\s*#.*")) {
                         continue;
                     }
-                    if (line.equals("exit")) {
+                    if ("exit".equals(line)) {
                         return;
                     }
                     ParsedLine pl = reader.getParser().parse(line, 0);

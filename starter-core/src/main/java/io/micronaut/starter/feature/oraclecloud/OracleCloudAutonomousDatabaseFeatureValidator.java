@@ -40,7 +40,7 @@ public class OracleCloudAutonomousDatabaseFeatureValidator implements FeatureVal
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof OracleCloudAutonomousDatabase)) {
+        if (features.stream().anyMatch(OracleCloudAutonomousDatabase.class::isInstance)) {
             if (options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
                 throw new IllegalArgumentException("Oracle Cloud Autonomous Database needs at least JDK 11");
             }
