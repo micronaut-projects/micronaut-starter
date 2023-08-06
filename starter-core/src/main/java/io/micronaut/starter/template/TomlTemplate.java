@@ -102,7 +102,7 @@ public class TomlTemplate extends DefaultTemplate {
     }
 
     private static void normalizeTopLevel(Map<DottedKey, Object> target, DottedKey prefix, Object here) {
-        if (here instanceof Map map) {
+        if (here instanceof Map<?, ?> map) {
             for (Map.Entry<?, ?> entry : map.entrySet()) {
                 normalizeTopLevel(target, prefix.resolve(((String) entry.getKey()).split("\\.")), entry.getValue());
             }
