@@ -102,8 +102,8 @@ public class TomlTemplate extends DefaultTemplate {
     }
 
     private static void normalizeTopLevel(Map<DottedKey, Object> target, DottedKey prefix, Object here) {
-        if (here instanceof Map) {
-            for (Map.Entry<?, ?> entry : ((Map<?, ?>) here).entrySet()) {
+        if (here instanceof Map map) {
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
                 normalizeTopLevel(target, prefix.resolve(((String) entry.getKey()).split("\\.")), entry.getValue());
             }
         } else {
@@ -204,18 +204,18 @@ public class TomlTemplate extends DefaultTemplate {
     private static void emitValue(Appendable to, Object value) throws IOException {
         if (value instanceof Number || value instanceof Boolean) {
             to.append(value.toString());
-        } else if (value instanceof Collection) {
+        } else if (value instanceof Collection collection) {
             to.append('[');
-            for (Iterator<?> iterator = ((Collection<?>) value).iterator(); iterator.hasNext(); ) {
+            for (Iterator<?> iterator = collection.iterator(); iterator.hasNext(); ) {
                 emitValue(to, iterator.next());
                 if (iterator.hasNext()) {
                     to.append(", ");
                 }
             }
             to.append(']');
-        } else if (value instanceof Map) {
+        } else if (value instanceof Map map) {
             to.append('{');
-            for (Iterator<? extends Map.Entry<?, ?>> iterator = ((Map<?, ?>) value).entrySet().iterator(); iterator.hasNext(); ) {
+            for (Iterator<? extends Map.Entry<?, ?>> iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
                 Map.Entry<?, ?> entry = iterator.next();
                 emitKey(to, (String) entry.getKey());
                 to.append(" = ");
@@ -315,7 +315,7 @@ public class TomlTemplate extends DefaultTemplate {
 
         @Override
         public boolean equals(Object o) {
-            return o instanceof DottedKey && this.parts.equals(((DottedKey) o).parts);
+            return o instanceof DottedKey dk && this.parts.equals(dk.parts);
         }
 
         @Override

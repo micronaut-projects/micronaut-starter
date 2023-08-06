@@ -33,8 +33,10 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(AbstractGoogleCloudFunction.class::isInstance)) {
             if (features.stream().anyMatch(GraalVM.class::isInstance)) {
-                throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
-                    "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
+                throw new IllegalArgumentException("""
+                    Google Cloud Function is not supported for GraalVM. \
+                    Consider Google Cloud Run for deploying GraalVM native images as docker containers.\
+                    """);
             }
             if (features.stream().anyMatch(SerializationFeature.class::isInstance)) {
                 throw new IllegalArgumentException("Google Cloud Function does not currently support micronaut-serialization.");

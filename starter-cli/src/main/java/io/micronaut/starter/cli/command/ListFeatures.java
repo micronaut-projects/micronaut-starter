@@ -78,7 +78,7 @@ public class ListFeatures {
 
         consoleOutput.out("Available Features");
         consoleOutput.out("@|blue (+)|@ denotes the feature is included by default");
-        consoleOutput.out("  " + String.format("%1$-" + width + "s", "Name") + "Description");
+        consoleOutput.out("  " + ("%1$-" + width + "s").formatted("Name") + "Description");
         consoleOutput.out("  " + new String(new char[width - 2]).replace("\0", "-") + "  ---------------");
 
         featuresByCategory.forEach((category, features) -> {
@@ -99,9 +99,9 @@ public class ListFeatures {
             }
             if (defaultFeatures.contains(feature)) {
                 name += " (+)";
-                consoleOutput.out("@|blue   " + String.format("%1$-" + width + "s", name) + feature.getDescription() + "|@");
+                consoleOutput.out("@|blue   " + ("%1$-" + width + "s").formatted(name) + feature.getDescription() + "|@");
             } else {
-                consoleOutput.out("  " + String.format("%1$-" + width + "s", name) + feature.getDescription());
+                consoleOutput.out("  " + ("%1$-" + width + "s").formatted(name) + feature.getDescription());
             }
         }
     }

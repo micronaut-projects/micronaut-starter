@@ -56,8 +56,10 @@ public class GitHubUser {
 
     @Override
     public String toString() {
-        return "GitHubUser{" +
-                "login='" + login + '\'' +
+        return """
+                GitHubUser{\
+                login='\
+                """ + login + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 '}';

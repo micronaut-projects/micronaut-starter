@@ -47,8 +47,10 @@ public class GitHubSecret {
 
     @Override
     public String toString() {
-        return "GitHubSecret{" +
-                "encryptedValue='" + encryptedValue + '\'' +
+        return """
+                GitHubSecret{\
+                encryptedValue='\
+                """ + encryptedValue + '\'' +
                 ", keyId='" + keyId + '\'' +
                 '}';
     }

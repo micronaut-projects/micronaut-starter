@@ -41,7 +41,7 @@ public class OneOfFeatureValidator implements FeatureValidator {
                     .map(Feature::getName)
                     .collect(Collectors.toList());
             if (matches.size() > 1) {
-                throw new IllegalArgumentException(String.format("There can only be one of the following features selected: %s", matches));
+                throw new IllegalArgumentException("There can only be one of the following features selected: %s".formatted(matches));
             }
         }
     }

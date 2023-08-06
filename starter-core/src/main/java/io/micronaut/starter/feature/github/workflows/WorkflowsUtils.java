@@ -40,7 +40,7 @@ public class WorkflowsUtils {
      * @return graal vm version
      */
     public static String graalVersion(JdkVersion javaVersion) {
-        return String.format("%s.java%s", VersionInfo.getDependencyVersion("graal").getValue(),
+        return "%s.java%s".formatted(VersionInfo.getDependencyVersion("graal").getValue(),
                 javaVersion.majorVersion());
     }
 

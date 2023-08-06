@@ -60,7 +60,7 @@ public class FeatureContext {
                     .map(TestFeature.class::cast)
                     .map(TestFeature::getTestFramework)
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
+                    .orElseThrow(() -> new IllegalArgumentException("No test framework could derived from the selected features [%s]".formatted(selectedFeatures)));
             options = options.withTestFramework(testFramework);
         }
         this.options = options;

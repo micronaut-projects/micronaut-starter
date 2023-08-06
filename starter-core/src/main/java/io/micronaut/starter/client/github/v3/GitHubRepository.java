@@ -75,8 +75,10 @@ public class GitHubRepository {
 
     @Override
     public String toString() {
-        return "GitHubRepository{" +
-                "name='" + name + '\'' +
+        return """
+                GitHubRepository{\
+                name='\
+                """ + name + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
                 ", htmlUrl='" + htmlUrl + '\'' +

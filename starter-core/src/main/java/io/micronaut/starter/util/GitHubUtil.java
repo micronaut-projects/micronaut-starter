@@ -81,7 +81,7 @@ public class GitHubUtil {
                     .collect(Collectors.toList());
 
             if (!failedRefUpdates.isEmpty()) {
-                throw new IOException(String.format("Failed to push to %s repository.", repository.getName()));
+                throw new IOException("Failed to push to %s repository.".formatted(repository.getName()));
             }
         } catch (GitAPIException e) {
             throw new IOException(e.getMessage(), e);

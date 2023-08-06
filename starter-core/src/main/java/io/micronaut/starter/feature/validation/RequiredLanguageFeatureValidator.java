@@ -35,8 +35,8 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
-            if (feature instanceof LanguageSpecificFeature) {
-                Language lang = ((LanguageSpecificFeature) feature).getRequiredLanguage();
+            if (feature instanceof LanguageSpecificFeature specificFeature) {
+                Language lang = specificFeature.getRequiredLanguage();
                 requiredLanguages.compute(lang, (key, value) -> {
                     if (value == null) {
                         value = new HashSet<>();
@@ -53,13 +53,13 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
         if (languages.size() > 1) {
             Language first = languageIterator.next();
             Language second = languageIterator.next();
-            throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s and %s requires %s", requiredLanguages.get(first), first, requiredLanguages.get(second), second));
+            throw new IllegalArgumentException("The selected features are incompatible. %s requires %s and %s requires %s".formatted(requiredLanguages.get(first), first, requiredLanguages.get(second), second));
         }
 
         Language requiredLanguage = languageIterator.hasNext() ? languageIterator.next() : null;
 
         if (options != null && requiredLanguage != null && requiredLanguage != options.getLanguage()) {
-            throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s but %s was the selected language.", requiredLanguages.get(requiredLanguage), requiredLanguage, options.getLanguage()));
+            throw new IllegalArgumentException("The selected features are incompatible. %s requires %s but %s was the selected language.".formatted(requiredLanguages.get(requiredLanguage), requiredLanguage, options.getLanguage()));
         }
     }
 

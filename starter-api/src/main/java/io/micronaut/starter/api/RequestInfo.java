@@ -120,8 +120,10 @@ public class RequestInfo {
 
     @Override
     public String toString() {
-        return "RequestInfo{" +
-                "serverURL='" + serverURL + '\'' +
+        return """
+                RequestInfo{\
+                serverURL='\
+                """ + serverURL + '\'' +
                 ", currentURL='" + currentURL + '\'' +
                 ", path='" + path + '\'' +
                 ", parameters=" + parameters +

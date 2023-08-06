@@ -599,8 +599,7 @@ public final class NameUtils {
                 return getPropertyName(type.getComponentType()) + suffix + "Array";
             }
 
-            if (object instanceof Collection) {
-                Collection coll = (Collection) object;
+            if (object instanceof Collection coll) {
                 if (coll.isEmpty()) {
                     return "emptyCollection";
                 }
@@ -615,8 +614,7 @@ public final class NameUtils {
                 return getPropertyName(first.getClass()) + suffix + "Collection";
             }
 
-            if (object instanceof Map) {
-                Map map = (Map) object;
+            if (object instanceof Map map) {
 
                 if (map.isEmpty()) {
                     return "emptyMap";
