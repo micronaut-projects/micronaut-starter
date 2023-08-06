@@ -120,7 +120,7 @@ public class GitHubCreateService extends AbstractCreateController {
                     githubRepository, gitHubUser, repoPath, accessToken.getAccessToken());
 
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Successfully pushed application to " + githubRepository);
+                LOG.debug("Successfully pushed application to {}", githubRepository);
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to push to created repository: " + githubRepository.getUrl());
@@ -130,7 +130,7 @@ public class GitHubCreateService extends AbstractCreateController {
                     deleteDirectory(repoPath);
                 }
             } catch (IOException e) {
-                LOG.error("Error cleaning up temporary project directory: " + e.getMessage(), e);
+                LOG.error("Error cleaning up temporary project directory: {}", e.getMessage(), e);
             }
         }
     }
@@ -146,7 +146,7 @@ public class GitHubCreateService extends AbstractCreateController {
                     new GitHubRepository(repoName, repoDescription));
 
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Created repository " + githubRepository);
+                LOG.debug("Created repository {}", githubRepository);
             }
             return githubRepository;
         } catch (HttpClientResponseException e) {
@@ -167,7 +167,7 @@ public class GitHubCreateService extends AbstractCreateController {
         try {
             GitHubUser gitHubUser = gitHubApiClient.getUser(authToken);
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Fetched user " + gitHubUser);
+                LOG.debug("Fetched user {}", gitHubUser);
             }
             return gitHubUser;
         } catch (HttpClientResponseException e) {
@@ -194,7 +194,7 @@ public class GitHubCreateService extends AbstractCreateController {
                     outputHandler,
                     generatorContext);
         } catch (Exception e) {
-            LOG.error("Error generating application: " + e.getMessage(), e);
+            LOG.error("Error generating application: {}", e.getMessage(), e);
             throw new IOException(e.getMessage(), e);
         }
     }

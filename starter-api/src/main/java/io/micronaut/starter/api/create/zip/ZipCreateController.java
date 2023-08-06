@@ -159,7 +159,7 @@ public class ZipCreateController extends AbstractCreateController implements Zip
 
                     outputStream.flush();
                 } catch (Exception e) {
-                    LOG.error("Error generating application: " + e.getMessage(), e);
+                    LOG.error("Error generating application: {}", e.getMessage(), e);
                     throw new IOException(e.getMessage(), e);
                 }
             }
