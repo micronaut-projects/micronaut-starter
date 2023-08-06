@@ -77,12 +77,11 @@ public class GitHubRepository {
     public String toString() {
         return """
                 GitHubRepository{\
-                name='\
-                """ + name + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", htmlUrl='" + htmlUrl + '\'' +
-                ", cloneUrl='" + cloneUrl + '\'' +
-                '}';
+                name='%s', \
+                description='%s', \
+                url='%s', \
+                htmlUrl='%s', \
+                cloneUrl='%s'\
+                }""".formatted(name, description, url, htmlUrl, cloneUrl);
     }
 }

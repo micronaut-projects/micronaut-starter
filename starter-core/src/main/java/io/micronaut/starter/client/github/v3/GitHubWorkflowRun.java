@@ -56,11 +56,9 @@ public class GitHubWorkflowRun {
     @Override
     public String toString() {
         return """
-                GitHubWorkflowRun{\
-                id=\
-                """ + id +
-                ", status='" + status + '\'' +
-                ", conclusion='" + conclusion + '\'' +
-                '}';
+                GitHubWorkflowRun{id=%d, \
+                status='%s', \
+                conclusion='%s'\
+                }""".formatted(id, status, conclusion);
     }
 }

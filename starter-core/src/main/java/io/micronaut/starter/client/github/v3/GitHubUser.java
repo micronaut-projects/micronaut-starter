@@ -58,10 +58,9 @@ public class GitHubUser {
     public String toString() {
         return """
                 GitHubUser{\
-                login='\
-                """ + login + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+                login='%s', \
+                email='%s', \
+                name='%s'\
+                }""".formatted(login, email, name);
     }
 }

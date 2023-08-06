@@ -49,9 +49,8 @@ public class GitHubSecret {
     public String toString() {
         return """
                 GitHubSecret{\
-                encryptedValue='\
-                """ + encryptedValue + '\'' +
-                ", keyId='" + keyId + '\'' +
-                '}';
+                encryptedValue='%s', \
+                keyId='%s'\
+                }""".formatted(encryptedValue, keyId);
     }
 }
