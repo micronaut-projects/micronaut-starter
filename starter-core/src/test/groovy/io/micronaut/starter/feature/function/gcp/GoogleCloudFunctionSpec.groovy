@@ -9,7 +9,12 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.json.JacksonDatabindFeature
 import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
 import spock.lang.Requires
 import spock.lang.Shared
@@ -183,22 +188,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         where:
         jdkVersion << [JdkVersion.JDK_8]
-    }
-
-    void 'test Google Cloud Function with #serialization is unsupported'() {
-        when:
-        generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['google-cloud-function',serialization]
-        )
-
-        then:
-        def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function does not currently support micronaut-serialization.'
-
-        where:
-        serialization << ['serialization-jackson', 'serialization-bson', 'serialization-jsonp']
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {
