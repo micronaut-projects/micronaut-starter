@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.messaging.kafka;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.database.TestContainers;
@@ -32,6 +33,18 @@ import java.util.Set;
 
 @Singleton
 public class Kafka extends EaseTestingFeature implements DefaultFeature, MessagingFeature, SharedTestResourceFeature {
+
+    public static final Dependency MICRONAUT_KAFKA = MicronautDependencyUtils
+            .kafkaDependency()
+            .artifactId("micronaut-kafka")
+            .compile()
+            .build();
+
+    public static final Dependency TESTCONTAINERS_KAFKA = Dependency.builder()
+            .groupId("org.testcontainers")
+            .artifactId("kafka")
+            .test()
+            .build();
 
     public static final String NAME = "kafka";
 
@@ -56,10 +69,10 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.kafka")
-                .artifactId("micronaut-kafka")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_KAFKA);
+        if (generatorContext.hasFeature(TestContainers.class)) {
+            generatorContext.addDependency(TESTCONTAINERS_KAFKA);
+        }
     }
 
     @Override
