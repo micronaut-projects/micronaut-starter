@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.function.gcp;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.feature.json.SerializationFeature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -35,9 +34,6 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
             if (features.stream().anyMatch(GraalVM.class::isInstance)) {
                 throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
                     "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
-            }
-            if (features.stream().anyMatch(SerializationFeature.class::isInstance)) {
-                throw new IllegalArgumentException("Google Cloud Function does not currently support micronaut-serialization.");
             }
         }
     }
