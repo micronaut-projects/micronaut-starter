@@ -1,0 +1,23 @@
+plugins {
+    id "io.micronaut.build.internal.common"
+    alias(templateLibs.plugins.micronaut.application)
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    implementation project(":starter-api")
+    implementation project(":starter-web-netty")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+}
+
+graalvmNative {
+    binaries {
+        all {
+            buildArgs.add("--report-unsupported-elements-at-runtime")
+        }
+    }
+}
