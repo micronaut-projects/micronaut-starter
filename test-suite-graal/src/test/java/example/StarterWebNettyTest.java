@@ -1,6 +1,5 @@
 package example;
 
-import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
@@ -24,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Property(name = "micronaut.http.client.read-timeout", value = "600")
 @MicronautTest(application = Application.class)
 public class StarterWebNettyTest {
 
