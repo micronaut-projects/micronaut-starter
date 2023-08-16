@@ -37,11 +37,19 @@ trait CommandOutputFixture {
         generate(ApplicationType.DEFAULT, features)
     }
 
+    Map<String, String> generate(String name, List<String> features = []) {
+        generate(name, ApplicationType.DEFAULT, features)
+    }
+
     Map<String, String> generate(ApplicationType type, List<String> features = []) {
+        generate("example.micronaut.foo", type, features)
+    }
+
+    Map<String, String> generate(String name, ApplicationType type, List<String> features = []) {
         OutputHandler handler = new MapOutputHandler()
         Options options = new Options()
         projectGenerator.generate(type,
-                NameUtils.parse("example.micronaut.foo"),
+                NameUtils.parse(name),
                 options,
                 OperatingSystem.LINUX,
                 features,

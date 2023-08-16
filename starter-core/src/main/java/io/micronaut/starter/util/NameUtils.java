@@ -81,7 +81,7 @@ public final class NameUtils {
         String packagePath = packageName.replace('.', '/');
         String className = getNameFromScript(appName);
         String naturalName = getNaturalName(appName);
-        String propertyName = getPropertyName(className);
+        String propertyName = getPropertyName(appName);
 
         return new Project(packageName, packagePath, className, naturalName, propertyName, appName);
     }
@@ -498,8 +498,16 @@ public final class NameUtils {
                 boolean isCurrentCharLowerCase = Character.isLowerCase(currChar);
                 boolean isPrevCharLowerCase = Character.isLowerCase(prevChar);
                 boolean isNextCharLowerCase = Character.isLowerCase(nextChar);
+                boolean isPrevCharHyphen = prevChar == '-';
+                boolean isCurCharHyphen = currChar == '-';
 
-                if (isCurrentCharLowerCase != isPrevCharLowerCase && !isCurrentCharLowerCase) {
+                if (isCurCharHyphen) {
+                    // hyphen is replaced by space
+                    sb.append(" ");
+                } else if (isPrevCharHyphen) {
+                    // and next letter after hyphen becomes upper case
+                    sb.append(Character.toUpperCase(currChar));
+                } else if (isCurrentCharLowerCase != isPrevCharLowerCase && !isCurrentCharLowerCase) {
                     sb.append(currChar).append(" ");
                 } else if (isCurrentCharLowerCase == isPrevCharLowerCase && !isCurrentCharLowerCase && isNextCharLowerCase) {
                     sb.append(currChar).append(" ");
