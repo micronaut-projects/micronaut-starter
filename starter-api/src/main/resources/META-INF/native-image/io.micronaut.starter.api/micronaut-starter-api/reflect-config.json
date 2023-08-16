@@ -43,10 +43,5 @@
 },{
 "name" : "org.apache.commons.compress.archivers.zip.ResourceAlignmentExtraField",
 "allDeclaredConstructors" : true
-},{
-"name":"io.micronaut.starter.api.preview.PreviewDTO",
-"allDeclaredFields":true,
-"allDeclaredMethods":true,
-"allDeclaredConstructors":true
 }
 ]

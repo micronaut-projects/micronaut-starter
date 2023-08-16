@@ -26,5 +26,13 @@
 {
   "name":"org.eclipse.jgit.lib.CoreConfig$SymLinks",
   "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$TrustPackedRefsStat",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.util.sha1.SHA1$Sha1Implementation",
+  "methods":[{"name":"values","parameterTypes":[] }]
 }
 ]

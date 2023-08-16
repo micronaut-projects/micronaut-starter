@@ -1,0 +1,5 @@
+micronaut:
+  starter:
+    github:
+      clientId: testClientId
+      clientSecret: testClientSecret
