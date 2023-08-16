@@ -25,9 +25,9 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.feature.messaging.kafka.Kafka;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
-
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -103,6 +103,9 @@ public class TestContainers implements Feature {
                 generatorContext.isFeaturePresent(DataMongoFeature.class) ||
                 generatorContext.isFeaturePresent(DataMongoReactive.class)) {
             generatorContext.addDependency(testContainerTestDependency("mongodb"));
+        }
+        if (generatorContext.isFeaturePresent(Kafka.class)) {
+            generatorContext.addDependency(testContainerTestDependency("kafka"));
         }
     }
 

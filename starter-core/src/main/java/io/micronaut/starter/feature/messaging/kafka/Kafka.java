@@ -40,12 +40,6 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
             .compile()
             .build();
 
-    public static final Dependency TESTCONTAINERS_KAFKA = Dependency.builder()
-            .groupId("org.testcontainers")
-            .artifactId("kafka")
-            .test()
-            .build();
-
     public static final String NAME = "kafka";
 
     public Kafka(TestContainers testContainers, TestResources testResources) {
@@ -70,9 +64,6 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_KAFKA);
-        if (generatorContext.hasFeature(TestContainers.class)) {
-            generatorContext.addDependency(TESTCONTAINERS_KAFKA);
-        }
     }
 
     @Override
