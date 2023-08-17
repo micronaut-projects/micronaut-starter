@@ -53,8 +53,7 @@ public class PropertiesTemplate extends DefaultTemplate {
     private void transform(Properties finalConfig, String prefix, Object value) {
         if (value instanceof Map) {
             transform(finalConfig, prefix + ".", (Map<String, Object>) value);
-        } else if (value instanceof List) {
-            List list = (List) value;
+        } else if (value instanceof List list) {
             for (int i = 0; i < list.size(); i++) {
                 transform(finalConfig, prefix + "[" + i + "]", list.get(i));
             }

@@ -37,7 +37,7 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
         if (features.stream().anyMatch(AwsLambda.class::isInstance) && features.stream().noneMatch(GraalVM.class::isInstance)) {
             JdkVersion javaVersion = options.getJavaVersion();
             if (!supports(options.getJavaVersion())) {
-                throw new IllegalArgumentException(String.format("AWS Lambda does not have a Java %s runtime", javaVersion.majorVersion()));
+                throw new IllegalArgumentException("AWS Lambda does not have a Java %s runtime".formatted(javaVersion.majorVersion()));
             }
         }
     }

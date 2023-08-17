@@ -102,7 +102,7 @@ public class GitHubCreateService extends AbstractCreateController {
                 type, name, features, buildTool, testFramework, lang, javaVersion, userAgent);
 
         String repoName = generatorContext.getProject().getName();
-        String repoDescription = String.format("Micronaut %s Application", generatorContext.getProject().getNaturalName());
+        String repoDescription = "Micronaut %s Application".formatted(generatorContext.getProject().getNaturalName());
         GitHubRepository githubRepository = createGitHubRepository(authToken, repoName, repoDescription, gitHubUser);
 
         pushToGithubRepository(generatorContext, gitHubUser, githubRepository, accessToken);
@@ -185,7 +185,7 @@ public class GitHubCreateService extends AbstractCreateController {
     protected void generateAppLocally(@NotNull GeneratorContext generatorContext, @NotNull Path repoPath) throws IOException {
         try {
             if (!Files.isDirectory(repoPath)) {
-                throw new IllegalArgumentException(String.format("The path %s must be a directory!", repoPath.toString()));
+                throw new IllegalArgumentException("The path %s must be a directory!".formatted(repoPath.toString()));
             }
 
             OutputHandler outputHandler = new FileSystemOutputHandler(repoPath.toFile(), ConsoleOutput.NOOP);

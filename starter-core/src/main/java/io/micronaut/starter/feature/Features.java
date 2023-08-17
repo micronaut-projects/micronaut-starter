@@ -44,14 +44,14 @@ public class Features extends ArrayList<String> {
         this.featureList = featureList;
         this.context = context;
         for (Feature feature: featureList) {
-            if (applicationFeature == null && feature instanceof ApplicationFeature) {
-                applicationFeature = (ApplicationFeature) feature;
+            if (applicationFeature == null && feature instanceof ApplicationFeature applicationFeature1) {
+                applicationFeature = applicationFeature1;
             }
-            if (languageFeature == null && feature instanceof LanguageFeature) {
-                languageFeature = (LanguageFeature) feature;
+            if (languageFeature == null && feature instanceof LanguageFeature languageFeature1) {
+                languageFeature = languageFeature1;
             }
-            if (testFeature == null && feature instanceof TestFeature) {
-                testFeature = (TestFeature) feature;
+            if (testFeature == null && feature instanceof TestFeature testFeature1) {
+                testFeature = testFeature1;
             }
         }
         this.javaVersion = options.getJavaVersion();
@@ -129,6 +129,6 @@ public class Features extends ArrayList<String> {
                 return (T) f;
             }
         }
-        throw new IllegalStateException(String.format("The required feature type %s does not exist", feature.getName()));
+        throw new IllegalStateException("The required feature type %s does not exist".formatted(feature.getName()));
     }
 }

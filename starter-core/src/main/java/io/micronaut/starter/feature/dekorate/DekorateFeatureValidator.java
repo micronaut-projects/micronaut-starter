@@ -53,7 +53,7 @@ public class DekorateFeatureValidator implements FeatureValidator {
             }
 
             if (features.stream().noneMatch(AbstractDekoratePlatformFeature.class::isInstance)) {
-                throw new IllegalArgumentException(String.format("At least one of %s features must be selected in order to use Dekorate properly",
+                throw new IllegalArgumentException("At least one of %s features must be selected in order to use Dekorate properly".formatted(
                         dekoratePlatformFeatures.stream().map(Feature::getName).collect(Collectors.toList())));
             }
         }

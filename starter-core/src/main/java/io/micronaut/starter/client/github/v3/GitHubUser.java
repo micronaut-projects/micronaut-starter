@@ -56,10 +56,11 @@ public class GitHubUser {
 
     @Override
     public String toString() {
-        return "GitHubUser{" +
-                "login='" + login + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return """
+                GitHubUser{\
+                login='%s', \
+                email='%s', \
+                name='%s'\
+                }""".formatted(login, email, name);
     }
 }

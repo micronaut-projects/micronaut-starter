@@ -75,12 +75,13 @@ public class GitHubRepository {
 
     @Override
     public String toString() {
-        return "GitHubRepository{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", htmlUrl='" + htmlUrl + '\'' +
-                ", cloneUrl='" + cloneUrl + '\'' +
-                '}';
+        return """
+                GitHubRepository{\
+                name='%s', \
+                description='%s', \
+                url='%s', \
+                htmlUrl='%s', \
+                cloneUrl='%s'\
+                }""".formatted(name, description, url, htmlUrl, cloneUrl);
     }
 }

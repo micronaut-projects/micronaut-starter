@@ -31,10 +31,10 @@ public class MinJdkFeatureValidator implements FeatureValidator {
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         JdkVersion jdk = options.getJavaVersion();
         for (Feature f : features) {
-            if (f instanceof MinJdkFeature) {
-                JdkVersion min = ((MinJdkFeature) f).minJdk();
+            if (f instanceof MinJdkFeature feature) {
+                JdkVersion min = feature.minJdk();
                 if (!jdk.greaterThanEqual(min)) {
-                    throw new IllegalArgumentException(String.format("The selected feature %s requires at latest Java %d", f.getName(), min.majorVersion()));
+                    throw new IllegalArgumentException("The selected feature %s requires at latest Java %d".formatted(f.getName(), min.majorVersion()));
                 }
             }
         }

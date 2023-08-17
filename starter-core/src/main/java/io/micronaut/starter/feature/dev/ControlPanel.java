@@ -48,8 +48,10 @@ public class ControlPanel implements Feature {
 
     @Override
     public String getDescription() {
-        return "The Micronaut Control Panel module provides a web UI that allows you to view and manage the state of " +
-                "your Micronaut application, typically in a development environment";
+        return """
+                The Micronaut Control Panel module provides a web UI that allows you to view and manage the state of \
+                your Micronaut application, typically in a development environment\
+                """;
     }
 
     @Override

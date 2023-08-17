@@ -83,16 +83,20 @@ public class GitHubCreateController implements GitHubCreateOperation {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Created GitHub repository containing the generated application. In case " +
-                            "the configuration contains launcher URI the redirect to launcher is sent.",
+                    description = """
+                            Created GitHub repository containing the generated application. In case \
+                            the configuration contains launcher URI the redirect to launcher is sent.\
+                            """,
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON
                     )
             ),
             @ApiResponse(
                     responseCode = "307",
-                    description = "Redirects to GitHub OAuth API to obtain user authorisation code before creating " +
-                            "the GitHub repository."
+                    description = """
+                            Redirects to GitHub OAuth API to obtain user authorisation code before creating \
+                            the GitHub repository.\
+                            """
             ),
             @ApiResponse(
                     responseCode = "307",

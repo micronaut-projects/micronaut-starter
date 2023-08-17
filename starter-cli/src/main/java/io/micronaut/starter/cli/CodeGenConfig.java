@@ -137,8 +137,8 @@ public class CodeGenConfig {
                 if (i.hasNext()) {
                     while (i.hasNext()) {
                         Object object = i.next();
-                        if (object instanceof Map) {
-                            map.putAll((Map) object);
+                        if (object instanceof Map map1) {
+                            map.putAll(map1);
                         }
                     }
                 }

@@ -120,13 +120,14 @@ public class RequestInfo {
 
     @Override
     public String toString() {
-        return "RequestInfo{" +
-                "serverURL='" + serverURL + '\'' +
-                ", currentURL='" + currentURL + '\'' +
-                ", path='" + path + '\'' +
-                ", parameters=" + parameters +
-                ", locale=" + locale +
-                ", userAgent='" + userAgent + '\'' +
-                '}';
+        return """
+                RequestInfo{\
+                serverURL='%s', \
+                currentURL='%s', \
+                path='%s', \
+                parameters=%s, \
+                locale=%s, \
+                userAgent='%s'\
+                }""".formatted(serverURL, currentURL, path, parameters, locale, userAgent);
     }
 }

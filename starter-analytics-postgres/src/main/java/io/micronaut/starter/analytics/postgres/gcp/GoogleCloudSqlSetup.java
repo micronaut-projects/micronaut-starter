@@ -46,7 +46,7 @@ public class GoogleCloudSqlSetup implements BeanCreatedEventListener<DatasourceC
     public DatasourceConfiguration onCreated(BeanCreatedEvent<DatasourceConfiguration> event) {
         DatasourceConfiguration config = event.getBean();
         if (DB_NAME != null) {
-            config.setJdbcUrl(String.format("jdbc:postgresql:///%s", DB_NAME));
+            config.setJdbcUrl("jdbc:postgresql:///%s".formatted(DB_NAME));
         }
         config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.postgres.SocketFactory");
         config.addDataSourceProperty("cloudSqlInstance", cloudSqlInstance);
