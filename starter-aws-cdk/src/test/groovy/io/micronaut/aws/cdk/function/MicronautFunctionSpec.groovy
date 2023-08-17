@@ -6,11 +6,20 @@ import software.amazon.awscdk.assertions.Template
 import software.amazon.awscdk.services.lambda.Code
 import software.amazon.awscdk.services.lambda.Function
 import software.amazon.awscdk.services.lambda.Runtime
+import spock.lang.IgnoreIf
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class MicronautFunctionSpec extends Specification {
 
+    @IgnoreIf({
+        try {
+            "node -v".execute()
+            return false
+        } catch(IOException e) {
+            return true
+        }
+    })
     @Unroll
     void "MicronautFunction::create sets Handler and #runtime for #applicationType"(ApplicationType applicationType, boolean graalVMNative, Runtime runtime) {
         given:
