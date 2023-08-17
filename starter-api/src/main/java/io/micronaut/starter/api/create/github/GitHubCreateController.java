@@ -130,7 +130,7 @@ public class GitHubCreateController implements GitHubCreateOperation {
             }
         } catch (Exception e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e.getMessage());
+                LOG.debug("", e);
             }
 
             if (launcherURI == null) {

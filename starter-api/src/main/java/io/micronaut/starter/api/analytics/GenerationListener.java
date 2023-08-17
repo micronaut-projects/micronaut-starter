@@ -56,7 +56,7 @@ public class GenerationListener {
                 .whenComplete((httpStatus, throwable) -> {
                     if (throwable != null) {
                         if (LOG.isErrorEnabled()) {
-                            LOG.error("Error occurred reporting analytics: " + throwable.getMessage(), throwable);
+                            LOG.error("Error occurred reporting analytics: {}", throwable.getMessage(), throwable);
                         }
                     }
                 });

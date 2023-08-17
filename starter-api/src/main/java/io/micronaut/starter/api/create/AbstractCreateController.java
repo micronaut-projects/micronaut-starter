@@ -100,7 +100,7 @@ public abstract class AbstractCreateController {
             try {
                 eventPublisher.publishEvent(new ApplicationGeneratingEvent(generatorContext));
             } catch (Exception e) {
-                LOG.warn("Error firing application generated event: " + e.getMessage(), e);
+                LOG.warn("Error firing application generated event: {}", e.getMessage(), e);
             }
         } catch (IllegalArgumentException e) {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

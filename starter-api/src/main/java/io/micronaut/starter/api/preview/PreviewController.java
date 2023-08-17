@@ -55,7 +55,7 @@ import java.util.Map;
 @Controller("/preview")
 public class PreviewController extends AbstractCreateController implements PreviewOperations {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreviewController.class);
 
     /**
      * Default constructor.
@@ -110,7 +110,7 @@ public class PreviewController extends AbstractCreateController implements Previ
         } catch (IllegalArgumentException e) {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            LOG.error("Error generating application: " + e.getMessage(), e);
+            LOG.error("Error generating application: {}", e.getMessage(), e);
             throw new IOException(e.getMessage(), e);
         }
     }
