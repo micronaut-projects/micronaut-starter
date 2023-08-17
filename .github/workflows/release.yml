@@ -395,18 +395,9 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - name: Determine default branch
-        uses: octokit/request-action@v2.x
-        id: get_default_branch
-        with:
-          route: GET /repos/{owner}/{repo}
-          owner: micronaut-projects
-          repo: micronaut-starter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v3
         with:
-          ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
+          ref: ${{ github.event.release.target_commitish }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Download ZIP, update versions and checksum
         id: choco
