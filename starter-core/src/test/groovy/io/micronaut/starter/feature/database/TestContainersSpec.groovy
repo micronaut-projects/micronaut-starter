@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -420,5 +423,20 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .filter(f -> f.name != "oracle-cloud-atp")
                 .filter({ f ->  !f.embedded() })
                 .collect(Collectors.toList())
+    }
+
+    void "test cassandra dependency is present for #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([TestContainers.NAME, Cassandra.NAME])
+                .render()
+
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("org.testcontainers", "cassandra", Scope.TEST)
+
+        where:
+        buildTool << BuildTool.values()
     }
 }

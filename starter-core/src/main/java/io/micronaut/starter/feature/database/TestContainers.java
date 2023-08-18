@@ -107,6 +107,9 @@ public class TestContainers implements Feature {
         if (generatorContext.isFeaturePresent(Kafka.class)) {
             generatorContext.addDependency(testContainerTestDependency("kafka"));
         }
+        if (generatorContext.isFeaturePresent(Cassandra.class)) {
+            generatorContext.addDependency(testContainerTestDependency("cassandra"));
+        }
     }
 
     @NonNull

@@ -25,10 +25,11 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Cassandra implements Feature {
+    public static final String NAME = "cassandra";
 
     @Override
     public String getName() {
-        return "cassandra";
+        return NAME;
     }
 
     @Override
