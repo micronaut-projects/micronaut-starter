@@ -12,12 +12,6 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -50,15 +44,11 @@ public class StarterWebNettyTest {
     }
 
     @Test
-    void testGitHubCreate() throws Exception {
+    void testGitHubCreate() {
         starterConfiguration.setRedirectUri(null);
         GitHubCreateDTO response = client.toBlocking().retrieve(HttpRequest.GET(GITHUB_CREATE_URI), GitHubCreateDTO.class);
         assertNotNull(response);
         assertNotNull(response.getCloneUrl());
-        Files.walk(Path.of(new URI(response.getCloneUrl())))
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .forEach(File::delete);
     }
 
     @Test
