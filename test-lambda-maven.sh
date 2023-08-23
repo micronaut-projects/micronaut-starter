@@ -7,7 +7,7 @@ rm -rf starter-cli/temp
 # | BUILD  | TYPE | RUNTIME | FEATURES
 # | MAVEN  | APP  | JAVA    | aws-lambda,aws-cdk,amazon-api-gateway-http
 ############
-
+echo "create-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway-http\" temp"
 ./gradlew micronaut-cli:run --args="create-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway-http\" temp" || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
@@ -33,7 +33,7 @@ rm -rf starter-cli/temp
 # | BUILD  | TYPE     | RUNTIME | FEATURES
 # | MAVEN | FUNCTION  | JAVA    | aws-lambda,aws-cdk,aws-lambda-function-url
 ############
-
+echo "create-function-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,aws-lambda-function-url\" temp"
 ./gradlew micronaut-cli:run --args="create-function-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,aws-lambda-function-url\" temp" || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
@@ -58,7 +58,7 @@ rm -rf starter-cli/temp
 # | BUILD  | TYPE | RUNTIME | FEATURES
 # | MAVEN  | APP  | JAVA    | aws-lambda,aws-cdk,amazon-api-gateway
 ############
-
+echo "create-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway\" temp"
 ./gradlew micronaut-cli:run --args="create-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway\" temp" || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
@@ -83,7 +83,7 @@ rm -rf starter-cli/temp
 # | BUILD  | TYPE     | RUNTIME | FEATURES
 # | MAVEN | FUNCTION  | JAVA    | aws-lambda,aws-cdk,amazon-api-gateway
 ############
-
+echo "create-function-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway\" temp"
 ./gradlew micronaut-cli:run --args="create-function-app --jdk 17 -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway\" temp" || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
