@@ -44,8 +44,8 @@ class MicronautFunctionSpec extends Specification {
         where:
         applicationType          | graalVMNative | runtime                | handler
         ApplicationType.DEFAULT  | true          | Runtime.PROVIDED_AL2   | null
-        ApplicationType.DEFAULT  | false         | Runtime.JAVA_11        | null
+        ApplicationType.DEFAULT  | false         | Runtime.JAVA_17        | null
         ApplicationType.FUNCTION | true          | Runtime.PROVIDED_AL2   | "example.micronaut.MyHandler"
-        ApplicationType.FUNCTION | false         | Runtime.JAVA_11        | "example.micronaut.MyHandler"
+        ApplicationType.FUNCTION | false         | Runtime.JAVA_17        | "example.micronaut.MyHandler"
     }
 }
