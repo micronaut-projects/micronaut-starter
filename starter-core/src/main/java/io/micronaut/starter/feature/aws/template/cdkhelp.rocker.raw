@@ -1,5 +1,5 @@
 @import io.micronaut.starter.options.BuildTool;
-@args(BuildTool buildTool, boolean nativeImage, String infrastructureModuleName)
+@args(BuildTool buildTool, boolean nativeImage, boolean optimized, String infrastructureModuleName)
 
 ## Requisites
 
@@ -14,6 +14,9 @@
 ```
 @if(buildTool.isGradle() && nativeImage) {
 ./gradlew :app:buildNativeLambda
+./gradlew test
+} else if(buildTool.isGradle() && !nativeImage && optimized) {
+./gradlew :app:optimizedJitJarAll
 ./gradlew test
 } else if(buildTool.isGradle() && !nativeImage) {
 ./gradlew :app:shadowJar
