@@ -17,6 +17,10 @@ fi
 if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
+./gradlew test || EXIT_STATUS=$?
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
 } else if(buildTool.isGradle() && !nativeImage) {
 ./gradlew :app:shadowJar || EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ]; then
