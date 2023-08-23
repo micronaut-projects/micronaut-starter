@@ -258,7 +258,7 @@ public class AppStack extends Stack {
 
     public static String functionFilename() {
         return MicronautFunctionFile.builder()
-@if (optimized) {
+@if (!nativeImage && optimized) {
             .optimized()
 }
             .graalVMNative(@nativeImage)

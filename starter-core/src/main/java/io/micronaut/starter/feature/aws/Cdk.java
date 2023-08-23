@@ -130,11 +130,19 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public String getCategory() {
         return Category.CLOUD;
     }
-
+    
     @Override
     public void apply(GeneratorContext generatorContext) {
+        boolean optimized = generatorContext.getFeatures().hasFeature(MicronautAot.class);
+        boolean nativeImage = generatorContext.getFeatures().hasFeature(GraalVM.class);
         if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class)) {
-            generatorContext.addTemplate("test-lambda", new RockerTemplate(Template.ROOT, "test-lambda.sh", testlambda.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasFeature(GraalVM.class), INFRA_MODULE), true));
+            generatorContext.addTemplate("test-lambda", new RockerTemplate(Template.ROOT,
+                    "test-lambda.sh",
+                    testlambda.template(generatorContext.getBuildTool(),
+                            nativeImage,
+                            optimized,
+                            INFRA_MODULE),
+                    true));
         }
         generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template(generatorContext.getBuildTool(), INFRA_MODULE)));
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
@@ -157,8 +165,8 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                         generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ? "micronaut-function-api" : null,
                         "0.1",
                         handler,
-                        generatorContext.getFeatures().hasFeature(GraalVM.class),
-                        generatorContext.getFeatures().hasFeature(MicronautAot.class),
+                        nativeImage,
+                        optimized,
                         generatorContext.getJdkVersion()))
         );
         buildRockerModel(generatorContext).ifPresent(rockerModel -> {
@@ -166,7 +174,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                     new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
         });
 
-        generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasFeature(GraalVM.class), INFRA_MODULE)));
+        generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasFeature(GraalVM.class), generatorContext.getFeatures().hasFeature(MicronautAot.class), INFRA_MODULE)));
     }
 
     protected void addAppStackTest(@NonNull GeneratorContext generatorContext,
