@@ -32,8 +32,10 @@ import io.micronaut.starter.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -119,8 +121,16 @@ public class MicronautAot implements DefaultFeature {
 
     protected void addAotPluginsDependencies(GeneratorContext generatorContext) {
         if (generatorContext.hasFeature(SecurityJWT.class) || generatorContext.hasFeature(SecurityOAuth2.class)) {
+            if (generatorContext.getBuildTool().isGradle()) {
+                generatorContext.addDependency(MicronautDependencyUtils.platformDependency()
+                        .artifactId("micronaut-platform")
+                        .version(VersionInfo.getMicronautVersion())
+                        .pom()
+                        .scope(Scope.AOT_PLUGIN)
+                );
+            }
             generatorContext.addDependency(MicronautDependencyUtils.securityDependency()
-                    .lookupArtifactId("micronaut-security-aot")
+                    .artifactId("micronaut-security-aot")
                     .scope(Scope.AOT_PLUGIN));
         }
     }

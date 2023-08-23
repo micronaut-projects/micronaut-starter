@@ -6,7 +6,6 @@
                   <dependency>
                       <groupId>@(aotDependency.getGroupId())</groupId>
                       <artifactId>@(aotDependency.getArtifactId())</artifactId>
-                      <version>@(aotDependency.getVersion())</version>
                   </dependency>
 }
               </aotDependencies>
