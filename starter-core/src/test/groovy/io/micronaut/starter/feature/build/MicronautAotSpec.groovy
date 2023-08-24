@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.build
 import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.DefaultFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
@@ -16,9 +19,6 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import jakarta.inject.Inject
 import spock.lang.Unroll
-
-import javax.security.auth.Subject
-
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
 import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
@@ -49,17 +49,18 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'application with aot and oauth adds platform dependency for the aot scope -- language=#language (#tool)'(Language language, BuildTool tool) {
         when:
-        String output = build(tool, language, [MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+        String template = new BuildBuilder(beanContext, tool)
+                .language(language)
+                .features([MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(tool, language, template)
 
         then:
-        output.contains(AOT_PLUGIN)
-        if (tool == GRADLE) {
-            assert output.contains("""aotPlugins platform("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion")
-    aotPlugins("io.micronaut.security:micronaut-security-aot")""")
-        } else {
-            assert output.contains("""aotPlugins(platform("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion"))
-    aotPlugins("io.micronaut.security:micronaut-security-aot")""")
-        }
+        verifier.hasBuildPlugin("io.micronaut.aot")
+        verifier.hasBom("io.micronaut.platform", "micronaut-platform", Scope.AOT_PLUGIN)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-aot", Scope.AOT_PLUGIN)
+        and:
+        template.contains("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion")
 
         where:
         [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
