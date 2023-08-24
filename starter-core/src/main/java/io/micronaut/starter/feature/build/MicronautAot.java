@@ -32,7 +32,6 @@ import io.micronaut.starter.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
