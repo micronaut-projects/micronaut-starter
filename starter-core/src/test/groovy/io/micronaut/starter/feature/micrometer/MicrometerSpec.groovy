@@ -4,6 +4,9 @@ import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -27,6 +30,23 @@ class MicrometerSpec extends ApplicationContextSpec {
 
         where:
         micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
+    }
+
+    void 'test gradle micrometer feature oracle cloud #buildTool'(BuildTool buildTool) {
+        given:
+        var name = beanContext.getBean(OracleCloud).getName()
+
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([name])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency('io.micronaut.oraclecloud', 'micronaut-oraclecloud-bmc-monitoring', Scope.COMPILE)
+
+        where:
+        buildTool << BuildTool.values()
     }
 
     void "test gradle micrometer multiple features"() {
