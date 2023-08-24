@@ -26,6 +26,7 @@ public class GroovyMavenPlusPlugin implements MavenSpecificFeature {
 
     private static final String GROUP_ID_GMAVEN = "org.codehaus.gmavenplus";
     private static final String ARTIFACT_ID_GMAVEN = "gmavenplus-plugin";
+
     @Override
     public String getName() {
         return "groovy-maven-plus-plugin";

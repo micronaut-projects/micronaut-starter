@@ -1,23 +1,26 @@
 package io.micronaut.starter.feature.build
 
+import groovy.xml.XmlSlurper
 import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.DefaultFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityOAuth2
-import io.micronaut.starter.feature.test.Mockito
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import jakarta.inject.Inject
+import spock.lang.Subject
 import spock.lang.Unroll
-
-import javax.security.auth.Subject
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
 import static io.micronaut.starter.options.BuildTool.GRADLE
@@ -30,21 +33,40 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
 
-    @spock.lang.Subject
+    @Subject
     @Inject
     MicronautAot feature = beanContext.getBean(MicronautAot)
 
-    void 'application with aot and oauth adds security aot keys  language=#language'(Language language) {
+    void '#language application with aot and oauth adds security aot keys'(Language language) {
         when:
         String output = build(GRADLE, language, [MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
 
         then:
         output.contains(AOT_PLUGIN)
-        output.contains("\"micronaut.security.jwks.enabled\",\"false\"")
-        output.contains("\"micronaut.security.openid-configuration.enabled\",\"false\"")
+        output.contains('"micronaut.security.jwks.enabled","false"')
+        output.contains('"micronaut.security.openid-configuration.enabled","false"')
 
         where:
         language << Language.values().toList()
+    }
+
+    void 'application with aot and oauth adds platform dependency for the aot scope -- language=#language (#tool)'(Language language, BuildTool tool) {
+        when:
+        String template = new BuildBuilder(beanContext, tool)
+                .language(language)
+                .features([MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(tool, language, template)
+
+        then:
+        verifier.hasBuildPlugin("io.micronaut.aot")
+        verifier.hasBom("io.micronaut.platform", "micronaut-platform", Scope.AOT_PLUGIN)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-aot", Scope.AOT_PLUGIN)
+        and:
+        template.contains("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion")
+
+        where:
+        [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'application with aot and jwt adds security jwks aot key language=#language'(Language language) {
@@ -192,9 +214,10 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output["aot-jar.properties"].contains("micronaut.security.jwks.enabled=false")
     }
 
-    void 'aot properties files are generated when aot security-aotuh2 features are selected'() {
+    void 'aot properties files are generated when aot security-oauth2 features are selected'() {
         when:
         Map<String,String> output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT, SecurityOAuth2.NAME])
+        def pom = new XmlSlurper().parseText(output.'pom.xml')
 
         then:
         output.containsKey('aot-jar.properties')
@@ -203,6 +226,15 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         output["aot-jar.properties"].contains("It fetches OpenID Connect metadata at Build time. https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#aotOpenidConfiguration")
         output["aot-jar.properties"].contains("micronaut.security.openid-configuration.enabled=false")
+
+        with(pom.build.plugins.plugin.find { it.artifactId == 'micronaut-maven-plugin' }) {
+            it
+            with(configuration.aotDependencies.dependency.find { it.artifactId == 'micronaut-security-aot' }) {
+                it
+                groupId == 'io.micronaut.security'
+                version == '${micronaut.security.version}'
+            }
+        }
     }
 
     private String build(BuildTool buildTool, Language language, List<String> features = [MicronautAot.FEATURE_NAME_AOT]) {

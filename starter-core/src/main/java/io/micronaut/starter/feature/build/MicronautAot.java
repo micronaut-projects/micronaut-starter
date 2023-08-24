@@ -22,6 +22,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -34,6 +35,7 @@ import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -119,9 +121,21 @@ public class MicronautAot implements DefaultFeature {
 
     protected void addAotPluginsDependencies(GeneratorContext generatorContext) {
         if (generatorContext.hasFeature(SecurityJWT.class) || generatorContext.hasFeature(SecurityOAuth2.class)) {
-            generatorContext.addDependency(MicronautDependencyUtils.securityDependency()
-                    .lookupArtifactId("micronaut-security-aot")
-                    .scope(Scope.AOT_PLUGIN));
+            Dependency.Builder securityAotPluginDependency = MicronautDependencyUtils.securityDependency()
+                    .artifactId("micronaut-security-aot")
+                    .scope(Scope.AOT_PLUGIN);
+
+            if (generatorContext.getBuildTool().isGradle()) {
+                generatorContext.addDependency(MicronautDependencyUtils.platformDependency()
+                        .artifactId("micronaut-platform")
+                        .version(VersionInfo.getMicronautVersion())
+                        .pom()
+                        .scope(Scope.AOT_PLUGIN)
+                );
+                generatorContext.addDependency(securityAotPluginDependency);
+            } else {
+                generatorContext.addDependency(securityAotPluginDependency.version("${micronaut.security.version}"));
+            }
         }
     }
 
