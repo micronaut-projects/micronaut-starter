@@ -22,6 +22,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -120,6 +121,10 @@ public class MicronautAot implements DefaultFeature {
 
     protected void addAotPluginsDependencies(GeneratorContext generatorContext) {
         if (generatorContext.hasFeature(SecurityJWT.class) || generatorContext.hasFeature(SecurityOAuth2.class)) {
+            Dependency.Builder securityAotPluginDependency = MicronautDependencyUtils.securityDependency()
+                    .artifactId("micronaut-security-aot")
+                    .scope(Scope.AOT_PLUGIN);
+
             if (generatorContext.getBuildTool().isGradle()) {
                 generatorContext.addDependency(MicronautDependencyUtils.platformDependency()
                         .artifactId("micronaut-platform")
@@ -127,10 +132,10 @@ public class MicronautAot implements DefaultFeature {
                         .pom()
                         .scope(Scope.AOT_PLUGIN)
                 );
+                generatorContext.addDependency(securityAotPluginDependency);
+            } else {
+                generatorContext.addDependency(securityAotPluginDependency.version("${micronaut.security.version}"));
             }
-            generatorContext.addDependency(MicronautDependencyUtils.securityDependency()
-                    .artifactId("micronaut-security-aot")
-                    .scope(Scope.AOT_PLUGIN));
         }
     }
 

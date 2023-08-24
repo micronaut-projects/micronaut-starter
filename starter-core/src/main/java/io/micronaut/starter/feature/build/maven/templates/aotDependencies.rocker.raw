@@ -6,7 +6,7 @@
                   <dependency>
                       <groupId>@(aotDependency.getGroupId())</groupId>
                       <artifactId>@(aotDependency.getArtifactId())</artifactId>
-                      <version>${micronaut.security.version}</version>
+                      <version>@(aotDependency.getVersion())</version>
                   </dependency>
 }
               </aotDependencies>
