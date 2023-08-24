@@ -42,8 +42,8 @@ public class OracleCloud extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.namespace", "change-me");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("com.oracle.oci.sdk")
-                .artifactId("oci-java-sdk-monitoring")
+                .groupId("io.micronaut.oraclecloud")
+                .artifactId("micronaut-oraclecloud-bmc-monitoring")
                 .compile());
     }
 
