@@ -25,3 +25,4 @@ starterImpls:
   starterCloudFunction: Google Cloud Function
   starterLambda: AWS Lambda
   starterAzure: Microsoft Azure
+communityFeature: Community Features
