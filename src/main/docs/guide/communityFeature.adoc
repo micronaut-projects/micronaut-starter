@@ -1,0 +1,6 @@
+==== Community Features
+
+Micronaut Launch includes Community Features such as those from https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries[Agorapulse], https://github.com/camunda-community-hub/micronaut-camunda-external-client[Camunda], and https://www.jobrunr.io/en/documentation/configuration/micronaut/[JobRunr].
+
+A feature that adds a Micronaut library which the Micronaut Foundation does not maintain is considered a Community Feature. In the event that Micronaut Foundation assumes responsibility for a Community Feature, it could potentially become an official Micronaut Launch feature instead.
+
