@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.ApiGatewayV2AwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
@@ -36,7 +38,7 @@ public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements Aws
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        featureContext.addFeatureIfNotPresent(ApiGatewayV2AwsLambdaHandlerProvider.class, apiGatewayV2AwsLambdaHandlerProvider);
+        featureContext.addFeature(apiGatewayV2AwsLambdaHandlerProvider);
     }
 
     @Override

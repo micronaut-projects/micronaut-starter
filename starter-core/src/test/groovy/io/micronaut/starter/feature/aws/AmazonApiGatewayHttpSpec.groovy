@@ -94,6 +94,8 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
                 .value(api.getUrl())
                 .build();
 ''')
+        appStack.contains('.handler("io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction")')
+
     }
 
     void 'amazon-api-gateway-http and arm do not use SnapStart'() {
