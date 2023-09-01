@@ -165,7 +165,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <artifactId>groovy</artifactId>
 ''')
         template.contains('''\
-    <groovyVersion>4.0.13</groovyVersion>
+    <groovyVersion>4.0.14</groovyVersion>
 ''')
     }
 
