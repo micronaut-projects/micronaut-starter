@@ -28,6 +28,17 @@ public class DatetimeGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy Date/Time Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for working with the JSR 310 Date/Time API introduced in Java 8.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_working_with_datetime_types";
     }

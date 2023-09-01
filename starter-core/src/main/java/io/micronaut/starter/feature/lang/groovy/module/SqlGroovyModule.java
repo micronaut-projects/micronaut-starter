@@ -28,6 +28,17 @@ public class SqlGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy SQL Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions that provide a higher-level abstraction over Java’s JDBC technology.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#processing-sql";
     }

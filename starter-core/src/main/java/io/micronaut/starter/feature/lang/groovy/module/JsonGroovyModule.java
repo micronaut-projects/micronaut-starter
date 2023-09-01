@@ -28,6 +28,17 @@ public class JsonGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy JSON Processing Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for JSON serialization and parsing.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_processing_json";
     }

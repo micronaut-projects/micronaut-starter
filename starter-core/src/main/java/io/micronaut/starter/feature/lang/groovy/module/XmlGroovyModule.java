@@ -28,6 +28,17 @@ public class XmlGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy XML Processing Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for processing XML with Groovy.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#processing-xml";
     }

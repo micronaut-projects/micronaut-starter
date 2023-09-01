@@ -28,6 +28,17 @@ public class GinqGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy Collection Query Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for queries against in-memory collections of objects in SQL-like style.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_querying_collections_in_sql_like_style";
     }

@@ -28,6 +28,17 @@ public class TomlGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy TOML Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for processing Groovy objects with TOML.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_processing_toml";
     }

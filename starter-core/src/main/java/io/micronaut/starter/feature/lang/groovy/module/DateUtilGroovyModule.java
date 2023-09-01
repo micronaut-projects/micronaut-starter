@@ -28,6 +28,17 @@ public class DateUtilGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy Legacy Date/Calendar Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for working with Java’s classic Date and Calendar classes.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_working_with_legacy_datecalendar_types";
     }

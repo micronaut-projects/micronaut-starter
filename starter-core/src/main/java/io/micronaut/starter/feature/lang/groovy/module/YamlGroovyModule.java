@@ -28,6 +28,17 @@ public class YamlGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
+    public String getTitle() {
+        return "Groovy YAML Extensions";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Extensions for processing Groovy objects with YAML.";
+    }
+
+    @Override
+    @NonNull
     public String getThirdPartyDocumentation() {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_processing_yaml";
     }

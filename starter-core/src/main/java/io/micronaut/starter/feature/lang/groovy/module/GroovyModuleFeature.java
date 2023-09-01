@@ -32,17 +32,6 @@ import io.micronaut.starter.feature.Feature;
 public interface GroovyModuleFeature extends Feature {
 
     @Override
-    @NonNull
-    default String getTitle() {
-        return String.format("%s module", getName());
-    }
-
-    @Override
-    default String getDescription() {
-        return String.format("Groovy optional module %s", getName());
-    }
-
-    @Override
     default void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("org.apache.groovy")

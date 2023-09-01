@@ -70,8 +70,8 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
         expect:
         def name = moduleFeature.name
         moduleFeature.category == Category.GROOVY_MODULE
-        moduleFeature.description == "Groovy optional module ${name}"
-        moduleFeature.title == "${name} module"
+        moduleFeature.description
+        moduleFeature.title
 
         where:
         moduleFeature << beanContext.getBeansOfType(GroovyModuleFeature)
