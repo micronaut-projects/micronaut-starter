@@ -17,8 +17,6 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.ApiGatewayV2AwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
