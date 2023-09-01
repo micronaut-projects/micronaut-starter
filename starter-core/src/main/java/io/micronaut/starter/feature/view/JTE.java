@@ -24,8 +24,10 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import java.util.Optional;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.feature.build.Kapt;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
@@ -83,9 +85,14 @@ public class JTE implements ViewFeature, MicronautServerDependent {
 
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
         Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
+
+        boolean patchKapt = generatorContext.getBuildTool().isGradle()
+                && generatorContext.getLanguage() == Language.KOTLIN
+                && generatorContext.hasFeature(Kapt.class);
+
         GradlePlugin.Builder builder = GradlePlugin.builder()
                 .id("gg.jte.gradle")
-                .extension(new RockerWritable(gradlePluginJTE.template(gradleDsl.orElse(GradleDsl.KOTLIN), JTE_SRC_DIR)))
+                .extension(new RockerWritable(gradlePluginJTE.template(patchKapt, gradleDsl.orElse(GradleDsl.KOTLIN), JTE_SRC_DIR)))
                 .lookupArtifactId("jte-gradle-plugin");
         return builder.build();
     }

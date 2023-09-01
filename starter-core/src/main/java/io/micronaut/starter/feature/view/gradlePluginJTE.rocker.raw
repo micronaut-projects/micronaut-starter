@@ -1,5 +1,5 @@
 @import io.micronaut.starter.build.gradle.GradleDsl
-@args(GradleDsl dsl, String path)
+@args(boolean patchKaptOutputs, GradleDsl dsl, String path)
 
 jte {
 @if(dsl == GradleDsl.KOTLIN) {
@@ -9,4 +9,16 @@ jte {
     sourceDirectory = file("@path").toPath()
 }
     generate()
+}
+
+@if (patchKaptOutputs) {
+// Patch Kapt inputs to include JTE generated files
+tasks.configureEach {
+    if (name == "kaptGenerateStubsKotlin") {
+        dependsOn("generateJte")
+    }
+    if (name == "kaptKotlin") {
+        dependsOn("generateJte")
+    }
+}
 }
