@@ -11,11 +11,9 @@ jte {
     generate()
 }
 
-@if (patchKaptOutputs) {
-// Patch Kapt inputs to include JTE generated files
+// Gradle requires that generateJte is run before some tasks
 tasks.configureEach {
-    if (name == "kaptGenerateStubsKotlin" || name == "inspectRuntimeClasspath") {
+    if (@if (patchKaptOutputs) {name == "kaptGenerateStubsKotlin" || }name == "inspectRuntimeClasspath") {
         mustRunAfter("generateJte")
     }
-}
 }
