@@ -14,11 +14,8 @@ jte {
 @if (patchKaptOutputs) {
 // Patch Kapt inputs to include JTE generated files
 tasks.configureEach {
-    if (name == "kaptGenerateStubsKotlin") {
-        dependsOn("generateJte")
-    }
-    if (name == "kaptKotlin") {
-        dependsOn("generateJte")
+    if (name == "kaptGenerateStubsKotlin" || name == "inspectRuntimeClasspath") {
+        mustRunAfter("generateJte")
     }
 }
 }
