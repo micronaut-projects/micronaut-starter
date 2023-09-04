@@ -29,7 +29,8 @@ import static io.micronaut.core.annotation.TypeHint.AccessType.ALL_DECLARED_FIEL
  * Picocli factory implementation that uses a Micronaut BeanContext to obtain bean instances.
  */
 @TypeHint(typeNames = {
-        "picocli.CommandLine$AutoHelpMixin"
+    "picocli.CommandLine$AutoHelpMixin",
+    "picocli.CommandLine$Model$CommandSpec"
 }, accessType = {ALL_DECLARED_CONSTRUCTORS, ALL_DECLARED_FIELDS})
 public class MicronautFactory implements CommandLine.IFactory {
 
