@@ -156,7 +156,19 @@ public class MicronautAot implements DefaultFeature {
         optimizations.add(new MicronautAotOptimization("known.missing.types.enabled", true, "Checks of existence of some types at build time instead of runtime"));
         optimizations.add(new MicronautAotOptimization("sealed.property.source.enabled", true, "Precomputes property sources at build time"));
 
-        optimizations.add(new MicronautAotOptimization("service.types", "io.micronaut.context.env.PropertySourceLoader,io.micronaut.inject.BeanConfiguration,io.micronaut.inject.BeanDefinitionReference,io.micronaut.http.HttpRequestFactory,io.micronaut.http.HttpResponseFactory,io.micronaut.core.beans.BeanIntrospectionReference,io.micronaut.core.convert.TypeConverterRegistrar,io.micronaut.context.env.PropertyExpressionResolver", "The list of service types to be scanned (comma separated)"));
+        optimizations.add(new MicronautAotOptimization(
+                "service.types",
+                """
+                        io.micronaut.context.env.PropertySourceLoader,\
+                        io.micronaut.inject.BeanConfiguration,\
+                        io.micronaut.inject.BeanDefinitionReference,\
+                        io.micronaut.http.HttpRequestFactory,\
+                        io.micronaut.http.HttpResponseFactory,\
+                        io.micronaut.core.beans.BeanIntrospectionReference,\
+                        io.micronaut.core.convert.TypeConverterRegistrar,\
+                        io.micronaut.context.env.PropertyExpressionResolver""",
+                "The list of service types to be scanned (comma separated)")
+        );
 
         optimizations.add(new MicronautAotOptimization("known.missing.types.list", "io.reactivex.Observable,reactor.core.publisher.Flux,kotlinx.coroutines.flow.Flow,io.reactivex.rxjava3.core.Flowable,io.reactivex.rxjava3.core.Observable,io.reactivex.Single,reactor.core.publisher.Mono,io.reactivex.Maybe,io.reactivex.rxjava3.core.Single,io.reactivex.rxjava3.core.Maybe,io.reactivex.Completable,io.reactivex.rxjava3.core.Completable,io.methvin.watchservice.MacOSXListeningWatchService,io.micronaut.core.async.publisher.CompletableFuturePublisher,io.micronaut.core.async.publisher.Publishers.JustPublisher,io.micronaut.core.async.subscriber.Completable", "A list of types that the AOT analyzer needs to check for existence (comma separated)"));
 
