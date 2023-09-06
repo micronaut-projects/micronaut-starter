@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class DateUtilGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-dateutil";
+
     @Override
     public String getName() {
-        return "groovy-dateutil";
+        return NAME;
     }
 
     @Override

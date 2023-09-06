@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SqlGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-sql";
+
     @Override
     public String getName() {
-        return "groovy-sql";
+        return NAME;
     }
 
     @Override

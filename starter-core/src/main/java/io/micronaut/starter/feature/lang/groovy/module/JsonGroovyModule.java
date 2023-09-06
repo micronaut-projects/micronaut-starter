@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class JsonGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-json";
+
     @Override
     public String getName() {
-        return "groovy-json";
+        return NAME;
     }
 
     @Override

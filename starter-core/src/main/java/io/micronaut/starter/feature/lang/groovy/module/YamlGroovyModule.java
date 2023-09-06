@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class YamlGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-yaml";
+
     @Override
     public String getName() {
-        return "groovy-yaml";
+        return NAME;
     }
 
     @Override

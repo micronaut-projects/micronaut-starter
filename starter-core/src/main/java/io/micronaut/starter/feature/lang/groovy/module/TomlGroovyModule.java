@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class TomlGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-toml";
+
     @Override
     public String getName() {
-        return "groovy-toml";
+        return NAME;
     }
 
     @Override

@@ -21,9 +21,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class GinqGroovyModule implements GroovyModuleFeature {
 
+    public static final String NAME = "groovy-ginq";
+
     @Override
     public String getName() {
-        return "groovy-ginq";
+        return NAME;
     }
 
     @Override
