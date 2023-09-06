@@ -22,7 +22,7 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("org.apache.groovy", moduleFeature, Scope.TEST)
+        verifier.hasDependency("org.apache.groovy", moduleFeature, Scope.COMPILE)
 
         where:
         [moduleFeature, buildTool] << [beanContext.getBeansOfType(GroovyModuleFeature)*.name, BuildTool.values()].combinations()

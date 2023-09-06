@@ -21,6 +21,8 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 /**
  * Implementation note: GroovyModuleFeature is not a LanguageSpecificFeature,
@@ -33,9 +35,16 @@ public interface GroovyModuleFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        Dependency.Builder builder = Dependency.builder()
                 .groupId("org.apache.groovy")
-                .test().artifactId(getName()));
+                .artifactId(getName());
+        if (generatorContext.getLanguage() == Language.GROOVY) {
+            // if language is Groovy, add to compile classpath
+            generatorContext.addDependency(builder.compile());
+        } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
+            // if language is not Groovy, but test if Spock, add to test classpath
+            generatorContext.addDependency(builder.test());
+        }
     }
 
     @Override
