@@ -22,7 +22,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 /**
  * Implementation note: GroovyModuleFeature is not a LanguageSpecificFeature,
@@ -40,22 +39,17 @@ public interface GroovyModuleFeature extends Feature {
                 .artifactId(getName());
         if (generatorContext.getLanguage() == Language.GROOVY) {
             // if language is Groovy, add to compile classpath
-            generatorContext.addDependency(builder.compile());
-        } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
-            // if language is not Groovy, but test if Spock, add to test classpath
-            generatorContext.addDependency(builder.test());
+            builder.compile();
+        } else {
+            // if test is Spock, add to test classpath; validation fails otherwise
+            builder.test();
         }
+        generatorContext.addDependency(builder);
     }
 
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    @NonNull
-    default String getThirdPartyDocumentation() {
-        return "https://docs.groovy-lang.org/docs/latest/html/documentation/";
     }
 
     @Override
