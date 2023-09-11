@@ -10,7 +10,7 @@ jobs:
     name: Maven Central Sync
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: v${{ github.event.inputs.release_version }}
       - uses: gradle/wrapper-validation-action@v1
