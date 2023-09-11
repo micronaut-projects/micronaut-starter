@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -63,8 +64,13 @@ public interface HandlerClassFeature extends Feature, AwsFeature {
 
     @NonNull
     static String resolveHandler(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getFeature(HandlerClassFeature.class)
-                .map(f -> f.handlerClass(generatorContext))
-                .orElse(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
+        return generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(f -> (f instanceof HandlerClassFeature))
+                .sorted(OrderUtil.REVERSE_COMPARATOR)
+                .map(f -> ((HandlerClassFeature) f).handlerClass(generatorContext))
+                .findFirst()
+                .orElseGet(() -> DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
     }
 }

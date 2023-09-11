@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import jakarta.inject.Singleton;
 
@@ -45,5 +46,10 @@ public class DefaultAwsLambdaHandlerProvider implements HandlerClassFeature {
     @NonNull
     public String handlerClass(ApplicationType applicationType, Project project) {
         return MICRONAUT_LAMBDA_HANDLER;
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOWEST.getOrder();
     }
 }
