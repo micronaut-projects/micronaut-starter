@@ -1,5 +1,5 @@
 @import io.micronaut.starter.build.gradle.GradleDsl
-@args(GradleDsl dsl, String path)
+@args(boolean patchKaptOutputs, GradleDsl dsl, String path)
 
 jte {
 @if(dsl == GradleDsl.KOTLIN) {
@@ -9,4 +9,11 @@ jte {
     sourceDirectory = file("@path").toPath()
 }
     generate()
+}
+
+// Gradle requires that generateJte is run before some tasks
+tasks.configureEach {
+    if (@if (patchKaptOutputs) {name == "kaptGenerateStubsKotlin" || }name == "inspectRuntimeClasspath") {
+        mustRunAfter("generateJte")
+    }
 }

@@ -1,7 +1,0 @@
-{
-  "resources":[
-    {"pattern":"\\Qapplication.yml\\E"},
-    {"pattern":"\\Qlogback.xml\\E"}
-  ],
-  "bundles":[{"name":"org.eclipse.jgit.internal.JGitText"}]
-}
