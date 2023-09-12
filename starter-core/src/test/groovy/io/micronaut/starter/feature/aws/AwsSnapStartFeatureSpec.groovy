@@ -38,7 +38,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         then:
         hasSnapStart(text)
         text.contains('import software.amazon.awscdk.services.lambda.Alias;')
-        text.contains('import software.amazon.awscdk.services.lambda.CfnFunction;')
+        text.contains('software.amazon.awscdk.services.lambda.SnapStartConf;')
         text.contains('import software.amazon.awscdk.services.lambda.Version;')
 
         where:
@@ -88,7 +88,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
     }
 
     private static boolean hasSnapStart(String text) {
-        text.contains('cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()')
+        text.contains('.snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)')
     }
 
     private static boolean usesApiGatewayToSnapStartVersionAlias(String text) {
