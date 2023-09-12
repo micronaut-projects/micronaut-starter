@@ -164,6 +164,7 @@ public class AppStack extends Stack {
 @if (features.contains("snapstart")) {
                 .tracing(Tracing.DISABLED)
                 .architecture(Architecture.X86_64)
+                .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
 } else {
                 .tracing(Tracing.ACTIVE)
     @if (architecture instanceof Arm) {
@@ -173,11 +174,6 @@ public class AppStack extends Stack {
     }
 }
                 .build();
-    @if (features.contains("snapstart")) {
-        Function lambdaFn = Function.Builder.create(this,"ScheduledFunction")
-              .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
-              .build();
-    }
 }
 @if (features.contains("aws-alexa")) {
         function.addPermission("alexa-skills-kit-trigger", Permission.builder()
