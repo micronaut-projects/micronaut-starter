@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.jaxrs;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -29,6 +30,9 @@ import jakarta.inject.Singleton;
 public class JaxRs implements Feature, MicronautServerDependent {
 
     public static final String MICRONAUT_JAX_RS_GROUP = "io.micronaut.jaxrs";
+    public static final String MICRONAUT_JAXRS_VERSION = "micronaut.jaxrs.version";
+    public static final String MICRONAUT_JAXRS_PROCESSOR = "micronaut-jaxrs-processor";
+    public static final String NAME = "jax-rs";
 
     private final JaxRsSecurity jaxRsSecurity;
 
@@ -38,7 +42,7 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
     @Override
     public String getName() {
-        return "jax-rs";
+        return NAME;
     }
 
     @Override
@@ -62,11 +66,18 @@ public class JaxRs implements Feature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder jaxrs = Dependency.builder()
                 .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId("micronaut-jaxrs-processor")
-                .versionProperty("micronaut.jaxrs.version")
+                .artifactId(MICRONAUT_JAXRS_PROCESSOR)
+                .versionProperty(MICRONAUT_JAXRS_VERSION)
                 .template();
 
-        generatorContext.addDependency(jaxrs.annotationProcessor());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(jaxrs.annotationProcessor());
+        } else {
+            generatorContext.addDependency(MicronautDependencyUtils
+                    .moduleMavenAnnotationProcessor(MICRONAUT_JAX_RS_GROUP, MICRONAUT_JAXRS_PROCESSOR, MICRONAUT_JAXRS_VERSION, false)
+            );
+        }
+
         generatorContext.addDependency(jaxrs.testAnnotationProcessor());
         generatorContext.addDependency(Dependency.builder()
                 .groupId(MICRONAUT_JAX_RS_GROUP)

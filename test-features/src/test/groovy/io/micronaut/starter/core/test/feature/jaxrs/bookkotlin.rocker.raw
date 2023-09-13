@@ -1,0 +1,8 @@
+package example.micronaut
+
+import io.micronaut.serde.annotation.Serdeable
+
+import jakarta.validation.constraints.NotBlank
+
+@@Serdeable
+public data class Book(@@field:NotBlank val name: String)
