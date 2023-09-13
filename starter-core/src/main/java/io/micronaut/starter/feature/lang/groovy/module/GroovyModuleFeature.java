@@ -25,8 +25,8 @@ import io.micronaut.starter.options.Language;
 
 /**
  * Implementation note: GroovyModuleFeature is not a LanguageSpecificFeature,
- * because it's perfectly reasonable to use for Spock framework, and the
- * GroovyModuleFeature dependencies are added as test scope by default.
+ * because it's perfectly reasonable to use for Spock framework, in which case the
+ * GroovyModuleFeature dependencies are added as test scope.
  *
  * @see GroovyModuleFeatureValidator
  */
