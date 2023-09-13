@@ -11,7 +11,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
 
     void 'test readme.md with feature jax-rs contains links to micronaut docs'() {
         when:
-        def output = generate(['jax-rs'])
+        def output = generate([JaxRs.NAME])
         def readme = output["README.md"]
 
         then:
@@ -23,7 +23,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
     void 'test jax-rs with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['jax-rs', 'kapt'])
+                .features([JaxRs.NAME, 'kapt'])
                 .language(language)
                 .render()
 
@@ -41,7 +41,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
     void 'test maven jax-rs feature'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['jax-rs'])
+                .features([JaxRs.NAME])
                 .render()
 
         then:
@@ -57,13 +57,19 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
               <groupId>io.micronaut.jaxrs</groupId>
               <artifactId>micronaut-jaxrs-processor</artifactId>
               <version>\${micronaut.jaxrs.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject</artifactId>
+                </exclusion>
+              </exclusions>
             </path>
 """)
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.KOTLIN)
-                .features(['jax-rs'])
+                .features([JaxRs.NAME])
                 .render()
 
         then:
@@ -85,7 +91,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.GROOVY)
-                .features(['jax-rs'])
+                .features([JaxRs.NAME])
                 .render()
 
         then:
