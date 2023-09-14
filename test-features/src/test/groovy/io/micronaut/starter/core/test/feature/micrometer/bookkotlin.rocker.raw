@@ -1,0 +1,39 @@
+package example.micronaut
+
+import io.micrometer.core.annotation.Counted
+import io.micrometer.core.annotation.Timed
+import io.micronaut.data.annotation.GeneratedValue
+import io.micronaut.data.annotation.Id
+import io.micronaut.data.annotation.MappedEntity
+import io.micronaut.data.jdbc.annotation.JdbcRepository
+import io.micronaut.data.model.query.builder.sql.Dialect
+import io.micronaut.data.repository.CrudRepository
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.serde.annotation.Serdeable
+
+@@JdbcRepository(dialect = Dialect.H2)
+open interface BookRepository : CrudRepository<Book, Long> {
+
+    open fun findByIsbn(isbn: String): Book
+}
+
+@@Controller
+open class BookController {
+
+    @@Get
+    @@Counted("books.find")
+    @@Timed("books.index")
+    open fun findBook(isbn: String): String? {
+        return null
+    }
+}
+
+@@Serdeable
+@@MappedEntity
+open class Book(var isbn: String, var name: String) {
+
+    @@field:Id
+    @@field:GeneratedValue(GeneratedValue.Type.AUTO)
+    var id: Long? = null
+}

@@ -1,0 +1,78 @@
+package example.micronaut;
+
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.data.annotation.GeneratedValue;
+import io.micronaut.data.annotation.Id;
+import io.micronaut.data.annotation.MappedEntity;
+import io.micronaut.data.jdbc.annotation.JdbcRepository;
+import io.micronaut.data.repository.CrudRepository;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.constraints.NotBlank;
+
+import java.util.Optional;
+
+import static io.micronaut.data.annotation.GeneratedValue.Type.AUTO;
+import static io.micronaut.data.model.query.builder.sql.Dialect.H2;
+
+@@JdbcRepository(dialect = H2) // <1>
+interface BookRepository extends CrudRepository<Book, Long> { // <2>
+
+    @@NonNull
+    Optional<Book> findByIsbn(@@NotBlank String isbn);
+}
+
+@@Controller
+public class BookController {
+
+    @@Get
+    @@Counted("books.find")
+    @@Timed("books.index")
+    Optional<String> findBook(String isbn) {
+        return Optional.empty();
+    }
+}
+
+@@Serdeable
+@@MappedEntity
+class Book {
+
+    @@Id
+    @@GeneratedValue(AUTO)
+    private Long id;
+
+    private String name;
+    private String isbn;
+
+    public Book(String isbn, String name) {
+        this.isbn = isbn;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+}

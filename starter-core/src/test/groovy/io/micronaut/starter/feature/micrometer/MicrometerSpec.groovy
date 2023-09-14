@@ -158,8 +158,10 @@ class MicrometerSpec extends ApplicationContextSpec {
                 .features(['micrometer-annotation', 'kapt'])
                 .render()
 
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
+
         then:
-        template.contains("$scope(\"io.micronaut.micrometer:micronaut-micrometer-annotation\")")
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", scope)
 
         where:
         language        | scope
@@ -174,16 +176,16 @@ class MicrometerSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['micrometer-annotation'])
                 .render()
-        def xml = new XmlSlurper().parseText(template)
-                .'**'.find{ it.artifactId == 'micronaut-micrometer-annotation'}
+        def xml = new XmlSlurper().parseText(template).'**'.find{ it.artifactId == 'micronaut-micrometer-annotation' }
 
         then:
-        xml
         xml.name()  == group
         xml.groupId == 'io.micronaut.micrometer'
         xml[versionOrScope] == expected
 
-        where:
+        and: "micronaut-core is excluded for java"
+        language != Language.JAVA || xml.exclusions.exclusion.artifactId.text() == 'micronaut-core'
+
         where:
         language        | group                     | versionOrScope || expected
         Language.JAVA   | 'path'                    | 'version'      || '${micronaut.micrometer.version}'
