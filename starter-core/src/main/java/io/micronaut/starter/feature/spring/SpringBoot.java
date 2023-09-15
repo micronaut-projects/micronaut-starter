@@ -25,13 +25,15 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SpringBoot extends SpringFeature {
 
+    public static final String NAME = "spring-boot";
+
     public SpringBoot(Spring spring) {
         super(spring);
     }
 
     @Override
     public String getName() {
-        return "spring-boot";
+        return NAME;
     }
 
     @Override
