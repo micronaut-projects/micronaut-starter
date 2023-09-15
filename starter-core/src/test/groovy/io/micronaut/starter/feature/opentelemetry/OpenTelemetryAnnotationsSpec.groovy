@@ -87,6 +87,12 @@ class OpenTelemetryAnnotationsSpec extends ApplicationContextSpec implements Com
               <groupId>io.micronaut.tracing</groupId>
               <artifactId>micronaut-tracing-opentelemetry-annotation</artifactId>
               <version>${micronaut.tracing.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject</artifactId>
+                </exclusion>
+              </exclusions>
             </path>''')
         } else if(language == Language.GROOVY) {
             template.contains('''
