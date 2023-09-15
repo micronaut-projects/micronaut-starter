@@ -48,6 +48,7 @@ log4j-slf4j = "2.17.2"
 micronaut-aot = "2.0.1"
 micronaut-build-plugins = "6.5.3"
 micronaut-gradle-plugin = "4.0.3"
+mockserver-client-java = "5.15.0"
 mockk = "1.9.3"
 protobuf-gradle-plugin = "0.9.2"
 rewrite-gradle-plugin = "5.12.0"
@@ -123,6 +124,7 @@ micronaut-crac-plugin = { module = "io.micronaut.gradle:micronaut-crac-plugin", 
 micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
 micronaut-test-resources-plugin = { module = "io.micronaut.gradle:micronaut-test-resources-plugin", version.ref = "micronaut-gradle-plugin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockserver-client-java = { module = "org.mock-server:mockserver-client-java", version.ref = "mockserver-client-java" }
 protobuf-gradle-plugin = { module = "gradle.plugin.com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-gradle-plugin" }
 rewrite-gradle-plugin = { module = "org.openrewrite:plugin", version.ref = "rewrite-gradle-plugin" }
 rewrite-maven-plugin = { module = "org.openrewrite.maven:rewrite-maven-plugin", version.ref = "rewrite-maven-plugin" }
