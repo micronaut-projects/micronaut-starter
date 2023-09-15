@@ -23,12 +23,16 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.NameUtils;
 import jakarta.inject.Singleton;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.coreDependency;
 
 @Singleton
 public class MicrometerAnnotations implements Feature, MicronautServerDependent {
 
+    public static final String NAME = "micrometer-annotation";
     private final Core core;
     private final Management management;
 
@@ -39,7 +43,7 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
 
     @Override
     public String getName() {
-        return "micrometer-annotation";
+        return NAME;
     }
 
     @Override
@@ -64,11 +68,22 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        Dependency.Builder dependency = Dependency
+                .builder()
                 .groupId("io.micronaut.micrometer")
                 .artifactId("micronaut-micrometer-annotation")
                 .versionProperty("micronaut.micrometer.version")
-                .annotationProcessor());
+                .annotationProcessor();
+
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            dependency.exclude(
+                    coreDependency()
+                            .artifactId("micronaut-core")
+                            .compile()
+                            .build()
+            );
+        }
+        generatorContext.addDependency(dependency);
     }
 
     @Override
