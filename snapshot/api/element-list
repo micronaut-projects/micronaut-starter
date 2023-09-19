@@ -156,7 +156,6 @@ io.micronaut.starter.feature.kotlin
 io.micronaut.starter.feature.kotlin.templates
 io.micronaut.starter.feature.lang
 io.micronaut.starter.feature.lang.groovy
-io.micronaut.starter.feature.lang.groovy.module
 io.micronaut.starter.feature.lang.java
 io.micronaut.starter.feature.lang.kotlin
 io.micronaut.starter.feature.logging
