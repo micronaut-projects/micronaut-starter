@@ -1,0 +1,19 @@
+package example.micronaut
+
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.stereotype.Component
+
+@@Component
+@@ConfigurationProperties("greeting")
+class Book {
+
+    private String template = "Hello, %s!"
+
+    String getTemplate() {
+        return template
+    }
+
+    void setTemplate(String template) {
+        this.template = template
+    }
+}
