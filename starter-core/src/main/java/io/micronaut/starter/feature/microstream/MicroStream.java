@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -29,6 +30,8 @@ import jakarta.inject.Singleton;
 public class MicroStream implements MicroStreamFeature {
 
     public static final String NAME = "microstream";
+    public static final String MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT = "micronaut-microstream-annotations";
+    public static final String MICRONAUT_MICROSTREAM_VERSION = "micronaut.microstream.version";
 
     @Override
     @NonNull
@@ -71,17 +74,25 @@ public class MicroStream implements MicroStreamFeature {
             generatorContext.addDependency(Dependency.builder()
                     .compile()
                     .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                    .artifactId("micronaut-microstream-annotations")
+                    .artifactId(MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT)
                     .build()
             );
         }
-        generatorContext.addDependency(Dependency.builder()
+        Dependency.Builder dependency = Dependency.builder()
                 .annotationProcessor()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId("micronaut-microstream-annotations")
-                .versionProperty("micronaut.microstream.version")
-                .build()
-        );
+                .artifactId(MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT)
+                .versionProperty(MICRONAUT_MICROSTREAM_VERSION);
+
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            dependency.exclude(
+                    MicronautDependencyUtils.coreDependency()
+                            .artifactId("micronaut-core")
+                            .compile()
+                            .build()
+            );
+        }
+        generatorContext.addDependency(dependency);
     }
 
     @Override

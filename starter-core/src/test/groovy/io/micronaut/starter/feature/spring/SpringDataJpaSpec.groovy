@@ -104,6 +104,12 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
               <groupId>io.micronaut.spring</groupId>
               <artifactId>micronaut-spring-annotation</artifactId>
               <version>\${micronaut.spring.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-core</artifactId>
+                </exclusion>
+              </exclusions>
             </path>
 """)
     }
