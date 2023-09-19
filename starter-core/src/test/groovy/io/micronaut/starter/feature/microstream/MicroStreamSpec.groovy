@@ -149,6 +149,12 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
               <groupId>io.micronaut.microstream</groupId>
               <artifactId>micronaut-microstream-annotations</artifactId>
               <version>${micronaut.microstream.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-core</artifactId>
+                </exclusion>
+              </exclusions>
             </path>''')
         }
 
