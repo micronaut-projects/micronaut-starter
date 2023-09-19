@@ -22,7 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.database.TestContainers;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -30,13 +29,6 @@ public class MockServerClient implements Feature {
 
     public static final String NAME = "mockserver-client-java";
     public static final String ARTIFACT_ID_MOCKSERVER_CLIENT_JAVA = "mockserver-client-java";
-    public static final String ARTIFACT_ID_TEST_CONTAINERS_MOCKSERVER = "mockserver";
-
-    public static final Dependency DEPENDENCY_TESTCONTAINERS_MOCKSERVER = Dependency.builder()
-            .groupId(TestContainers.TESTCONTAINERS_GROUP_ID)
-            .artifactId(ARTIFACT_ID_TEST_CONTAINERS_MOCKSERVER)
-            .test()
-            .build();
 
     public static final Dependency DEPENDENCY_MOCKSERVER_CLIENT_JAVA = Dependency.builder()
             .lookupArtifactId(ARTIFACT_ID_MOCKSERVER_CLIENT_JAVA)
@@ -81,9 +73,6 @@ public class MockServerClient implements Feature {
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(TestContainers.class)) {
-            generatorContext.addDependency(DEPENDENCY_TESTCONTAINERS_MOCKSERVER);
-        }
         generatorContext.addDependency(DEPENDENCY_MOCKSERVER_CLIENT_JAVA);
     }
 }
