@@ -11,7 +11,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
 
     void 'test readme.md with feature jax-rs-security contains links to micronaut docs'() {
         when:
-        def output = generate(['security', 'jax-rs'])
+        def output = generate(['security', JaxRs.NAME])
         def readme = output["README.md"]
 
         then:
@@ -23,7 +23,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
     void 'test jax-rs-security with Gradle for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['security', 'jax-rs', 'kapt'])
+                .features(['security', JaxRs.NAME, 'kapt'])
                 .language(language)
                 .render()
 
@@ -42,7 +42,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
     void 'test jax-rs-security is not with Gradle if none SecurityFeature selected'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['jax-rs'])
+                .features([JaxRs.NAME])
                 .language(Language.JAVA)
                 .render()
 
@@ -53,7 +53,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
     void 'test maven jax-rs-security feature'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['security', 'jax-rs'])
+                .features(['security', JaxRs.NAME])
                 .render()
 
         then:
@@ -77,13 +77,19 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
               <groupId>io.micronaut.jaxrs</groupId>
               <artifactId>micronaut-jaxrs-processor</artifactId>
               <version>\${micronaut.jaxrs.version}</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject</artifactId>
+                </exclusion>
+              </exclusions>
             </path>
 """)
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.KOTLIN)
-                .features(['security', 'jax-rs'])
+                .features(['security', JaxRs.NAME])
                 .render()
 
         then:
@@ -113,7 +119,7 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.GROOVY)
-                .features(['security', 'jax-rs'])
+                .features(['security', JaxRs.NAME])
                 .render()
 
         then:

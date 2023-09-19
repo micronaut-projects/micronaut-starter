@@ -7,10 +7,10 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
 import io.micronaut.starter.feature.aws.AwsLambdaEventFunctionFeature
 import io.micronaut.starter.feature.aws.Cdk
-import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.database.HibernateReactiveFeature
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
+import io.micronaut.starter.feature.lang.groovy.module.GroovyModuleFeature
 import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
@@ -45,6 +45,11 @@ class FeatureSpec extends BeanContextSpec {
         Language language = Language.JAVA
         if (feature instanceof LanguageSpecificFeature) {
             language = ((LanguageSpecificFeature) feature).getRequiredLanguage()
+        }
+        if (feature instanceof GroovyModuleFeature) {
+            // can't make GroovyModuleFeature a LanguageSpecificFeature,
+            // because it's valid when using Spock framework too
+            language = Language.GROOVY
         }
         Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
         List<String> features = [feature.getName()]

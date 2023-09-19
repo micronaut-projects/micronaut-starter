@@ -33,7 +33,7 @@ class JTESpec extends CommandSpec {
     void "test gradle views-jte with #language and #dsl"(Language language, BuildTool buildTool, String dsl) {
         when:
         generateProject(language, buildTool, ["views-jte", "kapt"])
-        BuildResult result = executeGradle("compileJava")
+        BuildResult result = executeGradle("build")
 
         then:
         result?.output?.contains("BUILD SUCCESS")

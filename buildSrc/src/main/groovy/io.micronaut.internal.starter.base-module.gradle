@@ -8,7 +8,7 @@ repositories {
 }
 
 version project.projectVersion
-group "io.micronaut.starter"
+group projectGroup
 ext {
     isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
 }

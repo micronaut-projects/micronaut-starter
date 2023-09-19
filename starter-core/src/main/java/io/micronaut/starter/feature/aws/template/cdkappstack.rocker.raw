@@ -137,10 +137,6 @@ public class AppStack extends Stack {
                 .build());
 }
 @if (functionId != null) {
-@if (!nativeImage) {
-        // https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
-        environmentVariables.put("JAVA_TOOL_OPTIONS", "-XX:+TieredCompilation -XX:TieredStopAtLevel=1");
-}
 @if (applicationType == ApplicationType.DEFAULT) {
         Function function = MicronautFunction.create(ApplicationType.DEFAULT,
 }
