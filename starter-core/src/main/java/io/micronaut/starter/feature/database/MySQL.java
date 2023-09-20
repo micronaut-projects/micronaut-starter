@@ -35,8 +35,8 @@ public class MySQL extends MySQLCompatibleFeature {
                     .runtime();
 
     public static final Dependency.Builder DEPENDENCY_MYSQL_CONNECTOR_JAVA = Dependency.builder()
-            .groupId(NAME)
-            .artifactId("mysql-connector-java")
+            .groupId("com.mysql")
+            .artifactId("mysql-connector-j")
             .runtime()
             .template();
 
