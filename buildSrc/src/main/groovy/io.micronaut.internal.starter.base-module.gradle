@@ -24,6 +24,7 @@ configurations.all {
                 details.useVersion(spockVersion)
             }
         }
+        force "io.micronaut:micronaut-inject-groovy:$micronautCoreVersion"
     }
 }
 

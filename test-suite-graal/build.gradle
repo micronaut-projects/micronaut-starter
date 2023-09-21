@@ -14,6 +14,13 @@ dependencies {
     testImplementation("io.micronaut.test:micronaut-test-junit5")
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "io.micronaut:micronaut-core-bom:$micronautCoreVersion"
+        force "io.micronaut:micronaut-inject-groovy:$micronautCoreVersion"
+    }
+}
+
 graalvmNative {
     binaries {
         all {
