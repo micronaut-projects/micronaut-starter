@@ -4,9 +4,16 @@ import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
+import io.micronaut.starter.feature.database.r2dbc.R2dbc
+import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 import spock.lang.Unroll
 
 class MicrometerSpec extends ApplicationContextSpec {
@@ -218,4 +225,50 @@ class MicrometerSpec extends ApplicationContextSpec {
 
     }
 
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")
+    void "test #micrometerFeature includes r2dbc-pool runtime when combined with #r2dbcFeature "(
+            Language language, BuildTool buildTool, String r2dbcFeature, String micrometerFeature
+    ) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .features([r2dbcFeature, micrometerFeature])
+                .render()
+
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
+        then:
+        verifier.hasDependency("io.r2dbc", "r2dbc-pool", Scope.RUNTIME)
+
+        where:
+        [language, buildTool, r2dbcFeature, micrometerFeature] << [
+                Language.values(),
+                BuildTool.values(),
+                [R2dbc.NAME, DataR2dbc.NAME],
+                beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
+        ].combinations()
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")
+    void "test #micrometerFeature without r2dbc feature does not includes r2dbc-pool runtime"(
+            Language language, BuildTool buildTool, String micrometerFeature
+    ) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .features([micrometerFeature])
+                .render()
+
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
+        then:
+        !verifier.hasDependency("io.r2dbc", "r2dbc-pool", Scope.RUNTIME)
+
+        where:
+        [language, buildTool, micrometerFeature] << [
+                Language.values(),
+                BuildTool.values(),
+                beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
+        ].combinations()
+    }
 }
