@@ -24,7 +24,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
-
 import io.micronaut.starter.feature.database.jdbc.Hikari;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
@@ -124,6 +123,7 @@ public class R2dbc implements R2dbcFeature {
             generatorContext.getConfiguration().putAll(rdbcConfig);
         } else {
             dbFeature.getDbType().ifPresent(type -> generatorContext.getConfiguration().addNested("r2dbc.datasources.default.db-type", type.toString()));
+            generatorContext.getConfiguration().addNested("r2dbc.datasources.default.dialect", dbFeature.getDataDialect());
         }
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_R2DBC_CORE);
