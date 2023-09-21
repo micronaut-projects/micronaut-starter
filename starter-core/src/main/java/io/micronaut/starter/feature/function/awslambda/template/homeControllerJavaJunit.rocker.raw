@@ -8,21 +8,15 @@ String handler
 @if (project.getPackageName() != null) {
 package @project.getPackageName();
 }
-import com.amazonaws.services.lambda.runtime.ClientContext;
-import com.amazonaws.services.lambda.runtime.CognitoIdentity;
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 @if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction;
 } else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
 import io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction;
 }
-
+import io.micronaut.function.aws.proxy.MockLambdaContext;
 import io.micronaut.http.HttpMethod;
 import io.micronaut.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
@@ -31,24 +25,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HomeControllerTest {
+class HomeControllerTest {
 @if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
     private static ApiGatewayProxyRequestEventFunction handler;
 
     @@BeforeAll
-    public static void setupSpec() {
+    static void setupSpec() {
         handler = new ApiGatewayProxyRequestEventFunction();
     }
 } else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
     private static APIGatewayV2HTTPEventFunction handler;
 
     @@BeforeAll
-    public static void setupSpec() {
+    static void setupSpec() {
         handler = new APIGatewayV2HTTPEventFunction();
     }
 }
     @@AfterAll
-    public static void cleanupSpec() {
+    static void cleanupSpec() {
         handler.getApplicationContext().close();
     }
 
@@ -58,7 +52,6 @@ public class HomeControllerTest {
         APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent();
         request.setPath("/");
         request.setHttpMethod(HttpMethod.GET.toString());
-        APIGatewayProxyResponseEvent response = handler.handleRequest(request, lambdaContext);
 } else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
         APIGatewayV2HTTPEvent request = new APIGatewayV2HTTPEvent();
         request.setRequestContext(APIGatewayV2HTTPEvent.RequestContext.builder()
@@ -67,67 +60,10 @@ public class HomeControllerTest {
                         .withMethod(HttpMethod.GET.toString())
                         .build()
                 ).build());
-        APIGatewayV2HTTPResponse response = handler.handleRequest(request, lambdaContext);
 }
+        var response = handler.handleRequest(request, new MockLambdaContext());
+
         assertEquals(HttpStatus.OK.getCode(), response.getStatusCode());
         assertEquals("{\"message\":\"Hello World\"}",  response.getBody());
     }
-
-   static final Context lambdaContext = new Context() {
-
-        @@Override
-        public String getAwsRequestId() {
-            return null;
-        }
-
-        @@Override
-        public String getLogGroupName() {
-            return null;
-        }
-
-        @@Override
-        public String getLogStreamName() {
-            return null;
-        }
-
-        @@Override
-        public String getFunctionName() {
-            return null;
-        }
-
-        @@Override
-        public String getFunctionVersion() {
-            return null;
-        }
-
-        @@Override
-        public String getInvokedFunctionArn() {
-            return null;
-        }
-
-        @@Override
-        public CognitoIdentity getIdentity() {
-            return null;
-        }
-
-        @@Override
-        public ClientContext getClientContext() {
-            return null;
-        }
-
-        @@Override
-        public int getRemainingTimeInMillis() {
-            return 0;
-        }
-
-        @@Override
-        public int getMemoryLimitInMB() {
-            return 0;
-        }
-
-        @@Override
-        public LambdaLogger getLogger() {
-            return null;
-        }
-    };
 }
