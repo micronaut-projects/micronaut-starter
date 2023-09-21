@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.messaging.kafka.Kafka;
+import io.micronaut.starter.feature.test.MockServerClient;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 import jakarta.inject.Singleton;
@@ -109,6 +110,9 @@ public class TestContainers implements Feature {
         }
         if (generatorContext.isFeaturePresent(Cassandra.class)) {
             generatorContext.addDependency(testContainerTestDependency("cassandra"));
+        }
+        if (generatorContext.isFeaturePresent(MockServerClient.class)) {
+            generatorContext.addDependency(testContainerTestDependency("mockserver"));
         }
     }
 
