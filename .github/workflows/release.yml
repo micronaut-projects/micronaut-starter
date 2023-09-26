@@ -104,7 +104,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.0.12
         with:
           version: '21.3.0'
-          java-version: '11'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-musl: 'true'
@@ -155,7 +155,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.0.12
         with:
           version: '21.3.0'
-          java-version: '11'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
@@ -199,7 +199,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.0.12
         with:
           version: '21.3.0'
-          java-version: '11'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
