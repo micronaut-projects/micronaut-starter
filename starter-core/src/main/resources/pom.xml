@@ -75,7 +75,7 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.14</version>
+            <version>5.4.10</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
