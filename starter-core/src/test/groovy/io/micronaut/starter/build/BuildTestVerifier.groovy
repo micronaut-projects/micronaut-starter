@@ -19,6 +19,8 @@ interface BuildTestVerifier {
 
     boolean hasDependency(String groupId, String artifactId)
 
+    boolean hasExclusion(String groupId, String artifactId)
+
     boolean hasTestResourceDependency(String groupId, String artifactId)
 
     boolean hasTestResourceDependency(String artifactId)
