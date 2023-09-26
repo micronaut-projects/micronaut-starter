@@ -9,11 +9,9 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
-import spock.lang.Unroll
 
 class CreateControllerSpec extends CommandSpec {
 
-    @Unroll
     void "test creating a controller and running the test for #language and #testFramework and #buildTool"(Language language,
                                                                                                            BuildTool buildTool,
                                                                                                            TestFramework testFramework) {
