@@ -60,7 +60,6 @@ graalvmNative {
                 logger.lifecycle("Using musl libc")
                 buildArgs("--libc=musl", "--static")
             }
-            mainClass = "io.micronaut.starter.cli.MicronautStarter"
         }
     }
 }
