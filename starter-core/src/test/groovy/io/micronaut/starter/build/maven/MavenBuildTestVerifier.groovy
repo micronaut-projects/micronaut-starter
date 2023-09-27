@@ -6,23 +6,43 @@ import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.options.Language
 
 @CompileStatic
 class MavenBuildTestVerifier implements BuildTestVerifier {
     final Node project
+    final Language language
 
-    MavenBuildTestVerifier(String template) {
+    MavenBuildTestVerifier(String template, Language language) {
         this.project = new XmlParser().parseText(template)
+        this.language = language
     }
 
     @CompileDynamic
     @Override
     boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        def result
         String expectedCoordinate = "${groupId}:${artifactId}"
-        project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
-            List<String> coordinates = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
-            coordinates.contains(expectedCoordinate)
+        switch (language) {
+            case Language.JAVA:
+                project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+                    List<String> coordinates = configuration.annotationProcessorPaths.path
+                            .collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                    result = coordinates.contains(expectedCoordinate)
+                }
+                break
+            case Language.GROOVY:
+                result = hasDependency(groupId, artifactId)
+                break
+            case Language.KOTLIN:
+                project.build.plugins.plugin.find { it.artifactId.text() == "kotlin-maven-plugin" }?.with {
+                    List<String> coordinates = executions.execution.configuration.annotationProcessorPaths.annotationProcessorPath
+                            .collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                    result = coordinates.contains(expectedCoordinate)
+                }
+                break
         }
+        result
     }
 
     @Override
@@ -51,6 +71,14 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String expectedArtifactId) {
         project.dependencies.dependency.find { it.artifactId.text() == expectedArtifactId }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId) {
+        project.dependencies.dependency.exclusions.exclusion.findAll { it.artifactId.text() == artifactId }.any {
+            it.groupId.text() == groupId
+        }
     }
 
     @CompileDynamic

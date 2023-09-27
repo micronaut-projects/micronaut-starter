@@ -64,6 +64,14 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
+    boolean hasExclusion(String groupId, String artifactId) {
+        // GRADLE: exclude(group: "io.micronaut.sql", module: "micronaut-hibernate-jpa")
+        // GRADLE_KOTLIN: exclude(group = "io.micronaut.sql", module = "micronaut-hibernate-jpa")
+        String pattern = /(?s).*exclude\(group\s?[:=]\s*"${groupId}", module\s?[:=]\s*"${artifactId}"\)\s*/
+        Pattern.compile(pattern).matcher(template).find()
+    }
+
+    @Override
     boolean hasTestResourceDependency(String groupId, String artifactId) {
         hasDependency(groupId, artifactId, Scope.TEST_RESOURCES_SERVICE)
     }
