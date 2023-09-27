@@ -29,7 +29,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features([DynamoDb.NAME, 'kapt'])
+                .features([DynamoDb.NAME, buildTool == BuildTool.MAVEN ? 'kapt' : 'ksp'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
@@ -39,7 +39,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         and: 'validation feature is applied since the rocker templates of dynamodb use annotations'
         verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()

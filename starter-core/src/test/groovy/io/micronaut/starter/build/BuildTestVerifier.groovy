@@ -7,6 +7,10 @@ import io.micronaut.starter.build.dependencies.Scope;
  */
 interface BuildTestVerifier {
 
+    boolean hasAnnotationProcessor(String groupId, String artifactId)
+
+    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest)
+
     boolean hasBom(String groupId, String artifactId, Scope scope)
 
     boolean hasBom(String groupId, String artifactId, String scope)
@@ -20,6 +24,8 @@ interface BuildTestVerifier {
     boolean hasDependency(String groupId, String artifactId, String scope, String version, boolean isProperty)
 
     boolean hasDependency(String groupId, String artifactId)
+
+    boolean hasExclusion(String groupId, String artifactId)
 
     boolean hasTestResourceDependency(String groupId, String artifactId)
 

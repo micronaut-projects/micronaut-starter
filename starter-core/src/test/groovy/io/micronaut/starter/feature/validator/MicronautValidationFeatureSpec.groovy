@@ -80,12 +80,12 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
-                .features(['validation', 'kapt'])
+                .features(['validation', buildTool == BuildTool.MAVEN ? 'kapt' : 'ksp'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
         if (language != Language.GROOVY) {
             assert verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
         }

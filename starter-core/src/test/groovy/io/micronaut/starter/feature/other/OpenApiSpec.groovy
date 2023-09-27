@@ -34,18 +34,13 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     void 'test swagger with #buildTool for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['openapi', 'kapt'])
+                .features(['openapi', buildTool == BuildTool.MAVEN ? 'kapt' : 'ksp'])
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, TestFramework.JUNIT, template)
 
         then:
-        if (!(buildTool == BuildTool.MAVEN && (Language.GROOVY == language))) { // not sure why it fails for this combinations
-            assert verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.ANNOTATION_PROCESSOR)
-        }
-        if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
-            assert verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.COMPILE)
-        }
+        verifier.hasAnnotationProcessor("io.micronaut.openapi", "micronaut-openapi")
         verifier.hasDependency("io.swagger.core.v3", "swagger-annotations", Scope.COMPILE)
 
         if (buildTool == BuildTool.MAVEN) {

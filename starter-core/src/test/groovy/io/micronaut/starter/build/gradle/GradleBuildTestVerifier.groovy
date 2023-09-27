@@ -5,6 +5,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
@@ -16,6 +17,16 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         this.template = template
         this.language = language
         this.testFramework = testFramework
+    }
+
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+    }
+
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest) {
+        return hasDependency(groupId, artifactId, (isTest ? Scope.TEST_ANNOTATION_PROCESSOR : Scope.ANNOTATION_PROCESSOR))
     }
 
     @Override
@@ -73,6 +84,14 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         GradleConfiguration.values().collect { it.getConfigurationName() }.any( {scope ->
             hasDependency(groupId, artifactId, scope)
         })
+    }
+
+    @Override
+    boolean hasExclusion(String groupId, String artifactId) {
+        // GRADLE: exclude(group: "io.micronaut.sql", module: "micronaut-hibernate-jpa")
+        // GRADLE_KOTLIN: exclude(group = "io.micronaut.sql", module = "micronaut-hibernate-jpa")
+        String pattern = /(?s).*exclude\(group\s?[:=]\s*"${groupId}", module\s?[:=]\s*"${artifactId}"\)\s*/
+        Pattern.compile(pattern).matcher(template).find()
     }
 
     @Override

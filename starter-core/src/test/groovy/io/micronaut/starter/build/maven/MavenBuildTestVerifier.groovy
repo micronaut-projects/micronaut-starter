@@ -18,8 +18,27 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
         this.language = language
     }
 
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        if (language == Language.GROOVY) {
+            return hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+        } else {
+            return hasAnnotationProcessor(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+        }
+    }
+
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest) {
+        Scope scope = isTest ? Scope.TEST_ANNOTATION_PROCESSOR : Scope.ANNOTATION_PROCESSOR
+        if (language == Language.GROOVY) {
+            return hasDependency(groupId, artifactId, scope)
+        } else {
+            return hasAnnotationProcessor(groupId, artifactId, scope)
+        }
+    }
+
     @CompileDynamic
-    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId) {
+    boolean hasAnnotationProcessor(String groupId, String artifactId, Scope scope) {
         String expectedCoordinate = "${groupId}:${artifactId}"
         if (language == Language.KOTLIN) {
             if (scope == Scope.ANNOTATION_PROCESSOR) {
@@ -43,7 +62,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     }
 
     @CompileDynamic
-    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId, String version, boolean isProperty) {
+    boolean hasAnnotationProcessor(String groupId, String artifactId, String version, Scope scope, boolean isProperty) {
         String v = isProperty ? '${' + version + '}' : version
         String expectedCoordinate = "${groupId}:${artifactId}:${v}"
         if (language == Language.KOTLIN) {
@@ -83,7 +102,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope) {
         if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
-            return hasAnnotationProcessor(scope, groupId, artifactId)
+            return hasAnnotationProcessor(groupId, artifactId, scope)
         }
         Optional<String> mavenScopeString = MavenScope.of(scope, language).map(MavenScope::toString)
         if (!mavenScopeString.isPresent()) {
@@ -96,6 +115,14 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String expectedArtifactId) {
         project.dependencies.dependency.find { it.artifactId.text() == expectedArtifactId }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId) {
+        project.dependencies.dependency.exclusions.exclusion.findAll { it.artifactId.text() == artifactId }.any {
+            it.groupId.text() == groupId
+        }
     }
 
     @CompileDynamic
@@ -122,7 +149,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope, String version, boolean isProperty) {
         if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
-            return hasAnnotationProcessor(scope, groupId, artifactId, version, isProperty)
+            return hasAnnotationProcessor(groupId, artifactId, version, scope, isProperty)
         }
         return MavenScope.of(scope, language)
                 .map {hasDependency(groupId, artifactId, it.toString(), version, isProperty) }

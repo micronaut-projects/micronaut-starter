@@ -22,7 +22,7 @@ class PicocliSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
                 .applicationType(ApplicationType.CLI)
-                .features(['kapt'])
+                .features(['ksp'])
                 .render()
 
         then:
@@ -36,7 +36,7 @@ class PicocliSpec extends ApplicationContextSpec {
         where:
         language        | scope
         Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
+        Language.KOTLIN | "ksp"
         Language.GROOVY | "compileOnly"
     }
 
