@@ -6,15 +6,12 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.CommunityFeatureValidator
+import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.feature.Category
-import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 
-@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
@@ -34,11 +31,6 @@ class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOut
         description = applicationType.name
     }
 
-    void "Slf4jSimpleLogger is community feature"() {
-        expect:
-        slf4jSimpleLogger.isCommunity()
-    }
-
     void "Slf4jSimpleLogger is logging category"() {
         expect:
         slf4jSimpleLogger.category == Category.LOGGING
@@ -53,7 +45,7 @@ class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOut
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("io.goodforgod", "slf4j-simple-logger", Scope.COMPILE)
+        verifier.hasDependency("io.goodforgod", "slf4j-simple-logger", Scope.RUNTIME)
 
         where:
         buildTool << BuildTool.values()

@@ -18,44 +18,33 @@ package io.micronaut.starter.feature.logging;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.CommunityFeature;
+import io.micronaut.starter.feature.ThirdPartyLibraryFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Slf4jSimpleLogger implements CommunityFeature {
-    public static final String NAME = "goodforgod-slf4j-simple-logger";
+public class Slf4jSimpleLogger implements ThirdPartyLibraryFeature, LoggingFeature {
+    public static final String NAME = "slf4j-simple-logger";
 
     private static final String SLF4J_SIMPLE_LOGGER_ARTIFACT_ID = "slf4j-simple-logger";
 
     private static final Dependency SLF4J_SIMPLE_LOGGER_DEPENDENCY = Dependency.builder()
             .lookupArtifactId(SLF4J_SIMPLE_LOGGER_ARTIFACT_ID)
-            .compile()
+            .runtime()
             .build();
 
     @Override
-    public String getCommunityFeatureTitle() {
-        return "Slf4j Simple Logger";
+    public String getName() {
+        return NAME;
     }
 
     @Override
-    public String getCommunityFeatureName() {
-        return "slf4j-simple-logger";
-    }
-
-    @Override
-    public String getCommunityContributor() {
-        return "goodforgod";
+    public String getTitle() {
+        return "SLF4J Simple Logger";
     }
 
     @Override
     public String getDescription() {
         return "Logger for applications in single-thread contexts.";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.LOGGING;
     }
 
     @Override
