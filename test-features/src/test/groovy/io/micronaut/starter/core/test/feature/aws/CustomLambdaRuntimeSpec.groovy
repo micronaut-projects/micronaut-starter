@@ -11,7 +11,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class CustomLambdaRuntimeSpec extends CommandSpec {
 
@@ -21,7 +20,6 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven aws-lambda-custom-runtime#desc with #language"(Language language, String feature) {
         when:
         generateProject(language, BuildTool.MAVEN, [AwsV2Sdk.NAME, AwsLambdaCustomRuntime.FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME, feature], ApplicationType.FUNCTION)
@@ -35,17 +33,16 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
         desc = feature == AwsV2Sdk.NAME ? "" : " and $feature"
     }
 
-    @Unroll
-    void "test gradle aws-lambda-custom-runtime#desc with #language"(Language language, String feature) {
+    void "test #buildTool aws-lambda-custom-runtime#desc with #language"(BuildTool buildTool, Language language, String feature) {
         when:
-        generateProject(language, BuildTool.GRADLE, [AwsLambdaCustomRuntime.FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME, feature], ApplicationType.FUNCTION)
+        generateProject(language, buildTool, [AwsLambdaCustomRuntime.FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME, feature], ApplicationType.FUNCTION)
         BuildResult result = executeGradle("classes")
 
         then:
         result.output.contains("BUILD SUCCESS")
 
         where:
-        [language, feature] << [supportedLanguages(), [AwsV2Sdk.NAME, AwsLambdaS3EventNotification.NAME, AwsLambdaScheduledEvent.NAME]].combinations()
+        [buildTool, language, feature] << [BuildTool.valuesGradle(), supportedLanguages(), [AwsV2Sdk.NAME, AwsLambdaS3EventNotification.NAME, AwsLambdaScheduledEvent.NAME]].combinations()
         desc = feature == AwsV2Sdk.NAME ? "" : " and $feature"
     }
 

@@ -41,9 +41,9 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         db << featuresNames()
     }
 
-    void "test gradle hibernate-reactive-jpa with java and #db"(String db) {
+    void "test #buildTool hibernate-reactive-jpa with java and #db"(BuildTool buildTool, String db) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, [HibernateReactiveJpa.NAME, db])
+        generateProject(Language.JAVA, buildTool, [HibernateReactiveJpa.NAME, db])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
 
@@ -53,7 +53,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << featuresNames()
+        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()].combinations()
     }
 
     private static List<String> featuresNames() {

@@ -4,20 +4,19 @@ import io.micronaut.starter.feature.json.SerializationJsonpFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Unroll
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class SerializationJsonpSpec extends CommandSpec {
+
     @Override
     String getTempDirectoryPrefix() {
         return "json"
     }
 
-    @Unroll
-    void "test gradle build with jsonp feature"(BuildTool buildTool) {
+    void "test #buildTool build with jsonp feature"(BuildTool buildTool) {
         when:
         generateProject(Language.JAVA, buildTool, [beanContext.getBeansOfType(SerializationJsonpFeature)[0].getName()])
         String output = executeGradle("compileJava")?.output
@@ -35,7 +34,7 @@ class SerializationJsonpSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        buildTool << [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]
+        buildTool << BuildTool.valuesGradle()
     }
 
     Path buildGradlePath(BuildTool buildTool) {

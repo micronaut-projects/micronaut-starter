@@ -11,7 +11,7 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature cache-coherence contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-coherence'])
+        def output = generate([Coherence.NAME])
         def readme = output["README.md"]
 
         then:
@@ -25,13 +25,13 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['cache-coherence'])
+                .features([Coherence.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-cache")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
         language << Language.values().toList()
@@ -41,7 +41,7 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['cache-coherence'])
+                .features([Coherence.NAME])
                 .render()
 
         then:
@@ -56,7 +56,6 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
     """)

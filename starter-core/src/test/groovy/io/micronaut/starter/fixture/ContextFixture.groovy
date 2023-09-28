@@ -62,7 +62,7 @@ trait ContextFixture {
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.GRADLE),
+                                       Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
                                        ApplicationType applicationType = ApplicationType.DEFAULT) {
 
         AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
@@ -77,7 +77,7 @@ trait ContextFixture {
     }
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
-                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
                                            ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
@@ -92,7 +92,7 @@ trait ContextFixture {
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
                                            Consumer<GeneratorContext> mutate,
-                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
                                            ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)

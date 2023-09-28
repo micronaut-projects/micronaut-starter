@@ -20,10 +20,9 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-acme/latest/guide/index.html")
     }
 
-    @Unroll
-    void 'test gradle acme feature for language=#language'() {
+    void 'test #buildTool acme feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['acme'])
                 .render()
@@ -32,7 +31,7 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.acme:micronaut-acme")')
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
     }
 
     @Unroll

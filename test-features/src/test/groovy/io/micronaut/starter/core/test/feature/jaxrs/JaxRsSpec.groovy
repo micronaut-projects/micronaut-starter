@@ -12,7 +12,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class JaxRsSpec extends CommandSpec {
 
@@ -22,7 +21,6 @@ class JaxRsSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven jax-rs with #language"(Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [Yaml.NAME, JaxRs.NAME, MicronautValidationFeature.NAME])
@@ -45,10 +43,9 @@ class JaxRsSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
-    void "test gradle jax-rs with #language"(Language language) {
+    void "test #buildTool jax-rs with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, JaxRs.NAME, MicronautValidationFeature.NAME])
+        generateProject(language, buildTool, [Yaml.NAME, JaxRs.NAME, MicronautValidationFeature.NAME])
 
         and:
         // Write a class that requires serialization
@@ -65,6 +62,6 @@ class JaxRsSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }

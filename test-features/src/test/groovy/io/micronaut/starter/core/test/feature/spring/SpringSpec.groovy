@@ -1,9 +1,7 @@
 package io.micronaut.starter.core.test.feature.spring
 
 import io.micronaut.starter.feature.config.Yaml
-import io.micronaut.starter.feature.jaxrs.JaxRs
 import io.micronaut.starter.feature.spring.SpringBoot
-import io.micronaut.starter.feature.validator.MicronautValidationFeature
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
@@ -13,7 +11,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class SpringSpec extends CommandSpec {
 
@@ -23,7 +20,6 @@ class SpringSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven spring with #language"(Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [Yaml.NAME, SpringBoot.NAME])
@@ -46,10 +42,9 @@ class SpringSpec extends CommandSpec {
         language << Language.values() - Language.GROOVY
     }
 
-    @Unroll
-    void "test gradle jax-rs with #language"(Language language) {
+    void "test #buildTool jax-rs with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, SpringBoot.NAME])
+        generateProject(language, buildTool, [Yaml.NAME, SpringBoot.NAME])
 
         and:
         // Write a class that requires serialization
@@ -66,6 +61,6 @@ class SpringSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }

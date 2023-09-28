@@ -40,24 +40,27 @@ class DataR2dbcSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
     }
 
-    void "test gradle data-r2dbc with #language"(Language language) {
+    void "test #buildTool data-r2dbc with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [DataR2dbc.NAME, MySQL.NAME])
+        generateProject(language, buildTool, [DataR2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 
-    void "test gradle data-r2dbc with TestContainers"() {
+    void "test #buildTool data-r2dbc with TestContainers"(BuildTool buildTool) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, [DataR2dbc.NAME, MySQL.NAME])
+        generateProject(Language.JAVA, buildTool, [DataR2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 }

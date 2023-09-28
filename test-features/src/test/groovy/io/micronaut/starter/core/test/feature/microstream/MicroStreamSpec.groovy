@@ -43,9 +43,9 @@ class MicroStreamSpec extends CommandSpec {
         language << Language.values()
     }
 
-    void "test gradle MicroStream with #language"(Language language) {
+    void "test #buildTool MicroStream with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, MicroStream.NAME, MicronautValidationFeature.NAME])
+        generateProject(language, buildTool, [Yaml.NAME, MicroStream.NAME, MicronautValidationFeature.NAME])
 
         and:
         // Write a class that requires serialization
@@ -62,6 +62,6 @@ class MicroStreamSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }

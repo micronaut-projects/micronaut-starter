@@ -17,16 +17,12 @@ package io.micronaut.starter.test
 
 import io.micronaut.starter.options.BuildTool
 
-import java.util.stream.Collectors
-
 class BuildToolCombinations {
 
-    static List<BuildTool> buildTools = (BuildTool.values() as List<BuildTool>).stream()
-            .filter(b -> {
-                if (b == BuildTool.MAVEN) {
-                    return !BuildToolTest.IGNORE_MAVEN
-                }
-                return true
-            })
-            .collect(Collectors.toList())
+    static List<BuildTool> buildTools = BuildTool.values().findAll { b ->
+        if (b == BuildTool.MAVEN) {
+            return !BuildToolTest.IGNORE_MAVEN
+        }
+        return true
+    }
 }

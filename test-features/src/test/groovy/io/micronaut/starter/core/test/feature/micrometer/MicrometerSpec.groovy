@@ -38,9 +38,9 @@ class MicrometerSpec extends CommandSpec {
         language << Language.values()
     }
 
-    void "test gradle micrometer-cloudwatch with #language"(Language language) {
+    void "test #buildTool micrometer-cloudwatch with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["micrometer-cloudwatch", MicrometerAnnotations.NAME, DataJdbc.NAME, MicronautValidationFeature.NAME])
+        generateProject(language, buildTool, ["micrometer-cloudwatch", MicrometerAnnotations.NAME, DataJdbc.NAME, MicronautValidationFeature.NAME])
 
         and:
         createTemplate(language)
@@ -52,7 +52,7 @@ class MicrometerSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 
     private void createTemplate(Language language) {

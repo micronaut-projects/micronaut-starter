@@ -1,12 +1,12 @@
 package io.micronaut.starter.core.test.feature.coherence
 
+import io.micronaut.starter.feature.coherence.CoherenceSessionStore
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class CoherenceSessionSpec extends CommandSpec {
 
@@ -16,10 +16,9 @@ class CoherenceSessionSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven coherence-session with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["coherence-session"])
+        generateProject(language, BuildTool.MAVEN, [CoherenceSessionStore.NAME])
         String output = executeMaven("compile")
 
         then:
@@ -29,16 +28,15 @@ class CoherenceSessionSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
-    void "test gradle coherence-session with #language"(Language language) {
+    void "test #buildTool coherence-session with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["coherence-session"])
+        generateProject(language, buildTool, [CoherenceSessionStore.NAME])
         BuildResult result = executeGradle("compileJava")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }

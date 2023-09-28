@@ -6,7 +6,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class DataMongoReactiveSpec extends CommandSpec {
 
@@ -16,7 +15,6 @@ class DataMongoReactiveSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven data-mongodb-reactive with #language"(Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, ["data-mongodb-reactive"])
@@ -29,16 +27,15 @@ class DataMongoReactiveSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
-    void "test gradle data-mongodb-reactive with #language"(Language language) {
+    void "test #buildTool data-mongodb-reactive with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["data-mongodb-reactive"])
+        generateProject(language, buildTool, ["data-mongodb-reactive"])
         BuildResult result = executeGradle("test")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }

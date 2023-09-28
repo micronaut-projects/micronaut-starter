@@ -12,7 +12,7 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature coherence-session contains links to micronaut docs'() {
         when:
-        def output = generate(['coherence-session'])
+        def output = generate([CoherenceSessionStore.NAME])
         def readme = output["README.md"]
 
         then:
@@ -23,7 +23,7 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test configuration with feature coherence-session'() {
         when:
-        Map<String, String> output = generate([Yaml.NAME, 'coherence-session'])
+        Map<String, String> output = generate([Yaml.NAME, CoherenceSessionStore.NAME])
         String configuration = output['src/main/resources/application.yml']
 
         then:
@@ -41,13 +41,13 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['coherence-session'])
+                .features([CoherenceSessionStore.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-session")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
         language << Language.values().toList()
@@ -57,7 +57,7 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['coherence-session'])
+                .features([CoherenceSessionStore.NAME])
                 .render()
 
         then:
@@ -72,7 +72,6 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 """)

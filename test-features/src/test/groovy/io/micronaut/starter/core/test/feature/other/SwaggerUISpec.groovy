@@ -65,9 +65,9 @@ class SwaggerUISpec extends CommandSpec {
                 mavenSupportedLanguages()].combinations()
     }
 
-    void "test gradle #feature with #language without security"(String feature, Language language) {
+    void "test #buildTool #feature with #language without security"(BuildTool buildTool, String feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, 'kapt', feature])
+        generateProject(language, buildTool, [Yaml.NAME, 'kapt', feature])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -80,9 +80,11 @@ class SwaggerUISpec extends CommandSpec {
         checkControllerFile(language)
 
         where:
-        [feature, language] << [
+        [buildTool, feature, language] << [
+                BuildTool.valuesGradle(),
                 [SwaggerUI.NAME],
-                Language.values()].combinations()
+                Language.values()
+        ].combinations()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -116,9 +118,9 @@ class SwaggerUISpec extends CommandSpec {
         }
     }
 
-    void "test gradle #feature with #language with security"(String feature, Language language, String securityFeature) {
+    void "test #buildTool #feature with #language with security"(BuildTool buildTool, String feature, Language language, String securityFeature) {
         when:
-        generateProject(language, BuildTool.GRADLE, [Yaml.NAME, 'kapt', feature, securityFeature])
+        generateProject(language, buildTool, [Yaml.NAME, 'kapt', feature, securityFeature])
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -131,7 +133,8 @@ class SwaggerUISpec extends CommandSpec {
         checkControllerFile(language)
 
         where:
-        [feature, language, securityFeature] << [
+        [buildTool, feature, language, securityFeature] << [
+                BuildTool.valuesGradle(),
                 [SwaggerUI.NAME],
                 Language.values(),
                 [Security.NAME]

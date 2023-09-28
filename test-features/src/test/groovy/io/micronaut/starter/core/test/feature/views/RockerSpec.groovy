@@ -6,7 +6,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class RockerSpec  extends CommandSpec {
 
@@ -16,7 +15,6 @@ class RockerSpec  extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven views-rocker with #language"(Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, ["views-rocker"])
@@ -29,16 +27,15 @@ class RockerSpec  extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
-    void "test gradle views-rocker with #language"(Language language) {
+    void "test #buildTool views-rocker with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["views-rocker"])
+        generateProject(language, buildTool, ["views-rocker"])
         BuildResult result = executeGradle("compileJava")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()]
     }
 }

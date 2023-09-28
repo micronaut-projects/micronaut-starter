@@ -195,7 +195,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
-    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
         new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

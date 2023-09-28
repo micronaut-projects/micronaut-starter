@@ -28,6 +28,7 @@ public final class MicronautDependencyUtils {
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
+    public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
@@ -147,6 +148,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder cracDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
+    }
+
+    @NonNull
+    public static Dependency.Builder coherenceDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_COHERENCE);
     }
 
     @NonNull

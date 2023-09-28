@@ -17,13 +17,11 @@ package io.micronaut.starter.feature.coherence;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
-
-import java.util.Map;
 
 /**
  * Coherence used to store HTTP sessions feature.
@@ -34,6 +32,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceSessionStore implements Feature {
 
+    public static final String NAME = "coherence-session";
     private final CoherenceFeature coherenceFeature;
 
     public CoherenceSessionStore(CoherenceFeature coherenceFeature) {
@@ -42,7 +41,7 @@ public class CoherenceSessionStore implements Feature {
 
     @Override
     public String getName() {
-        return "coherence-session";
+        return NAME;
     }
 
     @Override
@@ -74,14 +73,9 @@ public class CoherenceSessionStore implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map<String, Object> config = generatorContext.getConfiguration();
-        config.put("micronaut.session.http.coherence.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.session.http.coherence.enabled", true);
 
-        Dependency.Builder coherenceMicronaut = Dependency.builder()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-session")
-                .template();
-        generatorContext.addDependency(coherenceMicronaut.compile());
+        generatorContext.addDependency(MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-session").compile());
     }
 
     @Override

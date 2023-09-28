@@ -11,7 +11,7 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature coherence contains links to micronaut docs'() {
         when:
-        def output = generate(['coherence'])
+        def output = generate([CoherenceFeature.NAME])
         def readme = output["README.md"]
 
         then:
@@ -20,37 +20,27 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
         readme.contains("https://coherence.java.net/")
     }
 
-    void 'test gradle.properties contains coherence version'() {
-        when:
-        def output = generate(['coherence'])
-        def properties = output["gradle.properties"]
-
-        then:
-        properties
-        properties.contains("coherenceVersion=${CoherenceFeature.COHERENCE_VERSION}")
-    }
-
     @Unroll
     void 'test gradle coherence feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['coherence'])
+                .features([CoherenceFeature.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
         language << Language.values().toList()
     }
     @Unroll
-    void 'test maven coherence-data feature for language=#language'(Language language) {
+    void 'test maven coherence feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['coherence-data'])
+                .features([CoherenceFeature.NAME])
                 .render()
 
         then:
@@ -65,7 +55,6 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 ''')
