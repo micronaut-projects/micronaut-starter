@@ -31,7 +31,7 @@ public enum BuildTool {
     GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar", "Gradle (Kotlin)"),
     MAVEN("target", "pom.xml", "-*.jar", "Maven");
 
-    public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE;
+    public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE_KOTLIN;
 
     private final String jarDirectory;
     private final String fileName;
