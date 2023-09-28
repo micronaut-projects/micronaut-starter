@@ -121,7 +121,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     void 'test docker image is configured in build.gradle for #feature'(String feature) {
         when:
         def output = generate([feature])
-        def gradle = output['build.gradle']
+        def gradle = output['build.gradle.kts']
 
         then:
         gradle

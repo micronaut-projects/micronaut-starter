@@ -49,7 +49,7 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
     void 'test docker image is configured in build.gradle for #name'(String name) {
         when:
         def output = generate([name])
-        def gradle = output['build.gradle']
+        def gradle = output['build.gradle.kts']
 
         then:
         gradle
