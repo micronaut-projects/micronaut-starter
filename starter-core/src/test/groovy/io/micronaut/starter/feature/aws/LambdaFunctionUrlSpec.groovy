@@ -59,7 +59,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
             assert output['app/build.gradle']
             assert output['app/build.gradle'].contains('nativeLambda {')
             assert output['app/build.gradle'].contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
-        } else if (buildTool == BuildTool.GRADLE) {
+        } else if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert output['app/build.gradle.kts']
             assert output['app/build.gradle.kts'].contains('nativeLambda {')
             assert output['app/build.gradle.kts'].contains('lambdaRuntimeClassName.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
