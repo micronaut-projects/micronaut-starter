@@ -10,6 +10,7 @@ import io.micronaut.starter.build.dependencies.Dependency
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Options
 import spock.lang.Subject
 
 class MicronautHttpValidationSpec  extends ApplicationContextSpec {
@@ -57,4 +58,13 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
         where:
         buildTool << BuildTool.values()
     }
+
+    void "test micronaut-http-validation is applied by default for appType=#appType and buildTool=#buildTool"(ApplicationType appType, BuildTool buildTool) {
+        expect:
+        micronautHttpValidation.shouldApply(ApplicationType.DEFAULT, new Options().withBuildTool(buildTool), [] as Set)
+
+        where:
+        [appType, buildTool] << [ApplicationType.values(), BuildTool.values()].combinations()
+    }
+
 }
