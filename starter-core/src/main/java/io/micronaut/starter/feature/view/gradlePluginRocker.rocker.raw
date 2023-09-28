@@ -2,7 +2,7 @@
 
 rocker {
     configurations {
-        main {
+        create("main") {
             templateDir = file("@path")
             outputDir = file("src/generated/rocker")
         }

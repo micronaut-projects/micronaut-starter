@@ -10,6 +10,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -62,6 +63,6 @@ class JaxRsSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 }

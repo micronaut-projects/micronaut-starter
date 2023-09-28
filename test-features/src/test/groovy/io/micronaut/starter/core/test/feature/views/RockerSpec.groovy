@@ -4,6 +4,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -36,6 +37,6 @@ class RockerSpec  extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()]
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 }
