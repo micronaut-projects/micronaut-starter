@@ -24,7 +24,7 @@
         <dependency>
             <groupId>io.kotest</groupId>
             <artifactId>kotest-runner-junit5-jvm</artifactId>
-            <version>5.6.0</version>
+            <version>4.2.5</version>
         </dependency>
         <dependency>
             <groupId>io.kotest</groupId>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.14</version>
+            <version>5.4.10</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -135,17 +135,17 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.7.8</version>
+            <version>3.7.10</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-test-resources-plugin</artifactId>
-            <version>3.7.8</version>
+            <version>3.7.10</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-crac-plugin</artifactId>
-            <version>3.7.8</version>
+            <version>3.7.10</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
