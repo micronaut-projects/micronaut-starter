@@ -2,7 +2,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 plugins {
     id("io.micronaut.internal.starter.convention")
-    id("io.micronaut.application")
+    alias(templateLibs.plugins.micronaut.application)
 }
 
 dependencies {
