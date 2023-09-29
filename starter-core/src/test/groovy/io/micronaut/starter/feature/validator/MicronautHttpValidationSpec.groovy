@@ -25,7 +25,8 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
     void "micronaut-http-validation does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
         !micronautHttpValidation.supports(applicationType)
-
+        !micronautHttpValidation.shouldApply(applicationType, new Options(), [] as Set)
+        
         where:
         applicationType << (ApplicationType.values() - ApplicationType.DEFAULT)
     }
