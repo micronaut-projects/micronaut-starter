@@ -13,7 +13,7 @@ class SettingsExtensionsSpec  extends ApplicationContextSpec implements CommandO
     void "it is possible to provide extensions to settings.gradle"() {
         when:
         def output = generate(['google-app-engine-gradle'])
-        def settings = output["settings.gradle"]
+        def settings = output["settings.gradle.kts"]
 
         then:
         settings.contains('''\

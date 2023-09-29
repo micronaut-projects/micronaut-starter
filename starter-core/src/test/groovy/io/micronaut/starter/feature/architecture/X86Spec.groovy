@@ -39,10 +39,9 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         applicationType << ApplicationType.values()
     }
 
-
-    void 'x86 plus cdk feature sets lambda function architecture'() {
+    void 'x86 plus cdk feature sets lambda function architecture for #buildTool'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
         Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, X86.NAME])
 
@@ -57,5 +56,8 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.X86_64)/$)
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 }

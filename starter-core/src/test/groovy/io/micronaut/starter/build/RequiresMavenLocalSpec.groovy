@@ -25,7 +25,7 @@ class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFix
         template.contains("mavenLocal()")
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     void "Maven build contains mavenLocal() repository if the feature implements RequiresMavenLocal"() {

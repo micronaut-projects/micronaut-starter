@@ -18,9 +18,9 @@ package io.micronaut.starter.feature.coherence;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 /**
@@ -32,11 +32,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class CoherenceFeature implements Feature {
 
-    public static final String COHERENCE_VERSION = "21.06.2";
+    public static final String NAME = "coherence";
 
     @Override
     public String getName() {
-        return "coherence";
+        return NAME;
     }
 
     @Override
@@ -64,35 +64,10 @@ public class CoherenceFeature implements Feature {
         return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/";
     }
 
-    static String getCoherenceVersionPropertyName(BuildTool buildTool) {
-        if (buildTool.equals(BuildTool.MAVEN)) {
-            return "coherence.version";
-        } else {
-            return "coherenceVersion";
-        }
-    }
-
-    static String getCoherenceVersionProperty(BuildTool buildTool) {
-        return "${" + getCoherenceVersionPropertyName(buildTool) + "}";
-    }
-
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBuildProperties().put(
-                getCoherenceVersionPropertyName(generatorContext.getBuildTool()), COHERENCE_VERSION);
-
-        Dependency.Builder coherenceMicronaut = Dependency.builder()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence")
-                .template();
-        Dependency.Builder coherence = Dependency.builder()
-                .groupId("com.oracle.coherence.ce")
-                .artifactId("coherence")
-                .version(getCoherenceVersionProperty(generatorContext.getBuildTool()))
-                .template();
-
-        generatorContext.addDependency(coherence.compile());
-        generatorContext.addDependency(coherenceMicronaut.compile());
+        generatorContext.addDependency(MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence").compile());
+        generatorContext.addDependency(Dependency.builder().groupId("com.oracle.coherence.ce").artifactId("coherence").compile());
     }
 
     @Override

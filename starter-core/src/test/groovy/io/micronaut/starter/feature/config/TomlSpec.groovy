@@ -34,6 +34,6 @@ class TomlSpec extends BeanContextSpec implements CommandOutputFixture {
         output["src/main/resources/bootstrap.toml"] == "abc = 123\n"
         output["src/test/resources/application-test.toml"] == "abc = 456\n"
         output["src/main/resources/application-prod.toml"] == "abc = 789\n"
-        output["build.gradle"].contains('io.micronaut.toml:micronaut-toml')
+        output["build.gradle.kts"].contains('io.micronaut.toml:micronaut-toml')
     }
 }

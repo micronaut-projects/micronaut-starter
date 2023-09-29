@@ -10,6 +10,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -38,9 +39,9 @@ class MicrometerSpec extends CommandSpec {
         language << Language.values()
     }
 
-    void "test gradle micrometer-cloudwatch with #language"(Language language) {
+    void "test #buildTool micrometer-cloudwatch with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["micrometer-cloudwatch", MicrometerAnnotations.NAME, DataJdbc.NAME, MicronautValidationFeature.NAME])
+        generateProject(language, buildTool, ["micrometer-cloudwatch", MicrometerAnnotations.NAME, DataJdbc.NAME, MicronautValidationFeature.NAME])
 
         and:
         createTemplate(language)
@@ -52,7 +53,7 @@ class MicrometerSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 
     private void createTemplate(Language language) {

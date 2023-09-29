@@ -55,6 +55,6 @@ class GoogleCloudFunctionSpec extends Specification {
         map.contents.containsKey('src/main/java/test/Function.java')
         map.contents.containsKey('src/test/java/test/FunctionTest.java')
         map.contents['src/main/java/test/Function.java'].contains('StorageObjectData')
-        map.contents['build.gradle'].contains('io.micronaut.gcp:micronaut-gcp-function-cloudevents')
+        map.contents['build.gradle.kts'].contains('io.micronaut.gcp:micronaut-gcp-function-cloudevents')
     }
 }

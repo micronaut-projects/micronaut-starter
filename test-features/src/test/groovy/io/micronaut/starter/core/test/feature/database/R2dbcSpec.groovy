@@ -7,6 +7,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -40,24 +41,27 @@ class R2dbcSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
     }
 
-    void "test gradle r2dbc with #language"(Language language) {
+    void "test #buildTool r2dbc with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [R2dbc.NAME, MySQL.NAME])
+        generateProject(language, buildTool, [R2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 
-    void "test gradle data-r2dbc with TestContainers"() {
+    void "test #buildTool data-r2dbc with TestContainers"(BuildTool buildTool) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, [R2dbc.NAME, MySQL.NAME])
+        generateProject(Language.JAVA, buildTool, [R2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 }

@@ -46,7 +46,7 @@ Add the following GitHub secrets:
     void 'test docker image configured in build.gradle'() {
         when:
         def output = generate([GraalVMDockerRegistryWorkflow.NAME])
-        def gradle = output['build.gradle']
+        def gradle = output['build.gradle.kts']
 
         then:
         gradle

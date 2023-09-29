@@ -232,7 +232,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         testSrcDir << Language.testSrcDirs()
     }
 
-    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.GRADLE) {
+    private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
         new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
 }

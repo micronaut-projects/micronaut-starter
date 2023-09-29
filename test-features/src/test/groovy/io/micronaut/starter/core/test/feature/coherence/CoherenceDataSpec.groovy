@@ -1,12 +1,13 @@
 package io.micronaut.starter.core.test.feature.coherence
 
+import io.micronaut.starter.feature.coherence.CoherenceData
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class CoherenceDataSpec extends CommandSpec {
 
@@ -16,10 +17,9 @@ class CoherenceDataSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven coherence-data with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["coherence-data"])
+        generateProject(language, BuildTool.MAVEN, [CoherenceData.NAME])
         String output = executeMaven("compile")
 
         then:
@@ -29,16 +29,15 @@ class CoherenceDataSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @Unroll
-    void "test gradle coherence-data with #language"(Language language) {
+    void "test #buildTool coherence-data with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["coherence-data"])
+        generateProject(language, buildTool, [CoherenceData.NAME])
         BuildResult result = executeGradle("compileJava")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 }

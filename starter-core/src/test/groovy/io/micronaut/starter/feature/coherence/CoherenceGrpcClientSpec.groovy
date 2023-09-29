@@ -12,7 +12,7 @@ class CoherenceGrpcClientSpec extends BeanContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature coherence-grpc-client contains links to micronaut docs'() {
         when:
-        def output = generate(['coherence-grpc-client'])
+        def output = generate([CoherenceGrpcClient.NAME])
         def readme = output["README.md"]
 
         then:
@@ -23,7 +23,7 @@ class CoherenceGrpcClientSpec extends BeanContextSpec implements CommandOutputFi
 
     void 'test configuration with feature coherence-grpc-client'() {
         when:
-        Map<String, String> output = generate([Yaml.NAME, 'coherence-grpc-client'])
+        Map<String, String> output = generate([Yaml.NAME, CoherenceGrpcClient.NAME])
         String configuration = output['src/main/resources/application.yml']
 
         then:
@@ -38,14 +38,14 @@ coherence.session.default.type: grpc
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['coherence-grpc-client'])
+                .features([CoherenceGrpcClient.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-grpc-client")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence-java-client:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence-java-client")')
 
         where:
         language << Language.values().toList()
@@ -55,7 +55,7 @@ coherence.session.default.type: grpc
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['coherence-grpc-client'])
+                .features([CoherenceGrpcClient.NAME])
                 .render()
 
         then:
@@ -70,7 +70,6 @@ coherence.session.default.type: grpc
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -85,7 +84,6 @@ coherence.session.default.type: grpc
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence-java-client</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 """)

@@ -54,12 +54,12 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
                 .collect(Collectors.toList())
     }
 
-    void "test gradle workflow"() {
+    void "test #buildTool workflow"(BuildTool buildTool) {
         given:
         def project = NameUtils.parse("com.example.gradle-java-starter-test")
 
         when:
-        generateProject(project, Language.JAVA, BuildTool.GRADLE, [DockerRegistryWorkflow.NAME])
+        generateProject(project, Language.JAVA, buildTool, [DockerRegistryWorkflow.NAME])
         pushToGitHub(project, secrets)
         workflowPassed(project, 3*60)
 
@@ -68,6 +68,9 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
 
         cleanup:
         cleanupGitHubRepository(project)
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -87,12 +90,12 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
     }
 
-    void "test graalvm gradle workflow"() {
+    void "test graalvm #buildTool workflow"(BuildTool buildTool) {
         given:
         def project = NameUtils.parse("com.example.gradle-graalvm-starter-test")
 
         when:
-        generateProject(project, Language.JAVA, BuildTool.GRADLE, [GraalVMDockerRegistryWorkflow.NAME])
+        generateProject(project, Language.JAVA, buildTool, [GraalVMDockerRegistryWorkflow.NAME])
         pushToGitHub(project, secrets)
         workflowPassed(project, 15*60)
 
@@ -101,6 +104,9 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
 
         cleanup:
         cleanupGitHubRepository(project)
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })

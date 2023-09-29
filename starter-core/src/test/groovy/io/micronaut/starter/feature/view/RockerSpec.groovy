@@ -6,7 +6,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -21,10 +20,9 @@ class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         readme.contains("https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker")
     }
 
-    @Unroll
-    void 'test gradle views-rocker feature for language=#language'() {
+    void 'test #buildTool views-rocker feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['views-rocker'])
                 .render()
@@ -34,7 +32,7 @@ class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         template.contains('''\
 rocker {
     configurations {
-        main {
+        create("main") {
             templateDir = file("src/main/resources")
             outputDir = file("src/generated/rocker")
         }
@@ -57,10 +55,9 @@ rocker {
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
     }
 
-    @Unroll
     void 'test maven views-rocker feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

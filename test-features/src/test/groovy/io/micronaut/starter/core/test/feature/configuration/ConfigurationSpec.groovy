@@ -17,9 +17,9 @@ class ConfigurationSpec extends CommandSpec {
         return "configuration"
     }
 
-    def 'test configuration format #format'(String format) {
+    def 'test #buildTool configuration format #format'(BuildTool buildTool, String format) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, format == Properties.NAME ? [] : [format])
+        generateProject(Language.JAVA, buildTool, format == Properties.NAME ? [] : [format])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write('src/test/java/ConfigTest.java', new StringTemplate('src/test/java/ConfigTest.java', '''
 import io.micronaut.context.ApplicationContext;
@@ -42,6 +42,6 @@ public class ConfigTest {
         output?.contains("BUILD SUCCESS")
 
         where:
-        format << [Toml.NAME, Yaml.NAME, Properties.NAME]
+        [buildTool, format] << [BuildTool.valuesGradle(), [Toml.NAME, Yaml.NAME, Properties.NAME]].combinations()
     }
 }

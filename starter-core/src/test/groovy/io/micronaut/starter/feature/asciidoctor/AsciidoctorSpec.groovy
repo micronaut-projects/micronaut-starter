@@ -5,20 +5,19 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class AsciidoctorSpec extends ApplicationContextSpec {
 
-    @Unroll
-    void 'test gradle asciidoctor feature for language=#language'() {
+    void 'test #buildTool asciidoctor feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['asciidoctor'])
                 .render()
+        def scriptApplication = buildTool == BuildTool.GRADLE ? 'apply from: "gradle/asciidoc.gradle"' : "apply(from=\"gradle/asciidoc.gradle\")"
 
         then:
-        template.contains("apply from: \"gradle/asciidoc.gradle\"")
+        template.contains(scriptApplication)
 
         when:
         String pluginId = 'org.asciidoctor.jvm.convert'
@@ -35,10 +34,9 @@ class AsciidoctorSpec extends ApplicationContextSpec {
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
     }
 
-    @Unroll
     void 'test maven asciidoctor feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

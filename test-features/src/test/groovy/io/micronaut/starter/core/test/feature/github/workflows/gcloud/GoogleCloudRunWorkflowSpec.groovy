@@ -22,7 +22,6 @@ import io.micronaut.starter.test.github.WorkflowSpec
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Requires
 import spock.lang.Shared
-import spock.lang.Unroll
 
 import java.util.stream.Collectors
 
@@ -63,7 +62,6 @@ class GoogleCloudRunWorkflowSpec extends WorkflowSpec {
         httpClient = beanContext.createBean(HttpClient.class).toBlocking()
     }
 
-    @Unroll
     void "test google cloud run graalvm #buildTool workflow"(BuildTool buildTool) {
         given:
         def project = NameUtils.parse("com.example.google-cloud-run-${buildTool.name.toLowerCase()}-graalvm-test")
@@ -81,10 +79,9 @@ class GoogleCloudRunWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
 
         where:
-        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
+        buildTool << BuildToolCombinations.buildTools
     }
 
-    @Unroll
     void "test google cloud run #buildTool workflow"(BuildTool buildTool) {
         given:
         def project = NameUtils.parse("com.example.google-cloud-run-${buildTool.name.toLowerCase()}-test")

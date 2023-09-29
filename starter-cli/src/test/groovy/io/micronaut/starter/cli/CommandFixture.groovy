@@ -20,7 +20,7 @@ trait CommandFixture {
     abstract File getDir()
 
     void generateProject(Language lang,
-                         BuildTool buildTool = BuildTool.GRADLE,
+                         BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT) {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
@@ -47,7 +47,7 @@ trait CommandFixture {
     }
 
     void generateGrpcProject(Language lang,
-                             BuildTool buildTool = BuildTool.GRADLE,
+                             BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                              List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.GRPC,
                 NameUtils.parse("example.micronaut.foo"),

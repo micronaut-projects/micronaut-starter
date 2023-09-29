@@ -41,7 +41,7 @@ class GitHubCreateServiceTest extends Specification{
         gitHubCreateService.generateAppLocally(context, path)
 
         then:
-        Files.exists(Paths.get(path.toString(), "build.gradle"))
+        Files.exists(Paths.get(path.toString(), "build.gradle.kts"))
 
         cleanup:
         path.toFile().deleteDir()

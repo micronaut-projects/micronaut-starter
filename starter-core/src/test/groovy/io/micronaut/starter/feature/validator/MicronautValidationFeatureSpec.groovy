@@ -34,7 +34,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
     void 'jakarta.validation:jakarta.validation-api for gradle should not include version'() {
         when:
         Map<String, String> output = generate(['validation'])
-        String build = output["build.gradle"]
+        String build = output["build.gradle.kts"]
 
         then:
         build

@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.coherence;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -32,6 +32,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class CoherenceData implements Feature {
 
+    public static final String NAME = "coherence-data";
     private final CoherenceFeature coherenceFeature;
 
     public CoherenceData(CoherenceFeature coherenceFeature) {
@@ -40,7 +41,7 @@ public class CoherenceData implements Feature {
 
     @Override
     public String getName() {
-        return "coherence-data";
+        return NAME;
     }
 
     @Override
@@ -72,11 +73,7 @@ public class CoherenceData implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder coherenceMicronaut = Dependency.builder()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-data")
-                .template();
-        generatorContext.addDependency(coherenceMicronaut.compile());
+        generatorContext.addDependency(MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-data").compile());
     }
 
     @Override
