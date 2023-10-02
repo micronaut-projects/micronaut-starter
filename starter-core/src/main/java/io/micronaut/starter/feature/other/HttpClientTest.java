@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntim
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.validator.MicronautHttpValidation;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -33,9 +34,15 @@ import static io.micronaut.starter.feature.other.HttpClient.ARTIFACT_ID_MICRONAU
 
 @Singleton
 public class HttpClientTest implements DefaultFeature {
+
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST = MicronautDependencyUtils.coreDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
             .test()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY = MicronautDependencyUtils.coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
+            .compileOnly()
             .build();
 
     @Override
@@ -64,6 +71,9 @@ public class HttpClientTest implements DefaultFeature {
             generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
         } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
+            if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
+                generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);
+            }
         }
     }
 }

@@ -6,7 +6,6 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 class KubernetesClientSpec extends CommandSpec {
 
@@ -16,7 +15,6 @@ class KubernetesClientSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
-    @Unroll
     void "test maven #feature with #language"(String feature, Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [feature])
@@ -28,10 +26,9 @@ class KubernetesClientSpec extends CommandSpec {
         where:
         [feature, language] << [
                 ["kubernetes-client", "kubernetes-reactor-client", "kubernetes-rxjava2-client"],
-                Language.values()].combinations().findAll { it[1] != Language.GROOVY }
+                Language.values()].combinations()
     }
 
-    @Unroll
     void "test gradle #feature with #language"(String feature, Language language) {
         when:
         generateProject(language, BuildTool.GRADLE, [feature])

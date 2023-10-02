@@ -31,7 +31,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle()).findAll { it[1] != Language.GROOVY }
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
     void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
@@ -60,6 +60,6 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 .stream()
                 .filter(it -> !(
                 it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)
-                )).findAll { it[0] != Language.GROOVY }
+                ))
     }
 }
