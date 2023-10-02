@@ -1,4 +1,5 @@
 import io.micronaut.internal.starter.tasks.GradlePropertiesNextSnapshot
+import io.micronaut.internal.starter.tasks.PropertiesNotSnapshot
 
 plugins {
     id "io.micronaut.internal.starter.aggregator"
@@ -14,4 +15,15 @@ tasks.register("micronautCoreNextSnapshot", GradlePropertiesNextSnapshot) {
 
 tasks.register("micronautPlatformNextSnapshot", GradlePropertiesNextSnapshot) {
     propertyName = 'micronautVersion'
+}
+
+tasks.register("micronautCoreNotSnapshot", PropertiesNotSnapshot) {
+    propertyName = 'micronautCoreVersion'
+}
+
+tasks.register("micronautPlatformNotSnapshot", PropertiesNotSnapshot) {
+    propertyName = 'micronautVersion'
+}
+tasks.register("projectVersionNotSnapshot", PropertiesNotSnapshot) {
+    propertyName = 'projectVersion'
 }
