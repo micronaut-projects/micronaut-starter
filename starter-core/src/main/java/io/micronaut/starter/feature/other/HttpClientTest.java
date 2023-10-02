@@ -71,7 +71,7 @@ public class HttpClientTest implements DefaultFeature {
             generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
         } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
-            if (generatorContext.hasFeature(MicronautHttpValidation.class)) {
+            if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
                 generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);
             }
         }
