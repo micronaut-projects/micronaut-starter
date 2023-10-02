@@ -23,7 +23,7 @@ dependencies {
     testImplementation("com.google.cloud.functions:functions-framework-api")
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testRuntimeOnly("io.micronaut.serde:micronaut-serde-jackson")
-    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.3.0'
+    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.3.1'
 
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
