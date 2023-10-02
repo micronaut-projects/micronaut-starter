@@ -32,7 +32,7 @@ import java.util.Set;
 
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
-
+    public static final boolean DEFAULT_COLORING = true;
     private static final boolean USE_JANSI = false;
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
@@ -70,7 +70,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     protected void addConfig(GeneratorContext generatorContext) {
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml",
-                logback.template(useJansi(generatorContext))));
+                logback.template(useJansi(generatorContext), DEFAULT_COLORING)));
     }
 
     protected boolean useJansi(@NonNull GeneratorContext generatorContext) {
