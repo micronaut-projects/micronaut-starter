@@ -41,7 +41,7 @@ class CreateControllerSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations().findAll { it[0] != Language.GROOVY }
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
     }
 
     @Override

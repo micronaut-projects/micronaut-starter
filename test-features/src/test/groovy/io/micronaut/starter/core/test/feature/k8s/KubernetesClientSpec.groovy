@@ -28,7 +28,7 @@ class KubernetesClientSpec extends CommandSpec {
         where:
         [feature, language] << [
                 ["kubernetes-client", "kubernetes-reactor-client", "kubernetes-rxjava2-client"],
-                Language.values()].combinations().findAll { it[1] != Language.GROOVY }
+                Language.values()].combinations()
     }
 
     @Unroll
