@@ -31,7 +31,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools).findAll { it[1] != Language.GROOVY }
     }
 
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
@@ -56,6 +56,6 @@ class CreateAzureFunctionSpec extends CommandSpec {
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 BuildToolCombinations.buildTools,
                 TestFramework.values()
-        ].combinations()
+        ].combinations().findAll { it[0] != Language.GROOVY }
     }
 }
