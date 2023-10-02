@@ -1,4 +1,4 @@
-@args (boolean jansi)
+@args (boolean jansi, boolean coloring)
 
 <configuration>
 
@@ -9,7 +9,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-@if(jansi) {
+@if(coloring) {
             <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
 } else {
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
