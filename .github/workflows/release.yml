@@ -26,6 +26,12 @@ jobs:
           MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: projectVersion is not a snapshot
+        run: ./gradlew projectVersionNotSnapshot
+      - name: Micronaut Core is not a snapshot
+        run: ./gradlew micronautCoreNotSnapshot
+      - name: Micronaut Platform is not a snapshot
+        run: ./gradlew micronautPlatformNotSnapshot
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
         env:
