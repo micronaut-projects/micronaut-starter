@@ -23,7 +23,7 @@ dependencies {
     implementation("com.google.cloud.sql:postgres-socket-factory:1.11.1")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.flyway:micronaut-flyway")
-    implementation("org.apache.poi:poi-ooxml:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.4")
     runtimeOnly("org.yaml:snakeyaml")
     testCompileOnly("io.micronaut:micronaut-inject-groovy")
     testImplementation("io.micronaut:micronaut-http-client")
