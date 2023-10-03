@@ -35,12 +35,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Run Tests
         run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
         env:
