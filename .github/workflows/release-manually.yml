@@ -1,4 +1,4 @@
-name: Manual Release to GCR
+name: Manual Release to GCR # Commit micronautCoreVersion, micronautVersion (platform), and projectVersion manually to not snapshot versions. Then, run this workflow via the GitHub Actions UI.
 on: workflow_dispatch
 jobs:
   build:
