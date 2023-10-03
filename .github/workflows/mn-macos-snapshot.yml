@@ -8,8 +8,16 @@ on:
       - '[1-9]+.[0-9]+.x'
 jobs:
   build:
-    name: Builds OS X Native CLI
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [macos-latest-large, macos-latest]
+        include:
+          - os: macos-latest-large
+            name: aarch64
+          - os: macos-latest
+            name: amd64
+    name: Builds {{ matrix.name }} OS X Native CLI
+    runs-on: ${{ matrix.os }}
     steps:
       - name: "⬇ Checkout the repository"
         uses: actions/checkout@v4
@@ -36,13 +44,13 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p mn-darwin-amd64-snapshot/bin
-          mv ./starter-cli/build/native/nativeCompile/mn mn-darwin-amd64-snapshot/bin
-          cp ./LICENSE mn-darwin-amd64-snapshot/
-          zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
+          mkdir -p mn-darwin-{{ matrix.name }}-snapshot/bin
+          mv ./starter-cli/build/native/nativeCompile/mn mn-darwin-{{ matrix.name }}-snapshot/bin
+          cp ./LICENSE mn-darwin-{{ matrix.name }}-snapshot/
+          zip -r mn-darwin-{{ matrix.name }}-snapshot.zip ./mn-darwin-{{ matrix.name }}-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.0.x'
+        if: success() && github.event_name == 'push'
         uses: actions/upload-artifact@v3
         with:
-          name: mn-darwin-amd64-snapshot
-          path: mn-darwin-amd64-snapshot.zip
+          name: mn-darwin-{{ matrix.name }}-snapshot
+          path: mn-darwin-{{ matrix.name }}-snapshot.zip
