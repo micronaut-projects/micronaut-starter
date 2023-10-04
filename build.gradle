@@ -6,8 +6,8 @@ plugins {
     // https://github.com/bmuschko/gradle-docker-plugin/issues/1123
     // https://github.com/gradle/gradle/issues/17559
     id("com.bmuschko.docker-remote-api") version "9.0.1" apply false
-    id("io.micronaut.application") version(templateLibs.versions.micronaut.gradle.plugin.get()) apply false
-    id("io.micronaut.crac") version version(templateLibs.versions.micronaut.gradle.plugin.get()) apply false
+    id("io.micronaut.application") version(templateLibs.versions.micronaut.gradle.plugin) apply false
+    id("io.micronaut.crac") version(templateLibs.versions.micronaut.gradle.plugin) apply false
 }
 
 tasks.register("micronautCoreNextSnapshot", GradlePropertiesNextSnapshot) {
