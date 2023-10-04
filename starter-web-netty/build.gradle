@@ -1,7 +1,8 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
     id "com.github.johnrengelman.shadow"
-    alias(templateLibs.plugins.micronaut.application)
+    id "io.micronaut.crac"
+    id "io.micronaut.application"
 }
 
 ext.publish = false
@@ -14,6 +15,7 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut.gcp:micronaut-gcp-http-client"
     runtimeOnly "ch.qos.logback:logback-classic"
+    implementation "io.micronaut.crac:micronaut-crac"
 
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("io.micronaut.serde:micronaut-serde-jackson")

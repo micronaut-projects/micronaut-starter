@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.build.internal.common"
-    alias(templateLibs.plugins.micronaut.application)
+    id "io.micronaut.application"
 }
 
 repositories {

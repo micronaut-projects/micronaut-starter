@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
-    alias(templateLibs.plugins.micronaut.application)
+    id "io.micronaut.application"
 }
 
 micronaut {
