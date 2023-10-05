@@ -20,7 +20,7 @@ class OpenAPISpec extends Specification {
 
     void "test swagger-ui"() {
         when:
-        def response = server.getURI().resolve("/swagger-ui").toURL().text
+        def response = client.toBlocking().retrieve("/swagger-ui/index.html", String)
 
         List<String> matches = (response =~ /(?:src|href)=['"]([^'"]+)['"]/).collect { it[1] as String }
         String yml = (response =~ /['"]([^'"]+\.yml)['"]/)[0][1]
@@ -40,7 +40,7 @@ class OpenAPISpec extends Specification {
 
     void "test rapidoc"() {
         when:
-        def response = server.getURI().resolve("/rapidoc").toURL().text
+        def response = client.toBlocking().retrieve("/rapidoc/index.html", String)
 
         List<String> matches = (response =~ /(?:src|href)=['"]([^'"]+)['"]/).collect { it[1] as String }
         String yml = (response =~ /['"]([^'"]+\.yml)['"]/)[0][1]
