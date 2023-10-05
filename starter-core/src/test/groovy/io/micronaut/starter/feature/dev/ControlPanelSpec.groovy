@@ -8,24 +8,26 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.validator.MicronautHttpValidation
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Subject
 
 class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Subject
+    ControlPanel controlPanel = beanContext.getBean(ControlPanel)
 
     void 'test control-panel feature supports default application type'() {
-        given:
-        def feature = new ControlPanel()
 
         expect:
-        feature.supports(ApplicationType.DEFAULT)
+        controlPanel.supports(ApplicationType.DEFAULT)
 
         and:
-        !feature.supports(ApplicationType.FUNCTION)
-        !feature.supports(ApplicationType.CLI)
-        !feature.supports(ApplicationType.MESSAGING)
-        !feature.supports(ApplicationType.GRPC)
+        !controlPanel.supports(ApplicationType.FUNCTION)
+        !controlPanel.supports(ApplicationType.CLI)
+        !controlPanel.supports(ApplicationType.MESSAGING)
+        !controlPanel.supports(ApplicationType.GRPC)
     }
 
     void 'test readme.md with feature control-panel contains links to micronaut docs'() {
@@ -55,7 +57,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
     void 'test dependency added for control-panel and management feature'(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features([ControlPanel.NAME, "management"])
+                .features([ControlPanel.NAME])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -69,7 +71,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'test control-panel with management configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext([ControlPanel.NAME, "management"])
+        GeneratorContext commandContext = buildGeneratorContext([ControlPanel.NAME])
         def cfg = commandContext.getConfiguration(Environment.DEVELOPMENT)
 
         then:
