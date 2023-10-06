@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
@@ -35,6 +36,12 @@ import jakarta.inject.Singleton;
 public class ControlPanel implements Feature {
 
     public static final String NAME = "control-panel";
+
+    private final Management management;
+
+    public ControlPanel(Management management) {
+        this.management = management;
+    }
 
     @Override
     public String getName() {
@@ -75,16 +82,21 @@ public class ControlPanel implements Feature {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Management.class)) {
+            featureContext.addFeature(management);
+        }
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MicronautDependencyUtils.controlPanelDependency().artifactId("micronaut-control-panel-ui"));
         ApplicationConfiguration devConfig = generatorContext.getConfiguration(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
 
-        if (generatorContext.isFeaturePresent(Management.class)) {
-            generatorContext.addDependency(MicronautDependencyUtils.controlPanelDependency().artifactId("micronaut-control-panel-management"));
-            devConfig.put("endpoints.all.enabled", true);
-            devConfig.put("endpoints.all.sensitive", false);
-            devConfig.put("endpoints.health.details-visible", "ANONYMOUS");
-            devConfig.put("endpoints.loggers.write-sensitive", false);
-        }
+        generatorContext.addDependency(MicronautDependencyUtils.controlPanelDependency().artifactId("micronaut-control-panel-management"));
+        devConfig.put("endpoints.all.enabled", true);
+        devConfig.put("endpoints.all.sensitive", false);
+        devConfig.put("endpoints.health.details-visible", "ANONYMOUS");
+        devConfig.put("endpoints.loggers.write-sensitive", false);
     }
 }
