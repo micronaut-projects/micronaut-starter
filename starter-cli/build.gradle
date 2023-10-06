@@ -1,6 +1,6 @@
 plugins {
     id 'io.micronaut.internal.build.starter-cli-module'
-    alias(templateLibs.plugins.micronaut.application)
+    id "io.micronaut.application"
 }
 
 ext {
