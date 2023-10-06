@@ -20,7 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.micrometer.MicrometerFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -53,6 +53,13 @@ public class Cassandra implements Feature {
                 .groupId("io.micronaut.cassandra")
                 .artifactId("micronaut-cassandra")
                 .compile());
+
+        if (generatorContext.isFeaturePresent(MicrometerFeature.class)) {
+            generatorContext.getConfiguration().put("cassandra.default.advanced.metrics.factory.class", "MicrometerMetricsFactory");
+            generatorContext.getConfiguration().put("cassandra.default.advanced.metrics.factory.class", "MicrometerMetricsFactory");
+            generatorContext.getConfiguration().put("cassandra.default.advanced.metrics.session.enabled", "[connected-nodes, cql-requests, bytes-sent, bytes-received]");
+            generatorContext.getConfiguration().put("cassandra.default.advanced.metrics.node.enabled", "[cql-requests, bytes-sent, bytes-received]");
+        }
     }
 
     @Override
