@@ -14,7 +14,7 @@ dependencies {
     implementation "io.sdkman:gradle-sdkvendor-plugin:3.0.0"
     implementation "org.asciidoctor:asciidoctor-gradle-jvm:2.4.0"
     implementation "com.github.johnrengelman:shadow:8.1.1"
-    implementation "com.microsoft.azure:azure-functions-gradle-plugin:1.12.1"
+    implementation "com.microsoft.azure:azure-functions-gradle-plugin:1.13.0"
 }
 
 gradlePlugin {
