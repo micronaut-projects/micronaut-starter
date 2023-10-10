@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <title>Micronaut Launch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
     <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
@@ -45,13 +46,17 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#cdk"><strong>2</strong><span>AWS CDK</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#installation"><strong>3</strong><span>Installation</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#commands"><strong>4</strong><span>Available commands</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#starterImpls"><strong>5</strong><span>Micronaut Launch</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#commands"><strong>5</strong><span>Available commands</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#starterImpls"><strong>6</strong><span>Micronaut Launch</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#communityFeature"><strong>7</strong><span>Community Features</span></a></div>
                                 
                             </div>
                         </div>
@@ -84,43 +89,51 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-installation"><a href="#installation"><strong>2</strong><span>Installation</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-cdk"><a href="#cdk"><strong>2</strong><span>AWS CDK</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installSdkman"><a href="#installSdkman"><strong>2.1</strong><span>Install with SDKman</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-micronautFunctionFile"><a href="#micronautFunctionFile"><strong>2.1</strong><span>MicronautFunctionFile</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installHomebrew"><a href="#installHomebrew"><strong>2.2</strong><span>Install with Homebrew</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-micronautFunction"><a href="#micronautFunction"><strong>2.2</strong><span>MicronautFunction</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installMacports"><a href="#installMacports"><strong>2.3</strong><span>Install with MacPorts</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-installation"><a href="#installation"><strong>3</strong><span>Installation</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installChocolatey"><a href="#installChocolatey"><strong>2.4</strong><span>Install with Chocolatey</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installSdkman"><a href="#installSdkman"><strong>3.1</strong><span>Install with SDKman</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installWindows"><a href="#installWindows"><strong>2.5</strong><span>Install through Binary on Windows</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installHomebrew"><a href="#installHomebrew"><strong>3.2</strong><span>Install with Homebrew</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-installFromSource"><a href="#installFromSource"><strong>2.6</strong><span>Build &amp; Install from Source</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installMacports"><a href="#installMacports"><strong>3.3</strong><span>Install with MacPorts</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installChocolatey"><a href="#installChocolatey"><strong>3.4</strong><span>Install with Chocolatey</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-commands"><a href="#commands"><strong>4</strong><span>Available commands</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installWindows"><a href="#installWindows"><strong>3.5</strong><span>Install through Binary on Windows</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-starterImpls"><a href="#starterImpls"><strong>5</strong><span>Micronaut Launch</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installFromSource"><a href="#installFromSource"><strong>3.6</strong><span>Build &amp; Install from Source</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCLI"><a href="#starterCLI"><strong>5.1</strong><span>CLI Application</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterApi"><a href="#starterApi"><strong>5.2</strong><span>OpenAPI Specification</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-commands"><a href="#commands"><strong>5</strong><span>Available commands</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterNetty"><a href="#starterNetty"><strong>5.3</strong><span>Web API Application</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-starterImpls"><a href="#starterImpls"><strong>6</strong><span>Micronaut Launch</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterUI"><a href="#starterUI"><strong>5.4</strong><span>Micronaut Launch React UI</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCLI"><a href="#starterCLI"><strong>6.1</strong><span>CLI Application</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterServlet"><a href="#starterServlet"><strong>5.5</strong><span>WAR Deployment</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterApi"><a href="#starterApi"><strong>6.2</strong><span>OpenAPI Specification</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudRun"><a href="#starterCloudRun"><strong>5.6</strong><span>Google Cloud Run</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterNetty"><a href="#starterNetty"><strong>6.3</strong><span>Web API Application</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudFunction"><a href="#starterCloudFunction"><strong>5.7</strong><span>Google Cloud Function</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterUI"><a href="#starterUI"><strong>6.4</strong><span>Micronaut Launch React UI</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterLambda"><a href="#starterLambda"><strong>5.8</strong><span>AWS Lambda</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterServlet"><a href="#starterServlet"><strong>6.5</strong><span>WAR Deployment</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterAzure"><a href="#starterAzure"><strong>5.9</strong><span>Microsoft Azure</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudRun"><a href="#starterCloudRun"><strong>6.6</strong><span>Google Cloud Run</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudFunction"><a href="#starterCloudFunction"><strong>6.7</strong><span>Google Cloud Function</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterLambda"><a href="#starterLambda"><strong>6.8</strong><span>AWS Lambda</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterAzure"><a href="#starterAzure"><strong>6.9</strong><span>Microsoft Azure</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-communityFeature"><a href="#communityFeature"><strong>7</strong><span>Community Features</span></a></div>
         
         </div>
     </div>
@@ -130,13 +143,13 @@
         <h1>Micronaut Launch</h1>
         <p></p>
         <p>Generates Micronaut applications</p>
-        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/index.html'>SNAPSHOT</option><option value='https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html'>LATEST</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.3/guide/index.html'>4.1.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.2/guide/index.html'>4.1.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.1/guide/index.html'>4.1.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.0/guide/index.html'>4.1.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.6/guide/index.html'>4.0.6</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.5/guide/index.html'>4.0.5</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.4/guide/index.html'>4.0.4</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.3/guide/index.html'>4.0.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.2/guide/index.html'>4.0.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.1/guide/index.html'>4.0.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0/guide/index.html'>4.0.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-RC1/guide/index.html'>4.0.0-RC1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M5/guide/index.html'>4.0.0-M5</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M4/guide/index.html'>4.0.0-M4</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M3/guide/index.html'>4.0.0-M3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M2/guide/index.html'>4.0.0-M2</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.10.1/guide/index.html'>3.10.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.10.0/guide/index.html'>3.10.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.6/guide/index.html'>3.9.6</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.5/guide/index.html'>3.9.5</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.4/guide/index.html'>3.9.4</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.3/guide/index.html'>3.9.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.2/guide/index.html'>3.9.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.1/guide/index.html'>3.9.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.0/guide/index.html'>3.9.0</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-starter/3.8.11/guide/index.html'>3.8.11</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.10/guide/index.html'>3.8.10</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.9/guide/index.html'>3.8.9</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.8/guide/index.html'>3.8.8</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.7/guide/index.html'>3.8.7</option></select> </p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/index.html'>SNAPSHOT</option><option value='https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html'>LATEST</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-starter/4.1.4/guide/index.html'>4.1.4</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.3/guide/index.html'>4.1.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.2/guide/index.html'>4.1.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.1/guide/index.html'>4.1.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.1.0/guide/index.html'>4.1.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.6/guide/index.html'>4.0.6</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.5/guide/index.html'>4.0.5</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.4/guide/index.html'>4.0.4</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.3/guide/index.html'>4.0.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.2/guide/index.html'>4.0.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.1/guide/index.html'>4.0.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0/guide/index.html'>4.0.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-RC1/guide/index.html'>4.0.0-RC1</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M5/guide/index.html'>4.0.0-M5</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M4/guide/index.html'>4.0.0-M4</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M3/guide/index.html'>4.0.0-M3</option><option value='https://micronaut-projects.github.io/micronaut-starter/4.0.0-M2/guide/index.html'>4.0.0-M2</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.10.1/guide/index.html'>3.10.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.10.0/guide/index.html'>3.10.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.6/guide/index.html'>3.9.6</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.5/guide/index.html'>3.9.5</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.4/guide/index.html'>3.9.4</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.3/guide/index.html'>3.9.3</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.2/guide/index.html'>3.9.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.1/guide/index.html'>3.9.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.9.0/guide/index.html'>3.9.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.11/guide/index.html'>3.8.11</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.10/guide/index.html'>3.8.10</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.9/guide/index.html'>3.8.9</option><option value='https://micronaut-projects.github.io/micronaut-starter/3.8.8/guide/index.html'>3.8.8</option></select> </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -146,10 +159,100 @@
 <p>This project implements a project generator for Micronaut as is both a Command Line (CLI) application and an API that can be run as a HTTP server, deployed to a Servlet container or executed on a Serverless platform (Google Cloud Run, Google Cloud Function, AWS Lambda or Azure Function).</p>
 </div>
 
-<h1 id="installation"><a class="anchor" href="#installation"></a>2 Installation</h1>
+<h1 id="cdk"><a class="anchor" href="#cdk"></a>2 AWS CDK</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/cdk.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut CDK modules simplify the creation of Lambda functions with <a href="https://aws.amazon.com/cdk/">Amazon Cloud Development Kit (CDK)</a>.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-aws-cdk")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.starter&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-starter-aws-cdk&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+
+<h2 id="micronautFunctionFile"><a class="anchor" href="#micronautFunctionFile"></a>2.1 MicronautFunctionFile</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/cdk/micronautFunctionFile.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><a href="../api/io/micronaut/aws/cdk/function/MicronautFunctionFile.html">MicronautFunctionFile</a> has a fluid API to ease generating the file name of the asset.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">MicronautFunctionFile.builder()
+        .buildTool(BuildTool.GRADLE)
+        .archiveBaseName("app")
+        .graalVMNative()
+        .version("0.1")
+        .build();</code></pre>
+</div>
+</div>
+
+<h2 id="micronautFunction"><a class="anchor" href="#micronautFunction"></a>2.2 MicronautFunction</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/cdk/micronautFunction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p><a href="../api/io/micronaut/aws/cdk/function/MicronautFunction.html">MicronautFunction</a> eases the selection of the correct environment and sets the handler automatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">boolean graalVMNative = false;
+Function appFunction = MicronautFunction.create(ApplicationType.DEFAULT, graalVMNative, this, id)
+        .architecture(Architecture.X86_64)
+        .timeout(Duration.seconds(10))
+        .memorySize(512)
+        .tracing(Tracing.ACTIVE)
+        .code(Code.fromAsset("../app/build/libs/" + MicronautFunctionFile.builder()
+                .buildTool(BuildTool.MAVEN)
+                .archiveBaseName("app")
+                .version("0.1")
+                .build()))
+        .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you use <code>ApplicationType.FUNCTION</code> you have to provide your handler.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Function.Builder builder = MicronautFunction.create(ApplicationType.FUNCTION, false, this, id)
+        .handler("com.example.Handler");</code></pre>
+</div>
+</div>
+
+<h1 id="installation"><a class="anchor" href="#installation"></a>3 Installation</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -157,10 +260,10 @@
 
 
 
-<h2 id="installSdkman"><a class="anchor" href="#installSdkman"></a>2.1 Install with SDKman</h2>
+<h2 id="installSdkman"><a class="anchor" href="#installSdkman"></a>3.1 Install with SDKman</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installSdkman.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installSdkman.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -209,10 +312,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installHomebrew"><a class="anchor" href="#installHomebrew"></a>2.2 Install with Homebrew</h2>
+<h2 id="installHomebrew"><a class="anchor" href="#installHomebrew"></a>3.2 Install with Homebrew</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installHomebrew.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installHomebrew.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -259,10 +362,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installMacports"><a class="anchor" href="#installMacports"></a>2.3 Install with MacPorts</h2>
+<h2 id="installMacports"><a class="anchor" href="#installMacports"></a>3.3 Install with MacPorts</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installMacports.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installMacports.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -299,10 +402,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installChocolatey"><a class="anchor" href="#installChocolatey"></a>2.4 Install with Chocolatey</h2>
+<h2 id="installChocolatey"><a class="anchor" href="#installChocolatey"></a>3.4 Install with Chocolatey</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installChocolatey.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installChocolatey.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -331,10 +434,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installWindows"><a class="anchor" href="#installWindows"></a>2.5 Install through Binary on Windows</h2>
+<h2 id="installWindows"><a class="anchor" href="#installWindows"></a>3.5 Install through Binary on Windows</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installWindows.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installWindows.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -368,10 +471,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h2 id="installFromSource"><a class="anchor" href="#installFromSource"></a>2.6 Build & Install from Source</h2>
+<h2 id="installFromSource"><a class="anchor" href="#installFromSource"></a>3.6 Build & Install from Source</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/installation/installFromSource.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/installation/installFromSource.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -448,10 +551,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>3 Release History</h1>
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -468,10 +571,10 @@ mn&gt;</code></pre>
 </div>
 </div>
 
-<h1 id="commands"><a class="anchor" href="#commands"></a>4 Available commands</h1>
+<h1 id="commands"><a class="anchor" href="#commands"></a>5 Available commands</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/commands.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/commands.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -605,7 +708,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-ucp, jdbc-tomcat, data-r2dbc, views-handlebars, amazon-api-gateway, views-freemarker, gcp-cloud-trace, security-ldap, jooq, asciidoctor, gitlab-workflow-ci, micrometer-appoptics, rxjava3, oracle-function, serialization-jsonp, email-amazon-ses, sql-jdbi, views-thymeleaf, azure-function, dekorate-kubernetes, reactor, aws-lambda-custom-runtime, object-storage-gcp, jms-core, email-javamail, tracing-opentelemetry-jaeger, graalvm, oracle-cloud-vault, micrometer-signalfx, microstream-cache, kubernetes-client, kubernetes-rxjava2-client, github-workflow-oracle-cloud-functions, jib, mqttv3, security-jwt, neo4j-gorm, http-client, security, github-workflow-google-cloud-run-graalvm, h2, micrometer-stackdriver, aws-codebuild-workflow-ci, data-jpa, junit-params, data-jdbc, amazon-api-gateway-http, dekorate-halkyon, config-kubernetes, micrometer-influx, kubernetes-reactor-client, mongo-gorm, openrewrite, tracing-zipkin, management, dekorate-prometheus, jasync-sql, dekorate-jaeger, redis-lettuce, slf4j-simple, rxjava2, x86, mongo-reactive, github-workflow-google-cloud-run, graphql, micrometer-statsd, github-workflow-docker-registry, micrometer-prometheus, mysql, spring-boot, vertx-pg-client, dekorate-openshift, assertj, data-mongodb-reactive, rss, spring-data-jdbc, cache-coherence, problem-json, gcp-secrets-manager, coherence-distributed-configuration, undertow-server, micrometer-azure-monitor, discovery-eureka, springloaded, email-postmark, micrometer-jmx, jackson-databind, dynamodb, micrometer-elastic, cache-infinispan, micrometer-cloudwatch, micrometer-ganglia, agorapulse-gru-http, openapi, neo4j-bolt, jms-activemq-classic, oracle-cloud-sdk, coherence, serialization-bson, camunda-platform7, email-sendgrid, discovery-consul, agorapulse-micronaut-worker, camunda-zeebe, views-velocity, camunda-external-worker, tracing-opentelemetry-xray, tomcat-server, postgres, github-workflow-azure-container-instance-graalvm, nats, gradle-enterprise, hibernate-jpa, rabbitmq, awaitility, netflix-archaius, oci-devops-build-ci, kubernetes, mongo-sync, data-hibernate-reactive, tracing-jaeger, data-mongodb, jms-oracle-aq, log4j2, micrometer-humio, aws-lambda, hibernate-reactive-jpa, google-cloud-workflow-ci, r2dbc, jrebel, tracing-opentelemetry-gcp, object-storage-azure, micrometer-new-relic, github-workflow-graal-docker-registry, object-storage-oracle-cloud, hibernate-gorm, jms-sqs, liquibase, oracle-cloud-atp, logback, object-storage-aws, jax-rs, netty-server, microstream, azure-cosmos-db, micrometer-wavefront, micrometer-dynatrace, dekorate-servicecatalog, coherence-session, jms-activemq-artemis, mockito, vertx-mysql-client, kotlin-extension-functions, github-workflow-oracle-cloud-functions-graalvm, jetty-server, hamcrest, tracing-opentelemetry-exporter-logging, coherence-data, jmx, azure-key-vault, dekorate-knative, micrometer-oracle-cloud, mqtt, lombok, amazon-cognito, arm, aws-v2-sdk, microstream-rest, email-mailjet, coherence-grpc-client, testcontainers, views-jte, localstack, micrometer-atlas, knative, tracing-opentelemetry-exporter-otlp, aws-alexa, micrometer-datadog, micronaut-test-rest-assured, oracle, swagger-ui, views-rocker, rxjava1, hibernate-validator, elasticsearch, micrometer-kairos, mariadb, acme, test-resources, cache-caffeine, github-workflow-azure-container-instance, aws-secrets-manager, netflix-hystrix, flyway, rss-itunes-podcast, kubernetes-informer, agorapulse-micronaut-permissions, spring-data-jpa, email-template, http-session, netflix-ribbon, spring, google-cloud-function, tracing-opentelemetry-zipkin, micrometer-graphite, kafka, views-pebble, cache-ehcache, cassandra, cache-hazelcast, config-consul, multi-tenancy, multi-tenancy-gorm, views-soy, discovery-kubernetes, jackson-xml, micrometer-annotation, github-workflow-ci, serialization-jackson, aws-parameter-store, sqlserver, kafka-streams, micronaut-aot, gcp-pubsub, agorapulse-micronaut-console, crac, spring-web, security-oauth2, security-session, aws-cdk, ktor, shade, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, data-r2dbc, swagger-ui, data-mongodb-reactive, oracle-cloud-atp, discovery-client, awaitility, micronaut-http-validation, kafka-streams, jib, oci-devops-build-ci, retry, config-consul, views-thymeleaf, dekorate-kubernetes, nats, rxjava2-http-client, testcontainers, hibernate-jpa, vertx-mysql-client, asciidoctor, email-sendgrid, object-storage-oracle-cloud, micrometer-stackdriver, jooq, github-workflow-google-cloud-run-graalvm, management, neo4j-bolt, coherence-distributed-configuration, mockito, h2, github-workflow-azure-container-instance-graalvm, tracing-opentelemetry-gcp, mariadb, github-workflow-graal-docker-registry, netty-server, jetty-server, data-jdbc, aws-parameter-store, crac, views-soy, spring-data-jdbc, views-freemarker, multi-tenancy-gorm, annotation-api, rxjava1, mongo-gorm, sql-jdbi, tracing-opentelemetry-xray, mqtt, dekorate-openshift, arm, vertx-pg-client, openrewrite, micronaut-test-rest-assured, dekorate-knative, oracle-cloud-vault, kapt, tracing-opentelemetry-zipkin, discovery-consul, r2dbc, micronaut-aop, gcp-pubsub, micrometer-annotation, control-panel, hibernate-validator, localstack, x86, github-workflow-ci, security-ldap, cache-ehcache, coherence, jms-oracle-aq, object-storage-gcp, problem-json, mongo-sync, security-jwt, data-jpa, sqlserver, discovery-eureka, mqtt-hivemq, kubernetes-client, ksp, gcp-cloud-trace, hamcrest, http-client, micrometer-elastic, email-template, amazon-api-gateway, mongo-reactive, aws-v2-sdk, aws-lambda-custom-runtime, coherence-session, neo4j-gorm, log4j2, spring, oracle-cloud-sdk, oracle-function, gcp-secrets-manager, dekorate-servicecatalog, elasticsearch, micrometer-dynatrace, tracing-jaeger, azure-cosmos-db, google-cloud-function, gradle-enterprise, netflix-archaius, netflix-ribbon, jms-activemq-classic, knative, undertow-server, http-client-jdk, micrometer-prometheus, rxjava3-http-client, github-workflow-azure-container-instance, micrometer-signalfx, test-resources, micrometer-influx, spring-boot, github-workflow-google-cloud-run, spring-web, kubernetes-informer, micrometer-ganglia, oracle, github-workflow-oracle-cloud-functions-graalvm, views-jte, gitlab-workflow-ci, serialization-bson, liquibase, kafka, tomcat-server, micrometer-jmx, postgres, reactor-http-client, micrometer-graphite, acme, security, azure-key-vault, tracing-opentelemetry-exporter-otlp, micrometer-kairos, micrometer-cloudwatch, lombok, cache-coherence, microstream-rest, discovery-kubernetes, micrometer-atlas, views-rocker, coherence-grpc-client, github-workflow-oracle-cloud-functions, object-storage-local, micronaut-aot, email-javamail, rxjava3, jms-sqs, redis-lettuce, jms-core, micrometer-azure-monitor, azure-function, micrometer-wavefront, kubernetes-reactor-client, jax-rs, aws-alexa, hibernate-reactive-jpa, data-mongodb, email-postmark, mqttv3, email-amazon-ses, websocket, validation, jmx, aws-secrets-manager, jrebel, jasync-sql, http-session, coherence-data, spring-data-jpa, kubernetes-rxjava2-client, microstream-cache, config-kubernetes, serialization-jackson, kubernetes, github-workflow-docker-registry, cache-hazelcast, micrometer-oracle-cloud, slf4j-simple, serialization-jsonp, microstream, amazon-cognito, views-velocity, amazon-api-gateway-http, rss, jms-activemq-artemis, aws-codebuild-workflow-ci, object-storage-azure, views-handlebars, tracing-opentelemetry-jaeger, micrometer-humio, flyway, dekorate-jaeger, openapi, tracing-opentelemetry-exporter-logging, google-cloud-workflow-ci, dekorate-halkyon, object-storage-aws, jackson-databind, discovery-core, cache-caffeine, dynamodb, micrometer-datadog, aws-lambda, micrometer-new-relic, graphql, rss-itunes-podcast, cassandra, cache-infinispan, dekorate-prometheus, multi-tenancy, micrometer-appoptics, jackson-xml, data-azure-cosmos, junit-params, reactor, kotlin-extension-functions, micrometer-statsd, email-mailjet, netflix-hystrix, rabbitmq, graalvm, hibernate-gorm, logback, mysql, data-hibernate-reactive, views-pebble, rxjava2, aws-lambda-events-serde, assertj, tracing-zipkin, security-oauth2, security-session, aws-cdk, ktor, shade, config4k, properties, toml, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -617,7 +720,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
 <dd>
-<p>The JDK version the project should target</p>
+<p>The JDK version the project should target. Possible values: 17</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
@@ -692,7 +795,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-ucp, jdbc-tomcat, data-r2dbc, gcp-cloud-trace, security-ldap, jooq, asciidoctor, gitlab-workflow-ci, rxjava3, serialization-jsonp, email-amazon-ses, sql-jdbi, reactor, object-storage-gcp, jms-core, email-javamail, graalvm, microstream-cache, kubernetes-client, kubernetes-rxjava2-client, github-workflow-oracle-cloud-functions, jib, mqttv3, security-jwt, neo4j-gorm, http-client, security, github-workflow-google-cloud-run-graalvm, h2, aws-codebuild-workflow-ci, data-jpa, junit-params, data-jdbc, kubernetes-reactor-client, mongo-gorm, openrewrite, jasync-sql, redis-lettuce, slf4j-simple, rxjava2, x86, mongo-reactive, github-workflow-google-cloud-run, graphql, github-workflow-docker-registry, mysql, spring-boot, vertx-pg-client, assertj, data-mongodb-reactive, spring-data-jdbc, cache-coherence, problem-json, springloaded, email-postmark, jackson-databind, dynamodb, cache-infinispan, neo4j-bolt, jms-activemq-classic, oracle-cloud-sdk, coherence, serialization-bson, email-sendgrid, postgres, github-workflow-azure-container-instance-graalvm, nats, gradle-enterprise, hibernate-jpa, rabbitmq, awaitility, oci-devops-build-ci, mongo-sync, data-hibernate-reactive, data-mongodb, jms-oracle-aq, log4j2, hibernate-reactive-jpa, google-cloud-workflow-ci, r2dbc, jrebel, object-storage-azure, github-workflow-graal-docker-registry, object-storage-oracle-cloud, hibernate-gorm, jms-sqs, liquibase, oracle-cloud-atp, logback, object-storage-aws, microstream, azure-cosmos-db, coherence-session, jms-activemq-artemis, mockito, vertx-mysql-client, kotlin-extension-functions, github-workflow-oracle-cloud-functions-graalvm, hamcrest, coherence-data, mqtt, lombok, arm, aws-v2-sdk, microstream-rest, email-mailjet, coherence-grpc-client, testcontainers, localstack, micronaut-test-rest-assured, oracle, rxjava1, hibernate-validator, elasticsearch, mariadb, test-resources, cache-caffeine, github-workflow-azure-container-instance, netflix-hystrix, flyway, kubernetes-informer, agorapulse-micronaut-permissions, spring-data-jpa, email-template, http-session, netflix-ribbon, spring, kafka, cache-ehcache, cassandra, cache-hazelcast, multi-tenancy, multi-tenancy-gorm, jackson-xml, github-workflow-ci, serialization-jackson, sqlserver, kafka-streams, gcp-pubsub, crac, security-oauth2, security-session, shade, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, data-r2dbc, data-mongodb-reactive, oracle-cloud-atp, awaitility, kafka-streams, jib, oci-devops-build-ci, retry, nats, rxjava2-http-client, testcontainers, hibernate-jpa, vertx-mysql-client, asciidoctor, email-sendgrid, object-storage-oracle-cloud, jooq, github-workflow-google-cloud-run-graalvm, neo4j-bolt, mockito, h2, github-workflow-azure-container-instance-graalvm, mariadb, github-workflow-graal-docker-registry, data-jdbc, crac, spring-data-jdbc, multi-tenancy-gorm, annotation-api, rxjava1, mongo-gorm, sql-jdbi, mqtt, arm, vertx-pg-client, openrewrite, micronaut-test-rest-assured, kapt, r2dbc, micronaut-aop, gcp-pubsub, hibernate-validator, localstack, x86, github-workflow-ci, security-ldap, cache-ehcache, coherence, jms-oracle-aq, object-storage-gcp, problem-json, mongo-sync, security-jwt, data-jpa, sqlserver, mqtt-hivemq, kubernetes-client, ksp, gcp-cloud-trace, hamcrest, http-client, email-template, mongo-reactive, aws-v2-sdk, coherence-session, neo4j-gorm, log4j2, spring, oracle-cloud-sdk, elasticsearch, azure-cosmos-db, gradle-enterprise, netflix-ribbon, jms-activemq-classic, http-client-jdk, rxjava3-http-client, github-workflow-azure-container-instance, test-resources, spring-boot, github-workflow-google-cloud-run, kubernetes-informer, oracle, github-workflow-oracle-cloud-functions-graalvm, gitlab-workflow-ci, serialization-bson, liquibase, kafka, postgres, reactor-http-client, security, lombok, cache-coherence, microstream-rest, coherence-grpc-client, github-workflow-oracle-cloud-functions, object-storage-local, email-javamail, rxjava3, jms-sqs, redis-lettuce, jms-core, kubernetes-reactor-client, hibernate-reactive-jpa, data-mongodb, email-postmark, mqttv3, email-amazon-ses, websocket, validation, jrebel, jasync-sql, http-session, coherence-data, spring-data-jpa, kubernetes-rxjava2-client, microstream-cache, serialization-jackson, github-workflow-docker-registry, cache-hazelcast, slf4j-simple, serialization-jsonp, microstream, jms-activemq-artemis, aws-codebuild-workflow-ci, object-storage-azure, flyway, google-cloud-workflow-ci, object-storage-aws, jackson-databind, cache-caffeine, dynamodb, graphql, cassandra, cache-infinispan, multi-tenancy, jackson-xml, data-azure-cosmos, junit-params, reactor, kotlin-extension-functions, email-mailjet, netflix-hystrix, rabbitmq, graalvm, hibernate-gorm, logback, mysql, data-hibernate-reactive, rxjava2, aws-lambda-events-serde, assertj, security-oauth2, security-session, shade, config4k, properties, toml, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -704,7 +807,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
 <dd>
-<p>The JDK version the project should target</p>
+<p>The JDK version the project should target. Possible values: 17</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
@@ -779,7 +882,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-ucp, jdbc-tomcat, data-r2dbc, amazon-api-gateway, gcp-cloud-trace, security-ldap, jooq, asciidoctor, gitlab-workflow-ci, rxjava3, oracle-function, serialization-jsonp, email-amazon-ses, sql-jdbi, azure-function, reactor, aws-lambda-custom-runtime, object-storage-gcp, jms-core, email-javamail, tracing-opentelemetry-jaeger, graalvm, oracle-cloud-vault, aws-lambda-scheduled-event, microstream-cache, kubernetes-client, kubernetes-rxjava2-client, github-workflow-oracle-cloud-functions, jib, mqttv3, security-jwt, neo4j-gorm, http-client, security, github-workflow-google-cloud-run-graalvm, h2, aws-codebuild-workflow-ci, data-jpa, junit-params, data-jdbc, amazon-api-gateway-http, kubernetes-reactor-client, mongo-gorm, openrewrite, tracing-zipkin, jasync-sql, redis-lettuce, slf4j-simple, rxjava2, x86, mongo-reactive, github-workflow-google-cloud-run, graphql, github-workflow-docker-registry, mysql, spring-boot, vertx-pg-client, assertj, data-mongodb-reactive, spring-data-jdbc, cache-coherence, problem-json, gcp-secrets-manager, coherence-distributed-configuration, discovery-eureka, springloaded, aws-lambda-function-url, email-postmark, jackson-databind, dynamodb, cache-infinispan, neo4j-bolt, jms-activemq-classic, oracle-cloud-sdk, coherence, serialization-bson, email-sendgrid, discovery-consul, tracing-opentelemetry-xray, postgres, github-workflow-azure-container-instance-graalvm, nats, gradle-enterprise, hibernate-jpa, rabbitmq, awaitility, netflix-archaius, oci-devops-build-ci, mongo-sync, data-hibernate-reactive, tracing-jaeger, data-mongodb, jms-oracle-aq, log4j2, aws-lambda, hibernate-reactive-jpa, google-cloud-workflow-ci, r2dbc, jrebel, tracing-opentelemetry-gcp, object-storage-azure, github-workflow-graal-docker-registry, object-storage-oracle-cloud, hibernate-gorm, jms-sqs, liquibase, oracle-cloud-atp, logback, object-storage-aws, microstream, azure-cosmos-db, coherence-session, jms-activemq-artemis, mockito, vertx-mysql-client, kotlin-extension-functions, github-workflow-oracle-cloud-functions-graalvm, hamcrest, tracing-opentelemetry-exporter-logging, coherence-data, azure-key-vault, mqtt, lombok, arm, aws-v2-sdk, microstream-rest, email-mailjet, coherence-grpc-client, testcontainers, localstack, tracing-opentelemetry-exporter-otlp, aws-alexa, micronaut-test-rest-assured, oracle, rxjava1, hibernate-validator, elasticsearch, mariadb, test-resources, cache-caffeine, github-workflow-azure-container-instance, aws-secrets-manager, netflix-hystrix, flyway, kubernetes-informer, agorapulse-micronaut-permissions, spring-data-jpa, email-template, http-session, netflix-ribbon, spring, google-cloud-function, tracing-opentelemetry-zipkin, kafka, cache-ehcache, cassandra, cache-hazelcast, config-consul, multi-tenancy, multi-tenancy-gorm, discovery-kubernetes, jackson-xml, github-workflow-ci, serialization-jackson, aws-lambda-s3-event-notification, aws-parameter-store, sqlserver, kafka-streams, gcp-pubsub, security-oauth2, security-session, aws-cdk, shade, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, data-r2dbc, data-mongodb-reactive, oracle-cloud-atp, discovery-client, awaitility, kafka-streams, jib, oci-devops-build-ci, retry, config-consul, nats, rxjava2-http-client, testcontainers, hibernate-jpa, vertx-mysql-client, asciidoctor, email-sendgrid, object-storage-oracle-cloud, jooq, github-workflow-google-cloud-run-graalvm, neo4j-bolt, coherence-distributed-configuration, mockito, h2, github-workflow-azure-container-instance-graalvm, tracing-opentelemetry-gcp, mariadb, github-workflow-graal-docker-registry, data-jdbc, aws-parameter-store, spring-data-jdbc, multi-tenancy-gorm, annotation-api, rxjava1, mongo-gorm, sql-jdbi, tracing-opentelemetry-xray, mqtt, arm, vertx-pg-client, openrewrite, micronaut-test-rest-assured, oracle-cloud-vault, kapt, tracing-opentelemetry-zipkin, discovery-consul, r2dbc, micronaut-aop, gcp-pubsub, hibernate-validator, localstack, x86, github-workflow-ci, security-ldap, cache-ehcache, coherence, jms-oracle-aq, object-storage-gcp, problem-json, mongo-sync, security-jwt, data-jpa, sqlserver, discovery-eureka, mqtt-hivemq, kubernetes-client, ksp, gcp-cloud-trace, hamcrest, http-client, email-template, aws-lambda-s3-event-notification, amazon-api-gateway, mongo-reactive, aws-v2-sdk, aws-lambda-custom-runtime, coherence-session, neo4j-gorm, log4j2, spring, oracle-cloud-sdk, oracle-function, gcp-secrets-manager, elasticsearch, aws-lambda-scheduled-event, tracing-jaeger, azure-cosmos-db, google-cloud-function, gradle-enterprise, netflix-archaius, netflix-ribbon, jms-activemq-classic, http-client-jdk, rxjava3-http-client, github-workflow-azure-container-instance, test-resources, spring-boot, github-workflow-google-cloud-run, kubernetes-informer, oracle, github-workflow-oracle-cloud-functions-graalvm, gitlab-workflow-ci, serialization-bson, liquibase, kafka, postgres, reactor-http-client, security, aws-lambda-function-url, azure-key-vault, tracing-opentelemetry-exporter-otlp, lombok, cache-coherence, microstream-rest, discovery-kubernetes, coherence-grpc-client, github-workflow-oracle-cloud-functions, object-storage-local, email-javamail, rxjava3, jms-sqs, redis-lettuce, jms-core, azure-function, kubernetes-reactor-client, aws-alexa, hibernate-reactive-jpa, data-mongodb, email-postmark, mqttv3, email-amazon-ses, websocket, validation, aws-secrets-manager, jrebel, jasync-sql, http-session, coherence-data, spring-data-jpa, kubernetes-rxjava2-client, microstream-cache, serialization-jackson, github-workflow-docker-registry, cache-hazelcast, slf4j-simple, serialization-jsonp, google-cloud-function-cloudevents, microstream, amazon-api-gateway-http, jms-activemq-artemis, aws-codebuild-workflow-ci, object-storage-azure, tracing-opentelemetry-jaeger, flyway, tracing-opentelemetry-exporter-logging, google-cloud-workflow-ci, object-storage-aws, jackson-databind, discovery-core, cache-caffeine, dynamodb, aws-lambda, graphql, cassandra, cache-infinispan, multi-tenancy, jackson-xml, data-azure-cosmos, junit-params, reactor, kotlin-extension-functions, email-mailjet, netflix-hystrix, rabbitmq, graalvm, hibernate-gorm, logback, mysql, data-hibernate-reactive, rxjava2, aws-lambda-events-serde, assertj, tracing-zipkin, security-oauth2, security-session, aws-cdk, shade, config4k, properties, toml, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -791,7 +894,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
 <dd>
-<p>The JDK version the project should target</p>
+<p>The JDK version the project should target. Possible values: 17</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
@@ -866,7 +969,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-ucp, jdbc-tomcat, data-r2dbc, gcp-cloud-trace, security-ldap, jooq, asciidoctor, gitlab-workflow-ci, rxjava3, serialization-jsonp, email-amazon-ses, sql-jdbi, dekorate-kubernetes, reactor, object-storage-gcp, jms-core, email-javamail, tracing-opentelemetry-jaeger, graalvm, oracle-cloud-vault, microstream-cache, kubernetes-client, kubernetes-rxjava2-client, github-workflow-oracle-cloud-functions, jib, mqttv3, security-jwt, neo4j-gorm, http-client, security, github-workflow-google-cloud-run-graalvm, h2, aws-codebuild-workflow-ci, data-jpa, junit-params, data-jdbc, dekorate-halkyon, config-kubernetes, kubernetes-reactor-client, mongo-gorm, openrewrite, tracing-zipkin, dekorate-prometheus, jasync-sql, dekorate-jaeger, redis-lettuce, slf4j-simple, rxjava2, x86, mongo-reactive, github-workflow-google-cloud-run, graphql, github-workflow-docker-registry, mysql, spring-boot, vertx-pg-client, dekorate-openshift, assertj, data-mongodb-reactive, spring-data-jdbc, cache-coherence, problem-json, gcp-secrets-manager, coherence-distributed-configuration, discovery-eureka, springloaded, email-postmark, jackson-databind, dynamodb, cache-infinispan, neo4j-bolt, jms-activemq-classic, oracle-cloud-sdk, coherence, serialization-bson, email-sendgrid, discovery-consul, tracing-opentelemetry-xray, postgres, github-workflow-azure-container-instance-graalvm, nats, gradle-enterprise, hibernate-jpa, rabbitmq, awaitility, netflix-archaius, oci-devops-build-ci, kubernetes, mongo-sync, data-hibernate-reactive, tracing-jaeger, data-mongodb, jms-oracle-aq, log4j2, hibernate-reactive-jpa, google-cloud-workflow-ci, r2dbc, jrebel, tracing-opentelemetry-gcp, object-storage-azure, github-workflow-graal-docker-registry, object-storage-oracle-cloud, hibernate-gorm, jms-sqs, liquibase, oracle-cloud-atp, logback, object-storage-aws, microstream, azure-cosmos-db, dekorate-servicecatalog, coherence-session, jms-activemq-artemis, mockito, vertx-mysql-client, kotlin-extension-functions, github-workflow-oracle-cloud-functions-graalvm, hamcrest, tracing-opentelemetry-exporter-logging, coherence-data, azure-key-vault, dekorate-knative, mqtt, lombok, arm, aws-v2-sdk, microstream-rest, email-mailjet, coherence-grpc-client, testcontainers, localstack, knative, tracing-opentelemetry-exporter-otlp, micronaut-test-rest-assured, oracle, rxjava1, hibernate-validator, elasticsearch, mariadb, test-resources, cache-caffeine, github-workflow-azure-container-instance, aws-secrets-manager, netflix-hystrix, flyway, kubernetes-informer, agorapulse-micronaut-permissions, spring-data-jpa, email-template, http-session, netflix-ribbon, spring, tracing-opentelemetry-zipkin, kafka, cache-ehcache, cassandra, cache-hazelcast, config-consul, multi-tenancy, multi-tenancy-gorm, discovery-kubernetes, jackson-xml, github-workflow-ci, serialization-jackson, aws-parameter-store, sqlserver, kafka-streams, gcp-pubsub, security-oauth2, security-session, shade, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, data-r2dbc, data-mongodb-reactive, oracle-cloud-atp, discovery-client, awaitility, kafka-streams, jib, oci-devops-build-ci, retry, config-consul, dekorate-kubernetes, nats, rxjava2-http-client, testcontainers, hibernate-jpa, vertx-mysql-client, asciidoctor, email-sendgrid, object-storage-oracle-cloud, jooq, github-workflow-google-cloud-run-graalvm, neo4j-bolt, coherence-distributed-configuration, mockito, h2, github-workflow-azure-container-instance-graalvm, tracing-opentelemetry-gcp, mariadb, github-workflow-graal-docker-registry, data-jdbc, aws-parameter-store, spring-data-jdbc, multi-tenancy-gorm, annotation-api, rxjava1, mongo-gorm, sql-jdbi, tracing-opentelemetry-xray, mqtt, dekorate-openshift, arm, vertx-pg-client, openrewrite, micronaut-test-rest-assured, dekorate-knative, oracle-cloud-vault, kapt, tracing-opentelemetry-zipkin, discovery-consul, r2dbc, micronaut-aop, gcp-pubsub, hibernate-validator, localstack, x86, github-workflow-ci, security-ldap, cache-ehcache, coherence, jms-oracle-aq, object-storage-gcp, problem-json, mongo-sync, security-jwt, data-jpa, sqlserver, discovery-eureka, mqtt-hivemq, kubernetes-client, ksp, gcp-cloud-trace, hamcrest, http-client, email-template, mongo-reactive, aws-v2-sdk, coherence-session, neo4j-gorm, log4j2, spring, oracle-cloud-sdk, gcp-secrets-manager, dekorate-servicecatalog, elasticsearch, tracing-jaeger, azure-cosmos-db, gradle-enterprise, netflix-archaius, netflix-ribbon, jms-activemq-classic, knative, http-client-jdk, rxjava3-http-client, github-workflow-azure-container-instance, test-resources, spring-boot, github-workflow-google-cloud-run, kubernetes-informer, oracle, github-workflow-oracle-cloud-functions-graalvm, gitlab-workflow-ci, serialization-bson, liquibase, kafka, postgres, reactor-http-client, security, azure-key-vault, tracing-opentelemetry-exporter-otlp, lombok, cache-coherence, microstream-rest, discovery-kubernetes, coherence-grpc-client, github-workflow-oracle-cloud-functions, object-storage-local, email-javamail, rxjava3, jms-sqs, redis-lettuce, jms-core, kubernetes-reactor-client, hibernate-reactive-jpa, data-mongodb, email-postmark, mqttv3, email-amazon-ses, websocket, validation, aws-secrets-manager, jrebel, jasync-sql, http-session, coherence-data, spring-data-jpa, kubernetes-rxjava2-client, microstream-cache, config-kubernetes, serialization-jackson, kubernetes, github-workflow-docker-registry, cache-hazelcast, slf4j-simple, serialization-jsonp, microstream, jms-activemq-artemis, aws-codebuild-workflow-ci, object-storage-azure, tracing-opentelemetry-jaeger, flyway, dekorate-jaeger, tracing-opentelemetry-exporter-logging, google-cloud-workflow-ci, dekorate-halkyon, object-storage-aws, jackson-databind, discovery-core, cache-caffeine, dynamodb, graphql, cassandra, cache-infinispan, dekorate-prometheus, multi-tenancy, jackson-xml, data-azure-cosmos, junit-params, reactor, kotlin-extension-functions, email-mailjet, netflix-hystrix, rabbitmq, graalvm, hibernate-gorm, logback, mysql, data-hibernate-reactive, rxjava2, aws-lambda-events-serde, assertj, tracing-zipkin, security-oauth2, security-session, shade, config4k, properties, toml, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -878,7 +981,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
 <dd>
-<p>The JDK version the project should target</p>
+<p>The JDK version the project should target. Possible values: 17</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
@@ -953,7 +1056,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-ucp, jdbc-tomcat, data-r2dbc, gcp-cloud-trace, security-ldap, jooq, asciidoctor, gitlab-workflow-ci, rxjava3, serialization-jsonp, email-amazon-ses, sql-jdbi, reactor, object-storage-gcp, jms-core, email-javamail, tracing-opentelemetry-jaeger, graalvm, oracle-cloud-vault, microstream-cache, kubernetes-client, kubernetes-rxjava2-client, github-workflow-oracle-cloud-functions, jib, mqttv3, security-jwt, neo4j-gorm, http-client, security, github-workflow-google-cloud-run-graalvm, h2, aws-codebuild-workflow-ci, data-jpa, junit-params, data-jdbc, config-kubernetes, kubernetes-reactor-client, mongo-gorm, openrewrite, tracing-zipkin, jasync-sql, redis-lettuce, slf4j-simple, rxjava2, x86, mongo-reactive, github-workflow-google-cloud-run, graphql, github-workflow-docker-registry, mysql, spring-boot, vertx-pg-client, assertj, data-mongodb-reactive, spring-data-jdbc, cache-coherence, problem-json, gcp-secrets-manager, coherence-distributed-configuration, discovery-eureka, springloaded, email-postmark, jackson-databind, dynamodb, cache-infinispan, neo4j-bolt, jms-activemq-classic, oracle-cloud-sdk, coherence, serialization-bson, email-sendgrid, discovery-consul, tracing-opentelemetry-xray, postgres, github-workflow-azure-container-instance-graalvm, nats, gradle-enterprise, hibernate-jpa, rabbitmq, awaitility, netflix-archaius, oci-devops-build-ci, mongo-sync, data-hibernate-reactive, tracing-jaeger, data-mongodb, jms-oracle-aq, log4j2, hibernate-reactive-jpa, google-cloud-workflow-ci, r2dbc, jrebel, tracing-opentelemetry-gcp, object-storage-azure, github-workflow-graal-docker-registry, object-storage-oracle-cloud, hibernate-gorm, jms-sqs, liquibase, oracle-cloud-atp, logback, object-storage-aws, microstream, azure-cosmos-db, coherence-session, jms-activemq-artemis, mockito, vertx-mysql-client, kotlin-extension-functions, github-workflow-oracle-cloud-functions-graalvm, hamcrest, tracing-opentelemetry-exporter-logging, coherence-data, azure-key-vault, mqtt, lombok, arm, aws-v2-sdk, microstream-rest, email-mailjet, coherence-grpc-client, testcontainers, localstack, tracing-opentelemetry-exporter-otlp, micronaut-test-rest-assured, oracle, rxjava1, hibernate-validator, elasticsearch, mariadb, test-resources, cache-caffeine, github-workflow-azure-container-instance, aws-secrets-manager, netflix-hystrix, flyway, kubernetes-informer, agorapulse-micronaut-permissions, spring-data-jpa, email-template, http-session, netflix-ribbon, spring, tracing-opentelemetry-zipkin, kafka, cache-ehcache, cassandra, cache-hazelcast, config-consul, multi-tenancy, multi-tenancy-gorm, discovery-kubernetes, jackson-xml, github-workflow-ci, serialization-jackson, aws-parameter-store, sqlserver, kafka-streams, gcp-pubsub, security-oauth2, security-session, shade, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, data-r2dbc, data-mongodb-reactive, oracle-cloud-atp, discovery-client, awaitility, kafka-streams, jib, oci-devops-build-ci, retry, config-consul, nats, rxjava2-http-client, testcontainers, hibernate-jpa, vertx-mysql-client, asciidoctor, email-sendgrid, object-storage-oracle-cloud, jooq, github-workflow-google-cloud-run-graalvm, neo4j-bolt, coherence-distributed-configuration, mockito, h2, github-workflow-azure-container-instance-graalvm, tracing-opentelemetry-gcp, mariadb, github-workflow-graal-docker-registry, data-jdbc, aws-parameter-store, spring-data-jdbc, multi-tenancy-gorm, annotation-api, rxjava1, mongo-gorm, sql-jdbi, tracing-opentelemetry-xray, mqtt, arm, vertx-pg-client, openrewrite, micronaut-test-rest-assured, oracle-cloud-vault, kapt, tracing-opentelemetry-zipkin, discovery-consul, r2dbc, micronaut-aop, gcp-pubsub, hibernate-validator, localstack, x86, github-workflow-ci, security-ldap, cache-ehcache, coherence, jms-oracle-aq, object-storage-gcp, problem-json, mongo-sync, security-jwt, data-jpa, sqlserver, discovery-eureka, mqtt-hivemq, kubernetes-client, ksp, gcp-cloud-trace, hamcrest, http-client, email-template, mongo-reactive, aws-v2-sdk, coherence-session, neo4j-gorm, log4j2, spring, oracle-cloud-sdk, gcp-secrets-manager, elasticsearch, tracing-jaeger, azure-cosmos-db, gradle-enterprise, netflix-archaius, netflix-ribbon, jms-activemq-classic, http-client-jdk, rxjava3-http-client, github-workflow-azure-container-instance, test-resources, spring-boot, github-workflow-google-cloud-run, kubernetes-informer, oracle, github-workflow-oracle-cloud-functions-graalvm, gitlab-workflow-ci, serialization-bson, liquibase, kafka, postgres, reactor-http-client, security, azure-key-vault, tracing-opentelemetry-exporter-otlp, lombok, cache-coherence, microstream-rest, discovery-kubernetes, coherence-grpc-client, github-workflow-oracle-cloud-functions, object-storage-local, email-javamail, rxjava3, jms-sqs, redis-lettuce, jms-core, kubernetes-reactor-client, hibernate-reactive-jpa, data-mongodb, email-postmark, mqttv3, email-amazon-ses, websocket, validation, aws-secrets-manager, jrebel, jasync-sql, http-session, coherence-data, spring-data-jpa, kubernetes-rxjava2-client, microstream-cache, config-kubernetes, serialization-jackson, github-workflow-docker-registry, cache-hazelcast, slf4j-simple, serialization-jsonp, microstream, jms-activemq-artemis, aws-codebuild-workflow-ci, object-storage-azure, tracing-opentelemetry-jaeger, flyway, tracing-opentelemetry-exporter-logging, google-cloud-workflow-ci, object-storage-aws, jackson-databind, discovery-core, cache-caffeine, dynamodb, graphql, cassandra, cache-infinispan, multi-tenancy, jackson-xml, data-azure-cosmos, junit-params, reactor, kotlin-extension-functions, email-mailjet, netflix-hystrix, rabbitmq, graalvm, hibernate-gorm, logback, mysql, data-hibernate-reactive, rxjava2, aws-lambda-events-serde, assertj, tracing-zipkin, security-oauth2, security-session, shade, config4k, properties, toml, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -965,7 +1068,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
 <dd>
-<p>The JDK version the project should target</p>
+<p>The JDK version the project should target. Possible values: 17</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
@@ -1008,10 +1111,10 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h1 id="starterImpls"><a class="anchor" href="#starterImpls"></a>5 Micronaut Launch</h1>
+<h1 id="starterImpls"><a class="anchor" href="#starterImpls"></a>6 Micronaut Launch</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1024,7 +1127,7 @@ Application generation commands are:</p>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-core:3.8.11")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-core:4.1.4")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1032,16 +1135,16 @@ Application generation commands are:</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut.starter&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-starter-core&lt;/artifactId&gt;
-    &lt;version&gt;3.8.11&lt;/version&gt;
+    &lt;version&gt;4.1.4&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div></p>
 </div>
 
-<h2 id="starterCLI"><a class="anchor" href="#starterCLI"></a>5.1 CLI Application</h2>
+<h2 id="starterCLI"><a class="anchor" href="#starterCLI"></a>6.1 CLI Application</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterCLI.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterCLI.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1065,7 +1168,7 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-3.8.11-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-4.1.4-all.jar</code></pre>
 </div>
 </div>
 </div>
@@ -1076,7 +1179,7 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-3.8.11-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-4.1.4-all.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1089,10 +1192,10 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>5.2 OpenAPI Specification</h2>
+<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>6.2 OpenAPI Specification</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterApi.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterApi.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1118,10 +1221,10 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>5.3 Web API Application</h2>
+<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>6.3 Web API Application</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1171,15 +1274,15 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-3.8.11-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-4.1.4-all.jar</code></pre>
 </div>
 </div>
 </div>
 
-<h2 id="starterUI"><a class="anchor" href="#starterUI"></a>5.4 Micronaut Launch React UI</h2>
+<h2 id="starterUI"><a class="anchor" href="#starterUI"></a>6.4 Micronaut Launch React UI</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterUI.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterUI.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1189,10 +1292,10 @@ Application generation commands are:</p>
 <p>The <a href="https://micronaut.io/launch">UI for Micronaut Launch</a> is written in React and the sources can be found <a href="https://github.com/micronaut-projects/static-website/tree/master/main/src/main/js/launch">here</a> as a separate project.</p>
 </div>
 
-<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>5.5 WAR Deployment</h2>
+<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>6.5 WAR Deployment</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1242,10 +1345,10 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>5.6 Google Cloud Run</h2>
+<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>6.6 Google Cloud Run</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1321,10 +1424,10 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>5.7 Google Cloud Function</h2>
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>6.7 Google Cloud Function</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1382,7 +1485,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java17 --trigger-http</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1406,10 +1509,10 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>5.8 AWS Lambda</h2>
+<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>6.8 AWS Lambda</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1455,10 +1558,10 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 </div>
 </div>
 
-<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>5.9 Microsoft Azure</h2>
+<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>6.9 Microsoft Azure</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/3.8.x/src/main/docs/guide/starterImpls/starterAzure.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/starterImpls/starterAzure.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1502,6 +1605,25 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-azure-function:azureFunctionsDeploy</code></pre>
 </div>
+</div>
+</div>
+
+<h1 id="communityFeature"><a class="anchor" href="#communityFeature"></a>7 Community Features</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/4.1.x/src/main/docs/guide/communityFeature.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect3">
+<h4 id="_community_features">Community Features</h4>
+<div class="paragraph">
+<p>Micronaut Launch includes Community Features such as those from <a href="https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries">Agorapulse</a>, <a href="https://github.com/camunda-community-hub/micronaut-camunda-external-client">Camunda</a>, and <a href="https://www.jobrunr.io/en/documentation/configuration/micronaut/">JobRunr</a>.</p>
+</div>
+<div class="paragraph">
+<p>A feature that adds a Micronaut library which the Micronaut Foundation does not maintain is considered a Community Feature. In the event that Micronaut Foundation assumes responsibility for a Community Feature, it could potentially become an official Micronaut Launch feature instead.</p>
 </div>
 </div>
 
