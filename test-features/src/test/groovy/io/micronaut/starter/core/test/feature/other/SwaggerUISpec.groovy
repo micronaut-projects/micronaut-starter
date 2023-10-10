@@ -62,7 +62,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 [SwaggerUI.NAME],
-                mavenSupportedLanguages()].combinations()
+                Language.values()].combinations()
     }
 
     void "test gradle #feature with #language without security"(String feature, Language language) {
@@ -103,19 +103,11 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 [SwaggerUI.NAME],
-                mavenSupportedLanguages(),
+                Language.values(),
                 [Security.NAME]
         ].combinations()
     }
-
-    private static Language[] mavenSupportedLanguages() {
-        return new Language[] {
-            Language.JAVA,
-            //Language.GROOVY,
-            Language.KOTLIN
-        }
-    }
-
+    
     void "test gradle #feature with #language with security"(String feature, Language language, String securityFeature) {
         when:
         generateProject(language, BuildTool.GRADLE, [Yaml.NAME, 'kapt', feature, securityFeature])

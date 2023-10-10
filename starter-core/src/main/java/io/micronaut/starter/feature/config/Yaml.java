@@ -22,6 +22,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.other.SwaggerUI;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 import jakarta.inject.Singleton;
@@ -34,11 +36,9 @@ public class Yaml implements ConfigurationFeature {
     private static final String EXTENSION = "yml";
     private static final String YAML_GROUP_ID = "org.yaml";
     private static final String SNAKEYAML_ARTIFACT_ID = "snakeyaml";
-    private static final Dependency DEPENDENCY_YAML = Dependency.builder()
+    private static final Dependency.Builder DEPENDENCY_YAML = Dependency.builder()
             .groupId(YAML_GROUP_ID)
-            .artifactId(SNAKEYAML_ARTIFACT_ID)
-            .runtime()
-            .build();
+            .artifactId(SNAKEYAML_ARTIFACT_ID);
 
     @Override
     @NonNull
@@ -73,7 +73,13 @@ public class Yaml implements ConfigurationFeature {
 
             @Override
             public void apply(GeneratorContext generatorContext) {
-                generatorContext.addDependency(DEPENDENCY_YAML);
+                if (generatorContext.hasFeature(SwaggerUI.class) && generatorContext.getBuildTool() == BuildTool.MAVEN) {
+                    // Open API POM has transitive dependency on SnakeYAML so don't change the scope, to avoid maven build model failure
+                    // see https://github.com/micronaut-projects/micronaut-starter/pull/1767
+                    generatorContext.addDependency(DEPENDENCY_YAML.compile());
+                } else {
+                    generatorContext.addDependency(DEPENDENCY_YAML.runtime());
+                }
             }
         });
     }
