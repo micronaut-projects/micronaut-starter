@@ -35,7 +35,7 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         GeneratorContext commandContext = buildGeneratorContext([Cassandra.NAME])
 
         then:
-        commandContext.configuration.get('cassandra.default.basic.contact-points[0]') == 'localhost:9042'
+        commandContext.configuration.get('cassandra.default.basic.contact-points') == ['localhost:9042']
         commandContext.configuration.get('cassandra.default.basic.load-balancing-policy.local-datacenter') == 'datacenter1'
         commandContext.configuration.get('cassandra.default.basic.session-name') == 'defaultSession'
         commandContext.configuration.get('cassandra.default.advanced.control-connection.schema-agreement.timeout') == 20
