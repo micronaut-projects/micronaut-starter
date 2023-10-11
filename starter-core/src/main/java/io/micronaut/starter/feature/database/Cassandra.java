@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class Cassandra implements Feature {
@@ -74,7 +75,7 @@ public class Cassandra implements Feature {
         if (generatorContext.isFeaturePresent(TestResources.class)) {
             configuration.put("test-resources.containers.cassandra.startup-timeout", "600s");
             configuration.put("test-resources.containers.cassandra.image-name", "cassandra");
-            configuration.put("test-resources.containers.cassandra.exposed-ports[0].cassandra.port", 9042);
+            configuration.put("test-resources.containers.cassandra.exposed-ports", List.of(Map.of("cassandra.port", 9042)));
             configuration.put("cassandra.default.basic.contact-points", List.of("localhost:${cassandra.port}"));
         } else {
             configuration.put("cassandra.default.basic.contact-points", List.of("localhost:9042"));

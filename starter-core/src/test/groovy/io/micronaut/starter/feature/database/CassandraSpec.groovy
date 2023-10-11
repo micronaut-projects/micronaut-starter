@@ -69,7 +69,7 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         commandContext.configuration.get('cassandra.default.basic.contact-points') == ['localhost:${cassandra.port}']
         commandContext.configuration.get('test-resources.containers.cassandra.startup-timeout') == "600s"
         commandContext.configuration.get('test-resources.containers.cassandra.image-name') == 'cassandra'
-        commandContext.configuration.get('test-resources.containers.cassandra.exposed-ports[0].cassandra.port') == 9042
+        commandContext.configuration.get('test-resources.containers.cassandra.exposed-ports')[0]['cassandra.port'] == 9042
     }
 
     void 'test readme has docs'() {
