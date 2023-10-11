@@ -26,6 +26,8 @@ import io.micronaut.starter.feature.micrometer.MicrometerFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+import java.util.List;
+
 @Singleton
 public class Cassandra implements Feature {
 
