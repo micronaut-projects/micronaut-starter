@@ -66,13 +66,8 @@ public class Cassandra implements Feature {
 
         if (generatorContext.isFeaturePresent(MicrometerFeature.class)) {
             configuration.put("cassandra.default.advanced.metrics.factory.class", "MicrometerMetricsFactory");
-            configuration.addListItem("cassandra.default.advanced.metrics.session.enabled", "connected-nodes");
-            configuration.addListItem("cassandra.default.advanced.metrics.session.enabled", "cql-requests");
-            configuration.addListItem("cassandra.default.advanced.metrics.session.enabled", "bytes-sent");
-            configuration.addListItem("cassandra.default.advanced.metrics.session.enabled", "bytes-received");
-            configuration.addListItem("cassandra.default.advanced.metrics.node.enabled", "cql-requests");
-            configuration.addListItem("cassandra.default.advanced.metrics.node.enabled", "bytes-sent");
-            configuration.addListItem("cassandra.default.advanced.metrics.node.enabled", "bytes-received");
+            configuration.put("cassandra.default.advanced.metrics.session.enabled", List.of("connected-nodes", "cql-requests", "bytes-sent", "bytes-received"));
+            configuration.put("cassandra.default.advanced.metrics.node.enabled", List.of("cql-requests", "bytes-sent", "bytes-received"));
         }
         if (generatorContext.isFeaturePresent(TestResources.class)) {
             configuration.put("test-resources.containers.cassandra.startup-timeout", "600s");
