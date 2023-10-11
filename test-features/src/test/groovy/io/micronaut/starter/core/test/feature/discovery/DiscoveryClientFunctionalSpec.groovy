@@ -7,7 +7,6 @@ import io.micronaut.starter.test.LanguageBuildCombinations
 
 class DiscoveryClientFunctionalSpec extends CommandSpec {
 
-    @Unroll
     void 'test discovery-client for #lang and #buildTool'(Language lang, BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, ['discovery-client'])
