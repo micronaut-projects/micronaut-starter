@@ -75,7 +75,7 @@ public class Cassandra implements Feature {
             configuration.put("test-resources.containers.cassandra.exposed-ports[0].cassandra.port", 9042);
             configuration.put("cassandra.default.basic.contact-points", List.of("localhost:${cassandra.port}"));
         } else {
-            configuration.put("cassandra.default.basic.contact-points[0]", "localhost:9042");
+            configuration.put("cassandra.default.basic.contact-points", List.of("localhost:9042"));
         }
     }
 
