@@ -73,7 +73,7 @@ public class Cassandra implements Feature {
             configuration.put("test-resources.containers.cassandra.startup-timeout", "600s");
             configuration.put("test-resources.containers.cassandra.image-name", "cassandra");
             configuration.put("test-resources.containers.cassandra.exposed-ports[0].cassandra.port", 9042);
-            configuration.put("cassandra.default.basic.contact-points[0]", "localhost:${cassandra.port}");
+            configuration.put("cassandra.default.basic.contact-points", List.of("localhost:${cassandra.port}"));
         } else {
             configuration.put("cassandra.default.basic.contact-points[0]", "localhost:9042");
         }
