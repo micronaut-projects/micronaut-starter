@@ -66,7 +66,7 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         GeneratorContext commandContext = buildGeneratorContext([Cassandra.NAME, TestResources.NAME])
 
         then:
-        commandContext.configuration.get('cassandra.default.basic.contact-points[0]') == 'localhost:${cassandra.port}'
+        commandContext.configuration.get('cassandra.default.basic.contact-points') == ['localhost:${cassandra.port}']
         commandContext.configuration.get('test-resources.containers.cassandra.startup-timeout') == "600s"
         commandContext.configuration.get('test-resources.containers.cassandra.image-name') == 'cassandra'
         commandContext.configuration.get('test-resources.containers.cassandra.exposed-ports[0].cassandra.port') == 9042
