@@ -49,13 +49,8 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         commandContext.configuration.get('micronaut.metrics.enabled') == true
         commandContext.configuration.get('cassandra.default.advanced.metrics.factory.class') == 'MicrometerMetricsFactory'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.session.enabled')[0] == 'connected-nodes'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.session.enabled')[1] == 'cql-requests'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.session.enabled')[2] == 'bytes-sent'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.session.enabled')[3] == 'bytes-received'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.node.enabled')[0] == 'cql-requests'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.node.enabled')[1] == 'bytes-sent'
-        commandContext.configuration.get('cassandra.default.advanced.metrics.node.enabled')[2] == 'bytes-received'
+        commandContext.configuration.get('cassandra.default.advanced.metrics.session.enabled') == ['connected-nodes', 'cql-requests', 'bytes-sent', 'bytes-received']
+        commandContext.configuration.get('cassandra.default.advanced.metrics.node.enabled') == ['cql-requests', 'bytes-sent', 'bytes-received']
 
         where:
         micrometerFeature << beanContext.getBeansOfType(MicrometerFeature)*.name
