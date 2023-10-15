@@ -11,37 +11,37 @@ jobs:
     name: Builds Linux Native CLI
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the repository
+      - name: "⬇ Checkout the repository"
         uses: actions/checkout@v3
-      - name: Setup GraalVM CE
-        uses: graalvm/setup-graalvm@v1.0.12
         with:
-          version: '21.3.0'
-          java-version: '11'
+          fetch-depth: 0
+      - name: "☕️ Setup GraalVM CE"
+        uses: graalvm/setup-graalvm@v1.1.4.2
+        with:
+          version: '22.3.2'
+          java-version: '17'
+          native-image-musl: 'true'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          native-image-musl: 'true'
-      - name: Build the JAR
+      - name: "📸 Build the Native Image (with libc=musl)"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: ./gradlew micronaut-cli:shadowJar --no-daemon
-      - name: Build Native Image
-        run: native-image --allow-incomplete-classpath --static --libc=musl --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
-      - name: Verify Build
-        run: ./mn --version
-      - name: Verify Create App
-        run: ./mn create-app test
-      - name: Package Build
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
+      - name: "👷‍♀️Package Build"
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
           mkdir -p mn-linux-amd64-snapshot/bin
-          mv ./mn mn-linux-amd64-snapshot/bin
+          mv ./starter-cli/build/native/nativeCompile/mn mn-linux-amd64-snapshot/bin
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
-      - name: Upload Snapshot
+      - name: "🆙 Upload Snapshot"
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.10.x'
         uses: actions/upload-artifact@v3
         with:
