@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,26 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.micrometer.MicrometerFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
+
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class Cassandra implements Feature {
+
     public static final String NAME = "cassandra";
+
+    private static final Dependency MICRONAUT_CASSANDRA_DEPENDENCY = MicronautDependencyUtils.cassandraDependency()
+            .artifactId("micronaut-cassandra")
+            .compile()
+            .build();
 
     @Override
     public String getName() {
@@ -44,15 +56,30 @@ public class Cassandra implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("cassandra.default.clusterName", "\"myCluster\"");
-        generatorContext.getConfiguration().put("cassandra.default.contactPoint", "\"localhost\"");
-        generatorContext.getConfiguration().put("cassandra.default.port", 9042);
-        generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
-        generatorContext.getConfiguration().put("cassandra.default.ssl", true);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.cassandra")
-                .artifactId("micronaut-cassandra")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_CASSANDRA_DEPENDENCY);
+        applyConfiguration(generatorContext);
+    }
+
+    private void applyConfiguration(GeneratorContext generatorContext) {
+        ApplicationConfiguration configuration = generatorContext.getConfiguration();
+        configuration.put("cassandra.default.basic.load-balancing-policy.local-datacenter", "datacenter1");
+        configuration.put("cassandra.default.basic.session-name", "defaultSession");
+        configuration.put("cassandra.default.advanced.control-connection.schema-agreement.timeout", 20);
+        configuration.put("cassandra.default.advanced.ssl-engine-factory", "DefaultSslEngineFactory");
+
+        if (generatorContext.isFeaturePresent(MicrometerFeature.class)) {
+            configuration.put("cassandra.default.advanced.metrics.factory.class", "MicrometerMetricsFactory");
+            configuration.put("cassandra.default.advanced.metrics.session.enabled", List.of("connected-nodes", "cql-requests", "bytes-sent", "bytes-received"));
+            configuration.put("cassandra.default.advanced.metrics.node.enabled", List.of("cql-requests", "bytes-sent", "bytes-received"));
+        }
+        if (generatorContext.isFeaturePresent(TestResources.class)) {
+            configuration.put("test-resources.containers.cassandra.startup-timeout", "600s");
+            configuration.put("test-resources.containers.cassandra.image-name", "cassandra");
+            configuration.put("test-resources.containers.cassandra.exposed-ports", List.of(Map.of("cassandra.port", 9042)));
+            configuration.put("cassandra.default.basic.contact-points", List.of("localhost:${cassandra.port}"));
+        } else {
+            configuration.put("cassandra.default.basic.contact-points", List.of("localhost:9042"));
+        }
     }
 
     @Override
@@ -63,5 +90,15 @@ public class Cassandra implements Feature {
     @Override
     public String getCategory() {
         return Category.DATABASE;
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-cassandra/latest/guide/index.html";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.datastax.com/en/developer/java-driver/latest/";
     }
 }
