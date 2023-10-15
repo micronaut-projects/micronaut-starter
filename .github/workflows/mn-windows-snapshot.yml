@@ -11,42 +11,41 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup GraalVM CE
-        uses: graalvm/setup-graalvm@v1.0.12
+      - name: "⬇ Checkout the repository"
+        uses: actions/checkout@v3
         with:
-          version: '21.3.0'
-          java-version: '11'
+          fetch-depth: 0
+      - name: "☕️ Setup GraalVM CE"
+        uses: graalvm/setup-graalvm@v1.1.4.2
+        with:
+          version: '22.3.2'
+          java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build JAR File
-        shell: powershell
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
-      - name: Build Native Image
+      - name: "✅ Verify Build (Powershell)"
         shell: powershell
-        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
-      - name: Verify Build (Powershell)
-        shell: powershell
-        run: ./mn.exe --version
-      - name: Verify Create App (Powershell)
-        run: ./mn.exe create-app test
-      - name: Verify Build (CMD)
+        run: ./starter-cli/build/native/nativeCompile/mn.exe --version
+      - name: "✅ Verify Create App (Powershell)"
+        run: ./starter-cli/build/native/nativeCompile/mn.exe create-app test
+      - name: "✅ Verify Build (CMD)"
         shell: cmd
-        run: mn --version
-      - name: Verify Create App (CMD)
+        run: starter-cli\\build\\native\\nativeCompile\\mn --version
+      - name: "✅ Verify Create App (CMD)"
         shell: cmd
-        run: mn create-app test2
-      - name: ZIP Archive
+        run: starter-cli\\build\\native\\nativeCompile\\mn create-app test2
+      - name: "🤐 ZIP Archive"
         run: |
           New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
-          Move-Item -Path ./mn.exe -Destination "./mn-win-amd64-snapshot/bin"
+          Move-Item -Path ./starter-cli/build/native/nativeCompile/mn.exe -Destination "./mn-win-amd64-snapshot/bin"
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
-      - name: Publish artifact
+      - name: "🆙 Upload Snapshot"
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.10.x'
         uses: actions/upload-artifact@v3
         with:
