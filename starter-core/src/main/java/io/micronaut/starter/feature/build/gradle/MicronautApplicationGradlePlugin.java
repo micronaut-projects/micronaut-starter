@@ -51,6 +51,7 @@ public class MicronautApplicationGradlePlugin {
         private boolean incremental;
         private  String packageName;
         private boolean sharedTestResources;
+
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
             return this;
