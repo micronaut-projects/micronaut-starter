@@ -62,7 +62,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
                 MariaDB.NAME,
                 PostgreSQL.NAME,
                 Oracle.NAME,
-                //SQLServer.NAME   - Unexpected error occurred: class java.lang.String cannot be cast to class java.lang.Boolean (java.lang.String and java.lang.Boolean are in module java.base of loader 'bootstrap') java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Boolean (java.lang.String and java.lang.Boolean are in module java.base of loader 'bootstrap') at io.micronaut.testresources.mssql.MSSQLTestResourceProvider.createMSSQLContainer(MSSQLTestResourceProvider.java:50)
+                SQLServer.NAME
         ]
     }
 }
