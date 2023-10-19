@@ -71,6 +71,7 @@ public class MicronautHttpValidation implements DefaultFeature {
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_VALIDATION);
     }
+
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT;

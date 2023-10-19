@@ -37,7 +37,8 @@ public enum JdkVersion {
     JDK_17(17),
     JDK_18(18),
     JDK_19(19),
-    JDK_20(20);
+    JDK_20(20),
+    JDK_21(21);
 
     private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
 

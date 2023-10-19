@@ -1,13 +1,10 @@
-package io.micronaut.starter.feature.build
+package io.micronaut.starter.feature
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.LanguageSpecificFeature
-import io.micronaut.starter.feature.OneOfFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -15,6 +12,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 
 class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
     @Shared
     @Subject
     KotlinSymbolProcessing ksp = beanContext.getBean(KotlinSymbolProcessing)

@@ -56,7 +56,11 @@ String jvmArguments
 
   <properties>
     <packaging>jar</packaging>
+@if (features.language().isKotlin()) {
+    <jdk.version>@features.getTargetJdk(17)</jdk.version>
+} else {
     <jdk.version>@features.getTargetJdk()</jdk.version>
+}
     <release.version>@features.javaVersion().majorVersion()</release.version>
 @for (Property prop : mavenBuild.getProperties()) {
 @if (prop.isComment()) {
