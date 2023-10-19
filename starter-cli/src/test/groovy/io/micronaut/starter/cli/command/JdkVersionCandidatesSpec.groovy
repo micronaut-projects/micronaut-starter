@@ -4,8 +4,8 @@ import spock.lang.Specification
 
 class JdkVersionCandidatesSpec extends Specification {
 
-    void "ony 17 is valid candidate"() {
+    void "17 and 21 are valid candidates"() {
         expect:
-        ['17'] == new JdkVersionCandidates()
+        ['17', '21'] == new JdkVersionCandidates()
     }
 }

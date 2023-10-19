@@ -18,16 +18,19 @@ class SelectOptionsControllerTest extends Specification {
     @Client("/")
     HttpClient httpClient
 
-    void "Only JDK 17 is supported"() {
+    void "Only JDK 17 and 21 are supported"() {
         BlockingHttpClient client = httpClient.toBlocking()
-
         HttpRequest<?> request = HttpRequest.GET("/select-options")
+
         when:
         SelectOptionsDTO selectOptionsDTO = client.retrieve(request, SelectOptionsDTO)
 
         then:
         noExceptionThrown()
-        ['JDK_17'] == selectOptionsDTO.jdkVersion.options.stream().map(JdkVersionDTO::getName).toList()
+        ['JDK_17', 'JDK_21'] == selectOptionsDTO.jdkVersion.options.name
+
+        and:
+        selectOptionsDTO.jdkVersion.defaultOption.name == 'JDK_17'
     }
 
     void "default build tool is Gradle Kotlin"() {
