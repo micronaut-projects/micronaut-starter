@@ -57,7 +57,11 @@ application {
 }
 
 java {
+@if (features.language().isKotlin()) {
+    sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk(17)")
+} else {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+}
 @if (!features.language().isKotlin()) {
     targetCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
 }
@@ -75,9 +79,9 @@ tasks {
     compileKotlin {
         compilerOptions {
 @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk())
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))
 } else {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk()
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17)
 }
         }
     }
@@ -87,9 +91,9 @@ tasks {
     compileTestKotlin {
         compilerOptions {
 @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk())
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))
 } else {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk()
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17)
 }
         }
     }

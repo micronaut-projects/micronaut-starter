@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.build;
+package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.KotlinSymbolProcessingFeature;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.GradleSpecificFeature;
+import io.micronaut.starter.feature.build.KotlinSupportFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -78,7 +76,8 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeat
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool().isGradle() &&
-                KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
+        return options.getBuildTool().isGradle()
+                && KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework())
+                && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }
