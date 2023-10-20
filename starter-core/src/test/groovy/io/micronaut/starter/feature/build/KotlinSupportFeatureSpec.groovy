@@ -20,19 +20,19 @@ class KotlinSupportFeatureSpec extends BeanContextSpec implements CommandOutputF
         String buildGradle = output[buildTool.getBuildFileName()]
         String pom = output['pom.xml']
 
-        then:
+        then: 'default for Gradle is Ksp, but for Maven is Kapt'
         if (buildTool.isGradle()) {
-            buildGradle
-            buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
-            buildGradle.contains('id("org.jetbrains.kotlin.allopen")')
-            buildGradle.contains('id("com.google.devtools.ksp")')
-            !buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
+            assert buildGradle
+            assert buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
+            assert buildGradle.contains('id("org.jetbrains.kotlin.plugin.allopen")')
+            assert buildGradle.contains('id("com.google.devtools.ksp")')
+            assert !buildGradle.contains('id("org.jetbrains.kotlin.kapt")')
         } else if (buildTool == BuildTool.MAVEN) {
-            pom
-            pom.contains('<artifactId>kotlin-maven-plugin</artifactId>')
-            pom.contains('<id>kapt</id>')
-            pom.contains('<goal>kapt</goal>')
-            !pom.contains('ksp')
+            assert pom
+            assert pom.contains('<artifactId>kotlin-maven-plugin</artifactId>')
+            assert pom.contains('<id>kapt</id>')
+            assert pom.contains('<goal>kapt</goal>')
+            assert !pom.contains('ksp')
         }
 
         where:
