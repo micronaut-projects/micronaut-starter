@@ -30,6 +30,8 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 
+import java.util.stream.Collectors;
+
 /**
  * Marker interface for a feature which adds support for the {@link Language#KOTLIN} programming language.
  *
@@ -78,7 +80,7 @@ public interface KotlinSupportFeature extends OneOfFeature {
                 generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES)
                 );
             } else {
-                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES);
+                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
             }
         }
     }
