@@ -27,7 +27,7 @@ import java.util.Set;
 @Singleton
 public class AzureFunctionFeatureValidator implements FeatureValidator {
 
-    private static boolean supports(JdkVersion jdkVersion) {
+    public static boolean supports(JdkVersion jdkVersion) {
         return jdkVersion == JdkVersion.JDK_8 || jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
     }
 
@@ -40,7 +40,7 @@ public class AzureFunctionFeatureValidator implements FeatureValidator {
         if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.getJavaVersion())) {
             throw new IllegalArgumentException("""
                     Azure Function currently only supports JDK 8, 11 and 17 -- \
-                    https://cloud.google.com/functions/docs/concepts/java-runtime""");
+                    https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure""");
         }
     }
 }
