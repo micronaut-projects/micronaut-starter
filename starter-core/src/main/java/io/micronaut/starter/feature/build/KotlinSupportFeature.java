@@ -38,6 +38,18 @@ import io.micronaut.starter.template.StringTemplate;
  */
 public interface KotlinSupportFeature extends OneOfFeature {
 
+    String JDK_21_KAPT_MODULES = """
+            --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED""";
+
     @Override
     default Class<?> getFeatureClass() {
         return KotlinSupportFeature.class;
@@ -63,33 +75,10 @@ public interface KotlinSupportFeature extends OneOfFeature {
         }
         if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_17)) {
             if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", """
-                        --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-                        --add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED""")
+                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES)
                 );
             } else {
-                generatorContext.getBuildProperties().put(
-                        "kotlin.daemon.jvmargs",
-                        """
-                        --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
-                        --add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"""
-                );
+                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES);
             }
         }
     }
