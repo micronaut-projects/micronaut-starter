@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.function.gcp;
+package io.micronaut.starter.feature.function.azure;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -26,29 +25,21 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
+public class AzureFunctionFeatureValidator implements FeatureValidator {
 
     private static boolean supports(JdkVersion jdkVersion) {
-        return jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
+        return jdkVersion == JdkVersion.JDK_8 || jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
     }
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(AbstractGoogleCloudFunction.class::isInstance)) {
-            if (features.stream().anyMatch(GraalVM.class::isInstance)) {
-                throw new IllegalArgumentException("""
-                        Google Cloud Function is not supported for GraalVM. \
-                        Consider Google Cloud Run for deploying GraalVM native images as docker containers.\
-                        """);
-            }
-        }
     }
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(GoogleCloudFunction.class::isInstance) && !supports(options.getJavaVersion())) {
+        if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.getJavaVersion())) {
             throw new IllegalArgumentException("""
-                    Google Cloud Function currently only supports JDK 11 and 17 -- \
+                    Azure Function currently only supports JDK 8, 11 and 17 -- \
                     https://cloud.google.com/functions/docs/concepts/java-runtime""");
         }
     }
