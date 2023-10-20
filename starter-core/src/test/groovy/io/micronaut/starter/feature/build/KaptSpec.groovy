@@ -78,6 +78,17 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
+    void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_17))
+
+        then:
+        !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
     void "for java 21, with #buildTool and Kapt we add the add-opens hack"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21))
@@ -87,6 +98,18 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         where:
         buildTool << BuildTool.valuesGradle()
+    }
+
+    void "for java 17, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_17))
+        def pom = new XmlParser().parseText(output."pom.xml")
+
+        then: 'there is a kapt execution in the kotlin plugin'
+        pom.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }.executions.execution.find { it.id.text() == 'kapt' }
+
+        and: 'the config file is missing'
+        !output.".mvn/jvm.config"
     }
 
     void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
