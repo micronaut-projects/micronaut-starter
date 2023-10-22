@@ -173,4 +173,10 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions";
     }
+
+    @Override
+    public String getTags() {
+        return "gcp";
+    }
+
 }

@@ -158,4 +158,11 @@ public interface Feature extends Named, Ordered, Described {
     default String getThirdPartyDocumentation() {
         return null;
     }
+
+    /**
+     * @return Returns a list of tags separated by comma, which can be used in feature search functionality
+     */
+    @Nullable
+    default String getTags() { return null; };
+
 }
