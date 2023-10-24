@@ -39,6 +39,12 @@ public class Cassandra implements Feature {
             .compile()
             .build();
 
+    private static final Dependency CASSANDRA_METRICS_MICROMETER_DEPENDENCY = Dependency.builder()
+            .groupId("com.datastax.oss")
+            .artifactId("java-driver-metrics-micrometer")
+            .compile()
+            .build();
+
     @Override
     public String getName() {
         return NAME;
@@ -56,8 +62,15 @@ public class Cassandra implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MICRONAUT_CASSANDRA_DEPENDENCY);
+        applyDependencies(generatorContext);
         applyConfiguration(generatorContext);
+    }
+
+    private void applyDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MICRONAUT_CASSANDRA_DEPENDENCY);
+        if (generatorContext.isFeaturePresent(MicrometerFeature.class)) {
+            generatorContext.addDependency(CASSANDRA_METRICS_MICROMETER_DEPENDENCY);
+        }
     }
 
     private void applyConfiguration(GeneratorContext generatorContext) {

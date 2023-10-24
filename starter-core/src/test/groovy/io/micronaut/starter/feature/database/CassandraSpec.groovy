@@ -14,7 +14,7 @@ import io.micronaut.starter.options.Language
 
 class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'test gradle cassandra feature for language=#language and buildTool=#buildTool'(
+    void 'test cassandra feature dependency for language=#language and buildTool=#buildTool'(
             BuildTool buildTool, Language language) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -28,6 +28,22 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+    }
+
+    void 'test cassandra micrometer feature=#feature for language=#language and buildTool=#buildTool'(
+            BuildTool buildTool, Language language) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .features([Cassandra.NAME, feature])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
+        then:
+        verifier.hasDependency("com.datastax.oss","java-driver-metrics-micrometer", Scope.COMPILE)
+
+        where:
+        [language, buildTool, feature] << [Language.values(), BuildTool.values(), beanContext.getBeansOfType(MicrometerFeature)*.name].combinations()
     }
 
     void 'test cassandra configuration'() {
