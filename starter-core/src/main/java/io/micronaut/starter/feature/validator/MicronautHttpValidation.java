@@ -24,6 +24,7 @@ import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -31,6 +32,7 @@ import java.util.Set;
 
 @Singleton
 public class MicronautHttpValidation implements DefaultFeature {
+
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_VALIDATION = MicronautDependencyUtils.coreDependency()
             .artifactId("micronaut-http-validation")
             .versionProperty(MavenBuildCreator.PROPERTY_MICRONAUT_CORE_VERSION)
@@ -70,6 +72,9 @@ public class MicronautHttpValidation implements DefaultFeature {
 
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_VALIDATION);
+        if (generatorContext.getLanguage() == Language.GROOVY && generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency().artifactId("micronaut-http-client").compileOnly());
+        }
     }
 
     @Override
