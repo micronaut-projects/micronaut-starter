@@ -26,7 +26,8 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class DiscoveryCore implements Feature {
-    private static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE = "micronaut-discovery-core";
+
+    public static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE = "micronaut-discovery-core";
     private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CORE = MicronautDependencyUtils.coreDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE)
             .compile()

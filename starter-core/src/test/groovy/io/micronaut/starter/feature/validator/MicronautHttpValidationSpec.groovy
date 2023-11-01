@@ -43,6 +43,9 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
 
         then:
         verifier.hasDependency("io.micronaut", "micronaut-http-validation", Scope.ANNOTATION_PROCESSOR)
+        if (buildTool.isGradle()) {
+            assert verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE_ONLY)
+        }
 
         where:
         buildTool << BuildTool.values()

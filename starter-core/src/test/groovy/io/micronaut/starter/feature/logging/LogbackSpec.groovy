@@ -15,7 +15,7 @@ class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     @Shared
     Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
 
-    void 'by default jansi true'() {
+    void 'by default jansi false and coloring true'() {
         when:
         Map<String, String> output = generate([])
         String xml = output["src/main/resources/logback.xml"]
@@ -23,8 +23,8 @@ class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         then:
         xml
         !xml.contains("<withJansi>true</withJansi>")
-        !xml.contains("<pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>")
-        xml.contains("<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>")
+        xml.contains("<pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>")
+        !xml.contains("<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>")
     }
 
     void 'with aws-lambda with jansi false since CloudWatch does not works with jansi'() {
@@ -35,6 +35,7 @@ class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         then:
         xml
         !xml.contains("<withJansi>true</withJansi>")
-        xml.contains("<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>")
+        !xml.contains("<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>")
+        xml.contains("<pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>")
     }
 }
