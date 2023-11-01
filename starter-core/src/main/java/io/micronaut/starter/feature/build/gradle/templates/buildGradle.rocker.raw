@@ -57,7 +57,7 @@ application {
 }
 
 java {
-@if (features.language().isKotlin()) {
+@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk(17)")
 } else {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
@@ -89,6 +89,15 @@ tasks {
 
 @if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
     compileTestKotlin {
+        compilerOptions {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))
+} else {
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17)
+}
+        }
+    }
+    compileTestResourcesKotlin {
         compilerOptions {
 @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))

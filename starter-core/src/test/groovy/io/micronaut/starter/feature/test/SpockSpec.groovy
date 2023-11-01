@@ -54,26 +54,44 @@ java {
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
-    void 'With Kotlin or KoTest and JDK17 the sourceCompatibility is JDK17'() {
+    void 'With Kotlin or KoTest and #jdk the sourceCompatibility is JDK17'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(jdk)
                 .testFramework(testFramework)
                 .render()
 
         then:
-        template.contains("sourceCompatibility = JavaVersion.toVersion(\"17\")")
+        template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+
+        and: 'compilation option is defined for kotlin projects'
         template.contains('''\
+    compileKotlin {
         compilerOptions {
            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
-''')
+    }''') == (language == Language.KOTLIN)
+
+        and: 'compilation option is defined for kotlin test projects'
+        template.contains('''\
+    compileTestKotlin {
+        compilerOptions {
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
+    }
+    compileTestResourcesKotlin {
+        compilerOptions {
+           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
+    }''')
 
         where:
-        language        | testFramework
-        Language.KOTLIN | TestFramework.JUNIT
-        Language.JAVA   | TestFramework.KOTEST
+        language        | testFramework        | jdk
+        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_17
+        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_21
+        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_17
+        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_21
     }
 
     void 'test spock with Maven applies gmavenplus plugin'() {
