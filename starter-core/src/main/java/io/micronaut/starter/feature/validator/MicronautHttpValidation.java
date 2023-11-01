@@ -24,6 +24,7 @@ import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -72,9 +73,15 @@ public class MicronautHttpValidation implements DefaultFeature {
 
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_VALIDATION);
-        if (generatorContext.getLanguage() == Language.GROOVY && generatorContext.getBuildTool().isGradle()) {
+        if (shouldAddCompileOnlyClient(generatorContext)) {
             generatorContext.addDependency(MicronautDependencyUtils.coreDependency().artifactId("micronaut-http-client").compileOnly());
         }
+    }
+
+    private boolean shouldAddCompileOnlyClient(GeneratorContext generatorContext) {
+        return generatorContext.getLanguage() == Language.GROOVY
+                && generatorContext.getBuildTool().isGradle()
+                && !generatorContext.hasFeature(HttpClientFeature.class);
     }
 
     @Override
