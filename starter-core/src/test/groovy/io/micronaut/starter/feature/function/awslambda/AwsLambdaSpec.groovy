@@ -525,7 +525,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         build.contains('<exec.mainClass>')
         build.contains('</exec.mainClass>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        build.contains('<artifactId>micronaut-http-client</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
 
         where:

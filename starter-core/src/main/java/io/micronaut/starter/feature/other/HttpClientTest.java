@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -85,5 +86,10 @@ public class HttpClientTest implements DefaultFeature {
     private boolean hasHttpClientFeatureDependencyInScope(@NonNull GeneratorContext generatorContext, @NonNull Scope scope) {
         return generatorContext.hasDependencyInScope(MicronautDependencyUtils.GROUP_ID_MICRONAUT, ARTIFACT_ID_MICRONAUT_HTTP_CLIENT, scope) ||
                 generatorContext.hasDependencyInScope(MicronautDependencyUtils.GROUP_ID_MICRONAUT, HttpClientJdk.ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK, scope);
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
 }
