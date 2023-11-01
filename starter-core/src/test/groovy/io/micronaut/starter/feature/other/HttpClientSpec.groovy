@@ -26,12 +26,11 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, buildTool).language(language).features(features).render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
-        if (buildTool.gradle) println template
 
         then:
         if (features.isEmpty()) { // default feature
             assert verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
-            assert verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE_ONLY) == (language == Language.GROOVY && buildTool.gradle)
+            assert verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE_ONLY) == (buildTool.gradle)
         } else {
             assert verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
             assert !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)

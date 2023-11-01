@@ -482,8 +482,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         language << Language.values()
     }
 
-    @Unroll
-    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'(
+    void '#applicationType app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'(
             ApplicationType applicationType,
             Language language
     ) {
@@ -495,19 +494,21 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         )
         String build = output['build.gradle']
 
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, build)
+
         then:
         build.contains('runtime("lambda_provided")')
-        if (applicationType == ApplicationType.DEFAULT) {
-            assert !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
-        } else if (applicationType == ApplicationType.FUNCTION) {
-            assert build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
-        }
-        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
-        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime", Scope.COMPILE) == (applicationType == ApplicationType.FUNCTION)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
+
+        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
+        verifier.hasDependency("io.micronaut", "micronaut-http-client")
 
         where:
-        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
-        language << GraalVMFeatureValidator.supportedLanguages()
+        [applicationType, language] << [
+                [ApplicationType.DEFAULT, ApplicationType.FUNCTION],
+                GraalVMFeatureValidator.supportedLanguages()
+        ].combinations()
     }
 
     @Unroll
