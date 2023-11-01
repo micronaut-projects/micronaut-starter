@@ -28,8 +28,9 @@ import java.util.List;
 public class HttpClientJdk implements HttpClientFeature {
     public static final String NAME = "http-client-jdk";
 
+    public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK = "micronaut-http-client-jdk";
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK = MicronautDependencyUtils.coreDependency()
-            .artifactId("micronaut-http-client-jdk")
+            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK)
             .compile()
             .build();
 

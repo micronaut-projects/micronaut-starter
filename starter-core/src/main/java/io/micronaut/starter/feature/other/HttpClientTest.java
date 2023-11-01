@@ -15,16 +15,22 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
+import io.micronaut.starter.feature.validator.MicronautHttpValidation;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -33,9 +39,15 @@ import static io.micronaut.starter.feature.other.HttpClient.ARTIFACT_ID_MICRONAU
 
 @Singleton
 public class HttpClientTest implements DefaultFeature {
+
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST = MicronautDependencyUtils.coreDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
             .test()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY = MicronautDependencyUtils.coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
+            .compileOnly()
             .build();
 
     @Override
@@ -60,10 +72,25 @@ public class HttpClientTest implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) || (generatorContext.getFeatures().hasFeature(AwsLambda.class) && generatorContext.getFeatures().hasFeature(GraalVM.class))) {
-            generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
-        } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
-            generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
+        if (!hasHttpClientFeatureDependencyInScope(generatorContext, Scope.COMPILE)) {
+            if (generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) || (generatorContext.getFeatures().hasFeature(AwsLambda.class) && generatorContext.getFeatures().hasFeature(GraalVM.class))) {
+                generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
+            } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+                generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
+                if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle() && generatorContext.getLanguage() == Language.GROOVY) {
+                    generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);
+                }
+            }
         }
+    }
+
+    private boolean hasHttpClientFeatureDependencyInScope(@NonNull GeneratorContext generatorContext, @NonNull Scope scope) {
+        return generatorContext.hasDependencyInScope(MicronautDependencyUtils.GROUP_ID_MICRONAUT, ARTIFACT_ID_MICRONAUT_HTTP_CLIENT, scope) ||
+                generatorContext.hasDependencyInScope(MicronautDependencyUtils.GROUP_ID_MICRONAUT, HttpClientJdk.ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK, scope);
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
     }
 }
