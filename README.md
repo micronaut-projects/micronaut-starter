@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.micronaut.starter/micronaut-starter-core.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.micronaut.starter/micronaut-starter-core)
 [![Build Status](https://github.com/micronaut-projects/micronaut-starter/workflows/Java%20CI/badge.svg)](https://github.com/micronaut-projects/micronaut-starter/actions)
-[![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.micronaut.io/scans)
+[![Revved up by Develocity](https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.micronaut.io/scans)
 
 Generates Micronaut applications.
 
@@ -25,7 +25,7 @@ Run `curl https://launch.micronaut.io` for more information on how to use the AP
 
 If you prefer a browser based user interface you can visit [Micronaut Launch](https://micronaut.io/launch).
 
-The user interface is [written in React](https://github.com/micronaut-projects/micronaut-starter-ui/tree/master/main/src/main/js/launch) and is a static single page application that simply interacts with the https://launch.micronaut.io API.
+The user interface is [written in React](https://github.com/micronaut-projects/micronaut-starter-ui) and is a static single page application that simply interacts with the https://launch.micronaut.io API.
 
 ## API
 

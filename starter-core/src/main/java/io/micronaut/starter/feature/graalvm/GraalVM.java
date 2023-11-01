@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
@@ -28,6 +27,7 @@ public class GraalVM implements Feature {
     public static final String FEATURE_NAME_GRAALVM = "graalvm";
     public static final String ARTIFACT_ID_MICRONAUT_GRAALVM = "micronaut-graal";
 
+    @Deprecated(forRemoval = true, since = "4.1.4")
     static final Dependency GRAAL_SVM = Dependency.builder()
             .groupId("org.graalvm.nativeimage")
             .artifactId("svm")
@@ -59,13 +59,7 @@ public class GraalVM implements Feature {
         return Category.PACKAGING;
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(GRAAL_SVM);
-        }
-    }
-
+    @Deprecated(forRemoval = true, since = "4.1.4")
     public static Dependency.Builder micronautGraalVM() {
         return MicronautDependencyUtils.coreDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_GRAALVM);

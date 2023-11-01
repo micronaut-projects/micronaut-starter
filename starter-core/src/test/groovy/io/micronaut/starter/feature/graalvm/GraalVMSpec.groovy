@@ -3,6 +3,10 @@ package io.micronaut.starter.feature.graalvm
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Shared
@@ -22,6 +26,20 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         where:
         applicationType << ApplicationType.values()
+    }
+
+    void "test dependency added for AOP feature"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([GraalVM.FEATURE_NAME_GRAALVM])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        !verifier.hasDependency("org.graalvm.nativeimage", "svm", Scope.COMPILE_ONLY)
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     void 'graalvm feature not supported for groovy and gradle'() {

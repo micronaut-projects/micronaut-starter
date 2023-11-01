@@ -23,11 +23,7 @@ import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.DependencyContext;
-import io.micronaut.starter.build.dependencies.LookupFailedException;
+import io.micronaut.starter.build.dependencies.*;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.build.maven.Profile;
@@ -418,5 +414,14 @@ public class GeneratorContext implements DependencyContext {
 
     public boolean isMicronautFramework() {
         return getFramework().equalsIgnoreCase(Options.FRAMEWORK_MICRONAUT);
+    }
+
+    public boolean hasDependencyInScope(@NonNull String groupId,
+                                        @NonNull String artifactId,
+                                        @NonNull Scope scope) {
+        return getDependencies().stream()
+                .anyMatch(dependency -> dependency.getGroupId().equals(groupId) &&
+                        dependency.getArtifactId().equals(artifactId)
+                        && dependency.getScope() == scope);
     }
 }
