@@ -31,6 +31,7 @@ class ZipCreateControllerSpec extends Specification {
         def bytes = client.createApp("test", ['graalvm'], null, null, null)
 
         then:
+        ZipUtil.containsFile(bytes, "build.gradle.kts")
         !ZipUtil.containsFileWithContents(bytes, "build.gradle.kts", ':svm')
     }
 

@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,13 +23,13 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.feature.validator.MicronautHttpValidation;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -77,7 +76,7 @@ public class HttpClientTest implements DefaultFeature {
                 generatorContext.addDependency(HttpClient.DEPENDENCY_MICRONAUT_HTTP_CLIENT);
             } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
                 generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
-                if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle() && generatorContext.getLanguage() == Language.GROOVY) {
+                if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
                     generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);
                 }
             }
@@ -91,6 +90,6 @@ public class HttpClientTest implements DefaultFeature {
 
     @Override
     public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
+        return FeaturePhase.TEST.getOrder();
     }
 }
