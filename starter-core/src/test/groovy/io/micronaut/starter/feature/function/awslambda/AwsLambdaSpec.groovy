@@ -17,7 +17,6 @@ import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
-import spock.lang.Unroll
 
 class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -72,7 +71,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         ApplicationType.FUNCTION    | 'example.micronaut.FunctionRequestHandler'
     }
 
-    @Unroll
     void "aws-lambda does not support #description"(ApplicationType applicationType, String description) {
         expect:
         !awsLambda.supports(applicationType)
@@ -90,7 +88,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
     }
 
-    @Unroll
     void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -105,7 +102,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         language << Language.values()
     }
 
-    @Unroll
     void "'aws-lambda feature is default feature for function  and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, language, [])
@@ -120,7 +116,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildTool << BuildTool.values()
     }
 
-    @Unroll
     void "aws-lambda dependencies for aws-lambda function and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
@@ -134,7 +129,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildTool << BuildTool.values()
     }
 
-    @Unroll
     void "aws-lambda adds micronaut-aws-lambda-events-serde since serde-jackson is the default json feature for #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA], ApplicationType.DEFAULT)
@@ -147,7 +141,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildTool << BuildTool.values()
     }
 
-    @Unroll
     void "aws-lambda does not add micronaut-aws-lambda-events-serde when jackson-databind feature is added for #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'jackson-databind'], ApplicationType.DEFAULT)
@@ -179,7 +172,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
                 .render()
     }
 
-    @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
         String template = template(BuildTool.MAVEN, language, [])
@@ -196,7 +188,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         language << Language.values()
     }
 
-    @Unroll
     void 'function with gradle and feature aws-lambda for language=#language'() {
         when:
         String build = template(BuildTool.GRADLE, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
@@ -208,7 +199,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         language << Language.values().toList()
     }
 
-    @Unroll
     void "aws-lambda dependencies for aws-lambda, graalvm function and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm'])
@@ -233,7 +223,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         language << GraalVMFeatureValidator.supportedLanguages()
     }
 
-    @Unroll
     void 'files with gradle and feature aws-lambda for language=#language'() {
         when:
         Map<String, String> output = generate(
@@ -253,7 +242,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
     void 'function with maven and feature aws-lambda for language=#language'() {
         when:
         Map<String, String> output = generate(
@@ -279,7 +267,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(ApplicationType applicationType, Language language, BuildTool buildTool) {
         given:
         String extension = language.extension
@@ -352,7 +339,6 @@ tasks.named("dockerfileNative") {
         buildGradle.indexOf('com.google.devtools.ksp') < buildGradle.indexOf('io.micronaut.library')
     }
 
-    @Unroll
     void 'Application file is generated for a default application type with gradle Kotlin DSL and features aws-lambda for language: #language'(Language language, String extension) {
         given:
         BuildTool buildTool = BuildTool.GRADLE_KOTLIN
@@ -388,7 +374,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         extension << Language.extensions()
     }
 
-    @Unroll
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
         when:
         def output = generate(
@@ -405,7 +390,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         extension << GraalVMFeatureValidator.supportedLanguages()*.extension
     }
 
-    @Unroll
     void 'Application file is generated for a default application type with gradle and features aws-lambda and aws-lambda-custom-runtime for language: #language'(Language language, String extension) {
         when:
         def output = generate(
@@ -428,7 +412,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         extension << Language.extensions()
     }
 
-    @Unroll
     void 'aws-lambda features includes dependency to micronaut-function-aws-api-proxy for function for gradle and language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -461,7 +444,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         language << GraalVMFeatureValidator.supportedLanguages()
     }
 
-    @Unroll
     void 'test maven micronaut-function-aws-api-proxy feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -511,7 +493,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         ].combinations()
     }
 
-    @Unroll
     void 'app with maven and feature aws-lambda does not apply aws-lambda-custom-runtime for language=#language'() {
         when:
         def output = generate(
@@ -520,20 +501,23 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA]
         )
         String build = output['pom.xml']
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, build)
 
         then:
-        !build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
         build.contains('<exec.mainClass>')
         build.contains('</exec.mainClass>')
-        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        !build.contains('<artifactId>micronaut-http-client</artifactId>')
-        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+
+        !verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime")
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
+        verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws-api-proxy', Scope.COMPILE)
+
+        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
+        verifier.hasDependency("io.micronaut", "micronaut-http-client")
 
         where:
         language << Language.values().toList()
     }
 
-    @Unroll
     void 'app with maven and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
         when:
         def output = generate(
@@ -542,19 +526,22 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm']
         )
         String build = output['pom.xml']
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, build)
 
         then:
         build.contains('<exec.mainClass>io.micronaut.function.aws.runtime.MicronautLambdaRuntime</exec.mainClass>')
-        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
-        build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
-        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        build.contains('<artifactId>micronaut-http-client</artifactId>')
+
+        verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws-api-proxy', Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
+
+        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
+        verifier.hasDependency("io.micronaut", "micronaut-http-client")
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
     }
 
-    @Unroll
     void 'app with gradle and feature aws-lambda for language=#language'() {
         when:
         Map<String, String> output = generate(
@@ -579,7 +566,6 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
     void 'app with maven and feature aws-lambda for language=#language'() {
         when:
         Map<String, String> output = generate(
