@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Prometheus extends MicrometerFeature {
+public class Prometheus extends MetricsRegistryFeature {
 
     public Prometheus(Core core, Management management) {
         super(core, management);

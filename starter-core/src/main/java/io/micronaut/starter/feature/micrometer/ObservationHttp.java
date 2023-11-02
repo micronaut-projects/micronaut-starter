@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,25 +20,30 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Influx extends MetricsRegistryFeature {
+public class ObservationHttp extends MicrometerFeature {
 
-    public Influx(Core core, Management management) {
+    ObservationHttp(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Influx reporter)";
-    }
-
-    @Override
-    public void doApply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.enabled", true);
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.step", "PT1M");
+        return "Automates code instrumentation for Micronaut HTTP server and Micronaut HTTP clients";
     }
 
     @Override
     protected String getImplementationName() {
-        return "influx";
+        return "observation-http";
+    }
+
+    @Override
+    protected void doApply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micrometer.observation.http.server.enabled", true);
+        generatorContext.getConfiguration().put("micrometer.observation.http.client.enabled", true);
+    }
+
+    @Override
+    protected String getArtifactId() {
+        return "micronaut-micrometer-" + getImplementationName();
     }
 }

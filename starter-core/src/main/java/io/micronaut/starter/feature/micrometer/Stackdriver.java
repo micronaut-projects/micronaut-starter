@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Stackdriver extends MicrometerFeature {
+public class Stackdriver extends MetricsRegistryFeature {
 
     public Stackdriver(Core core, Management management) {
         super(core, management);

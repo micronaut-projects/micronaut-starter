@@ -10,7 +10,6 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
 import io.micronaut.starter.feature.database.r2dbc.R2dbc
-import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Issue
@@ -129,7 +128,7 @@ class MicrometerSpec extends ApplicationContextSpec {
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature)*.name.iterator()
+        micrometerFeature << beanContext.getBeansOfType(MetricsRegistryFeature)*.name.iterator()
         configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
     }
 
@@ -212,36 +211,49 @@ class MicrometerSpec extends ApplicationContextSpec {
         commandContext.configuration.get('micronaut.metrics.enabled') == true
     }
 
-    void "test gradle micrometer annotation and feature"() {
+    void "test micrometer annotation and feature for buildTool=#buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
         def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         deps.size() == 3
-        deps.containsAll(['implementation("io.micronaut.micrometer:micronaut-micrometer-core")',
-                          'implementation("io.micronaut.micrometer:micronaut-micrometer-registry-atlas")',
-                          'annotationProcessor("io.micronaut.micrometer:micronaut-micrometer-annotation")'])
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR)
 
+        where:
+        buildTool << BuildTool.values()
     }
 
-    void "test maven micrometer annotation and features"() {
+    void "test micrometer dependencies for Observation feature=#feature for buildTool=#buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
-        def xml = new XmlSlurper().parseText(template)
-                .'**'.findAll{ it.groupId == 'io.micronaut.micrometer'}?.artifactId*.text()
+        def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        xml
-        xml.size() == 3
-        xml.containsAll(['micronaut-micrometer-core',
-                         'micronaut-micrometer-registry-atlas',
-                         'micronaut-micrometer-annotation'])
+        deps.size() == 3
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR)
 
+        where:
+        [feature, buildTool] << [["micrometer-observation", "micrometer-observation-http"], BuildTool.values()].combinations()
+    }
+
+    void 'test configuration for feature micrometer-observation-http'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(["micrometer-observation-http"])
+
+        then: 'the configuration is enabled for the feature'
+        commandContext.configuration.get('micrometer.observation.http.server.enabled') == true
+        commandContext.configuration.get('micrometer.observation.http.client.enabled') == true
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")

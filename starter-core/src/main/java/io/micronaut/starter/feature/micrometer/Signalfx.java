@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Signalfx extends MicrometerFeature {
+public class Signalfx extends MetricsRegistryFeature {
 
     public Signalfx(Core core, Management management) {
         super(core, management);

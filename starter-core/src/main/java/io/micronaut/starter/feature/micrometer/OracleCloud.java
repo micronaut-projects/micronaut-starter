@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloud extends MicrometerFeature {
+public class OracleCloud extends MetricsRegistryFeature {
 
     public OracleCloud(Core core, Management management) {
         super(core, management);

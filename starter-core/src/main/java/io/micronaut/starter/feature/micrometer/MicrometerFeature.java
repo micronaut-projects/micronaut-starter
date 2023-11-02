@@ -80,9 +80,7 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
         return "io.micronaut.micrometer";
     }
 
-    protected String getArtifactId() {
-        return "micronaut-micrometer-registry-" + getImplementationName();
-    }
+    protected abstract String getArtifactId();
 
     protected abstract String getImplementationName();
 

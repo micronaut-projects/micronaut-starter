@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Atlas extends MicrometerFeature {
+public class Atlas extends MetricsRegistryFeature {
 
     public Atlas(Core core, Management management) {
         super(core, management);
