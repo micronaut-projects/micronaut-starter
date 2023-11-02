@@ -16,7 +16,6 @@ import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
 import spock.lang.Shared
-import spock.lang.Unroll
 
 class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -71,7 +70,6 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains('age=30')
     }
 
-    @Unroll
     @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/601')
     void 'a Java/Groovy app with Gradle does not add a "tasks" block (language=#language)'() {
         when:
@@ -84,18 +82,6 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         language << [Language.JAVA, Language.GROOVY]
-    }
-
-    @Unroll
-    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/601')
-    void 'a Kotlin app with Gradle adds a "tasks" block (language=#language)'() {
-        when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, BuildTool.GRADLE))
-        def buildGradle = output["build.gradle"]
-
-        then:
-        buildGradle
-        buildGradle.contains("tasks")
     }
 
     void 'disable Gradle Toolchain by default (dsl = #dsl)'() {

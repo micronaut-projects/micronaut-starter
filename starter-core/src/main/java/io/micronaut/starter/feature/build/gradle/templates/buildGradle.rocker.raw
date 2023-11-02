@@ -57,7 +57,7 @@ application {
 }
 
 java {
-@if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk(17)")
 } else {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
@@ -67,27 +67,14 @@ java {
 }
 }
 
-@if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
-@if (features.contains("kapt")) {
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
-} else if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-    }
 }
-} else {
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}
-}
-}
+
 
 @if (features.contains("jrebel") ||
     features.contains("azure-function") ||

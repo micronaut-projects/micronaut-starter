@@ -62,7 +62,9 @@ java {
 
         then:
         template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
-        template.contains('''\
+
+        and: 'since Kotlin 1.9.20 we do not require jvmTarget anymore'
+        !template.contains('''\
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
@@ -86,6 +88,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 
         then:
         template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+
         template.contains('''\
 kotlin {
     jvmToolchain {
