@@ -57,7 +57,7 @@ application {
 }
 
 java {
-@if (features.language().isKotlin()) {
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk(17)")
 } else {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
@@ -67,38 +67,21 @@ java {
 }
 }
 
-@if (features.language().isKotlin() ||
-    features.testFramework().isKotlinTestFramework() ||
-    features.contains("jrebel") ||
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+}
+
+
+@if (features.contains("jrebel") ||
     features.contains("azure-function") ||
     features.contains("oracle-function") ||
     features.contains("jib") ||
     features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
 tasks {
-@if (features.language().isKotlin()) {
-    compileKotlin {
-        compilerOptions {
-@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))
-} else {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17)
-}
-        }
-    }
-}
-
-@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
-    compileTestKotlin {
-        compilerOptions {
-@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17))
-} else {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_@features.getTargetJdk(17)
-}
-        }
-    }
-}
-
 @if (features.contains("jrebel")) {
     run {
         dependsOn(generateRebel)

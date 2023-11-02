@@ -78,6 +78,24 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
+    void "test #buildTool with #jdk, ksp is the default"(BuildTool buildTool, JdkVersion jdk) {
+        when:
+        Language language = Language.KOTLIN
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasBuildPlugin("org.jetbrains.kotlin.jvm")
+        verifier.hasBuildPlugin("com.google.devtools.ksp")
+        verifier.hasBuildPlugin("org.jetbrains.kotlin.plugin.allopen")
+        !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
+
+        where:
+        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_17, JdkVersion.JDK_21]].combinations()
+    }
+
     void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_17))
@@ -91,7 +109,11 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 21, with #buildTool and Kapt we add the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21))
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),
+                [Kapt.NAME]
+        )
 
         then:
         output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))

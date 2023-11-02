@@ -75,10 +75,9 @@ public interface KotlinSupportFeature extends OneOfFeature {
                 generatorContext.addBuildPlugin(GradlePlugin.of("org.jetbrains.kotlin.plugin.jpa", "kotlin-noarg"));
             }
         }
-        if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_21)) {
+        if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_21) && generatorContext.hasFeature(Kapt.class)) {
             if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES)
-                );
+                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES));
             } else {
                 generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
             }
