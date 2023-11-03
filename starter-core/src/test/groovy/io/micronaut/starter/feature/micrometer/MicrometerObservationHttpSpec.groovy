@@ -30,6 +30,8 @@ class MicrometerObservationHttpSpec extends ApplicationContextSpec implements Co
 
         then:
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-observation-http", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-management", Scope.COMPILE)
 
         where:
         buildTool << BuildTool.values()
@@ -51,9 +53,9 @@ class MicrometerObservationHttpSpec extends ApplicationContextSpec implements Co
 
     void "micrometer-observation-http supports every application type"(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        !feature.supports(applicationType)
 
         where:
-        applicationType << ApplicationType.values()
+        applicationType << ApplicationType.values() - ApplicationType.DEFAULT
     }
 }

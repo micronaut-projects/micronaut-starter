@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Signalfx extends MicrometerFeature {
+public class Signalfx extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Signalfx(Core core, Management management) {
         super(core, management);
@@ -32,7 +32,7 @@ public class Signalfx extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.accessToken", "${SIGNALFX_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.step", "PT1M");

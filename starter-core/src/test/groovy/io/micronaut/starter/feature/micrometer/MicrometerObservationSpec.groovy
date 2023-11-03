@@ -29,6 +29,8 @@ class MicrometerObservationSpec extends ApplicationContextSpec implements Comman
 
         then:
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-observation", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-management", Scope.COMPILE)
 
         where:
         buildTool << BuildTool.values()
@@ -41,9 +43,9 @@ class MicrometerObservationSpec extends ApplicationContextSpec implements Comman
 
     void "micrometer-observation supports every application type"(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        !feature.supports(applicationType)
 
         where:
-        applicationType << ApplicationType.values()
+        applicationType << ApplicationType.values() - ApplicationType.DEFAULT
     }
 }

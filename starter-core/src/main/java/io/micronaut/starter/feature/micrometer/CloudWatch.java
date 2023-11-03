@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CloudWatch extends MicrometerFeature {
+public class CloudWatch extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public CloudWatch(Core core, Management management) {
         super(core, management);
@@ -32,12 +32,12 @@ public class CloudWatch extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".cloudwatch.enabled", true);
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "cloudwatch";
     }
 }

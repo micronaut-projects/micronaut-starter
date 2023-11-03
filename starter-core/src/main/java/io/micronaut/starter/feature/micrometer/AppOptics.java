@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AppOptics extends MicrometerFeature {
+public class AppOptics extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public AppOptics(Core core, Management management) {
         super(core, management);
@@ -32,14 +32,14 @@ public class AppOptics extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.apiToken", "${APPOPTICS_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "appoptics";
     }
 }

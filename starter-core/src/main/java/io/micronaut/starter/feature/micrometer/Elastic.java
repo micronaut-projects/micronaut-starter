@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Elastic extends MicrometerFeature {
+public class Elastic extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Elastic(Core core, Management management) {
         super(core, management);
@@ -32,13 +32,13 @@ public class Elastic extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "elastic";
     }
 }

@@ -15,12 +15,13 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Wavefront extends MicrometerFeature {
+public class Wavefront extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Wavefront(Core core, Management management) {
         super(core, management);
@@ -32,14 +33,14 @@ public class Wavefront extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(@NonNull GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.apiToken", "${WAVEFRONT_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "wavefront";
     }
 }

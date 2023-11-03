@@ -22,12 +22,13 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_PREFIX_MICRONAUT_MICROMETER;
 
 @Singleton
-public class MicrometerObservation implements Feature {
+public class MicrometerObservation extends MicrometerFeature implements Feature {
     public static final String NAME = "micrometer-observation";
     public static final String ARTIFACT_ID_MICRONAUT_MICROMETER_OBSERVATION = ARTIFACT_ID_PREFIX_MICRONAUT_MICROMETER + "observation";
     public static final Dependency DEPENDENCY_MICRONAUT_MICROMETER_OBSERVATION = MicronautDependencyUtils.micrometerDependency()
@@ -35,6 +36,10 @@ public class MicrometerObservation implements Feature {
             .compile()
             .build();
     public static final String TITLE = "Micronaut Micrometer Observation";
+
+    public MicrometerObservation(Core core, Management management) {
+        super(core, management);
+    }
 
     @Override
     public String getTitle() {
@@ -53,7 +58,7 @@ public class MicrometerObservation implements Feature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override

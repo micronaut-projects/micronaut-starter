@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Stackdriver extends MicrometerFeature {
+public class Stackdriver extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Stackdriver(Core core, Management management) {
         super(core, management);
@@ -32,14 +32,14 @@ public class Stackdriver extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.projectId", "${STACKDRIVER_PROJECT_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "stackdriver";
     }
 }

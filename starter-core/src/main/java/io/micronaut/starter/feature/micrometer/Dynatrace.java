@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Dynatrace extends MicrometerFeature {
+public class Dynatrace extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Dynatrace(Core core, Management management) {
         super(core, management);
@@ -32,7 +32,7 @@ public class Dynatrace extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.apiToken", "${DYNATRACE_DEVICE_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.uri", "${DYNATRACE_DEVICE_URI}");
@@ -41,7 +41,7 @@ public class Dynatrace extends MicrometerFeature {
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "dynatrace";
     }
 }

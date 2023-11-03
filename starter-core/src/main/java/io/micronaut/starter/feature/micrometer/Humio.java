@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Humio extends MicrometerFeature {
+public class Humio extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Humio(Core core, Management management) {
         super(core, management);
@@ -32,13 +32,13 @@ public class Humio extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "humio";
     }
 }

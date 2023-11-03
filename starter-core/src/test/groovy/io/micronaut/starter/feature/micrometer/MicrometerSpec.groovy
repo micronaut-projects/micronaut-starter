@@ -21,7 +21,7 @@ import spock.lang.Unroll
 class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixture  {
 
     @Unroll
-    void 'test micrometer feature #micrometerFeature.name contributes dependencies for #buildTool'(MicrometerFeature micrometerFeature, BuildTool buildTool) {
+    void 'test micrometer feature #micrometerFeature.name contributes dependencies for #buildTool'(MicrometerRegistryFeature micrometerFeature, BuildTool buildTool) {
         given:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features([micrometerFeature.name])
@@ -37,7 +37,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
 
         where:
-        [micrometerFeature, buildTool] << [beanContext.getBeansOfType(MicrometerFeature), BuildTool.values()].combinations()
+        [micrometerFeature, buildTool] << [beanContext.getBeansOfType(MicrometerRegistryFeature), BuildTool.values()].combinations()
     }
 
     void 'test gradle micrometer feature oracle cloud #buildTool'(BuildTool buildTool) {
@@ -109,7 +109,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature)*.name.iterator()
+        micrometerFeature << beanContext.getBeansOfType(MicrometerRegistryFeature)*.name.iterator()
         configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
     }
 

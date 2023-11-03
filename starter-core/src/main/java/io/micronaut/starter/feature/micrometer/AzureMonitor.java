@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AzureMonitor extends MicrometerFeature {
+public class AzureMonitor extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public AzureMonitor(Core core, Management management) {
         super(core, management);
@@ -32,14 +32,14 @@ public class AzureMonitor extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "azure-monitor";
     }
 }
