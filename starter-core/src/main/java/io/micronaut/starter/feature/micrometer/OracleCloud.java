@@ -15,13 +15,22 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloud extends MicrometerFeature {
+public class OracleCloud extends MicrometerFeature implements OracleCloudFeature, MicrometerRegistryFeature  {
+
+    public static final String ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER = "micronaut-oraclecloud-micrometer";
+    public static final Dependency DEPENDENCY_MICRONAUT_ORACLE_CLOUD_MICROMETER = MicronautDependencyUtils.oracleCloudDependency()
+            .artifactId("micronaut-oraclecloud-bmc-monitoring")
+            .compile()
+            .build();
 
     public OracleCloud(Core core, Management management) {
         super(core, management);
@@ -38,27 +47,25 @@ public class OracleCloud extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(micrometerDependency());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_ORACLE_CLOUD_MICROMETER);
+    }
+
+    @Override
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.namespace", "change-me");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
-                .artifactId("micronaut-oraclecloud-bmc-monitoring")
-                .compile());
     }
 
     @Override
-    public String getGroupId() {
-        return "io.micronaut.oraclecloud";
+    @NonNull
+    public Dependency.Builder micrometerDependency() {
+        return MicronautDependencyUtils.oracleCloudDependency().artifactId(ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER).compile();
     }
 
     @Override
-    public String getArtifactId() {
-        return "micronaut-oraclecloud-micrometer";
-    }
-
-    @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "oracle-cloud";
     }
 }

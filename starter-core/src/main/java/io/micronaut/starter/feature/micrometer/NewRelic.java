@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class NewRelic extends MicrometerFeature {
+public class NewRelic extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public NewRelic(Core core, Management management) {
         super(core, management);
@@ -32,7 +32,7 @@ public class NewRelic extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.apiKey", "${NEWRELIC_API_KEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
@@ -40,7 +40,7 @@ public class NewRelic extends MicrometerFeature {
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "new-relic";
     }
 }

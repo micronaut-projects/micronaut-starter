@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Kairos extends MicrometerFeature {
+public class Kairos extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Kairos(Core core, Management management) {
         super(core, management);
@@ -33,13 +32,13 @@ public class Kairos extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "kairos";
     }
 }

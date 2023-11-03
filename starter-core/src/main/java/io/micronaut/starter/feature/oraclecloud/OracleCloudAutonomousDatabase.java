@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -34,8 +35,7 @@ import java.util.Map;
 @Singleton
 public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
-    private static final Dependency.Builder DEPENDENCY_MICRONAUT_ORACLECLOUD_ATP = Dependency.builder()
-            .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_ORACLECLOUD_ATP = MicronautDependencyUtils.oracleCloudDependency()
             .artifactId("micronaut-oraclecloud-atp")
             .compile();
 

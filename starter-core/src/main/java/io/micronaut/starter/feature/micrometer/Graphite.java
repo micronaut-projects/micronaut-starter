@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Graphite extends MicrometerFeature {
+public class Graphite extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Graphite(Core core, Management management) {
         super(core, management);
@@ -33,7 +32,7 @@ public class Graphite extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
@@ -41,7 +40,7 @@ public class Graphite extends MicrometerFeature {
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "graphite";
     }
 }

@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Influx extends MicrometerFeature {
+public class Influx extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Influx(Core core, Management management) {
         super(core, management);
@@ -33,13 +32,13 @@ public class Influx extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "influx";
     }
 }

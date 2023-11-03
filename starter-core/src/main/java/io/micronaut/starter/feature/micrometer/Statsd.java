@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Statsd extends MicrometerFeature {
+public class Statsd extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Statsd(Core core, Management management) {
         super(core, management);
@@ -33,7 +32,7 @@ public class Statsd extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.flavor", "datadog");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.host", "localhost");
@@ -42,7 +41,7 @@ public class Statsd extends MicrometerFeature {
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "statsd";
     }
 }

@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Atlas extends MicrometerFeature {
+public class Atlas extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Atlas(Core core, Management management) {
         super(core, management);
@@ -32,14 +32,14 @@ public class Atlas extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.uri", "http://localhost:7101/api/v1/publish");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "atlas";
     }
 

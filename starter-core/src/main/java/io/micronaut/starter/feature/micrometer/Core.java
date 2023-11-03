@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.micrometer;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
@@ -25,8 +26,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Core implements Feature {
-    private static final Dependency MICRONAUT_MICROMETER_CORE = Dependency.builder()
-            .groupId("io.micronaut.micrometer")
+    private static final Dependency MICRONAUT_MICROMETER_CORE = MicronautDependencyUtils.micrometerDependency()
             .artifactId("micronaut-micrometer-core")
             .compile()
             .build();
