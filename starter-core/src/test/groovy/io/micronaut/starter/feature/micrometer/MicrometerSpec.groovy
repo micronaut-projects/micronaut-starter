@@ -210,7 +210,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         buildTool << BuildTool.values()
     }
 
-    void "test micrometer dependencies for Observation feature=#feature for buildTool=#buildTool"(BuildTool buildTool) {
+    void "test micrometer dependencies for micrometer-atlas and micrometer-annotation for buildTool=#buildTool"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-annotation"])
@@ -225,16 +225,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR)
 
         where:
-        [feature, buildTool] << [["micrometer-observation", "micrometer-observation-http"], BuildTool.values()].combinations()
-    }
-
-    void 'test configuration for feature micrometer-observation-http'() {
-        when:
-        GeneratorContext commandContext = buildGeneratorContext(["micrometer-observation-http"])
-
-        then: 'the configuration is enabled for the feature'
-        commandContext.configuration.get('micrometer.observation.http.server.enabled') == true
-        commandContext.configuration.get('micrometer.observation.http.client.enabled') == true
+        buildTool << BuildTool.values()
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")

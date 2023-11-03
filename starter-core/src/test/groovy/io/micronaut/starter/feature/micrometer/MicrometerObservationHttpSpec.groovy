@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.micrometer
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
@@ -32,6 +33,15 @@ class MicrometerObservationHttpSpec extends ApplicationContextSpec implements Co
 
         where:
         buildTool << BuildTool.values()
+    }
+
+    void 'test configuration for feature micrometer-observation-http'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(["micrometer-observation-http"])
+
+        then: 'the configuration is enabled for the feature'
+        commandContext.configuration.get('micrometer.observation.http.server.enabled') == true
+        commandContext.configuration.get('micrometer.observation.http.client.enabled') == true
     }
 
     void "micrometer-observation-http belongs to Metrics category"() {
