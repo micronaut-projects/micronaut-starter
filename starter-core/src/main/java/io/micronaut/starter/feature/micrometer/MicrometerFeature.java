@@ -85,9 +85,18 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
      *
      * @return Use {@link io.micronaut.starter.build.dependencies.MicronautDependencyUtils#GROUP_ID_MICRONAUT_MICROMETER} instead.
      */
-    @Deprecated(forRemoval = true)
+    @Deprecated(forRemoval = true, since = "4.2.0")
     protected String getGroupId() {
         return "io.micronaut.micrometer";
+    }
+
+    /**
+     *
+     * @return Use {@link MicronautDependencyUtils#micrometerRegistryDependency(String)} instead.
+     */
+    @Deprecated(forRemoval = true, since = "4.2.0")
+    protected String getArtifactId() {
+        return "micronaut-micrometer-registry-" + getImplementationName();
     }
 
     protected abstract String getImplementationName();
