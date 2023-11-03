@@ -1,6 +1,10 @@
-@args (boolean jansi, boolean coloring)
+@args (boolean jansi, boolean coloring, boolean jul)
 
 <configuration>
+
+@if(jul){
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+}
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 @if(jansi) {
