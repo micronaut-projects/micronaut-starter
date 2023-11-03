@@ -27,12 +27,6 @@ import jakarta.inject.Singleton;
 public class Slf4jJulBridge implements LoggingFeature {
 
     private static final boolean USE_JUL = true;
-    private static final Dependency JUL_TO_SLF4J = Dependency.builder()
-            .groupId("org.slf4j")
-            .artifactId("jul-to-slf4j")
-            .version("2.0.9")
-            .runtime()
-            .build();
     private final Logback logback;
 
     public Slf4jJulBridge(Logback logback) {
@@ -66,7 +60,7 @@ public class Slf4jJulBridge implements LoggingFeature {
         logback.addConfig(generatorContext, USE_JUL);
         addLoggingProperties(generatorContext);
         logback.addDependency(generatorContext);
-        generatorContext.addDependency(JUL_TO_SLF4J);
+        generatorContext.addDependency(Dependency.builder().lookupArtifactId("jul-to-slf4j").runtime());
     }
 
     protected void addLoggingProperties(GeneratorContext generatorContext) {
