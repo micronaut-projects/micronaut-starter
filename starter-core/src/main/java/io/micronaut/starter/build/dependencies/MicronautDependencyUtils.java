@@ -143,8 +143,8 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
-    public static Dependency.Builder micrometerDependency(@NonNull String implementationName) {
-        return micronautDependency(GROUP_ID_MICRONAUT_MICROMETER).artifactId("micronaut-micrometer-registry-" + implementationName);
+    public static Dependency.Builder micrometerRegistryDependency(@NonNull String implementationName) {
+        return micrometerDependency().artifactId("micronaut-micrometer-registry-" + implementationName);
     }
 
     @NonNull

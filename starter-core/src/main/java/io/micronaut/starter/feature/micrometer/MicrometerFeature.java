@@ -67,7 +67,7 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
 
     @NonNull
     protected Dependency.Builder micrometerDependency() {
-        return MicronautDependencyUtils.micrometerDependency(getImplementationName())
+        return MicronautDependencyUtils.micrometerRegistryDependency(getImplementationName())
                 .compile();
     }
 
