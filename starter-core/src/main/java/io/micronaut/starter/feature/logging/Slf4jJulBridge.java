@@ -19,18 +19,17 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.logging.template.julToSlf4j;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Slf4jJulBridge implements LoggingFeature {
-
-    private static final boolean USE_JUL = true;
-    private final Logback logback;
-
-    public Slf4jJulBridge(Logback logback) {
-        this.logback = logback;
+public class Slf4jJulBridge implements Feature {
+    @Override
+    public String getCategory() {
+        return Category.LOGGING;
     }
 
     @Override
@@ -57,9 +56,7 @@ public class Slf4jJulBridge implements LoggingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        logback.addConfig(generatorContext, USE_JUL);
         addLoggingProperties(generatorContext);
-        logback.addDependency(generatorContext);
         generatorContext.addDependency(Dependency.builder().lookupArtifactId("jul-to-slf4j").runtime());
     }
 

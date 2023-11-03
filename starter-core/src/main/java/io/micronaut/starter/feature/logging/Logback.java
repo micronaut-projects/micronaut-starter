@@ -34,7 +34,6 @@ import java.util.Set;
 public class Logback implements LoggingFeature, DefaultFeature {
     public static final boolean DEFAULT_COLORING = true;
     private static final boolean USE_JANSI = false;
-    private static final boolean DEFAULT_JUL = false;
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
             .artifactId("logback-classic")
@@ -65,7 +64,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        addConfig(generatorContext, DEFAULT_JUL);
+        addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
         addDependency(generatorContext);
     }
 
