@@ -6,33 +6,38 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
 import io.micronaut.starter.feature.database.r2dbc.R2dbc
+import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Issue
 import spock.lang.Unroll
 
-class MicrometerSpec extends ApplicationContextSpec {
+class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixture  {
 
     @Unroll
-    void 'test gradle micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
+    void 'test micrometer feature #micrometerFeature.name contributes dependencies for #buildTool'(MicrometerFeature micrometerFeature, BuildTool buildTool) {
         given:
-        String dependency = micrometerFeature.getArtifactId()
-        String group = micrometerFeature.getGroupId()
-
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features([micrometerFeature.name])
                 .render()
+        when:
+        String groupId = micrometerFeature instanceof OracleCloudFeature ?
+                MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD : MicronautDependencyUtils.GROUP_ID_MICRONAUT_MICROMETER
+        String artifactId = micrometerFeature instanceof OracleCloudFeature ?
+                OracleCloud.ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER : "micronaut-micrometer-registry-" + micrometerFeature.getImplementationName()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("implementation(\"${group}:${dependency}\")")
+        verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
+        [micrometerFeature, buildTool] << [beanContext.getBeansOfType(MicrometerFeature), BuildTool.values()].combinations()
     }
 
     void 'test gradle micrometer feature oracle cloud #buildTool'(BuildTool buildTool) {
@@ -65,30 +70,6 @@ class MicrometerSpec extends ApplicationContextSpec {
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-influx")
 """)
         template.count("io.micronaut.micrometer:micronaut-micrometer-core") == 1
-    }
-
-    @Unroll
-    void 'test maven micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
-        given:
-        String dependency = micrometerFeature.getArtifactId()
-        String group = micrometerFeature.getGroupId()
-
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([micrometerFeature.name])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>$group</groupId>
-      <artifactId>$dependency</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
     }
 
     void "test maven micrometer multiple features"() {
@@ -128,7 +109,7 @@ class MicrometerSpec extends ApplicationContextSpec {
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MetricsRegistryFeature)*.name.iterator()
+        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature)*.name.iterator()
         configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
     }
 

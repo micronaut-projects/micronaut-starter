@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jmx extends MetricsRegistryFeature {
+public class Jmx extends MicrometerFeature {
 
     public Jmx(Core core, Management management) {
         super(core, management);

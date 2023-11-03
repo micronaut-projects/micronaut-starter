@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataDog extends MetricsRegistryFeature {
+public class DataDog extends MicrometerFeature {
 
     public DataDog(Core core, Management management) {
         super(core, management);

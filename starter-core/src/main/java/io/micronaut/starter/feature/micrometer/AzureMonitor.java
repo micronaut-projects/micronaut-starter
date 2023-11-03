@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AzureMonitor extends MetricsRegistryFeature {
+public class AzureMonitor extends MicrometerFeature {
 
     public AzureMonitor(Core core, Management management) {
         super(core, management);

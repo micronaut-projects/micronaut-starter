@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -60,15 +62,18 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
     @Override
     public void apply(GeneratorContext generatorContext) {
         doApply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getGroupId())
-                .artifactId(getArtifactId())
-                .compile());
+        generatorContext.addDependency(micrometerDependency());
+    }
+
+    @NonNull
+    protected Dependency.Builder micrometerDependency() {
+        return MicronautDependencyUtils.micrometerDependency(getImplementationName())
+                .compile();
     }
 
     @Override
     public String getCategory() {
-        return Category.MANAGEMENT;
+        return Category.METRICS;
     }
 
     @Override
@@ -76,11 +81,14 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
         return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
     }
 
+    /**
+     *
+     * @return Use {@link io.micronaut.starter.build.dependencies.MicronautDependencyUtils#GROUP_ID_MICRONAUT_MICROMETER} instead.
+     */
+    @Deprecated(forRemoval = true)
     protected String getGroupId() {
         return "io.micronaut.micrometer";
     }
-
-    protected abstract String getArtifactId();
 
     protected abstract String getImplementationName();
 

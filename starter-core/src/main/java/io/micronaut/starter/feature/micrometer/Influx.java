@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Influx extends MetricsRegistryFeature {
+public class Influx extends MicrometerFeature {
 
     public Influx(Core core, Management management) {
         super(core, management);

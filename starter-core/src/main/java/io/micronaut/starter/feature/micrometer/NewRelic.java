@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class NewRelic extends MetricsRegistryFeature {
+public class NewRelic extends MicrometerFeature {
 
     public NewRelic(Core core, Management management) {
         super(core, management);

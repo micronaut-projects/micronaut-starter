@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Humio extends MetricsRegistryFeature {
+public class Humio extends MicrometerFeature {
 
     public Humio(Core core, Management management) {
         super(core, management);

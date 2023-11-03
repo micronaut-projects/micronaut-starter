@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Dynatrace extends MetricsRegistryFeature {
+public class Dynatrace extends MicrometerFeature {
 
     public Dynatrace(Core core, Management management) {
         super(core, management);

@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AppOptics extends MetricsRegistryFeature {
+public class AppOptics extends MicrometerFeature {
 
     public AppOptics(Core core, Management management) {
         super(core, management);

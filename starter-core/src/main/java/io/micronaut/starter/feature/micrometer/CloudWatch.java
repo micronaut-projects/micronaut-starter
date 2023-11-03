@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CloudWatch extends MetricsRegistryFeature {
+public class CloudWatch extends MicrometerFeature {
 
     public CloudWatch(Core core, Management management) {
         super(core, management);

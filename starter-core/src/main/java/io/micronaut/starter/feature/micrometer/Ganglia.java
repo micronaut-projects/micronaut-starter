@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Ganglia extends MetricsRegistryFeature {
+public class Ganglia extends MicrometerFeature {
 
     public Ganglia(Core core, Management management) {
         super(core, management);

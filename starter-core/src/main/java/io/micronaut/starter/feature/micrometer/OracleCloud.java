@@ -15,13 +15,18 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloud extends MetricsRegistryFeature {
+public class OracleCloud extends MicrometerFeature implements OracleCloudFeature {
+
+    public static final String ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER = "micronaut-oraclecloud-micrometer";
 
     public OracleCloud(Core core, Management management) {
         super(core, management);
@@ -41,20 +46,15 @@ public class OracleCloud extends MetricsRegistryFeature {
     public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.namespace", "change-me");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
+        generatorContext.addDependency(MicronautDependencyUtils.oracleCloudDependency()
                 .artifactId("micronaut-oraclecloud-bmc-monitoring")
                 .compile());
     }
 
     @Override
-    public String getGroupId() {
-        return "io.micronaut.oraclecloud";
-    }
-
-    @Override
-    public String getArtifactId() {
-        return "micronaut-oraclecloud-micrometer";
+    @NonNull
+    protected Dependency.Builder micrometerDependency() {
+        return MicronautDependencyUtils.oracleCloudDependency().artifactId(ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER).compile();
     }
 
     @Override

@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Statsd extends MetricsRegistryFeature {
+public class Statsd extends MicrometerFeature {
 
     public Statsd(Core core, Management management) {
         super(core, management);

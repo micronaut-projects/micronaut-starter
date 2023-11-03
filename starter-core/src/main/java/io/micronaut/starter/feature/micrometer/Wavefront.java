@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Wavefront extends MetricsRegistryFeature {
+public class Wavefront extends MicrometerFeature {
 
     public Wavefront(Core core, Management management) {
         super(core, management);

@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Graphite extends MetricsRegistryFeature {
+public class Graphite extends MicrometerFeature {
 
     public Graphite(Core core, Management management) {
         super(core, management);

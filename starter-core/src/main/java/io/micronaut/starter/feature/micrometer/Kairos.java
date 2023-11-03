@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Kairos extends MetricsRegistryFeature {
+public class Kairos extends MicrometerFeature {
 
     public Kairos(Core core, Management management) {
         super(core, management);

@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.oraclecloud;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
@@ -60,8 +60,7 @@ public class OracleCloudVault implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
+        generatorContext.addDependency(MicronautDependencyUtils.oracleCloudDependency()
                 .artifactId("micronaut-oraclecloud-vault")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
