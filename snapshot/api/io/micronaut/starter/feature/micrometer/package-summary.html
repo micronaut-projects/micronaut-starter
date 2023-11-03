@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -75,8 +79,9 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="caption"><span>Classes</span></div>
-<div class="summary-table two-column-summary">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel">
+<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AppOptics.html" title="class in io.micronaut.starter.feature.micrometer">AppOptics</a></div>
@@ -111,20 +116,29 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MicrometerFeature.html" title="class in io.micronaut.starter.feature.micrometer">MicrometerFeature</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NewRelic.html" title="class in io.micronaut.starter.feature.micrometer">NewRelic</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MicrometerObservation.html" title="class in io.micronaut.starter.feature.micrometer">MicrometerObservation</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OracleCloud.html" title="class in io.micronaut.starter.feature.micrometer">OracleCloud</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MicrometerObservationHttp.html" title="class in io.micronaut.starter.feature.micrometer">MicrometerObservationHttp</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Prometheus.html" title="class in io.micronaut.starter.feature.micrometer">Prometheus</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Signalfx.html" title="class in io.micronaut.starter.feature.micrometer">Signalfx</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="MicrometerRegistryFeature.html" title="interface in io.micronaut.starter.feature.micrometer">MicrometerRegistryFeature</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Marker interface for Micronaut Registry features.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="NewRelic.html" title="class in io.micronaut.starter.feature.micrometer">NewRelic</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Stackdriver.html" title="class in io.micronaut.starter.feature.micrometer">Stackdriver</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="OracleCloud.html" title="class in io.micronaut.starter.feature.micrometer">OracleCloud</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Statsd.html" title="class in io.micronaut.starter.feature.micrometer">Statsd</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Prometheus.html" title="class in io.micronaut.starter.feature.micrometer">Prometheus</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Wavefront.html" title="class in io.micronaut.starter.feature.micrometer">Wavefront</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Signalfx.html" title="class in io.micronaut.starter.feature.micrometer">Signalfx</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Stackdriver.html" title="class in io.micronaut.starter.feature.micrometer">Stackdriver</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Statsd.html" title="class in io.micronaut.starter.feature.micrometer">Statsd</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Wavefront.html" title="class in io.micronaut.starter.feature.micrometer">Wavefront</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+</div>
 </div>
 </div>
 </li>
