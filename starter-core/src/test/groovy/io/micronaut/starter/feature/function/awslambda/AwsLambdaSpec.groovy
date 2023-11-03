@@ -110,6 +110,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
         verifier.hasDependency('io.micronaut.crac', 'micronaut-crac')
+        verifier.hasDependency('com.amazonaws', 'aws-lambda-java-events')
 
         where:
         language << Language.values()
