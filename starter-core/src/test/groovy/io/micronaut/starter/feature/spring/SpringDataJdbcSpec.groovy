@@ -58,7 +58,7 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
     void 'test spring-data-jdbc with buildTool=#buildTool for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['spring-data-jdbc', buildTool == BuildTool.MAVEN ? 'kapt' : 'ksp'])
+                .features(['spring-data-jdbc'])
                 .language(language)
                 .render()
 

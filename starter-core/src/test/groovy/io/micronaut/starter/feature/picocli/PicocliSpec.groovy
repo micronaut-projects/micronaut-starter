@@ -17,27 +17,21 @@ import spock.lang.Unroll
 class PicocliSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle cli app contains picocli-gen as annotation processor for language=#language'(Language language, String scope) {
+    void 'test cli app contains picocli-gen as annotation processor for buildTool=#buildTool language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .applicationType(ApplicationType.CLI)
-                .features(['ksp'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains("$scope(\"info.picocli:picocli-codegen\")")
-        if (language in [Language.KOTLIN, Language.GROOVY]) {
-            assert !template.contains('annotationProcessor("info.picocli:picocli-codegen')
-        }
-        template.contains('implementation("info.picocli:picocli")')
-        template.contains('implementation("io.micronaut.picocli:micronaut-picocli")')
+        verifier.hasAnnotationProcessor("info.picocli", "picocli-codegen")
+        verifier.hasDependency("info.picocli", "picocli")
+        verifier.hasDependency("io.micronaut.picocli", "micronaut-picocli")
 
         where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "ksp"
-        Language.GROOVY | "compileOnly"
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {

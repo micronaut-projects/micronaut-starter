@@ -80,7 +80,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
-                .features(['validation', buildTool == BuildTool.MAVEN ? 'kapt' : 'ksp'])
+                .features(['validation'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
