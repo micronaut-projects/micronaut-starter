@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
@@ -67,7 +68,16 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
         then:
         verifier.hasDependency("io.micronaut.data", "micronaut-data-spring")
         verifier.hasDependency("org.springframework", "spring-jdbc")
-        verifier.hasAnnotationProcessor("io.micronaut.spring", "micronaut-spring-annotation")
+        if (language != Language.GROOVY && buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("io.micronaut.spring", "micronaut-spring-annotation", Scope.ANNOTATION_PROCESSOR,
+                    "micronaut.spring.version", true)
+        }
+        if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("io.micronaut.spring", "micronaut-spring-annotation", Scope.COMPILE_ONLY)
+        }
+        if (language == Language.JAVA && buildTool == BuildTool.MAVEN) {
+            assert verifier.hasExclusion("io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
+        }
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
