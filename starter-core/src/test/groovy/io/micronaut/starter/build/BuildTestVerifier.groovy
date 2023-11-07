@@ -1,5 +1,6 @@
 package io.micronaut.starter.build
 
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.starter.build.dependencies.Scope;
 
 /**
@@ -26,6 +27,8 @@ interface BuildTestVerifier {
     boolean hasDependency(String groupId, String artifactId)
 
     boolean hasExclusion(String groupId, String artifactId)
+
+    boolean hasExclusion(String groupId, String artifactId, @Nullable Scope scope)
 
     boolean hasTestResourceDependency(String groupId, String artifactId)
 

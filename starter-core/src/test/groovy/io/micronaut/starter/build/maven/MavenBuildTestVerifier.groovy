@@ -4,6 +4,7 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.Language
@@ -117,11 +118,23 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
         project.dependencies.dependency.find { it.artifactId.text() == expectedArtifactId }
     }
 
-    @CompileDynamic
     @Override
     boolean hasExclusion(String groupId, String artifactId) {
-        project.dependencies.dependency.exclusions.exclusion.findAll { it.artifactId.text() == artifactId }.any {
-            it.groupId.text() == groupId
+        return hasExclusion(groupId, artifactId, null)
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, @Nullable Scope scope) {
+        if (scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) {
+            return project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }
+                ?.configuration.annotationProcessorPaths.path.exclusions.exclusion.findAll { it.artifactId.text() == artifactId }.any {
+                it.groupId.text() == groupId
+            }
+        } else {
+            return project.dependencies.dependency.exclusions.exclusion.findAll { it.artifactId.text() == artifactId }.any {
+                it.groupId.text() == groupId
+            }
         }
     }
 
