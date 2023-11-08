@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.database.MariaDB;
 import io.micronaut.starter.feature.database.MySQL;
 import io.micronaut.starter.feature.database.Oracle;
+import io.micronaut.starter.feature.database.PostgreSQL;
 import io.micronaut.starter.feature.database.SQLServer;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudAutonomousDatabase;
 import jakarta.inject.Singleton;
@@ -36,6 +37,7 @@ public class Flyway implements MigrationFeature {
     public static final String ARTIFACT_ID_FLYWAY_SQLSERVER = "flyway-sqlserver";
     public static final String ARTIFACT_ID_FLYWAY_ORACLE = "flyway-database-oracle";
     //https://documentation.red-gate.com/fd/oracle-184127602.html
+    public static final String ARTIFACT_ID_FLYWAY_POSTGRESQL = "flyway-database-postgresql";
     public static final Dependency.Builder DEPENDENCY_FLYWAY_MYSQL = Dependency.builder()
             .groupId(GROUP_ID_FLYWAYDB)
             .artifactId(ARTIFACT_ID_FLYWAY_MYSQL)
@@ -44,6 +46,10 @@ public class Flyway implements MigrationFeature {
     public static final Dependency.Builder DEPENDENCY_FLYWAY_ORACLE = Dependency.builder()
             .groupId(GROUP_ID_FLYWAYDB)
             .artifactId(ARTIFACT_ID_FLYWAY_ORACLE)
+            .runtime();
+    public static final Dependency.Builder DEPENDENCY_FLYWAY_POSTGRESQL = Dependency.builder()
+            .groupId(GROUP_ID_FLYWAYDB)
+            .artifactId(ARTIFACT_ID_FLYWAY_POSTGRESQL)
             .runtime();
     public static final Dependency.Builder DEPENDENCY_FLYWAY_SQLSERVER = Dependency.builder()
             .groupId(GROUP_ID_FLYWAYDB)
@@ -93,6 +99,9 @@ public class Flyway implements MigrationFeature {
         }
         if (generatorContext.isFeaturePresent(Oracle.class) || generatorContext.isFeaturePresent(OracleCloudAutonomousDatabase.class)) {
             generatorContext.addDependency(DEPENDENCY_FLYWAY_ORACLE);
+        }
+        if (generatorContext.isFeaturePresent(PostgreSQL.class)) {
+            generatorContext.addDependency(DEPENDENCY_FLYWAY_POSTGRESQL);
         }
     }
 }
