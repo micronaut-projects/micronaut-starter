@@ -51,12 +51,15 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .language(language)
                 .features([DynamoDb.NAME, GraalVM.FEATURE_NAME_GRAALVM])
                 .render()
+        String mapNotation = buildTool == BuildTool.GRADLE ? ':' : ' ='
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
-        verifier.hasExclusion("software.amazon.awssdk", "apache-client")
-        verifier.hasExclusion("software.amazon.awssdk", "netty-nio-client")
+        template.contains("""    implementation("software.amazon.awssdk:dynamodb") {
+                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "apache-client")
+                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "netty-nio-client")
+                            |    }""".stripMargin())
         verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
 
         where:

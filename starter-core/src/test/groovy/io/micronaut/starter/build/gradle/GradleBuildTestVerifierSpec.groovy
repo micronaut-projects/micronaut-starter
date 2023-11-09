@@ -24,18 +24,4 @@ class GradleBuildTestVerifierSpec extends Specification {
         false    | 'implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-function-http")'       |  "io.micronaut.oraclecloud" | "micronaut-oraclecloud-function"      | GradleConfiguration.IMPLEMENTATION.toString()
 
     }
-
-    void "hasExclusionRegex" () {
-        given:
-        GradleBuildTestVerifier verifier = new GradleBuildTestVerifier(template, Language.JAVA, TestFramework.JUNIT)
-
-        expect:
-        expected == verifier.hasExclusion(groupId, artifactId)
-
-        where:
-        expected | template | groupId | artifactId
-        false    | 'implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-function-http")' |  "io.micronaut.oraclecloud" | "micronaut-oraclecloud-function-http"
-        true     | 'exclude(group: "io.micronaut.sql", module: "micronaut-hibernate-jpa"))'         |  "io.micronaut.sql"         | "micronaut-hibernate-jpa"
-        true     | 'exclude(group = "io.micronaut.sql", module = "micronaut-hibernate-jpa")'        |  "io.micronaut.sql"         | "micronaut-hibernate-jpa"
-    }
 }

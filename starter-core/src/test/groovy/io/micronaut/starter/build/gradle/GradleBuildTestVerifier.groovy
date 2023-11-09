@@ -1,7 +1,6 @@
 package io.micronaut.starter.build.gradle
 
 import io.micronaut.context.exceptions.ConfigurationException
-import io.micronaut.core.annotation.Nullable
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.Language
@@ -85,19 +84,6 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         GradleConfiguration.values().collect { it.getConfigurationName() }.any( {scope ->
             hasDependency(groupId, artifactId, scope)
         })
-    }
-
-    @Override
-    boolean hasExclusion(String groupId, String artifactId) {
-        // GRADLE: exclude(group: "io.micronaut.sql", module: "micronaut-hibernate-jpa")
-        // GRADLE_KOTLIN: exclude(group = "io.micronaut.sql", module = "micronaut-hibernate-jpa")
-        template =~ /exclude\(group\s?[:=]\s?"${groupId}", module\s?[:=]\s?"${artifactId}"\)/
-    }
-
-    @Override
-    boolean hasExclusion(String groupId, String artifactId, @Nullable Scope scope) {
-        // scope only matters for Maven verifier
-        return hasExclusion(groupId, artifactId)
     }
 
     @Override
