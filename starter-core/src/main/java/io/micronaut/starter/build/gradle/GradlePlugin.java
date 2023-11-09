@@ -46,6 +46,7 @@ public class GradlePlugin implements BuildPlugin {
     private final boolean requiresLookup;
     private final List<GradleRepository> pluginsManagementRepositories;
     private final Set<String> buildImports;
+    private final Set<String> settingsImports;
     private final int order;
 
     public GradlePlugin(@NonNull GradleFile gradleFile,
@@ -57,7 +58,8 @@ public class GradlePlugin implements BuildPlugin {
                         List<GradleRepository> pluginsManagementRepositories,
                         boolean requiresLookup,
                         int order,
-                        Set<String> buildImports) {
+                        Set<String> buildImports,
+                        Set<String> settingsImports) {
         this.gradleFile = gradleFile;
         this.id = id;
         this.version = version;
@@ -68,6 +70,7 @@ public class GradlePlugin implements BuildPlugin {
         this.requiresLookup = requiresLookup;
         this.order = order;
         this.buildImports = buildImports;
+        this.settingsImports = settingsImports;
     }
 
     public static GradlePlugin of(String id, String lookupArtifactId) {
@@ -81,6 +84,11 @@ public class GradlePlugin implements BuildPlugin {
     @Nullable
     public Set<String> getBuildImports() {
         return buildImports;
+    }
+
+    @Nullable
+    public Set<String> getSettingsImports() {
+        return settingsImports;
     }
 
     @NonNull
@@ -135,7 +143,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, pluginsManagementRepositories, false, order, buildImports);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, pluginsManagementRepositories, false, order, buildImports, settingsImports);
     }
 
     @Override
@@ -171,6 +179,7 @@ public class GradlePlugin implements BuildPlugin {
         private boolean requiresLookup;
         private int order;
         private Set<String> buildImports = new HashSet<>();
+        private Set<String> settingsImports = new HashSet<>();
 
         private Builder() { }
 
@@ -189,6 +198,12 @@ public class GradlePlugin implements BuildPlugin {
         @NonNull
         public GradlePlugin.Builder buildImports(String... imports) {
             this.buildImports.addAll(Arrays.asList(imports));
+            return this;
+        }
+
+        @NonNull
+        public GradlePlugin.Builder settingsImports(String... imports) {
+            this.settingsImports.addAll(Arrays.asList(imports));
             return this;
         }
 
@@ -238,7 +253,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, pluginsManagementRepositories, requiresLookup, order, buildImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, pluginsManagementRepositories, requiresLookup, order, buildImports, settingsImports);
         }
     }
 

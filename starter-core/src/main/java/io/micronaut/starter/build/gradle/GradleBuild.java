@@ -82,6 +82,11 @@ public class GradleBuild {
     }
 
     @NonNull
+    public List<String> getSettingsImports() {
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).map(GradlePlugin::getSettingsImports).flatMap(Collection::stream).toList();
+    }
+
+    @NonNull
     public List<GradlePlugin> getSettingsPlugins() {
         return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).collect(Collectors.toList());
     }
