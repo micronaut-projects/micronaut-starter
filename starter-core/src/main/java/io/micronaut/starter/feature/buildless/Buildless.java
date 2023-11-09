@@ -20,6 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.CommunityFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildCacheConfiguration;
 import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
@@ -28,12 +29,11 @@ import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Buildless implements Feature, BuildCacheConfiguration {
+public class Buildless implements CommunityFeature, BuildCacheConfiguration {
     public static final boolean BUILDLESS_ENABLE_PLUGIN = true;
     public static final String FEATURE_NAME_BUILDLESS = "buildless";
     public static final String BUILDLESS_PLUGIN_ID = "build.less";
     public static final String BUILDLESS_PLUGIN_VERSION = "1.0.0-beta1";
-    public static final String BUILDLESS_ARTIFACT_ID = "build.less:buildless-plugin-gradle";
 
     @Override
     public String getName() {
@@ -46,8 +46,18 @@ public class Buildless implements Feature, BuildCacheConfiguration {
     }
 
     @Override
-    public boolean isCommunity() {
-        return true;
+    public String getCommunityFeatureTitle() {
+        return "Buildless";
+    }
+
+    @Override
+    public String getCommunityFeatureName() {
+        return "buildless";
+    }
+
+    @Override
+    public String getCommunityContributor() {
+        return "@sgammon";
     }
 
     @Override
