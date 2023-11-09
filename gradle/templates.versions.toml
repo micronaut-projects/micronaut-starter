@@ -28,6 +28,7 @@ azure-functions-maven-plugin = "1.26.0"
 bom-opentelemetry = "1.14.0-alpha"
 bpm-assert = "7.19.0"
 bpm-micronaut = "2.14.0"
+buildless = "1.0.0-beta1"
 camunda-micronaut-client = "2.12.0"
 gradle-enterprise = "3.13.4"
 gradle-enterprise-maven-custom-data = "1.12.4"
@@ -137,6 +138,7 @@ rocker-maven-plugin = { module = "com.fizzed:rocker-maven-plugin", version.ref =
 scram-client = { module = "com.ongres.scram:client", version.ref = "scram-client" }
 slf4j-simple-logger = { module = "io.goodforgod:slf4j-simple-logger", version.ref = "slf4j-simple-logger" }
 zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature", version.ref = "zeebe-micronaut-client" }
+buildless-gradle-plugin = { module = "build.less:buildless-plugin-gradle", version.ref = "buildless" }
 
 [plugins]
 # This is an exception to the rule!
