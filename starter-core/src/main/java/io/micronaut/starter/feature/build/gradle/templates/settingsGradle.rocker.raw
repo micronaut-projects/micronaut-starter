@@ -5,7 +5,7 @@
 @import java.util.Collection;
 @args (Project project, GradleBuild gradleBuild, boolean hasMultiProjectFeature, Collection<String> moduleNames)
 
-@if(!gradleBuild.getSettingsImports().isEmpty()) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN && !gradleBuild.getSettingsImports().isEmpty()) {
 @for (String settingsImport : gradleBuild.getSettingsImports()) {
 import @(settingsImport)
 }
