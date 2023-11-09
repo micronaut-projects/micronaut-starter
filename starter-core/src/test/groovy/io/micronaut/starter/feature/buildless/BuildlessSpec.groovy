@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.gradle.GradleDsl
 import io.micronaut.starter.feature.build.MicronautGradleEnterprise
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -44,8 +45,10 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         assert buildless.getRemoteCacheUri() != null
 
         and: 'buildless imports and block should be added'
-        assert settings.contains("import build.less.plugin.settings.buildless")
         assert settings.contains("buildless {")
+        if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+            assert settings.contains("import build.less.plugin.settings.buildless")
+        }
 
         and: 'buildless plugin should be added'
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
