@@ -23,7 +23,6 @@ asciidoctor-maven-plugin = "2.2.2"
 asciidoctorj = "2.5.10"
 asciidoctorj-diagram = "2.2.13"
 awaitility = "4.2.0"
-aws-java-events = "3.11.3"
 azure-functions-gradle-plugin = "1.13.0"
 azure-functions-maven-plugin = "1.26.0"
 bom-opentelemetry = "1.14.0-alpha"
@@ -89,7 +88,6 @@ asciidoctorj-diagram = { module = "org.asciidoctor:asciidoctorj-diagram", versio
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
 awaitility-groovy = { module = "org.awaitility:awaitility-groovy", version.ref = "awaitility" }
 awaitility-kotlin = { module = "org.awaitility:awaitility-kotlin", version.ref = "awaitility" }
-aws-java-events = { module = "com.amazonaws:aws-lambda-java-events", version.ref = "aws-java-events" }
 azure-functions-gradle-plugin = { module = "com.microsoft.azure:azure-functions-gradle-plugin", version.ref = "azure-functions-gradle-plugin" }
 azure-functions-maven-plugin = { module = "com.microsoft.azure:azure-functions-maven-plugin", version.ref = "azure-functions-maven-plugin" }
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
