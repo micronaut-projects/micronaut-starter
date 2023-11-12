@@ -21,7 +21,7 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api("com.fasterxml.jackson.core:jackson-annotations")
     api "io.micronaut:micronaut-http-client"
-    api "io.github.java-diff-utils:java-diff-utils:4.10"
+    api "io.github.java-diff-utils:java-diff-utils:4.12"
     api "org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r"
     api("org.yaml:snakeyaml")
     implementation("com.typesafe:config:1.4.2")
