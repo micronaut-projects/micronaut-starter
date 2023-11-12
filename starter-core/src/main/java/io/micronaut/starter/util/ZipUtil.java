@@ -96,6 +96,7 @@ public class ZipUtil {
                 if (name.contains("/")) {
                     if (name.endsWith("/" + filename)) {
                         String zipContents = readZipContents(zipInputStream);
+                        System.out.println("zipContents: " + zipContents);
                         return zipContents.contains(contents);
                     }
                 } else if (name.equals(filename)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,24 +28,28 @@ import java.util.Set;
 @Singleton
 public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
+    private static boolean supports(JdkVersion jdkVersion) {
+        return jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
+    }
+
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(AbstractGoogleCloudFunction.class::isInstance)) {
             if (features.stream().anyMatch(GraalVM.class::isInstance)) {
                 throw new IllegalArgumentException("""
-                    Google Cloud Function is not supported for GraalVM. \
-                    Consider Google Cloud Run for deploying GraalVM native images as docker containers.\
-                    """);
+                        Google Cloud Function is not supported for GraalVM. \
+                        Consider Google Cloud Run for deploying GraalVM native images as docker containers.\
+                        """);
             }
         }
     }
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(GoogleCloudFunction.class::isInstance)) {
-            if (options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
-                throw new IllegalArgumentException("Google Cloud Function needs at least JDK 11");
-            }
+        if (features.stream().anyMatch(GoogleCloudFunction.class::isInstance) && !supports(options.getJavaVersion())) {
+            throw new IllegalArgumentException("""
+                    Google Cloud Function currently only supports JDK 11 and 17 -- \
+                    https://cloud.google.com/functions/docs/concepts/java-runtime""");
         }
     }
 }

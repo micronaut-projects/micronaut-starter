@@ -24,6 +24,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Coherence implements CacheFeature {
 
+    public static final String NAME = "cache-coherence";
     private final CoherenceFeature coherenceFeature;
 
     public Coherence(CoherenceFeature coherenceFeature) {
@@ -32,7 +33,7 @@ public class Coherence implements CacheFeature {
 
     @Override
     public String getName() {
-        return "cache-coherence";
+        return NAME;
     }
 
     @Override

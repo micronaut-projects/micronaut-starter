@@ -4,6 +4,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 import spock.lang.Unroll
@@ -33,13 +34,13 @@ class JTESpec extends CommandSpec {
     void "test gradle views-jte with #language and #dsl"(Language language, BuildTool buildTool, String dsl) {
         when:
         generateProject(language, buildTool, ["views-jte", "kapt"])
-        BuildResult result = executeGradle("compileJava")
+        BuildResult result = executeGradle("build")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
         dsl = buildTool == BuildTool.GRADLE ? "Groovy DSL" : "Kotlin DSL"
     }
 }

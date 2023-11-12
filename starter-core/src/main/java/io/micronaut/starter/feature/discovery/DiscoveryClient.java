@@ -22,20 +22,40 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.other.HttpClient;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class DiscoveryClient implements Feature {
+    public static final String NAME = "discovery-client";
     private static final String ARTIFACT_ID_MICRONAUT_DISCOVERY_CLIENT = "micronaut-discovery-client";
     private static final Dependency DEPENDENCY_MICRONAUT_DISCOVERY_CLIENT = MicronautDependencyUtils.discovery()
             .artifactId(ARTIFACT_ID_MICRONAUT_DISCOVERY_CLIENT)
             .compile()
             .build();
 
+    private final HttpClient httpClient;
+
+    @Inject
+    public DiscoveryClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    /**
+     * @deprecated Use {@link DiscoveryClient(HttpClient)} instead.
+     */
+    @Deprecated
+    public DiscoveryClient() {
+        this(new HttpClient());
+    }
+
     @NonNull
     @Override
     public String getName() {
-        return "discovery-client";
+        return NAME;
     }
 
     @Override
@@ -46,6 +66,13 @@ public class DiscoveryClient implements Feature {
     @Override
     public String getDescription() {
         return "Adds micronaut-discovery-client dependency which provides an implmentation of the DiscoveryClient API.";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(HttpClientFeature.class)) {
+            featureContext.addFeature(httpClient);
+        }
     }
 
     public void apply(GeneratorContext generatorContext) {

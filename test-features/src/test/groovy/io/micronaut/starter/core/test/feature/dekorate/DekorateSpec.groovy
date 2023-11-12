@@ -62,34 +62,34 @@ class DekorateSpec extends CommandSpec {
     }
 
     @Ignore
-    @Unroll
-    void "test gradle dekorate platform #feature.name with #language"(Feature feature, Language language) {
+    void "test #buildTool dekorate platform #feature.name with #language"(BuildTool buildTool, Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])
+        generateProject(language, buildTool, [feature.getName(), 'kapt'])
         String output =  executeGradle("compileJava")?.output
         String manifestName = feature.getName().replaceFirst("dekorate-", "")
 
         then:
         output?.contains("BUILD SUCCESS")
-        if(language == Language.KOTLIN){
+        if (language == Language.KOTLIN) {
             assert Files.exists(Paths.get(dir.getPath(),"build/tmp/kapt3/classes/main", String.format("META-INF/dekorate/%s.json", manifestName)))
             assert Files.exists(Paths.get(dir.getPath(),"build/tmp/kapt3/classes/main", String.format("META-INF/dekorate/%s.json", manifestName)))
-        }else{
+        } else {
             assert Files.exists(Paths.get(dir.getPath(),"build/classes/java/main", String.format("META-INF/dekorate/%s.json", manifestName)))
             assert Files.exists(Paths.get(dir.getPath(),"build/classes/java/main", String.format("META-INF/dekorate/%s.json", manifestName)))
         }
 
         where:
-        [feature, language] << [
+        [buildTool, feature, language] << [
+                BuildTool.valuesGradle(),
                 beanContext.getBeansOfType(AbstractDekoratePlatformFeature),
-                [Language.JAVA, Language.KOTLIN]].combinations()
+                [Language.JAVA, Language.KOTLIN]
+        ].combinations()
     }
 
     @Ignore
-    @Unroll
-    void "test gradle dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
+    void "test #buildTool dekorate service #feature.name with #language on default platform"(BuildTool buildTool, Feature feature, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [feature.getName(), 'kapt'])
+        generateProject(language, buildTool, [feature.getName(), 'kapt'])
         String output =  executeGradle("compileJava")?.output
 
         then:
@@ -104,7 +104,9 @@ class DekorateSpec extends CommandSpec {
 
         where:
         [feature, language] << [
+                BuildTool.valuesGradle(),
                 beanContext.getBeansOfType(AbstractDekorateServiceFeature),
-                [Language.JAVA, Language.KOTLIN]].combinations()
+                [Language.JAVA, Language.KOTLIN]
+        ].combinations()
     }
 }

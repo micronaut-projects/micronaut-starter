@@ -24,15 +24,34 @@ import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.JpaFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.StringTemplate;
+
+import java.util.stream.Collectors;
 
 /**
  * Marker interface for a feature which adds support for the {@link Language#KOTLIN} programming language.
- * @since 4.0.0
+ *
  * @author Sergio del Amo
+ * @since 4.0.0
  */
 public interface KotlinSupportFeature extends OneOfFeature {
+
+    String JDK_21_KAPT_MODULES = """
+            --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+            --add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED""";
+
     @Override
     default Class<?> getFeatureClass() {
         return KotlinSupportFeature.class;
@@ -54,6 +73,13 @@ public interface KotlinSupportFeature extends OneOfFeature {
             generatorContext.addBuildPlugin(GradlePlugin.of("org.jetbrains.kotlin.plugin.allopen", "kotlin-allopen"));
             if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
                 generatorContext.addBuildPlugin(GradlePlugin.of("org.jetbrains.kotlin.plugin.jpa", "kotlin-noarg"));
+            }
+        }
+        if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_21) && generatorContext.hasFeature(Kapt.class)) {
+            if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES));
+            } else {
+                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
             }
         }
     }

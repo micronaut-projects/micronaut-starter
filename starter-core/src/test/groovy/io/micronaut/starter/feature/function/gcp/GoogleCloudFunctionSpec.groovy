@@ -19,7 +19,6 @@ import spock.lang.Issue
 import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
-import spock.lang.Unroll
 
 @Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
@@ -60,7 +59,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         language << Language.values().toList()
     }
 
-    @Unroll
     void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {
         expect:
         !googleCloudFunction.supports(applicationType)
@@ -70,7 +68,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         description = applicationType.name
     }
 
-    @Unroll
     void "google-cloud-function supports #description"(ApplicationType applicationType, String description) {
         expect:
         googleCloudFunction.supports(applicationType)
@@ -80,7 +77,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         description = applicationType.name
     }
 
-    @Unroll
     void 'test gradle google cloud function feature for language=#language'() {
         when:
         def output = generate(
@@ -143,7 +139,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         build.contains('runtime("google_function")')
     }
 
-    @Unroll
     void 'test gradle google cloud function feature for language=#language - raw function'() {
         when:
         def output = generate(
@@ -174,7 +169,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         testSrcDir << Language.testSrcDirs()
     }
 
-    void 'test Google Cloud does not support JDK < 11'() {
+    void 'test Google Cloud JDK support fails with #jdkVersion'() {
         when:
         generate(
                 ApplicationType.DEFAULT,
@@ -184,10 +179,10 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function needs at least JDK 11'
+        e.message == 'Google Cloud Function currently only supports JDK 11 and 17 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
 
         where:
-        jdkVersion << [JdkVersion.JDK_8]
+        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_21]
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {

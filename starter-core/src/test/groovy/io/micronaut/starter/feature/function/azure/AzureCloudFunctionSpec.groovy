@@ -11,30 +11,44 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Unroll("#jdkVersion not supported for #feature")
-    void "verify for all JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    void "verify for #jdkVersion application #applicationType with azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion) {
         when:
         generate(
                 applicationType,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [feature],
+                ['azure-function']
         )
         then:
         noExceptionThrown()
 
         where:
-        [applicationType, jdkVersion, feature] << [
+        [applicationType, jdkVersion] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                MicronautJdkVersionConfiguration.SUPPORTED_JDKS,
-                ['azure-function']
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS.findAll { AzureFunctionFeatureValidator.supports(it) }
         ].combinations()
     }
 
-    @Unroll
+    void "verify for #jdkVersion application #applicationType with azure-function illegal argument exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion) {
+        when:
+        generate(
+                applicationType,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                ['azure-function']
+        )
+        then:
+        def ex = thrown(IllegalArgumentException)
+        ex.message == 'Azure Function currently only supports JDK 8, 11 and 17 -- https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure'
+
+        where:
+        [applicationType, jdkVersion] << [
+                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS.findAll { !AzureFunctionFeatureValidator.supports(it) }
+        ].combinations()
+    }
+
     void 'test gradle raw azure function feature for language=#language'() {
         when:
         def output = generate(
@@ -79,7 +93,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
     void 'test gradle azure function feature for language=#language'() {
         when:
         String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -119,7 +132,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
     void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
@@ -150,7 +162,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
-    @Unroll
     void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
         when:
         def output = generate(

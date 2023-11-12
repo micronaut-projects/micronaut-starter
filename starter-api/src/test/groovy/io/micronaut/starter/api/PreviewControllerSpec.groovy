@@ -25,7 +25,7 @@ class PreviewControllerSpec extends Specification {
         def map = client.previewApp(ApplicationType.DEFAULT, "test", Collections.emptyList(), null, null, null)
 
         then:
-        map.contents.containsKey("build.gradle")
+        map.contents.containsKey("build.gradle.kts")
 
     }
 

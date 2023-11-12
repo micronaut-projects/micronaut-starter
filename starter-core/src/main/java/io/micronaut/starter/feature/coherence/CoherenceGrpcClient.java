@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.coherence;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -35,6 +36,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceGrpcClient implements Feature {
 
+    public static final String NAME = "coherence-grpc-client";
     private final CoherenceFeature coherenceFeature;
 
     public CoherenceGrpcClient(CoherenceFeature coherenceFeature) {
@@ -43,7 +45,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getName() {
-        return "coherence-grpc-client";
+        return NAME;
     }
 
     @Override
@@ -84,17 +86,8 @@ public class CoherenceGrpcClient implements Feature {
 
         config.put("coherence.session.default.type", "grpc");
 
-        Dependency.Builder coherenceMicronaut = Dependency.builder()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-grpc-client")
-                .template();
-        Dependency.Builder coherence = Dependency.builder()
-                .groupId("com.oracle.coherence.ce")
-                .artifactId("coherence-java-client")
-                .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
-                .template();
-        generatorContext.addDependency(coherence.compile());
-        generatorContext.addDependency(coherenceMicronaut.compile());
+        generatorContext.addDependency(MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-grpc-client").compile());
+        generatorContext.addDependency(Dependency.builder().groupId("com.oracle.coherence.ce").artifactId("coherence-java-client").compile());
     }
 
     @Override

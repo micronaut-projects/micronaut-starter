@@ -6,30 +6,38 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
+import io.micronaut.starter.feature.database.r2dbc.R2dbc
+import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 import spock.lang.Unroll
 
-class MicrometerSpec extends ApplicationContextSpec {
+class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixture  {
 
     @Unroll
-    void 'test gradle micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
+    void 'test micrometer feature #micrometerFeature.name contributes dependencies for #buildTool'(MicrometerRegistryFeature micrometerFeature, BuildTool buildTool) {
         given:
-        String dependency = micrometerFeature.getArtifactId()
-        String group = micrometerFeature.getGroupId()
-
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features([micrometerFeature.name])
                 .render()
+        when:
+        String groupId = micrometerFeature instanceof OracleCloudFeature ?
+                MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD : MicronautDependencyUtils.GROUP_ID_MICRONAUT_MICROMETER
+        String artifactId = micrometerFeature instanceof OracleCloudFeature ?
+                OracleCloud.ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER : "micronaut-micrometer-registry-" + micrometerFeature.getImplementationName()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("implementation(\"${group}:${dependency}\")")
+        verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
+        [micrometerFeature, buildTool] << [beanContext.getBeansOfType(MicrometerRegistryFeature), BuildTool.values()].combinations()
     }
 
     void 'test gradle micrometer feature oracle cloud #buildTool'(BuildTool buildTool) {
@@ -62,30 +70,6 @@ class MicrometerSpec extends ApplicationContextSpec {
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-influx")
 """)
         template.count("io.micronaut.micrometer:micronaut-micrometer-core") == 1
-    }
-
-    @Unroll
-    void 'test maven micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
-        given:
-        String dependency = micrometerFeature.getArtifactId()
-        String group = micrometerFeature.getGroupId()
-
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([micrometerFeature.name])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>$group</groupId>
-      <artifactId>$dependency</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
     }
 
     void "test maven micrometer multiple features"() {
@@ -125,7 +109,7 @@ class MicrometerSpec extends ApplicationContextSpec {
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature)*.name.iterator()
+        micrometerFeature << beanContext.getBeansOfType(MicrometerRegistryFeature)*.name.iterator()
         configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
     }
 
@@ -208,36 +192,86 @@ class MicrometerSpec extends ApplicationContextSpec {
         commandContext.configuration.get('micronaut.metrics.enabled') == true
     }
 
-    void "test gradle micrometer annotation and feature"() {
+    void "test micrometer annotation and feature for buildTool=#buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
         def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         deps.size() == 3
-        deps.containsAll(['implementation("io.micronaut.micrometer:micronaut-micrometer-core")',
-                          'implementation("io.micronaut.micrometer:micronaut-micrometer-registry-atlas")',
-                          'annotationProcessor("io.micronaut.micrometer:micronaut-micrometer-annotation")'])
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR)
 
+        where:
+        buildTool << BuildTool.values()
     }
 
-    void "test maven micrometer annotation and features"() {
+    void "test micrometer dependencies for micrometer-atlas and micrometer-annotation for buildTool=#buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
-        def xml = new XmlSlurper().parseText(template)
-                .'**'.findAll{ it.groupId == 'io.micronaut.micrometer'}?.artifactId*.text()
+        def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        xml
-        xml.size() == 3
-        xml.containsAll(['micronaut-micrometer-core',
-                         'micronaut-micrometer-registry-atlas',
-                         'micronaut-micrometer-annotation'])
+        deps.size() == 3
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR)
 
+        where:
+        buildTool << BuildTool.values()
     }
 
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")
+    void "test #micrometerFeature includes r2dbc-pool runtime when combined with #r2dbcFeature "(
+            Language language, BuildTool buildTool, String r2dbcFeature, String micrometerFeature
+    ) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .features([r2dbcFeature, micrometerFeature])
+                .render()
+
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
+        then:
+        verifier.hasDependency("io.r2dbc", "r2dbc-pool", Scope.RUNTIME)
+
+        where:
+        [language, buildTool, r2dbcFeature, micrometerFeature] << [
+                Language.values(),
+                BuildTool.values(),
+                [R2dbc.NAME, DataR2dbc.NAME],
+                beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
+        ].combinations()
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")
+    void "test #micrometerFeature without r2dbc feature does not includes r2dbc-pool runtime"(
+            Language language, BuildTool buildTool, String micrometerFeature
+    ) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .features([micrometerFeature])
+                .render()
+
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
+        then:
+        !verifier.hasDependency("io.r2dbc", "r2dbc-pool", Scope.RUNTIME)
+
+        where:
+        [language, buildTool, micrometerFeature] << [
+                Language.values(),
+                BuildTool.values(),
+                beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
+        ].combinations()
+    }
 }

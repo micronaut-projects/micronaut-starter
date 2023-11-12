@@ -56,7 +56,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     void 'test docker image is configured in build.gradle'() {
         when:
         def output = generate([GoogleCloudRunGraalWorkflow.NAME])
-        def gradle = output['build.gradle']
+        def gradle = output['build.gradle.kts']
 
         then:
         gradle

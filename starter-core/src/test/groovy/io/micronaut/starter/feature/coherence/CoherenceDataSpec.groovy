@@ -13,7 +13,7 @@ class CoherenceDataSpec extends BeanContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature coherence-data contains links to micronaut docs'() {
         when:
-        def output = generate(['coherence-data'])
+        def output = generate([CoherenceData.NAME])
         def readme = output["README.md"]
 
         then:
@@ -25,7 +25,7 @@ class CoherenceDataSpec extends BeanContextSpec implements CommandOutputFixture 
     @PendingFeature(reason = "missing example")
     void 'test configuration with feature coherence-data'() {
         when:
-        def output = generate([Yaml.NAME, 'coherence-data'])
+        def output = generate([Yaml.NAME, CoherenceData.NAME])
         def configuration = output['src/main/resources/application.yml']
 
         then:
@@ -44,12 +44,12 @@ micronaut:
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['coherence-data'])
+                .features([CoherenceData.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-data")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
         language << Language.values().toList()
@@ -60,7 +60,7 @@ micronaut:
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['coherence-data'])
+                .features([CoherenceData.NAME])
                 .render()
 
         then:
@@ -75,7 +75,6 @@ micronaut:
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -90,5 +89,4 @@ micronaut:
         where:
         language << Language.values()
     }
-
 }

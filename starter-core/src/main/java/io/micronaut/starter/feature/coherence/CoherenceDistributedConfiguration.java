@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.coherence;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
@@ -32,6 +33,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceDistributedConfiguration implements DistributedConfigFeature {
 
+    public static final String NAME = "coherence-distributed-configuration";
     private final CoherenceFeature coherenceFeature;
 
     public CoherenceDistributedConfiguration(CoherenceFeature coherenceFeature) {
@@ -40,7 +42,7 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
 
     @Override
     public String getName() {
-        return "coherence-distributed-configuration";
+        return NAME;
     }
 
     @Override
@@ -83,16 +85,13 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
         config.put("coherence.client.host", "${COHERENCE_HOST:localhost}");
         config.put("coherence.client.port", "${COHERENCE_PORT:1408}");
 
-        Dependency.Builder distributedConfiguration = Dependency.builder()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-distributed-configuration")
-                .template();
-        generatorContext.addDependency(distributedConfiguration.compile());
+        Dependency.Builder distributedConfiguration = MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-distributed-configuration").compile();
+        generatorContext.addDependency(distributedConfiguration);
+
         if (generatorContext.getBuildTool().isGradle() && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.oracle.coherence.ce")
                     .artifactId("coherence-java-client")
-                    .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
                     .compile());
         }
     }

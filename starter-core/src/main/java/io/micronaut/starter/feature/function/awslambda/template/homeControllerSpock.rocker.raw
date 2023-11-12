@@ -9,19 +9,14 @@ String handler
 package @project.getPackageName()
 }
 
-import com.amazonaws.services.lambda.runtime.ClientContext
-import com.amazonaws.services.lambda.runtime.CognitoIdentity
-import com.amazonaws.services.lambda.runtime.Context
-import com.amazonaws.services.lambda.runtime.LambdaLogger
 @if (handler == "io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction") {
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import io.micronaut.function.aws.proxy.payload1.ApiGatewayProxyRequestEventFunction
 } else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
-import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse
 import io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction
 }
+import io.micronaut.function.aws.proxy.MockLambdaContext
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import spock.lang.AutoCleanup
@@ -46,8 +41,6 @@ class HomeControllerSpec extends Specification {
         request.path = "/"
         request.httpMethod = HttpMethod.GET.toString()
 
-        when:
-        APIGatewayProxyResponseEvent response = handler.handleRequest(request, lambdaContext)
 } else if (handler == "io.micronaut.function.aws.proxy.payload2.APIGatewayV2HTTPEventFunction") {
         APIGatewayV2HTTPEvent request = new APIGatewayV2HTTPEvent()
         request.setRequestContext(APIGatewayV2HTTPEvent.RequestContext.builder()
@@ -56,69 +49,13 @@ class HomeControllerSpec extends Specification {
                         .withMethod(HttpMethod.GET.toString())
                         .build()
                 ).build())
-        when:
-        APIGatewayV2HTTPResponse response = handler.handleRequest(request, lambdaContext)
 }
+        when:
+        def response = handler.handleRequest(request, new MockLambdaContext())
+
         then:
         HttpStatus.OK.code == response.statusCode.intValue()
         "{\"message\":\"Hello World\"}" == response.getBody()
     }
 
-   static final Context lambdaContext = new Context() {
-
-        @@Override
-        String getAwsRequestId() {
-            return null
-        }
-
-        @@Override
-        String getLogGroupName() {
-            return null
-        }
-
-        @@Override
-        String getLogStreamName() {
-            return null
-        }
-
-        @@Override
-        String getFunctionName() {
-            return null
-        }
-
-        @@Override
-        String getFunctionVersion() {
-            return null
-        }
-
-        @@Override
-        String getInvokedFunctionArn() {
-            return null
-        }
-
-        @@Override
-        CognitoIdentity getIdentity() {
-            return null
-        }
-
-        @@Override
-        ClientContext getClientContext() {
-            return null
-        }
-
-        @@Override
-        int getRemainingTimeInMillis() {
-            return 0
-        }
-
-        @@Override
-        int getMemoryLimitInMB() {
-            return 0
-        }
-
-        @@Override
-        LambdaLogger getLogger() {
-            return null
-        }
-    }
 }

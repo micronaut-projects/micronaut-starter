@@ -33,11 +33,14 @@ public class Category {
     public static final String DEV_TOOLS            = "Development Tools";
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
+    public static final String GROOVY_MODULE        = "Groovy Optional Modules";
     public static final String IOT                  = "Internet of Things";
     public static final String LANGUAGES            = "Languages";
     public static final String LOGGING              = "Logging";
     public static final String MANAGEMENT           = "Management";
+
     public static final String MESSAGING            = "Messaging";
+    public static final String METRICS           = "Metrics";
     public static final String OTHER                = "Other";
     public static final String PACKAGING            = "Packaging";
     public static final String REACTIVE             = "Reactive";

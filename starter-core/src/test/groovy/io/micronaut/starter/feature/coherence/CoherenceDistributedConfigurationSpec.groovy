@@ -12,7 +12,7 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
 
     void 'test readme.md with feature coherence-distributed-configuration contains links to micronaut docs'() {
         when:
-        def output = generate(['coherence-distributed-configuration'])
+        def output = generate([CoherenceDistributedConfiguration.NAME])
         def readme = output["README.md"]
 
         then:
@@ -23,7 +23,7 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
 
     void 'test configuration with feature coherence-distributed-configuration'() {
         when:
-        Map<String, String> output = generate([Yaml.NAME, 'coherence-distributed-configuration'])
+        Map<String, String> output = generate([Yaml.NAME, CoherenceDistributedConfiguration.NAME])
         String configuration = output['src/main/resources/bootstrap.yml']
 
         then:
@@ -42,13 +42,13 @@ coherence:
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['coherence-distributed-configuration'])
+                .features([CoherenceDistributedConfiguration.NAME])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-distributed-configuration")')
-        template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
+        template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
         language << Language.values().toList()
@@ -59,7 +59,7 @@ coherence:
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['coherence-distributed-configuration'])
+                .features([CoherenceDistributedConfiguration.NAME])
                 .render()
 
         then:
@@ -74,7 +74,6 @@ coherence:
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
     """)

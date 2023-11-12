@@ -20,6 +20,7 @@ import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Options
+import spock.lang.Issue
 
 class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -134,9 +135,6 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         expect: 'the URL is only applied for H2, as otherwise test-resources will provide it'
         ctx.configuration.containsKey("r2dbc.datasources.default.url") == isH2
 
-        and: 'dialect is not set'
-        !ctx.configuration.containsKey("r2dbc.datasources.default.dialect")
-
         and: 'db-type should be set for non-h2 databases'
         if (isH2) {
             assert ctx.configuration.get("r2dbc.datasources.default.db-type") == null
@@ -147,6 +145,21 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         where:
         [buildTool, featureClass] << [BuildTool.values(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         driver = featureClass.simpleName
+        isH2 = featureClass == H2
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1960")
+    void "test-resources needs db dialect for #featureClass"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
+        given:
+        Options options = new Options(null, null, buildTool)
+        GeneratorContext ctx = buildGeneratorContext([R2dbc.NAME, featureClass.NAME], options)
+        def feature = ctx.getRequiredFeature(featureClass)
+
+        expect: 'dialect must be set when using test-resources'
+        isH2 || ctx.configuration.get("r2dbc.datasources.default.dialect") == feature.dataDialect
+
+        where:
+        [buildTool, featureClass] << [BuildTool.values(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         isH2 = featureClass == H2
     }
 }

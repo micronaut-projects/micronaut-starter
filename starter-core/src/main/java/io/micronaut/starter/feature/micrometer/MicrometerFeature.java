@@ -16,30 +16,19 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.util.NameUtils;
 
 public abstract class MicrometerFeature implements Feature, MicronautServerDependent {
-
-    protected final String EXPORT_PREFIX = "micronaut.metrics.export";
-
     private final Core core;
     private final Management management;
 
     public MicrometerFeature(Core core, Management management) {
         this.core = core;
         this.management = management;
-    }
-
-    @Override
-    public String getName() {
-        return "micrometer-" + getImplementationName();
     }
 
     @Override
@@ -58,34 +47,7 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        doApply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getGroupId())
-                .artifactId(getArtifactId())
-                .compile());
-    }
-
-    @Override
     public String getCategory() {
-        return Category.MANAGEMENT;
+        return Category.METRICS;
     }
-
-    @Override
-    public String getTitle() {
-        return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
-    }
-
-    protected String getGroupId() {
-        return "io.micronaut.micrometer";
-    }
-
-    protected String getArtifactId() {
-        return "micronaut-micrometer-registry-" + getImplementationName();
-    }
-
-    protected abstract String getImplementationName();
-
-    protected abstract void doApply(GeneratorContext generatorContext);
-
 }

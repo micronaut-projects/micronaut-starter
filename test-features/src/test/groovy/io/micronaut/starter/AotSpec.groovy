@@ -9,7 +9,8 @@ import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 
 class AotSpec extends CommandSpec {
-    def 'test aot with gradle'(BuildTool buildTool) {
+
+    void 'test aot with #buildTool'(BuildTool buildTool) {
         when:
         generateProject(
                 Language.KOTLIN,
@@ -22,7 +23,7 @@ class AotSpec extends CommandSpec {
         result.output.contains("BUILD SUCCESS")
 
         where:
-        buildTool << [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]
+        buildTool << BuildTool.valuesGradle()
     }
 
     @Override

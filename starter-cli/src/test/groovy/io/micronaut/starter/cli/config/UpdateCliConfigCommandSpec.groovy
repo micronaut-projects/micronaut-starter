@@ -17,8 +17,8 @@ class UpdateCliConfigCommandSpec extends CommandSpec implements CommandFixture {
     @AutoCleanup
     ApplicationContext beanContext = ApplicationContext.run()
 
-    void "test old cli config conversion - gradle"() {
-        generateProject(Language.JAVA)
+    void "test old cli config conversion - #buildTool"(BuildTool buildTool) {
+        generateProject(Language.JAVA, buildTool)
         File cliYaml = new File(dir, "micronaut-cli.yml").getCanonicalFile()
         //Replace the config with the old style
         cliYaml.write("""profile: service
@@ -50,12 +50,14 @@ sourceLanguage: java""")
 defaultPackage: micronaut.testing.keycloak
 testFramework: junit
 sourceLanguage: java
-buildTool: gradle
+buildTool: $buildTool
 features: \\[.*?\\]
 """)
         2 * consoleOutput.out(_)
         1 * consoleOutput.out("For a list of available features, run `mn create-app --list-features`")
 
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     void "test old cli config conversion - maven"() {

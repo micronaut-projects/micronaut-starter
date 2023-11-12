@@ -26,8 +26,8 @@ import java.util.Locale;
 import java.util.Set;
 
 public enum Language implements IncludesDefaults<LanguageDefaults> {
-    JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE)),
-    GROOVY("groovy", new LanguageDefaults(TestFramework.SPOCK, BuildTool.GRADLE)),
+    JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN)),
+    GROOVY("groovy", new LanguageDefaults(TestFramework.SPOCK, BuildTool.GRADLE_KOTLIN)),
     KOTLIN("kt", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN));
 
     public static final Language DEFAULT_OPTION = JAVA;

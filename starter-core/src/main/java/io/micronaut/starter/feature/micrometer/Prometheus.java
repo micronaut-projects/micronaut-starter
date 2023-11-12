@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Prometheus extends MicrometerFeature {
+public class Prometheus extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Prometheus(Core core, Management management) {
         super(core, management);
@@ -32,14 +32,14 @@ public class Prometheus extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.descriptions", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "prometheus";
     }
 }

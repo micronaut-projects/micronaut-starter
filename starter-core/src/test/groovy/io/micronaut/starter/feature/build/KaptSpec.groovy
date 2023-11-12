@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
@@ -10,9 +11,14 @@ import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.feature.OneOfFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
+
+import java.util.stream.Collectors
 
 class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
@@ -70,5 +76,73 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         where:
         buildTool << BuildTool.valuesGradle()
+    }
+
+    void "test #buildTool with #jdk, ksp is the default"(BuildTool buildTool, JdkVersion jdk) {
+        when:
+        Language language = Language.KOTLIN
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasBuildPlugin("org.jetbrains.kotlin.jvm")
+        verifier.hasBuildPlugin("com.google.devtools.ksp")
+        verifier.hasBuildPlugin("org.jetbrains.kotlin.plugin.allopen")
+        !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
+
+        where:
+        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_17, JdkVersion.JDK_21]].combinations()
+    }
+
+    void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_17))
+
+        then:
+        !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "for java 21, with #buildTool and Kapt we add the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),
+                [Kapt.NAME]
+        )
+
+        then:
+        output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "for java 17, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_17))
+        def pom = new XmlParser().parseText(output."pom.xml")
+
+        then: 'there is a kapt execution in the kotlin plugin'
+        pom.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }.executions.execution.find { it.id.text() == 'kapt' }
+
+        and: 'the config file is missing'
+        !output.".mvn/jvm.config"
+    }
+
+    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21))
+        def pom = new XmlParser().parseText(output."pom.xml")
+
+        then: 'there is a kapt execution in the kotlin plugin'
+        pom.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }.executions.execution.find { it.id.text() == 'kapt' }
+
+        and: 'the config file is added in the right place'
+        output.".mvn/jvm.config" == KotlinSupportFeature.JDK_21_KAPT_MODULES
     }
 }

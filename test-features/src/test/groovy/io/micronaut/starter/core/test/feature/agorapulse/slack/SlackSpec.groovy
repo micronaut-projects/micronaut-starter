@@ -9,7 +9,6 @@ import io.micronaut.starter.test.CommunityLibraries
 import org.gradle.testkit.runner.BuildResult
 import org.yaml.snakeyaml.Yaml
 import spock.lang.IgnoreIf
-import spock.lang.Unroll
 
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -22,7 +21,6 @@ class SlackSpec extends CommandSpec {
         return 'agorapulse-micronaut-slack'
     }
 
-    @Unroll
     void "test maven agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType"(
             Language language,
             TestFramework testFramework,
@@ -48,7 +46,6 @@ class SlackSpec extends CommandSpec {
         ].combinations()
     }
 
-    @Unroll
     void "test gradle agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType using #buildTool"(
             BuildTool buildTool,
             Language language,
@@ -70,7 +67,7 @@ class SlackSpec extends CommandSpec {
 
         where:
         [buildTool, language, testFramework, features, applicationType] << [
-                [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN],
+                BuildTool.valuesGradle(),
                 Language.values(),
                 TestFramework.values(),
                 [
@@ -81,9 +78,9 @@ class SlackSpec extends CommandSpec {
         ].combinations()
     }
 
-    void "slack manifest generated"() {
+    void "slack manifest generated for #buildTool"(BuildTool buildTool) {
         given:
-        generateProject(Language.JAVA, BuildTool.GRADLE, ['agorapulse-micronaut-slack'], ApplicationType.DEFAULT, TestFramework.JUNIT)
+        generateProject(Language.JAVA, buildTool, ['agorapulse-micronaut-slack'], ApplicationType.DEFAULT, TestFramework.JUNIT)
 
         when:
         File slackManifestFile = new File(dir.path, 'slack-manifest.yml')
@@ -109,5 +106,8 @@ class SlackSpec extends CommandSpec {
         manifestContent.settings.interactivity
         manifestContent.settings.interactivity.is_enabled
         manifestContent.settings.interactivity.request_url == 'https://example-micronaut-foo.loca.lt/slack/events'
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 }

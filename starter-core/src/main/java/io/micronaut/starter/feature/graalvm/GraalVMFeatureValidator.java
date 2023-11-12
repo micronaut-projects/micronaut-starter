@@ -29,7 +29,6 @@ import jakarta.inject.Singleton;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Singleton
@@ -47,13 +46,13 @@ public class GraalVMFeatureValidator implements FeatureValidator {
                 throw new IllegalArgumentException("GraalVM is not supported in " + StringUtils.capitalize(options.getLanguage().getName()) + " applications");
             }
 
-            if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_17.majorVersion()) {
-                throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 17");
+            if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_21.majorVersion()) {
+                throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 21");
             }
 
             // See https://github.com/micronaut-projects/micronaut-maven-plugin/issues/373
             if (options.getBuildTool() == BuildTool.MAVEN && features.stream().anyMatch(Cdk.class::isInstance)) {
-                throw new IllegalArgumentException("Maven, CDK and GraalVM are not yet supporteds");
+                throw new IllegalArgumentException("Maven, CDK and GraalVM are not yet supported");
             }
         }
     }
@@ -61,7 +60,7 @@ public class GraalVMFeatureValidator implements FeatureValidator {
     public static List<Language> supportedLanguages() {
         return Stream.of(Language.values())
                 .filter(GraalVMFeatureValidator::supports)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static boolean supports(Language language) {

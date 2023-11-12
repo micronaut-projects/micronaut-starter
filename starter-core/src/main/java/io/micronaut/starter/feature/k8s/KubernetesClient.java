@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,12 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.discovery.DiscoveryCore;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 /**
@@ -76,5 +80,18 @@ public class KubernetesClient implements Feature {
                 .groupId(MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-client")
                 .compile());
+        fixupDependencies(generatorContext);
+    }
+
+    static void fixupDependencies(GeneratorContext generatorContext) {
+        if (!generatorContext.hasFeature(DiscoveryCore.class)
+                && generatorContext.getBuildTool() == BuildTool.MAVEN
+                && generatorContext.getLanguage() == Language.GROOVY
+        ) {
+            // Maven requires discovery core provided to work with http-validation under groovy
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
+                    .artifactId(DiscoveryCore.ARTIFACT_ID_MICRONAUT_DISCOVERY_CORE)
+                    .compileOnly());
+        }
     }
 }

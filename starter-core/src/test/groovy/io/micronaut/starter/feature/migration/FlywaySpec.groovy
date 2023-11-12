@@ -115,4 +115,16 @@ flyway:
         where:
         buildTool << BuildTool.values()
     }
+
+    void "test the flyway-database-postgresql dependency is added to the gradle build when postgres is selected"(BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'postgres'])
+
+        then:
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
+        verifier.hasDependency("org.flywaydb", "flyway-database-postgresql", Scope.RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
+    }
 }

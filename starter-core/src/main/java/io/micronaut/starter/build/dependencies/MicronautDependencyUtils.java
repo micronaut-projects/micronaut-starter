@@ -28,13 +28,14 @@ public final class MicronautDependencyUtils {
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
+    public static final String GROUP_ID_MICRONAUT_CASSANDRA = "io.micronaut.cassandra";
+    public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
-
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
@@ -42,9 +43,11 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
     public static final String GROUP_ID_MICRONAUT_DATA = "io.micronaut.data";
     public static final String GROUP_ID_MICRONAUT_SQL = "io.micronaut.sql";
-
     public static final String GROUP_ID_MICRONAUT_STARTER = "io.micronaut.starter";
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
+
+    public static final String GROUP_ID_MICRONAUT_MICROMETER = "io.micronaut.micrometer";
+    public static final String ARTIFACT_ID_PREFIX_MICRONAUT_MICROMETER = "micronaut-micrometer-";
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
@@ -55,6 +58,7 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_GRPC = "io.micronaut.grpc";
     public static final String GROUP_ID_IO_MICRONAUT_JMS = "io.micronaut.jms";
+    public static final String GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
@@ -134,6 +138,16 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder micrometerDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_MICROMETER);
+    }
+
+    @NonNull
+    public static Dependency.Builder micrometerRegistryDependency(@NonNull String implementationName) {
+        return micrometerDependency().artifactId("micronaut-micrometer-registry-" + implementationName);
+    }
+
+    @NonNull
     public static Dependency.Builder groovyDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GROOVY);
     }
@@ -147,6 +161,16 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder cracDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
+    }
+
+    @NonNull
+    public static Dependency.Builder cassandraDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_CASSANDRA);
+    }
+
+    @NonNull
+    public static Dependency.Builder coherenceDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_COHERENCE);
     }
 
     @NonNull
@@ -235,5 +259,10 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder controlPanelDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
+    }
+
+    @NonNull
+    public static Dependency.Builder oracleCloudDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD);
     }
 }

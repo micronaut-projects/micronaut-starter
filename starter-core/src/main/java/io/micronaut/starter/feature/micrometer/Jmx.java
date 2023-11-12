@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jmx extends MicrometerFeature {
+public class Jmx extends MicrometerFeature implements MicrometerRegistryFeature {
 
     public Jmx(Core core, Management management) {
         super(core, management);
@@ -38,13 +37,13 @@ public class Jmx extends MicrometerFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.step", "PT1M");
     }
 
     @Override
-    protected String getImplementationName() {
+    public String getImplementationName() {
         return "jmx";
     }
 }

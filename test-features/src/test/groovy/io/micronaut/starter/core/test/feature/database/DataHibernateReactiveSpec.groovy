@@ -15,7 +15,6 @@ import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import spock.lang.Ignore
 import spock.lang.IgnoreIf
 
 class DataHibernateReactiveSpec extends CommandSpec {
@@ -41,9 +40,9 @@ class DataHibernateReactiveSpec extends CommandSpec {
         db << featuresNames()
     }
 
-    void "test gradle data-hibernate-reactive with java and #db"(String db) {
+    void "test #buildTool data-hibernate-reactive with java and #db"(BuildTool buildTool, String db) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, [DataHibernateReactive.NAME, db])
+        generateProject(Language.JAVA, buildTool, [DataHibernateReactive.NAME, db])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
 
@@ -53,7 +52,7 @@ class DataHibernateReactiveSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << featuresNames()
+        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()].combinations()
     }
 
     private static List<String> featuresNames() {

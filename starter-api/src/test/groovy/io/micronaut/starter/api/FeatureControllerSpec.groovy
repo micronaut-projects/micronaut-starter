@@ -41,7 +41,7 @@ class FeatureControllerSpec extends Specification {
                 'agorapulse-micronaut-permissions',
                 'agorapulse-micronaut-slack',
                 'agorapulse-micronaut-worker',
-                'camunda-zeebe',
+                'camunda-zeebe'
         ].sort()
     }
 

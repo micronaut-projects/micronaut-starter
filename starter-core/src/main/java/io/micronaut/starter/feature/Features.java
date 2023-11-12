@@ -101,6 +101,10 @@ public class Features extends ArrayList<String> {
         return Optional.empty();
     }
 
+    public String getTargetJdk(int max) {
+        return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), max));
+    }
+
     public String getTargetJdk() {
         return VersionInfo.toJdkVersion(javaVersion.majorVersion());
     }
