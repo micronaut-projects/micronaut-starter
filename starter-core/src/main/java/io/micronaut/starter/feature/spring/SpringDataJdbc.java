@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DataJdbc;
 
@@ -25,6 +26,21 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class SpringDataJdbc extends SpringFeature {
+
+    private static final Dependency MICRONAUT_DATA_SPRING_DEPENDENCY = MicronautDependencyUtils
+            .dataDependency()
+            .artifactId("micronaut-data-spring")
+            .compile()
+            // exclude for Micronaut 3.x only, fixed in Micronaut 4.x
+            .exclude(MicronautDependencyUtils.sqlDependency().artifactId("micronaut-hibernate-jpa").build())
+            .exclude(MicronautDependencyUtils.sqlDependency().artifactId("micronaut-hibernate-jpa-spring").build())
+            .build();
+
+    private static final Dependency SPRING_JDBC_DEPENDENCY = Dependency.builder()
+            .groupId("org.springframework")
+            .artifactId("spring-jdbc")
+            .compile()
+            .build();
 
     private final DataJdbc dataJdbc;
 
@@ -63,13 +79,7 @@ public class SpringDataJdbc extends SpringFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-spring")
-                .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.springframework")
-                .artifactId("spring-jdbc")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_DATA_SPRING_DEPENDENCY);
+        generatorContext.addDependency(SPRING_JDBC_DEPENDENCY);
     }
 }
