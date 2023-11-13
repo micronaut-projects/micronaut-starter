@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.security
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -21,91 +24,36 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
     }
 
     @Unroll
-    void 'test gradle security-session feature for language=#language'() {
+    void 'test #buildTool security-session feature dependencies'(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['security-session', 'kapt'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['security-session'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut.security:micronaut-security-session")')
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-session")
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
     @Unroll
-    void 'test gradle security-session removes http-session feature for language=#language'() {
+    void 'test #buildTool security-session removes http-session feature'(Language language, BuildTool  buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['http-session', 'security-session'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        !template.contains('implementation("io.micronaut.security:micronaut-session")')
+        !verifier.hasDependency("io.micronaut", "micronaut-session")
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-session")
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven security-session feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['security-session'])
-                .language(language)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.security</groupId>
-      <artifactId>micronaut-security-session</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        if (language == Language.JAVA) {
-            assert template.contains("""
-            <path>
-              <groupId>io.micronaut.security</groupId>
-              <artifactId>micronaut-security-annotations</artifactId>
-              <version>\${micronaut.security.version}</version>
-            </path>
-""")
-        } else if (language == Language.KOTLIN) {
-            assert template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.security</groupId>
-                 <artifactId>micronaut-security-annotations</artifactId>
-                 <version>${micronaut.security.version}</version>
-               </annotationProcessorPath>
-''') == 1
-        } else if (language == Language.GROOVY) {
-            assert true
-        } else {
-            assert false
-        }
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven security-session removes http-session feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['http-session','security-session'])
-                .language(language)
-                .render()
-
-        then:
-        !template.contains("micronaut-session")
-
-        where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test security-session configuration'() {

@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.options.BuildTool;
 
 public final class MicronautDependencyUtils {
     public static final String ARTIFACT_ID_MICRONAUT_INJECT = "micronaut-inject";
@@ -241,6 +242,29 @@ public final class MicronautDependencyUtils {
                                                                     @NonNull String artifactId,
                                                                     @NonNull String propertyName) {
         return moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName) {
+        return annotationProcessor(buildTool, groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName,
+                                                         boolean requiresPriority) {
+        return switch (buildTool) {
+            case GRADLE, GRADLE_KOTLIN -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .annotationProcessor();
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, requiresPriority);
+        };
     }
 
     @NonNull
