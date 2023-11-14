@@ -12,14 +12,14 @@ import io.micronaut.starter.options.Language
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class ViewsFieldsetSpec extends ApplicationContextSpec {
+class ViewsFieldsetTckSpec extends ApplicationContextSpec {
 
     @Subject
-    ViewsFieldset feature = beanContext.getBean(ViewsFieldset)
+    ViewsFieldsetTck feature = beanContext.getBean(ViewsFieldsetTck)
 
     void 'views-fieldset feature is visible'() {
         expect:
-        feature.visible
+        !feature.visible
     }
 
     void 'views-fieldset feature is in the VIEWS category'() {
@@ -48,12 +48,12 @@ class ViewsFieldsetSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features(['views-fieldset'])
+                .features(['views-fieldset-tck'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset-tck", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
