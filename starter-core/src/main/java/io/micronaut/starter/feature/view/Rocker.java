@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.view;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -26,6 +27,8 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Rocker implements ViewFeature, MicronautServerDependent {
+
+    private static final String ARTIFACT_ID_MICRONAUT_VIEWS_ROCKER = "micronaut-views-rocker";
 
     @Override
     public String getName() {
@@ -54,9 +57,8 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.views")
-                .artifactId("micronaut-views-rocker")
+        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_ROCKER)
                 .compile());
         generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("nu.studer.rocker")

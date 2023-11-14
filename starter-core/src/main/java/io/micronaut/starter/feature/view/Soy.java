@@ -17,12 +17,15 @@ package io.micronaut.starter.feature.view;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Soy implements ViewFeature, MicronautServerDependent {
+
+    private static final String ARTIFACT_ID_MICRONAUT_VIEWS_SOY = "micronaut-views-soy";
 
     @Override
     public String getName() {
@@ -51,9 +54,8 @@ public class Soy implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.views")
-                .artifactId("micronaut-views-soy")
+        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_SOY)
                 .compile());
     }
 }
