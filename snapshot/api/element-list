@@ -148,6 +148,7 @@ io.micronaut.starter.feature.jaxrs
 io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
+io.micronaut.starter.feature.jobrunr
 io.micronaut.starter.feature.json
 io.micronaut.starter.feature.k8s
 io.micronaut.starter.feature.knative

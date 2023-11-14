@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="agorapulse/console/Console.html" title="class in io.micronaut.starter.feature.agorapulse.console">Console</a></code>, <code><a href="camunda/ExternalWorker.html" title="class in io.micronaut.starter.feature.camunda">ExternalWorker</a></code>, <code><a href="agorapulse/gru/GruHttp.html" title="class in io.micronaut.starter.feature.agorapulse.gru">GruHttp</a></code>, <code><a href="agorapulse/permissions/Permissions.html" title="class in io.micronaut.starter.feature.agorapulse.permissions">Permissions</a></code>, <code><a href="camunda/Platform7.html" title="class in io.micronaut.starter.feature.camunda">Platform7</a></code>, <code><a href="agorapulse/slack/Slack.html" title="class in io.micronaut.starter.feature.agorapulse.slack">Slack</a></code>, <code><a href="agorapulse/worker/Worker.html" title="class in io.micronaut.starter.feature.agorapulse.worker">Worker</a></code>, <code><a href="camunda/Zeebe.html" title="class in io.micronaut.starter.feature.camunda">Zeebe</a></code></dd>
+<dd><code><a href="agorapulse/console/Console.html" title="class in io.micronaut.starter.feature.agorapulse.console">Console</a></code>, <code><a href="camunda/ExternalWorker.html" title="class in io.micronaut.starter.feature.camunda">ExternalWorker</a></code>, <code><a href="agorapulse/gru/GruHttp.html" title="class in io.micronaut.starter.feature.agorapulse.gru">GruHttp</a></code>, <code><a href="jobrunr/JobRunrFeature.html" title="class in io.micronaut.starter.feature.jobrunr">JobRunrFeature</a></code>, <code><a href="agorapulse/permissions/Permissions.html" title="class in io.micronaut.starter.feature.agorapulse.permissions">Permissions</a></code>, <code><a href="camunda/Platform7.html" title="class in io.micronaut.starter.feature.camunda">Platform7</a></code>, <code><a href="agorapulse/slack/Slack.html" title="class in io.micronaut.starter.feature.agorapulse.slack">Slack</a></code>, <code><a href="agorapulse/worker/Worker.html" title="class in io.micronaut.starter.feature.agorapulse.worker">Worker</a></code>, <code><a href="camunda/Zeebe.html" title="class in io.micronaut.starter.feature.camunda">Zeebe</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CommunityFeature</span><span class="extends-implements">
@@ -110,32 +110,38 @@ extends <a href="Feature.html" title="interface in io.micronaut.starter.feature"
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityContributor()" class="member-name-link">getCommunityContributor</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../options/MicronautVersion.html" title="enum class in io.micronaut.starter.options">MicronautVersion</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#builtWithMicronautVersion()" class="member-name-link">builtWithMicronautVersion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityFeatureName()" class="member-name-link">getCommunityFeatureName</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityContributor()" class="member-name-link">getCommunityContributor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityFeatureTitle()" class="member-name-link">getCommunityFeatureTitle</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityFeatureName()" class="member-name-link">getCommunityFeatureName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommunityFeatureTitle()" class="member-name-link">getCommunityFeatureTitle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isCommunity()" class="member-name-link">isCommunity</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isVisible()" class="member-name-link">isVisible</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isCommunity()" class="member-name-link">isCommunity</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isVisible()" class="member-name-link">isVisible</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Some features should not be visible to the user because they are a common parent of other
  selectable features, or they should always be applied, or any other reason.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supportsCurrentMicronautVersion()" class="member-name-link">supportsCurrentMicronautVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -171,6 +177,12 @@ extends <a href="Feature.html" title="interface in io.micronaut.starter.feature"
 <dt>Returns:</dt>
 <dd>the name of the feature</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="builtWithMicronautVersion()">
+<h3>builtWithMicronautVersion</h3>
+<div class="member-signature"><span class="return-type"><a href="../options/MicronautVersion.html" title="enum class in io.micronaut.starter.options">MicronautVersion</a></span>&nbsp;<span class="element-name">builtWithMicronautVersion</span>()</div>
 </section>
 </li>
 <li>
@@ -236,6 +248,12 @@ extends <a href="Feature.html" title="interface in io.micronaut.starter.feature"
 <dt>Returns:</dt>
 <dd>True if the feature should able to be selected by the user</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="supportsCurrentMicronautVersion()">
+<h3>supportsCurrentMicronautVersion</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supportsCurrentMicronautVersion</span>()</div>
 </section>
 </li>
 </ul>
