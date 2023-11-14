@@ -1,61 +1,61 @@
 package io.micronaut.starter.feature.buildless
 
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.gradle.GradleBuild
-import io.micronaut.starter.build.gradle.GradleDsl
-import io.micronaut.starter.feature.build.MicronautGradleEnterprise
-import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Subject
+import io.micronaut.starter.options.Options
 
 class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixture {
-
-    @Subject
-    Buildless buildless = beanContext.getBean(Buildless.class)
-
     @Override
     Map<String, Object> getConfiguration() {
         ["spec.name": "BuildlessSpec"]
     }
 
-    void "if you add the buildless feature it is configured for #buildTool"() {
-        given:when:
-        BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
-                    .language(Language.JAVA)
-                    .applicationType(ApplicationType.DEFAULT)
-                    .features(["buildless"])
-        Project project = builder.getProject()
-        GradleBuild gradleBuild = (GradleBuild) builder.build(false)
-        String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
+    void 'test README.md with buildless feature contains links to docs'() {
+        when:
+        def output = generate([Buildless.NAME])
+        def readme = output["README.md"]
 
-        then: 'we we should have a plugins block'
-        settings.contains('plugins {')
+        then:
+        readme.contains("[https://docs.less.build/](https://docs.less.build/)")
+    }
 
-        and: 'buildless defaults should enable the plugin'
-        assert buildless.isUseCustomCachePlugin()
-        assert buildless.isEnableRemoteCache()
-        assert buildless.isRemoteCachePushEnabled()
-        assert buildless.isUseExpectContinue()
-        assert buildless.getRemoteCacheType() != null
-        assert buildless.getRemoteCacheUri() != null
+    void "feature buildless properties validation"() {
+        given:
+        def feature = beanContext.getBean(Buildless)
 
-        and: 'buildless imports and block should be added'
-        assert settings.contains("buildless {")
-        if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-            assert settings.contains("import build.less.plugin.settings.buildless")
+        expect:
+        for (applicationType in ApplicationType.values()) {
+            assert feature.supports(applicationType)
         }
 
-        and: 'buildless plugin should be added'
-        if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert settings.contains('    id("build.less")')
-        } else {
-            assert settings.contains('    id "build.less"')
-        }
+        feature.category == Category.DEV_TOOLS
+        feature.name == Buildless.NAME
+    }
+
+    void "buildless configured correctly for #buildTool"() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
+        def version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
+        def settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
+        def expectedPlugin = buildTool == BuildTool.GRADLE ? """id "build.less" version "$version\"""" : """id("build.less") version("$version")"""
+
+        then: 'we have the plugin in the settings file'
+        settings.contains("    $expectedPlugin")
+
+        and: 'we have the configuration in the settings file'
+        settings.contains("""\
+buildless {
+    // this call is enough to configure the cache, although, remember to
+    // set BUILDLESS_APIKEY in your environment.
+}""")
+
+        and: 'caching is enabled in the properties file'
+        output['gradle.properties'].contains("org.gradle.caching=true")
 
         where:
         buildTool << BuildTool.valuesGradle()
@@ -63,6 +63,6 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "io.micronaut.starter.feature.buildless.Buildless is visible"() {
         expect:
-        beanContext.getBean(Buildless).isVisible()
+        beanContext.getBean(Buildless).visible
     }
 }
