@@ -34,6 +34,8 @@ import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.c
 public class MicrometerAnnotations implements Feature, MicronautServerDependent {
 
     public static final String NAME = "micrometer-annotation";
+    private static final String ARTIFACT_ID_MICRONAUT_MICROMETER_ANNOTATION = "micronaut-micrometer-annotation";
+    private static final String PROPERTY_MICRONAUT_MICROMETER_VERSION = "micronaut.micrometer.version";
     private final Core core;
     private final Management management;
 
@@ -70,8 +72,8 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
     @Override
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder dependency = MicronautDependencyUtils.micrometerDependency()
-                .artifactId("micronaut-micrometer-annotation")
-                .versionProperty("micronaut.micrometer.version")
+                .artifactId(ARTIFACT_ID_MICRONAUT_MICROMETER_ANNOTATION)
+                .versionProperty(PROPERTY_MICRONAUT_MICROMETER_VERSION)
                 .annotationProcessor();
 
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
