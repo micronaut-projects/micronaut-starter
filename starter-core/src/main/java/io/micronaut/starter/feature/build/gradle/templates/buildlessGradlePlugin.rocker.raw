@@ -3,7 +3,7 @@
 
 @if (config.isUseCustomCachePlugin()) {
 buildless {
-  // this call is enough to configure the cache, although, remember to
-  // set BUILDLESS_APIKEY in your environment.
+    // this call is enough to configure the cache, although, remember to
+    // set BUILDLESS_APIKEY in your environment.
 }
 }
