@@ -42,7 +42,6 @@ class JobRunrFeatureSpec extends ApplicationContextSpec implements CommandOutput
         jobRunrFeature.category == Category.SCHEDULING
     }
 
-    @PendingFeature
     void "test dependency added for jobrunr feature for build tool #buildTool"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -57,7 +56,6 @@ class JobRunrFeatureSpec extends ApplicationContextSpec implements CommandOutput
         buildTool << BuildTool.values()
     }
 
-    @PendingFeature
     void 'verify jobrunr configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext([jobRunrFeature.name])

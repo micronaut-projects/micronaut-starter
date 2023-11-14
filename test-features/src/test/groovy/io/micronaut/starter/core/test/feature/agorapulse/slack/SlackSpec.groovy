@@ -5,15 +5,15 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.test.CommunityLibraries
 import org.gradle.testkit.runner.BuildResult
 import org.yaml.snakeyaml.Yaml
+import spock.lang.Ignore
 import spock.lang.IgnoreIf
 
 import java.nio.file.Files
 import java.nio.file.Paths
 
-@IgnoreIf({ CommunityLibraries.IGNORE })
+@Ignore("agora community features do not support Micronaut Framework 4 yet")
 class SlackSpec extends CommandSpec {
 
     @Override
