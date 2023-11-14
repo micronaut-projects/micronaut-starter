@@ -27,12 +27,6 @@ public class OpenTelemetryAnnotations implements OpenTelemetryFeature {
     public static final String MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID = "micronaut-tracing-opentelemetry-annotation";
     public static final String MICRONAUT_TRACING_VERSION = "micronaut.tracing.version";
 
-    private static final Dependency.Builder MICRONAUT_OPEN_TELEMETRY_ANNOTATION_PROCESSOR = MicronautDependencyUtils
-            .tracingDependency()
-            .artifactId(MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID)
-            .versionProperty(MICRONAUT_TRACING_VERSION)
-            .annotationProcessor();
-
     @Override
     public boolean isVisible() {
         return false;

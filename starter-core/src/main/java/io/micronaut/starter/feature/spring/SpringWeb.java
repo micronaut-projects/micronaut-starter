@@ -53,8 +53,7 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder springWebAnnotation = Dependency.builder()
-                .groupId("io.micronaut.spring")
+        Dependency.Builder springWebAnnotation = MicronautDependencyUtils.springDependency()
                 .artifactId("micronaut-spring-web-annotation")
                 .versionProperty("micronaut.spring.version")
                 .template();
