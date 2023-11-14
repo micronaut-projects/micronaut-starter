@@ -21,16 +21,14 @@ import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
-import io.micronaut.starter.feature.build.BuildCacheConfiguration;
+import io.micronaut.starter.feature.GradleSpecificFeature;
 import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
-import io.micronaut.starter.feature.build.gradle.templates.gradleBuildCache;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Buildless implements CommunityFeature, BuildCacheConfiguration {
+public class Buildless implements CommunityFeature, GradleSpecificFeature {
     public static final String NAME = "buildless";
-    public static final boolean BUILDLESS_ENABLE_PLUGIN = true;
     public static final String FEATURE_NAME_BUILDLESS = "buildless";
     public static final String BUILDLESS_PLUGIN_ID = "build.less";
     public static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
@@ -80,65 +78,23 @@ public class Buildless implements CommunityFeature, BuildCacheConfiguration {
         return "https://docs.less.build/";
     }
 
-    @Override
-    public String getRemoteCacheType() {
-        return "HttpBuildCache";
-    }
-
-    @Override
-    public boolean isEnableRemoteCache() {
-        return true;
-    }
-
-    @Override
-    public boolean isRemoteCachePushEnabled() {
-        return true;
-    }
-
-    @Override
-    public String getRemoteCacheUri() {
-        return "https://gradle.less.build/cache/generic/";
-    }
-
-    @Override
-    public boolean isUseExpectContinue() {
-        return true;
-    }
-
-    @Override
-    public boolean isUseCustomCachePlugin() {
-        return BUILDLESS_ENABLE_PLUGIN;
-    }
-
-    protected GradlePlugin gradlePlugin(Buildless configuration) {
+    protected GradlePlugin gradlePlugin() {
         var builder = GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(BUILDLESS_PLUGIN_ID)
                 .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT);
 
-        if (!isUseCustomCachePlugin()) {
-            // use a generic HTTPS endpoint for caching
-            builder.settingsExtension(new RockerWritable(gradleBuildCache.template(configuration)));
-        } else {
-            // use the buildless plugin
-            builder.settingsImports("build.less.plugin.settings.buildless");
-            builder.settingsExtension(new RockerWritable(buildlessGradlePlugin.template(configuration)));
-        }
-
+        // use the buildless plugin
+        builder.settingsImports("build.less.plugin.settings.buildless");
+        builder.settingsExtension(new RockerWritable(buildlessGradlePlugin.template()));
         return builder.build();
-    }
-
-    protected void applyMaven(GeneratorContext context, Buildless configuration) {
-
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().put("org.gradle.caching", "true");
-            generatorContext.addBuildPlugin(gradlePlugin(this));
-        } else {
-            applyMaven(generatorContext, this);
+            generatorContext.addBuildPlugin(gradlePlugin());
         }
     }
 }
