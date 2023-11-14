@@ -28,10 +28,15 @@ import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.c
 
 @Singleton
 public class Spring implements Feature {
+    private static final String ARTIFACT_ID_MICRONAUT_SPRING_ANNOTATION = "micronaut-spring-annotation";
+    private static final String PROPERTY_MICRONAUT_SPRING_VERSION = "micronaut.spring.version";
+    private static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";
+    private static final String ARTIFACT_ID_SPRING_BOOT_STARTER = "spring-boot-starter";
+    public static final String NAME = "spring";
 
     @Override
     public String getName() {
-        return "spring";
+        return NAME;
     }
 
     @Override
@@ -47,8 +52,8 @@ public class Spring implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder springAnnotation = MicronautDependencyUtils.springDependency()
-                .artifactId("micronaut-spring-annotation")
-                .versionProperty("micronaut.spring.version")
+                .artifactId(ARTIFACT_ID_MICRONAUT_SPRING_ANNOTATION)
+                .versionProperty(PROPERTY_MICRONAUT_SPRING_VERSION)
                 .template();
 
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
@@ -65,8 +70,8 @@ public class Spring implements Feature {
         }
         generatorContext.addDependency(springAnnotation.testAnnotationProcessor());
         generatorContext.addDependency(Dependency.builder()
-                .groupId("org.springframework.boot")
-                .artifactId("spring-boot-starter")
+                .groupId(GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT)
+                .artifactId(ARTIFACT_ID_SPRING_BOOT_STARTER)
                 .compile());
     }
 
