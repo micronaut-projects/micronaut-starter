@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildCacheConfiguration;
 import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
 import io.micronaut.starter.feature.build.gradle.templates.gradleBuildCache;
@@ -30,10 +29,11 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Buildless implements CommunityFeature, BuildCacheConfiguration {
+    public static final String NAME = "buildless";
     public static final boolean BUILDLESS_ENABLE_PLUGIN = true;
     public static final String FEATURE_NAME_BUILDLESS = "buildless";
     public static final String BUILDLESS_PLUGIN_ID = "build.less";
-    public static final String BUILDLESS_PLUGIN_VERSION = "1.0.0-beta1";
+    public static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
 
     @Override
     public String getName() {
@@ -52,7 +52,7 @@ public class Buildless implements CommunityFeature, BuildCacheConfiguration {
 
     @Override
     public String getCommunityFeatureName() {
-        return "buildless";
+        return Buildless.NAME;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class Buildless implements CommunityFeature, BuildCacheConfiguration {
         var builder = GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(BUILDLESS_PLUGIN_ID)
-                .version(BUILDLESS_PLUGIN_VERSION);
+                .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT);
 
         if (!isUseCustomCachePlugin()) {
             // use a generic HTTPS endpoint for caching
