@@ -135,51 +135,24 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         newRelic.title == 'Micrometer New Relic'
     }
 
-    void 'test gradle micrometer-annotation feature for #language'() {
+    void 'test gradle micrometer-annotation feature for #language and buildTool: #buildTool'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['micrometer-annotation', 'kapt'])
-                .render()
-
-        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
-
-        then:
-        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", scope)
-
-        where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
-        Language.GROOVY | "compileOnly"
-    }
-
-    void 'test maven micrometer-annotation feature for #language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['micrometer-annotation'])
                 .render()
-        def xml = new XmlSlurper().parseText(template).'**'.find{ it.artifactId == 'micronaut-micrometer-annotation' }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        xml.name()  == group
-        xml.groupId == 'io.micronaut.micrometer'
-        xml[versionOrScope] == expected
-
-        and: "micronaut-core is excluded for java"
-        language != Language.JAVA || xml.exclusions.exclusion.artifactId.text() == 'micronaut-core'
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR, "micronaut.micrometer.version", true)
 
         where:
-        language        | group                     | versionOrScope || expected
-        Language.JAVA   | 'path'                    | 'version'      || '${micronaut.micrometer.version}'
-        Language.KOTLIN | 'annotationProcessorPath' | 'version'      || '${micronaut.micrometer.version}'
-        Language.GROOVY | 'dependency'              | 'scope'        || 'provided'
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test mandatory dependencies and configurations are added with micrometer-annotation'() {
         given:
-        def feature = ['micrometer-annotation']
+        List<String> feature = ['micrometer-annotation']
 
         when:
         Features features = getFeatures(feature)

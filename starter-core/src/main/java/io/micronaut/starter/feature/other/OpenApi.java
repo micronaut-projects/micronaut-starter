@@ -75,16 +75,8 @@ public class OpenApi implements Feature, MicronautServerDependent {
     }
 
     public static Dependency.Builder micronautOpenApiProcessor(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            return MicronautDependencyUtils
-                    .openapi()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
-                    .annotationProcessor();
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            return MicronautDependencyUtils
-                    .moduleMavenAnnotationProcessor(GROUP_ID_IO_MICRONAUT_OPENAPI, ARTIFACT_ID_MICRONAUT_OPENAPI, OPENAPI_VERSION_MAVEN_PROPERTY);
-        }
-        throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
+        return MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                GROUP_ID_IO_MICRONAUT_OPENAPI, ARTIFACT_ID_MICRONAUT_OPENAPI, OPENAPI_VERSION_MAVEN_PROPERTY);
     }
 
     @Override

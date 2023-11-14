@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.microstream
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -44,196 +47,51 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         readme.contains("[https://docs.microstream.one/manual/cache/index.html](https://docs.microstream.one/manual/cache/index.html)")
     }
 
-    void 'test gradle microstream feature for language=#language'(Language language) {
+    void "test dependencies added for microstream feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['microstream', 'kapt'])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
-        if (language == Language.KOTLIN) {
-            assert template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
-        } else if (language == Language.JAVA) {
-            assert template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
-        } else {
-            assert !template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
-            assert !template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
-        }
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void 'test gradle microstream-rest feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['microstream-rest', 'kapt'])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
-        template.contains('developmentOnly("io.micronaut.microstream:micronaut-microstream-rest")')
-        if (language == Language.KOTLIN) {
-            assert template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
-        } else if (language == Language.JAVA) {
-            assert template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
-        } else {
-            assert !template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
-            assert !template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
-        }
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void 'test gradle microstream-cache feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['microstream-cache'])
-                .render()
-
-        then:
-        !template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
-        !template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream-cache")')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void 'test maven microstream feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['microstream'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        (language != Language.GROOVY) == template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        (language == Language.GROOVY) == template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-annotations</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
-        if (language == Language.KOTLIN) {
-            assert template.contains('''
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.microstream</groupId>
-                 <artifactId>micronaut-microstream-annotations</artifactId>
-                 <version>${micronaut.microstream.version}</version>
-               </annotationProcessorPath>''')
-        } else if(language == Language.JAVA) {
-            assert template.contains('''
-            <path>
-              <groupId>io.micronaut.microstream</groupId>
-              <artifactId>micronaut-microstream-annotations</artifactId>
-              <version>${micronaut.microstream.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-core</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>''')
-        }
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
-    void 'test maven microstream-rest feature for language=#language'(Language language) {
+    void "test dependencies added for microstream-rest feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['microstream-rest'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        (language != Language.GROOVY) == template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        (language == Language.GROOVY) == template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-annotations</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-rest</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-rest", Scope.DEVELOPMENT_ONLY)
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
+
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
-    void 'test maven microstream-cache feature for language=#language'(Language language) {
+    void "test dependencies added for microstream-cache feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['microstream-cache'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.microstream</groupId>
-      <artifactId>micronaut-microstream-cache</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-cache", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
     void 'test microstream configuration'() {
