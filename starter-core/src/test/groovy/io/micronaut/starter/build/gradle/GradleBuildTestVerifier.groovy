@@ -25,8 +25,8 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
-    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest) {
-        return hasDependency(groupId, artifactId, (isTest ? Scope.TEST_ANNOTATION_PROCESSOR : Scope.ANNOTATION_PROCESSOR))
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.TEST_ANNOTATION_PROCESSOR)
     }
 
     @Override

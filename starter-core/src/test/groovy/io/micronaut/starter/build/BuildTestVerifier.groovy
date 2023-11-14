@@ -10,7 +10,7 @@ interface BuildTestVerifier {
 
     boolean hasAnnotationProcessor(String groupId, String artifactId)
 
-    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest)
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId)
 
     boolean hasBom(String groupId, String artifactId, Scope scope)
 

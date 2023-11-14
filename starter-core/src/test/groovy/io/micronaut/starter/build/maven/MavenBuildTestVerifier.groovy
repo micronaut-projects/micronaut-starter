@@ -20,21 +20,12 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasAnnotationProcessor(String groupId, String artifactId) {
-        if (language == Language.GROOVY) {
-            return hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
-        } else {
-            return hasAnnotationProcessor(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
-        }
+        return hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR);
     }
 
     @Override
-    boolean hasAnnotationProcessor(String groupId, String artifactId, boolean isTest) {
-        Scope scope = isTest ? Scope.TEST_ANNOTATION_PROCESSOR : Scope.ANNOTATION_PROCESSOR
-        if (language == Language.GROOVY) {
-            return hasDependency(groupId, artifactId, scope)
-        } else {
-            return hasAnnotationProcessor(groupId, artifactId, scope)
-        }
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId) {
+        return hasDependency(groupId, artifactId, Scope.TEST_ANNOTATION_PROCESSOR);
     }
 
     @CompileDynamic
