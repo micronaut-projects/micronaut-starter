@@ -57,7 +57,7 @@ public interface CommunityFeature extends Feature {
 
     default boolean supportsCurrentMicronautVersion() {
         return VersionInfo.getMicronautMajorVersion()
-                .filter(integer -> builtWithMicronautVersion().getMajor() == integer)
+                .filter(currentMicronautVersion -> builtWithMicronautVersion().getMajor() == currentMicronautVersion)
                 .isPresent();
     }
 }
