@@ -18,13 +18,12 @@ package io.micronaut.starter.feature;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
-
 import java.util.Set;
 
 @Singleton
 public class CommunityFeatureValidator implements FeatureValidator {
-    public static final boolean ENABLE_COMMUNITY_FEATURES = false;
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
@@ -32,8 +31,10 @@ public class CommunityFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(CommunityFeature.class::isInstance) && !ENABLE_COMMUNITY_FEATURES) {
-            throw new IllegalArgumentException("Community features are not yet supported.");
+        for (Feature feature : features) {
+            if (feature instanceof CommunityFeature communityFeature && !communityFeature.supportsCurrentMicronautVersion()) {
+                throw new IllegalArgumentException("Community feature " + feature.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(4));
+            }
         }
     }
 }

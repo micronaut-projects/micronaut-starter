@@ -17,19 +17,18 @@ package io.micronaut.starter.util;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.JdkVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class VersionInfo {
+    private static final Logger LOG = LoggerFactory.getLogger(VersionInfo.class);
 
     private static final Properties VERSIONS = new Properties();
 
@@ -77,7 +76,20 @@ public class VersionInfo {
         if (micronautVersion != null) {
             return micronautVersion.toString();
         }
-        return "2.0.0";
+        return "4.0.0";
+    }
+
+    public static Optional<Integer> getMicronautMajorVersion() {
+        String micronautVersion = getMicronautVersion();
+        String[] parts = micronautVersion.split("\\.");
+        if (parts.length >= 1) {
+            try {
+                return Optional.of(Integer.parseInt(parts[0]));
+            } catch (NumberFormatException e) {
+                LOG.error("could not parse major version of Micronaut", e);
+            }
+        }
+        return Optional.empty();
     }
 
     /**

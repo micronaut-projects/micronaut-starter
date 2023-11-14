@@ -16,12 +16,16 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.options.MicronautVersion;
+import io.micronaut.starter.util.VersionInfo;
 
 public interface CommunityFeature extends Feature {
     @NonNull
     default String getName() {
         return getCommunityContributor().toLowerCase() + "-" + getCommunityFeatureName();
     }
+
+    MicronautVersion builtWithMicronautVersion();
 
     @Override
     @NonNull
@@ -48,6 +52,12 @@ public interface CommunityFeature extends Feature {
 
     @Override
     default boolean isVisible() {
-        return CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES;
+        return supportsCurrentMicronautVersion();
+    }
+
+    default boolean supportsCurrentMicronautVersion() {
+        return VersionInfo.getMicronautMajorVersion()
+                .filter(integer -> builtWithMicronautVersion().getMajor() == integer)
+                .isPresent();
     }
 }

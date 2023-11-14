@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
+import io.micronaut.starter.options.MicronautVersion;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -33,6 +34,11 @@ public class JobRunrFeature implements CommunityFeature {
             .build();
     private static final String PROPERTY_JOBRUNR_BACKGROUND_JOB_SERVER_ENABLED = "jobrunr.background-job-server.enabled";
     private static final String PROPERTY_JOBRUNR_DASHBOARD_ENABLED = "jobrunr.dashboard.enabled";
+
+    @Override
+    public MicronautVersion builtWithMicronautVersion() {
+        return MicronautVersion.FOUR;
+    }
 
     @Override
     public String getCommunityFeatureTitle() {
