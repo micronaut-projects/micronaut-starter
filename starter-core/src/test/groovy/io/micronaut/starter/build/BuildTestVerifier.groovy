@@ -1,11 +1,16 @@
 package io.micronaut.starter.build
 
-import io.micronaut.starter.build.dependencies.Scope;
+
+import io.micronaut.starter.build.dependencies.Scope
 
 /**
  * You can get an instance via {@link io.micronaut.starter.build.BuildTestUtil}.
  */
 interface BuildTestVerifier {
+
+    boolean hasAnnotationProcessor(String groupId, String artifactId)
+
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId)
 
     boolean hasBom(String groupId, String artifactId, Scope scope)
 
