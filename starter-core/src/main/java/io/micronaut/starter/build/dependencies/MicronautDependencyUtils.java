@@ -66,6 +66,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
+    public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
 
     private MicronautDependencyUtils() {
 
@@ -287,5 +288,9 @@ public final class MicronautDependencyUtils {
 
     public static Dependency.Builder microstreamDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MICROSTREAM);
+    }
+
+    public static Dependency.Builder springDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
     }
 }

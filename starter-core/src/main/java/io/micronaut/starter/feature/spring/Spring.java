@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
@@ -45,8 +46,7 @@ public class Spring implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder springAnnotation = Dependency.builder()
-                .groupId("io.micronaut.spring")
+        Dependency.Builder springAnnotation = MicronautDependencyUtils.springDependency()
                 .artifactId("micronaut-spring-annotation")
                 .versionProperty("micronaut.spring.version")
                 .template();
