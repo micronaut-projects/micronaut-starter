@@ -20,7 +20,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation("org.postgresql:postgresql:42.6.0")
-    implementation("com.google.cloud.sql:postgres-socket-factory:1.11.1")
+    implementation("com.google.cloud.sql:postgres-socket-factory:1.15.0")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("org.apache.poi:poi-ooxml:5.2.4")
