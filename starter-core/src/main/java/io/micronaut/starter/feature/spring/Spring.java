@@ -21,18 +21,15 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.coreDependency;
 
 @Singleton
 public class Spring implements Feature {
+    public static final String NAME = "spring";
     private static final String ARTIFACT_ID_MICRONAUT_SPRING_ANNOTATION = "micronaut-spring-annotation";
     private static final String PROPERTY_MICRONAUT_SPRING_VERSION = "micronaut.spring.version";
     private static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";
     private static final String ARTIFACT_ID_SPRING_BOOT_STARTER = "spring-boot-starter";
-    public static final String NAME = "spring";
 
     @Override
     public String getName() {
@@ -51,24 +48,8 @@ public class Spring implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder springAnnotation = MicronautDependencyUtils.springDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_SPRING_ANNOTATION)
-                .versionProperty(PROPERTY_MICRONAUT_SPRING_VERSION)
-                .template();
-
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(springAnnotation
-                    .annotationProcessor()
-                    .exclude(coreDependency()
-                            .artifactId("micronaut-core")
-                            .compile()
-                            .build()
-                    )
-            );
-        } else {
-            generatorContext.addDependency(springAnnotation.annotationProcessor());
-        }
-        generatorContext.addDependency(springAnnotation.testAnnotationProcessor());
+        generatorContext.addDependency(
+                MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(), MicronautDependencyUtils.GROUP_ID_MICRONAUT_SPRING, ARTIFACT_ID_MICRONAUT_SPRING_ANNOTATION, PROPERTY_MICRONAUT_SPRING_VERSION));
         generatorContext.addDependency(Dependency.builder()
                 .groupId(GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT)
                 .artifactId(ARTIFACT_ID_SPRING_BOOT_STARTER)
