@@ -16,15 +16,37 @@
 package io.micronaut.starter.feature.view;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     private static final String ARTIFACT_ID_MICRONAUT_VIEWS_THYMELEAF = "micronaut-views-thymeleaf";
+
+    private final ViewsFieldset viewsFieldset;
+
+    @Inject
+    public Thymeleaf(ViewsFieldset viewsFieldset) {
+        this.viewsFieldset = viewsFieldset;
+    }
+
+    /**
+     *
+     * @deprecated Use {@link Thymeleaf(ViewsFieldset)} instead.
+     */
+    @Deprecated(forRemoval = true, since = "4.2.0")
+    public Thymeleaf() {
+        this(new ViewsFieldset());
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(ViewsFieldset.class, viewsFieldset);
+    }
 
     @Override
     public String getName() {
