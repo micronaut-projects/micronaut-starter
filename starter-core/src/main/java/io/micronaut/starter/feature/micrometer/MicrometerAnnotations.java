@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.micrometer;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -68,9 +69,7 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder dependency = Dependency
-                .builder()
-                .groupId("io.micronaut.micrometer")
+        Dependency.Builder dependency = MicronautDependencyUtils.micrometerDependency()
                 .artifactId("micronaut-micrometer-annotation")
                 .versionProperty("micronaut.micrometer.version")
                 .annotationProcessor();
