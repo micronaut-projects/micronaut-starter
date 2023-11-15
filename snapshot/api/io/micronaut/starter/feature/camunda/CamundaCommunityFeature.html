@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../CommunityFeature.html" title="interface in io.micronaut.starter.feature">CommunityFeature</a></code>, <code>io.micronaut.core.naming.Described</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code></dd>
+<dd><code><a href="../CommunityFeature.html" title="interface in io.micronaut.starter.feature">CommunityFeature</a></code>, <code>io.micronaut.core.naming.Described</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../MicronautCommunityFeature.html" title="interface in io.micronaut.starter.feature">MicronautCommunityFeature</a></code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CamundaCommunityFeature</span><span class="extends-implements">
-extends <a href="../CommunityFeature.html" title="interface in io.micronaut.starter.feature">CommunityFeature</a></span></div>
+extends <a href="../MicronautCommunityFeature.html" title="interface in io.micronaut.starter.feature">MicronautCommunityFeature</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,13 +117,16 @@ extends <a href="../CommunityFeature.html" title="interface in io.micronaut.star
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.CommunityFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../CommunityFeature.html" title="interface in io.micronaut.starter.feature">CommunityFeature</a></h3>
-<code><a href="../CommunityFeature.html#getCommunityFeatureName()">getCommunityFeatureName</a>, <a href="../CommunityFeature.html#getCommunityFeatureTitle()">getCommunityFeatureTitle</a>, <a href="../CommunityFeature.html#getName()">getName</a>, <a href="../CommunityFeature.html#getTitle()">getTitle</a>, <a href="../CommunityFeature.html#isCommunity()">isCommunity</a>, <a href="../CommunityFeature.html#isVisible()">isVisible</a>, <a href="../CommunityFeature.html#supportsCurrentMicronautVersion()">supportsCurrentMicronautVersion</a></code></div>
+<code><a href="../CommunityFeature.html#getCommunityFeatureName()">getCommunityFeatureName</a>, <a href="../CommunityFeature.html#getCommunityFeatureTitle()">getCommunityFeatureTitle</a>, <a href="../CommunityFeature.html#getName()">getName</a>, <a href="../CommunityFeature.html#getTitle()">getTitle</a>, <a href="../CommunityFeature.html#isCommunity()">isCommunity</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
 <code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="../Feature.html#getCategory()">getCategory</a>, <a href="../Feature.html#getDescription()">getDescription</a>, <a href="../Feature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getOrder()">getOrder</a>, <a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#isPreview()">isPreview</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)">processSelectedFeatures</a>, <a href="../Feature.html#supports(io.micronaut.starter.application.ApplicationType)">supports</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.MicronautCommunityFeature">Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../MicronautCommunityFeature.html" title="interface in io.micronaut.starter.feature">MicronautCommunityFeature</a></h3>
+<code><a href="../MicronautCommunityFeature.html#isVisible()">isVisible</a>, <a href="../MicronautCommunityFeature.html#supportsCurrentMicronautVersion()">supportsCurrentMicronautVersion</a></code></div>
 </section>
 </li>
 </ul>
@@ -154,7 +157,7 @@ extends <a href="../CommunityFeature.html" title="interface in io.micronaut.star
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../../options/MicronautVersion.html" title="enum class in io.micronaut.starter.options">MicronautVersion</a></span>&nbsp;<span class="element-name">builtWithMicronautVersion</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../CommunityFeature.html#builtWithMicronautVersion()">builtWithMicronautVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../CommunityFeature.html" title="interface in io.micronaut.starter.feature">CommunityFeature</a></code></dd>
+<dd><code><a href="../MicronautCommunityFeature.html#builtWithMicronautVersion()">builtWithMicronautVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../MicronautCommunityFeature.html" title="interface in io.micronaut.starter.feature">MicronautCommunityFeature</a></code></dd>
 </dl>
 </section>
 </li>
