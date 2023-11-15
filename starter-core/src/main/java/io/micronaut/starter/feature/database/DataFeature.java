@@ -28,13 +28,13 @@ import io.micronaut.starter.options.BuildTool;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA;
 
 public interface DataFeature extends OneOfFeature {
 
     String SCHEMA_GENERATE_KEY = "datasources.default.schema-generate";
     String MICRONAUT_DATA_VERSION = "micronaut.data.version";
-    String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
 
     @Override
     default Class<?> getFeatureClass() {
@@ -51,7 +51,7 @@ public interface DataFeature extends OneOfFeature {
     }
 
     static Dependency dataProcessorDependency(BuildTool buildTool) {
-        return dataProcessorDependency(buildTool, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
+        return dataProcessorDependency(buildTool, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Priority.MICRONAUT_DATA_PROCESSOR.getOrder());
     }
 
     static Dependency dataProcessorDependency(BuildTool buildTool, String artifactId, int order) {

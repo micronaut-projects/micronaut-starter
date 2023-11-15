@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.BuildTool;
 
 public final class MicronautDependencyUtils {
+    public static final String ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE = "micronaut-data-tx-hibernate";
+    public static final String ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT = "micronaut-inject";
     public static final Dependency MICRONAUT_INJECT = coreDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_INJECT)
