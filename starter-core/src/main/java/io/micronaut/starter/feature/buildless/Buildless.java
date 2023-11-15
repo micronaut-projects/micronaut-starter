@@ -29,9 +29,17 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Buildless implements CommunityFeature, GradleSpecificFeature {
     public static final String NAME = "buildless";
-    public static final String FEATURE_NAME_BUILDLESS = "buildless";
-    public static final String BUILDLESS_PLUGIN_ID = "build.less";
-    public static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
+    private static final String FEATURE_NAME_BUILDLESS = "buildless";
+    private static final String BUILDLESS_PLUGIN_ID = "build.less";
+    static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
+
+    private static final GradlePlugin BUILDLESS_GRADLE_PLUGIN = GradlePlugin.builder()
+            .gradleFile(GradleFile.SETTINGS)
+            .id(BUILDLESS_PLUGIN_ID)
+            .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT)
+            .settingsImports("build.less.plugin.settings.buildless")
+            .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()))
+            .build();
 
     @Override
     public String getName() {
@@ -78,23 +86,11 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
         return "https://docs.less.build/";
     }
 
-    protected GradlePlugin gradlePlugin() {
-        var builder = GradlePlugin.builder()
-                .gradleFile(GradleFile.SETTINGS)
-                .id(BUILDLESS_PLUGIN_ID)
-                .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT);
-
-        // use the buildless plugin
-        builder.settingsImports("build.less.plugin.settings.buildless");
-        builder.settingsExtension(new RockerWritable(buildlessGradlePlugin.template()));
-        return builder.build();
-    }
-
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().put("org.gradle.caching", "true");
-            generatorContext.addBuildPlugin(gradlePlugin());
+            generatorContext.addBuildPlugin(BUILDLESS_GRADLE_PLUGIN);
         }
     }
 }
