@@ -70,13 +70,10 @@ public class JaxRs implements Feature, MicronautServerDependent {
                 .versionProperty(MICRONAUT_JAXRS_VERSION)
                 .template();
 
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(jaxrs.annotationProcessor());
-        } else {
-            generatorContext.addDependency(MicronautDependencyUtils
-                    .moduleMavenAnnotationProcessor(MICRONAUT_JAX_RS_GROUP, MICRONAUT_JAXRS_PROCESSOR, MICRONAUT_JAXRS_VERSION, false)
-            );
-        }
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MICRONAUT_JAX_RS_GROUP,
+                MICRONAUT_JAXRS_PROCESSOR,
+                MICRONAUT_JAXRS_VERSION));
 
         generatorContext.addDependency(jaxrs.testAnnotationProcessor());
         generatorContext.addDependency(Dependency.builder()

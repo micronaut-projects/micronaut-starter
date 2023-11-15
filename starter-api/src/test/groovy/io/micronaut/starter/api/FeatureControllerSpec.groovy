@@ -27,22 +27,16 @@ class FeatureControllerSpec extends Specification {
         !features.isEmpty()
     }
 
-    @Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
     void "test community features"() {
+        given:
+        List<String> expected = [
+                'jobrunr-jobrunr'
+        ]
         when:
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
 
         then:
-        communityFeatures.name.sort() == [
-                'camunda-platform7',
-                'camunda-external-worker',
-                'agorapulse-gru-http',
-                'agorapulse-micronaut-console',
-                'agorapulse-micronaut-permissions',
-                'agorapulse-micronaut-slack',
-                'agorapulse-micronaut-worker',
-                'camunda-zeebe'
-        ].sort()
+        communityFeatures.name.sort() == expected.sort()
     }
 
     void "test list features - spanish"() {

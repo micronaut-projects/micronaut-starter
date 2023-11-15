@@ -150,14 +150,14 @@ public enum GradleConfiguration implements Ordered {
     }
 
     private static GradleConfiguration kotlinAnnotationProcessor(GeneratorContext generatorContext) {
-        if (generatorContext != null && generatorContext.isFeaturePresent(KotlinSymbolProcessingFeature.class)) {
+        if (generatorContext == null || generatorContext.isFeaturePresent(KotlinSymbolProcessingFeature.class)) {
             return GradleConfiguration.KSP;
         }
         return GradleConfiguration.KAPT;
     }
 
     private static GradleConfiguration kotlinTestAnnotationProcessor(GeneratorContext generatorContext) {
-        if (generatorContext != null && generatorContext.isFeaturePresent(KotlinSymbolProcessingFeature.class)) {
+        if (generatorContext == null || generatorContext.isFeaturePresent(KotlinSymbolProcessingFeature.class)) {
             return GradleConfiguration.TEST_KSP;
         }
         return GradleConfiguration.TEST_KAPT;

@@ -17,14 +17,15 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 public class SecurityAnnotations implements Feature, MicronautServerDependent {
+    public static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-annotations";
+    public static final String PROPERTY_MICRONAUT_SECURITY_VERSION = "micronaut.security.version";
 
     @Override
     public String getName() {
@@ -43,10 +44,9 @@ public class SecurityAnnotations implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.security")
-                .artifactId("micronaut-security-annotations")
-                .versionProperty("micronaut.security.version")
-                .annotationProcessor());
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_SECURITY,
+                ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS,
+                PROPERTY_MICRONAUT_SECURITY_VERSION));
     }
 }

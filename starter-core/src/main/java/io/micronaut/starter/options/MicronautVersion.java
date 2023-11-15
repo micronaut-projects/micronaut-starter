@@ -13,10 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test;
+package io.micronaut.starter.options;
 
-import io.micronaut.starter.feature.CommunityFeatureValidator;
+/**
+ * Enum for Micronaut Framework major versions.
+ */
+public enum MicronautVersion {
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4);
 
-public class CommunityLibraries {
-    public static final boolean IGNORE = !CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES;
+    private final int major;
+
+    MicronautVersion(int major) {
+        this.major = major;
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    @Override
+    public String toString() {
+        return "" + major;
+    }
 }
