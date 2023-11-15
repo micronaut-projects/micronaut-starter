@@ -11,7 +11,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Subject
-import spock.lang.Unroll
 
 class JunitPlatformSuiteEngineSpec extends ApplicationContextSpec {
 
@@ -36,13 +35,12 @@ class JunitPlatformSuiteEngineSpec extends ApplicationContextSpec {
         applicationType << ApplicationType.values()
     }
 
-    @Unroll
     void 'test #buildTool junit-platform-suite-engine feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .testFramework(TestFramework.JUNIT)
-                .features(['junit-platform-suite-engine'])
+                .features([JunitPlatformSuiteEngine.NAME])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 

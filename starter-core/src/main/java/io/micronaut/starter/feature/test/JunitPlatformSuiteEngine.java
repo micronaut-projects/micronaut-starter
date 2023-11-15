@@ -25,6 +25,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class JunitPlatformSuiteEngine implements JunitCompanionFeature {
 
+    public static final String NAME = "junit-platform-suite-engine";
+
     private static final String ARTIFACT_ID_JUNIT_PLATFORM_SUITE_ENGINE = "junit-platform-suite-engine";
     private static final String GROUP_ID_ORG_JUNIT_PLATFORM = "org.junit.platform";
     public static final Dependency.Builder DEPENDENCY_JUNIT_PLATFORM_SUITE_ENGINE = Dependency.builder()
@@ -35,7 +37,7 @@ public class JunitPlatformSuiteEngine implements JunitCompanionFeature {
     @Override
     @NonNull
     public String getName() {
-        return "junit-platform-suite-engine";
+        return NAME;
     }
 
     @Override
