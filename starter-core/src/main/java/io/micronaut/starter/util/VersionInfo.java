@@ -80,8 +80,11 @@ public class VersionInfo {
     }
 
     public static Optional<Integer> getMicronautMajorVersion() {
-        String micronautVersion = getMicronautVersion();
-        String[] parts = micronautVersion.split("\\.");
+        return getMajorVersion(getMicronautVersion());
+    }
+
+    public static Optional<Integer> getMajorVersion(String version) {
+        String[] parts = version.split("\\.");
         if (parts.length >= 1) {
             try {
                 return Optional.of(Integer.parseInt(parts[0]));
