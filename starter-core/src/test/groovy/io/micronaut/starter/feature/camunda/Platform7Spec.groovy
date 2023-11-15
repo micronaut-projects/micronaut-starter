@@ -21,11 +21,9 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import spock.lang.PendingFeature
-import spock.lang.Requires
 
 class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixture {
 

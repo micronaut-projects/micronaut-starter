@@ -19,7 +19,7 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.CommunityFeature;
+import io.micronaut.starter.feature.MicronautCommunityFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.MicronautVersion;
 import io.micronaut.starter.options.TestFramework;
@@ -27,7 +27,7 @@ import io.micronaut.starter.template.RockerTemplate;
 
 import java.util.Optional;
 
-public interface AgoraPulseFeature extends CommunityFeature {
+public interface AgoraPulseFeature extends MicronautCommunityFeature {
 
     @Override
     default MicronautVersion builtWithMicronautVersion() {
