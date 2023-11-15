@@ -4,7 +4,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import spock.lang.Unroll
 
 class ThymeleafSpec extends CommandSpec {
 
@@ -13,7 +12,6 @@ class ThymeleafSpec extends CommandSpec {
         return "thymeleafViews"
     }
 
-    @Unroll
     void "test gradle views-thymeleaf runs fieldset suite"() {
         when:
         generateProject(Language.JAVA, BuildTool.GRADLE, ["views-thymeleaf", "views-fieldset-tck"])
