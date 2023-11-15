@@ -3,12 +3,10 @@ package io.micronaut.starter.feature.agorapulse.gru
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
-import spock.lang.Requires
+import spock.lang.PendingFeature
 
-@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class GruHttpSpec extends ApplicationContextSpec {
 
     void "Gru-http Feature override Feature->getThirdPartyDocumentation"() {
@@ -42,6 +40,7 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
     }
 
+    @PendingFeature(reason = "agora community features do not support Micronaut Framework 4 yet")
     void "#buildTool with feature agorapulse-gru-http adds dependency for #buildTool"(BuildTool buildTool) {
         given:
         String groupId = 'com.agorapulse'

@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
@@ -28,6 +28,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class HibernateJpa implements JpaFeature {
 
+    private static final String ARTIFACT_ID_MICRONAUT_HIBERNATE_JPA = "micronaut-hibernate-jpa";
     private final JdbcFeature jdbcFeature;
 
     public HibernateJpa(JdbcFeature jdbcFeature) {
@@ -61,9 +62,15 @@ public class HibernateJpa implements JpaFeature {
         generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
                 generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
                         Hbm2ddlAuto.UPDATE.toString());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.sql")
-                .artifactId("micronaut-hibernate-jpa")
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MicronautDependencyUtils.sqlDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_HIBERNATE_JPA)
+                .compile());
+        generatorContext.addDependency(MicronautDependencyUtils.dataDependency()
+                .artifactId(MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE)
                 .compile());
     }
 

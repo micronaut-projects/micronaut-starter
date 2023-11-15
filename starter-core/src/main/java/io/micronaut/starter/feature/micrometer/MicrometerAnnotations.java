@@ -17,22 +17,21 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.NameUtils;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.coreDependency;
 
 @Singleton
 public class MicrometerAnnotations implements Feature, MicronautServerDependent {
 
     public static final String NAME = "micrometer-annotation";
+    private static final String ARTIFACT_ID_MICRONAUT_MICROMETER_ANNOTATION = "micronaut-micrometer-annotation";
+    private static final String PROPERTY_MICRONAUT_MICROMETER_VERSION = "micronaut.micrometer.version";
     private final Core core;
     private final Management management;
 
@@ -68,22 +67,8 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder dependency = Dependency
-                .builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-annotation")
-                .versionProperty("micronaut.micrometer.version")
-                .annotationProcessor();
-
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            dependency.exclude(
-                    coreDependency()
-                            .artifactId("micronaut-core")
-                            .compile()
-                            .build()
-            );
-        }
-        generatorContext.addDependency(dependency);
+        generatorContext.addDependency(
+                MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(), MicronautDependencyUtils.GROUP_ID_MICRONAUT_MICROMETER, ARTIFACT_ID_MICRONAUT_MICROMETER_ANNOTATION, PROPERTY_MICRONAUT_MICROMETER_VERSION));
     }
 
     @Override

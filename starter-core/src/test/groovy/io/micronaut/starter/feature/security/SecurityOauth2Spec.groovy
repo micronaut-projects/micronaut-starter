@@ -34,68 +34,26 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
 
         then:
         verifier.hasDependency("io.micronaut.security", "micronaut-security-oauth2", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
         buildTool << BuildTool.values()
     }
 
     @Unroll
-    void 'test gradle security-oauth2 feature for language=#language'() {
+    void 'test #buildTool security-oauth2 feature dependencies'(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['security-oauth2', 'kapt'])
-                .render()
-
-        then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut.security:micronaut-security-oauth2")')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven security-oauth2 feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['security-oauth2'])
-                .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.security</groupId>
-      <artifactId>micronaut-security-oauth2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        if (language == Language.JAVA) {
-            assert template.contains("""
-            <path>
-              <groupId>io.micronaut.security</groupId>
-              <artifactId>micronaut-security-annotations</artifactId>
-              <version>\${micronaut.security.version}</version>
-            </path>
-""")
-        } else if (language == Language.KOTLIN) {
-            assert template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.security</groupId>
-                 <artifactId>micronaut-security-annotations</artifactId>
-                 <version>${micronaut.security.version}</version>
-               </annotationProcessorPath>
-''') == 1
-        } else if (language == Language.GROOVY) {
-            assert true
-        } else {
-            assert false
-        }
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-oauth2")
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
     void 'test security-oauth2 configuration'() {

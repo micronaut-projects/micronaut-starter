@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.spring
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
@@ -52,141 +55,20 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
         features.contains('spring')
     }
 
-    @Unroll
-    void 'test spring-data-jpa with Gradle for language=#language'() {
+    void "test dependencies added for spring-data-jpa feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-data-jpa', 'kapt'])
-                .language(language)
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['spring-data-jpa'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-annotation\")")
-        template.contains('implementation("io.micronaut.data:micronaut-data-spring")')
-        template.contains('implementation("io.micronaut.data:micronaut-data-spring-jpa")')
-        template.contains('implementation("org.springframework:spring-orm")')
+        verifier.hasDependency("io.micronaut.spring", "micronaut-spring-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.spring.version', true)
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-spring", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-spring-jpa", Scope.COMPILE)
+        verifier.hasDependency("org.springframework", "spring-orm", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    void 'test maven spring-data-jpa feature for java'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-data-jpa'])
-                .language(Language.JAVA)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring-jpa</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-annotation</artifactId>
-              <version>\${micronaut.spring.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-core</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>
-""")
-    }
-
-    void 'test maven spring-data-jpa feature for groovy'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-data-jpa'])
-                .language(Language.GROOVY)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring-jpa</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.spring</groupId>
-      <artifactId>micronaut-spring-annotation</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
-    }
-
-    void 'test maven spring-data-jpa feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-data-jpa'])
-                .language(Language.KOTLIN)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-spring-jpa</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.spring</groupId>
-                 <artifactId>micronaut-spring-annotation</artifactId>
-                 <version>\${micronaut.spring.version}</version>
-               </annotationProcessorPath>
-""")
+        buildTool << BuildTool.values()
     }
 }
