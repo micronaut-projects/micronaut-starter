@@ -29,6 +29,7 @@ import java.util.List;
 
 @Singleton
 public class ViewsFieldset implements Feature {
+
     public static final String NAME = "views-fieldset";
     private static final String ARTIFACT_ID_MICRONAUT_VIEWS_FIELDSET = "micronaut-views-fieldset";
     private static final Dependency DEPENDENCY_VIEWS_FIELDSET =

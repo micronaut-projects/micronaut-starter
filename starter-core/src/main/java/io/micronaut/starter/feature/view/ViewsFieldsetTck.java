@@ -31,6 +31,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class ViewsFieldsetTck implements Feature {
+
     public static final String NAME = "views-fieldset-tck";
     private static final String ARTIFACT_ID_MICRONAUT_VIEWS_FIELDSET_TCK = "micronaut-views-fieldset-tck";
     private static final Dependency DEPENDENCY_VIEWS_FIELDSET_TCK =
