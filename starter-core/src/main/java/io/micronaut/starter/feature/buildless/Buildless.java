@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.buildless;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
@@ -78,21 +79,25 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
         return "https://docs.less.build/";
     }
 
-    private GradlePlugin buildPlugin() {
-        return GradlePlugin.builder()
+    private GradlePlugin buildPlugin(GeneratorContext generatorContext) {
+        GradlePlugin.Builder plugin = GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(BUILDLESS_PLUGIN_ID)
                 .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT)
-                .settingsImports("build.less.plugin.settings.buildless")
-                .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()))
-                .build();
+                .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()));
+
+        // in kotlin DSL we need an import
+        if (GradleDsl.KOTLIN.equals(generatorContext.getBuildTool().getGradleDsl().orElse(null))) {
+            plugin.settingsImports("build.less.plugin.settings.buildless");
+        }
+        return plugin.build();
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().put("org.gradle.caching", "true");
-            generatorContext.addBuildPlugin(buildPlugin());
+            generatorContext.addBuildPlugin(buildPlugin(generatorContext));
         }
     }
 }
