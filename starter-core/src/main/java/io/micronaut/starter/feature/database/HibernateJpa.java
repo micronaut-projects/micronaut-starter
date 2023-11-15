@@ -28,7 +28,6 @@ import jakarta.inject.Singleton;
 @Singleton
 public class HibernateJpa implements JpaFeature {
 
-    private static final String ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE = "micronaut-data-tx-hibernate";
     private static final String ARTIFACT_ID_MICRONAUT_HIBERNATE_JPA = "micronaut-hibernate-jpa";
     private final JdbcFeature jdbcFeature;
 
@@ -71,7 +70,7 @@ public class HibernateJpa implements JpaFeature {
                 .artifactId(ARTIFACT_ID_MICRONAUT_HIBERNATE_JPA)
                 .compile());
         generatorContext.addDependency(MicronautDependencyUtils.dataDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE)
+                .artifactId(MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE)
                 .compile());
     }
 

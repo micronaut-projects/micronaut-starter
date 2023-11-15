@@ -18,7 +18,7 @@ import spock.lang.Issue
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL
-import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.feature.database.jdbc.Hikari.MICRONAUT_JDBC_HIKARI_ARTIFACT
 
 class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -66,7 +66,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
         then:
         //src/main
-        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
         verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, "micronaut-data-hibernate-jpa", Scope.COMPILE )
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )

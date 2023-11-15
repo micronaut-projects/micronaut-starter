@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MicronautApplicationGradlePlugin {
 
@@ -58,8 +59,15 @@ public class MicronautApplicationGradlePlugin {
         private  String packageName;
         private boolean sharedTestResources;
 
+        private Set<String> ignoredAutomaticDependencies;
+
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
+            return this;
+        }
+
+        public Builder ignoredAutomaticDependencies(Set<String> ignoredAutomaticDependencies) {
+            this.ignoredAutomaticDependencies = ignoredAutomaticDependencies;
             return this;
         }
 
@@ -144,7 +152,7 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass)));
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

@@ -17,12 +17,18 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
 
     void 'test readme.md with feature hibernate-jpa contains links to micronaut docs'() {
         when:
-        def output = generate(['hibernate-jpa'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['hibernate-jpa'])
+        String readme = output["README.md"]
 
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate")
+
+        when:
+        String buildGradleKts = output["build.gradle.kts"]
+
+        then:
+        buildGradleKts.contains('ignoredAutomaticDependencies.add("io.micronaut.data:micronaut-data-processor")')
     }
 
     void "test hibernate jpa features"() {
