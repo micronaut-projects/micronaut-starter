@@ -13,28 +13,15 @@ class BuildlessSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle buildless integration with #language"(Language language) {
+    void "test #buildTool buildless integration with #language"(BuildTool buildTool, Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["buildless"])
+        generateProject(language, buildTool, ["buildless"])
         BuildResult result = executeGradle("compileJava")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
-    }
-
-    @Unroll
-    void "test gradle kotlin DSL buildless integration with #language"(Language language) {
-        when:
-        generateProject(language, BuildTool.GRADLE_KOTLIN, ["buildless"])
-        BuildResult result = executeGradle("compileJava")
-
-        then:
-        result?.output?.contains("BUILD SUCCESS")
-
-        where:
-        language << Language.values()
+        [buildTool, language] << [BuildTool.gradleValues(), Language.values()].combinations()
     }
 }
