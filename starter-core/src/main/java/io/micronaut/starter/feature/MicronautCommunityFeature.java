@@ -15,35 +15,23 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.options.MicronautVersion;
+import io.micronaut.starter.util.VersionInfo;
 
-public interface CommunityFeature extends Feature {
-    @NonNull
-    default String getName() {
-        return getCommunityContributor().toLowerCase() + "-" + getCommunityFeatureName();
-    }
-
-    @Override
-    @NonNull
-    default String getTitle() {
-        return getCommunityContributor() + " " + getCommunityFeatureTitle();
-    }
-
-    @NonNull
-    String getCommunityFeatureTitle();
-
-    @NonNull
-    String getCommunityFeatureName();
-
-    /**
-     * @return Indicates name of the community contributor.
-     */
-    @NonNull
-    String getCommunityContributor();
+/**
+ * Markert interface for {@link CommunityFeature} which expose a Micronaut Library.
+ */
+public interface MicronautCommunityFeature extends CommunityFeature {
+    MicronautVersion builtWithMicronautVersion();
 
     @Override
-    default boolean isCommunity() {
-        return true;
+    default boolean isVisible() {
+        return supportsCurrentMicronautVersion();
     }
 
+    default boolean supportsCurrentMicronautVersion() {
+        return VersionInfo.getMicronautMajorVersion()
+                .filter(currentMicronautVersion -> builtWithMicronautVersion().getMajor() == currentMicronautVersion)
+                .isPresent();
+    }
 }

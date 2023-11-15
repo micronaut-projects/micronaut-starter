@@ -23,7 +23,7 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class CommunityFeatureValidator implements FeatureValidator {
+public class MicronautCommunityFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
@@ -32,8 +32,8 @@ public class CommunityFeatureValidator implements FeatureValidator {
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         for (Feature feature : features) {
-            if (feature instanceof CommunityFeature communityFeature && !communityFeature.supportsCurrentMicronautVersion()) {
-                throw new IllegalArgumentException("Community feature " + feature.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(4));
+            if (feature instanceof MicronautCommunityFeature f && !f.supportsCurrentMicronautVersion()) {
+                throw new IllegalArgumentException("Community feature " + f.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(4));
             }
         }
     }

@@ -3,11 +3,9 @@ package io.micronaut.starter.feature.agorapulse.gru
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import spock.lang.PendingFeature
-import spock.lang.Requires
 
 class GruHttpSpec extends ApplicationContextSpec {
 
