@@ -20,6 +20,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface ViewFeature extends OneOfFeature {
+    String VIEWS_PATH = "src/main/resources/views/";
 
     @Override
     default Class<?> getFeatureClass() {

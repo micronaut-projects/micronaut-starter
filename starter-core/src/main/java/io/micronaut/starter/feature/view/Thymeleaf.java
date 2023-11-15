@@ -16,9 +16,11 @@
 package io.micronaut.starter.feature.view;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -26,6 +28,11 @@ import jakarta.inject.Singleton;
 public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     private static final String ARTIFACT_ID_MICRONAUT_VIEWS_THYMELEAF = "micronaut-views-thymeleaf";
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_VIEWS_THYMELEAF = MicronautDependencyUtils.viewsDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_THYMELEAF)
+            .compile();
+    private static final String LAYOUT_HTML = "layout.html";
+    private static final String RESOURCES_THYMELEAF_PATH = "views/thymeleaf/";
 
     private final ViewsFieldset viewsFieldset;
 
@@ -75,8 +82,16 @@ public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_THYMELEAF)
-                .compile());
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_VIEWS_THYMELEAF);
+        addLayout(generatorContext);
+    }
+
+    private void addLayout(GeneratorContext generatorContext) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        generatorContext.addTemplate(LAYOUT_HTML, new URLTemplate(VIEWS_PATH + LAYOUT_HTML, classLoader.getResource(RESOURCES_THYMELEAF_PATH +  LAYOUT_HTML)));
     }
 }

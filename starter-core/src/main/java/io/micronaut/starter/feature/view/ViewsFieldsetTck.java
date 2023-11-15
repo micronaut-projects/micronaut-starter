@@ -15,12 +15,18 @@
  */
 package io.micronaut.starter.feature.view;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.test.JunitPlatformSuiteEngine;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -29,8 +35,19 @@ public class ViewsFieldsetTck implements Feature {
     private static final String ARTIFACT_ID_MICRONAUT_VIEWS_FIELDSET_TCK = "micronaut-views-fieldset-tck";
     private static final Dependency DEPENDENCY_VIEWS_FIELDSET_TCK =
             MicronautDependencyUtils.viewsDependency().artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_FIELDSET_TCK)
-                    .compile()
+                    .test()
                     .build();
+
+    private final JunitPlatformSuiteEngine junitPlatformSuiteEngine;
+
+    public ViewsFieldsetTck(JunitPlatformSuiteEngine junitPlatformSuiteEngine) {
+        this.junitPlatformSuiteEngine = junitPlatformSuiteEngine;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(JunitPlatformSuiteEngine.class, junitPlatformSuiteEngine);
+    }
 
     @Override
     public String getName() {
@@ -64,10 +81,24 @@ public class ViewsFieldsetTck implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addThymeleafSuite(generatorContext);
         addDependencies(generatorContext);
+    }
+
+    private void addThymeleafSuite(GeneratorContext generatorContext) {
+        if (generatorContext.getLanguage() == Language.JAVA) {
+            RockerModel rockerModel = thymeleafSuite.template(generatorContext.getProject());
+            String templateName = "thymeleafSuite";
+            String extension = generatorContext.getLanguage().getExtension();
+            String srcDir = generatorContext.getLanguage().getTestSrcDir();
+            generatorContext.addTemplate(templateName,
+                    new RockerTemplate(srcDir + "/{packagePath}/ThymeleafSuite." + extension, rockerModel));
+        }
     }
 
     private void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_VIEWS_FIELDSET_TCK);
+        //TODO Delete when this is merged https://github.com/micronaut-projects/micronaut-views/pull/656
+        generatorContext.addDependency(Dependency.builder().groupId("io.micronaut.data").artifactId("micronaut-data-jdbc").scope(Scope.TEST));
     }
 }

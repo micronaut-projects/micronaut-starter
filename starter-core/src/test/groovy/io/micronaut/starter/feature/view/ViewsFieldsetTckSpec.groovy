@@ -7,12 +7,15 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.function.awslambda.AwsLambda
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class ViewsFieldsetTckSpec extends ApplicationContextSpec {
+class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
     ViewsFieldsetTck feature = beanContext.getBean(ViewsFieldsetTck)
@@ -53,9 +56,18 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset-tck", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset-tck", Scope.TEST)
+        verifier.hasDependency("org.junit.platform", "junit-platform-suite-engine", Scope.TEST)
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+    }
+
+    void 'ThymeleafSuite test is generated views-fieldset-tck'() {
+        when:
+        Map<String, String> output = generate(['views-fieldset-tck'])
+
+        then:
+        output.containsKey("${Language.DEFAULT_OPTION.testSrcDir}/example/micronaut/ThymeleafSuite.$Language.DEFAULT_OPTION.extension".toString())
     }
 }

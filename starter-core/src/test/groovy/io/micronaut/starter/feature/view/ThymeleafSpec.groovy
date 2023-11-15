@@ -14,13 +14,16 @@ class ThymeleafSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature views-thymeleaf contains links to micronaut docs'() {
         when:
-        def output = generate(['views-thymeleaf'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-thymeleaf'])
+        String readme = output["README.md"]
 
         then:
         readme
         readme.contains('https://www.thymeleaf.org')
         readme.contains("https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#thymeleaf")
+
+        and:
+        output.containsKey("src/main/resources/views/layout.html")
     }
 
     @Unroll
