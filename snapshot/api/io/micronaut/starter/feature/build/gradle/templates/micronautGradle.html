@@ -198,6 +198,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTemplatePackageName()" class="member-name-link">getTemplatePackageName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ignoredAutomaticDependencies()" class="member-name-link">ignoredAutomaticDependencies</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="micronautGradle.html" title="class in io.micronaut.starter.feature.build.gradle.templates">micronautGradle</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ignoredAutomaticDependencies(java.util.Set)" class="member-name-link">ignoredAutomaticDependencies</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#incremental()" class="member-name-link">incremental</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -229,7 +235,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sharedTestResources(boolean)" class="member-name-link">sharedTestResources</a><wbr>(boolean&nbsp;sharedTestResources)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="micronautGradle.html" title="class in io.micronaut.starter.feature.build.gradle.templates">micronautGradle</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String)" class="member-name-link">template</a><wbr>(<a href="../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set)" class="member-name-link">template</a><wbr>(<a href="../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
  <a href="../../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
  <a href="../Dockerfile.html" title="class in io.micronaut.starter.feature.build.gradle">Dockerfile</a>&nbsp;dockerfile,
  <a href="../Dockerfile.html" title="class in io.micronaut.starter.feature.build.gradle">Dockerfile</a>&nbsp;dockerfileNative,
@@ -243,7 +249,8 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;additionalTestResourceModules,
  boolean&nbsp;sharedTestResources,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;aotKeys,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testRuntime()" class="member-name-link">testRuntime</a>()</code></div>
@@ -496,7 +503,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String)">
+<section class="detail" id="ignoredAutomaticDependencies(java.util.Set)">
+<h3>ignoredAutomaticDependencies</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="micronautGradle.html" title="class in io.micronaut.starter.feature.build.gradle.templates">micronautGradle</a></span>&nbsp;<span class="element-name">ignoredAutomaticDependencies</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="ignoredAutomaticDependencies()">
+<h3>ignoredAutomaticDependencies</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">ignoredAutomaticDependencies</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set)">
 <h3>template</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="micronautGradle.html" title="class in io.micronaut.starter.feature.build.gradle.templates">micronautGradle</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
  <a href="../../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
@@ -512,7 +531,8 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;additionalTestResourceModules,
  boolean&nbsp;sharedTestResources,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;aotKeys,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</span></div>
 </section>
 </li>
 <li>
