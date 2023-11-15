@@ -33,14 +33,6 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
     private static final String BUILDLESS_PLUGIN_ID = "build.less";
     static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
 
-    private static final GradlePlugin BUILDLESS_GRADLE_PLUGIN = GradlePlugin.builder()
-            .gradleFile(GradleFile.SETTINGS)
-            .id(BUILDLESS_PLUGIN_ID)
-            .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT)
-            .settingsImports("build.less.plugin.settings.buildless")
-            .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()))
-            .build();
-
     @Override
     public String getName() {
         return FEATURE_NAME_BUILDLESS;
@@ -86,11 +78,21 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
         return "https://docs.less.build/";
     }
 
+    private GradlePlugin buildPlugin() {
+        return GradlePlugin.builder()
+                .gradleFile(GradleFile.SETTINGS)
+                .id(BUILDLESS_PLUGIN_ID)
+                .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT)
+                .settingsImports("build.less.plugin.settings.buildless")
+                .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()))
+                .build();
+    }
+
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().put("org.gradle.caching", "true");
-            generatorContext.addBuildPlugin(BUILDLESS_GRADLE_PLUGIN);
+            generatorContext.addBuildPlugin(buildPlugin());
         }
     }
 }
