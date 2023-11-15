@@ -19,7 +19,7 @@ import io.micronaut.starter.options.MicronautVersion;
 import io.micronaut.starter.util.VersionInfo;
 
 /**
- * Markert interface for {@link CommunityFeature} which expose a Micronaut Library.
+ * Marker interface for {@link CommunityFeature} which expose a Micronaut Library.
  */
 public interface MicronautCommunityFeature extends CommunityFeature {
     MicronautVersion builtWithMicronautVersion();
