@@ -31,7 +31,6 @@ include 'starter-web-servlet'
 include 'starter-azure-function'
 include 'starter-gcp-function'
 include 'starter-aws-lambda'
-include 'starter-analytics-postgres'
 
 include 'test-aws'
 include 'test-buildtool'
