@@ -1,8 +1,5 @@
 io.micronaut.aws.cdk.function
 io.micronaut.starter.analytics
-io.micronaut.starter.analytics.postgres
-io.micronaut.starter.analytics.postgres.gcp
-io.micronaut.starter.analytics.postgres.security
 io.micronaut.starter.api
 io.micronaut.starter.api.analytics
 io.micronaut.starter.api.bind
