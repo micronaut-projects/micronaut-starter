@@ -2,22 +2,20 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class MySQLSpec extends ApplicationContextSpec {
 
     void 'test gradle mysql feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, GRADLE)
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['mysql'])
                 .language(language)
                 .render()
 
         then:
-        template.contains('runtimeOnly("com.mysql:mysql-connector-j")')
+        template.contains('runtimeOnly("mysql:mysql-connector-java")')
 
         and:
         template.contains("""
@@ -31,13 +29,13 @@ class MySQLSpec extends ApplicationContextSpec {
 
     void 'testresources not configured for Gradle with testContainers feature and language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, GRADLE)
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['mysql', 'testcontainers'])
                 .language(language)
                 .render()
 
         then:
-        template.contains('runtimeOnly("com.mysql:mysql-connector-j")')
+        template.contains('runtimeOnly("mysql:mysql-connector-java")')
 
         and:
         !template.contains("""
@@ -51,7 +49,7 @@ class MySQLSpec extends ApplicationContextSpec {
 
     void 'test maven mysql feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, MAVEN)
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['mysql'])
                 .language(language)
                 .render()
@@ -59,8 +57,8 @@ class MySQLSpec extends ApplicationContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
     </dependency>
 """)
