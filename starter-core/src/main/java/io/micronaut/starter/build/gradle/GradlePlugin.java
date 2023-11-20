@@ -49,7 +49,7 @@ public class GradlePlugin implements BuildPlugin {
     private final Set<String> settingsImports;
     private final int order;
 
-    @Deprecated
+    @Deprecated(since = "4.2.0", forRemoval = true)
     public GradlePlugin(@NonNull GradleFile gradleFile,
                         @Nullable String id,
                         @Nullable String version,
