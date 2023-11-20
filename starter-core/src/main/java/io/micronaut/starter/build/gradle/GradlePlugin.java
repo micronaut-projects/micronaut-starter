@@ -60,17 +60,19 @@ public class GradlePlugin implements BuildPlugin {
                         boolean requiresLookup,
                         int order,
                         Set<String> buildImports) {
-        this.gradleFile = gradleFile;
-        this.id = id;
-        this.version = version;
-        this.artifactId = artifactId;
-        this.extension = extension;
-        this.settingsExtension = settingsExtension;
-        this.pluginsManagementRepositories = pluginsManagementRepositories;
-        this.requiresLookup = requiresLookup;
-        this.order = order;
-        this.buildImports = buildImports;
-        this.settingsImports = Collections.emptySet();
+        this(
+            gradleFile,
+            id,
+            version,
+            artifactId,
+            extension,
+            settingsExtension,
+            pluginsManagementRepositories,
+            requiresLookup,
+            order,
+            buildImports,
+            Collections.emptySet()
+        );
     }
 
     public GradlePlugin(@NonNull GradleFile gradleFile,
