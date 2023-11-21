@@ -37,6 +37,18 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         feature.name == Buildless.NAME
     }
 
+    void "feature buildless is unsupported with maven and #language"(Language language) {
+        when:
+        generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [Buildless.NAME])
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'Feature only supported by Gradle'
+
+        where:
+        language << Language.values()
+    }
+
     void "buildless configured correctly for #buildTool"() {
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
