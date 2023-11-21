@@ -47,7 +47,7 @@ public final class JdkVersion {
     public static final JdkVersion JDK_20 = new JdkVersion(20);
     public static final JdkVersion JDK_21 = new JdkVersion(21);
 
-    private final int majorVersion;
+    int majorVersion;
 
     private JdkVersion(int majorVersion) {
         if (INSTANCES.containsKey(majorVersion)) {
@@ -56,6 +56,10 @@ public final class JdkVersion {
 
         this.majorVersion = majorVersion;
         INSTANCES.put(majorVersion, this);
+    }
+
+    JdkVersion() {
+        // for serialization
     }
 
     /**
