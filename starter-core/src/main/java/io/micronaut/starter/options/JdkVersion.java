@@ -49,27 +49,9 @@ public final class JdkVersion {
 
     int majorVersion;
 
-    private JdkVersion(int majorVersion) {
-        if (INSTANCES.containsKey(majorVersion)) {
-            throw new IllegalArgumentException("version " + majorVersion + " already registered");
-        }
-
+    public JdkVersion(int majorVersion) {
         this.majorVersion = majorVersion;
         INSTANCES.put(majorVersion, this);
-    }
-
-    JdkVersion() {
-        // for serialization
-    }
-
-    /**
-     * Add a new supported version.
-     *
-     * @param majorVersion the major version
-     * @return the new instance
-     */
-    public static JdkVersion registerNewVersion(int majorVersion) {
-        return new JdkVersion(majorVersion);
     }
 
     /**
@@ -103,6 +85,11 @@ public final class JdkVersion {
     }
 
     public int majorVersion() {
+        return majorVersion;
+    }
+
+    // for serialization
+    int getMajorVersion() {
         return majorVersion;
     }
 
