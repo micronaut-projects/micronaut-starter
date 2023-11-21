@@ -15,8 +15,11 @@
  */
 package io.micronaut.starter.options;
 
-import java.util.Arrays;
-import java.util.List;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.serde.annotation.Serdeable;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * JDK versions.
@@ -24,43 +27,82 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-public enum JdkVersion {
-    JDK_8(8),
-    JDK_9(9),
-    JDK_10(10),
-    JDK_11(11),
-    JDK_12(12),
-    JDK_13(13),
-    JDK_14(14),
-    JDK_15(15),
-    JDK_16(16),
-    JDK_17(17),
-    JDK_18(18),
-    JDK_19(19),
-    JDK_20(20),
-    JDK_21(21);
+@Serdeable
+public final class JdkVersion {
 
-    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
+    private static final Map<Integer, JdkVersion> INSTANCES = new TreeMap<>();
+
+    public static final JdkVersion JDK_8 = new JdkVersion(8);
+    public static final JdkVersion JDK_9 = new JdkVersion(9);
+    public static final JdkVersion JDK_10 = new JdkVersion(10);
+    public static final JdkVersion JDK_11 = new JdkVersion(11);
+    public static final JdkVersion JDK_12 = new JdkVersion(12);
+    public static final JdkVersion JDK_13 = new JdkVersion(13);
+    public static final JdkVersion JDK_14 = new JdkVersion(14);
+    public static final JdkVersion JDK_15 = new JdkVersion(15);
+    public static final JdkVersion JDK_16 = new JdkVersion(16);
+    public static final JdkVersion JDK_17 = new JdkVersion(17);
+    public static final JdkVersion JDK_18 = new JdkVersion(18);
+    public static final JdkVersion JDK_19 = new JdkVersion(19);
+    public static final JdkVersion JDK_20 = new JdkVersion(20);
+    public static final JdkVersion JDK_21 = new JdkVersion(21);
 
     private final int majorVersion;
 
-    JdkVersion(int majorVersion) {
+    private JdkVersion(int majorVersion) {
+        if (INSTANCES.containsKey(majorVersion)) {
+            throw new IllegalArgumentException("version " + majorVersion + " already registered");
+        }
+
         this.majorVersion = majorVersion;
+        INSTANCES.put(majorVersion, this);
+    }
+
+    /**
+     * Add a new supported version.
+     *
+     * @param majorVersion the major version
+     * @return the new instance
+     */
+    public static JdkVersion registerNewVersion(int majorVersion) {
+        return new JdkVersion(majorVersion);
+    }
+
+    /**
+     * @return the name
+     */
+    public String name() {
+        return "JDK_" + majorVersion;
+    }
+
+    @Override
+    public String toString() {
+        return name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof JdkVersion other && other.majorVersion == majorVersion;
+    }
+
+    @Override
+    public int hashCode() {
+        return majorVersion;
     }
 
     public static JdkVersion valueOf(int majorVersion) {
-        return Arrays
-                .stream(JdkVersion.values())
+        return INSTANCES.values().stream()
                 .filter(jdkVersion -> jdkVersion.majorVersion == majorVersion)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " + SUPPORTED_JDKS));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Unsupported JDK version: " + majorVersion + ". Supported values are " + INSTANCES.keySet()));
     }
 
     public int majorVersion() {
         return majorVersion;
     }
 
-    public boolean greaterThanEqual(JdkVersion jdk) {
+    public boolean greaterThanEqual(@NonNull JdkVersion jdk) {
         return majorVersion >= jdk.majorVersion;
     }
 }
