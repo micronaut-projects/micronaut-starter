@@ -36,6 +36,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_CASSANDRA = "io.micronaut.cassandra";
     public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
+    public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
@@ -147,6 +148,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder micrometerDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MICROMETER);
+    }
+
+    @NonNull
+    public static Dependency.Builder eclipsestoreDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ECLIPSESTORE);
     }
 
     @NonNull
