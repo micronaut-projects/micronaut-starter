@@ -22,6 +22,6 @@ class BuildlessSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.gradleValues(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
     }
 }
