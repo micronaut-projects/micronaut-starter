@@ -47,51 +47,54 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         readme.contains("[https://docs.microstream.one/manual/cache/index.html](https://docs.microstream.one/manual/cache/index.html)")
     }
 
-    void "test dependencies added for microstream feature"(BuildTool buildTool) {
+    void "test dependencies added for microstream feature"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['microstream'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        assertMicroStreamDependencies(verifier, buildTool, language)
         verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
-    void "test dependencies added for microstream-rest feature"(BuildTool buildTool) {
+    void "test dependencies added for microstream-rest feature"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['microstream-rest'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        assertMicroStreamDependencies(verifier, buildTool, language)
         verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-rest", Scope.DEVELOPMENT_ONLY)
-        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
-    void "test dependencies added for microstream-cache feature"(BuildTool buildTool) {
+    void "test dependencies added for microstream-cache feature"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['microstream-cache'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
-        !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
         verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-cache", Scope.COMPILE)
 
+        and: 'cache does not add core microstream'
+        !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test microstream configuration'() {
@@ -129,5 +132,15 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         microStreamFeature << beanContext.getBeansOfType(MicroStreamFeature).iterator()
+    }
+
+    private void assertMicroStreamDependencies(BuildTestVerifier verifier, BuildTool buildTool, Language language) {
+        verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream", Scope.COMPILE)
+        if (buildTool == BuildTool.MAVEN && language == Language.GROOVY) {
+            assert !verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.COMPILE)
+        } else {
+            assert verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.COMPILE)
+        }
+        assert verifier.hasDependency("io.micronaut.microstream", "micronaut-microstream-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.microstream.version', true)
     }
 }
