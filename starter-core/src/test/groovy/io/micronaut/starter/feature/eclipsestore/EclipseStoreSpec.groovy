@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
 class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -34,35 +35,35 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         readme.contains("[https://docs.eclipsestore.io/manual/storage/rest-interface/index.html](https://docs.eclipsestore.io/manual/storage/rest-interface/index.html)")
     }
 
-    void "test dependencies added for eclipsestore feature"(BuildTool buildTool) {
+    void "test dependencies added for eclipsestore feature for #language and build #buildTool"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['eclipsestore'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.eclipsestore.version', true)
+        assertEclipeStoreDependencies(verifier, buildTool, language)
 
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
-    void "test dependencies added for eclipsestore-rest feature"(BuildTool buildTool) {
+    void "test dependencies added for eclipsestore-rest feature for #language and build #buildTool"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['eclipsestore-rest'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore", Scope.COMPILE)
+        assertEclipeStoreDependencies(verifier, buildTool, language)
         verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-rest", Scope.DEVELOPMENT_ONLY)
-        verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.eclipsestore.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [[Language.GROOVY], [BuildTool.MAVEN]].combinations()//[Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test eclipsestore configuration'() {
@@ -89,5 +90,15 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         eclipsestoreFeature << beanContext.getBeansOfType(EclipseStoreFeature).iterator()
+    }
+
+    private void assertEclipeStoreDependencies(BuildTestVerifier verifier, BuildTool buildTool, Language language) {
+        assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore", Scope.COMPILE)
+        if (buildTool == BuildTool.MAVEN && language == Language.GROOVY) {
+            assert !verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.COMPILE)
+        } else {
+            assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.COMPILE)
+        }
+        assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.eclipsestore.version', true)
     }
 }

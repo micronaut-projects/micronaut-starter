@@ -22,8 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -33,6 +31,15 @@ public class EclipseStore implements EclipseStoreFeature {
     public static final String MICRONAUT_ECLIPSESTORE_ANNOTATIONS_ARTIFACT = "micronaut-eclipsestore-annotations";
     public static final String MICRONAUT_ECLIPSESTORE_VERSION = "micronaut.eclipsestore.version";
     public static final String ARTIFACT_ID_MICRONAUT_ECLIPSESTORE = "micronaut-eclipsestore";
+    public static final Dependency DEPENDENCY_MICRONAUT_ECLIPSE_STORE = MicronautDependencyUtils.eclipsestoreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_ECLIPSESTORE)
+            .compile()
+            .build();
+
+    public static final Dependency DEPENDENCY_MICRONAUT_ECLIPSE_STORE_ANNOTATIONS = MicronautDependencyUtils.eclipsestoreDependency()
+            .artifactId(MICRONAUT_ECLIPSESTORE_ANNOTATIONS_ARTIFACT)
+            .compile()
+            .build();
 
     @Override
     @NonNull
@@ -63,28 +70,10 @@ public class EclipseStore implements EclipseStoreFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.eclipsestoreDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_ECLIPSESTORE)
-                .compile());
-        // For Groovy and Maven we only require the annotation in provided scope (from the processor below)
-        // Adding it in both compile, and provided via the processor results in a build failure
-        if (generatorContext.getBuildTool() != BuildTool.MAVEN || generatorContext.getLanguage() != Language.GROOVY) {
-            generatorContext.addDependency(MicronautDependencyUtils.eclipsestoreDependency()
-                    .artifactId(MICRONAUT_ECLIPSESTORE_ANNOTATIONS_ARTIFACT)
-                    .compile()
-            );
-        }
-        Dependency.Builder dependency = MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
-                        MicronautDependencyUtils.GROUP_ID_MICRONAUT_ECLIPSESTORE, MICRONAUT_ECLIPSESTORE_ANNOTATIONS_ARTIFACT, MICRONAUT_ECLIPSESTORE_VERSION);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            dependency.exclude(
-                    MicronautDependencyUtils.coreDependency()
-                            .artifactId("micronaut-core")
-                            .compile()
-                            .build()
-            );
-        }
-        generatorContext.addDependency(dependency);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_ECLIPSE_STORE);
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_ECLIPSESTORE, MICRONAUT_ECLIPSESTORE_ANNOTATIONS_ARTIFACT, MICRONAUT_ECLIPSESTORE_VERSION));
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_ECLIPSE_STORE_ANNOTATIONS);
     }
 
     @Override
