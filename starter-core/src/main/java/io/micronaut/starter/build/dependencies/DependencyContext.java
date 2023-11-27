@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,23 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 import static io.micronaut.starter.build.dependencies.Phase.COMPILATION;
 import static io.micronaut.starter.build.dependencies.Phase.RUNTIME;
 
 public interface DependencyContext {
-    Function<Dependency, Boolean> IS_COMPILE_API_OR_RUNTIME = d -> d.getScope().getPhases().contains(COMPILATION) ||
+
+    Predicate<Dependency> IS_COMPILE_API_OR_RUNTIME = d -> d.getScope().getPhases().contains(COMPILATION) ||
             d.getScope().getPhases().contains(Phase.PUBLIC_API) ||
             d.getScope().getPhases().contains(Phase.RUNTIME);
     
@@ -43,32 +47,32 @@ public interface DependencyContext {
     @NonNull
     default List<Dependency> removeDuplicates(Collection<Dependency> dependencies, Language language, BuildTool buildTool) {
 
-        List<Dependency> dependenciesNotInMainOrTestClasspath = new ArrayList<>(dependencies.stream()
+        List<Dependency> dependenciesNotInMainOrTestClasspath = dependencies.stream()
                 .filter(d -> {
                     if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
-                        return !IS_COMPILE_API_OR_RUNTIME.apply(d) && !d.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING);
+                        return !IS_COMPILE_API_OR_RUNTIME.test(d) && !d.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING);
                     }
-                    return !IS_COMPILE_API_OR_RUNTIME.apply(d);
+                    return !IS_COMPILE_API_OR_RUNTIME.test(d);
                 })
-                .toList());
+                .toList();
 
-        List<Dependency> dependenciesInMainClasspath = new ArrayList<>(dependencies.stream()
+        List<Dependency> dependenciesInMainClasspath = dependencies.stream()
                 .filter(d -> {
                     if (d.getScope().getSource() != Source.MAIN) {
                         return false;
                     }
                     if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
-                        return IS_COMPILE_API_OR_RUNTIME.apply(d) || d.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING);
+                        return IS_COMPILE_API_OR_RUNTIME.test(d) || d.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING);
                     }
-                    return IS_COMPILE_API_OR_RUNTIME.apply(d);
+                    return IS_COMPILE_API_OR_RUNTIME.test(d);
 
                 })
-                .toList());
+                .toList();
         List<Dependency> dependenciesInMainClasspathWithoutDuplicates = filterDuplicates(dependenciesInMainClasspath);
 
-        List<Dependency> dependenciesInTestClasspath = new ArrayList<>(dependencies.stream()
-                .filter(d -> d.getScope().getSource() == Source.TEST && IS_COMPILE_API_OR_RUNTIME.apply(d))
-                .toList());
+        List<Dependency> dependenciesInTestClasspath = dependencies.stream()
+                .filter(d -> d.getScope().getSource() == Source.TEST && IS_COMPILE_API_OR_RUNTIME.test(d))
+                .toList();
 
         List<Dependency> dependenciesInTestClasspathWithoutDuplicates = filterDuplicates(dependenciesInTestClasspath);
 
