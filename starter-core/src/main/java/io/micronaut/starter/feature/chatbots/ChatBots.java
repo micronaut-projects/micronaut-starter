@@ -36,27 +36,12 @@ import io.micronaut.starter.template.RockerTemplate;
  * @author Tim Yates
  * @since 4.3.0
  */
-abstract class ChatBots implements ChatBotsFeature {
+public abstract class ChatBots implements ChatBotsFeature {
 
     private final MicronautValidationFeature validationFeature;
 
     protected ChatBots(MicronautValidationFeature validationFeature) {
         this.validationFeature = validationFeature;
-    }
-
-    protected void addConfigurations(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.token",
-                "WEBHOOK_TOKEN"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.at-username",
-                "@MyMicronautExampleBot"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.folder",
-                "botcommands"
-        );
     }
 
     protected void renderTemplates(GeneratorContext generatorContext) {
@@ -85,6 +70,13 @@ abstract class ChatBots implements ChatBotsFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeatureIfNotPresent(ValidationFeature.class, validationFeature);
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/";
+    }
+
+    protected abstract void addConfigurations(GeneratorContext generatorContext);
 
     public abstract String getChatBotType();
 }

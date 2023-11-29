@@ -1,0 +1,16 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+
+@args (
+Project project,
+Features features,
+String buildCommand
+)
+
+## Deploying the function to Azure
+
+Once you have an Azure account set up and have logged in via `az login`, deploy the function with:
+
+```bash
+$ ./@buildCommand
+```
