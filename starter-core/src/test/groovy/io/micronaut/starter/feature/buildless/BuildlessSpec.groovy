@@ -62,8 +62,11 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         and: 'we have the configuration in the settings file'
         settings.contains("""\
 buildless {
-    // this call is enough to configure the cache, although, remember to
-    // set BUILDLESS_APIKEY in your environment.
+    // This block is optional; use it to further configure your build cache. Make sure to
+    // install and run the Buildless Agent (https://github.com/buildless/cli) for best results.
+    //
+    // Remember to set BUILDLESS_APIKEY in your environment if you are using Buildless Cloud.
+    // The agent and plugin will pick up your API key automatically.
 }""")
 
         and: 'caching is enabled in the properties file'
