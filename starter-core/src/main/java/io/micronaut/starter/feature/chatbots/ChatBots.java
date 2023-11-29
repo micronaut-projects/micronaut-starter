@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.chatbots;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.about;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
@@ -43,6 +42,21 @@ abstract class ChatBots implements ChatBotsFeature {
 
     protected ChatBots(MicronautValidationFeature validationFeature) {
         this.validationFeature = validationFeature;
+    }
+
+    protected void addConfigurations(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(
+                "micronaut.chatbots.telegram.bots.example.token",
+                "WEBHOOK_TOKEN"
+        );
+        generatorContext.getConfiguration().put(
+                "micronaut.chatbots.telegram.bots.example.at-username",
+                "@MyMicronautExampleBot"
+        );
+        generatorContext.getConfiguration().put(
+                "micronaut.chatbots.folder",
+                "botcommands"
+        );
     }
 
     protected void renderTemplates(GeneratorContext generatorContext) {

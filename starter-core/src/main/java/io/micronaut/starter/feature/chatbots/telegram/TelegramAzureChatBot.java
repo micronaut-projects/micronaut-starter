@@ -22,7 +22,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.chatbots.ChatBotsAzureFunction;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.feature.validator.ValidationFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -50,6 +49,16 @@ public class TelegramAzureChatBot extends ChatBotsAzureFunction {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Telegram ChatBot as Azure Function";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Generates an application that can be deployed as an Azure Function that implements a Telegram chatbot";
     }
 
     @Override

@@ -24,7 +24,6 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.feature.validator.ValidationFeature;
 
 /**
  * Base class for Azure Functions chatbot features.
@@ -61,6 +60,7 @@ public abstract class ChatBotsAzureFunction extends ChatBots implements CloudFea
     public void apply(GeneratorContext generatorContext) {
         addMicronautRuntimeBuildProperty(generatorContext);
         addDependencies(generatorContext);
+        addConfigurations(generatorContext);
         renderTemplates(generatorContext);
     }
 
