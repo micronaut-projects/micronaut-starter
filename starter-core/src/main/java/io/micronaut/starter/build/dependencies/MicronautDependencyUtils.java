@@ -34,6 +34,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
     public static final String GROUP_ID_MICRONAUT_CASSANDRA = "io.micronaut.cassandra";
+    public static final String GROUP_ID_MICRONAUT_CHATBOTS = "io.micronaut.chatbots";
     public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
@@ -173,6 +174,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder cassandraDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CASSANDRA);
+    }
+
+    @NonNull
+    public static Dependency.Builder chatBotsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_CHATBOTS);
     }
 
     @NonNull

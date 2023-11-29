@@ -48,6 +48,7 @@ log4j-slf4j = "2.17.2"
 micronaut-aot = "2.0.1"
 micronaut-build-plugins = "6.5.7"
 micronaut-gradle-plugin = "4.2.0"
+micronaut-chatbots = "2.0.0-SNAPSHOT"
 mockserver-client-java = "5.15.0"
 mockk = "1.9.3"
 protobuf-gradle-plugin = "0.9.2"
@@ -137,6 +138,9 @@ rocker-maven-plugin = { module = "com.fizzed:rocker-maven-plugin", version.ref =
 scram-client = { module = "com.ongres.scram:client", version.ref = "scram-client" }
 slf4j-simple-logger = { module = "io.goodforgod:slf4j-simple-logger", version.ref = "slf4j-simple-logger" }
 zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature", version.ref = "zeebe-micronaut-client" }
+
+# Temporarially add chatbots to the version catalog until we get a release to platform
+micronaut-chatbots-telegram-azure-function = { module = "io.micronaut.chatbots:micronaut-chatbots-telegram-azure-function", version.ref = "micronaut-chatbots" }
 
 [plugins]
 # This is an exception to the rule!
