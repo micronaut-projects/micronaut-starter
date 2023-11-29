@@ -26,6 +26,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
 import io.micronaut.starter.feature.function.azure.template.azurefunctions;
@@ -136,7 +137,8 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION
+                && generatorContext.isFeatureMissing(ChatBotsFeature.class)) {
             String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
             generatorContext.addTemplate("trigger", triggerFile,
                     azureRawFunctionTriggerJava.template(project),
