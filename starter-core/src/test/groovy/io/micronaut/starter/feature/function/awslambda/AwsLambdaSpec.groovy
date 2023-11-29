@@ -15,6 +15,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -287,6 +288,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         when:
         String fileName = buildTool.getBuildFileName()
         String buildGradle = output[fileName]
+        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
 
         then:
         !buildGradle.contains('id "application"')
@@ -296,25 +298,27 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildGradle.contains('id("io.micronaut.application")')
 
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert buildGradle.contains('''\
+            assert buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     baseImage.set("amazonlinux:2")
+    jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         } else if (buildTool == BuildTool.GRADLE) {
-            assert buildGradle.contains('''\
+            assert buildGradle.contains("""\
 tasks.named("dockerfileNative") {
     baseImage = "amazonlinux:2"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         }
 
         where:
@@ -355,21 +359,22 @@ tasks.named("dockerfileNative") {
 
         when:
         String buildGradle = output[buildTool.buildFileName]
+        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
 
         then:
         !buildGradle.contains('id "application"')
         buildGradle.contains('mainClass.set')
         buildGradle.contains('id("io.micronaut.application")')
-
-        buildGradle.contains('''\
+        buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     baseImage.set("amazonlinux:2")
+    jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         where:
         language << Language.values().toList()
         extension << Language.extensions()
