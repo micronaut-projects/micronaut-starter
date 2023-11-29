@@ -86,10 +86,6 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
                 .lookupArtifactId(BUILDLESS_PLUGIN_ARTIFACT)
                 .settingsExtension(new RockerWritable(buildlessGradlePlugin.template()));
 
-        // in kotlin DSL we need an import
-        if (GradleDsl.KOTLIN.equals(generatorContext.getBuildTool().getGradleDsl().orElse(null))) {
-            plugin.settingsImports("build.less.plugin.settings.buildless");
-        }
         return plugin.build();
     }
 
