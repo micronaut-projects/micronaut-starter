@@ -82,7 +82,9 @@ public class ContextFactory {
                                                    FeatureContext featureContext,
                                                    ConsoleOutput consoleOutput) {
 
-        projectNameValidator.validate(project);
+        if (project != null) {
+            projectNameValidator.validate(project);
+        }
 
         featureContext.processSelectedFeatures();
 

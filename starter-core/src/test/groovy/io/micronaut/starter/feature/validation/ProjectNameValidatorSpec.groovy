@@ -6,7 +6,7 @@ import io.micronaut.starter.util.NameUtils
 import spock.lang.Shared
 import spock.lang.Unroll
 
-class ProjectValidatorSpec extends BeanContextSpec {
+class ProjectNameValidatorSpec extends BeanContextSpec {
 
     ProjectNameValidator projectValidator = beanContext.getBean(ProjectNameValidator)
 
