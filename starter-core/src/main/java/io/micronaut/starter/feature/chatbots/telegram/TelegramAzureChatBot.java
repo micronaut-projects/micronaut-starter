@@ -16,26 +16,28 @@
 package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.ChatBotsAzureFunction;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.azureReadme;
-import io.micronaut.starter.feature.chatbots.template.telegramReadme;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 /**
  * Adds support for Telegram chatbots as Azure Functions.
  *
- * @since 4.3.0
  * @author Tim Yates
+ * @since 4.3.0
  */
 @Singleton
-public class TelegramAzureChatBot extends ChatBotsAzureFunction {
+public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeature, AzureMicronautRuntimeFeature {
 
     public static final String NAME = "chatbots-telegram-azure-function";
 
@@ -45,30 +47,27 @@ public class TelegramAzureChatBot extends ChatBotsAzureFunction {
             .compile()
             .build();
 
+    private final AzureRawFunction azureRawFunction;
+
     public TelegramAzureChatBot(MicronautValidationFeature validationFeature, AzureRawFunction azureRawFunction) {
-        super(validationFeature, azureRawFunction);
+        super(validationFeature);
+        this.azureRawFunction = azureRawFunction;
     }
 
     @Override
-    protected void addConfigurations(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.token",
-                "WEBHOOK_TOKEN"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.at-username",
-                "@MyMicronautExampleBot"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.folder",
-                "botcommands"
-        );
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.FUNCTION;
     }
 
     @NonNull
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AZURE;
     }
 
     @Override
@@ -82,19 +81,22 @@ public class TelegramAzureChatBot extends ChatBotsAzureFunction {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
-                azureReadme.class.getName().replace(".", "/") + ".rocker.raw",
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
+        featureContext.addFeatureIfNotPresent(AzureRawFunction.class, azureRawFunction);
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        addMicronautRuntimeBuildProperty(generatorContext);
+
+    }
+
+    @Override
     protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package";
+            return "mvnw package azure-functions:deploy";
         } else {
             return "gradlew azureFunctionsDeploy";
         }
@@ -106,7 +108,7 @@ public class TelegramAzureChatBot extends ChatBotsAzureFunction {
     }
 
     @Override
-    public String getChatBotType() {
-        return "Telegram";
+    public String rootReadMeTemplate() {
+        return azureReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }

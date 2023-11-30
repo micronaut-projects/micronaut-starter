@@ -21,12 +21,16 @@ import io.micronaut.starter.feature.chatbots.template.about;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJava;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.template.azureReadme;
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerGroovy;
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerJava;
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.template.telegramReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.feature.validator.ValidationFeature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
 /**
  * Base class for chatbot features.
@@ -64,6 +68,19 @@ public abstract class ChatBots implements ChatBotsFeature {
                 finalCommandHandlerKotlin.template(generatorContext.getProject()),
                 finalCommandHandlerGroovy.template(generatorContext.getProject())
         );
+        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
+                azureReadme.class.getName().replace(".", "/") + ".rocker.raw",
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                getBuildCommand(generatorContext.getBuildTool()))
+        ));
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
+        addConfigurations(generatorContext);
+        renderTemplates(generatorContext);
     }
 
     @Override
@@ -76,7 +93,13 @@ public abstract class ChatBots implements ChatBotsFeature {
         return "https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/";
     }
 
+    protected abstract void addDependencies(GeneratorContext generatorContext);
+
     protected abstract void addConfigurations(GeneratorContext generatorContext);
 
-    public abstract String getChatBotType();
+    protected abstract String getChatBotType();
+
+    protected abstract String rootReadMeTemplate();
+
+    protected abstract String getBuildCommand(BuildTool buildTool);
 }

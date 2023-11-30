@@ -16,12 +16,16 @@
 package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.ChatBotsGcpFunction;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.gcpReadme;
 import io.micronaut.starter.feature.chatbots.template.telegramReadme;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -31,11 +35,11 @@ import jakarta.inject.Singleton;
 /**
  * Adds support for Telegram chatbots as Google Cloud Functions.
  *
- * @since 4.3.0
  * @author Tim Yates
+ * @since 4.3.0
  */
 @Singleton
-public class TelegramGcpChatBot extends ChatBotsGcpFunction {
+public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature, GcpMicronautRuntimeFeature {
 
     public static final String NAME = "chatbots-telegram-gcp-function";
 
@@ -45,30 +49,27 @@ public class TelegramGcpChatBot extends ChatBotsGcpFunction {
             .compile()
             .build();
 
+    private final GoogleCloudRawFunction rawFunction;
+
     public TelegramGcpChatBot(MicronautValidationFeature validationFeature, GoogleCloudRawFunction rawFunction) {
-        super(validationFeature, rawFunction);
+        super(validationFeature);
+        this.rawFunction = rawFunction;
     }
 
     @Override
-    protected void addConfigurations(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.token",
-                "WEBHOOK_TOKEN"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.at-username",
-                "@MyMicronautExampleBot"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.folder",
-                "botcommands"
-        );
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.FUNCTION;
     }
 
     @NonNull
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.GCP;
     }
 
     @Override
@@ -82,8 +83,15 @@ public class TelegramGcpChatBot extends ChatBotsGcpFunction {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
+        featureContext.addFeatureIfNotPresent(GoogleCloudRawFunction.class, rawFunction);
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
+        addMicronautRuntimeBuildProperty(generatorContext);
         generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
                 gcpReadme.class.getName().replace(".", "/") + ".rocker.raw",
                 generatorContext.getProject(),
@@ -92,7 +100,8 @@ public class TelegramGcpChatBot extends ChatBotsGcpFunction {
         ));
     }
 
-    private String getBuildCommand(BuildTool buildTool) {
+    @Override
+    protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw clean package";
         } else {
@@ -106,7 +115,7 @@ public class TelegramGcpChatBot extends ChatBotsGcpFunction {
     }
 
     @Override
-    public String getChatBotType() {
-        return "Telegram";
+    protected String rootReadMeTemplate() {
+        return gcpReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }

@@ -21,8 +21,8 @@ import io.micronaut.starter.feature.Feature;
 /**
  * Marker interface for chatbot features.
  *
- * @since 4.3.0
  * @author Tim Yates
+ * @since 4.3.0
  */
 public interface ChatBotsFeature extends Feature {
 
