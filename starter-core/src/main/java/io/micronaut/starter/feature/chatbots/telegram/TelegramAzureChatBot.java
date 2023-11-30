@@ -47,6 +47,9 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
             .compile()
             .build();
 
+    public static final String MAVEN_AZURE_DEPLOY_COMMAND = "mvnw package azure-functions:deploy";
+    public static final String GRADLE_AZURE_DEPLOY_COMMAND = "gradlew azureFunctionsDeploy";
+
     private final AzureRawFunction azureRawFunction;
 
     public TelegramAzureChatBot(MicronautValidationFeature validationFeature, AzureRawFunction azureRawFunction) {
@@ -96,9 +99,9 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
-            return "mvnw package azure-functions:deploy";
+            return MAVEN_AZURE_DEPLOY_COMMAND;
         } else {
-            return "gradlew azureFunctionsDeploy";
+            return GRADLE_AZURE_DEPLOY_COMMAND;
         }
     }
 
