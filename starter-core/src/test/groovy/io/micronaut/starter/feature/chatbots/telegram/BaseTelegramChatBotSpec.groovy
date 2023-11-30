@@ -7,7 +7,7 @@ abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
     void 'configuration is generated'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, [TelegramAzureChatBot.NAME])
+        def output = generate(ApplicationType.FUNCTION, [featureName])
         def cfg = output["src/main/resources/application.properties"]
 
         then:

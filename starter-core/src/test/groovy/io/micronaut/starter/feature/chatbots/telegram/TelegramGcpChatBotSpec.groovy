@@ -5,16 +5,16 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 
-class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
+class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
 
     @Override
     String getFeatureName() {
-        TelegramAzureChatBot.NAME
+        TelegramGcpChatBot.NAME
     }
 
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(TelegramAzureChatBot).supports(type) == supports
+        beanContext.getBean(TelegramGcpChatBot).supports(type) == supports
 
         where:
         type << ApplicationType.values()
@@ -30,13 +30,12 @@ class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
         then:
         readme.contains("Telegram ChatBot")
         readme.contains("./$command")
-        readme.contains("- [Micronaut Azure Function documentation](https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions)")
-        readme.contains("- [https://docs.microsoft.com/azure](https://docs.microsoft.com/azure)")
+        readme.contains("- [Micronaut Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions)")
         readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Telegram ChatBot as Azure Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [Micronaut Telegram ChatBot as Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()
-        command = buildTool.isGradle() ? TelegramAzureChatBot.GRADLE_AZURE_DEPLOY_COMMAND : TelegramAzureChatBot.MAVEN_AZURE_DEPLOY_COMMAND
+        command = buildTool.isGradle() ? TelegramGcpChatBot.GRADLE_PACKAGE_COMMAND : TelegramGcpChatBot.MAVEN_PACKAGE_COMMAND
     }
 }

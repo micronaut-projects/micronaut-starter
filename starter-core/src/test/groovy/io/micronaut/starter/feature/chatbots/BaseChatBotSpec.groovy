@@ -9,9 +9,11 @@ import io.micronaut.starter.options.Options
 
 abstract class BaseChatBotSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    abstract String getFeatureName()
+
     void 'example chat commands are generated in #language'(Language language) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(language), [TelegramAzureChatBot.NAME])
+        def output = generate(ApplicationType.FUNCTION, new Options(language), [featureName])
 
         then:
         output.containsKey("src/main/$language.name/example/micronaut/AboutCommandHandler.$language.extension".toString())

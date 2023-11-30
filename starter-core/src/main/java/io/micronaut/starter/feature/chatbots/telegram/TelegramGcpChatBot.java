@@ -48,6 +48,8 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
             .artifactId("micronaut-chatbots-telegram-gcp-function")
             .compile()
             .build();
+    public static final String MAVEN_PACKAGE_COMMAND = "mvnw clean package";
+    public static final String GRADLE_PACKAGE_COMMAND = "gradlew shadowJar";
 
     private final GoogleCloudRawFunction rawFunction;
 
@@ -103,9 +105,9 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package";
+            return MAVEN_PACKAGE_COMMAND;
         } else {
-            return "gradlew shadowJar";
+            return GRADLE_PACKAGE_COMMAND;
         }
     }
 
