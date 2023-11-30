@@ -92,12 +92,22 @@ public interface DependencyContext {
     }
 
     private static List<Dependency> filterDuplicates(List<Dependency> dependencies) {
-        return new ArrayList<>(dependencies.stream().collect(
-                Collectors.toMap(
-                        d -> new MavenCoordinate(d.getGroupId(), d.getArtifactId(), d.getVersion()),
-                        Function.identity(),
-                        BinaryOperator.minBy(Comparator.comparing(d -> d.getScope().getOrder()))
-                )
-        ).values());
+        List<Dependency> dependenciesWithoutDuplicates = new ArrayList<>();
+        Map<MavenCoordinate, Scope> dependenciesWithScope = new HashMap<>();
+        for (Dependency dep : dependencies.stream().sorted(Dependency.COMPARATOR).toList()) {
+            MavenCoordinate coordinate = new MavenCoordinate(dep.getGroupId(), dep.getArtifactId(), dep.getVersion());
+            if (dependenciesWithScope.containsKey(coordinate)) {
+                if (dependenciesWithScope.get(coordinate).getOrder() < dep.getOrder()) {
+                    dependenciesWithScope.remove(coordinate);
+                    dependenciesWithoutDuplicates.removeIf(f -> new MavenCoordinate(f.getGroupId(), f.getArtifactId(), f.getVersion()).equals(coordinate));
+                    dependenciesWithScope.put(coordinate, dep.getScope());
+                    dependenciesWithoutDuplicates.add(dep);
+                }
+            } else {
+                dependenciesWithScope.put(coordinate, dep.getScope());
+                dependenciesWithoutDuplicates.add(dep);
+            }
+        }
+        return dependenciesWithoutDuplicates;
     }
 }
