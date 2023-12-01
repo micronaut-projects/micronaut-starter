@@ -17,7 +17,7 @@ import jakarta.inject.Singleton
 import java.util.Optional
 
 @@Singleton
-class FinalCommandHandler(private val spaceParser: SpaceParser<Update, Chat>) : TelegramHandler<SendMessage> {
+open class FinalCommandHandler(private val spaceParser: SpaceParser<Update, Chat>) : TelegramHandler<SendMessage> {
 
     override fun canHandle(bot: TelegramBotConfiguration?, input: Update) = true
 

@@ -14,7 +14,7 @@ import io.micronaut.chatbots.telegram.core.TelegramSlashCommandParser
 import jakarta.inject.Singleton
 
 @@Singleton
-class AboutCommandHandler(
+open class AboutCommandHandler(
     slashCommandParser: TelegramSlashCommandParser,
     textResourceLoader: TextResourceLoader,
     spaceParser: SpaceParser<Update, Chat>

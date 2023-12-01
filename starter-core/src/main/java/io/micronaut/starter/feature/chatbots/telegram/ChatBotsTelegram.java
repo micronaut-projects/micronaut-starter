@@ -17,8 +17,18 @@ package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.chatbots.ChatBots;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJavaJunit;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlinJunit;
+import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerKotlin;
 import io.micronaut.starter.feature.chatbots.template.telegramReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerWritable;
 
 /**
@@ -46,6 +56,35 @@ abstract class ChatBotsTelegram extends ChatBots {
         generatorContext.getConfiguration().put(
                 "micronaut.chatbots.folder",
                 "botcommands"
+        );
+    }
+
+    @Override
+    protected void renderTemplates(GeneratorContext generatorContext) {
+        super.renderTemplates(generatorContext);
+        generatorContext.addTemplate(
+                "about-command-handler",
+                generatorContext.getSourcePath("/{packagePath}/AboutCommandHandler"),
+                aboutCommandHandlerJava.template(generatorContext.getProject()),
+                aboutCommandHandlerKotlin.template(generatorContext.getProject()),
+                aboutCommandHandlerGroovy.template(generatorContext.getProject())
+        );
+        if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
+            generatorContext.addTemplate(
+                    "about-command-handler-junit-java-test",
+                    generatorContext.getTestSourcePath("/{packagePath}/AboutCommandHandler"),
+                    aboutCommandHandlerJavaJunit.template(generatorContext.getProject()),
+                    aboutCommandHandlerKotlinJunit.template(generatorContext.getProject()),
+                    aboutCommandHandlerGroovyJunit.template(generatorContext.getProject())
+            );
+        }
+
+        generatorContext.addTemplate(
+                "final-command-handler",
+                generatorContext.getSourcePath("/{packagePath}/FinalCommandHandler"),
+                finalCommandHandlerJava.template(generatorContext.getProject()),
+                finalCommandHandlerKotlin.template(generatorContext.getProject()),
+                finalCommandHandlerGroovy.template(generatorContext.getProject())
         );
     }
 
