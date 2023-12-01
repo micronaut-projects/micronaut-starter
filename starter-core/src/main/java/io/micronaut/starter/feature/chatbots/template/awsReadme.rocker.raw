@@ -10,4 +10,4 @@ String buildCommand
 
 ## Lambda handler class
 
-When deployed to AWS Lambda, the lambda handler should be defined as `@TelegramAwsChatBot.HANDLER_CLASS`
+When deployed to AWS Lambda, the lambda handler should be defined as `@TelegramAwsChatBot.HANDLER_CLASS`.

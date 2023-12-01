@@ -11,4 +11,3 @@ String buildCommand
 ## Lambda handler class
 
 The Cdk project defined in `infra` is already configured to use `@TelegramAwsChatBot.HANDLER_CLASS` as the handler for your Lambda function.
-
