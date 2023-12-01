@@ -41,7 +41,7 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
         then:
         verifier.hasAnnotationProcessor("io.micronaut.openapi", "micronaut-openapi")
-        verifier.hasDependency("io.swagger.core.v3", "swagger-annotations", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi-annotations", Scope.COMPILE_ONLY)
 
         if (buildTool == BuildTool.MAVEN) {
             // property is not defined it is inherited via the bom
