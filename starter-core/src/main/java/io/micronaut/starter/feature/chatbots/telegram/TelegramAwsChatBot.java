@@ -22,6 +22,9 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
+import io.micronaut.starter.feature.aws.Cdk;
+import io.micronaut.starter.feature.chatbots.template.awsCdkReadme;
+import io.micronaut.starter.feature.chatbots.template.awsReadme;
 import io.micronaut.starter.feature.chatbots.template.azureReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
@@ -111,7 +114,9 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
     }
 
     @Override
-    public String rootReadMeTemplate() {
-        return azureReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public String rootReadMeTemplate(GeneratorContext generatorContext) {
+        return generatorContext.isFeaturePresent(Cdk.class) ?
+            awsCdkReadme.class.getName().replace(".", "/") + ".rocker.raw" :
+            awsReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }

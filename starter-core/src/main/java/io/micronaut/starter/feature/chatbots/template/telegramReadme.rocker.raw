@@ -11,8 +11,9 @@
 
 # Telegram ChatBot
 
-Follow the instructions in the https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/[Micronaut ChatBot Documentation] to create a Telegram ChatBot.
-Then edit the application config in this project to set your chosen bot username and a random token.
+Follow the instructions in the [Micronaut ChatBot Documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/) to create a Telegram ChatBot.
+
+Once you have a username and HTTP auth key for your new bot, edit the application config in this project to set the bot username and make up a WEBHOOK_TOKEN so you can ensure it's Telegram that's calling your bot.
 
 @Rocker.template(platformTemplate, project, features, buildCommand)
 

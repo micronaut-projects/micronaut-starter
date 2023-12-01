@@ -17,7 +17,9 @@ package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.chatbots.ChatBots;
+import io.micronaut.starter.feature.chatbots.template.telegramReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
+import io.micronaut.starter.template.RockerWritable;
 
 /**
  * Base class for Telegram chatbot features.
@@ -45,6 +47,17 @@ abstract class ChatBotsTelegram extends ChatBots {
                 "micronaut.chatbots.folder",
                 "botcommands"
         );
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
+                rootReadMeTemplate(generatorContext),
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                getBuildCommand(generatorContext.getBuildTool()))
+        ));
     }
 
     @Override

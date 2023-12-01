@@ -68,12 +68,6 @@ public abstract class ChatBots implements ChatBotsFeature {
                 finalCommandHandlerKotlin.template(generatorContext.getProject()),
                 finalCommandHandlerGroovy.template(generatorContext.getProject())
         );
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
-                azureReadme.class.getName().replace(".", "/") + ".rocker.raw",
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
     }
 
     @Override
@@ -99,7 +93,7 @@ public abstract class ChatBots implements ChatBotsFeature {
 
     protected abstract String getChatBotType();
 
-    protected abstract String rootReadMeTemplate();
+    protected abstract String rootReadMeTemplate(GeneratorContext generatorContext);
 
     protected abstract String getBuildCommand(BuildTool buildTool);
 }

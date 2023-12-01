@@ -94,12 +94,6 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
         addMicronautRuntimeBuildProperty(generatorContext);
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
-                gcpReadme.class.getName().replace(".", "/") + ".rocker.raw",
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
     }
 
     @Override
@@ -117,7 +111,7 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
     }
 
     @Override
-    protected String rootReadMeTemplate() {
+    protected String rootReadMeTemplate(GeneratorContext generatorContext) {
         return gcpReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }
