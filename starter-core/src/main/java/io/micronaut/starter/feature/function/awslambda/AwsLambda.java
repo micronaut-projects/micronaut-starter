@@ -37,6 +37,7 @@ import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
+import io.micronaut.starter.feature.chatbots.ChatBots;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
@@ -273,7 +274,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     }
 
     boolean shouldGenerateSources(GeneratorContext generatorContext) {
-        return !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
+        return generatorContext.isFeatureMissing(AwsAlexa.class) && generatorContext.isFeatureMissing(ChatBots.class);
     }
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
