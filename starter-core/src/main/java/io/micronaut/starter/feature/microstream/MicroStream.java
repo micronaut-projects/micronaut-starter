@@ -22,8 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -32,6 +30,16 @@ public class MicroStream implements MicroStreamFeature {
     public static final String NAME = "microstream";
     public static final String MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT = "micronaut-microstream-annotations";
     public static final String MICRONAUT_MICROSTREAM_VERSION = "micronaut.microstream.version";
+    public static final String ARTIFACT_ID_MICRONAUT_MICROSTREAM = "micronaut-microstream";
+    private static final Dependency DEPENDENCY_MICRONAUT_MICROSTREAM = MicronautDependencyUtils.microstreamDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_MICROSTREAM)
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_MICROSTREAM_ANNOTATIONS = MicronautDependencyUtils.microstreamDependency()
+            .artifactId(MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT)
+            .compile()
+            .build();
 
     @Override
     @NonNull
@@ -62,37 +70,14 @@ public class MicroStream implements MicroStreamFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId("micronaut-microstream")
-                .build()
-        );
-        // For Groovy and Maven we only require the annotation in provided scope (from the processor below)
-        // Adding it in both compile, and provided via the processor results in a build failure
-        if (generatorContext.getBuildTool() != BuildTool.MAVEN || generatorContext.getLanguage() != Language.GROOVY) {
-            generatorContext.addDependency(Dependency.builder()
-                    .compile()
-                    .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                    .artifactId(MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT)
-                    .build()
-            );
-        }
-        Dependency.Builder dependency = Dependency.builder()
-                .annotationProcessor()
-                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId(MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT)
-                .versionProperty(MICRONAUT_MICROSTREAM_VERSION);
+        addDependencies(generatorContext);
+    }
 
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            dependency.exclude(
-                    MicronautDependencyUtils.coreDependency()
-                            .artifactId("micronaut-core")
-                            .compile()
-                            .build()
-            );
-        }
-        generatorContext.addDependency(dependency);
+    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_MICROSTREAM);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_MICROSTREAM_ANNOTATIONS);
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_MICROSTREAM, MICRONAUT_MICROSTREAM_ANNOTATIONS_ARTIFACT, MICRONAUT_MICROSTREAM_VERSION));
     }
 
     @Override

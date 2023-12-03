@@ -19,7 +19,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_VALIDATION;
@@ -77,17 +76,9 @@ public class MicronautValidationFeature implements ValidationFeature {
     }
 
     public static Dependency.Builder micronautValidationProcessor(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            return MicronautDependencyUtils
-                    .validationDependency()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR)
-                    .annotationProcessor();
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            return MicronautDependencyUtils.moduleMavenAnnotationProcessor(
-                    GROUP_ID_IO_MICRONAUT_VALIDATION,
-                    ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR,
-                    VALIDATION_VERSION_MAVEN_PROPERTY);
-        }
-        throw new RuntimeException("build tool " + generatorContext.getBuildTool().getName() + " not supported");
+        return MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                GROUP_ID_IO_MICRONAUT_VALIDATION,
+                ARTIFACT_ID_MICRONAUT_VALIDATION_PROCESSOR,
+                VALIDATION_VERSION_MAVEN_PROPERTY);
     }
 }

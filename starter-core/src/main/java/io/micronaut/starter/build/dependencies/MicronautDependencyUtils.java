@@ -16,8 +16,11 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.options.BuildTool;
 
 public final class MicronautDependencyUtils {
+    public static final String ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE = "micronaut-data-tx-hibernate";
+    public static final String ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT = "micronaut-inject";
     public static final Dependency MICRONAUT_INJECT = coreDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_INJECT)
@@ -25,6 +28,8 @@ public final class MicronautDependencyUtils {
             .build();
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
+
+    public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
@@ -63,6 +68,8 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
+    public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
+    public static final String GROUP_ID_MICRONAUT_VIEWS = "io.micronaut.views";
 
     private MicronautDependencyUtils() {
 
@@ -237,10 +244,26 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
-    public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
-                                                                    @NonNull String artifactId,
-                                                                    @NonNull String propertyName) {
-        return moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false);
+    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName) {
+        return annotationProcessor(buildTool, groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName,
+                                                         boolean requiresPriority) {
+        return switch (buildTool) {
+            case GRADLE, GRADLE_KOTLIN -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .annotationProcessor();
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, requiresPriority);
+        };
     }
 
     @NonNull
@@ -264,5 +287,17 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder oracleCloudDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD);
+    }
+
+    public static Dependency.Builder microstreamDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_MICROSTREAM);
+    }
+
+    public static Dependency.Builder springDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
+    }
+
+    public static Dependency.Builder viewsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
     }
 }

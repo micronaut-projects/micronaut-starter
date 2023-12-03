@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
@@ -28,6 +28,7 @@ import jakarta.inject.Singleton;
 public class MicroStreamRest implements MicroStreamFeature {
 
     public static final String NAME = "microstream-rest";
+    public static final String ARTIFACT_ID_MICRONAUT_MICROSTREAM_REST = "micronaut-microstream-rest";
 
     private final MicroStream microStream;
 
@@ -64,10 +65,9 @@ public class MicroStreamRest implements MicroStreamFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        generatorContext.addDependency(MicronautDependencyUtils.microstreamDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_MICROSTREAM_REST)
                 .developmentOnly()
-                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId("micronaut-microstream-rest")
         );
     }
 

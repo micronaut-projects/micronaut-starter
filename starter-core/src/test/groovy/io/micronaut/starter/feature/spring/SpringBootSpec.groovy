@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.spring
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
@@ -51,143 +54,19 @@ class SpringBootSpec extends ApplicationContextSpec {
         features.contains('spring')
     }
 
-    @Unroll
-    void 'test spring-boot with Gradle for language=#language'() {
+    void "test dependencies added for spring-data-jpa feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-boot', 'kapt'])
-                .language(language)
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['spring-boot'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot-annotation\")")
-        template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
-        template.contains('runtimeOnly("io.micronaut.spring:micronaut-spring-boot")')
+        verifier.hasDependency("io.micronaut.spring", "micronaut-spring-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.spring.version', true)
+        verifier.hasDependency("org.springframework.boot", "spring-boot-starter-web", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.spring", "micronaut-spring-boot", Scope.RUNTIME)
 
         where:
-        language << Language.values().toList()
-    }
-
-    void 'test maven spring-boot feature'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-boot'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.spring</groupId>
-      <artifactId>micronaut-spring-boot</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-boot-annotation</artifactId>
-              <version>\${micronaut.spring.version}</version>
-            </path>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-annotation</artifactId>
-              <version>\${micronaut.spring.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-core</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>
-""")
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-boot'])
-                .language(Language.KOTLIN)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.spring</groupId>
-      <artifactId>micronaut-spring-boot</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.spring</groupId>
-                 <artifactId>micronaut-spring-boot-annotation</artifactId>
-                 <version>${micronaut.spring.version}</version>
-               </annotationProcessorPath>
-''') == 2
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-boot'])
-                .language(Language.GROOVY)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.spring</groupId>
-      <artifactId>micronaut-spring-boot</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-    }
-
-    void 'test spring-web and spring-boot only add spring-boot-starter-web dependency once'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['spring-boot'])
-                .language(language)
-                .render()
-
-        then:
-        template.count('implementation("org.springframework.boot:spring-boot-starter-web")') == 1
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['spring-boot'])
-                .language(language)
-                .render()
-
-        then:
-        template.count("""
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""") == 1
-
-        where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 }

@@ -17,9 +17,7 @@ package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -27,12 +25,6 @@ public class OpenTelemetryAnnotations implements OpenTelemetryFeature {
 
     public static final String MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID = "micronaut-tracing-opentelemetry-annotation";
     public static final String MICRONAUT_TRACING_VERSION = "micronaut.tracing.version";
-
-    private static final Dependency.Builder MICRONAUT_OPEN_TELEMETRY_ANNOTATION_PROCESSOR = MicronautDependencyUtils
-            .tracingDependency()
-            .artifactId(MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID)
-            .versionProperty(MICRONAUT_TRACING_VERSION)
-            .annotationProcessor();
 
     @Override
     public boolean isVisible() {
@@ -59,17 +51,9 @@ public class OpenTelemetryAnnotations implements OpenTelemetryFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(MicronautDependencyUtils
-                    .moduleMavenAnnotationProcessor(
-                            MicronautDependencyUtils.GROUP_ID_MICRONAUT_TRACING,
-                            MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID,
-                            MICRONAUT_TRACING_VERSION,
-                            false
-                    )
-            );
-        } else {
-            generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY_ANNOTATION_PROCESSOR);
-        }
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_TRACING,
+                MICRONAUT_TRACING_OPENTELEMETRY_ANNOTATION_ARTIFACTID,
+                MICRONAUT_TRACING_VERSION));
     }
 }
