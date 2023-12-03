@@ -1,0 +1,1 @@
+Don't modify these Thymeleaf fragments. Change them in https://github.com/micronaut-projects/micronaut-views/tree/master/test-suite-thymeleaf-fieldset/src/test/resources/views/fieldset and sync them to this directory.  

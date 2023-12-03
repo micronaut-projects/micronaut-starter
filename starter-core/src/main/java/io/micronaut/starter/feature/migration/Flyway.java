@@ -24,7 +24,11 @@ import io.micronaut.starter.feature.database.Oracle;
 import io.micronaut.starter.feature.database.PostgreSQL;
 import io.micronaut.starter.feature.database.SQLServer;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudAutonomousDatabase;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
+
+import java.util.Map;
+import java.util.Optional;
 
 @Singleton
 public class Flyway implements MigrationFeature {
@@ -101,7 +105,11 @@ public class Flyway implements MigrationFeature {
             generatorContext.addDependency(DEPENDENCY_FLYWAY_ORACLE);
         }
         if (generatorContext.isFeaturePresent(PostgreSQL.class)) {
-            generatorContext.addDependency(DEPENDENCY_FLYWAY_POSTGRESQL);
+            Map.Entry<String, String> version = VersionInfo.getDependencyVersion("micronaut.flyway");
+            Optional<Integer> majorVersion = VersionInfo.getMajorVersion(version.getValue());
+            if (majorVersion.isPresent() && majorVersion.get() >= 7) { // 7 is the first major of Micronaut Flyway version which includes flyway 10
+                generatorContext.addDependency(DEPENDENCY_FLYWAY_POSTGRESQL);
+            }
         }
     }
 }

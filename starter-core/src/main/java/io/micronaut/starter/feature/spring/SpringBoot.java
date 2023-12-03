@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
@@ -26,6 +27,8 @@ import jakarta.inject.Singleton;
 public class SpringBoot extends SpringFeature {
 
     public static final String NAME = "spring-boot";
+    public static final String ARTIFACT_ID_MICRONAUT_SPRING_BOOT_ANNOTATION = "micronaut-spring-boot-annotation";
+    public static final String PROPERTY_MICRONAUT_SPRING_VERSION = "micronaut.spring.version";
 
     public SpringBoot(Spring spring) {
         super(spring);
@@ -53,10 +56,9 @@ public class SpringBoot extends SpringFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder springBoot = Dependency.builder()
-                .groupId("io.micronaut.spring")
-                .artifactId("micronaut-spring-boot-annotation")
-                .versionProperty("micronaut.spring.version")
+        Dependency.Builder springBoot = MicronautDependencyUtils.springDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_SPRING_BOOT_ANNOTATION)
+                .versionProperty(PROPERTY_MICRONAUT_SPRING_VERSION)
                 .template();
 
         generatorContext.addDependency(springBoot.annotationProcessor());

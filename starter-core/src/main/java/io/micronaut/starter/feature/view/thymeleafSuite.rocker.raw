@@ -1,0 +1,21 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SuiteDisplayName;
+
+@@Suite
+@@SelectPackages({
+        "io.micronaut.views.fields.tck",
+})
+@@SuiteDisplayName("Fieldset TCK for Thymeleaf")
+class ThymeleafSuite {
+}

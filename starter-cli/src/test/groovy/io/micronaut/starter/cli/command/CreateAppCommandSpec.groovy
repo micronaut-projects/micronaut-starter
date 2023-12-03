@@ -12,20 +12,17 @@ import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
-import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.NameUtils
+import jakarta.inject.Inject
 import spock.lang.AutoCleanup
 import spock.lang.Issue
-import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Unroll
-
-import jakarta.inject.Inject
 
 class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
@@ -106,7 +103,7 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
         and:
         def (previewFeature, communityFeature) = beanContext.getBean(DefaultAvailableFeatures).with {
-            [allFeatures.find { it.preview }, allFeatures.find { it.community }]
+            [allFeatures.find { it.preview }, allFeatures.find { it.community && it.visible }]
         }
 
         when:
@@ -115,9 +112,7 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
         then:
         noExceptionThrown()
         baos.toString().contains("$previewFeature.name [PREVIEW]")
-        if (CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES) {
-            assert baos.toString().contains("$communityFeature.name [COMMUNITY]")
-        }
+        baos.toString().contains("$communityFeature.name [COMMUNITY]")
 
         cleanup:
         System.setOut(old)
