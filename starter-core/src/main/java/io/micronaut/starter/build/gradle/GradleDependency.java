@@ -18,16 +18,9 @@ package io.micronaut.starter.build.gradle;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.DependencyContext;
-import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import io.micronaut.starter.build.dependencies.*;
 
+import java.util.*;
 import static io.micronaut.core.util.CollectionUtils.isNotEmpty;
 
 public class GradleDependency extends DependencyCoordinate {
@@ -151,10 +144,10 @@ public class GradleDependency extends DependencyCoordinate {
 
     @NonNull
     public static List<GradleDependency> listOf(DependencyContext dependencyContext, GeneratorContext generatorContext, boolean useVersionCatalogue) {
-        return dependencyContext.getDependencies()
+        return generatorContext.removeDuplicates(dependencyContext.getDependencies(), generatorContext.getLanguage(), generatorContext.getBuildTool())
                 .stream()
                 .map(dep -> new GradleDependency(dep, generatorContext, useVersionCatalogue))
                 .sorted(GradleDependency.COMPARATOR)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
