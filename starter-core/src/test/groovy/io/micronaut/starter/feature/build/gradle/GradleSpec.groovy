@@ -86,8 +86,8 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'disable Gradle Toolchain by default (dsl = #dsl)'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
-        def buildGradle = output[fileName]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
+        String buildGradle = output[fileName]
 
         then:
         buildGradle
@@ -97,7 +97,14 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         dsl                     | fileName           | configuration
         BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+    }
 
+    void 'ignoredAutomaticDependencies not output by default'() {
+        when:
+        Map<String, String> output = generate([])
+
+        then:
+        !output["build.gradle.kts"].contains('ignoredAutomaticDependencies')
     }
 
     void 'disable Gradle Toolchain by default for Oracle function (dsl = #dsl)'() {

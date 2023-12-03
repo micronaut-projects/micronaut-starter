@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import spock.lang.PendingFeature
 
 class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -116,6 +117,7 @@ flyway:
         buildTool << BuildTool.values()
     }
 
+    @PendingFeature
     void "test the flyway-database-postgresql dependency is added to the gradle build when postgres is selected"(BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'postgres'])

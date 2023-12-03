@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout(title, script, content)" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title th:replace="${title}"></title>
+        <script th:replace="${script}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="${content}"></div>
+        </div>
+    </body>
+</html>

@@ -25,13 +25,15 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SpringWeb extends SpringFeature implements MicronautServerDependent {
 
+    public static final String NAME = "spring-web";
+
     public SpringWeb(Spring spring) {
         super(spring);
     }
 
     @Override
     public String getName() {
-        return "spring-web";
+        return NAME;
     }
 
     @Override
@@ -51,8 +53,7 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder springWebAnnotation = Dependency.builder()
-                .groupId("io.micronaut.spring")
+        Dependency.Builder springWebAnnotation = MicronautDependencyUtils.springDependency()
                 .artifactId("micronaut-spring-web-annotation")
                 .versionProperty("micronaut.spring.version")
                 .template();

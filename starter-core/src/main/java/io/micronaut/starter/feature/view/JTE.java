@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.view;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import java.util.Optional;
@@ -34,8 +34,10 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class JTE implements ViewFeature, MicronautServerDependent {
-    private static final String MAVEN_PLUGIN_ARTIFACT_ID = "jte-maven-plugin";
 
+    public static final String ARTIFACT_ID_MICRONAUT_VIEWS_JTE = "micronaut-views-jte";
+
+    private static final String MAVEN_PLUGIN_ARTIFACT_ID = "jte-maven-plugin";
     private static final String JTE_SRC_DIR = "src/main/jte";
 
     @Override
@@ -67,20 +69,15 @@ public class JTE implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(dependencyBuilder());
+        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_JTE)
+                .compile());
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addBuildPlugin(mavenPlugin(generatorContext));
         }
         generatorContext.addTemplate("exampleJte", new RockerTemplate(JTE_SRC_DIR + "/example.jte", exampleJTE.template()));
-    }
-
-    private Dependency.Builder  dependencyBuilder() {
-        return Dependency.builder()
-                .groupId("io.micronaut.views")
-                .artifactId("micronaut-views-jte")
-                .compile();
     }
 
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {

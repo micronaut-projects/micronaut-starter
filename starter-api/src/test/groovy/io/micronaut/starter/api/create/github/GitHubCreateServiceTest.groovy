@@ -26,7 +26,7 @@ class GitHubCreateServiceTest extends Specification{
 
     void 'test generate app to local path'(){
         given:
-        Project project = NameUtils.parse('io.micronaut.foo');
+        Project project = NameUtils.parse('io.micronaut.foo')
         GeneratorContext context = projectGenerator.createGeneratorContext(
                 ApplicationType.DEFAULT,
                 project,
@@ -35,7 +35,7 @@ class GitHubCreateServiceTest extends Specification{
                 [],
                 ConsoleOutput.NOOP
         )
-        Path path = Files.createTempDirectory("test-generate");
+        Path path = Files.createTempDirectory("test-generate")
 
         when:
         gitHubCreateService.generateAppLocally(context, path)

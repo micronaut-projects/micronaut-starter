@@ -46,8 +46,4 @@ public interface CommunityFeature extends Feature {
         return true;
     }
 
-    @Override
-    default boolean isVisible() {
-        return CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES;
-    }
 }
