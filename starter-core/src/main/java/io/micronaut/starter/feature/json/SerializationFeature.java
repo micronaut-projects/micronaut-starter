@@ -71,14 +71,8 @@ public interface SerializationFeature extends JsonFeature {
 
     @NonNull
     default Dependency.Builder serdeProcessor(BuildTool buildTool) {
-        if (buildTool.isGradle()) {
-            return MicronautDependencyUtils.serdeDependency()
-                    .annotationProcessor()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR);
-        } else if (buildTool == BuildTool.MAVEN) {
-            return MicronautDependencyUtils.moduleMavenAnnotationProcessor(GROUP_ID_MICRONAUT_SERDE, ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR, "micronaut.serialization.version");
-        }
-        throw new RuntimeException("build tool " + buildTool.getName() + " not supported");
+        return MicronautDependencyUtils.annotationProcessor(buildTool,
+                GROUP_ID_MICRONAUT_SERDE, ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR, "micronaut.serialization.version");
     }
 
     String getModule();

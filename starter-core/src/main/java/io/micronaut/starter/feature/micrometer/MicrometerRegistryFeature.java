@@ -28,6 +28,7 @@ import io.micronaut.starter.util.NameUtils;
  */
 public interface MicrometerRegistryFeature extends Feature {
     String EXPORT_PREFIX = "micronaut.metrics.export";
+
     @Override
     default String getCategory() {
         return Category.METRICS;

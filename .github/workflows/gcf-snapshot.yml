@@ -2,7 +2,7 @@ name: Snapshot to GCF
 on:
   push:
     branches:
-      - 4.2.x
+      - 4.3.x
 jobs:
   deploy:
     name: Deploy job

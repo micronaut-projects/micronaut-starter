@@ -1,7 +1,6 @@
 package io.micronaut.starter.feature.database
 
 import groovy.xml.XmlSlurper
-import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
@@ -18,8 +17,8 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Issue
 import spock.lang.Requires
 
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
-import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
 
 @Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
@@ -343,6 +342,6 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY)
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY)
     }
 }

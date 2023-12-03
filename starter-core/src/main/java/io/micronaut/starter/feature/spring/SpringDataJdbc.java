@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DataJdbc;
 
@@ -63,8 +64,7 @@ public class SpringDataJdbc extends SpringFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
+        generatorContext.addDependency(MicronautDependencyUtils.dataDependency()
                 .artifactId("micronaut-data-spring")
                 .compile());
         generatorContext.addDependency(Dependency.builder()

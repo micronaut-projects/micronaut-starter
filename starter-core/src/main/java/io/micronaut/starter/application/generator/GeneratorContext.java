@@ -424,4 +424,17 @@ public class GeneratorContext implements DependencyContext {
                         dependency.getArtifactId().equals(artifactId)
                         && dependency.getScope() == scope);
     }
+
+    public boolean hasDependency(@NonNull String groupId,
+                                        @NonNull String artifactId) {
+        return getDependencies().stream()
+                .anyMatch(dependency -> dependency.getGroupId().equals(groupId) &&
+                        dependency.getArtifactId().equals(artifactId));
+    }
+
+    public long countDependencies(@NonNull String groupId) {
+        return getDependencies().stream()
+                .filter(dependency -> dependency.getGroupId().equals(groupId))
+                .count();
+    }
 }
