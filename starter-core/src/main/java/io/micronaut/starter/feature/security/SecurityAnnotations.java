@@ -24,8 +24,8 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class SecurityAnnotations implements Feature, MicronautServerDependent {
-    public static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-annotations";
-    public static final String PROPERTY_MICRONAUT_SECURITY_VERSION = "micronaut.security.version";
+    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-annotations";
+    private static final String PROPERTY_MICRONAUT_SECURITY_VERSION = "micronaut.security.version";
 
     @Override
     public String getName() {

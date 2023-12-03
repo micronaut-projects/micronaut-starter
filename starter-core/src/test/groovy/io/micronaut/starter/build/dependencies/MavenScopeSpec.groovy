@@ -15,7 +15,7 @@ class MavenScopeSpec extends Specification {
     @Unroll("#source #phases should return #scope")
     void "verify MavenScope::of"(Source source, List<Phase> phases, Language language, MavenScope scope) {
         expect:
-        scope == MavenScope.of(new Scope(source, phases), language).get()
+        scope == MavenScope.of(new Scope(source, phases, 1), language).get()
 
         where:
         source      | phases                                               | language        || scope
