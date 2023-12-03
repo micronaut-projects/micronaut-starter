@@ -16,13 +16,19 @@
 package io.micronaut.starter.feature.camunda;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.CommunityFeature;
+import io.micronaut.starter.feature.MicronautCommunityFeature;
+import io.micronaut.starter.options.MicronautVersion;
 
-public interface CamundaCommunityFeature extends CommunityFeature {
+public interface CamundaCommunityFeature extends MicronautCommunityFeature {
 
     @Override
     @NonNull
     default String getCommunityContributor() {
         return "Camunda";
+    }
+
+    @Override
+    default MicronautVersion builtWithMicronautVersion() {
+        return MicronautVersion.THREE;
     }
 }
