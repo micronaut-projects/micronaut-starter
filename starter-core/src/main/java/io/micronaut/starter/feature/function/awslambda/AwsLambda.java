@@ -60,8 +60,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
-import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.json.SerializationJacksonFeature;
+import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -91,7 +91,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
-    private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile().build();
+    private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder()
+            .groupId("com.amazonaws")
+            .artifactId("aws-lambda-java-events")
+            .compile()
+            .build();
     private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS = MicronautDependencyUtils.awsDependency()
             .artifactId("micronaut-function-aws")
             .compile()

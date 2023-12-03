@@ -1,0 +1,1 @@
+<div th:fragment="inputradios(el)" xmlns:th="http://www.thymeleaf.org" class="form-check" th:each="radio : ${el.buttons()}"><input th:replace="~{fieldset/inputradio :: inputradio(${el}, ${radio})}"/><label th:replace="~{fieldset/label :: label(${radio.id()}, ${radio.label()})}"></label></div>
