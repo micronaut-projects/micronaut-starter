@@ -5,6 +5,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
@@ -16,6 +17,16 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         this.template = template
         this.language = language
         this.testFramework = testFramework
+    }
+
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+    }
+
+    @Override
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.TEST_ANNOTATION_PROCESSOR)
     }
 
     @Override

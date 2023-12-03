@@ -34,7 +34,7 @@ class GradleConfigurationSpec extends Specification {
 
     void "#source #phases should return #configuration"() {
         expect:
-        configuration == GradleConfiguration.of(new Scope(source, phases), Language.JAVA, TestFramework.JUNIT, null).get()
+        configuration == GradleConfiguration.of(new Scope(source, phases, 1), Language.JAVA, TestFramework.JUNIT, null).get()
 
         where:
         source      | phases                                               || configuration
@@ -56,7 +56,7 @@ class GradleConfigurationSpec extends Specification {
             isFeaturePresent(KotlinSymbolProcessingFeature.class) >> ksp
         }
         expect:
-        configuration == GradleConfiguration.of(new Scope(source, phases), Language.KOTLIN, TestFramework.JUNIT, generatorContext).get()
+        configuration == GradleConfiguration.of(new Scope(source, phases, 1), Language.KOTLIN, TestFramework.JUNIT, generatorContext).get()
 
         where:
         ksp   | source      | phases                        || configuration

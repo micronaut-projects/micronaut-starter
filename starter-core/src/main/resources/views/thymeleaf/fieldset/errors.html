@@ -1,0 +1,1 @@
+<th:block th:fragment="errors(name,errors)" xmlns:th="http://www.thymeleaf.org" th:each="error : ${errors}"><div th:id="|${name}ValidationServerFeedback|" class="invalid-feedback" th:text="${#strings.defaultString(#messages.msgOrNull(error.code()),error.defaultMessage())}"></div></th:block>

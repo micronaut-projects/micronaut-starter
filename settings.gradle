@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.6.0'
+    id 'io.micronaut.build.shared.settings' version '6.6.1'
 }
 
 rootProject.name = 'micronaut-starter'
@@ -31,7 +31,6 @@ include 'starter-web-servlet'
 include 'starter-azure-function'
 include 'starter-gcp-function'
 include 'starter-aws-lambda'
-include 'starter-analytics-postgres'
 
 include 'test-aws'
 include 'test-buildtool'

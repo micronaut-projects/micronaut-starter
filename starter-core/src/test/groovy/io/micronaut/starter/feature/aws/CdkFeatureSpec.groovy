@@ -78,9 +78,10 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
     void "dependencies are added for cdk to infra project for #buildTool"(BuildTool buildTool, String buildFile) {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        String infraBuild = output."$Cdk.INFRA_MODULE/$buildFile"
 
         then:
-        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.starter:micronaut-starter-aws-cdk/$)
+        infraBuild.contains($/implementation("io.micronaut.starter:micronaut-starter-aws-cdk/$)
 
         where:
         buildTool               | buildFile
