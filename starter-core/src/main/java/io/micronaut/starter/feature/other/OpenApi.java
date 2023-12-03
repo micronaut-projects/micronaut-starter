@@ -33,12 +33,12 @@ import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.G
 public class OpenApi implements Feature, MicronautServerDependent {
 
     public static final String ARTIFACT_ID_MICRONAUT_OPENAPI = "micronaut-openapi";
+    public static final String ARTIFACT_ID_MICRONAUT_OPENAPI_ANNOTATIONS = "micronaut-openapi-annotations";
     private static final String OPENAPI_VERSION_MAVEN_PROPERTY = "micronaut.openapi.version";
 
-    private static final Dependency DEPENDENCY_SWAGGER_ANNOTATIONS = Dependency.builder()
-            .groupId("io.swagger.core.v3")
-            .artifactId("swagger-annotations")
-            .compile()
+    private static final Dependency DEPENDENCY_OPENAPI_ANNOTATIONS = MicronautDependencyUtils.openapi()
+            .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI_ANNOTATIONS)
+            .compileOnly()
             .build();
 
     @Override
@@ -66,7 +66,7 @@ public class OpenApi implements Feature, MicronautServerDependent {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(micronautOpenApiProcessor(generatorContext));
-        generatorContext.addDependency(DEPENDENCY_SWAGGER_ANNOTATIONS);
+        generatorContext.addDependency(DEPENDENCY_OPENAPI_ANNOTATIONS);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
             generatorContext.addDependency(MicronautDependencyUtils.openapi()
                     .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
