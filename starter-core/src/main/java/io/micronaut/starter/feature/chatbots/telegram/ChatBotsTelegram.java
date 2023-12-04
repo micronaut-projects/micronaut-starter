@@ -19,6 +19,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.chatbots.ChatBots;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovySpock;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJava;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJavaJunit;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlin;
@@ -29,6 +30,7 @@ import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerKotlin;
 import io.micronaut.starter.feature.chatbots.template.telegramReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
 /**
@@ -76,6 +78,11 @@ abstract class ChatBotsTelegram extends ChatBots {
                     aboutCommandHandlerJavaJunit.template(generatorContext.getProject()),
                     aboutCommandHandlerKotlinJunit.template(generatorContext.getProject()),
                     aboutCommandHandlerGroovyJunit.template(generatorContext.getProject())
+            );
+        } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
+            generatorContext.addTemplate(
+                    "about-command-handler-spock-groovy-test",
+                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/AboutCommandHandler"), aboutCommandHandlerGroovySpock.template(generatorContext.getProject()))
             );
         }
 
