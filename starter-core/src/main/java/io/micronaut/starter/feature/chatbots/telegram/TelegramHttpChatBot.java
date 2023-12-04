@@ -20,9 +20,18 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovySpock;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJavaJunit;
+import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlinJunit;
+import io.micronaut.starter.feature.chatbots.template.controllerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.template.controllerJavaJunit;
+import io.micronaut.starter.feature.chatbots.template.controllerKotlinJunit;
 import io.micronaut.starter.feature.chatbots.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -49,6 +58,20 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    protected void renderTemplates(GeneratorContext generatorContext) {
+        super.renderTemplates(generatorContext);
+        if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
+            generatorContext.addTemplate(
+                    "http-client-command-handler-junit-test",
+                    generatorContext.getTestSourcePath("/{packagePath}/TelegramController"),
+                    controllerJavaJunit.template(generatorContext.getProject()),
+                    controllerKotlinJunit.template(generatorContext.getProject()),
+                    controllerGroovyJunit.template(generatorContext.getProject())
+            );
+        }
     }
 
     @NonNull

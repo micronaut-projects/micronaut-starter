@@ -73,7 +73,7 @@ abstract class ChatBotsTelegram extends ChatBots {
         );
         if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
             generatorContext.addTemplate(
-                    "about-command-handler-junit-java-test",
+                    "about-command-handler-junit-test",
                     generatorContext.getTestSourcePath("/{packagePath}/AboutCommandHandler"),
                     aboutCommandHandlerJavaJunit.template(generatorContext.getProject()),
                     aboutCommandHandlerKotlinJunit.template(generatorContext.getProject()),
