@@ -5,11 +5,17 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.feature.build.KotlinSupportFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
+
+import java.util.stream.Collectors
 
 class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -65,6 +71,30 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
         verifier.hasBuildPlugin("com.google.devtools.ksp")
         verifier.hasBuildPlugin("org.jetbrains.kotlin.plugin.allopen")
         !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "org.gradle.jvmargs is only added for KSP"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+
+        then:
+        output."gradle.properties".contains("micronautVersion")
+        !output."gradle.properties".contains("org.gradle.jvmargs")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "org.gradle.jvmargs is added for KSP"() {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+
+        then:
+        output."gradle.properties".contains("micronautVersion")
+        output."gradle.properties".contains("org.gradle.jvmargs")
 
         where:
         buildTool << BuildTool.valuesGradle()
