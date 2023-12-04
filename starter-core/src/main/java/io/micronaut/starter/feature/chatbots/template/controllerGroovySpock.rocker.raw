@@ -1,0 +1,85 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+
+}
+
+import io.micronaut.chatbots.telegram.api.send.SendMessage
+import io.micronaut.chatbots.telegram.core.TelegramBotConfiguration
+import io.micronaut.chatbots.telegram.core.TokenValidator
+import io.micronaut.context.BeanContext
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MutableHttpRequest
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import spock.lang.Specification
+
+@@MicronautTest
+class TelegramControllerSpec extends Specification {
+
+    @@Client("/")
+    @@Inject
+    HttpClient client
+
+    @@Inject
+    BeanContext ctx
+
+    void "controller is enabled and responsive"() {
+        when:
+        String token = ctx.getBean(TelegramBotConfiguration.class).token
+        MutableHttpRequest<String> post = HttpRequest.POST("/telegram", aboutCommandJson).header(TokenValidator.X_TELEGRAM_BOT_API_SECRET_TOKEN, token)
+        HttpResponse<SendMessage> messageResponse = client.toBlocking().exchange(post, SendMessage.class)
+
+        then:
+        messageResponse.body().text.trim() == "Telegram Bot developed with 💙 and [Micronaut](https://micronaut.io)"
+    }
+
+    void "controller requires token in header"() {
+        when:
+        MutableHttpRequest<String> post = HttpRequest.POST("/telegram", aboutCommandJson)
+        client.toBlocking().exchange(post, SendMessage.class)
+
+        then:
+        HttpClientResponseException httpClientResponseException = thrown()
+        httpClientResponseException.status == HttpStatus.BAD_REQUEST
+    }
+
+    private String getAboutCommandJson() {
+        '''{
+          |  "update_id": 952034417,
+          |  "message": {
+          |    "message_id": 447,
+          |    "from": {
+          |      "id": 613021175,
+          |      "is_bot": false,
+          |      "first_name": "John",
+          |      "last_name": "Del Amo",
+          |      "username": "johnsnow",
+          |      "language_code": "en"
+          |    },
+          |    "chat": {
+          |      "id": 613021175,
+          |      "first_name": "John",
+          |      "last_name": "Del Amo",
+          |      "username": "johnsnow",
+          |      "type": "private"
+          |    },
+          |    "date": 1662545408,
+          |    "text": "/about",
+          |    "entities": [
+          |      {
+          |        "offset": 0,
+          |        "length": 6,
+          |        "type": "bot_command"
+          |      }
+          |    ]
+          |  }
+          |}'''.stripMargin()
+    }
+}

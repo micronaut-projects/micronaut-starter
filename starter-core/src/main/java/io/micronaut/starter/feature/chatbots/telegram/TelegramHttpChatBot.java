@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyS
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJavaJunit;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlinJunit;
 import io.micronaut.starter.feature.chatbots.template.controllerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.template.controllerGroovySpock;
 import io.micronaut.starter.feature.chatbots.template.controllerJavaJunit;
 import io.micronaut.starter.feature.chatbots.template.controllerKotlinJunit;
 import io.micronaut.starter.feature.chatbots.template.controllerReadme;
@@ -70,6 +71,11 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
                     controllerJavaJunit.template(generatorContext.getProject()),
                     controllerKotlinJunit.template(generatorContext.getProject()),
                     controllerGroovyJunit.template(generatorContext.getProject())
+            );
+        } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
+            generatorContext.addTemplate(
+                    "http-client-command-handler-spock-test",
+                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/TelegramController"), controllerGroovySpock.template(generatorContext.getProject()))
             );
         }
     }
