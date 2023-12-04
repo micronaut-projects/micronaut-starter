@@ -86,6 +86,13 @@ abstract class ChatBotsTelegram extends ChatBots {
             );
         }
 
+        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
+                rootReadMeTemplate(generatorContext),
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                getBuildCommand(generatorContext.getBuildTool()))
+        ));
+
         generatorContext.addTemplate(
                 "final-command-handler",
                 generatorContext.getSourcePath("/{packagePath}/FinalCommandHandler"),
@@ -93,17 +100,6 @@ abstract class ChatBotsTelegram extends ChatBots {
                 finalCommandHandlerKotlin.template(generatorContext.getProject()),
                 finalCommandHandlerGroovy.template(generatorContext.getProject())
         );
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
-                rootReadMeTemplate(generatorContext),
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
     }
 
     @Override

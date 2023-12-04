@@ -20,7 +20,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.template.gcpReadme;
+import io.micronaut.starter.feature.chatbots.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
@@ -79,6 +79,6 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
 
     @Override
     protected String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return gcpReadme.class.getName().replace(".", "/") + ".rocker.raw";
+        return controllerReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }
