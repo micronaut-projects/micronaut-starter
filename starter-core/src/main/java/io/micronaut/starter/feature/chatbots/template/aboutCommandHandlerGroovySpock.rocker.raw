@@ -17,7 +17,7 @@ import jakarta.inject.Inject
 import spock.lang.Specification
 
 @@MicronautTest(startApplication = false)
-class AboutCommandHandlerTest extends Specification {
+class AboutCommandHandlerSpec extends Specification {
 
     @@Inject
     BeanContext ctx
