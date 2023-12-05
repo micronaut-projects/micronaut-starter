@@ -18,7 +18,6 @@
 @import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.migration.MigrationFeature
 @import io.micronaut.starter.feature.testresources.TestResources
-@import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.util.VersionInfo
 
 @args (
