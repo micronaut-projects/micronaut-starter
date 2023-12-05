@@ -59,7 +59,6 @@ public class OpenApiAdoc implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.openapi.adoc.enabled", true);
         generatorContext.addDependency(DEPENDENCY_OPENAPI_ASCIIDOC);
     }
 

@@ -2,7 +2,6 @@ package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
@@ -42,13 +41,5 @@ class OpenApiAdocSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
-    }
-
-    void "test config enables openapi-adoc"() {
-        when:
-        GeneratorContext ctx = buildGeneratorContext(['openapi-adoc'])
-
-        then:
-        ctx.configuration.get('micronaut.openapi.adoc.enabled') == true
     }
 }
