@@ -83,7 +83,6 @@ io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.gradle.templates
 io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
-io.micronaut.starter.feature.buildless
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
 io.micronaut.starter.feature.ci.workflows
@@ -109,7 +108,6 @@ io.micronaut.starter.feature.dev
 io.micronaut.starter.feature.discovery
 io.micronaut.starter.feature.distributedconfig
 io.micronaut.starter.feature.distributedconfig.template
-io.micronaut.starter.feature.eclipsestore
 io.micronaut.starter.feature.elasticsearch
 io.micronaut.starter.feature.email
 io.micronaut.starter.feature.function
