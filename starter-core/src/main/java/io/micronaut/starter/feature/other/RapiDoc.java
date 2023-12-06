@@ -15,30 +15,15 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
-import io.micronaut.starter.feature.other.template.openApiProperties;
-import io.micronaut.starter.feature.security.Security;
-import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 @Singleton
-public class RapiDoc implements Feature, MicronautServerDependent {
+public class RapiDoc extends OpenApiView {
     public static final String NAME = "rapidoc";
 
-    private final OpenApi openApiFeature;
-
     public RapiDoc(OpenApi openApiFeature) {
-        this.openApiFeature = openApiFeature;
+        super(openApiFeature);
     }
 
     @Override
@@ -57,45 +42,10 @@ public class RapiDoc implements Feature, MicronautServerDependent {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("openapiProperties", new RockerTemplate("openapi.properties", openApiProperties.template(this)));
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.paths", "classpath:META-INF/swagger");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.mapping", "/swagger/**");
+        super.apply(generatorContext);
         generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.paths", "classpath:META-INF/swagger/views/rapidoc");
         generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.mapping", "/rapidoc/**");
-
-        if (generatorContext.isFeaturePresent(Security.class)) {
-            Map<String, String> swaggerAccess = new HashMap<>() {{
-                put("pattern", "/swagger/**");
-                put("access", "isAnonymous()");
-            }};
-
-            Map<String, String> swaggerUiAccess = new HashMap<>() {{
-                put("pattern", "/swagger-ui/**");
-                put("access", "isAnonymous()");
-            }};
-
-            generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess));
-        }
-
-        generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController(
-                generatorContext.getProject(), generatorContext.getLanguage()));
-
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeatureIfNotPresent(OpenApi.class, openApiFeature);
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.API;
     }
 
     @Override
