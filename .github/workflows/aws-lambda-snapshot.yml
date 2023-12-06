@@ -2,7 +2,7 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - 4.2.x
+      - 4.3.x
 jobs:
   deploy:
     name: Deploy Job
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Set up JDK
-        uses: actions/setup-java@v3.11.0
+        uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
           java-version: '17'

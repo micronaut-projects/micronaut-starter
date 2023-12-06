@@ -16,27 +16,31 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.order.Ordered;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Scope {
-    public static final Scope ANNOTATION_PROCESSOR = new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
-    public static final Scope AOT_PLUGIN = new Scope(Source.MAIN, Collections.singletonList(Phase.AOT_PLUGIN));
-    public static final Scope API = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.PUBLIC_API, Phase.RUNTIME));
-    public static final Scope COMPILE = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
-    public static final Scope DEVELOPMENT_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.DEVELOPMENT));
-    public static final Scope COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION));
-    public static final Scope TEST_RESOURCES_SERVICE = new Scope(Source.MAIN, Collections.singletonList(Phase.TEST_RESOURCES_SERVICE));
-    public static final Scope RUNTIME = new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME));
-    public static final Scope TEST = new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
-    public static final Scope TEST_ANNOTATION_PROCESSOR = new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
-    public static final Scope TEST_COMPILE_ONLY = new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION));
-    public static final Scope TEST_RUNTIME = new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME));
-    public static final Scope OPENREWRITE = new Scope(Source.MAIN, Collections.singletonList(Phase.OPENREWRITE));
-    public static final Scope NATIVE_IMAGE_COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.NATIVE_IMAGE_COMPILATION));
+public class Scope implements Ordered {
+    public static final Scope ANNOTATION_PROCESSOR = new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING), 0);
+    public static final Scope API = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.PUBLIC_API, Phase.RUNTIME), 1);
+    public static final Scope COMPILE = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME), 2);
+    public static final Scope COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION), 3);
+    public static final Scope RUNTIME = new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME), 4);
+    public static final Scope DEVELOPMENT_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.DEVELOPMENT), 5);
+
+    public static final Scope AOT_PLUGIN = new Scope(Source.MAIN, Collections.singletonList(Phase.AOT_PLUGIN), 6);
+    public static final Scope OPENREWRITE = new Scope(Source.MAIN, Collections.singletonList(Phase.OPENREWRITE), 7);
+    public static final Scope NATIVE_IMAGE_COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.NATIVE_IMAGE_COMPILATION), 8);
+
+    public static final Scope TEST = new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME), 9);
+    public static final Scope TEST_ANNOTATION_PROCESSOR = new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING), 10);
+    public static final Scope TEST_COMPILE_ONLY = new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION), 11);
+    public static final Scope TEST_RUNTIME = new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME), 12);
+
+    public static final Scope TEST_RESOURCES_SERVICE = new Scope(Source.MAIN, Collections.singletonList(Phase.TEST_RESOURCES_SERVICE), 13);
 
     @NonNull
     private Source source;
@@ -44,10 +48,19 @@ public class Scope {
     @NonNull
     private List<Phase> phases;
 
+    private final Integer order;
+
     public Scope(@NonNull Source source,
-                 @NonNull List<Phase> phases) {
+                 @NonNull List<Phase> phases,
+                 int order) {
         this.source = source;
         this.phases = phases;
+        this.order = order;
+    }
+
+    @Override
+    public int getOrder() {
+        return order;
     }
 
     @NonNull

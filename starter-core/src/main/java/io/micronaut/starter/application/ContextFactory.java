@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.feature.validation.ProjectNameValidator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -38,12 +39,17 @@ import java.util.Set;
 public class ContextFactory {
 
     private final FeatureValidator featureValidator;
+
+    private final ProjectNameValidator projectNameValidator;
+
     private final DefaultCoordinateResolver coordinateResolver;
 
     public ContextFactory(FeatureValidator featureValidator,
-                          DefaultCoordinateResolver coordinateResolver) {
+                          DefaultCoordinateResolver coordinateResolver,
+                          ProjectNameValidator projectNameValidator) {
         this.featureValidator = featureValidator;
         this.coordinateResolver = coordinateResolver;
+        this.projectNameValidator = projectNameValidator;
     }
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
@@ -75,6 +81,11 @@ public class ContextFactory {
     public GeneratorContext createGeneratorContext(Project project,
                                                    FeatureContext featureContext,
                                                    ConsoleOutput consoleOutput) {
+
+        if (project != null) {
+            projectNameValidator.validate(project);
+        }
+
         featureContext.processSelectedFeatures();
 
         Set<Feature> featureList = featureContext.getFinalFeatures(consoleOutput);

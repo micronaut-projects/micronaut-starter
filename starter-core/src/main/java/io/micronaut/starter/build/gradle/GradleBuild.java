@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +80,11 @@ public class GradleBuild {
     @NonNull
     public List<GradlePlugin> getPlugins() {
         return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.BUILD).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public List<String> getSettingsImports() {
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).map(GradlePlugin::getSettingsImports).flatMap(Collection::stream).toList();
     }
 
     @NonNull

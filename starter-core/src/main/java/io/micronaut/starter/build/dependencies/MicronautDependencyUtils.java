@@ -36,10 +36,12 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_CASSANDRA = "io.micronaut.cassandra";
     public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
+    public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
+    public static final String GROUP_ID_MICRONAUT_REACTOR = "io.micronaut.reactor";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
@@ -96,6 +98,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder reactorDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_REACTOR);
+    }
+
+    @NonNull
     public static Dependency.Builder serdeDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERDE);
     }
@@ -147,6 +154,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder micrometerDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MICROMETER);
+    }
+
+    @NonNull
+    public static Dependency.Builder eclipsestoreDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ECLIPSESTORE);
     }
 
     @NonNull

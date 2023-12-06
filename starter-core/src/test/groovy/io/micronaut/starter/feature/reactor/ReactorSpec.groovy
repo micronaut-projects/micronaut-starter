@@ -63,6 +63,7 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         then:
         verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor-http-client", Scope.COMPILE)
+        verifier.hasDependency("io.micrometer", "context-propagation", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
