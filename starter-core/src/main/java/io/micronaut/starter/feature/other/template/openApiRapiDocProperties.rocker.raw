@@ -1,0 +1,6 @@
+swagger-ui.enabled=false
+redoc.enabled=false
+rapidoc.enabled=true
+rapidoc.bg-color=#14191f
+rapidoc.text-color=#aec2e0
+rapidoc.sort-endpoints-by=method
