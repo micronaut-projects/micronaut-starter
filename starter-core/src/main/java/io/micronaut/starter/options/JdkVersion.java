@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.options;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.serde.annotation.Serdeable;
 
@@ -58,7 +57,6 @@ public final class JdkVersion {
     /**
      * @return the name
      */
-    @JsonValue
     public String name() {
         return "JDK_" + majorVersion;
     }
