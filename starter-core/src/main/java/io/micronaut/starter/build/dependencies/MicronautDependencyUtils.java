@@ -41,6 +41,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
+    public static final String GROUP_ID_MICRONAUT_REACTOR = "io.micronaut.reactor";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
@@ -94,6 +95,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder azureDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AZURE);
+    }
+
+    @NonNull
+    public static Dependency.Builder reactorDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_REACTOR);
     }
 
     @NonNull

@@ -25,6 +25,7 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.KotlinSymbolProcessing;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -40,10 +41,10 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Singleton
 public class Gradle implements BuildFeature {
@@ -53,6 +54,17 @@ public class Gradle implements BuildFeature {
     protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
     protected static final String DEFAULT_VERSION = "0.1";
+    private static final Property PROPERTY_GRADLE_JVMARGS = new Property() {
+        @Override
+        public String getKey() {
+            return " org.gradle.jvmargs";
+        }
+
+        @Override
+        public String getValue() {
+            return "-Xmx4096M";
+        }
+    };
 
     protected final GradleBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
@@ -144,9 +156,12 @@ public class Gradle implements BuildFeature {
 
     @NonNull
     protected List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getBuildProperties().getProperties().stream()
-                .filter(p -> p.getKey() == null || !p.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)) // It is set via the DSL
-                .collect(Collectors.toList());
+        List<Property> properties = new ArrayList<>(generatorContext.getBuildProperties().getProperties().stream()
+                .filter(p -> p.getKey() == null || !p.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)).toList());
+        if (generatorContext.getBuildTool().isGradle() && generatorContext.hasFeature(KotlinSymbolProcessing.class)) {
+            properties.add(PROPERTY_GRADLE_JVMARGS);
+        }
+        return properties;
     }
 
     protected void addSettingsFile(GeneratorContext generatorContext, GradleBuild build) {
