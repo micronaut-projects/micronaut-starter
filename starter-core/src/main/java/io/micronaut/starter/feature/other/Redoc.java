@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SwaggerUI extends OpenApiView {
-    public static final String NAME = "swagger-ui";
+public class Redoc extends OpenApiView {
+    public static final String NAME = "redoc";
 
-    public SwaggerUI(OpenApi openApiFeature) {
+    public Redoc(OpenApi openApiFeature) {
         super(openApiFeature);
     }
 
@@ -33,28 +34,28 @@ public class SwaggerUI extends OpenApiView {
 
     @Override
     public String getTitle() {
-        return "Swagger UI";
+        return "Redoc View";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables Swagger UI by default";
+        return "Adds and enables Redoc view for OpenApi";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.paths", "classpath:META-INF/swagger/views/swagger-ui");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
+        generatorContext.getConfiguration().put("micronaut.router.static-resources.redoc.paths", "classpath:META-INF/swagger/views/redoc");
+        generatorContext.getConfiguration().put("micronaut.router.static-resources.redoc.mapping", "/redoc/**");
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://swagger.io/tools/swagger-ui/";
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html";
+        return "https://github.com/Redocly/redoc#generate-beautiful-api-documentation-from-openapi";
     }
 }

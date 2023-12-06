@@ -25,35 +25,16 @@ import io.micronaut.starter.feature.other.template.openApiProperties;
 import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.template.RockerTemplate;
-import jakarta.inject.Singleton;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
-public class RapiDoc implements Feature, MicronautServerDependent {
-    public static final String NAME = "rapidoc";
-
+abstract class OpenApiView implements Feature, MicronautServerDependent  {
     private final OpenApi openApiFeature;
 
-    public RapiDoc(OpenApi openApiFeature) {
+    OpenApiView(OpenApi openApiFeature) {
         this.openApiFeature = openApiFeature;
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public String getTitle() {
-        return "RapiDoc View";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds and enables RapiDoc view for OpenApi";
     }
 
     @Override
@@ -66,8 +47,6 @@ public class RapiDoc implements Feature, MicronautServerDependent {
         generatorContext.addTemplate("openapiProperties", new RockerTemplate("openapi.properties", openApiProperties.template(this)));
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.paths", "classpath:META-INF/swagger");
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.mapping", "/swagger/**");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.paths", "classpath:META-INF/swagger/views/rapidoc");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.mapping", "/rapidoc/**");
 
         if (generatorContext.isFeaturePresent(Security.class)) {
             Map<String, String> swaggerAccess = new HashMap<>() {{
@@ -96,10 +75,5 @@ public class RapiDoc implements Feature, MicronautServerDependent {
     @Override
     public String getCategory() {
         return Category.API;
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://rapidocweb.com/api.html";
     }
 }
