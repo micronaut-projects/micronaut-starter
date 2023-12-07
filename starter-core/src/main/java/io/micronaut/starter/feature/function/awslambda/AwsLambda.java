@@ -23,10 +23,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.*;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
@@ -35,7 +32,6 @@ import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventsSerde;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
-import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.function.CloudFeature;
@@ -200,7 +196,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (shouldGenerateSources(generatorContext)) {
+        if (generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             ApplicationType applicationType = generatorContext.getApplicationType();
             if (applicationType == DEFAULT || applicationType == FUNCTION) {
                 addCode(generatorContext);
@@ -270,10 +266,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
             ApplicationConfiguration test = generatorContext.getConfiguration(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
             test.put("micronaut.security.filter.enabled", false);
         }
-    }
-
-    boolean shouldGenerateSources(GeneratorContext generatorContext) {
-        return !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
     }
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {

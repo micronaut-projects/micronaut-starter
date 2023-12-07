@@ -25,6 +25,7 @@ public class Category {
     public static final String API                  = "API";
     public static final String BPM                  = "BPM";
     public static final String CACHE                = "Cache";
+    public static final String CHATBOTS             = "ChatBots";
     public static final String CICD                 = "CI/CD";
     public static final String CLIENT               = "Client";
     public static final String CLOUD                = "Cloud";
