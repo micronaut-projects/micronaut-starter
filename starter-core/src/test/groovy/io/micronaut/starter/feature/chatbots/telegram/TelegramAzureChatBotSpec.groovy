@@ -1,9 +1,11 @@
 package io.micronaut.starter.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.Shared
 
 class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
 
@@ -12,9 +14,17 @@ class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
         TelegramAzureChatBot.NAME
     }
 
+    @Shared
+    TelegramAzureChatBot feature = beanContext.getBean(TelegramAzureChatBot)
+
+    void 'chatbots-telegram-azure-function feature is an Azure cloud feature'() {
+        expect:
+        Cloud.AZURE == feature.getCloud()
+    }
+
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(TelegramAzureChatBot).supports(type) == supports
+        feature.supports(type) == supports
 
         where:
         type << ApplicationType.values()

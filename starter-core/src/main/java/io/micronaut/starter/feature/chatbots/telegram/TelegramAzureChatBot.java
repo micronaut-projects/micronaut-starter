@@ -24,6 +24,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.azureReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -37,7 +38,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeature, AzureMicronautRuntimeFeature {
+public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
     public static final String NAME = "chatbots-telegram-azure-function";
 
@@ -69,13 +70,8 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
-    }
-
-    @Override
     public String getTitle() {
-        return "Telegram ChatBot as Azure Function";
+        return "Telegram ChatBot as an Azure Function";
     }
 
     @Override
