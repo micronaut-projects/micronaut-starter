@@ -18,15 +18,11 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.DependencyContext;
-import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-import io.micronaut.starter.build.dependencies.Phase;
+import io.micronaut.starter.build.dependencies.*;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class MavenDependency extends DependencyCoordinate {
 
@@ -87,11 +83,11 @@ public class MavenDependency extends DependencyCoordinate {
 
     @NonNull
     public static List<MavenDependency> listOf(@NonNull DependencyContext dependencyContext, Language language) {
-        return dependencyContext.getDependencies()
+        return dependencyContext.removeDuplicates(dependencyContext.getDependencies(), language, BuildTool.MAVEN)
                 .stream()
-                .filter(dep -> dep.getScope() != null && !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING) && !dep.getScope().getPhases().contains(Phase.AOT_PLUGIN))
                 .map(dep -> new MavenDependency(dep, language))
+                .filter(mavenDependency -> mavenDependency.getMavenScope() != null)
                 .sorted(MavenDependency.COMPARATOR)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

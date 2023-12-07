@@ -22,7 +22,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.chatbots.template.*;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
@@ -50,7 +49,7 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
@@ -76,11 +75,6 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
     @Override
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    protected String getBuildCommand(BuildTool buildTool) {
-        return "";
     }
 
     @Override

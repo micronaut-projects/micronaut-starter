@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlinJ
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerGroovy;
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerJava;
 import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.template.mockAboutCommandJson;
 import io.micronaut.starter.feature.chatbots.template.telegramReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
@@ -72,6 +73,15 @@ abstract class ChatBotsTelegram extends ChatBots {
                 aboutCommandHandlerKotlin.template(generatorContext.getProject()),
                 aboutCommandHandlerGroovy.template(generatorContext.getProject())
         );
+        if (!generatorContext.getTestFramework().isKotlinTestFramework()) {
+            generatorContext.addTemplate(
+                    "mock-about-command-json",
+                    new RockerTemplate(
+                            "src/test/resources/mockAboutCommand.json",
+                            mockAboutCommandJson.template()
+                    )
+            );
+        }
         if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
             generatorContext.addTemplate(
                     "about-command-handler-junit-test",

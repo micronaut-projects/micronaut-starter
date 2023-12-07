@@ -7,12 +7,25 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
+import io.micronaut.starter.feature.chatbots.ChatBotsFeature
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
 class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
 
     @Override
+    Class<ChatBotsFeature> getFeature() {
+        TelegramGcpChatBot
+    }
+
+    @Override
     String getFeatureName() {
         TelegramGcpChatBot.NAME
+    }
+
+    List<ApplicationType> getSupportedApplicationTypes() {
+        [ApplicationType.FUNCTION]
     }
 
     @Shared

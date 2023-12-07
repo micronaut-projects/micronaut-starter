@@ -40,6 +40,7 @@ public abstract class ChatBots implements ChatBotsFeature {
         this.validationFeature = validationFeature;
     }
 
+
     protected void renderTemplates(@NonNull GeneratorContext generatorContext) {
         generatorContext.addTemplate(
                 "about-markdown",

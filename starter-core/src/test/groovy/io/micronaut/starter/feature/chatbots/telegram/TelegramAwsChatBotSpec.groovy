@@ -9,8 +9,21 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
+import io.micronaut.starter.feature.chatbots.ChatBotsFeature
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
+    @Override
+    List<ApplicationType> getSupportedApplicationTypes() {
+        [ApplicationType.FUNCTION]
+    }
+
+    @Override
+    Class<ChatBotsFeature> getFeature() {
+        TelegramAwsChatBot
+    }
 
     @Override
     String getFeatureName() {
@@ -33,7 +46,7 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         type << ApplicationType.values()
         supports = type == ApplicationType.FUNCTION
         supportMsg = supports ? 'supports' : 'does not support'
-    }
+
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:

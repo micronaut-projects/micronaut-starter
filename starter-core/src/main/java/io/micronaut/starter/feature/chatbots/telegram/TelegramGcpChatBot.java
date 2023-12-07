@@ -38,7 +38,6 @@ import jakarta.inject.Singleton;
  */
 @Singleton
 public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeature, GcpMicronautRuntimeFeature {
-
     public static final String NAME = "chatbots-telegram-gcp-function";
 
     public static final Dependency CHATBOTS_TELEGRAM_GCP_FUNCTION = MicronautDependencyUtils
@@ -46,7 +45,6 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeat
             .artifactId("micronaut-chatbots-telegram-gcp-function")
             .compile()
             .build();
-
     private final GoogleCloudRawFunction rawFunction;
 
     public TelegramGcpChatBot(MicronautValidationFeature validationFeature, GoogleCloudRawFunction rawFunction) {

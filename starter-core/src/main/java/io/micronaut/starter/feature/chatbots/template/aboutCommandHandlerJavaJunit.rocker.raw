@@ -15,7 +15,7 @@ import io.micronaut.json.JsonMapper;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-
+import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,37 +44,7 @@ class AboutCommandHandlerTest {
         assertEquals("Telegram Bot developed with 💙 and [Micronaut](https://micronaut.io)", ((SendMessage) send).getText().trim());
     }
 
-    private String getAboutCommandJson() {
-        return """
-          {
-            "update_id": 952034417,
-            "message": {
-              "message_id": 447,
-              "from": {
-                "id": 613021175,
-                "is_bot": false,
-                "first_name": "John",
-                "last_name": "Del Amo",
-                "username": "johnsnow",
-                "language_code": "en"
-              },
-              "chat": {
-                "id": 613021175,
-                "first_name": "John",
-                "last_name": "Del Amo",
-                "username": "johnsnow",
-                "type": "private"
-              },
-              "date": 1662545408,
-              "text": "/about",
-              "entities": [
-                {
-                  "offset": 0,
-                  "length": 6,
-                  "type": "bot_command"
-                }
-              ]
-            }
-          }""";
+    private String getAboutCommandJson() throws IOException {
+        return new String(AboutCommandHandlerTest.class.getResourceAsStream("/mockAboutCommand.json").readAllBytes());
     }
 }

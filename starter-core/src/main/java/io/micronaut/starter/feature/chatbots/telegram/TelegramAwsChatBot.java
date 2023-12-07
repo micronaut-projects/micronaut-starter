@@ -51,7 +51,6 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements AwsFeature, 
             .build();
 
     public static final String HANDLER_CLASS = "io.micronaut.chatbots.telegram.lambda.Handler";
-
     private final AwsLambda awsLambda;
 
     public TelegramAwsChatBot(MicronautValidationFeature validationFeature, AwsLambda awsLambda) {

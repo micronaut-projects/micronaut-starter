@@ -1,0 +1,30 @@
+{
+  "update_id": 952034417,
+  "message": {
+    "message_id": 447,
+    "from": {
+      "id": 613021175,
+      "is_bot": false,
+      "first_name": "John",
+      "last_name": "Del Amo",
+      "username": "johnsnow",
+      "language_code": "en"
+    },
+    "chat": {
+      "id": 613021175,
+      "first_name": "John",
+      "last_name": "Del Amo",
+      "username": "johnsnow",
+      "type": "private"
+    },
+    "date": 1662545408,
+    "text": "/about",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 6,
+        "type": "bot_command"
+      }
+    ]
+  }
+}
