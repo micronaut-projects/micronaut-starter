@@ -15,6 +15,13 @@
  */
 package io.micronaut.starter.feature.chatbots;
 
+import io.micronaut.core.util.StringUtils;
+
 public enum ChatBotType {
-    TELEGRAM
+    TELEGRAM;
+
+    @Override
+    public String toString() {
+        return StringUtils.capitalize(this.name().toLowerCase());
+    }
 }
