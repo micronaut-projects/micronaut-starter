@@ -13,23 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.chatbots;
-
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.Feature;
+package io.micronaut.starter.feature;
 
 /**
- * Marker interface for chatbot features.
- *
- * @author Tim Yates
- * @since 4.3.0
+ * Marker interface for {@link Feature} which contribute code to the generated project.
  */
-
-public interface ChatBotsFeature extends CodeContributingFeature {
-
-    @Override
-    default String getCategory() {
-        return Category.CHATBOTS;
-    }
+public interface CodeContributingFeature extends Feature{
 }
