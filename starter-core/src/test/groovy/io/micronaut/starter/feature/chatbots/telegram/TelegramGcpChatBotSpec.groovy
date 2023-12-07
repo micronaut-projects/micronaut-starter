@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -36,6 +37,6 @@ class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
 
         where:
         buildTool << BuildTool.values()
-        command = buildTool.isGradle() ? TelegramGcpChatBot.GRADLE_PACKAGE_COMMAND : TelegramGcpChatBot.MAVEN_PACKAGE_COMMAND
+        command = buildTool.isGradle() ? GcpCloudFunctionBuildCommandUtils.GRADLE_PACKAGE_COMMAND : GcpCloudFunctionBuildCommandUtils.MAVEN_PACKAGE_COMMAND
     }
 }

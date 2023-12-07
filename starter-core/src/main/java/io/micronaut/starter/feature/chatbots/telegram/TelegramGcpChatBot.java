@@ -24,6 +24,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.gcpReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -46,8 +47,6 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
             .artifactId("micronaut-chatbots-telegram-gcp-function")
             .compile()
             .build();
-    public static final String MAVEN_PACKAGE_COMMAND = "mvnw clean package";
-    public static final String GRADLE_PACKAGE_COMMAND = "gradlew shadowJar";
 
     private final GoogleCloudRawFunction rawFunction;
 
@@ -96,11 +95,7 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return MAVEN_PACKAGE_COMMAND;
-        } else {
-            return GRADLE_PACKAGE_COMMAND;
-        }
+        return GcpCloudFunctionBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override
