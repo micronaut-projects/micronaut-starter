@@ -9,11 +9,6 @@ import io.micronaut.starter.options.TestFramework
 
 abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
-    void 'configuration is generated'() {
-        when:
-        def output = generate(ApplicationType.FUNCTION, [featureName])
-
-
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
         beanContext.getBean(feature).supports(type) == supports

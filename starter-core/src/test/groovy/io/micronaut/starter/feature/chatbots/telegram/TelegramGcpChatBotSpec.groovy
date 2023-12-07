@@ -28,22 +28,9 @@ class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
         [ApplicationType.FUNCTION]
     }
 
-    @Shared
-    TelegramGcpChatBot feature = beanContext.getBean(TelegramGcpChatBot)
-
     void 'chatbots-telegram-gcp-function feature is an GCP cloud feature'() {
         expect:
-        Cloud.GCP == feature.getCloud()
-    }
-
-    void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
-        expect:
-        feature.supports(type) == supports
-
-        where:
-        type << ApplicationType.values()
-        supports = type == ApplicationType.FUNCTION
-        supportMsg = supports ? 'supports' : 'does not support'
+        Cloud.GCP == beanContext.getBean(feature).getCloud()
     }
 
     void 'test README contains docs for #buildTool and command "#command"'(BuildTool buildTool, String command) {

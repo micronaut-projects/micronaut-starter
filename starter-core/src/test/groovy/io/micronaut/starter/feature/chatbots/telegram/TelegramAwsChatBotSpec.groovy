@@ -3,16 +3,13 @@ package io.micronaut.starter.feature.chatbots.telegram
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
+import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
-import io.micronaut.starter.feature.chatbots.ChatBotsFeature
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
     @Override
@@ -30,23 +27,10 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         TelegramAwsChatBot.NAME
     }
 
-    @Shared
-    TelegramAwsChatBot feature = beanContext.getBean(TelegramAwsChatBot)
-
     void 'chatbots-telegram-lambda feature is an AWS cloud feature'() {
         expect:
-        Cloud.AWS == feature.getCloud()
+        Cloud.AWS == beanContext.getBean(feature).getCloud()
     }
-
-    void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
-        expect:
-        feature.supports(type) == supports
-
-        where:
-        type << ApplicationType.values()
-        supports = type == ApplicationType.FUNCTION
-        supportMsg = supports ? 'supports' : 'does not support'
-
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:

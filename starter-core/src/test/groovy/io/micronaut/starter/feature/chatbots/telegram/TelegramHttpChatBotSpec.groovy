@@ -22,14 +22,6 @@ class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
         TelegramHttpChatBot.NAME
     }
 
-    void 'feature supports ApplicationType #type'(ApplicationType type) {
-        expect:
-        beanContext.getBean(TelegramHttpChatBot).supports(type)
-
-        where:
-        type << ApplicationType.values()
-    }
-
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [featureName])
