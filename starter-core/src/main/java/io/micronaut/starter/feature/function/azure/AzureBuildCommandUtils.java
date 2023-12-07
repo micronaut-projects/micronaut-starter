@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.azure;
 import io.micronaut.starter.options.BuildTool;
 
 public final class AzureBuildCommandUtils {
+
     public static final String MAVEN_AZURE_DEPLOY_COMMAND = "mvnw package azure-functions:deploy";
     public static final String GRADLE_AZURE_DEPLOY_COMMAND = "gradlew azureFunctionsDeploy";
 

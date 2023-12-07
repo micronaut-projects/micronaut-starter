@@ -7,6 +7,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 
 class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
+
     @Override
     List<ApplicationType> getSupportedApplicationTypes() {
         [ApplicationType.DEFAULT]

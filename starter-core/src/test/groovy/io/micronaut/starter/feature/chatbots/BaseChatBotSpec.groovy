@@ -7,6 +7,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 
 abstract class BaseChatBotSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
     abstract List<ApplicationType> getSupportedApplicationTypes()
 
     abstract Class<ChatBotsFeature> getFeature()

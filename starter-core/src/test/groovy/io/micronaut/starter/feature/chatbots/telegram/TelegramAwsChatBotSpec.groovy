@@ -12,6 +12,7 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
+
     @Override
     List<ApplicationType> getSupportedApplicationTypes() {
         [ApplicationType.FUNCTION]
