@@ -43,7 +43,7 @@ class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("./$command")
         readme.contains("- [Micronaut Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions)")
         readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Telegram ChatBot as Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [Micronaut Telegram ChatBot as a Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

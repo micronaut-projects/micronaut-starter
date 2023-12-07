@@ -67,12 +67,12 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeat
 
     @Override
     public String getTitle() {
-        return "Telegram ChatBot as Google Cloud Function";
+        return "Telegram ChatBot as a Google Cloud Function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Google Cloud Function that implements a Telegram chatbot";
+        return "Generates an application that can be deployed as a Google Cloud Function that implements a Telegram ChatBot";
     }
 
     @Override
