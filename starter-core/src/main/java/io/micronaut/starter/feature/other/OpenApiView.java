@@ -17,20 +17,17 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.*;
 import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
 import io.micronaut.starter.feature.other.template.openApiProperties;
-import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 import io.micronaut.starter.template.RockerTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-abstract class OpenApiView implements Feature, MicronautServerDependent  {
+abstract class OpenApiView implements Feature, MicronautServerDependent, ContributingInterceptUrlMapFeature, ContributingStaticResources {
     private final OpenApi openApiFeature;
 
     OpenApiView(OpenApi openApiFeature) {
@@ -45,26 +42,8 @@ abstract class OpenApiView implements Feature, MicronautServerDependent  {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("openapiProperties", new RockerTemplate("openapi.properties", openApiProperties.template(this)));
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.paths", "classpath:META-INF/swagger");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.mapping", "/swagger/**");
-
-        if (generatorContext.isFeaturePresent(Security.class)) {
-            Map<String, String> swaggerAccess = new HashMap<>() {{
-                put("pattern", "/swagger/**");
-                put("access", "isAnonymous()");
-            }};
-
-            Map<String, String> swaggerUiAccess = new HashMap<>() {{
-                put("pattern", "/swagger-ui/**");
-                put("access", "isAnonymous()");
-            }};
-
-            generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess));
-        }
-
         generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController(
                 generatorContext.getProject(), generatorContext.getLanguage()));
-
     }
 
     @Override
@@ -75,5 +54,15 @@ abstract class OpenApiView implements Feature, MicronautServerDependent  {
     @Override
     public String getCategory() {
         return Category.API;
+    }
+
+    @Override
+    public List<InterceptUrlMap> interceptUrlMaps() {
+        return Collections.singletonList(InterceptUrlMap.anonymousAcccess("/swagger/**"));
+    }
+
+    @Override
+    public List<StaticResource> staticResources() {
+        return Collections.singletonList(new StaticResource("swagger", "/swagger/**", "classpath:META-INF/swagger"));
     }
 }

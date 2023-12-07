@@ -15,11 +15,16 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
+import io.micronaut.starter.feature.InterceptUrlMap;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Singleton
-public class SwaggerUI extends OpenApiView {
+public class SwaggerUI extends OpenApiView implements ContributingInterceptUrlMapFeature {
     public static final String NAME = "swagger-ui";
 
     public SwaggerUI(OpenApi openApiFeature) {
@@ -42,13 +47,6 @@ public class SwaggerUI extends OpenApiView {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.paths", "classpath:META-INF/swagger/views/swagger-ui");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
-    }
-
-    @Override
     public String getThirdPartyDocumentation() {
         return "https://swagger.io/tools/swagger-ui/";
     }
@@ -56,5 +54,19 @@ public class SwaggerUI extends OpenApiView {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html";
+    }
+
+    @Override
+    public List<InterceptUrlMap> interceptUrlMaps() {
+        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        result.add(InterceptUrlMap.anonymousAcccess("/swagger-ui/**"));
+        return result;
+    }
+
+    @Override
+    public List<StaticResource> staticResources() {
+        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        result.add(new StaticResource("swagger-ui", "/swagger-ui/**", "classpath:META-INF/swagger/views/swagger-ui"));
+        return result;
     }
 }
