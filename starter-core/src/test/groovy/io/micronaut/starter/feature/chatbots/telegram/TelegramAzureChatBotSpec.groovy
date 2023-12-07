@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.Cloud
+import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -47,6 +48,6 @@ class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
 
         where:
         buildTool << BuildTool.values()
-        command = buildTool.isGradle() ? TelegramAzureChatBot.GRADLE_AZURE_DEPLOY_COMMAND : TelegramAzureChatBot.MAVEN_AZURE_DEPLOY_COMMAND
+        command = buildTool.isGradle() ? AzureBuildCommandUtils.GRADLE_AZURE_DEPLOY_COMMAND : AzureBuildCommandUtils.MAVEN_AZURE_DEPLOY_COMMAND
     }
 }

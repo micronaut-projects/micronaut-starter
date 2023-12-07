@@ -22,8 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.azureReadme;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
@@ -47,9 +46,6 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
             .artifactId("micronaut-chatbots-telegram-azure-function")
             .compile()
             .build();
-
-    public static final String MAVEN_AZURE_DEPLOY_COMMAND = "mvnw package azure-functions:deploy";
-    public static final String GRADLE_AZURE_DEPLOY_COMMAND = "gradlew azureFunctionsDeploy";
 
     private final AzureRawFunction azureRawFunction;
 
@@ -93,11 +89,7 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return MAVEN_AZURE_DEPLOY_COMMAND;
-        } else {
-            return GRADLE_AZURE_DEPLOY_COMMAND;
-        }
+        return AzureBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override
