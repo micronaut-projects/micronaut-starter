@@ -69,7 +69,7 @@ public abstract class ChatBots implements ChatBotsFeature {
     protected abstract void addConfigurations(@NonNull GeneratorContext generatorContext);
 
     @NonNull
-    protected abstract String getChatBotType();
+    protected abstract ChatBotType getChatBotType();
 
     @NonNull
     protected abstract String rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
