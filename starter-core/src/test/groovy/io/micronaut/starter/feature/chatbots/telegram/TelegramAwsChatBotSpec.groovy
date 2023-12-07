@@ -46,7 +46,7 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("When deployed to AWS Lambda, the lambda handler should be defined as `io.micronaut.chatbots.telegram.lambda.Handler`.")
         readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
         readme.contains("- [Micronaut AWS Lambda Function documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda)")
-        readme.contains("- [Micronaut Telegram ChatBot as Lambda documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [Micronaut Telegram ChatBot as AWS Lambda function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

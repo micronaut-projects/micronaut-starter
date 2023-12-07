@@ -72,12 +72,12 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements AwsFeature, 
 
     @Override
     public String getTitle() {
-        return "Telegram ChatBot as Lambda";
+        return "Telegram ChatBot as AWS Lambda function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Lambda that implements a Telegram chatbot";
+        return "Generates an application that can be deployed as an AWS Lambda function that implements a Telegram ChatBot";
     }
 
     @Override
