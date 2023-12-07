@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.chatbots.ChatBotType;
 import io.micronaut.starter.feature.chatbots.ChatBots;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
 import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyJunit;
@@ -113,7 +114,7 @@ abstract class ChatBotsTelegram extends ChatBots {
     }
 
     @Override
-    public String getChatBotType() {
-        return "Telegram";
+    public ChatBotType getChatBotType() {
+        return ChatBotType.TELEGRAM;
     }
 }

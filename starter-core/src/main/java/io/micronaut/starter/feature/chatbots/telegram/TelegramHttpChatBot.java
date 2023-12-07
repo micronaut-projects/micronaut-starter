@@ -20,11 +20,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.template.controllerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.template.controllerGroovySpock;
-import io.micronaut.starter.feature.chatbots.template.controllerJavaJunit;
-import io.micronaut.starter.feature.chatbots.template.controllerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.template.controllerReadme;
+import io.micronaut.starter.feature.chatbots.template.*;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
@@ -54,7 +50,7 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
@@ -83,11 +79,6 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
     }
 
     @Override
-    protected String getBuildCommand(BuildTool buildTool) {
-        return "";
-    }
-
-    @Override
     public String getTitle() {
         return "Telegram ChatBot as a controller";
     }
@@ -105,5 +96,10 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
     @Override
     protected String rootReadMeTemplate(GeneratorContext generatorContext) {
         return controllerReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    }
+
+    @Override
+    protected String getBuildCommand(BuildTool buildTool) {
+        return "";
     }
 }

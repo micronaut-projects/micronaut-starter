@@ -9,6 +9,11 @@ import io.micronaut.starter.options.Options
 class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
 
     @Override
+    List<ApplicationType> getSupportedApplicationTypes() {
+        [ApplicationType.DEFAULT]
+    }
+
+    @Override
     Class<ChatBotsFeature> getFeature() {
         TelegramHttpChatBot
     }
@@ -16,11 +21,6 @@ class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
     @Override
     String getFeatureName() {
         TelegramHttpChatBot.NAME
-    }
-
-    @Override
-    List<ApplicationType> getSupportedApplicationTypes() {
-        [ApplicationType.FUNCTION, ApplicationType.DEFAULT]
     }
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {

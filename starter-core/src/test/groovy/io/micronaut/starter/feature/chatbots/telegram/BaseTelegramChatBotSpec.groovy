@@ -2,13 +2,12 @@ package io.micronaut.starter.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.chatbots.BaseChatBotSpec
+
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 
 abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
-
-    abstract List<ApplicationType> getSupportedApplicationTypes()
 
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:

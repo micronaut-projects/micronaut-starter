@@ -22,8 +22,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.gcpReadme;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -37,8 +37,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature, GcpMicronautRuntimeFeature {
-
+public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeature, GcpMicronautRuntimeFeature {
     public static final String NAME = "chatbots-telegram-gcp-function";
 
     public static final Dependency CHATBOTS_TELEGRAM_GCP_FUNCTION = MicronautDependencyUtils
@@ -46,9 +45,6 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
             .artifactId("micronaut-chatbots-telegram-gcp-function")
             .compile()
             .build();
-    public static final String MAVEN_PACKAGE_COMMAND = "mvnw clean package";
-    public static final String GRADLE_PACKAGE_COMMAND = "gradlew shadowJar";
-
     private final GoogleCloudRawFunction rawFunction;
 
     public TelegramGcpChatBot(MicronautValidationFeature validationFeature, GoogleCloudRawFunction rawFunction) {
@@ -68,18 +64,13 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
-    }
-
-    @Override
     public String getTitle() {
-        return "Telegram ChatBot as Google Cloud Function";
+        return "Telegram ChatBot as a Google Cloud Function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Google Cloud Function that implements a Telegram chatbot";
+        return "Generates an application that can be deployed as a Google Cloud Function that implements a Telegram ChatBot";
     }
 
     @Override
@@ -96,11 +87,7 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return MAVEN_PACKAGE_COMMAND;
-        } else {
-            return GRADLE_PACKAGE_COMMAND;
-        }
+        return GcpCloudFunctionBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override

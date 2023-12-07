@@ -15,9 +15,7 @@ import io.micronaut.json.JsonMapper;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,7 +43,6 @@ class AboutCommandHandlerTest {
         assertTrue(send instanceof SendMessage);
         assertEquals("Telegram Bot developed with 💙 and [Micronaut](https://micronaut.io)", ((SendMessage) send).getText().trim());
     }
-
 
     private String getAboutCommandJson() throws IOException {
         return new String(AboutCommandHandlerTest.class.getResourceAsStream("/mockAboutCommand.json").readAllBytes());

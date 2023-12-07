@@ -22,8 +22,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.azureReadme;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
+import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -37,7 +37,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeature, AzureMicronautRuntimeFeature {
+public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
     public static final String NAME = "chatbots-telegram-azure-function";
 
@@ -46,9 +46,6 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
             .artifactId("micronaut-chatbots-telegram-azure-function")
             .compile()
             .build();
-
-    public static final String MAVEN_AZURE_DEPLOY_COMMAND = "mvnw package azure-functions:deploy";
-    public static final String GRADLE_AZURE_DEPLOY_COMMAND = "gradlew azureFunctionsDeploy";
 
     private final AzureRawFunction azureRawFunction;
 
@@ -69,18 +66,13 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
-    }
-
-    @Override
     public String getTitle() {
-        return "Telegram ChatBot as Azure Function";
+        return "Telegram ChatBot as an Azure Function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Azure Function that implements a Telegram chatbot";
+        return "Generates an application that can be deployed as an Azure Function that implements a Telegram ChatBot";
     }
 
     @Override
@@ -97,11 +89,7 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return MAVEN_AZURE_DEPLOY_COMMAND;
-        } else {
-            return GRADLE_AZURE_DEPLOY_COMMAND;
-        }
+        return AzureBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override

@@ -15,20 +15,13 @@
  */
 package io.micronaut.starter.feature.chatbots;
 
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.CodeContributingFeature;
+import io.micronaut.core.util.StringUtils;
 
-/**
- * Marker interface for chatbot features.
- *
- * @author Tim Yates
- * @since 4.3.0
- */
-
-public interface ChatBotsFeature extends CodeContributingFeature {
+public enum ChatBotType {
+    TELEGRAM;
 
     @Override
-    default String getCategory() {
-        return Category.CHATBOTS;
+    public String toString() {
+        return StringUtils.capitalize(this.name().toLowerCase());
     }
 }

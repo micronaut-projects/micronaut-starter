@@ -22,8 +22,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
@@ -67,7 +67,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
         ApplicationType type = generatorContext.getApplicationType();
-        if (type == ApplicationType.FUNCTION && generatorContext.isFeatureMissing(ChatBotsFeature.class)) {
+        if (type == ApplicationType.FUNCTION && generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             Project project = generatorContext.getProject();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
             generatorContext.addTemplate(

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.chatbots;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.about;
@@ -39,7 +40,7 @@ public abstract class ChatBots implements ChatBotsFeature {
         this.validationFeature = validationFeature;
     }
 
-    protected void renderTemplates(GeneratorContext generatorContext) {
+    protected void renderTemplates(@NonNull GeneratorContext generatorContext) {
         generatorContext.addTemplate(
                 "about-markdown",
                 new RockerTemplate("src/main/resources/botcommands/about.md", about.template(getChatBotType()))
@@ -63,13 +64,16 @@ public abstract class ChatBots implements ChatBotsFeature {
         return "https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/";
     }
 
-    protected abstract void addDependencies(GeneratorContext generatorContext);
+    protected abstract void addDependencies(@NonNull GeneratorContext generatorContext);
 
-    protected abstract void addConfigurations(GeneratorContext generatorContext);
+    protected abstract void addConfigurations(@NonNull GeneratorContext generatorContext);
 
-    protected abstract String getChatBotType();
+    @NonNull
+    protected abstract ChatBotType getChatBotType();
 
-    protected abstract String rootReadMeTemplate(GeneratorContext generatorContext);
+    @NonNull
+    protected abstract String rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
 
-    protected abstract String getBuildCommand(BuildTool buildTool);
+    @NonNull
+    protected abstract String getBuildCommand(@NonNull BuildTool buildTool);
 }

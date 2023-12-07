@@ -2,7 +2,6 @@
 @args (Project project)
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
-
 }
 
 import io.micronaut.chatbots.core.SpaceParser

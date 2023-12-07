@@ -1,3 +1,4 @@
-@args(String type)
+@import io.micronaut.starter.application.Project
+@args(io.micronaut.starter.feature.chatbots.ChatBotType type)
 
 @type Bot developed with 💙 and [Micronaut](https://micronaut.io) 
