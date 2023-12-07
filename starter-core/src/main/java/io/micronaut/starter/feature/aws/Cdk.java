@@ -55,7 +55,6 @@ import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
-import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -149,9 +148,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
-        String handler = generatorContext.isFeaturePresent(TelegramAwsChatBot.class) ?
-                TelegramAwsChatBot.HANDLER_CLASS :
-                HandlerClassFeature.resolveHandler(generatorContext);
+        String handler = HandlerClassFeature.resolveHandler(generatorContext);
         Language lang = Language.JAVA;
         addAppStackTest(generatorContext, lang, handler);
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)

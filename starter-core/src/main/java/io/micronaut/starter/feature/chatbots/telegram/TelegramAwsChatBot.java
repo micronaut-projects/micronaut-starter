@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.chatbots.telegram;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -27,6 +28,7 @@ import io.micronaut.starter.feature.chatbots.template.awsCdkReadme;
 import io.micronaut.starter.feature.chatbots.template.awsReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -39,7 +41,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature, AwsMicronautRuntimeFeature {
+public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature, AwsMicronautRuntimeFeature, HandlerClassFeature {
 
     public static final String NAME = "chatbots-telegram-lambda";
 
@@ -113,4 +115,8 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
         return "";
     }
 
+    @Override
+    public String handlerClass(ApplicationType applicationType, Project project) {
+        return HANDLER_CLASS;
+    }
 }
