@@ -3,11 +3,12 @@ package io.micronaut.starter.feature.chatbots.telegram
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
-import io.micronaut.starter.feature.aws.LambdaFunctionUrl
+import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Shared
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
@@ -16,9 +17,17 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         TelegramAwsChatBot.NAME
     }
 
+    @Shared
+    TelegramAwsChatBot feature = beanContext.getBean(TelegramAwsChatBot)
+
+    void 'chatbots-telegram-lambda feature is an AWS cloud feature'() {
+        expect:
+        Cloud.AWS == feature.getCloud()
+    }
+
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(TelegramAwsChatBot).supports(type) == supports
+        feature.supports(type) == supports
 
         where:
         type << ApplicationType.values()

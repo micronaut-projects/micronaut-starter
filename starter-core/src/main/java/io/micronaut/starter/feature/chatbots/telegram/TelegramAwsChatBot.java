@@ -22,12 +22,11 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.chatbots.template.awsCdkReadme;
 import io.micronaut.starter.feature.chatbots.template.awsReadme;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -41,7 +40,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature, AwsMicronautRuntimeFeature, HandlerClassFeature {
+public class TelegramAwsChatBot extends ChatBotsTelegram implements AwsFeature, AwsMicronautRuntimeFeature, HandlerClassFeature {
 
     public static final String NAME = "chatbots-telegram-lambda";
 
@@ -69,11 +68,6 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
     @Override
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
     }
 
     @Override
