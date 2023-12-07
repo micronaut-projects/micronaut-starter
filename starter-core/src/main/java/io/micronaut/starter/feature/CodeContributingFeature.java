@@ -18,5 +18,5 @@ package io.micronaut.starter.feature;
 /**
  * Marker interface for {@link Feature} which contribute code to the generated project.
  */
-public interface CodeContributingFeature extends Feature{
+public interface CodeContributingFeature extends Feature {
 }
