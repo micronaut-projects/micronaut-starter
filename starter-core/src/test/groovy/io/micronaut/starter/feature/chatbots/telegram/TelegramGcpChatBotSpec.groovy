@@ -1,10 +1,12 @@
 package io.micronaut.starter.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.Shared
 
 class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
 
@@ -13,9 +15,17 @@ class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
         TelegramGcpChatBot.NAME
     }
 
+    @Shared
+    TelegramGcpChatBot feature = beanContext.getBean(TelegramGcpChatBot)
+
+    void 'chatbots-telegram-gcp-function feature is an GCP cloud feature'() {
+        expect:
+        Cloud.GCP == feature.getCloud()
+    }
+
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(TelegramGcpChatBot).supports(type) == supports
+        feature.supports(type) == supports
 
         where:
         type << ApplicationType.values()

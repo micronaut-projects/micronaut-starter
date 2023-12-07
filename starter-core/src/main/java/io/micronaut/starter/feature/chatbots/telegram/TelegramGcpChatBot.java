@@ -22,8 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.chatbots.template.gcpReadme;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
@@ -38,7 +37,7 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature, GcpMicronautRuntimeFeature {
+public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeature, GcpMicronautRuntimeFeature {
 
     public static final String NAME = "chatbots-telegram-gcp-function";
 
@@ -64,11 +63,6 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements CloudFeature
     @Override
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
     }
 
     @Override
