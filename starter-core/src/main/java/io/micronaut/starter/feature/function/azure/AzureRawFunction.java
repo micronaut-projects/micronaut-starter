@@ -24,7 +24,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionResponseBuilderJava;

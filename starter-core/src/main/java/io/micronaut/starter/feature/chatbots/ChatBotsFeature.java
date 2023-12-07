@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.chatbots;
 
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.Feature;
 
 /**
  * Marker interface for chatbot features.
