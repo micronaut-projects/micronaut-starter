@@ -33,7 +33,7 @@ class TelegramAzureChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("- [Micronaut Azure Function documentation](https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions)")
         readme.contains("- [https://docs.microsoft.com/azure](https://docs.microsoft.com/azure)")
         readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Telegram ChatBot as Azure Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [Micronaut Telegram ChatBot as an Azure Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

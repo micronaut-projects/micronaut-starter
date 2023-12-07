@@ -80,7 +80,7 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements CloudFeatu
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Azure Function that implements a Telegram chatbot";
+        return "Generates an application that can be deployed as an Azure Function that implements a Telegram ChatBot";
     }
 
     @Override
