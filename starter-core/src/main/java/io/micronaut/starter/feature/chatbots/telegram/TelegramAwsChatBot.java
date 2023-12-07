@@ -25,7 +25,6 @@ import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.chatbots.template.awsCdkReadme;
 import io.micronaut.starter.feature.chatbots.template.awsReadme;
-import io.micronaut.starter.feature.chatbots.template.azureReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
