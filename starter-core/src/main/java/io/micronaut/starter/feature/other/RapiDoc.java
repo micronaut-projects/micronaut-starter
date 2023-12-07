@@ -15,11 +15,16 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.InterceptUrlMap;
+import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Singleton
-public class RapiDoc extends OpenApiView {
+public class RapiDoc extends OpenApiView implements ContributingStaticResources {
     public static final String NAME = "rapidoc";
 
     public RapiDoc(OpenApi openApiFeature) {
@@ -42,14 +47,26 @@ public class RapiDoc extends OpenApiView {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.paths", "classpath:META-INF/swagger/views/rapidoc");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.rapidoc.mapping", "/rapidoc/**");
+    public String getThirdPartyDocumentation() {
+        return "https://rapidocweb.com/api.html";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
-        return "https://rapidocweb.com/api.html";
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#rapidoc";
+    }
+
+    @Override
+    public List<StaticResource> staticResources() {
+        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        result.add(new StaticResource("rapidoc", "/rapidoc/**", "classpath:META-INF/swagger/views/rapidoc"));
+        return result;
+    }
+
+    @Override
+    public List<InterceptUrlMap> interceptUrlMaps() {
+        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        result.add(InterceptUrlMap.anonymousAcccess("/rapidoc/**"));
+        return result;
     }
 }
