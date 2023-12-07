@@ -49,8 +49,6 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
             .compile()
             .build();
 
-    public static final String MAVEN_AZURE_DEPLOY_COMMAND = "mvnw package azure-functions:deploy";
-    public static final String GRADLE_AZURE_DEPLOY_COMMAND = "gradlew azureFunctionsDeploy";
     public static final String HANDLER_CLASS = "io.micronaut.chatbots.telegram.lambda.Handler";
 
     private final AwsLambda awsLambda;
@@ -99,15 +97,6 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
     }
 
     @Override
-    protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return MAVEN_AZURE_DEPLOY_COMMAND;
-        } else {
-            return GRADLE_AZURE_DEPLOY_COMMAND;
-        }
-    }
-
-    @Override
     protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(CHATBOTS_TELEGRAM_LAMBDA);
     }
@@ -118,4 +107,10 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements CloudFeature
             awsCdkReadme.class.getName().replace(".", "/") + ".rocker.raw" :
             awsReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
+
+    @Override
+    protected String getBuildCommand(BuildTool buildTool) {
+        return "";
+    }
+
 }
