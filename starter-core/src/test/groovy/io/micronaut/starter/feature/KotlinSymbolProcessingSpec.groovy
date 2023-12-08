@@ -5,7 +5,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.feature.build.KotlinSupportFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -81,8 +80,8 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
 
         then:
-        output."gradle.properties".contains("micronautVersion")
-        !output."gradle.properties".contains("org.gradle.jvmargs")
+        output."gradle.properties" =~ /(?m)^micronautVersion=.+/
+        !(output."gradle.properties" =~ /(?m)^org.gradle.jvmargs=.+/)
 
         where:
         buildTool << BuildTool.valuesGradle()
@@ -93,8 +92,8 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
 
         then:
-        output."gradle.properties".contains("micronautVersion")
-        output."gradle.properties".contains("org.gradle.jvmargs")
+        output."gradle.properties" =~ /(?m)^micronautVersion=.+/
+        output."gradle.properties" =~ /(?m)^org.gradle.jvmargs=.+/
 
         where:
         buildTool << BuildTool.valuesGradle()
