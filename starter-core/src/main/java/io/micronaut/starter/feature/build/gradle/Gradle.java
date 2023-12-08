@@ -57,7 +57,7 @@ public class Gradle implements BuildFeature {
     private static final Property PROPERTY_GRADLE_JVMARGS = new Property() {
         @Override
         public String getKey() {
-            return " org.gradle.jvmargs";
+            return "org.gradle.jvmargs";
         }
 
         @Override
