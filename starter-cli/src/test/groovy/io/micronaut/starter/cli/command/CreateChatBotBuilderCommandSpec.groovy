@@ -74,7 +74,7 @@ Choose the target JDK. (enter for default)
 >
      */
 
-    void "test prompt"(CliOptions cliOptions) {
+    void "test options #cliOptions.cliCommands -- #cliOptions"(CliOptions cliOptions) {
         given:
         CreateChatBotBuilderCommand command = applicationContext.getBean(CreateChatBotBuilderCommand)
 
