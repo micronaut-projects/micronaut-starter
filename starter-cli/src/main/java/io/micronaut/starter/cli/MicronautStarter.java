@@ -26,6 +26,7 @@ import io.micronaut.starter.cli.command.BuildToolConverter;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.command.CreateAppCommand;
 import io.micronaut.starter.cli.command.CreateBuilderCommand;
+import io.micronaut.starter.cli.command.CreateChatBotBuilderCommand;
 import io.micronaut.starter.cli.command.CreateCliCommand;
 import io.micronaut.starter.cli.command.CreateFunctionCommand;
 import io.micronaut.starter.cli.command.CreateGrpcCommand;
@@ -50,6 +51,7 @@ import java.util.function.BiFunction;
             "Application generation commands are:",
             "",
             "*  @|bold create-app|@ @|yellow NAME|@",
+            "*  @|bold create-chatbot|@ @|yellow NAME|@",
             "*  @|bold create-cli-app|@ @|yellow NAME|@",
             "*  @|bold create-function-app|@ @|yellow NAME|@",
             "*  @|bold create-grpc-app|@ @|yellow NAME|@",
@@ -61,6 +63,7 @@ import java.util.function.BiFunction;
         subcommands = {
                 // Creation commands
                 CreateAppCommand.class,
+                CreateChatBotBuilderCommand.class,
                 CreateCliCommand.class,
                 CreateFunctionCommand.class,
                 CreateGrpcCommand.class,
