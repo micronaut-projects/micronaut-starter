@@ -20,6 +20,7 @@ package io.micronaut.starter.cli.command;
  * @since 3.8.0
  */
 public enum YesOrNo {
+
     YES,
     NO;
 }

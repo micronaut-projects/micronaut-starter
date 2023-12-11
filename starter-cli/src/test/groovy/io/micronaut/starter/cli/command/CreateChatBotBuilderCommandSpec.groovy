@@ -5,7 +5,6 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.feature.architecture.CpuArchitecture
 import io.micronaut.starter.feature.architecture.X86
-import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot
@@ -30,45 +29,44 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         applicationContext = ApplicationContext.run();
     }
     /*
-        Choose your preferred deployment. (enter for default)
-        *1) AWS Lambda - Deploy to AWS Lambda
-         2) Azure Function - Deploy to Azure as a Function
-         3) Google Cloud Function - Deploy to Google Cloud as a Function
-         4) HTTP - Deploy as an HTTP Server
-        >
+Choose your preferred deployment. (enter for default)
+*1) AWS Lambda - Deploy to AWS Lambda
+ 2) Azure Function - Deploy to Azure as a Function
+ 3) Google Cloud Function - Deploy to Google Cloud as a Function
+ 4) HTTP - Deploy as an HTTP Server
+>
 
-        Choose your Lambda Architecture. (enter for x86)
-         1) arm
-        *2) x86
-        >
+Choose your Lambda Architecture. (enter for x86)
+ 1) Arm
+*2) X86
+>
 
-        Do you want to generate infrastructure as code with CDK? (enter for yes)
-        *1) Yes
-         2) No
-        >
+Do you want to generate infrastructure as code with CDK? (enter for yes)
+*1) Yes
+ 2) No
+>
 
-        Choose your preferred language. (enter for default)
-        *1) Java
-         2) Groovy
-         3) Kotlin
-        >
+Choose your preferred language. (enter for default)
+*1) Java
+ 2) Groovy
+ 3) Kotlin
+>
 
-        Choose your preferred test framework. (enter for default)
-        *1) JUnit
-         2) Spock
-         3) Kotest
-        >
+Choose your preferred test framework. (enter for default)
+*1) JUnit
+ 2) Spock
+ 3) Kotest
+>
 
-        Choose your preferred build tool. (enter for default)
-         1) Gradle (Groovy)
-        *2) Gradle (Kotlin)
-         3) Maven
-        >
+Choose your preferred build tool. (enter for default)
+ 1) Gradle (Groovy)
+*2) Gradle (Kotlin)
+ 3) Maven
+>
 
-        Choose the target JDK. (enter for default)
-        *1) 17
-         2) 21
-        >
+Choose the target JDK. (enter for default)
+*1) 17
+ 2) 21
      */
 
     void "test prompt"(CliOptions cliOptions) {
@@ -93,7 +91,7 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         cliOptions << [
                 CreateChatBotBuilderCommand.ChatBotDeployment.values(),
                 [applicationContext.getBean(Arm), applicationContext.getBean(X86)],
-                [applicationContext.getBean(Cdk), null],
+                [true, false], // cdk
                 [Language.JAVA, Language.GROOVY, Language.KOTLIN],
                 [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST],
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN],
@@ -105,7 +103,7 @@ class CreateChatBotBuilderCommandSpec extends Specification {
     private static class CliOptions {
         final CreateChatBotBuilderCommand.ChatBotDeployment applicationType
         final CpuArchitecture cpuArchitecture
-        final Cdk cdk
+        final boolean cdk
         final Language language
         final TestFramework testFramework
         final BuildTool buildTool
@@ -114,7 +112,7 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         CliOptions(
                 CreateChatBotBuilderCommand.ChatBotDeployment applicationType,
                 CpuArchitecture cpuArchitecture,
-                Cdk cdk,
+                boolean cdk,
                 Language language,
                 TestFramework testFramework,
                 BuildTool buildTool,
@@ -132,7 +130,7 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         List<String> getFeatures() {
             switch (applicationType) {
                 case CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA:
-                    return [TelegramAwsChatBot.NAME, LambdaFunctionUrl.NAME, cpuArchitecture.getName()] + (cdk ? [Cdk.NAME] : [])
+                    return [TelegramAwsChatBot.NAME, cpuArchitecture.getName()] + (cdk ? [LambdaFunctionUrl.NAME] : [])
                 case CreateChatBotBuilderCommand.ChatBotDeployment.AZURE:
                     return [TelegramAzureChatBot.NAME]
                 case CreateChatBotBuilderCommand.ChatBotDeployment.GCP:
@@ -156,7 +154,7 @@ class CreateChatBotBuilderCommandSpec extends Specification {
             if (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA) {
                 ret += [
                         cpuArchitecture instanceof Arm ? "1" : "2",
-                        cdk instanceof Cdk ? "1" : "2",
+                        cdk ? "1" : "2",
                 ]
             }
             ret + [
@@ -170,9 +168,9 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         @Override
         String toString() {
             if (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA) {
-                applicationType.name() + " " + cpuArchitecture.getName() + " " + cdk?.getName() + " " + language + " " + testFramework + " " + buildTool + " " + javaVersion
+                "${applicationType.name()} ${cpuArchitecture.getName()} cdk:${cdk} $language $testFramework $buildTool $javaVersion"
             } else {
-                applicationType.name() + " " + language + " " + testFramework + " " + buildTool + " " + javaVersion
+                "${applicationType.name()} $language $testFramework $buildTool $javaVersion"
             }
         }
     }

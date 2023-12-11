@@ -22,7 +22,6 @@ import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
-import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot;
@@ -59,9 +58,8 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
         ApplicationType applicationType = deployment.applicationType;
 
         if (deployment == ChatBotDeployment.LAMBDA) {
-            applicationFeatures.add(LambdaFunctionUrl.NAME);
             getArchitecture(reader).ifPresent(applicationFeatures::add);
-            getCdk(reader).ifPresent(f -> applicationFeatures.add(f.getName()));
+            getCdk(reader).ifPresent(applicationFeatures::add);
         }
 
         Options options = getOptions(reader);
@@ -80,21 +78,15 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
                 .map(Feature::getName)
                 .sorted()
                 .toList();
-        out("Choose your Lambda Architecture. (enter for " + X86.NAME + ")");
-        return Optional.ofNullable(
-                getListOption(
-                        archFeatures,
-                        o -> o,
-                        X86.NAME,
-                        reader
-                )
-        );
+        String defaultCpuArchitecture = X86.NAME;
+        out("Choose your Lambda Architecture. (enter for " + defaultCpuArchitecture + ")");
+        return Optional.ofNullable(getListOption(archFeatures, StringUtils::capitalize, defaultCpuArchitecture, reader));
     }
 
-    protected Optional<Feature> getCdk(LineReader reader) {
+    protected Optional<String> getCdk(LineReader reader) {
         out("Do you want to generate infrastructure as code with CDK? (enter for yes)");
-        return getEnumOption(YesOrNo.class, yesOrNo -> StringUtils.capitalize(yesOrNo.name().toLowerCase()), YesOrNo.YES, reader) == YesOrNo.YES
-                ? features.stream().filter(Cdk.class::isInstance).findFirst()
+        return getYesOrNo(reader) == YesOrNo.YES
+                ? Optional.of(LambdaFunctionUrl.NAME)
                 : Optional.empty();
     }
 
@@ -108,6 +100,7 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
     }
 
     private enum ChatBotType {
+
         TELEGRAM("Telegram Chat bot");
 
         private final String title;

@@ -60,6 +60,9 @@ import static picocli.CommandLine.Help.Ansi.AUTO;
  */
 public abstract class BuilderCommand extends BaseCommand implements Callable<Integer> {
 
+    // Wrapped in a memoized Supplier, so it's not created at build time
+    public static final Supplier<String> PROMPT = SupplierUtil.memoized(() -> AUTO.string("@|blue > |@"));
+
     protected final ProjectGenerator projectGenerator;
     protected final List<Feature> features;
 
@@ -100,9 +103,6 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
         }
         return 0;
     }
-
-    // Wrapped in a memoized Supplier, so it's not created at build time
-    public static final Supplier<String> PROMPT = SupplierUtil.memoized(() -> AUTO.string("@|blue > |@"));
 
     protected List<String> getFeatures(ApplicationType applicationType, Terminal terminal, List<Feature> features) {
         AvailableFeatures availableFeatures = new BaseAvailableFeatures(features, applicationType);
@@ -159,6 +159,10 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                 String.valueOf(defaultOption.majorVersion()),
                 reader
         )));
+    }
+
+    protected YesOrNo getYesOrNo(LineReader reader) {
+        return getEnumOption(YesOrNo.class, yesOrNo -> StringUtils.capitalize(yesOrNo.name().toLowerCase()), YesOrNo.YES, reader);
     }
 
     protected int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {

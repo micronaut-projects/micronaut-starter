@@ -170,14 +170,14 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
     protected Optional<Feature> getArchitecture(LineReader reader) {
         List<Feature> cpuArchitecturesFeatures = features.stream()
                 .filter(CpuArchitecture.class::isInstance)
-                .collect(Collectors.toList());
+                .toList();
         String defaultCpuArchitecture = X86.NAME;
         out("Choose your Lambda Architecture. (enter for " + defaultCpuArchitecture + ")");
         String option = getListOption(
                 cpuArchitecturesFeatures.stream()
                         .map(Feature::getName)
                         .sorted()
-                        .collect(Collectors.toList()),
+                        .toList(),
                 o -> o,
                 defaultCpuArchitecture,
                 reader);
@@ -216,14 +216,9 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     protected Optional<Feature> getCdk(LineReader reader) {
         out("Do you want to generate infrastructure as code with CDK? (enter for yes)");
-        return getEnumOption(
-                YesOrNo.class,
-                yesOrNo -> StringUtils.capitalize(yesOrNo.toString()),
-                YesOrNo.YES,
-                reader) == YesOrNo.YES ?
-                features.stream()
-                        .filter(Cdk.class::isInstance)
-                        .findFirst() : Optional.empty();
+        return getYesOrNo(reader) == YesOrNo.YES
+                ? features.stream().filter(Cdk.class::isInstance).findFirst()
+                : Optional.empty();
     }
 
     protected List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
