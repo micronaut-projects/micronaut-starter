@@ -29,6 +29,10 @@ class CreateChatBotBuilderCommandSpec extends Specification {
         applicationContext = ApplicationContext.run();
     }
     /*
+Choose your ChatBot type. (enter for Telegram)
+*1) Telegram - A chat bot for the telegram messaging platform
+>
+
 Choose your preferred deployment. (enter for default)
 *1) AWS Lambda - Deploy to AWS Lambda
  2) Azure Function - Deploy to Azure as a Function
@@ -67,6 +71,7 @@ Choose your preferred build tool. (enter for default)
 Choose the target JDK. (enter for default)
 *1) 17
  2) 21
+>
      */
 
     void "test prompt"(CliOptions cliOptions) {
@@ -89,6 +94,7 @@ Choose the target JDK. (enter for default)
 
         where:
         cliOptions << [
+                CreateChatBotBuilderCommand.ChatBotType.values(),
                 CreateChatBotBuilderCommand.ChatBotDeployment.values(),
                 [applicationContext.getBean(Arm), applicationContext.getBean(X86)],
                 [true, false], // cdk
@@ -101,6 +107,8 @@ Choose the target JDK. (enter for default)
     }
 
     private static class CliOptions {
+
+        final CreateChatBotBuilderCommand.ChatBotType chatBotType
         final CreateChatBotBuilderCommand.ChatBotDeployment applicationType
         final CpuArchitecture cpuArchitecture
         final boolean cdk
@@ -110,6 +118,7 @@ Choose the target JDK. (enter for default)
         final JdkVersion javaVersion
 
         CliOptions(
+                CreateChatBotBuilderCommand.ChatBotType chatBotType,
                 CreateChatBotBuilderCommand.ChatBotDeployment applicationType,
                 CpuArchitecture cpuArchitecture,
                 boolean cdk,
@@ -118,6 +127,7 @@ Choose the target JDK. (enter for default)
                 BuildTool buildTool,
                 JdkVersion javaVersion
         ) {
+            this.chatBotType = chatBotType
             this.applicationType = applicationType
             this.cpuArchitecture = cpuArchitecture
             this.cdk = cdk
@@ -149,6 +159,7 @@ Choose the target JDK. (enter for default)
 
         List<String> getCliCommands() {
             List<String> ret = [
+                    "${chatBotType.ordinal() + 1}".toString(),
                     "${applicationType.ordinal() + 1}".toString()
             ]
             if (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA) {
@@ -168,9 +179,9 @@ Choose the target JDK. (enter for default)
         @Override
         String toString() {
             if (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA) {
-                "${applicationType.name()} ${cpuArchitecture.getName()} cdk:${cdk} $language $testFramework $buildTool $javaVersion"
+                "${chatBotType.name()} ${applicationType.name()} ${cpuArchitecture.getName()} cdk:${cdk} $language $testFramework $buildTool $javaVersion"
             } else {
-                "${applicationType.name()} $language $testFramework $buildTool $javaVersion"
+                "${chatBotType.name()} ${applicationType.name()} $language $testFramework $buildTool $javaVersion"
             }
         }
     }

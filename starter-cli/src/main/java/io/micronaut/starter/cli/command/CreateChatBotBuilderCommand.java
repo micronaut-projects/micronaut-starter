@@ -67,8 +67,8 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
     }
 
     private ChatBotType getChatBotType(LineReader reader) {
-        // We only have one for now...
-        return ChatBotType.TELEGRAM;
+        out("Choose your ChatBot type. (enter for " + ChatBotType.TELEGRAM.title + ")");
+        return getEnumOption(ChatBotType.class, f -> "%s - %s".formatted(f.title, f.description), ChatBotType.TELEGRAM, reader);
     }
 
     protected Optional<String> getArchitecture(LineReader reader) {
@@ -99,14 +99,16 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
         }
     }
 
-    private enum ChatBotType {
+    enum ChatBotType {
 
-        TELEGRAM("Telegram Chat bot");
+        TELEGRAM("Telegram", "A chat bot for the telegram messaging platform");
 
         private final String title;
+        private final String description;
 
-        ChatBotType(String title) {
+        ChatBotType(String title, String description) {
             this.title = title;
+            this.description = description;
         }
     }
 
