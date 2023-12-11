@@ -7,7 +7,7 @@ import jakarta.inject.Inject
 import spock.lang.Specification
 
 @MicronautTest
-class JdkVersionDTOTest extends Specification {
+class JdkVersionDTOSpec extends Specification {
     @Inject
     JsonMapper jsonMapper
 
