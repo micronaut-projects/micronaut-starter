@@ -1,7 +1,7 @@
 package io.micronaut.starter.netty
 
 import io.micronaut.json.JsonMapper
-import io.micronaut.starter.api.JdkVersionDTO
+import io.micronaut.serde.annotation.Serdeable
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
@@ -12,20 +12,25 @@ class JdkVersionSpec extends Specification {
     @Inject
     JsonMapper jsonMapper
 
-    void "Serialize JDKVersion"() {
+    void "Serialize and deserialize JDKVersion"() {
         given:
         JdkVersion jdk17 = JdkVersion.JDK_17
 
         when:
-        String json = jsonMapper.writeValueAsString(jdk17)
+        String json = jsonMapper.writeValueAsString(new Foo(jdk: jdk17))
 
         then:
-        json.contains('"value":"JDK_17"')
+        json.contains("{\"jdk\":\"JDK_17\"}")
 
         when:
-        JdkVersion jdkVersion = jsonMapper.readValue("JDK_17", JdkVersion.class)
+        Foo foo = jsonMapper.readValue("{\"jdk\":\"JDK_17\"}", Foo.class)
 
         then:
-        jdk17 == jdkVersion
+        jdk17 == foo.jdk
+    }
+
+    @Serdeable
+    static class Foo {
+        JdkVersion jdk
     }
 }
