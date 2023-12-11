@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.options;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.util.Map;
@@ -47,6 +49,7 @@ public final class JdkVersion {
     public static final JdkVersion JDK_19 = new JdkVersion(19);
     public static final JdkVersion JDK_20 = new JdkVersion(20);
     public static final JdkVersion JDK_21 = new JdkVersion(21);
+    private static final String PREFIX_JDK = "JDK_";
 
     int majorVersion;
 
@@ -60,7 +63,7 @@ public final class JdkVersion {
      */
     @JsonValue
     public String name() {
-        return "JDK_" + majorVersion;
+        return PREFIX_JDK + majorVersion;
     }
 
     @Override
@@ -76,6 +79,23 @@ public final class JdkVersion {
     @Override
     public int hashCode() {
         return majorVersion;
+    }
+
+    @JsonCreator
+    public static JdkVersion valueOf(String jdkVersion) {
+        if (StringUtils.isEmpty(jdkVersion)) {
+            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
+        }
+        if (!jdkVersion.startsWith(PREFIX_JDK)) {
+            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
+        }
+        String version = jdkVersion.substring(PREFIX_JDK.length());
+        try {
+            int majorVersion = Integer.parseInt(version);
+            return valueOf(majorVersion);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("cannot parse JDK major version of " + version);
+        }
     }
 
     public static JdkVersion valueOf(int majorVersion) {
