@@ -3,9 +3,13 @@ package io.micronaut.starter.feature.github.workflows.gcloud
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.Unroll
 
 class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -20,7 +24,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         readme.contains("GCLOUD_PROJECT_ID")
     }
 
-    @Unroll
     void 'test graalvm github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
@@ -36,7 +39,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         buildTool << BuildTool.values()
     }
 
-    @Unroll
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
@@ -53,25 +55,39 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         buildTool << BuildTool.values()
     }
 
-    void 'test docker image is configured in build.gradle'() {
+    void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {
         when:
-        def output = generate([GoogleCloudRunGraalWorkflow.NAME])
-        def gradle = output['build.gradle.kts']
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [GoogleCloudRunGraalWorkflow.NAME])
+        def gradle = output[buildTool.buildFileName]
 
         then:
-        gradle
-        gradle.contains("""
+        if (buildTool == BuildTool.GRADLE) {
+            assert gradle.contains('''
     dockerBuild {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }''')
 
-        gradle.contains("""
+            assert gradle.contains('''
     dockerBuildNative {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }''')
+        } else {
+            assert gradle.contains('''
+    dockerBuild {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+    }''')
+
+            assert gradle.contains('''
+    dockerBuildNative {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+    }''')
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+        buildFileName = buildTool.buildFileName
     }
 
-    @Unroll
     void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
                                                                            JdkVersion graalVersion){
         given:
@@ -93,7 +109,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         JdkVersion.JDK_17 | JdkVersion.JDK_17
     }
 
-    @Unroll
     void 'test github #buildTool with java #jdkVersion workflow'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
