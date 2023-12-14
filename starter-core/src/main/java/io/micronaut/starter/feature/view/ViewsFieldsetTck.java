@@ -24,6 +24,7 @@ import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.feature.test.JunitPlatformSuiteEngine;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -47,7 +48,9 @@ public class ViewsFieldsetTck implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeatureIfNotPresent(JunitPlatformSuiteEngine.class, junitPlatformSuiteEngine);
+        if (featureContext.isPresent(Junit.class)) {
+            featureContext.addFeatureIfNotPresent(JunitPlatformSuiteEngine.class, junitPlatformSuiteEngine);
+        }
     }
 
     @Override
