@@ -15,21 +15,18 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.MinJdkFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-
-import io.micronaut.starter.options.JdkVersion;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jooq implements Feature, MinJdkFeature {
+public class Jooq implements Feature {
 
     private final JdbcFeature jdbcFeature;
 
@@ -65,6 +62,12 @@ public class Jooq implements Feature, MinJdkFeature {
                 .groupId("io.micronaut.sql")
                 .artifactId("micronaut-jooq")
                 .compile());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("org.jooq.jooq-codegen-gradle")
+                    .lookupArtifactId("org.jooq.jooq-codegen-gradle.gradle.plugin")
+                    .build());
+        }
     }
 
     @Override
@@ -80,11 +83,5 @@ public class Jooq implements Feature, MinJdkFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq";
-    }
-
-    @Override
-    @NonNull
-    public JdkVersion minJdk() {
-        return JdkVersion.JDK_11;
     }
 }

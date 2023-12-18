@@ -3,9 +3,11 @@ package io.micronaut.starter.feature.database
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
@@ -22,55 +24,24 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq")
     }
 
-    void 'test gradle jooq feature for language=#language'() {
+    void 'test buildTool=#buildTool jooq feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['jooq'])
                 .language(language)
                 .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.sql:micronaut-jooq")')
+        verifier.hasDependency('io.micronaut.sql','micronaut-jooq', Scope.COMPILE)
+
+        and:
+        if (buildTool.isGradle()) {
+             assert verifier.hasBuildPlugin('org.jooq.jooq-codegen-gradle')
+        }
 
         where:
-        language << Language.values().toList()
-    }
-
-    void 'test maven jooq feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['jooq'])
-                .language(language)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jooq</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void "test jooq cannot be applied for #language with Java 8"() {
-        when:
-        new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['jooq'])
-                .language(language)
-                .jdkVersion(JdkVersion.JDK_8)
-                .render()
-
-        then:
-        IllegalArgumentException ex = thrown()
-        ex.message == "The selected feature jooq requires at latest Java 11"
-
-        where:
-        language << Language.values().toList()
+        [buildTool,language] << [BuildTool.values(), Language.values()].combinations()
     }
 }
