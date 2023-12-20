@@ -29,9 +29,9 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Buildless implements CommunityFeature, GradleSpecificFeature {
     public static final String NAME = "buildless";
+    public static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
     private static final String FEATURE_NAME_BUILDLESS = "buildless";
     private static final String BUILDLESS_PLUGIN_ID = "build.less";
-    static final String BUILDLESS_PLUGIN_ARTIFACT = "buildless-plugin-gradle";
 
     @Override
     public String getName() {

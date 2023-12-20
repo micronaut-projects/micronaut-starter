@@ -156,6 +156,40 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
+    void 'test oracle cloud function image config for #buildTool'(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['oracle-function'])
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
+
+        then:
+        if (buildTool == BuildTool.GRADLE) {
+            assert template.contains('''    String region = "region-key"
+                                       |    String tenancy = "tenancy"
+                                       |    String repo = "my-app"'''.stripMargin())
+            assert template.contains('''    dockerBuild {
+                                       |        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+                                       |    }'''.stripMargin())
+            assert template.contains('''    dockerBuildNative {
+                                       |        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+                                       |    }'''.stripMargin())
+        } else {
+            assert template.contains('''    val region = "region-key"
+                                       |    val tenancy = "tenancy"
+                                       |    val repo = "my-app"'''.stripMargin())
+            assert template.contains('''    dockerBuild {
+                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |    }'''.stripMargin())
+            assert template.contains('''    dockerBuildNative {
+                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |    }'''.stripMargin())
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
     void 'test oracle cloud function dependencies for language=#language and buildtool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
