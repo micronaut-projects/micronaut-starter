@@ -3,9 +3,13 @@ package io.micronaut.starter.feature.github.workflows.azure
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.Unroll
 
 class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -29,7 +33,6 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         readme.contains("Azure Container Instance GraalVM Workflow")
     }
 
-    @Unroll
     void 'test java github workflow is created for #buildTool'(BuildTool buildTool) {
         when:
         def output = generate(ApplicationType.DEFAULT,
@@ -45,29 +48,39 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         buildTool << BuildTool.values()
     }
 
-    @Unroll
-    void 'test docker image is configured in build.gradle for #name'(String name) {
+    void 'test docker image is configured in #buildFileName for #feature'(BuildTool buildTool, String feature) {
         when:
-        def output = generate([name])
-        def gradle = output['build.gradle.kts']
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [feature])
+        def gradle = output[buildTool.buildFileName]
 
         then:
-        gradle
-        gradle.contains("""
+        if (buildTool == BuildTool.GRADLE) {
+            assert gradle.contains('''
     dockerBuild {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }''')
 
-        gradle.contains("""
+            assert gradle.contains('''
     dockerBuildNative {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }''')
+        } else {
+            assert gradle.contains('''
+    dockerBuild {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+    }''')
+
+            assert gradle.contains('''
+    dockerBuildNative {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+    }''')
+        }
 
         where:
-        name << [AzureContainerInstanceJavaWorkflow.NAME, AzureContainerInstanceGraalWorkflow.NAME]
+        [buildTool, feature] << [BuildTool.valuesGradle(), [AzureContainerInstanceJavaWorkflow.NAME, AzureContainerInstanceGraalWorkflow.NAME]].combinations()
+        buildFileName = buildTool.buildFileName
     }
 
-    @Unroll
     void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
                                                                            JdkVersion graalVersion){
         given:

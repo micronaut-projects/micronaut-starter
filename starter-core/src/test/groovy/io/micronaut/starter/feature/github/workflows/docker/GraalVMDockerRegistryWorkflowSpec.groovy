@@ -43,17 +43,27 @@ Add the following GitHub secrets:
         buildTool << BuildTool.values()
     }
 
-    void 'test docker image configured in build.gradle'() {
+    void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {
         when:
-        def output = generate([GraalVMDockerRegistryWorkflow.NAME])
-        def gradle = output['build.gradle.kts']
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [GraalVMDockerRegistryWorkflow.NAME])
+        def gradle = output[buildTool.buildFileName]
 
         then:
-        gradle
-        gradle.contains("""
+        if (buildTool == BuildTool.GRADLE) {
+            assert gradle.contains('''
     dockerBuildNative {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }''')
+        } else {
+            assert gradle.contains('''
+    dockerBuildNative {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+    }''')
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+        buildFileName = buildTool.buildFileName
     }
 
     void 'test push to docker workflow for maven'() {
