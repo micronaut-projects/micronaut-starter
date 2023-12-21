@@ -1,0 +1,29 @@
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@args (
+    DatabaseDriverFeature dbFeature,
+    String jooqGeneratorDb
+)
+
+jooq {
+    configuration {
+        jdbc {
+            driver = @dbFeature.getDriverClass()
+            url = @dbFeature.getJdbcUrl()
+            user = @dbFeature.getDefaultUser()
+            password = @dbFeature.getDefaultPassword()
+        }
+        generator {
+            database {
+                name = @jooqGeneratorDb
+                includes = ".*"
+                excludes = "flyway_schema_history"
+                inputSchema = "public"
+            }
+
+            target {
+                packageName = "example.micronaut.jooq"
+                directory = "build/generated-sources/jooq"
+            }
+        }
+    }
+}

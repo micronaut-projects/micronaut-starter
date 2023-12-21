@@ -23,7 +23,12 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.templates.jooqGradleConfiguration;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
 
 @Singleton
 public class Jooq implements Feature {
@@ -62,11 +67,19 @@ public class Jooq implements Feature {
                 .groupId("io.micronaut.sql")
                 .artifactId("micronaut-jooq")
                 .compile());
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id("org.jooq.jooq-codegen-gradle")
-                    .lookupArtifactId("org.jooq.jooq-codegen-gradle.gradle.plugin")
-                    .build());
+        Optional<DatabaseDriverFeature> dbDriverOptional = generatorContext.getFeature(DatabaseDriverFeature.class);
+        if (generatorContext.getBuildTool().isGradle() && dbDriverOptional.isPresent()) {
+            DatabaseDriverFeature dbDriver = dbDriverOptional.get();
+            Optional<String> jooqGeneratorDb = jooqGeneratorDb(dbDriver);
+            if (jooqGeneratorDb.isPresent()) {
+                generatorContext.addHelpLink("jOOQ Generation with the Gradle plugin", "https://www.jooq.org/doc/3.19/manual/code-generation/codegen-gradle/");
+                generatorContext.addHelpLink("jOOQ Configuration Reference", "https://www.jooq.org/doc/3.19/manual/code-generation/codegen-configuration/");
+                generatorContext.addBuildPlugin(GradlePlugin.builder()
+                        .id("org.jooq.jooq-codegen-gradle")
+                        .lookupArtifactId("org.jooq.jooq-codegen-gradle.gradle.plugin")
+                        .extension(new RockerWritable(jooqGradleConfiguration.template(dbDriver, jooqGeneratorDb.get())))
+                        .build());
+            }
         }
     }
 
@@ -83,5 +96,18 @@ public class Jooq implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq";
+    }
+
+    // see https://www.jooq.org/doc/3.19/manual/code-generation/codegen-configuration/
+    private Optional<String> jooqGeneratorDb(DatabaseDriverFeature dbDriver) {
+        Optional<DbType> dbType = dbDriver.getDbType();
+        return dbType.flatMap(type -> switch (type) {
+            case MYSQL -> Optional.of("org.jooq.meta.mysql.MySQLDatabase");
+            case MARIADB -> Optional.of("org.jooq.meta.mariadb.MariaDBDatabase");
+            case ORACLEXE -> Optional.of("org.jooq.meta.oracle.OracleDatabase");
+            case SQLSERVER -> Optional.of("org.jooq.meta.sqlserver.SQLServerDatabase");
+            case POSTGRESQL -> Optional.of("org.jooq.meta.postgres.PostgresDatabase");
+            default -> Optional.empty();
+        });
     }
 }
