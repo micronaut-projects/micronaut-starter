@@ -24,28 +24,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq")
     }
 
-    void 'test buildTool=#buildTool jooq feature does not have jooq plugin for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .features(['jooq'])
-                .language(language)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
-                .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
-
-        then:
-        verifier.hasDependency('io.micronaut.sql','micronaut-jooq', Scope.COMPILE)
-
-        and:
-        if (buildTool.isGradle()) {
-             assert !verifier.hasBuildPlugin('org.jooq.jooq-codegen-gradle')
-        }
-
-        where:
-        [buildTool,language] << [BuildTool.values()-BuildTool.MAVEN, Language.values()].combinations()
-    }
-
-    void 'test buildTool=#buildTool jooq feature does not have jooq plugin for language=#language'() {
+    void 'test buildTool=#buildTool jooq feature has Gradle jooq plugin for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(['jooq', dbType])
@@ -56,16 +35,13 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
         then:
         verifier.hasDependency('io.micronaut.sql','micronaut-jooq', Scope.COMPILE)
+        verifier.hasBuildPlugin('org.jooq.jooq-codegen-gradle')
 
-        and:
-        if (buildTool.isGradle()) {
-             assert verifier.hasBuildPlugin('org.jooq.jooq-codegen-gradle')
-        }
+
 
         where:
-        [buildTool,language, dbType] << [BuildTool.values()-BuildTool.MAVEN,
-                                 Language.values(),
-                                ['mariadb', 'mysql', 'oracle', 'postgres', 'sqlserver']]
+        [buildTool, language, dbType] << [BuildTool.values() - BuildTool.MAVEN, Language.values(),
+                                  ['h2', 'mariadb', 'mysql', 'oracle', 'postgres', 'sqlserver']]
                 .combinations()
     }
 }
