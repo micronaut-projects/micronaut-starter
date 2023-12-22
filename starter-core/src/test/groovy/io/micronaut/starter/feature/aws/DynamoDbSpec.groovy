@@ -77,25 +77,12 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
-        template.contains("""
-    <dependency>
-      <groupId>software.amazon.awssdk</groupId>
-      <artifactId>dynamodb</artifactId>
-      <scope>compile</scope>
-      <exclusions>
-          <exclusion>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>apache-client</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>netty-nio-client</artifactId>
-          </exclusion>
-        </exclusions>
-    </dependency>
-""")
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
+
+        verifier.hasDependency("software.amazon.awssdk", "dynamodb", Scope.COMPILE)
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "apache-client")
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "netty-nio-client")
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()

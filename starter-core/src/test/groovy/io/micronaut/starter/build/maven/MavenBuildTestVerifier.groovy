@@ -161,6 +161,24 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
 
     @CompileDynamic
     @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId) {
+        hasExclusion(groupId, artifactId, excludedGroupId, excludedArtifactId, Scope.COMPILE)
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
+        if (scope == Scope.COMPILE) {
+            project.dependencies.dependency.find { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
+                it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+            }
+        } else {
+            throw new UnsupportedOperationException("not yet implemented")
+        }
+    }
+
+    @CompileDynamic
+    @Override
     boolean hasTestResourceDependency(String expectedGroupId, String expectedArtifactId) {
         def micronautPlugin = project.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
         micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == expectedGroupId }?.with {

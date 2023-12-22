@@ -1,5 +1,6 @@
 package io.micronaut.starter.build.gradle
 
+
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
@@ -84,6 +85,16 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         GradleConfiguration.values().collect { it.getConfigurationName() }.any( {scope ->
             hasDependency(groupId, artifactId, scope)
         })
+    }
+
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
