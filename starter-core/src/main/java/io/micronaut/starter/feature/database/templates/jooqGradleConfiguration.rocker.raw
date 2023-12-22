@@ -7,14 +7,14 @@
 jooq {
     configuration {
         jdbc {
-            driver = @dbFeature.getDriverClass()
-            url = @dbFeature.getJdbcUrl()
-            user = @dbFeature.getDefaultUser()
-            password = @dbFeature.getDefaultPassword()
+            driver = "@dbFeature.getDriverClass()"
+            url = "@dbFeature.getJdbcUrl()"
+            user = "@dbFeature.getDefaultUser()"
+            password = "@dbFeature.getDefaultPassword()"
         }
         generator {
             database {
-                name = @jooqGeneratorDb
+                name = "@jooqGeneratorDb"
                 includes = ".*"
                 excludes = "flyway_schema_history"
                 inputSchema = "public"
