@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.jaxrs
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -55,59 +58,24 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['security', JaxRs.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server-security</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.jaxrs</groupId>
-              <artifactId>micronaut-jaxrs-processor</artifactId>
-              <version>\${micronaut.jaxrs.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>
-""")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server-security")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.KOTLIN)
                 .features(['security', JaxRs.NAME])
                 .render()
+        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.KOTLIN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server-security</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server-security")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
         template.count('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut.jaxrs</groupId>
@@ -121,22 +89,12 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
                 .language(Language.GROOVY)
                 .features(['security', JaxRs.NAME])
                 .render()
+        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.GROOVY, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server-security</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server-security")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
     }
 }

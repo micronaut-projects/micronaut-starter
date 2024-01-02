@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.jaxrs
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -41,45 +44,24 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
     void 'test maven jax-rs feature'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.JAVA)
                 .features([JaxRs.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.JAVA, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.jaxrs</groupId>
-              <artifactId>micronaut-jaxrs-processor</artifactId>
-              <version>\${micronaut.jaxrs.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>
-""")
-
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.KOTLIN)
                 .features([JaxRs.NAME])
                 .render()
+        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.KOTLIN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
         template.count('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut.jaxrs</groupId>
@@ -93,15 +75,11 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
                 .language(Language.GROOVY)
                 .features([JaxRs.NAME])
                 .render()
+        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.GROOVY, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
     }
 }

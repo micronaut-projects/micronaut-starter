@@ -168,12 +168,23 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @CompileDynamic
     @Override
     boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
-        if (scope == Scope.COMPILE) {
-            project.dependencies.dependency.find { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
-                it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+        if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
+            project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+                configuration.annotationProcessorPaths.path.find {it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
+                     it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+                }
             }
         } else {
-            throw new UnsupportedOperationException("not yet implemented")
+            project.dependencies.dependency.findAll { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
+//                exclusions.exclusion.any {
+                    it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+//                }
+            }
+//            project.dependencies.dependency.findAll { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.with {
+//                exclusions.exclusion.any {
+//                    it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+//                }
+//            }
         }
     }
 
