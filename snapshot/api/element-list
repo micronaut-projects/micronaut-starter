@@ -83,12 +83,8 @@ io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.gradle.templates
 io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
-io.micronaut.starter.feature.buildless
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
-io.micronaut.starter.feature.chatbots
-io.micronaut.starter.feature.chatbots.telegram
-io.micronaut.starter.feature.chatbots.template
 io.micronaut.starter.feature.ci.workflows
 io.micronaut.starter.feature.ci.workflows.aws
 io.micronaut.starter.feature.ci.workflows.aws.templates
@@ -112,7 +108,6 @@ io.micronaut.starter.feature.dev
 io.micronaut.starter.feature.discovery
 io.micronaut.starter.feature.distributedconfig
 io.micronaut.starter.feature.distributedconfig.template
-io.micronaut.starter.feature.eclipsestore
 io.micronaut.starter.feature.elasticsearch
 io.micronaut.starter.feature.email
 io.micronaut.starter.feature.function
@@ -205,7 +200,6 @@ io.micronaut.starter.feature.server.template
 io.micronaut.starter.feature.spring
 io.micronaut.starter.feature.springboot.template
 io.micronaut.starter.feature.stackdriver
-io.micronaut.starter.feature.staticResources
 io.micronaut.starter.feature.test
 io.micronaut.starter.feature.test.template
 io.micronaut.starter.feature.testresources
