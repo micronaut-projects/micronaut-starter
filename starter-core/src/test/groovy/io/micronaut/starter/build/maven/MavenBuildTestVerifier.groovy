@@ -168,23 +168,19 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @CompileDynamic
     @Override
     boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
+        String expectedExclude = "${excludedGroupId}:${excludedArtifactId}"
         if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
             project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
-                configuration.annotationProcessorPaths.path.find {it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
-                     it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
+                configuration.annotationProcessorPaths.path.find {it.artifactId.text() == artifactId && it.groupId.text() == groupId && it.exclusions}?.with {
+                    List<String> excludes = exclusions.exclusion.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                    return excludes.contains(expectedExclude)
                 }
             }
         } else {
-            project.dependencies.dependency.findAll { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.exclusions.exclusion.any {
-//                exclusions.exclusion.any {
-                    it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
-//                }
+            project.dependencies.dependency.find { it.artifactId.text() == artifactId && it.groupId.text() == groupId && it.exclusions}?.with {
+                List<String> excludes = exclusions.exclusion.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                return excludes.contains(expectedExclude)
             }
-//            project.dependencies.dependency.findAll { it.artifactId.text() == artifactId && it.groupId.text() == groupId}?.with {
-//                exclusions.exclusion.any {
-//                    it.artifactId.text() == excludedArtifactId && it.groupId.text() == excludedGroupId
-//                }
-//            }
         }
     }
 
