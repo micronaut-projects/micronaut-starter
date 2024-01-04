@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,10 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampAwsChatBot;
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampAzureChatBot;
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampGcpChatBot;
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampHttpChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot;
@@ -53,8 +57,8 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
     public GenerateOptions createGenerateOptions(LineReader reader) {
         ChatBotType chatBotType = getChatBotType(reader);
         Set<String> applicationFeatures = new HashSet<>();
-        ChatBotDeployment deployment = getDeployment(chatBotType, reader);
-        applicationFeatures.add(deployment.feature);
+        ChatBotDeployment deployment = getDeployment(reader);
+        applicationFeatures.add(deployment.getFeature(chatBotType));
         ApplicationType applicationType = deployment.applicationType;
 
         if (deployment == ChatBotDeployment.LAMBDA) {
@@ -90,18 +94,15 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
                 : Optional.empty();
     }
 
-    private ChatBotDeployment getDeployment(ChatBotType chatBotType, LineReader reader) {
+    private ChatBotDeployment getDeployment(LineReader reader) {
         out("Choose your preferred deployment. (enter for default)");
-        if (chatBotType == ChatBotType.TELEGRAM) {
-            return getEnumOption(ChatBotDeployment.class, f -> "%s - %s".formatted(f.title, f.description), ChatBotDeployment.LAMBDA, reader);
-        } else {
-            throw new IllegalArgumentException("Unsupported chat bot type: " + chatBotType);
-        }
+        return getEnumOption(ChatBotDeployment.class, f -> "%s - %s".formatted(f.title, f.description), ChatBotDeployment.LAMBDA, reader);
     }
 
     enum ChatBotType {
 
-        TELEGRAM("Telegram", "A chat bot for the telegram messaging platform");
+        BASECAMP("Basecamp", "A chat bot for Basecamp chats"),
+        TELEGRAM("Telegram", "A chat bot for the Telegram messaging platform");
 
         private final String title;
         private final String description;
@@ -114,21 +115,36 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
 
     enum ChatBotDeployment {
 
-        LAMBDA("AWS Lambda", "Deploy to AWS Lambda", TelegramAwsChatBot.NAME, ApplicationType.FUNCTION),
-        AZURE("Azure Function", "Deploy to Azure as a Function", TelegramAzureChatBot.NAME, ApplicationType.FUNCTION),
-        GCP("Google Cloud Function", "Deploy to Google Cloud as a Function", TelegramGcpChatBot.NAME, ApplicationType.FUNCTION),
-        HTTP("HTTP", "Deploy as an HTTP Server", TelegramHttpChatBot.NAME, ApplicationType.DEFAULT);
+        LAMBDA("AWS Lambda", "Deploy to AWS Lambda", BasecampAwsChatBot.NAME, TelegramAwsChatBot.NAME, ApplicationType.FUNCTION),
+        AZURE("Azure Function", "Deploy to Azure as a Function", BasecampAzureChatBot.NAME, TelegramAzureChatBot.NAME, ApplicationType.FUNCTION),
+        GCP("Google Cloud Function", "Deploy to Google Cloud as a Function", BasecampGcpChatBot.NAME, TelegramGcpChatBot.NAME, ApplicationType.FUNCTION),
+        HTTP("HTTP", "Deploy as an HTTP Server", BasecampHttpChatBot.NAME, TelegramHttpChatBot.NAME, ApplicationType.DEFAULT);
 
         private final String title;
         private final String description;
-        private final String feature;
+        private final String basecampFeature;
+        private final String telegramFeature;
         private final ApplicationType applicationType;
 
-        ChatBotDeployment(String title, String description, String feature, ApplicationType applicationType) {
+        ChatBotDeployment(
+                String title,
+                String description,
+                String basecampFeature,
+                String telegramFeature,
+                ApplicationType applicationType
+        ) {
             this.title = title;
             this.description = description;
-            this.feature = feature;
+            this.basecampFeature = basecampFeature;
+            this.telegramFeature = telegramFeature;
             this.applicationType = applicationType;
+        }
+
+        String getFeature(ChatBotType chatBotType) {
+            return switch (chatBotType) {
+                case BASECAMP -> basecampFeature;
+                case TELEGRAM -> telegramFeature;
+            };
         }
     }
 }

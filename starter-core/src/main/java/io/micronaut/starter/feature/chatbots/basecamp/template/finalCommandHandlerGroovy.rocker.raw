@@ -1,0 +1,39 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.micronaut.chatbots.basecamp.api.Query
+import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
+import io.micronaut.chatbots.basecamp.core.BasecampHandler
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.core.annotation.Nullable
+import io.micronaut.core.order.Ordered
+import jakarta.inject.Singleton
+import jakarta.validation.constraints.NotNull
+
+@@Singleton
+class BasecampFinalCommandHandler implements BasecampHandler {
+
+    @@Override
+    boolean canHandle(
+        @@Nullable BasecampBotConfiguration bot,
+        @@NonNull @@NotNull Query query
+    ) {
+        true
+    }
+
+    @@Override
+    Optional<String> handle(
+        @@Nullable BasecampBotConfiguration bot,
+        @@NonNull @@NotNull Query query
+    ) {
+        Optional.of("I don't how to handle your query: ${query.command}".toString())
+    }
+
+    @@Override
+    int getOrder() {
+        Ordered.LOWEST_PRECEDENCE
+    }
+}

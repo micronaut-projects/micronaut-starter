@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.chatbots;
 import io.micronaut.core.util.StringUtils;
 
 public enum ChatBotType {
+    BASECAMP,
     TELEGRAM;
 
     @Override

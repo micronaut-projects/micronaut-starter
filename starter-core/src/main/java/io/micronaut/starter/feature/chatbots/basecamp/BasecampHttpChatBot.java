@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.chatbots.telegram;
+package io.micronaut.starter.feature.chatbots.basecamp;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovySpock;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerJavaJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerReadme;
+import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovySpock;
+import io.micronaut.starter.feature.chatbots.basecamp.template.controllerJavaJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.controllerKotlinJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
@@ -38,17 +38,17 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramHttpChatBot extends ChatBotsTelegram {
+public class BasecampHttpChatBot extends ChatBotsBasecamp {
 
-    public static final String NAME = "chatbots-telegram-http";
+    public static final String NAME = "chatbots-basecamp-http";
 
-    public static final Dependency CHATBOTS_TELEGRAM_HTTP = MicronautDependencyUtils
+    public static final Dependency CHATBOTS_BASECAMP_HTTP = MicronautDependencyUtils
             .chatBotsDependency()
-            .artifactId("micronaut-chatbots-telegram-http")
+            .artifactId("micronaut-chatbots-basecamp-http")
             .compile()
             .build();
 
-    public TelegramHttpChatBot(MicronautValidationFeature validationFeature) {
+    public BasecampHttpChatBot(MicronautValidationFeature validationFeature) {
         super(validationFeature);
     }
 
@@ -63,7 +63,7 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
         if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
             generatorContext.addTemplate(
                     "http-client-command-handler-junit-test",
-                    generatorContext.getTestSourcePath("/{packagePath}/TelegramController"),
+                    generatorContext.getTestSourcePath("/{packagePath}/BasecampController"),
                     controllerJavaJunit.template(generatorContext.getProject()),
                     controllerKotlinJunit.template(generatorContext.getProject()),
                     controllerGroovyJunit.template(generatorContext.getProject())
@@ -71,7 +71,7 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
         } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
             generatorContext.addTemplate(
                     "http-client-command-handler-spock-test",
-                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/TelegramController"), controllerGroovySpock.template(generatorContext.getProject()))
+                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/BasecampController"), controllerGroovySpock.template(generatorContext.getProject()))
             );
         }
     }
@@ -84,17 +84,17 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
 
     @Override
     public String getTitle() {
-        return "Telegram ChatBot as a controller";
+        return "Basecamp ChatBot as a controller";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that implements a Telegram chatbot controller";
+        return "Generates an application that implements a Basecamp chatbot controller";
     }
 
     @Override
     protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(CHATBOTS_TELEGRAM_HTTP);
+        generatorContext.addDependency(CHATBOTS_BASECAMP_HTTP);
     }
 
     @Override

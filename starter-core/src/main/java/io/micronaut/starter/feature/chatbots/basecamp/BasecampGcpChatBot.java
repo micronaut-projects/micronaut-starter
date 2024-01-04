@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.chatbots.telegram;
+package io.micronaut.starter.feature.chatbots.basecamp;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
@@ -21,37 +21,36 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.telegram.template.azureReadme;
-import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
-import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
-import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
-import io.micronaut.starter.feature.function.azure.AzureRawFunction;
+import io.micronaut.starter.feature.chatbots.basecamp.template.gcpReadme;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
+import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
+import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 /**
- * Adds support for Telegram chatbots as Azure Functions.
+ * Adds support for Telegram chatbots as Google Cloud Functions.
  *
  * @author Tim Yates
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloudFeature, AzureMicronautRuntimeFeature {
+public class BasecampGcpChatBot extends ChatBotsBasecamp implements GcpCloudFeature, GcpMicronautRuntimeFeature {
 
-    public static final String NAME = "chatbots-telegram-azure-function";
+    public static final String NAME = "chatbots-basecamp-gcp-function";
 
-    public static final Dependency CHATBOTS_TELEGRAM_AZURE_FUNCTION = MicronautDependencyUtils
+    public static final Dependency CHATBOTS_BASECAMP_GCP_FUNCTION = MicronautDependencyUtils
             .chatBotsDependency()
-            .artifactId("micronaut-chatbots-telegram-azure-function")
+            .artifactId("micronaut-chatbots-basecamp-gcp-function")
             .compile()
             .build();
+    private final GoogleCloudRawFunction rawFunction;
 
-    private final AzureRawFunction azureRawFunction;
-
-    public TelegramAzureChatBot(MicronautValidationFeature validationFeature, AzureRawFunction azureRawFunction) {
+    public BasecampGcpChatBot(MicronautValidationFeature validationFeature, GoogleCloudRawFunction rawFunction) {
         super(validationFeature);
-        this.azureRawFunction = azureRawFunction;
+        this.rawFunction = rawFunction;
     }
 
     @Override
@@ -67,18 +66,18 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
 
     @Override
     public String getTitle() {
-        return "Telegram ChatBot as an Azure Function";
+        return "Basecamp ChatBot as a Google Cloud Function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Azure Function that implements a Telegram ChatBot";
+        return "Generates an application that can be deployed as a Google Cloud Function that implements a Basecamp ChatBot";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        featureContext.addFeatureIfNotPresent(AzureRawFunction.class, azureRawFunction);
+        featureContext.addFeatureIfNotPresent(GoogleCloudRawFunction.class, rawFunction);
     }
 
     @Override
@@ -89,16 +88,16 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        return AzureBuildCommandUtils.getBuildCommand(buildTool);
+        return GcpCloudFunctionBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override
     protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(CHATBOTS_TELEGRAM_AZURE_FUNCTION);
+        generatorContext.addDependency(CHATBOTS_BASECAMP_GCP_FUNCTION);
     }
 
     @Override
-    public String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return azureReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    protected String rootReadMeTemplate(GeneratorContext generatorContext) {
+        return gcpReadme.class.getName().replace(".", "/") + ".rocker.raw";
     }
 }

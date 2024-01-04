@@ -1,0 +1,46 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import io.micronaut.chatbots.basecamp.api.Query
+import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
+import io.micronaut.chatbots.core.Dispatcher
+import io.micronaut.context.BeanContext
+import io.micronaut.json.JsonMapper
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import spock.lang.Specification
+
+@@MicronautTest(startApplication = false)
+class BasecampAboutCommandHandlerSpec extends Specification {
+
+    @@Inject
+    BeanContext ctx
+
+    @@Inject
+    Dispatcher<BasecampBotConfiguration, Query, String> dispatcher
+
+    @@Inject
+    JsonMapper jsonMapper
+
+    void "about command handler is in the context"() {
+        expect:
+        ctx.containsBean(BasecampAboutCommandHandler)
+    }
+
+    void "the about command handler works as expected"() {
+        when:
+        String send = dispatcher.dispatch(null, jsonMapper.readValue(aboutCommandJson, Query)).get()
+
+        then:
+        send instanceof String
+        send.trim() == "Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)"
+    }
+
+    private String getAboutCommandJson() {
+        BasecampAboutCommandHandlerSpec.getResourceAsStream("/mockBasecampAboutCommand.json").text
+    }
+}

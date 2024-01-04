@@ -1,0 +1,50 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import io.micronaut.chatbots.basecamp.api.Query;
+import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration;
+import io.micronaut.chatbots.core.Dispatcher
+import io.micronaut.context.BeanContext
+import io.micronaut.json.JsonMapper
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertInstanceOf;
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+
+@@MicronautTest(startApplication = false)
+class BasecampAboutCommandHandlerTest {
+
+    @@Inject
+    lateinit var ctx: BeanContext
+
+    @@Inject
+    lateinit var dispatcher: Dispatcher<BasecampBotConfiguration, Query, String>
+
+    @@Inject
+    lateinit var jsonMapper: JsonMapper
+
+    @@Test
+    fun beanOfTypeHelloWorldHandlerExists() {
+        assertTrue(ctx.containsBean(BasecampAboutCommandHandler::class.java))
+    }
+
+    @@Test
+    @@Throws(Exception::class)
+    fun aboutCommandHandlerExists() {
+        val send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query::class.java)).get()
+
+        assertInstanceOf(String::class.java, send)
+        assertEquals(
+            "Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)",
+            send.trim()
+        )
+    }
+
+    private fun getAboutCommandJson() = BasecampAboutCommandHandlerTest::class.java.getResource("/mockBasecampAboutCommand.json")!!.readText()
+}

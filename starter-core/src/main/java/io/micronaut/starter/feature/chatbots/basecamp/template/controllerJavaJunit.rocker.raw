@@ -1,0 +1,41 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+
+}
+
+import io.micronaut.context.BeanContext;
+import io.micronaut.http.HttpHeaders;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpRequest;
+import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.annotation.Client;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@@MicronautTest
+class BasecampControllerTest {
+
+    @@Client("/")
+    @@Inject
+    HttpClient client;
+
+    @@Inject
+    BeanContext ctx;
+
+    @@Test
+    void aboutCommandHandlerExists() throws Exception {
+        MutableHttpRequest<String> post = HttpRequest.POST("/basecamp", getAboutCommandJson()).header(HttpHeaders.USER_AGENT, "Mock Basecamp request");
+        HttpResponse<String> messageResponse = client.toBlocking().exchange(post, String.class);
+        assertEquals("Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)", messageResponse.body().trim());
+    }
+
+    private String getAboutCommandJson() throws IOException {
+        return new String(BasecampControllerTest.class.getResourceAsStream("/mockBasecampAboutCommand.json").readAllBytes());
+    }
+}

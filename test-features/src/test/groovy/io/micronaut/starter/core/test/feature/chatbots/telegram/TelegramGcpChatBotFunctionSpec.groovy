@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test.feature.chatbots
+package io.micronaut.starter.core.test.feature.chatbots.telegram
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot

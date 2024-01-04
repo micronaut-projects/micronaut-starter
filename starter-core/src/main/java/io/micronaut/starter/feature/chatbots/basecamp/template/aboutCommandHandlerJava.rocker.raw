@@ -1,0 +1,39 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+
+}
+
+import io.micronaut.chatbots.basecamp.api.Query;
+import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration;
+import io.micronaut.chatbots.basecamp.core.BasecampHandler;
+import io.micronaut.chatbots.core.CommandResponse;
+import io.micronaut.chatbots.core.TextResourceLoader;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import jakarta.inject.Singleton;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.Optional;
+
+@@Singleton
+class BasecampAboutCommandHandler implements BasecampHandler {
+
+    public static final String ABOUT = "about";
+    private final TextResourceLoader textResourceLoader;
+
+    BasecampAboutCommandHandler(TextResourceLoader textResourceLoader) {
+        this.textResourceLoader = textResourceLoader;
+    }
+
+    @@Override
+    public boolean canHandle(@@Nullable BasecampBotConfiguration bot, @@NonNull @@NotNull Query input) {
+        return input.getCommand().equalsIgnoreCase("/" + ABOUT);
+    }
+
+    @@Override
+    public @@NonNull Optional<String> handle(@@Nullable BasecampBotConfiguration bot, @@NonNull @@NotNull Query input) {
+        return textResourceLoader.composeCommandResponse(ABOUT).map(CommandResponse::getText);
+    }
+}

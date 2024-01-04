@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.chatbots.telegram;
+package io.micronaut.starter.feature.chatbots.basecamp;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.chatbots.ChatBotType;
 import io.micronaut.starter.feature.chatbots.ChatBots;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovy;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovySpock;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerJava;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerJavaJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerKotlin;
-import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerGroovy;
-import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerJava;
-import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerKotlin;
-import io.micronaut.starter.feature.chatbots.telegram.template.mockAboutCommandJson;
-import io.micronaut.starter.feature.chatbots.telegram.template.telegramReadme;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerGroovySpock;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerJavaJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.basecamp.template.aboutCommandHandlerKotlinJunit;
+import io.micronaut.starter.feature.chatbots.basecamp.template.finalCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.basecamp.template.finalCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.basecamp.template.finalCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.basecamp.template.mockAboutCommandJson;
+import io.micronaut.starter.feature.chatbots.basecamp.template.basecampReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -41,22 +41,14 @@ import io.micronaut.starter.template.RockerWritable;
  * @since 4.3.0
  * @author Tim Yates
  */
-abstract class ChatBotsTelegram extends ChatBots {
+abstract class ChatBotsBasecamp extends ChatBots {
 
-    protected ChatBotsTelegram(MicronautValidationFeature validationFeature) {
+    protected ChatBotsBasecamp(MicronautValidationFeature validationFeature) {
         super(validationFeature);
     }
 
     @Override
     protected void addConfigurations(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.token",
-                "WEBHOOK_TOKEN"
-        );
-        generatorContext.getConfiguration().put(
-                "micronaut.chatbots.telegram.bots.example.at-username",
-                "@MyMicronautExampleBot"
-        );
         generatorContext.getConfiguration().put(
                 "micronaut.chatbots.folder",
                 "botcommands"
@@ -67,17 +59,17 @@ abstract class ChatBotsTelegram extends ChatBots {
     protected void renderTemplates(GeneratorContext generatorContext) {
         super.renderTemplates(generatorContext);
         generatorContext.addTemplate(
-                "about-command-handler",
-                generatorContext.getSourcePath("/{packagePath}/AboutCommandHandler"),
+                "basecamp-about-command-handler",
+                generatorContext.getSourcePath("/{packagePath}/BasecampAboutCommandHandler"),
                 aboutCommandHandlerJava.template(generatorContext.getProject()),
                 aboutCommandHandlerKotlin.template(generatorContext.getProject()),
                 aboutCommandHandlerGroovy.template(generatorContext.getProject())
         );
         if (!generatorContext.getTestFramework().isKotlinTestFramework()) {
             generatorContext.addTemplate(
-                    "mock-about-command-json",
+                    "mock-basecamp-about-command-json",
                     new RockerTemplate(
-                            "src/test/resources/mockAboutCommand.json",
+                            "src/test/resources/mockBasecampAboutCommand.json",
                             mockAboutCommandJson.template()
                     )
             );
@@ -85,7 +77,7 @@ abstract class ChatBotsTelegram extends ChatBots {
         if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
             generatorContext.addTemplate(
                     "about-command-handler-junit-test",
-                    generatorContext.getTestSourcePath("/{packagePath}/AboutCommandHandler"),
+                    generatorContext.getTestSourcePath("/{packagePath}/BasecampAboutCommandHandler"),
                     aboutCommandHandlerJavaJunit.template(generatorContext.getProject()),
                     aboutCommandHandlerKotlinJunit.template(generatorContext.getProject()),
                     aboutCommandHandlerGroovyJunit.template(generatorContext.getProject())
@@ -93,11 +85,11 @@ abstract class ChatBotsTelegram extends ChatBots {
         } else if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
             generatorContext.addTemplate(
                     "about-command-handler-spock-groovy-test",
-                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/AboutCommandHandler"), aboutCommandHandlerGroovySpock.template(generatorContext.getProject()))
+                    new RockerTemplate(generatorContext.getTestSourcePath("/{packagePath}/BasecampAboutCommandHandler"), aboutCommandHandlerGroovySpock.template(generatorContext.getProject()))
             );
         }
 
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
+        generatorContext.addHelpTemplate(new RockerWritable(basecampReadme.template(
                 rootReadMeTemplate(generatorContext),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
@@ -106,7 +98,7 @@ abstract class ChatBotsTelegram extends ChatBots {
 
         generatorContext.addTemplate(
                 "final-command-handler",
-                generatorContext.getSourcePath("/{packagePath}/FinalCommandHandler"),
+                generatorContext.getSourcePath("/{packagePath}/BasecampFinalCommandHandler"),
                 finalCommandHandlerJava.template(generatorContext.getProject()),
                 finalCommandHandlerKotlin.template(generatorContext.getProject()),
                 finalCommandHandlerGroovy.template(generatorContext.getProject())
@@ -114,7 +106,12 @@ abstract class ChatBotsTelegram extends ChatBots {
     }
 
     @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/basecamp/bc3-api/blob/master/sections/chatbots.md";
+    }
+
+    @Override
     public ChatBotType getChatBotType() {
-        return ChatBotType.TELEGRAM;
+        return ChatBotType.BASECAMP;
     }
 }
