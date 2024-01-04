@@ -41,45 +41,26 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         Language.GROOVY | "compileOnly"
     }
 
-    void 'test maven jax-rs feature'() {
+    void 'test maven jax-rs feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.JAVA)
+                .language(language)
                 .features([JaxRs.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.JAVA, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
-        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
-                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.KOTLIN)
-                .features([JaxRs.NAME])
-                .render()
-        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.KOTLIN, template)
+        verifier.hasAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor")
 
-        then:
-        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.jaxrs</groupId>
-                 <artifactId>micronaut-jaxrs-processor</artifactId>
-                 <version>${micronaut.jaxrs.version}</version>
-               </annotationProcessorPath>
-''') == 2
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.GROOVY)
-                .features([JaxRs.NAME])
-                .render()
-        verifier = BuildTestUtil.verifier(BuildTool.MAVEN, Language.GROOVY, template)
-
-        then:
-        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
-        verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
-                "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
+        and:
+        if (language == Language.KOTLIN) {
+            assert verifier.hasTestAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor")
+        } else {
+            assert verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                    "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
+        }
+        where:
+        language << Language.values()
     }
 }
