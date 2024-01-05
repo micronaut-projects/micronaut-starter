@@ -29,10 +29,11 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
                 .features([JaxRs.NAME, 'kapt'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
-        template.contains("$scope(\"io.micronaut.jaxrs:micronaut-jaxrs-processor\")")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-processor", scope)
 
         where:
         language        | scope

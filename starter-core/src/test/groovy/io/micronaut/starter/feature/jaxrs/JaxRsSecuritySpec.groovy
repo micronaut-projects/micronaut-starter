@@ -29,11 +29,12 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
                 .features(['security', JaxRs.NAME, 'kapt'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server-security")')
-        template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
-        template.contains("$scope(\"io.micronaut.jaxrs:micronaut-jaxrs-processor\")")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server-security")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-processor", scope)
 
         where:
         language        | scope
@@ -48,9 +49,10 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
                 .features([JaxRs.NAME])
                 .language(Language.JAVA)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
 
         then:
-        !template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server-security")')
+        !verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server-security")
     }
 
     void 'test maven jax-rs-security feature for language=#language'() {
