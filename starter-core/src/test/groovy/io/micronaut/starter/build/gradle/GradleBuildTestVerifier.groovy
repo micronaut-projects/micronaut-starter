@@ -1,20 +1,23 @@
 package io.micronaut.starter.build.gradle
 
-
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
+
+    final BuildTool buildTool
     final String template
     final Language language
     final TestFramework testFramework
 
-    GradleBuildTestVerifier(String template, Language language, TestFramework testFramework) {
+    GradleBuildTestVerifier(BuildTool buildTool, String template, Language language, TestFramework testFramework) {
+        this.buildTool = buildTool
         this.template = template
         this.language = language
         this.testFramework = testFramework
@@ -89,12 +92,27 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId) {
-        throw new UnsupportedOperationException("not yet implemented");
+        hasExclusion(groupId, artifactId, excludedGroupId, excludedArtifactId, Scope.COMPILE)
     }
 
     @Override
     boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework, null).map { it.getConfigurationName() }
+        if (!gradleConfigurationNameOptional.isPresent()){
+            throw new ConfigurationException("cannot match " + scope + " to gradle configuration");
+        }
+        String gradleConfigurationName = gradleConfigurationNameOptional.get()
+        String pattern = /(?s).*${gradleConfigurationName}\("${groupId.replace(".", "\\.")}:${artifactId}"\)\s*\{(.+?)\}/
+        println pattern
+        def match = template =~ pattern
+        if (match.size() > 0) {
+            if (buildTool == BuildTool.GRADLE) {
+                return match[0][1].contains("exclude(group: \"${excludedGroupId}\", module: \"${excludedArtifactId}\")")
+            } else {
+                return match[0][1].contains("exclude(group = \"${excludedGroupId}\", module = \"${excludedArtifactId}\"")
+            }
+        }
+        return false
     }
 
     @Override
