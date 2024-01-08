@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 @Command(name = CreateChatBotBuilderCommand.NAME, description = "A guided walk-through to create a chat bot application")
 @Prototype
@@ -115,36 +116,42 @@ public class CreateChatBotBuilderCommand extends BuilderCommand {
 
     enum ChatBotDeployment {
 
-        LAMBDA("AWS Lambda", "Deploy to AWS Lambda", BasecampAwsChatBot.NAME, TelegramAwsChatBot.NAME, ApplicationType.FUNCTION),
-        AZURE("Azure Function", "Deploy to Azure as a Function", BasecampAzureChatBot.NAME, TelegramAzureChatBot.NAME, ApplicationType.FUNCTION),
-        GCP("Google Cloud Function", "Deploy to Google Cloud as a Function", BasecampGcpChatBot.NAME, TelegramGcpChatBot.NAME, ApplicationType.FUNCTION),
-        HTTP("HTTP", "Deploy as an HTTP Server", BasecampHttpChatBot.NAME, TelegramHttpChatBot.NAME, ApplicationType.DEFAULT);
+        LAMBDA("AWS Lambda", "Deploy to AWS Lambda", ApplicationType.FUNCTION, type -> switch (type) {
+            case BASECAMP -> BasecampAwsChatBot.NAME;
+            case TELEGRAM -> TelegramAwsChatBot.NAME;
+        }),
+        AZURE("Azure Function", "Deploy to Azure as a Function", ApplicationType.FUNCTION, type -> switch (type) {
+            case BASECAMP -> BasecampAzureChatBot.NAME;
+            case TELEGRAM -> TelegramAzureChatBot.NAME;
+        }),
+        GCP("Google Cloud Function", "Deploy to Google Cloud as a Function", ApplicationType.FUNCTION, type -> switch (type) {
+            case BASECAMP -> BasecampGcpChatBot.NAME;
+            case TELEGRAM -> TelegramGcpChatBot.NAME;
+        }),
+        HTTP("HTTP", "Deploy as an HTTP Server", ApplicationType.DEFAULT, type -> switch (type) {
+            case BASECAMP -> BasecampHttpChatBot.NAME;
+            case TELEGRAM -> TelegramHttpChatBot.NAME;
+        });
 
         private final String title;
         private final String description;
-        private final String basecampFeature;
-        private final String telegramFeature;
         private final ApplicationType applicationType;
+        private final Function<ChatBotType, String> featureName;
 
         ChatBotDeployment(
                 String title,
                 String description,
-                String basecampFeature,
-                String telegramFeature,
-                ApplicationType applicationType
+                ApplicationType applicationType,
+                Function<ChatBotType, String> featureName
         ) {
             this.title = title;
             this.description = description;
-            this.basecampFeature = basecampFeature;
-            this.telegramFeature = telegramFeature;
             this.applicationType = applicationType;
+            this.featureName = featureName;
         }
 
         String getFeature(ChatBotType chatBotType) {
-            return switch (chatBotType) {
-                case BASECAMP -> basecampFeature;
-                case TELEGRAM -> telegramFeature;
-            };
+            return featureName.apply(chatBotType);
         }
     }
 }
