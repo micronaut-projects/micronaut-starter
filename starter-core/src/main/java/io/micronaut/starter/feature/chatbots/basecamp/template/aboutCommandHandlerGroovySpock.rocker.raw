@@ -36,7 +36,7 @@ class BasecampAboutCommandHandlerSpec extends Specification {
         String send = dispatcher.dispatch(null, jsonMapper.readValue(aboutCommandJson, Query)).get()
 
         then:
-        send.trim() == "Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>."
+        send.trim() == 'Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.'
     }
 
     private String getAboutCommandJson() {

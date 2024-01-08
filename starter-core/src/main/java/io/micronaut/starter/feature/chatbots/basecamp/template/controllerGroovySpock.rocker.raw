@@ -32,7 +32,7 @@ class BasecampControllerSpec extends Specification {
         HttpResponse<String> messageResponse = client.toBlocking().exchange(post, String)
 
         then:
-        messageResponse.body().trim() == "Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)"
+        messageResponse.body().trim() == 'Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.'
     }
 
     private String getAboutCommandJson() {

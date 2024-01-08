@@ -39,8 +39,9 @@ class BasecampAboutCommandHandlerTest {
     void aboutCommandHandlerExists() throws Exception {
         String send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query.class)).get();
 
-        assertEquals("""
-                        Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.""",
+        assertEquals(
+                """
+                Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.""",
                 send.trim()
         );
     }

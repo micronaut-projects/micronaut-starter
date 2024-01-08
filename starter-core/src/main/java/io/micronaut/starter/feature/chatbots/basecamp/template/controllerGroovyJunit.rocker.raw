@@ -33,7 +33,7 @@ class BasecampControllerTest {
     void aboutCommandHandlerExists() {
         MutableHttpRequest<String> post = HttpRequest.POST("/basecamp", getAboutCommandJson()).header(HttpHeaders.USER_AGENT, "Mock Basecamp request")
         HttpResponse<String> messageResponse = client.toBlocking().exchange(post, String)
-        assertEquals("Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)", messageResponse.body().trim());
+        assertEquals('Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.', messageResponse.body().trim());
     }
 
     private String getAboutCommandJson() {

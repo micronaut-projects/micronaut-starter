@@ -30,7 +30,7 @@ class BasecampControllerTest {
         val post = HttpRequest.POST("/basecamp", getAboutCommandJson()).header(HttpHeaders.USER_AGENT, "Mock Basecamp Request")
         val messageResponse = client.toBlocking().exchange(post, String::class.java)
         assertEquals(
-            "Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)",
+            """Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.""",
             messageResponse.body().trim()
         )
     }
