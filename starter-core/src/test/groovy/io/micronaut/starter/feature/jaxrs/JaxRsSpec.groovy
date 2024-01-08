@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.jaxrs
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -26,10 +29,11 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
                 .features([JaxRs.NAME, 'kapt'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, language, template)
 
         then:
-        template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
-        template.contains("$scope(\"io.micronaut.jaxrs:micronaut-jaxrs-processor\")")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-processor", scope)
 
         where:
         language        | scope
@@ -38,70 +42,26 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         Language.GROOVY | "compileOnly"
     }
 
-    void 'test maven jax-rs feature'() {
+    void 'test maven jax-rs feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
                 .features([JaxRs.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-            <path>
-              <groupId>io.micronaut.jaxrs</groupId>
-              <artifactId>micronaut-jaxrs-processor</artifactId>
-              <version>\${micronaut.jaxrs.version}</version>
-              <exclusions>
-                <exclusion>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject</artifactId>
-                </exclusion>
-              </exclusions>
-            </path>
-""")
+        verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
+        verifier.hasAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor")
 
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.KOTLIN)
-                .features([JaxRs.NAME])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.count('''\
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.jaxrs</groupId>
-                 <artifactId>micronaut-jaxrs-processor</artifactId>
-                 <version>${micronaut.jaxrs.version}</version>
-               </annotationProcessorPath>
-''') == 2
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.GROOVY)
-                .features([JaxRs.NAME])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
+        and:
+        if (language == Language.KOTLIN) {
+            assert verifier.hasTestAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor")
+        } else {
+            assert verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                    "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
+        }
+        where:
+        language << Language.values()
     }
 }
