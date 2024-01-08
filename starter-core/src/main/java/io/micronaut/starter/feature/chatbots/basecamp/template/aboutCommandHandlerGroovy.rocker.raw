@@ -33,6 +33,6 @@ class BasecampAboutCommandHandler implements BasecampHandler {
 
     @@Override
     public @@NonNull Optional<String> handle(@@Nullable BasecampBotConfiguration bot, @@NonNull @@NotNull Query input) {
-        return textResourceLoader.composeCommandResponse(ABOUT).map(CommandResponse::getText)
+        return textResourceLoader.composeCommandResponse(ABOUT).map(CommandResponse::text)
     }
 }
