@@ -22,7 +22,6 @@ class BasecampGcpChatBotFunctionSpec extends CommandSpec {
         String result = executeBuild(buildTool, "test")
 
         then:
-        println result
         result.contains("BUILD SUCCESS")
 
         where:
