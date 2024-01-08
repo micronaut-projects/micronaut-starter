@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 
 import static org.junit.jupiter.api.Assertions.assertEquals
-import static org.junit.jupiter.api.Assertions.assertInstanceOf
 import static org.junit.jupiter.api.Assertions.assertTrue
 
 @@MicronautTest(startApplication = false)
@@ -40,7 +39,6 @@ class BasecampAboutCommandHandlerTest {
     void aboutCommandHandlerExists() throws Exception {
         String send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query)).get()
 
-        assertInstanceOf(String, send)
         assertEquals("Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.", send.trim())
     }
 

@@ -13,7 +13,6 @@ import io.micronaut.json.JsonMapper
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertInstanceOf;
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
@@ -39,9 +38,8 @@ class BasecampAboutCommandHandlerTest {
     fun aboutCommandHandlerExists() {
         val send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query::class.java)).get()
 
-        assertInstanceOf(String::class.java, send)
         assertEquals(
-            "Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.",
+            """Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.""",
             send.trim()
         )
     }
