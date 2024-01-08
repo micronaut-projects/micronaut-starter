@@ -37,7 +37,7 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
         then:
         output.containsKey("src/main/$language.name/example/micronaut/BasecampAboutCommandHandler.$language.extension".toString())
         output.containsKey("src/main/$language.name/example/micronaut/BasecampFinalCommandHandler.$language.extension".toString())
-        output.containsKey("src/main/resources/botcommands/about.md")
+        output.containsKey("src/main/resources/botcommands/about.html")
         output.containsKey(language.getTestSourcePath("/example/micronaut/BasecampAboutCommandHandlerTest"))
         output.containsKey("src/test/resources/mockBasecampAboutCommand.json")
 

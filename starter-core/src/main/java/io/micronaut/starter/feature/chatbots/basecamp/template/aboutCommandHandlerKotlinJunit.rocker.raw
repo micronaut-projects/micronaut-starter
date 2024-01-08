@@ -41,7 +41,7 @@ class BasecampAboutCommandHandlerTest {
 
         assertInstanceOf(String::class.java, send)
         assertEquals(
-            "Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)",
+            "Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.",
             send.trim()
         )
     }

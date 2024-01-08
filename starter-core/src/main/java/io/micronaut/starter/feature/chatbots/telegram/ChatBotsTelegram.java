@@ -30,6 +30,7 @@ import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandl
 import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerKotlin;
 import io.micronaut.starter.feature.chatbots.telegram.template.mockAboutCommandJson;
 import io.micronaut.starter.feature.chatbots.telegram.template.telegramReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.about;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -65,7 +66,10 @@ abstract class ChatBotsTelegram extends ChatBots {
 
     @Override
     protected void renderTemplates(GeneratorContext generatorContext) {
-        super.renderTemplates(generatorContext);
+        generatorContext.addTemplate(
+                "about-markdown",
+                new RockerTemplate("src/main/resources/botcommands/about.md", about.template())
+        );
         generatorContext.addTemplate(
                 "about-command-handler",
                 generatorContext.getSourcePath("/{packagePath}/AboutCommandHandler"),

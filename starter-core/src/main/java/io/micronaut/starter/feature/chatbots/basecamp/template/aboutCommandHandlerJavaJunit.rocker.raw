@@ -41,7 +41,7 @@ class BasecampAboutCommandHandlerTest {
         String send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query.class)).get();
 
         assertInstanceOf(String.class, send);
-        assertEquals("Basecamp Bot developed with 💙 and [Micronaut](https://micronaut.io)", send.trim());
+        assertEquals("Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.", send.trim());
     }
 
     private String getAboutCommandJson() throws IOException {

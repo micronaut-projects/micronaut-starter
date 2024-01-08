@@ -30,6 +30,7 @@ import io.micronaut.starter.feature.chatbots.basecamp.template.finalCommandHandl
 import io.micronaut.starter.feature.chatbots.basecamp.template.finalCommandHandlerKotlin;
 import io.micronaut.starter.feature.chatbots.basecamp.template.mockAboutCommandJson;
 import io.micronaut.starter.feature.chatbots.basecamp.template.basecampReadme;
+import io.micronaut.starter.feature.chatbots.basecamp.template.about;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -57,7 +58,10 @@ abstract class ChatBotsBasecamp extends ChatBots {
 
     @Override
     protected void renderTemplates(GeneratorContext generatorContext) {
-        super.renderTemplates(generatorContext);
+        generatorContext.addTemplate(
+                "about-html",
+                new RockerTemplate("src/main/resources/botcommands/about.html", about.template())
+        );
         generatorContext.addTemplate(
                 "basecamp-about-command-handler",
                 generatorContext.getSourcePath("/{packagePath}/BasecampAboutCommandHandler"),

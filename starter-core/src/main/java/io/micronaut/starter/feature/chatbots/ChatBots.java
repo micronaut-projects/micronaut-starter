@@ -40,12 +40,7 @@ public abstract class ChatBots implements ChatBotsFeature {
         this.validationFeature = validationFeature;
     }
 
-    protected void renderTemplates(@NonNull GeneratorContext generatorContext) {
-        generatorContext.addTemplate(
-                "about-markdown",
-                new RockerTemplate("src/main/resources/botcommands/about.md", about.template(getChatBotType()))
-        );
-    }
+    protected abstract void renderTemplates(@NonNull GeneratorContext generatorContext);
 
     @Override
     public void apply(GeneratorContext generatorContext) {
