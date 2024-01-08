@@ -105,14 +105,10 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         String pattern = /(?s).*${gradleConfigurationName}\("${groupId.replace(".", "\\.")}:${artifactId}"\)\s*\{(.+?)\}/
         println pattern
         def match = template =~ pattern
-        if (match.size() > 0) {
-            if (buildTool == BuildTool.GRADLE) {
-                return match[0][1].contains("exclude(group: \"${excludedGroupId}\", module: \"${excludedArtifactId}\")")
-            } else {
-                return match[0][1].contains("exclude(group = \"${excludedGroupId}\", module = \"${excludedArtifactId}\"")
-            }
-        }
-        return false
+        String assignmentOp = (buildTool == BuildTool.GRADLE) ? ": " : " = "
+        return match.size() > 0
+                ? match[0][1].contains("exclude(group${assignmentOp}\"${excludedGroupId}\", module${assignmentOp}\"${excludedArtifactId}\")")
+                : false
     }
 
     @Override
