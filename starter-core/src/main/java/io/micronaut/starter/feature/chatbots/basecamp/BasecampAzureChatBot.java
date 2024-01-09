@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.chatbots.telegram;
+package io.micronaut.starter.feature.chatbots.basecamp;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
@@ -21,7 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.telegram.template.azureReadme;
+import io.micronaut.starter.feature.chatbots.basecamp.template.azureReadme;
 import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
@@ -37,19 +37,19 @@ import jakarta.inject.Singleton;
  * @since 4.3.0
  */
 @Singleton
-public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloudFeature, AzureMicronautRuntimeFeature {
+public class BasecampAzureChatBot extends ChatBotsBasecamp implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
-    public static final String NAME = "chatbots-telegram-azure-function";
+    public static final String NAME = "chatbots-basecamp-azure-function";
 
-    public static final Dependency CHATBOTS_TELEGRAM_AZURE_FUNCTION = MicronautDependencyUtils
+    public static final Dependency CHATBOTS_BASECAMP_AZURE_FUNCTION = MicronautDependencyUtils
             .chatBotsDependency()
-            .artifactId("micronaut-chatbots-telegram-azure-function")
+            .artifactId("micronaut-chatbots-basecamp-azure-function")
             .compile()
             .build();
 
     private final AzureRawFunction azureRawFunction;
 
-    public TelegramAzureChatBot(MicronautValidationFeature validationFeature, AzureRawFunction azureRawFunction) {
+    public BasecampAzureChatBot(MicronautValidationFeature validationFeature, AzureRawFunction azureRawFunction) {
         super(validationFeature);
         this.azureRawFunction = azureRawFunction;
     }
@@ -67,12 +67,12 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
 
     @Override
     public String getTitle() {
-        return "Telegram ChatBot as an Azure Function";
+        return "Basecamp ChatBot as an Azure Function";
     }
 
     @Override
     public String getDescription() {
-        return "Generates an application that can be deployed as an Azure Function that implements a Telegram ChatBot";
+        return "Generates an application that can be deployed as an Azure Function that implements a Basecamp ChatBot";
     }
 
     @Override
@@ -94,7 +94,7 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
 
     @Override
     protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(CHATBOTS_TELEGRAM_AZURE_FUNCTION);
+        generatorContext.addDependency(CHATBOTS_BASECAMP_AZURE_FUNCTION);
     }
 
     @Override

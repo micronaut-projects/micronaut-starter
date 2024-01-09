@@ -6,6 +6,10 @@ import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.feature.architecture.CpuArchitecture
 import io.micronaut.starter.feature.architecture.X86
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampAwsChatBot
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampAzureChatBot
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampGcpChatBot
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampHttpChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot
@@ -30,7 +34,8 @@ class CreateChatBotBuilderCommandSpec extends Specification {
     }
     /*
 Choose your ChatBot type. (enter for Telegram)
-*1) Telegram - A chat bot for the telegram messaging platform
+ 1) Basecamp - A chat bot for Basecamp chats
+*2) Telegram - A chat bot for the Telegram messaging platform
 >
 
 Choose your preferred deployment. (enter for default)
@@ -140,13 +145,13 @@ Choose the target JDK. (enter for default)
         List<String> getFeatures() {
             switch (applicationType) {
                 case CreateChatBotBuilderCommand.ChatBotDeployment.LAMBDA:
-                    return [TelegramAwsChatBot.NAME, cpuArchitecture.getName()] + (cdk ? [LambdaFunctionUrl.NAME] : [])
+                    return [chatBotType == CreateChatBotBuilderCommand.ChatBotType.BASECAMP ? BasecampAwsChatBot.NAME : TelegramAwsChatBot.NAME, cpuArchitecture.getName()] + (cdk ? [LambdaFunctionUrl.NAME] : [])
                 case CreateChatBotBuilderCommand.ChatBotDeployment.AZURE:
-                    return [TelegramAzureChatBot.NAME]
+                    return [chatBotType == CreateChatBotBuilderCommand.ChatBotType.BASECAMP ? BasecampAzureChatBot.NAME : TelegramAzureChatBot.NAME]
                 case CreateChatBotBuilderCommand.ChatBotDeployment.GCP:
-                    return [TelegramGcpChatBot.NAME]
+                    return [chatBotType == CreateChatBotBuilderCommand.ChatBotType.BASECAMP ? BasecampGcpChatBot.NAME : TelegramGcpChatBot.NAME]
                 case CreateChatBotBuilderCommand.ChatBotDeployment.HTTP:
-                    return [TelegramHttpChatBot.NAME]
+                    return [chatBotType == CreateChatBotBuilderCommand.ChatBotType.BASECAMP ? BasecampHttpChatBot.NAME : TelegramHttpChatBot.NAME]
             }
         }
 

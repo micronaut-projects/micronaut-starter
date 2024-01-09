@@ -77,6 +77,10 @@ startScripts {
     applicationName = 'mn'
 }
 
+run {
+    standardInput = System.in
+}
+
 sdkman {
     api = "https://vendors.sdkman.io"
     consumerKey = System.getenv("GVM_SDKVENDOR_KEY") ?: project.hasProperty("gvmSdkvendorKey") ? project.gvmSdkvendorKey : ''

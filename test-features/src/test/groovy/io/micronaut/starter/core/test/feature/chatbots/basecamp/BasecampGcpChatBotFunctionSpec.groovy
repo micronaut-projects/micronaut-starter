@@ -1,17 +1,17 @@
-package io.micronaut.starter.core.test.feature.chatbots
+package io.micronaut.starter.core.test.feature.chatbots.basecamp
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot
+import io.micronaut.starter.feature.chatbots.basecamp.BasecampGcpChatBot
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 
-class TelegramGcpChatBotFunctionSpec extends CommandSpec {
+class BasecampGcpChatBotFunctionSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
-        return "telegramGcpChatBotFunctionSpec"
+        return "basecampGcpChatBotFunctionSpec"
     }
 
     void "#testFramework test #feature feature in #language with #buildTool"(BuildTool buildTool, Language language, TestFramework testFramework) {
@@ -22,11 +22,10 @@ class TelegramGcpChatBotFunctionSpec extends CommandSpec {
         String result = executeBuild(buildTool, "test")
 
         then:
-        println result
         result.contains("BUILD SUCCESS")
 
         where:
         [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
-        feature = TelegramGcpChatBot.NAME
+        feature = BasecampGcpChatBot.NAME
     }
 }

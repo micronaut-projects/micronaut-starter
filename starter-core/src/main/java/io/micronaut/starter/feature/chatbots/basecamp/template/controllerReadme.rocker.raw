@@ -1,0 +1,13 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+
+@args (
+Project project,
+Features features,
+String buildCommand
+)
+
+This project has a dependency on `micronaut-chatbots-basecamp-http` which has added a controller to your application with the path `/basecamp`.
+
+When registering your bot with Basecamp, you will need to provide the HTTPS URL of your application including this path.
+If you are running your application locally, you can use a tool like [ngrok](https://ngrok.com/) to expose your application to the internet.
