@@ -87,8 +87,10 @@ io.micronaut.starter.feature.buildless
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
 io.micronaut.starter.feature.chatbots
+io.micronaut.starter.feature.chatbots.basecamp
+io.micronaut.starter.feature.chatbots.basecamp.template
 io.micronaut.starter.feature.chatbots.telegram
-io.micronaut.starter.feature.chatbots.template
+io.micronaut.starter.feature.chatbots.telegram.template
 io.micronaut.starter.feature.ci.workflows
 io.micronaut.starter.feature.ci.workflows.aws
 io.micronaut.starter.feature.ci.workflows.aws.templates
