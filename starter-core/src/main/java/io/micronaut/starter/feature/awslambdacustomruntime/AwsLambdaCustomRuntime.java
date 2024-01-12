@@ -35,7 +35,7 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLam
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.feature.other.HttpClient;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
@@ -51,11 +51,11 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
 
     private final Provider<AwsLambda> awsLambda;
-    private final HttpClient httpClient;
+    private final HttpClientJdk httpClientJdk;
 
-    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClient httpClient) {
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClientJdk httpClientJdk) {
         this.awsLambda = awsLambda;
-        this.httpClient = httpClient;
+        this.httpClientJdk = httpClientJdk;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
             featureContext.addFeature(awsLambda);
         }
-        if (!featureContext.isPresent(HttpClient.class)) {
-            featureContext.addFeature(httpClient);
+        if (!featureContext.isPresent(HttpClientJdk.class)) {
+            featureContext.addFeature(httpClientJdk);
         }
     }
 

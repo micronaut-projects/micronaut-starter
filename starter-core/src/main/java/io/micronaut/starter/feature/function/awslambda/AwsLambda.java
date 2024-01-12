@@ -23,7 +23,11 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.*;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.CodeContributingFeature;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
@@ -56,8 +60,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.feature.json.SerializationJacksonFeature;
-import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -111,7 +115,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final AwsLambdaCustomRuntime customRuntime;
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
-    private final HttpClient httpClient;
+    private final HttpClientJdk httpClientJdk;
 
     private final AwsLambdaEventsSerde awsLambdaEventsSerde;
 
@@ -122,7 +126,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
                      AwsLambdaSnapstart snapstart,
-                     HttpClient httpClient,
+                     HttpClientJdk httpClientJdk,
                      AwsLambdaEventsSerde awsLambdaEventsSerde,
                      DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
                      FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
@@ -130,7 +134,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = x86;
         this.snapstart = snapstart;
-        this.httpClient = httpClient;
+        this.httpClientJdk = httpClientJdk;
         this.awsLambdaEventsSerde = awsLambdaEventsSerde;
         this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
         this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
@@ -155,7 +159,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         }
 
         if (featureContext.isPresent(GraalVM.class) && !featureContext.isPresent(HttpClientFeature.class)) {
-            featureContext.addFeature(httpClient);
+            featureContext.addFeature(httpClientJdk);
         }
 
         if (shouldAddSnapstartFeature(featureContext)) {
