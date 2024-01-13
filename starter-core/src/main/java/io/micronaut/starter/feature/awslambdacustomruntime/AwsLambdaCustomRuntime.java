@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.awslambdacustomruntime;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -37,6 +38,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.template.RockerWritable;
+import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
@@ -53,9 +55,22 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     private final Provider<AwsLambda> awsLambda;
     private final HttpClientJdk httpClientJdk;
 
-    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClientJdk httpClientJdk) {
+    @Inject
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda,
+                                  HttpClientJdk httpClientJdk) {
         this.awsLambda = awsLambda;
         this.httpClientJdk = httpClientJdk;
+    }
+
+    /**
+     *
+     * @param awsLambda AWS Lambda
+     * @param httpClient Netty HTTP Client
+     * @deprecated Use {@link #AwsLambdaCustomRuntime(Provider, HttpClientJdk)} instead.
+     */
+    @Deprecated
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClient httpClient) {
+        this(awsLambda, new HttpClientJdk());
     }
 
     @Override
