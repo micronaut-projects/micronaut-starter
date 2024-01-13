@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -69,6 +70,7 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -122,6 +124,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
     private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
+    @Inject
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
@@ -138,6 +141,28 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         this.awsLambdaEventsSerde = awsLambdaEventsSerde;
         this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
         this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
+    }
+
+    /**
+     * @deprecated Use {@link #AwsLambda(ShadePlugin, AwsLambdaCustomRuntime, X86, AwsLambdaSnapstart, HttpClientJdk, AwsLambdaEventsSerde, DefaultAwsLambdaHandlerProvider, FunctionAwsLambdaHandlerProvider)} instead.
+     */
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86,
+                     AwsLambdaSnapstart snapstart,
+                     HttpClient httpClient,
+                     AwsLambdaEventsSerde awsLambdaEventsSerde,
+                     DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
+                     FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
+        this(shadePlugin,
+                customRuntime,
+                x86,
+                snapstart,
+                new HttpClientJdk(),
+                awsLambdaEventsSerde,
+                defaultAwsLambdaHandlerProvider,
+                functionAwsLambdaHandlerProvider);
     }
 
     @Override
