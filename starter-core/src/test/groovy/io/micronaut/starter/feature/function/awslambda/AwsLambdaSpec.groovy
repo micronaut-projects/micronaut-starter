@@ -516,9 +516,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime")
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws-api-proxy', Scope.COMPILE)
-
-        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.TEST)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
