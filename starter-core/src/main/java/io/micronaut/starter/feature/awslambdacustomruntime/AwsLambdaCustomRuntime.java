@@ -36,6 +36,7 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLam
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Inject;
@@ -79,7 +80,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
             featureContext.addFeature(awsLambda);
         }
-        if (!featureContext.isPresent(HttpClientJdk.class)) {
+        if (!featureContext.isPresent(HttpClientFeature.class)) {
             featureContext.addFeature(httpClientJdk);
         }
     }
