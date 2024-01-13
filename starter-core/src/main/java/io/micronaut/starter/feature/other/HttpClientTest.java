@@ -76,9 +76,7 @@ public class HttpClientTest implements DefaultFeature {
                 generatorContext.addDependency(HttpClientJdk.DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
             } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
                 generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
-                if (generatorContext.getFeatures().hasFeature(AwsLambda.class)) {
-                    generatorContext.addDependency(HttpClientJdk.DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK_COMPILE_ONLY);
-                } else if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
+                if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
                     generatorContext.addDependency(DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);
                 }
             }
