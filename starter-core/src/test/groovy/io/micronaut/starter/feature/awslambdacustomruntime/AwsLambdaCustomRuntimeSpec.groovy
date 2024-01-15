@@ -115,7 +115,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime", Scope.COMPILE)
         and: 'http-client dependency is in compile scope'
-        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
         language        | applicationType
@@ -138,7 +138,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
         language        | applicationType
