@@ -64,18 +64,17 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder jaxrs = Dependency.builder()
-                .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId(MICRONAUT_JAXRS_PROCESSOR)
-                .versionProperty(MICRONAUT_JAXRS_VERSION)
-                .template();
-
-        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+        Dependency.Builder annotationProcessor = MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
                 MICRONAUT_JAX_RS_GROUP,
                 MICRONAUT_JAXRS_PROCESSOR,
-                MICRONAUT_JAXRS_VERSION));
+                MICRONAUT_JAXRS_VERSION);
+        Dependency.Builder testAnnotationProcessor = MicronautDependencyUtils.testAnnotationProcessor(generatorContext.getBuildTool(),
+                MICRONAUT_JAX_RS_GROUP,
+                MICRONAUT_JAXRS_PROCESSOR,
+                MICRONAUT_JAXRS_VERSION);
 
-        generatorContext.addDependency(jaxrs.testAnnotationProcessor());
+        generatorContext.addDependency(annotationProcessor);
+        generatorContext.addDependency(testAnnotationProcessor);
         generatorContext.addDependency(Dependency.builder()
                 .groupId(MICRONAUT_JAX_RS_GROUP)
                 .artifactId("micronaut-jaxrs-server")
