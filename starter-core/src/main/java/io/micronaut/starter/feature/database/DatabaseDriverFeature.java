@@ -32,7 +32,11 @@ import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
 
