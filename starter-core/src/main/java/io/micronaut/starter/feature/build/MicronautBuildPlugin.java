@@ -34,24 +34,25 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
+import io.micronaut.starter.feature.database.Data;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.HibernateReactiveFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
-import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature {
@@ -167,19 +168,19 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
         if (generatorContext.getFeatures().hasFeature(TestResources.class)) {
-            for (String addAdditionalTestResourceModule : generatorContext.getFeatures().getFeatures()
-                    .stream()
-                    .filter(TestResourcesAdditionalModulesProvider.class::isInstance)
-                    .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesAdditionalModules(generatorContext))
-                    .flatMap(List::stream)
-                    .collect(Collectors.toSet())) {
-                builder.addAdditionalTestResourceModules(addAdditionalTestResourceModule);
+            Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
+            if (
+                    (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) &&
+                            databaseDriverFeature.isPresent()
+            ) {
+                databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
+                        .map(dbType -> getModuleName(generatorContext, dbType))
+                        .ifPresent(builder::addAdditionalTestResourceModules);
             }
             if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
                 builder = builder.withSharedTestResources();
             }
         }
-
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
@@ -191,6 +192,16 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
             }
         }
         return builder.id(id);
+    }
+
+    private String getModuleName(GeneratorContext generatorContext, DbType dbType) {
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            return dbType.getR2dbcTestResourcesModuleName();
+        } else if (generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) {
+            return dbType.getHibernateReactiveTestResourcesModuleName();
+        } else {
+            return dbType.getJdbcTestResourcesModuleName();
+        }
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
