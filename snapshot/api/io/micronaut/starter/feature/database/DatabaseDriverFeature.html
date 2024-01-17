@@ -79,7 +79,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="DatabaseDriverFeatureDependencies.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeatureDependencies</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code>, <code><a href="../testresources/TestResourcesAdditionalModulesProvider.html" title="interface in io.micronaut.starter.feature.testresources">TestResourcesAdditionalModulesProvider</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="DatabaseDriverFeatureDependencies.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeatureDependencies</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -88,7 +88,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">DatabaseDriverFeature</span>
 <span class="extends-implements">extends <a href="../testresources/EaseTestingFeature.html" title="class in io.micronaut.starter.feature.testresources">EaseTestingFeature</a>
-implements <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>, <a href="DatabaseDriverFeatureDependencies.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeatureDependencies</a>, <a href="../testresources/TestResourcesAdditionalModulesProvider.html" title="interface in io.micronaut.starter.feature.testresources">TestResourcesAdditionalModulesProvider</a></span></div>
+implements <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>, <a href="DatabaseDriverFeatureDependencies.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeatureDependencies</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -169,21 +169,18 @@ implements <a href="../OneOfFeature.html" title="interface in io.micronaut.start
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getR2dbcUrl()" class="member-name-link">getR2dbcUrl</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTestResourcesAdditionalModules(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">getTestResourcesAdditionalModules</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">parseDependencies</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">parseDependencies</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
  application types.</div>
 </div>
@@ -345,18 +342,6 @@ implements <a href="../OneOfFeature.html" title="interface in io.micronaut.start
 <h3>getDbType</h3>
 <div class="member-signature"><span class="annotations">@NonNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="../testresources/DbType.html" title="enum class in io.micronaut.starter.feature.testresources">DbType</a>&gt;</span>&nbsp;<span class="element-name">getDbType</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getTestResourcesAdditionalModules(io.micronaut.starter.application.generator.GeneratorContext)">
-<h3>getTestResourcesAdditionalModules</h3>
-<div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getTestResourcesAdditionalModules</span><wbr><span class="parameters">(@NonNull
- @NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../testresources/TestResourcesAdditionalModulesProvider.html#getTestResourcesAdditionalModules(io.micronaut.starter.application.generator.GeneratorContext)">getTestResourcesAdditionalModules</a></code>&nbsp;in interface&nbsp;<code><a href="../testresources/TestResourcesAdditionalModulesProvider.html" title="interface in io.micronaut.starter.feature.testresources">TestResourcesAdditionalModulesProvider</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
