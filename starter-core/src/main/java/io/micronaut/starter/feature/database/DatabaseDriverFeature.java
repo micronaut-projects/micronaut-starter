@@ -143,7 +143,8 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
                         } else {
                             return dbType.getJdbcTestResourcesModuleName();
                         }
-                    }).map(resourceName -> new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-" + resourceName, null))
+                    })
+                    .map(resourceName -> new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-" + resourceName, null))
                     .ifPresent(dependencies::add);
         }
         if ((generatorContext.isFeaturePresent(HibernateReactiveFeature.class) || generatorContext.isFeaturePresent(R2dbc.class))
