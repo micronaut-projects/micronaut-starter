@@ -7,11 +7,11 @@ import io.micronaut.starter.options.Language
 
 class SQSSpec  extends ApplicationContextSpec {
 
-    void 'test localstack-sqs test-resources module is added'() {
+    void 'test localstack-sqs test-resources module is added'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['jms-sqs', 'test-resources'])
-                .language(Language.JAVA)
+                .language(language)
                 .render()
 
         then:
