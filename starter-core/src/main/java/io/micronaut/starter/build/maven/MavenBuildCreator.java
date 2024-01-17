@@ -36,8 +36,6 @@ import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Singleton
 public class MavenBuildCreator {
@@ -97,14 +95,7 @@ public class MavenBuildCreator {
                 .filter(MavenPlugin.class::isInstance)
                 .map(MavenPlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
-                .collect(Collectors.toList());
-
-        Set<MavenCoordinate> testResourcesDependencies = generatorContext.getFeatures().getFeatures()
-                .stream()
-                .filter(TestResourcesAdditionalModulesProvider.class::isInstance)
-                .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesDependencies(generatorContext))
-                .flatMap(List::stream)
-                .collect(Collectors.toSet());
+                .toList();
 
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
@@ -128,6 +119,6 @@ public class MavenBuildCreator {
                 .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesDependencies(generatorContext))
                 .flatMap(List::stream)
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
 }
