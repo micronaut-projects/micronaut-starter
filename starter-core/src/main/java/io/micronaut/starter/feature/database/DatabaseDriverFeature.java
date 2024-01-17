@@ -29,6 +29,7 @@ import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature, DatabaseDriverFeatureDependencies {
+public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature, DatabaseDriverFeatureDependencies, TestResourcesAdditionalModulesProvider {
 
     private final JdbcFeature jdbcFeature;
 
@@ -102,6 +103,25 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     @NonNull
     public Optional<DbType> getDbType() {
         return Optional.empty();
+    }
+
+    @Override
+    @NonNull
+    public List<String> getTestResourcesAdditionalModules(@NonNull GeneratorContext generatorContext) {
+        if (
+                (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
+        ) {
+            return getDbType().map(dbType -> {
+                if (generatorContext.isFeaturePresent(R2dbc.class)) {
+                    return Collections.singletonList(dbType.getR2dbcTestResourcesModuleName());
+                } else if (generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) {
+                    return Collections.singletonList(dbType.getHibernateReactiveTestResourcesModuleName());
+                } else {
+                    return Collections.singletonList(dbType.getJdbcTestResourcesModuleName());
+                }
+            }).orElseGet(Collections::emptyList);
+        }
+        return Collections.emptyList();
     }
 
     public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {

@@ -18,10 +18,15 @@ package io.micronaut.starter.feature.messaging.jms;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.testresources.buildtools.KnownModules;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+
 @Singleton
-public class SQS extends AbstractJmsFeature {
+public class SQS extends AbstractJmsFeature implements TestResourcesAdditionalModulesProvider {
 
     public static final String NAME = "jms-sqs";
 
@@ -47,5 +52,10 @@ public class SQS extends AbstractJmsFeature {
         generatorContext.addDependency(MicronautDependencyUtils.jmsDependency()
                 .artifactId("micronaut-jms-sqs")
                 .compile());
+    }
+
+    @Override
+    public List<String> getTestResourcesAdditionalModules(GeneratorContext generatorContext) {
+        return Collections.singletonList(KnownModules.LOCALSTACK_SQS);
     }
 }
