@@ -29,12 +29,14 @@ class SQSSpec  extends ApplicationContextSpec {
     void 'test localstack-sqs test-resources module is added for Maven'() {
         given:
         BuildTool buildTool = BuildTool.MAVEN
+
         when:
         String template = new BuildBuilder(beanContext, buildTool)
             .features(['jms-sqs', 'test-resources'])
             .language(Language.JAVA)
             .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
         then:
         verifier.hasTestResourceDependency("micronaut-test-resources-localstack-sqs")
     }
