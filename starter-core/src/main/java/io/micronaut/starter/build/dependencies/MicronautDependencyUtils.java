@@ -29,6 +29,7 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
 
+    public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";

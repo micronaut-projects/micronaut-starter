@@ -20,20 +20,15 @@ import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.Repository;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Phase;
-import io.micronaut.starter.build.dependencies.Priority;
-import io.micronaut.starter.build.dependencies.Scope;
-import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.build.dependencies.*;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -96,6 +91,13 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
 
+        Set<MavenCoordinate> testResourcesDependencies = generatorContext.getFeatures().getFeatures()
+                .stream()
+                .filter(TestResourcesAdditionalModulesProvider.class::isInstance)
+                .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesDependencies(generatorContext))
+                .flatMap(List::stream)
+                .collect(Collectors.toSet());
+
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
@@ -106,6 +108,18 @@ public class MavenBuildCreator {
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles(),
-                generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList());
+                generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList(),
+                testResourcesDependencies(generatorContext));
+    }
+
+    @NonNull
+    private static List<MavenCoordinate> testResourcesDependencies(@NonNull GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().getFeatures()
+                .stream()
+                .filter(TestResourcesAdditionalModulesProvider.class::isInstance)
+                .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesDependencies(generatorContext))
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

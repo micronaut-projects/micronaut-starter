@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.messaging.jms;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.testresources.buildtools.KnownModules;
@@ -24,6 +25,8 @@ import jakarta.inject.Singleton;
 
 import java.util.Collections;
 import java.util.List;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
 
 @Singleton
 public class SQS extends AbstractJmsFeature implements TestResourcesAdditionalModulesProvider {
@@ -57,5 +60,10 @@ public class SQS extends AbstractJmsFeature implements TestResourcesAdditionalMo
     @Override
     public List<String> getTestResourcesAdditionalModules(GeneratorContext generatorContext) {
         return Collections.singletonList(KnownModules.LOCALSTACK_SQS);
+    }
+
+    @Override
+    public List<MavenCoordinate> getTestResourcesDependencies(GeneratorContext generatorContext) {
+        return Collections.singletonList(new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-localstack-sqs", null));
     }
 }

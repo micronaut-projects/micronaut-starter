@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
@@ -31,11 +32,9 @@ import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
 
 public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature, DatabaseDriverFeatureDependencies, TestResourcesAdditionalModulesProvider {
 
@@ -109,7 +108,7 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     @NonNull
     public List<String> getTestResourcesAdditionalModules(@NonNull GeneratorContext generatorContext) {
         if (
-                (!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
+                (!generatorContext.isFeaturePresent(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
         ) {
             return getDbType().map(dbType -> {
                 if (generatorContext.isFeaturePresent(R2dbc.class)) {
@@ -122,6 +121,37 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
             }).orElseGet(Collections::emptyList);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    @NonNull
+    public List<MavenCoordinate> getTestResourcesDependencies(@NonNull GeneratorContext generatorContext) {
+        List<MavenCoordinate> dependencies = new ArrayList<>();
+        if (
+                (!generatorContext.isFeaturePresent(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class) || generatorContext.isFeaturePresent(R2dbc.class))
+        ) {
+            getDbType()
+                    .map(dbType -> {
+                        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+                            return dbType.getR2dbcTestResourcesModuleName();
+                        } else if (generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) {
+                            return dbType.getHibernateReactiveTestResourcesModuleName();
+                        } else {
+                            return dbType.getJdbcTestResourcesModuleName();
+                        }})
+                    .map(resourceName -> new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-" + resourceName, null))
+                    .ifPresent(dependencies::add);
+        }
+        if ((generatorContext.isFeaturePresent(HibernateReactiveFeature.class) || generatorContext.isFeaturePresent(R2dbc.class))
+                && generatorContext.isFeaturePresent(DatabaseDriverFeature.class)
+                && !generatorContext.isFeaturePresent(MigrationFeature.class)
+        ) {
+            generatorContext.getFeature(DatabaseDriverFeature.class)
+                    .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
+                    .map(Dependency.Builder::build)
+                    .ifPresent(driver -> dependencies.add(new MavenCoordinate(driver.getGroupId(), driver.getArtifactId(), null)));
+        }
+        return dependencies;
     }
 
     public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {

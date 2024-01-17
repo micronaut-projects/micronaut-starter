@@ -17,12 +17,15 @@ package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 
 import java.util.List;
 
-@FunctionalInterface
 public interface TestResourcesAdditionalModulesProvider {
 
     @NonNull
     List<String> getTestResourcesAdditionalModules(@NonNull GeneratorContext generatorContext);
+
+    @NonNull
+    List<MavenCoordinate> getTestResourcesDependencies(@NonNull GeneratorContext generatorContext);
 }
