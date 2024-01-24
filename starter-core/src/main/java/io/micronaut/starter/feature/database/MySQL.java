@@ -16,12 +16,14 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Singleton
@@ -108,6 +110,16 @@ public class MySQL extends MySQLCompatibleFeature {
     @NonNull
     public Optional<Dependency.Builder> getR2DbcDependency() {
         return Optional.of(DEPENDENCY_R2DBC_MYSQL);
+    }
+
+    @Override
+    public Map<String, Object> getAdditionalConfig(GeneratorContext generatorContext) {
+        if (generatorContext.isFeaturePresent(TestResources.class)) {
+            // MySql 8.3 doesn't work with TestContainers 1.19.3 https://github.com/testcontainers/testcontainers-java/issues/8130
+            return Map.of("test-resources.containers.mysql.image-name", "mysql:8.2");
+        } else {
+            return super.getAdditionalConfig(generatorContext);
+        }
     }
 
     @Override

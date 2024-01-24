@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.jdbc.Hikari;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
@@ -115,7 +116,13 @@ public class R2dbc implements R2dbcFeature {
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
             generatorContext.getConfiguration().putAll(rdbcConfig);
         } else {
-            dbFeature.getDbType().ifPresent(type -> generatorContext.getConfiguration().addNested("r2dbc.datasources.default.db-type", type.toString()));
+            dbFeature.getDbType().ifPresent(type -> {
+                generatorContext.getConfiguration().addNested("r2dbc.datasources.default.db-type", type.toString());
+                // MySql 8.3 doesn't work with TestContainers 1.19.3 https://github.com/testcontainers/testcontainers-java/issues/8130
+                if (type == DbType.MYSQL) {
+                    generatorContext.getConfiguration().addNested("test-resources.containers.mysql.image-name", "mysql:8.2");
+                }
+            });
             generatorContext.getConfiguration().addNested("r2dbc.datasources.default.dialect", dbFeature.getDataDialect());
         }
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
