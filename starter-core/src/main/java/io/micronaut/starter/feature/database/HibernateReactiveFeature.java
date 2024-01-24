@@ -61,13 +61,9 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
             generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
                     migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
         } else {
-            optionalDbType.ifPresent(type -> {
-                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString());
-                // MySql 8.3 doesn't work with TestContainers 1.19.3 https://github.com/testcontainers/testcontainers-java/issues/8130
-                if (type == DbType.MYSQL) {
-                    generatorContext.getConfiguration().addNested("test-resources.containers.mysql.image-name", "mysql:8.2");
-                }
-            });
+            optionalDbType.ifPresent(type ->
+                    generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString())
+            );
         }
         if (optionalDbType.isPresent()) {
             DbType dbType = optionalDbType.get();
