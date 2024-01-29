@@ -34,8 +34,8 @@ dependencies {
 
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
 
-    implementation 'org.shredzone.acme4j:acme4j-client:2.16'
     implementation 'org.shredzone.acme4j:acme4j-utils:2.12'
+    implementation("org.shredzone.acme4j:acme4j-client")
 
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 
