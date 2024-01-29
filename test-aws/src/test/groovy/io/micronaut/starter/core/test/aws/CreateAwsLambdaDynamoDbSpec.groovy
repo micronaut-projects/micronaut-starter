@@ -32,5 +32,7 @@ class CreateAwsLambdaDynamoDbSpec extends CommandSpec {
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])
+                .stream()
+                .filter(l -> !(l[1] == Language.KOTLIN && l[2] == BuildTool.MAVEN) ) // Caused by: java.lang.NoSuchMethodError: Micronaut method io.micronaut.context.DefaultBeanContext.getProxyTargetBean(BeanResolutionContext,BeanDefinition,Argument,Qualifier) not found. Most likely reason for this issue is that you are running a newer version of Micronaut with code compiled against an older version. Please recompile the offending classe"
     }
 }
