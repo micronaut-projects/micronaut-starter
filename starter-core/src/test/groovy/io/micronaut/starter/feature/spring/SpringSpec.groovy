@@ -24,8 +24,8 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
 
     void 'test readme.md with feature spring contains links to micronaut docs'() {
         when:
-        def output = generate(['spring'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['spring'])
+        String readme = output["README.md"]
 
         then:
         readme

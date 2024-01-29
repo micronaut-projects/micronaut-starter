@@ -15,8 +15,8 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature microstream contains links to micronaut docs'() {
         when:
-        def output = generate(['microstream'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['microstream'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
@@ -25,8 +25,8 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature microstream-rest contains links to micronaut docs'() {
         when:
-        def output = generate(['microstream-rest'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['microstream-rest'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
@@ -37,8 +37,8 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature microstream-cache contains links to micronaut docs'() {
         when:
-        def output = generate(['microstream-cache'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['microstream-cache'])
+        String readme = output["README.md"]
 
         then:
         !readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")

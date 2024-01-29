@@ -7,8 +7,8 @@ class HibernateValidatorSpec extends BeanContextSpec  implements CommandOutputFi
 
     void 'test readme.md contains links to micronaut docs'() {
         when:
-        def output = generate(['hibernate-validator'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['hibernate-validator'])
+        String readme = output["README.md"]
 
         then:
         readme

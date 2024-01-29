@@ -16,8 +16,8 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
 
     void 'test readme.md with feature jax-rs-security contains links to micronaut docs'() {
         when:
-        def output = generate(['security', JaxRs.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security', JaxRs.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

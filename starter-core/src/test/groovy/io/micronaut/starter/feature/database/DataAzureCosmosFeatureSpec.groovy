@@ -20,8 +20,8 @@ class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements Comma
 
     void 'test README.md with feature data-azure-cosmos contains links to micronaut and microsoft docs'() {
         when:
-        def output = generate(['data-azure-cosmos'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['data-azure-cosmos'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Data Azure Cosmos documentation](https://micronaut-projects.github.io/micronaut-data/latest/guide/#azureCosmos)")

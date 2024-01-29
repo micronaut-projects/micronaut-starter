@@ -51,13 +51,13 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
 
     void 'test gradle raw azure function feature for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
                 ['azure-function']
         )
         String build = output['build.gradle']
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         build.contains('id("com.microsoft.azure.azurefunctions")')
@@ -134,12 +134,12 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
 
     void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
@@ -164,13 +164,13 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
 
     void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         build.count('<artifactId>azure-functions-maven-plugin</artifactId>') == 1

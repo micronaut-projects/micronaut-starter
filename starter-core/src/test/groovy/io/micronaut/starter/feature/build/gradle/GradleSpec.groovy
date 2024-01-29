@@ -127,9 +127,9 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def features = (apptype == ApplicationType.CLI && lang == Language.KOTLIN) ? [Kapt.NAME] : []
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk), features)
-        def readme = output["README.md"]
+        List<String> features = (apptype == ApplicationType.CLI && lang == Language.KOTLIN) ? [Kapt.NAME] : []
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk), features)
+        String readme = output["README.md"]
 
         then:
         readme
@@ -149,8 +149,8 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        String readme = output["README.md"]
 
         then:
         readme

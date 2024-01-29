@@ -14,8 +14,8 @@ class DockerRegistryWorkflowSpec extends BeanContextSpec implements CommandOutpu
 
     void 'test github workflow readme'(){
         when:
-        def output = generate([DockerRegistryWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([DockerRegistryWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme

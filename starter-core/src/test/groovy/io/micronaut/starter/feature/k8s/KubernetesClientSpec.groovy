@@ -15,8 +15,8 @@ class KubernetesClientSpec extends ApplicationContextSpec  implements CommandOut
 
     void 'test readme.md with feature kubernetes-client contains links to docs'() {
         when:
-        def output = generate(['kubernetes-client'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kubernetes-client'])
+        String readme = output["README.md"]
 
         then:
         readme
