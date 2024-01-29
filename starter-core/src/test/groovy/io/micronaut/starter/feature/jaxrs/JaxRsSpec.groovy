@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 import spock.lang.Unroll
 
 class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -64,4 +65,5 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         where:
         language << Language.values()
     }
+
 }
