@@ -8,7 +8,6 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Issue
 import spock.lang.Unroll
 
 class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -43,13 +42,15 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         Language.GROOVY | "compileOnly"
     }
 
-    void 'test maven jax-rs feature for language=#language'() {
+    void 'test maven jax-rs feature for language=#language'(Language language) {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features([JaxRs.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
