@@ -321,6 +321,7 @@ public final class MicronautDependencyUtils {
         Dependency.Builder dependency = Dependency.builder()
                 .groupId(groupId)
                 .artifactId(artifactId)
+                .exclude(MICRONAUT_INJECT)
                 .versionProperty(propertyName);
 
         return isTestScope ? dependency.testAnnotationProcessor(requiresPriority) : dependency.annotationProcessor(requiresPriority);
