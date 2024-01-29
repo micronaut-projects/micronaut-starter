@@ -28,7 +28,7 @@ public final class MicronautDependencyUtils {
             .build();
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
-
+    public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
@@ -81,6 +81,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
+    }
+
+    @NonNull
+    public static Dependency.Builder jaxrsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JAXRS);
     }
 
     @NonNull
