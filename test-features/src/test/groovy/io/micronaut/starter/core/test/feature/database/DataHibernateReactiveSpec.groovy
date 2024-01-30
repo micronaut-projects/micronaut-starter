@@ -14,6 +14,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -38,6 +39,9 @@ class DataHibernateReactiveSpec extends CommandSpec {
 
         where:
         db << featuresNames()
+                .stream()
+                .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .toList()
     }
 
     void "test #buildTool data-hibernate-reactive with java and #db"(BuildTool buildTool, String db) {
@@ -52,7 +56,11 @@ class DataHibernateReactiveSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()].combinations()
+        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
+                .stream()
+                .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .toList()
+        ].combinations()
     }
 
     private static List<String> featuresNames() {

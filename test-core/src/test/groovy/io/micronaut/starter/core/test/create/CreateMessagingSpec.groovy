@@ -9,7 +9,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
-import org.gradle.internal.os.OperatingSystem
+import io.micronaut.starter.test.PredicateUtils
 import spock.lang.Unroll
 import java.util.stream.Collectors
 
@@ -36,12 +36,8 @@ class CreateMessagingSpec extends CommandSpec {
         where:
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
                 beanContext.streamOfType(MessagingFeature.class)
-                        .filter( f -> {
-                            if (f.name == 'jms-oracle-aq') {
-                                return !OperatingSystem.current().isMacOsX()
-                            }
-                            return true
-                        })
+                        .map(Feature::getName)
+                        .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of( 'jms-oracle-aq')).test(f))
                         .map(Feature::getName)
                         .filter( f -> !isCi() || (f != "jms-sqs" && isCi()))
                         .collect(Collectors.toList()))
