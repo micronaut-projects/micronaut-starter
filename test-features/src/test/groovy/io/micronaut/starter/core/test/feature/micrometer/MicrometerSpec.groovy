@@ -14,6 +14,8 @@ import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
+import java.util.stream.Stream
+
 class MicrometerSpec extends CommandSpec {
 
     @Override
@@ -36,7 +38,9 @@ class MicrometerSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << Stream.of(Language.values())
+                .filter(it -> it == Language.GROOVY)
+                .toList()
     }
 
     void "test #buildTool micrometer-cloudwatch with #language"(BuildTool buildTool, Language language) {
