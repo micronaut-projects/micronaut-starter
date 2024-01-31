@@ -14,8 +14,6 @@ import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
-import java.util.stream.Stream
-
 class MicroStreamSpec extends CommandSpec {
 
     @Override
@@ -43,9 +41,7 @@ class MicroStreamSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Stream.of(Language.values())
-                .filter(it -> it == Language.GROOVY)
-                .toList()
+        language << Language.values()
     }
 
     void "test #buildTool MicroStream with #language"(BuildTool buildTool, Language language) {
@@ -68,8 +64,5 @@ class MicroStreamSpec extends CommandSpec {
 
         where:
         [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
-                .stream()
-                .filter(l -> !(l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN) ) // Caused by: java.lang.NoSuchMethodError: Micronaut method io.micronaut.context.DefaultBeanContext.getProxyTargetBean(BeanResolutionContext,BeanDefinition,Argument,Qualifier) not found. Most likely reason for this issue is that you are running a newer version of Micronaut with code compiled against an older version. Please recompile the offending classe"
-                .toList()
     }
 }

@@ -26,9 +26,6 @@ class BasecampGcpChatBotFunctionSpec extends CommandSpec {
 
         where:
         [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
-                .stream()
-                .filter(l -> !(l[0] == BuildTool.MAVEN && l[1] == Language.KOTLIN) ) // Caused by: java.lang.NoSuchMethodError: Micronaut method io.micronaut.context.DefaultBeanContext.getProxyTargetBean(BeanResolutionContext,BeanDefinition,Argument,Qualifier) not found. Most likely reason for this issue is that you are running a newer version of Micronaut with code compiled against an older version. Please recompile the offending classe"
-                .toList()
         feature = BasecampGcpChatBot.NAME
     }
 }
