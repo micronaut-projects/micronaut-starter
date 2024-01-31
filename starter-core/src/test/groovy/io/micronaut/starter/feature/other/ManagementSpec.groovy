@@ -9,8 +9,8 @@ class ManagementSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test readme.md contains links to hazelcast and micronaut docs'() {
         when:
-        def output = generate(['management'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['management'])
+        String readme = output["README.md"]
 
         then:
         readme

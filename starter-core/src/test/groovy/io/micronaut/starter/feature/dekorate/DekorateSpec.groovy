@@ -13,8 +13,8 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature dekorate-kubernetes contains links to micronaut docs'() {
         when:
-        def output = generate(['dekorate-kubernetes'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['dekorate-kubernetes'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -14,8 +14,8 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jooq contains links to micronaut docs'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options().withJavaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION), ['jooq'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options().withJavaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION), ['jooq'])
+        String readme = output["README.md"]
 
         then:
         readme

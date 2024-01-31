@@ -8,14 +8,13 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import spock.lang.PendingFeature
 
 class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature flyway contains links to micronaut docs'() {
         when:
-        def output = generate(['flyway'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['flyway'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -117,7 +116,6 @@ flyway:
         buildTool << BuildTool.values()
     }
 
-    @PendingFeature
     void "test the flyway-database-postgresql dependency is added to the gradle build when postgres is selected"(BuildTool buildTool) {
         when:
         BuildTestVerifier verifier = verifier(buildTool, ['flyway', 'postgres'])

@@ -7,8 +7,6 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 
@@ -86,18 +84,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([TestContainers.NAME, 'mongo-sync'])
-                .render()
-
-        then:
-        template.contains('testImplementation("org.testcontainers:mongodb")')
-        template.contains('testImplementation("org.testcontainers:testcontainers")')
-    }
-
-    void "test mongo-gorm dependency is present for gradle"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([TestContainers.NAME, 'mongo-gorm'])
-                .language(Language.GROOVY)
                 .render()
 
         then:
@@ -286,30 +272,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'mongo-sync'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mongodb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-    }
-
-    void "test mongo-gorm dependency is present for maven"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([TestContainers.NAME, 'mongo-gorm'])
-                .language(Language.GROOVY)
                 .render()
 
         then:

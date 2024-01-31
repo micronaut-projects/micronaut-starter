@@ -14,6 +14,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -36,7 +37,10 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        db << featuresNames()
+        db << featuresNames().stream()
+                .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter(f -> f  != Oracle.NAME) // java.lang.ClassCastException: class org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation cannot be cast to class org.hibernate.sql.model.internal.OptionalTableUpdate (org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation and org.hibernate.sql.model.internal.OptionalTableUpdate are in unnamed module of loader 'app')
+                .toList()
     }
 
     void "test #buildTool hibernate-reactive-jpa with java and #db"(BuildTool buildTool, String db) {
@@ -51,7 +55,11 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()].combinations()
+        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
+                                    .stream()
+                                    .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                                     .filter(f -> f  != Oracle.NAME) // java.lang.ClassCastException: class org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation cannot be cast to class org.hibernate.sql.model.internal.OptionalTableUpdate (org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation and org.hibernate.sql.model.internal.OptionalTableUpdate are in unnamed module of loader 'app')
+                                    .toList()].combinations()
     }
 
     private static List<String> featuresNames() {
