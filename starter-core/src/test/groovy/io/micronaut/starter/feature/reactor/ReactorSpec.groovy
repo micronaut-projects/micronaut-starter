@@ -18,8 +18,8 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void 'test readme.md with feature reactor contains links to micronaut docs'() {
         when:
-        def output = generate(['reactor'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['reactor'])
+        String readme = output["README.md"]
 
         then:
         readme

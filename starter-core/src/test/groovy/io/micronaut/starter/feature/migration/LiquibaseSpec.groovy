@@ -10,8 +10,8 @@ class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixt
 
     void 'test readme.md with feature liquibase contains links to micronaut docs'() {
         when:
-        def output = generate(['liquibase'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['liquibase'])
+        String readme = output["README.md"]
 
         then:
         readme

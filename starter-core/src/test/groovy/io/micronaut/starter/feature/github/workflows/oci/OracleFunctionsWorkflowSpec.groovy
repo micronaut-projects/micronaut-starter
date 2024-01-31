@@ -15,8 +15,8 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
 
     void 'test github workflow readme'() {
         when:
-        def output = generate([OracleFunctionsJavaWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([OracleFunctionsJavaWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme
@@ -25,8 +25,8 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
 
     void 'test github graalvm workflow readme'() {
         when:
-        def output = generate([OracleFunctionsGraalWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([OracleFunctionsGraalWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme

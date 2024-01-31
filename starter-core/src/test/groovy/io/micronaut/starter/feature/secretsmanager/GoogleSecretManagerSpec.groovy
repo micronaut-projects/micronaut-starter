@@ -12,8 +12,8 @@ class GoogleSecretManagerSpec extends ApplicationContextSpec implements CommandO
 
     void 'test readme.md with feature gcp-secrets-manager contains links to micronaut docs'() {
         when:
-        def output = generate(['gcp-secrets-manager'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['gcp-secrets-manager'])
+        String readme = output["README.md"]
 
         then:
         readme

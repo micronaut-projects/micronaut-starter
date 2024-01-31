@@ -11,8 +11,8 @@ class FreemarkerSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'test readme.md with feature views-freemarker contains links to micronaut docs'() {
         when:
-        def output = generate(['views-freemarker'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-freemarker'])
+        String readme = output["README.md"]
 
         then:
         readme

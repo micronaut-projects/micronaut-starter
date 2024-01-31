@@ -17,8 +17,8 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature dynamodb contains links to micronaut docs'() {
         when:
-        def output = generate([DynamoDb.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([DynamoDb.NAME])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Amazon DynamoDB documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)")

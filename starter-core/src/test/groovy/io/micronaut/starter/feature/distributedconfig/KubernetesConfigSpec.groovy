@@ -13,8 +13,8 @@ class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOut
 
     void 'test readme.md with feature kubernetes contains links to micronaut docs'() {
         when:
-        def output = generate(['config-kubernetes'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['config-kubernetes'])
+        String readme = output["README.md"]
 
         then:
         readme

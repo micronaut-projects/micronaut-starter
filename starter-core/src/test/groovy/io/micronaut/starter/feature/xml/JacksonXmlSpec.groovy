@@ -11,8 +11,8 @@ class JacksonXmlSpec extends ApplicationContextSpec  implements CommandOutputFix
 
     void 'test readme.md with feature jackson-xml contains links to micronaut docs'() {
         when:
-        def output = generate(['jackson-xml'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jackson-xml'])
+        String readme = output["README.md"]
 
         then:
         readme
