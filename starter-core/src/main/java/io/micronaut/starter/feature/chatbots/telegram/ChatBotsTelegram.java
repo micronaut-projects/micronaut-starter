@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +18,19 @@ package io.micronaut.starter.feature.chatbots.telegram;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.chatbots.ChatBotType;
 import io.micronaut.starter.feature.chatbots.ChatBots;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovy;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerGroovySpock;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJava;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerJavaJunit;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlin;
-import io.micronaut.starter.feature.chatbots.template.aboutCommandHandlerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerGroovy;
-import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerJava;
-import io.micronaut.starter.feature.chatbots.template.finalCommandHandlerKotlin;
-import io.micronaut.starter.feature.chatbots.template.mockAboutCommandJson;
-import io.micronaut.starter.feature.chatbots.template.telegramReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovyJunit;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovySpock;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerJavaJunit;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerKotlinJunit;
+import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerGroovy;
+import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerJava;
+import io.micronaut.starter.feature.chatbots.telegram.template.finalCommandHandlerKotlin;
+import io.micronaut.starter.feature.chatbots.telegram.template.mockAboutCommandJson;
+import io.micronaut.starter.feature.chatbots.telegram.template.telegramReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.about;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -65,7 +66,10 @@ abstract class ChatBotsTelegram extends ChatBots {
 
     @Override
     protected void renderTemplates(GeneratorContext generatorContext) {
-        super.renderTemplates(generatorContext);
+        generatorContext.addTemplate(
+                "about-markdown",
+                new RockerTemplate("src/main/resources/botcommands/about.md", about.template())
+        );
         generatorContext.addTemplate(
                 "about-command-handler",
                 generatorContext.getSourcePath("/{packagePath}/AboutCommandHandler"),

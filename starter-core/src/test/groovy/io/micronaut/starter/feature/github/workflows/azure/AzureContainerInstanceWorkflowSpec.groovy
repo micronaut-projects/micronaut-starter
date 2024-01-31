@@ -15,8 +15,8 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
 
     void 'test github java workflow readme'() {
         when:
-        def output = generate([AzureContainerInstanceJavaWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([AzureContainerInstanceJavaWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme
@@ -25,8 +25,8 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
 
     void 'test github graalvm workflow readme'() {
         when:
-        def output = generate([AzureContainerInstanceGraalWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([AzureContainerInstanceGraalWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme

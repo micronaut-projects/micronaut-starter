@@ -12,8 +12,8 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
 
     void 'test readme.md with feature discovery-consul contains links to micronaut docs'() {
         when:
-        def output = generate(['config-consul'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['config-consul'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -17,8 +17,8 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test README.md with buildless feature contains links to docs'() {
         when:
-        def output = generate([Buildless.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Buildless.NAME])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[https://docs.less.build/](https://docs.less.build/)")

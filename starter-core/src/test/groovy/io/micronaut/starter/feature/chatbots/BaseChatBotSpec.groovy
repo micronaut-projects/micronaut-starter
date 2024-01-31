@@ -13,18 +13,4 @@ abstract class BaseChatBotSpec extends ApplicationContextSpec implements Command
     abstract Class<ChatBotsFeature> getFeature()
 
     abstract String getFeatureName()
-
-    void 'example chat commands are generated in #language'(Language language) {
-        when:
-        ApplicationType applicationType = getSupportedApplicationTypes().contains(ApplicationType.FUNCTION) ? ApplicationType.FUNCTION : getSupportedApplicationTypes().stream().findFirst().orElseThrow()
-        def output = generate(applicationType, new Options(language), [featureName])
-
-        then:
-        output.containsKey("src/main/$language.name/example/micronaut/AboutCommandHandler.$language.extension".toString())
-        output.containsKey("src/main/$language.name/example/micronaut/FinalCommandHandler.$language.extension".toString())
-        output.containsKey("src/main/resources/botcommands/about.md")
-
-        where:
-        language << Language.values()
-    }
 }

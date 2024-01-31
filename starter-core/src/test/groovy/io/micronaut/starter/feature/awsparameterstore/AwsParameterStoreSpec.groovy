@@ -11,8 +11,8 @@ import spock.lang.Unroll
 class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature aws-parameter-store contains links to micronaut docs'() {
         when:
-        def output = generate(['aws-parameter-store'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['aws-parameter-store'])
+        String readme = output["README.md"]
 
         then:
         readme

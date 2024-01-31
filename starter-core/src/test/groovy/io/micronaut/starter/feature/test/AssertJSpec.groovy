@@ -25,8 +25,8 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'test readme.md with feature assertJ contains links to 3rd party docs'() {
         when:
-        def output = generate(['assertj'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['assertj'])
+        String readme = output["README.md"]
 
         then:
         readme
