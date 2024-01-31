@@ -1,0 +1,13 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot
+
+@args (
+Project project,
+Features features,
+String buildCommand
+)
+
+## Lambda handler class
+
+The Cdk project defined in `infra` is already configured to use `@TelegramAwsChatBot.HANDLER_CLASS` as the handler for your Lambda function.

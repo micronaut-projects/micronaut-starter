@@ -12,8 +12,8 @@ class RibbonSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature netflix-ribbon contains links to micronaut docs'() {
         when:
-        def output = generate(['netflix-ribbon'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['netflix-ribbon'])
+        String readme = output["README.md"]
 
         then:
         readme

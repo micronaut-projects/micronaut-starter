@@ -85,8 +85,8 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme has docs'() {
         when:
-        def output = generate([Cassandra.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Cassandra.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

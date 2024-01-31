@@ -15,8 +15,8 @@ class RxJava1Spec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void 'test readme.md with feature rxjava1 contains links to micronaut docs'() {
         when:
-        def output = generate(['rxjava1'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['rxjava1'])
+        String readme = output["README.md"]
 
         then:
         readme

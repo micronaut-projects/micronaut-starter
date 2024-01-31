@@ -1,6 +1,10 @@
-swagger-ui.enabled=true
-redoc.enabled=false
-rapidoc.enabled=false
+@import io.micronaut.starter.feature.Feature
+@args (
+Feature feature
+)
+swagger-ui.enabled=@feature.getName().equals("swagger-ui")
+redoc.enabled=@feature.getName().equals("redoc")
+rapidoc.enabled=@feature.getName().equals("rapidoc")
 rapidoc.bg-color=#14191f
 rapidoc.text-color=#aec2e0
 rapidoc.sort-endpoints-by=method
