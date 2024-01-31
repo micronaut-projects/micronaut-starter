@@ -15,6 +15,9 @@ import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
 
 // Required so Groovy recognizes these as a class
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
+import io.micronaut.starter.core.test.feature.testcontainers.book
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 
 class TestcontainersSpec extends CommandSpec {
 
