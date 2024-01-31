@@ -18,8 +18,8 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'test readme.md with feature localstack contains links to 3rd party docs'() {
         when:
-        def output = generate(['localstack'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['localstack'])
+        String readme = output["README.md"]
 
         then:
         readme

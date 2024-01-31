@@ -14,9 +14,9 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a #buildTool app in #language"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), [feature, 'kapt'])
-        def readme = output["README.md"]
-        def build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), [feature, 'kapt'])
+        String readme = output["README.md"]
+        String build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
 
         then:
         readme
@@ -56,8 +56,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a Maven app in #language"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
+        String readme = output["README.md"]
         def project = new XmlParser().parseText(output['pom.xml'])
 
         then:

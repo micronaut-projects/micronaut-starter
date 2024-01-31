@@ -14,8 +14,8 @@ class VelocitySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature views-velocity contains links to micronaut docs'() {
         when:
-        def output = generate(['views-velocity'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-velocity'])
+        String readme = output["README.md"]
 
         then:
         readme

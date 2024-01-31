@@ -7,8 +7,8 @@ class JettyTestSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jetty-server contains links to micronaut docs'() {
         when:
-        def output = generate(['jetty-server'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jetty-server'])
+        String readme = output["README.md"]
 
         then:
         readme

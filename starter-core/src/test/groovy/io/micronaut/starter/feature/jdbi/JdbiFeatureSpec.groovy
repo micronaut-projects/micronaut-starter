@@ -14,8 +14,8 @@ class JdbiFeatureSpec extends ApplicationContextSpec  implements CommandOutputFi
 
     void 'test readme.md with feature sql-jdbi contains links to micronaut docs'() {
         when:
-        def output = generate(['sql-jdbi'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['sql-jdbi'])
+        String readme = output["README.md"]
 
         then:
         readme

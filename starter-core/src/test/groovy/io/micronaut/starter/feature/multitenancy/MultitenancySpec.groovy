@@ -19,8 +19,8 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
 
     void 'test readme.md with feature multi-tenancy contains links to micronaut docs'() {
         when:
-        def output = generate(['multi-tenancy'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['multi-tenancy'])
+        String readme = output["README.md"]
 
         then:
         readme

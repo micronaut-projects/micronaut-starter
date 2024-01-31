@@ -130,20 +130,20 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
     void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
+        Language language = Language.GROOVY
+
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-            .language(Language.GROOVY)
+        String template = new BuildBuilder(beanContext, buildTool)
+            .language(language)
             .features(["data-jpa"])
             .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-''')
+        println(template)
+        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
     }
 
     void 'feature data-jpa contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {

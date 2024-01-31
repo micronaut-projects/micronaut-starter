@@ -1,6 +1,8 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
+import io.micronaut.starter.feature.database.Oracle
+import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
@@ -9,17 +11,14 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.Retry
-import spock.lang.Unroll
 
 // Required so Groovy recognizes these as a class
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 
-import java.util.stream.Collectors
-@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class TestcontainersSpec extends CommandSpec {
 
     @Override
@@ -27,7 +26,6 @@ class TestcontainersSpec extends CommandSpec {
         return "testcontainers"
     }
 
-    @Unroll
     void "test running tests with testcontainers with #buildTool and #driverFeature.getName()"(BuildTool buildTool, DatabaseDriverFeature driverFeature) {
         setup:
         boolean skip = driverFeature.name == "oracle-cloud-atp" && VersionInfo.getJavaVersion() == JdkVersion.JDK_8
@@ -58,9 +56,11 @@ class TestcontainersSpec extends CommandSpec {
         where:
         [buildTool, driverFeature] << [
                 BuildToolCombinations.buildTools,
-                beanContext.streamOfType(DatabaseDriverFeature)
-                        .filter({ f ->  !f.embedded() })
-                        .collect(Collectors.toList())
+                beanContext.getBeansOfType(DatabaseDriverFeature)
+                        .stream()
+                        .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
+                        .filter( f -> !f.embedded())
+                        .toList()
         ].combinations()
     }
 }
