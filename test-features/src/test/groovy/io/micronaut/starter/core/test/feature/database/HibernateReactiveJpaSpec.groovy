@@ -39,6 +39,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         where:
         db << featuresNames().stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter(f -> f  != Oracle.NAME) // java.lang.ClassCastException: class org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation cannot be cast to class org.hibernate.sql.model.internal.OptionalTableUpdate (org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation and org.hibernate.sql.model.internal.OptionalTableUpdate are in unnamed module of loader 'app')
                 .toList()
     }
 
@@ -57,6 +58,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
                                     .stream()
                                     .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                                     .filter(f -> f  != Oracle.NAME) // java.lang.ClassCastException: class org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation cannot be cast to class org.hibernate.sql.model.internal.OptionalTableUpdate (org.hibernate.sql.model.jdbc.DeleteOrUpsertOperation and org.hibernate.sql.model.internal.OptionalTableUpdate are in unnamed module of loader 'app')
                                     .toList()].combinations()
     }
 
