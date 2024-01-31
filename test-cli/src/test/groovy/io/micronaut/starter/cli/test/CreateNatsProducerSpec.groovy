@@ -42,8 +42,6 @@ class CreateNatsProducerSpec extends CommandSpec {
 
         where:
         [language, buildTool] << LanguageBuildCombinations.combinations()
-                .stream()
-                .filter(l -> !(l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN) ) // Caused by: java.lang.NoSuchMethodError: Micronaut method io.micronaut.context.DefaultBeanContext.getProxyTargetBean(BeanResolutionContext,BeanDefinition,Argument,Qualifier) not found. Most likely reason for this issue is that you are running a newer version of Micronaut with code compiled against an older version. Please recompile the offending classe"
     }
 
     @Override
