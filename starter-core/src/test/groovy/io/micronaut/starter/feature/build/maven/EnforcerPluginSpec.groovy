@@ -13,8 +13,8 @@ class EnforcerPluginSpec extends ApplicationContextSpec  implements CommandOutpu
 
     void 'test readme.md with feature kubernetes-informer contains links to docs'() {
         when:
-        def output = generate(['kubernetes-informer'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kubernetes-informer'])
+        String readme = output["README.md"]
 
         then:
         readme

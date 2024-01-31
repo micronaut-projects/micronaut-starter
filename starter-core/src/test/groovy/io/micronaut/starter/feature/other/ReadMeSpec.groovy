@@ -8,9 +8,9 @@ class ReadMeSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md contains links to micronaut user guides'() {
         when:
-        def output = generate([])
-        def readme = output["README.md"]
-        def version = VersionInfo.isMicronautSnapshot() ? "snapshot" : VersionInfo.getMicronautVersion()
+        Map<String, String> output = generate([])
+        String readme = output["README.md"]
+        String version = VersionInfo.isMicronautSnapshot() ? "snapshot" : VersionInfo.getMicronautVersion()
 
         then:
         readme

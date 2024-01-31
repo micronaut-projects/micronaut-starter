@@ -18,8 +18,8 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature hamcrest contains links to 3rd party docs'() {
         when:
-        def output = generate(['hamcrest'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['hamcrest'])
+        String readme = output["README.md"]
 
         then:
         readme

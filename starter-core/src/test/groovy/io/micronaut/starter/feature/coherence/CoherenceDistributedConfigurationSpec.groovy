@@ -12,8 +12,8 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
 
     void 'test readme.md with feature coherence-distributed-configuration contains links to micronaut docs'() {
         when:
-        def output = generate([CoherenceDistributedConfiguration.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([CoherenceDistributedConfiguration.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

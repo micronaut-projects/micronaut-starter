@@ -30,8 +30,8 @@ class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixtu
     @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void 'test readme.md with feature camunda-platform7 contains links to micronaut docs'() {
         when:
-        def output = generate(['camunda-platform7'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['camunda-platform7'])
+        String readme = output["README.md"]
 
         then:
         readme

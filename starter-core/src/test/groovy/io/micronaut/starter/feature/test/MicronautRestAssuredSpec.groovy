@@ -21,8 +21,8 @@ class MicronautRestAssuredSpec extends ApplicationContextSpec implements Command
 
     void 'test readme.md with feature micronaut-test-rest-assured contains links to docs'() {
         when:
-        def output = generate([FEATURE])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([FEATURE])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -23,8 +23,8 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature crac contains links to micronaut docs'() {
         when:
-        def output = generate([Crac.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Crac.NAME])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Support for CRaC (Coordinated Restore at Checkpoint) documentation](https://micronaut-projects.github.io/micronaut-crac/latest/guide)")

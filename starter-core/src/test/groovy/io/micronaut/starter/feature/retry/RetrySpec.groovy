@@ -20,8 +20,8 @@ class RetrySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature retry contains links to micronaut docs'() {
         when:
-        def output = generate(['retry'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['retry'])
+        String readme = output["README.md"]
 
         then:
         readme
