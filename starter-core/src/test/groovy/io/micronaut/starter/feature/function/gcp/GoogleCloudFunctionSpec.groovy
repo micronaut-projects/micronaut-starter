@@ -29,12 +29,12 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['google-cloud-function']
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
@@ -79,12 +79,12 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test gradle google cloud function feature for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['google-cloud-function']
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
@@ -141,13 +141,13 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test gradle google cloud function feature for language=#language - raw function'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
                 new Options(language, BuildTool.GRADLE),
                 ['google-cloud-function']
         )
         String build = output['build.gradle']
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')

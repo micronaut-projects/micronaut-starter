@@ -15,9 +15,16 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
+import io.micronaut.starter.feature.InterceptUrlMap;
 import jakarta.inject.Singleton;
+
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class Security extends SecurityFeature {
@@ -49,6 +56,20 @@ public class Security extends SecurityFeature {
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security")
                 .compile());
+        addInterceptUrlMapConfiguration(generatorContext);
+    }
+
+    protected void addInterceptUrlMapConfiguration(@NonNull GeneratorContext generatorContext) {
+        List<Map<String, String>> list = generatorContext.getFeatures().getFeatures()
+                .stream()
+                .filter(f -> f instanceof ContributingInterceptUrlMapFeature)
+                .map(f -> ((ContributingInterceptUrlMapFeature) f).interceptUrlMaps())
+                .flatMap(List::stream)
+                .map(InterceptUrlMap::toMap)
+                .toList();
+        if (CollectionUtils.isNotEmpty(list)) {
+            generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", list);
+        }
     }
 
     @Override

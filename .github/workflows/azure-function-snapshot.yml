@@ -10,7 +10,7 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
       - name: Setup Java
-        uses: actions/setup-java@v3.11.0
+        uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
           java-version: '17'

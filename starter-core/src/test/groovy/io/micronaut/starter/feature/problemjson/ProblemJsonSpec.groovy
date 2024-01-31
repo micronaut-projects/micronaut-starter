@@ -10,8 +10,8 @@ import spock.lang.Unroll
 class ProblemJsonSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature problem-json contains links to micronaut docs'() {
         when:
-        def output = generate(['problem-json'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['problem-json'])
+        String readme = output["README.md"]
 
         then:
         readme

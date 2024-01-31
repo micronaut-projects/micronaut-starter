@@ -14,8 +14,8 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
     void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8)
-        def output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -28,8 +28,8 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
     void 'test readme.md with feature azure-function contains links to docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        def output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
+        String readme = output["README.md"]
 
         then:
         readme

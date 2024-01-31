@@ -14,8 +14,8 @@ class SecurityLdapSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature security-ldap contains links to micronaut docs'() {
         when:
-        def output = generate(['security-ldap'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security-ldap'])
+        String readme = output["README.md"]
 
         then:
         readme

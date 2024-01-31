@@ -20,8 +20,8 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature websocket contains links to micronaut docs'() {
         when:
-        def output = generate([Websocket.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Websocket.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

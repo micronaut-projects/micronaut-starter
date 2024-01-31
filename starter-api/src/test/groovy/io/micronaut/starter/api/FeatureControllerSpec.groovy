@@ -27,14 +27,15 @@ class FeatureControllerSpec extends Specification {
 
     void "test community features"() {
         given:
-        List<String> expected = [
+        Set<String> expected = [
+                'buildless',
                 'jobrunr-jobrunr'
         ]
         when:
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
 
         then:
-        communityFeatures.name.sort() == expected.sort()
+        communityFeatures.name =~ expected
     }
 
     void "test list features - spanish"() {

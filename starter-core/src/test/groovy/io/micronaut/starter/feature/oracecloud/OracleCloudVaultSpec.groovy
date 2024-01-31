@@ -14,8 +14,8 @@ class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'test README.md with feature oracle-cloud-vault contains links to Micronaut docs'() {
         when:
-        def output = generate(['oracle-cloud-vault'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['oracle-cloud-vault'])
+        String readme = output["README.md"]
 
         then:
         readme

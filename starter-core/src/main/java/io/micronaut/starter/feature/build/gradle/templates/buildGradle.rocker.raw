@@ -114,36 +114,65 @@ tasks {
     }
 }
 
+
+    // Update these to match your region, tenancy and repo
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    val region = "region-key"
+    val tenancy = "tenancy"
+    val repo = "my-app"
+} else {
+    String region = "region-key"
+    String tenancy = "tenancy"
+    String repo = "my-app"
+}
+
+
     dockerBuild {
         @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+            } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
         } else {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
             } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
             }
         }
     }
 
     dockerBuildNative {
         @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+            } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
         } else {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
+        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
             } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
+        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
             }
         }
     }
 } else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
     dockerBuild {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+            } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
     }
 
     dockerBuildNative {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+            } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
     }
 }
 

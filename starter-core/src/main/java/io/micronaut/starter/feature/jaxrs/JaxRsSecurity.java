@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.jaxrs;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -25,6 +26,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class JaxRsSecurity implements Feature, MicronautServerDependent {
+    private static final String ARTIFACT_ID_MICRONAUT_JAXRS_SERVER_SECURITY = "micronaut-jaxrs-server-security";
 
     @Override
     public String getName() {
@@ -48,9 +50,8 @@ public class JaxRsSecurity implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(JaxRs.MICRONAUT_JAX_RS_GROUP)
-                .artifactId("micronaut-jaxrs-server-security")
+        generatorContext.addDependency(MicronautDependencyUtils.jaxrsDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_JAXRS_SERVER_SECURITY)
                 .versionProperty("micronaut.jaxrs.version")
                 .compile());
     }
