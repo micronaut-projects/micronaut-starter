@@ -12,8 +12,8 @@ class CoherenceGrpcClientSpec extends BeanContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature coherence-grpc-client contains links to micronaut docs'() {
         when:
-        def output = generate([CoherenceGrpcClient.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([CoherenceGrpcClient.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

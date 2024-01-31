@@ -14,8 +14,8 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
 
     void 'test readme.md with feature jax-rs contains links to micronaut docs'() {
         when:
-        def output = generate([JaxRs.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([JaxRs.NAME])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -42,13 +42,15 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         Language.GROOVY | "compileOnly"
     }
 
-    void 'test maven jax-rs feature for language=#language'() {
+    void 'test maven jax-rs feature for language=#language'(Language language) {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features([JaxRs.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
@@ -64,4 +66,5 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         where:
         language << Language.values()
     }
+
 }

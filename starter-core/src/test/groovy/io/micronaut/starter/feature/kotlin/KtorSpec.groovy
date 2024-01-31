@@ -26,8 +26,8 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature ktor contains links to micronaut docs'() {
         when:
         Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        def output = generate(ApplicationType.DEFAULT, options, [Ktor.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [Ktor.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

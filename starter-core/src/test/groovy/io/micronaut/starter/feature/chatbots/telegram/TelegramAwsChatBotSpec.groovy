@@ -35,8 +35,8 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
+        String readme = output["README.md"]
 
         then:
         readme.contains("Telegram ChatBot")
@@ -52,8 +52,8 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'test README contains docs for #buildTool with CDK'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName, 'aws-cdk'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName, 'aws-cdk'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("Telegram ChatBot")

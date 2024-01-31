@@ -12,8 +12,8 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature aws-v2-sdk contains links to micronaut docs'() {
         when:
-        def output = generate(['aws-v2-sdk'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['aws-v2-sdk'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut AWS SDK 2.x documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/)")

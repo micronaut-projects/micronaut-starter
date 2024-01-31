@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.awslambdacustomruntime;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -35,8 +36,10 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLam
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.feature.other.HttpClient;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.template.RockerWritable;
+import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
@@ -51,11 +54,24 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
 
     private final Provider<AwsLambda> awsLambda;
-    private final HttpClient httpClient;
+    private final HttpClientJdk httpClientJdk;
 
-    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClient httpClient) {
+    @Inject
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda,
+                                  HttpClientJdk httpClientJdk) {
         this.awsLambda = awsLambda;
-        this.httpClient = httpClient;
+        this.httpClientJdk = httpClientJdk;
+    }
+
+    /**
+     *
+     * @param awsLambda AWS Lambda
+     * @param httpClient Netty HTTP Client
+     * @deprecated Use {@link #AwsLambdaCustomRuntime(Provider, HttpClientJdk)} instead.
+     */
+    @Deprecated
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClient httpClient) {
+        this(awsLambda, new HttpClientJdk());
     }
 
     @Override
@@ -64,8 +80,8 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
             featureContext.addFeature(awsLambda);
         }
-        if (!featureContext.isPresent(HttpClient.class)) {
-            featureContext.addFeature(httpClient);
+        if (!featureContext.isPresent(HttpClientFeature.class)) {
+            featureContext.addFeature(httpClientJdk);
         }
     }
 

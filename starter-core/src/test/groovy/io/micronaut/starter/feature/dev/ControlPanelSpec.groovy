@@ -32,8 +32,8 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature control-panel contains links to micronaut docs'() {
         when:
-        def output = generate([ControlPanel.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([ControlPanel.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

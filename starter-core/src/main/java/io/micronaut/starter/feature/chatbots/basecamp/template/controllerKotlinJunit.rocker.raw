@@ -1,0 +1,39 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import io.micronaut.context.BeanContext
+import io.micronaut.http.HttpHeaders
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+
+@@MicronautTest
+class BasecampControllerTest {
+
+    @@field:Client("/")
+    @@Inject
+    lateinit var client: HttpClient
+
+    @@Inject
+    lateinit var ctx: BeanContext
+
+    @@Test
+    fun aboutCommandHandlerExists() {
+        val post = HttpRequest.POST("/basecamp", getAboutCommandJson()).header(HttpHeaders.USER_AGENT, "Mock Basecamp Request")
+        val messageResponse = client.toBlocking().exchange(post, String::class.java)
+        assertEquals(
+            """Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.""",
+            messageResponse.body().trim()
+        )
+    }
+
+    private fun getAboutCommandJson() = BasecampControllerTest::class.java.getResource("/mockBasecampAboutCommand.json")!!.readText()
+}

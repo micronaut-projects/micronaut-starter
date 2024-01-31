@@ -11,8 +11,8 @@ class GraalVMDockerRegistryWorkflowSpec extends BeanContextSpec implements Comma
 
     void 'test github workflow readme'() {
         when:
-        def output = generate([GraalVMDockerRegistryWorkflow.NAME])
-        def readme = output['README.md']
+        Map<String, String> output = generate([GraalVMDockerRegistryWorkflow.NAME])
+        String readme = output['README.md']
 
         then:
         readme

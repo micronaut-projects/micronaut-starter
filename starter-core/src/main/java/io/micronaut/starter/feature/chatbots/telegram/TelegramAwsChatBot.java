@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.aws.Cdk;
-import io.micronaut.starter.feature.chatbots.template.awsCdkReadme;
-import io.micronaut.starter.feature.chatbots.template.awsReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.awsCdkReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.awsReadme;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;

@@ -29,9 +29,13 @@ public class HttpClientJdk implements HttpClientFeature {
     public static final String NAME = "http-client-jdk";
 
     public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK = "micronaut-http-client-jdk";
-    private static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK = MicronautDependencyUtils.coreDependency()
-            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK)
+    private static final Dependency.Builder MICRONAUT_HTTP_CLIENT_JDK = MicronautDependencyUtils.coreDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK);
+    public static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK = MICRONAUT_HTTP_CLIENT_JDK
             .compile()
+            .build();
+    public static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK_COMPILE_ONLY = MICRONAUT_HTTP_CLIENT_JDK
+            .compileOnly()
             .build();
 
     @Override
