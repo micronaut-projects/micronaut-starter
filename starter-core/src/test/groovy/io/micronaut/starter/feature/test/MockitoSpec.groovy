@@ -18,8 +18,8 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'test readme.md with feature mockito contains links to 3rd party docs'() {
         when:
-        def output = generate(['mockito'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['mockito'])
+        String readme = output["README.md"]
 
         then:
         readme

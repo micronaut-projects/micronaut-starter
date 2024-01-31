@@ -7,8 +7,8 @@ class UndertowSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature undertow-server contains links to micronaut docs'() {
         when:
-        def output = generate(['undertow-server'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['undertow-server'])
+        String readme = output["README.md"]
 
         then:
         readme
