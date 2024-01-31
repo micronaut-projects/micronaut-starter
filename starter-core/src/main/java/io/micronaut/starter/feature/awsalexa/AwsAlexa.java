@@ -20,6 +20,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy;
@@ -75,7 +76,7 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsAlexa implements Feature, AwsCloudFeature {
+public class AwsAlexa implements Feature, AwsCloudFeature, CodeContributingFeature {
     public static final String NAME = "aws-alexa";
 
     @Override

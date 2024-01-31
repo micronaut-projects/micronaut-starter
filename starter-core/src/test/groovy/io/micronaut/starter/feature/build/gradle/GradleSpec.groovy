@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
@@ -126,8 +127,9 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        List<String> features = (apptype == ApplicationType.CLI && lang == Language.KOTLIN) ? [Kapt.NAME] : []
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk), features)
+        String readme = output["README.md"]
 
         then:
         readme
@@ -147,8 +149,8 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        String readme = output["README.md"]
 
         then:
         readme

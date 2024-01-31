@@ -30,7 +30,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
         when:
         Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
@@ -165,7 +165,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <artifactId>groovy</artifactId>
 ''')
         template.contains('''\
-    <groovyVersion>4.0.16</groovyVersion>
+    <groovyVersion>4.0.18</groovyVersion>
 ''')
     }
 

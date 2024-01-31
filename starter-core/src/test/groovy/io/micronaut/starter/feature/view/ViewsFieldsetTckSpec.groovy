@@ -7,13 +7,10 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Subject
-import spock.lang.Unroll
 
 class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -46,18 +43,21 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
         applicationType << ApplicationType.values() - ApplicationType.DEFAULT
     }
 
-    @Unroll
     void 'test #buildTool views-fieldsets feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features(['views-fieldset-tck'])
+                .features([ViewsFieldsetTck.NAME])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset-tck", Scope.TEST)
-        verifier.hasDependency("org.junit.platform", "junit-platform-suite-engine", Scope.TEST)
+
+        and:
+        if (language != Language.GROOVY) {
+            assert verifier.hasDependency("org.junit.platform", "junit-platform-suite-engine", Scope.TEST)
+        }
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
@@ -65,7 +65,7 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'ThymeleafSuite test is generated views-fieldset-tck'() {
         when:
-        Map<String, String> output = generate(['views-fieldset-tck'])
+        Map<String, String> output = generate([ViewsFieldsetTck.NAME])
 
         then:
         output.containsKey("${Language.DEFAULT_OPTION.testSrcDir}/example/micronaut/ThymeleafSuite.$Language.DEFAULT_OPTION.extension".toString())

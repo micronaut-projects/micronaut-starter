@@ -2,6 +2,7 @@ package io.micronaut.starter.core.test.create
 
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
@@ -21,7 +22,7 @@ class CreateCliSpec extends CommandSpec {
     void 'create-cli-app with #lang and #buildTool'(Language lang, BuildTool buildTool) {
         given:
         ApplicationType applicationType = ApplicationType.CLI
-        generateProject(lang, buildTool, [], applicationType)
+        generateProject(lang, buildTool, (lang == Language.KOTLIN) ? [Kapt.NAME] : [], applicationType)
 
         when:
         String output = null

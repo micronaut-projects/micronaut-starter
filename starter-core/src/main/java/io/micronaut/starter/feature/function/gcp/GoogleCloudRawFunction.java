@@ -22,6 +22,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
@@ -35,8 +36,6 @@ import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpoc
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -68,27 +67,16 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
         ApplicationType type = generatorContext.getApplicationType();
-        if (type == ApplicationType.FUNCTION) {
-            Language language = generatorContext.getLanguage();
+        if (type == ApplicationType.FUNCTION && generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             Project project = generatorContext.getProject();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
-            switch (language) {
-                case GROOVY:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            gcpRawBackgroundFunctionGroovy.template(project)));
-                break;
-                case KOTLIN:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            gcpRawBackgroundFunctionKotlin.template(project)));
-                break;
-                case JAVA:
-                default:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            gcpRawBackgroundFunctionJava.template(project)));
-            }
+            generatorContext.addTemplate(
+                    "function",
+                    sourceFile,
+                    gcpRawBackgroundFunctionJava.template(project),
+                    gcpRawBackgroundFunctionKotlin.template(project),
+                    gcpRawBackgroundFunctionGroovy.template(project)
+            );
 
             applyTestTemplate(generatorContext, project, "Function");
             addDependencies(generatorContext);
