@@ -17,8 +17,8 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test readme.md with feature #feature contains links to micronaut and 3rd party docs'(String feature) {
         when:
-        def output = generate([feature])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([feature])
+        String readme = output["README.md"]
 
         then:
         readme

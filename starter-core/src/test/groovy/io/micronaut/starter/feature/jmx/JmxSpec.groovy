@@ -12,8 +12,8 @@ class JmxSpec extends ApplicationContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test readme.md contains links to jmx and micronaut docs'() {
         when:
-        def output = generate(['jmx'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jmx'])
+        String readme = output["README.md"]
 
         then:
         readme

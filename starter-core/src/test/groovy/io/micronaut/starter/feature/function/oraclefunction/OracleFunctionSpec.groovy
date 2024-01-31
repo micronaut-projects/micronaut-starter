@@ -42,13 +42,13 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
 
     void 'test gradle oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
-        def readme = output["README.md"]
-        def funcYaml = output["func.yml"]
+        String readme = output["README.md"]
+        String funcYaml = output["func.yml"]
 
         then:
         readme
@@ -84,14 +84,14 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
 
     void 'test maven oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']
-        def readme = output["README.md"]
-        def funcYaml = output["func.yml"]
+        String readme = output["README.md"]
+        String funcYaml = output["func.yml"]
 
         then:
         readme
@@ -154,6 +154,40 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
 
         where:
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+    }
+
+    void 'test oracle cloud function image config for #buildTool'(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['oracle-function'])
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
+
+        then:
+        if (buildTool == BuildTool.GRADLE) {
+            assert template.contains('''    String region = "region-key"
+                                       |    String tenancy = "tenancy"
+                                       |    String repo = "my-app"'''.stripMargin())
+            assert template.contains('''    dockerBuild {
+                                       |        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+                                       |    }'''.stripMargin())
+            assert template.contains('''    dockerBuildNative {
+                                       |        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+                                       |    }'''.stripMargin())
+        } else {
+            assert template.contains('''    val region = "region-key"
+                                       |    val tenancy = "tenancy"
+                                       |    val repo = "my-app"'''.stripMargin())
+            assert template.contains('''    dockerBuild {
+                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |    }'''.stripMargin())
+            assert template.contains('''    dockerBuildNative {
+                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |    }'''.stripMargin())
+        }
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     void 'test oracle cloud function dependencies for language=#language and buildtool=#buildTool'(Language language, BuildTool buildTool) {

@@ -11,8 +11,8 @@ class HandlebarsSpec extends ApplicationContextSpec  implements CommandOutputFix
 
     void 'test readme.md with feature views-handlebars contains links to micronaut docs'() {
         when:
-        def output = generate(['views-handlebars'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-handlebars'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -120,20 +120,12 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
 
     @Override
     protected String getRunCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return "mvnw function:run";
-        } else {
-            return "gradlew runFunction";
-        }
+        return GcpCloudFunctionBuildCommandUtils.getRunCommand(buildTool);
     }
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package";
-        } else {
-            return "gradlew clean shadowJar";
-        }
+        return GcpCloudFunctionBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     @Override

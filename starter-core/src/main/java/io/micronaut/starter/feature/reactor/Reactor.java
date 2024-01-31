@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.reactive.ReactiveFeature;
@@ -27,7 +28,16 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Reactor implements ReactiveFeature {
 
-    public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
+    public static final Dependency MICRONAUT_REACTOR_DEPENDENCY = MicronautDependencyUtils.reactorDependency()
+            .artifactId("micronaut-reactor")
+            .compile()
+            .build();
+
+    public static final Dependency MICROMETER_CONTEXT_PROPOGRATION_DEPENDENCY = Dependency.builder()
+            .groupId("io.micrometer")
+            .artifactId("context-propagation")
+            .compile()
+            .build();
 
     private final ReactorHttpClient reactorHttpClient;
 
@@ -70,9 +80,7 @@ public class Reactor implements ReactiveFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_REACTOR_GROUP_ID)
-                .artifactId("micronaut-reactor")
-                .compile());
+        generatorContext.addDependency(MICRONAUT_REACTOR_DEPENDENCY);
+        generatorContext.addDependency(MICROMETER_CONTEXT_PROPOGRATION_DEPENDENCY);
     }
 }

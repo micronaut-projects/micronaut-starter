@@ -21,6 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
+import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
 import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
@@ -63,8 +64,10 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         BuildTool buildTool = generatorContext.getBuildTool();
 
-        readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)
-            .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
+        if (generatorContext.isFeatureMissing(ChatBotsFeature.class)) {
+            readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)
+                    .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
+        }
 
         if (type == ApplicationType.DEFAULT) {
 

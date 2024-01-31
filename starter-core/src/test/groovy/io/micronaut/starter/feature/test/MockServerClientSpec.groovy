@@ -22,8 +22,8 @@ class MockServerClientSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'test readme.md with feature MockServerClient contains links to 3rd party docs'() {
         when:
-        def output = generate([MockServerClient.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([MockServerClient.NAME])
+        String readme = output["README.md"]
 
         then:
         readme
