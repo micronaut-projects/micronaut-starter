@@ -37,8 +37,7 @@ class CreateMessagingSpec extends CommandSpec {
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
                 beanContext.streamOfType(MessagingFeature.class)
                         .map(Feature::getName)
-                        .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of( 'jms-oracle-aq')).test(f))
-                        .map(Feature::getName)
+                        .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of( 'jms-oracle-aq')).test(f))
                         .filter( f -> !isCi() || (f != "jms-sqs" && isCi()))
                         .collect(Collectors.toList()))
     }

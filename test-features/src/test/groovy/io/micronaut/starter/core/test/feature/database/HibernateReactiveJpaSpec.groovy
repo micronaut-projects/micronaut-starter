@@ -38,7 +38,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
 
         where:
         db << featuresNames().stream()
-                .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
                 .toList()
     }
 
@@ -56,7 +56,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         where:
         [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
                                     .stream()
-                                    .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                                    .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
                                     .toList()].combinations()
     }
 

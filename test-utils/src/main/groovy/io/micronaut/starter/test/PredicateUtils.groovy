@@ -25,7 +25,7 @@ final class PredicateUtils {
     private PredicateUtils() {
     }
 
-    static Predicate<String> skipFeatureIfMacOS(List<String> featuresNames) {
+    static Predicate<String> testFeatureIfMacOS(List<String> featuresNames) {
         return new Predicate<String>() {
             @Override
             boolean test(String s) {

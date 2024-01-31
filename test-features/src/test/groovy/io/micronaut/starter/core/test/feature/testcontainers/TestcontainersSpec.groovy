@@ -15,9 +15,6 @@ import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
 
 // Required so Groovy recognizes these as a class
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
-import io.micronaut.starter.core.test.feature.testcontainers.book
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 
 class TestcontainersSpec extends CommandSpec {
 
@@ -58,7 +55,7 @@ class TestcontainersSpec extends CommandSpec {
                 BuildToolCombinations.buildTools,
                 beanContext.getBeansOfType(DatabaseDriverFeature)
                         .stream()
-                        .filter( f -> PredicateUtils.skipFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
+                        .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
                         .filter( f -> !f.embedded())
                         .toList()
         ].combinations()
