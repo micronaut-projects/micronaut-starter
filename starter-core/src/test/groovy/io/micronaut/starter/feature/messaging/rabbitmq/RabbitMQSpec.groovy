@@ -10,8 +10,8 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature rabbitmq contains links to micronaut docs'() {
         when:
-        def output = generate(['rabbitmq'])
-        def readme = output["README.md"]
+        Map<String, String>  output = generate(['rabbitmq'])
+        String readme = output["README.md"]
 
         then:
         readme

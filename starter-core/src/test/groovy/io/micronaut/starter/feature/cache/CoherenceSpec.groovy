@@ -11,8 +11,8 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature cache-coherence contains links to micronaut docs'() {
         when:
-        def output = generate([Coherence.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Coherence.NAME])
+        String readme = output["README.md"]
 
         then:
         readme

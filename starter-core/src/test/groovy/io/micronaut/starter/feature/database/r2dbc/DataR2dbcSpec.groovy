@@ -32,8 +32,8 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature data-jdbc contains links to micronaut docs'() {
         when:
-        def output = generate(['data-r2dbc'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['data-r2dbc'])
+        String readme = output["README.md"]
 
         then:
         readme

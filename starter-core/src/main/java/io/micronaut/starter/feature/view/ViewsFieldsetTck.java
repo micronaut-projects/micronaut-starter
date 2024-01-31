@@ -20,7 +20,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -102,7 +101,5 @@ public class ViewsFieldsetTck implements Feature {
 
     private void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_VIEWS_FIELDSET_TCK);
-        //TODO Delete when this is merged https://github.com/micronaut-projects/micronaut-views/pull/656
-        generatorContext.addDependency(Dependency.builder().groupId("io.micronaut.data").artifactId("micronaut-data-jdbc").scope(Scope.TEST));
     }
 }
