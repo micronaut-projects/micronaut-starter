@@ -1,6 +1,6 @@
 package io.micronaut.starter.core.test.feature.other
 
-import io.micronaut.starter.feature.Feature
+import groovy.yaml.YamlSlurper
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
@@ -175,8 +175,8 @@ class SwaggerUISpec extends CommandSpec {
 
     void checkYAMLConfigFileWithoutSecurityFeature() {
         assert Files.exists(applicationYAMLPath)
-        assert Collections.indexOfSubList(Files.readAllLines(applicationYAMLPath),
-                """micronaut:
+        def yaml = new YamlSlurper()
+        def expected = new YamlSlurper().parseText("""micronaut:
                   |  application:
                   |    name: foo
                   |  router:
@@ -186,14 +186,15 @@ class SwaggerUISpec extends CommandSpec {
                   |        mapping: /swagger/**
                   |      swagger-ui:
                   |        paths: classpath:META-INF/swagger/views/swagger-ui
-                  |        mapping: /swagger-ui/**""".stripMargin()
-                .split(System.lineSeparator()).toList()) == 0
+                  |        mapping: /swagger-ui/**""".stripMargin())
+        def actual = yaml.parse(Files.newInputStream(applicationYAMLPath))
+        assert actual == expected
     }
 
     void checkYAMLConfigFileWithSecurityFeature() {
         assert Files.exists(applicationYAMLPath)
-        assert Collections.indexOfSubList(Files.readAllLines(applicationYAMLPath),
-                """micronaut:
+        def yaml = new YamlSlurper()
+        def expected = new YamlSlurper().parseText("""micronaut:
                   |  application:
                   |    name: foo
                   |  router:
@@ -209,7 +210,9 @@ class SwaggerUISpec extends CommandSpec {
                   |    - access: isAnonymous()
                   |      pattern: /swagger/**
                   |    - access: isAnonymous()
-                  |      pattern: /swagger-ui/**""".stripMargin()
-                .split(System.lineSeparator()).toList()) == 0
+                  |      pattern: /swagger-ui/**""".stripMargin())
+
+        def actual = yaml.parse(Files.newInputStream(applicationYAMLPath))
+        assert actual == expected
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class OpenRewrite implements LanguageSpecificFeature {
     @Override
     @NonNull
     public String getDescription() {
-        return "Adds OpenRewrite plugin and Micronaut upgrade recipe";
+        return "Adds OpenRewrite plugin and Micronaut3to4Migration migration recipe";
     }
 
     @Override
@@ -74,6 +74,7 @@ public class OpenRewrite implements LanguageSpecificFeature {
 
     private void addGradlePlugin(GeneratorContext generatorContext) {
         generatorContext.addHelpLink("Rewrite Gradle Plugin", "https://plugins.gradle.org/plugin/org.openrewrite.rewrite");
+        generatorContext.addHelpLink("Rewrite Micronaut3to4Migration Recipe", "https://docs.openrewrite.org/running-recipes/popular-recipe-guides/migrate-to-micronaut-4-from-micronaut-3");
         generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("org.openrewrite.rewrite")
                 .lookupArtifactId("plugin")
@@ -87,6 +88,7 @@ public class OpenRewrite implements LanguageSpecificFeature {
     }
 
     private void addMavenPlugin(GeneratorContext generatorContext) {
+        generatorContext.addHelpLink("Rewrite Micronaut3to4Migration Recipe", "https://docs.openrewrite.org/running-recipes/popular-recipe-guides/migrate-to-micronaut-4-from-micronaut-3");
         String mavenPluginArtifactId = "rewrite-maven-plugin";
         generatorContext.addBuildPlugin(MavenPlugin.builder()
                 .artifactId(mavenPluginArtifactId)

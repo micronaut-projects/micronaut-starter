@@ -3,6 +3,8 @@ package io.micronaut.starter.feature.other
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -26,17 +28,17 @@ class OpenRewriteSpec extends ApplicationContextSpec implements CommandOutputFix
         String template = render(GRADLE)
         String pluginId = 'org.openrewrite.rewrite'
 
+        BuildTestVerifier verifier = BuildTestUtil.verifier(GRADLE,template)
+
         then:
-        template.contains 'rewrite("org.openrewrite.recipe:rewrite-micronaut:'
+        verifier.hasDependency("org.openrewrite.recipe", "rewrite-micronaut", "rewrite")
+        verifier.hasBuildPlugin(pluginId)
 
         template.contains '''
 rewrite {
-    activeRecipe("org.openrewrite.java.micronaut.Micronaut2to3Migration")
+    activeRecipe("org.openrewrite.java.micronaut.Micronaut3to4Migration")
 }
 '''
-
-        template.contains 'id("' + pluginId + '") version "'
-
         when:
         Optional<SemanticVersion> semver = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
 
@@ -61,7 +63,7 @@ rewrite {
         <version>${openrewrite.maven.plugin.version}</version>
         <configuration>
           <activeRecipes>
-            <recipe>org.openrewrite.java.micronaut.Micronaut2to3Migration</recipe>
+            <recipe>org.openrewrite.java.micronaut.Micronaut3to4Migration</recipe>
           </activeRecipes>
           <activeStyles>
           </activeStyles>

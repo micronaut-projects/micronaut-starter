@@ -11,8 +11,8 @@ class SoySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-soy contains links to micronaut docs'() {
         when:
-        def output = generate(['views-soy'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-soy'])
+        String readme = output["README.md"]
 
         then:
         readme

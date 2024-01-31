@@ -32,10 +32,18 @@ import java.util.Set;
  */
 @Singleton
 public class JunitCompanionFeatureValidator implements FeatureValidator {
+
     @Override
     public void validatePreProcessing(Options options,
                                       ApplicationType applicationType,
                                       Set<Feature> features) {
+
+    }
+
+    @Override
+    public void validatePostProcessing(Options options,
+                                       ApplicationType applicationType,
+                                       Set<Feature> features) {
         if (options.getTestFramework() != TestFramework.JUNIT) {
             features.stream()
                     .filter(JunitCompanionFeature.class::isInstance)
@@ -44,12 +52,5 @@ public class JunitCompanionFeatureValidator implements FeatureValidator {
                         throw new IllegalArgumentException(f.getName() + " requires JUnit.");
                     });
         }
-    }
-
-    @Override
-    public void validatePostProcessing(Options options,
-                                       ApplicationType applicationType,
-                                       Set<Feature> features) {
-
     }
 }

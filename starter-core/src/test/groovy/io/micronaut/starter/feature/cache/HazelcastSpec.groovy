@@ -13,8 +13,8 @@ class HazelcastSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void 'test readme.md contains links to hazelcast and micronaut docs'() {
         when:
-        def output = generate(['cache-hazelcast'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['cache-hazelcast'])
+        String readme = output["README.md"]
 
         then:
         readme

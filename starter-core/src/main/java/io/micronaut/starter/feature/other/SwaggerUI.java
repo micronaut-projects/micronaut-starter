@@ -15,31 +15,20 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
-import io.micronaut.starter.feature.other.template.openApiProperties;
-import io.micronaut.starter.feature.security.Security;
-import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.template.RockerTemplate;
-
+import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
+import io.micronaut.starter.feature.InterceptUrlMap;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 import jakarta.inject.Singleton;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
-public class SwaggerUI implements Feature, MicronautServerDependent {
+public class SwaggerUI extends OpenApiView implements ContributingInterceptUrlMapFeature {
     public static final String NAME = "swagger-ui";
 
-    private final OpenApi openApiFeature;
-
     public SwaggerUI(OpenApi openApiFeature) {
-        this.openApiFeature = openApiFeature;
+        super(openApiFeature);
     }
 
     @Override
@@ -58,48 +47,6 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("openapiProperties", new RockerTemplate("openapi.properties", openApiProperties.template()));
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.paths", "classpath:META-INF/swagger");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.mapping", "/swagger/**");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.paths", "classpath:META-INF/swagger/views/swagger-ui");
-        generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
-
-        if (generatorContext.isFeaturePresent(Security.class)) {
-            Map<String, String> swaggerAccess = new HashMap<>() {{
-                put("pattern", "/swagger/**");
-                put("access", "isAnonymous()");
-            }};
-
-            Map<String, String> swaggerUiAccess = new HashMap<>() {{
-                put("pattern", "/swagger-ui/**");
-                put("access", "isAnonymous()");
-            }};
-
-            generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess));
-        }
-
-        generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController(
-                generatorContext.getProject(), generatorContext.getLanguage()));
-
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeatureIfNotPresent(OpenApi.class, openApiFeature);
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.API;
-    }
-
-    @Override
     public String getThirdPartyDocumentation() {
         return "https://swagger.io/tools/swagger-ui/";
     }
@@ -107,5 +54,19 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html";
+    }
+
+    @Override
+    public List<InterceptUrlMap> interceptUrlMaps() {
+        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        result.add(InterceptUrlMap.anonymousAcccess("/swagger-ui/**"));
+        return result;
+    }
+
+    @Override
+    public List<StaticResource> staticResources() {
+        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        result.add(new StaticResource("swagger-ui", "/swagger-ui/**", "classpath:META-INF/swagger/views/swagger-ui"));
+        return result;
     }
 }

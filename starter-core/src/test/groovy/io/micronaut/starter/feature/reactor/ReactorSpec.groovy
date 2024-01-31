@@ -18,8 +18,8 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void 'test readme.md with feature reactor contains links to micronaut docs'() {
         when:
-        def output = generate(['reactor'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['reactor'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -63,6 +63,7 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         then:
         verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.reactor", "micronaut-reactor-http-client", Scope.COMPILE)
+        verifier.hasDependency("io.micrometer", "context-propagation", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()

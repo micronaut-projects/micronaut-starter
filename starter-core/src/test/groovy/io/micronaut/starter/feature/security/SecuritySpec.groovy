@@ -13,8 +13,8 @@ class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature security contains links to micronaut docs'() {
         when:
-        def output = generate(['security'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security'])
+        String readme = output["README.md"]
 
         then:
         readme

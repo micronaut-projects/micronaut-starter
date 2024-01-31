@@ -12,8 +12,8 @@ class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test README.md with feature jms contains links to micronaut docs'() {
         when:
-        def output = generate([feature])
-        def readme = output['README.md']
+        Map<String, String> output = generate([feature])
+        String readme = output['README.md']
 
         then:
         readme

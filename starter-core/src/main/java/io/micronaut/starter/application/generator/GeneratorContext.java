@@ -309,6 +309,10 @@ public class GeneratorContext implements DependencyContext {
         return features.isFeaturePresent(feature);
     }
 
+    public boolean isFeatureMissing(Class<? extends Feature> feature) {
+        return !features.isFeaturePresent(feature);
+    }
+
     public <T extends Feature> Optional<T> getFeature(Class<T> feature) {
         return features.getFeature(feature);
     }
