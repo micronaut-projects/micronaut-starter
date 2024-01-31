@@ -25,6 +25,7 @@ public class Category {
     public static final String API                  = "API";
     public static final String BPM                  = "BPM";
     public static final String CACHE                = "Cache";
+    public static final String CHATBOTS             = "ChatBots";
     public static final String CICD                 = "CI/CD";
     public static final String CLIENT               = "Client";
     public static final String CLOUD                = "Cloud";
@@ -53,6 +54,7 @@ public class Category {
     public static final String SPRING               = "Spring Framework";
     public static final String SSL                  = "SSL";
     public static final String SCHEDULING           = "Scheduling";
+    public static final String TEST                 = "Testing";
     public static final String TRACING              = "Distributed Tracing";
     public static final String VALIDATION           = "Validation";
     public static final String VIEW                 = "View Rendering";

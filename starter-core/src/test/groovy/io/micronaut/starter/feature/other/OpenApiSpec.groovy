@@ -16,8 +16,8 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void 'test readme.md with feature openapi contains links to micronaut docs'() {
         when:
-        def output = generate(['openapi'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['openapi'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -34,19 +34,14 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     void 'test swagger with #buildTool for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['openapi', 'kapt'])
+                .features(['openapi'])
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, TestFramework.JUNIT, template)
 
         then:
-        if (!(buildTool == BuildTool.MAVEN && (Language.GROOVY == language))) { // not sure why it fails for this combinations
-            assert verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.ANNOTATION_PROCESSOR)
-        }
-        if (language == Language.GROOVY && buildTool == BuildTool.MAVEN) {
-            assert verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi", Scope.COMPILE)
-        }
-        verifier.hasDependency("io.swagger.core.v3", "swagger-annotations", Scope.COMPILE)
+        verifier.hasAnnotationProcessor("io.micronaut.openapi", "micronaut-openapi")
+        verifier.hasDependency("io.micronaut.openapi", "micronaut-openapi-annotations", Scope.COMPILE_ONLY)
 
         if (buildTool == BuildTool.MAVEN) {
             // property is not defined it is inherited via the bom

@@ -15,9 +15,9 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL
-import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.feature.database.DataJdbc.MICRONAUT_DATA_JDBC_ARTIFACT
 import static io.micronaut.starter.feature.database.jdbc.Hikari.MICRONAUT_JDBC_HIKARI_ARTIFACT
 
@@ -25,8 +25,8 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
 
     void 'test readme.md with feature data-jdbc contains links to micronaut docs'() {
         when:
-        def output = generate(['data-jdbc'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['data-jdbc'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -65,7 +65,7 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
         verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_JDBC_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )
@@ -141,6 +141,6 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
 
         then:
 
-        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.COMPILE_ONLY )
     }
 }

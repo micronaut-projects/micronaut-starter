@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
@@ -86,8 +87,8 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'disable Gradle Toolchain by default (dsl = #dsl)'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
-        def buildGradle = output[fileName]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
+        String buildGradle = output[fileName]
 
         then:
         buildGradle
@@ -97,7 +98,14 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         dsl                     | fileName           | configuration
         BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+    }
 
+    void 'ignoredAutomaticDependencies not output by default'() {
+        when:
+        Map<String, String> output = generate([])
+
+        then:
+        !output["build.gradle.kts"].contains('ignoredAutomaticDependencies')
     }
 
     void 'disable Gradle Toolchain by default for Oracle function (dsl = #dsl)'() {
@@ -119,8 +127,9 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        List<String> features = (apptype == ApplicationType.CLI && lang == Language.KOTLIN) ? [Kapt.NAME] : []
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk), features)
+        String readme = output["README.md"]
 
         then:
         readme
@@ -140,8 +149,8 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        String readme = output["README.md"]
 
         then:
         readme

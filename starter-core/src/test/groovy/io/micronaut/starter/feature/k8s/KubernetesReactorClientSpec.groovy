@@ -15,8 +15,8 @@ class KubernetesReactorClientSpec extends ApplicationContextSpec  implements Com
 
     void 'test readme.md with feature kubernetes-reactor-client contains links to docs'() {
         when:
-        def output = generate(['kubernetes-reactor-client'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kubernetes-reactor-client'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -21,24 +21,24 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.CommunityFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import spock.lang.Requires
+import spock.lang.PendingFeature
 
-@Requires({ CommunityFeatureValidator.ENABLE_COMMUNITY_FEATURES })
 class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void 'test readme.md with feature camunda-external-worker contains links to micronaut docs'() {
         when:
-        def output = generate(['camunda-external-worker'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['camunda-external-worker'])
+        String readme = output["README.md"]
 
         then:
         readme
         readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-external-client")
     }
 
+    @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void "test dependency added for camunda-external-worker feature"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -53,6 +53,7 @@ class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutput
         buildTool << BuildTool.values()
     }
 
+    @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void 'test camunda-external-worker configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['camunda-external-worker'])

@@ -18,7 +18,7 @@ import spock.lang.Issue
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL
-import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR_ARTIFACT
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.feature.database.jdbc.Hikari.MICRONAUT_JDBC_HIKARI_ARTIFACT
 
 class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -66,7 +66,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
         then:
         //src/main
-        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
+        verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT, Scope.ANNOTATION_PROCESSOR )
         verifier.hasDependency(GROUP_ID_MICRONAUT_DATA, "micronaut-data-hibernate-jpa", Scope.COMPILE )
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_JDBC_HIKARI_ARTIFACT, Scope.COMPILE )
         verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME )
@@ -130,20 +130,20 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
     void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
+        Language language = Language.GROOVY
+
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-            .language(Language.GROOVY)
+        String template = new BuildBuilder(beanContext, buildTool)
+            .language(language)
             .features(["data-jpa"])
             .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-''')
+        println(template)
+        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
     }
 
     void 'feature data-jpa contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {

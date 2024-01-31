@@ -18,12 +18,17 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public final class Dependency {
+public final class Dependency implements Coordinate {
+
+    public static final Comparator<Dependency> COMPARATOR = (o1, o2) -> {
+        int comparison = Integer.compare(o1.getScope().getOrder(), o2.getScope().getOrder());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return Coordinate.COMPARATOR.compare(o1, o2);
+    };
 
     @Nullable
     private final Scope scope;
@@ -148,15 +153,18 @@ public final class Dependency {
         return scope;
     }
 
+    @Override
     public String getGroupId() {
         return groupId;
     }
 
+    @Override
     public String getArtifactId() {
         return artifactId;
     }
 
     @Nullable
+    @Override
     public String getVersion() {
         return version;
     }
@@ -170,6 +178,7 @@ public final class Dependency {
         return order;
     }
 
+    @Override
     public boolean isPom() {
         return pom;
     }

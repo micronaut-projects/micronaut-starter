@@ -18,8 +18,18 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
         this.language = language
     }
 
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        return hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR);
+    }
+
+    @Override
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId) {
+        return hasDependency(groupId, artifactId, Scope.TEST_ANNOTATION_PROCESSOR);
+    }
+
     @CompileDynamic
-    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId) {
+    boolean hasAnnotationProcessor(String groupId, String artifactId, Scope scope) {
         String expectedCoordinate = "${groupId}:${artifactId}"
         if (language == Language.KOTLIN) {
             if (scope == Scope.ANNOTATION_PROCESSOR) {
@@ -43,7 +53,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     }
 
     @CompileDynamic
-    boolean hasAnnotationProcessor(Scope scope, String groupId, String artifactId, String version, boolean isProperty) {
+    boolean hasAnnotationProcessor(String groupId, String artifactId, String version, Scope scope, boolean isProperty) {
         String v = isProperty ? '${' + version + '}' : version
         String expectedCoordinate = "${groupId}:${artifactId}:${v}"
         if (language == Language.KOTLIN) {
@@ -83,7 +93,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope) {
         if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
-            return hasAnnotationProcessor(scope, groupId, artifactId)
+            return hasAnnotationProcessor(groupId, artifactId, scope)
         }
         Optional<String> mavenScopeString = MavenScope.of(scope, language).map(MavenScope::toString)
         if (!mavenScopeString.isPresent()) {
@@ -122,7 +132,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope, String version, boolean isProperty) {
         if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
-            return hasAnnotationProcessor(scope, groupId, artifactId, version, isProperty)
+            return hasAnnotationProcessor(groupId, artifactId, version, scope, isProperty)
         }
         return MavenScope.of(scope, language)
                 .map {hasDependency(groupId, artifactId, it.toString(), version, isProperty) }
@@ -146,6 +156,31 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     boolean hasDependency(String expectedGroupId, String expectedArtifactId) {
         project.dependencies.dependency.findAll { it.artifactId.text() == expectedArtifactId }.any {
             it.groupId.text() == expectedGroupId
+        }
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId) {
+        hasExclusion(groupId, artifactId, excludedGroupId, excludedArtifactId, Scope.COMPILE)
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
+        String expectedExclude = "${excludedGroupId}:${excludedArtifactId}"
+        if ((scope == Scope.ANNOTATION_PROCESSOR || scope == Scope.TEST_ANNOTATION_PROCESSOR) && language != Language.GROOVY) {
+            project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }?.with {
+                configuration.annotationProcessorPaths.path.find {it.artifactId.text() == artifactId && it.groupId.text() == groupId && it.exclusions}?.with {
+                    List<String> excludes = exclusions.exclusion.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                    return excludes.contains(expectedExclude)
+                }
+            }
+        } else {
+            project.dependencies.dependency.find { it.artifactId.text() == artifactId && it.groupId.text() == groupId && it.exclusions}?.with {
+                List<String> excludes = exclusions.exclusion.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+                return excludes.contains(expectedExclude)
+            }
         }
     }
 

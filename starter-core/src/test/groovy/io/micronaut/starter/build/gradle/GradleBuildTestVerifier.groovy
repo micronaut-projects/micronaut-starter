@@ -3,19 +3,34 @@ package io.micronaut.starter.build.gradle
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+
 import java.util.regex.Pattern
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
+
+    final BuildTool buildTool
     final String template
     final Language language
     final TestFramework testFramework
 
-    GradleBuildTestVerifier(String template, Language language, TestFramework testFramework) {
+    GradleBuildTestVerifier(BuildTool buildTool, String template, Language language, TestFramework testFramework) {
+        this.buildTool = buildTool
         this.template = template
         this.language = language
         this.testFramework = testFramework
+    }
+
+    @Override
+    boolean hasAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.ANNOTATION_PROCESSOR)
+    }
+
+    @Override
+    boolean hasTestAnnotationProcessor(String groupId, String artifactId) {
+        hasDependency(groupId, artifactId, Scope.TEST_ANNOTATION_PROCESSOR)
     }
 
     @Override
@@ -73,6 +88,27 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
         GradleConfiguration.values().collect { it.getConfigurationName() }.any( {scope ->
             hasDependency(groupId, artifactId, scope)
         })
+    }
+
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId) {
+        hasExclusion(groupId, artifactId, excludedGroupId, excludedArtifactId, Scope.COMPILE)
+    }
+
+    @Override
+    boolean hasExclusion(String groupId, String artifactId, String excludedGroupId, String excludedArtifactId, Scope scope) {
+        Optional<String> gradleConfigurationNameOptional = GradleConfiguration.of(scope, language, testFramework, null).map { it.getConfigurationName() }
+        if (!gradleConfigurationNameOptional.isPresent()){
+            throw new ConfigurationException("cannot match " + scope + " to gradle configuration");
+        }
+        String gradleConfigurationName = gradleConfigurationNameOptional.get()
+        String pattern = /(?s).*${gradleConfigurationName}\("${groupId.replace(".", "\\.")}:${artifactId}"\)\s*\{(.+?)\}/
+        println pattern
+        def match = template =~ pattern
+        String assignmentOp = (buildTool == BuildTool.GRADLE) ? ": " : " = "
+        return match.size() > 0
+                ? match[0][1].contains("exclude(group${assignmentOp}\"${excludedGroupId}\", module${assignmentOp}\"${excludedArtifactId}\")")
+                : false
     }
 
     @Override

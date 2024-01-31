@@ -13,8 +13,8 @@ class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature flyway contains links to micronaut docs'() {
         when:
-        def output = generate(['flyway'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['flyway'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -12,8 +12,8 @@ class InfinispanSpec extends ApplicationContextSpec  implements CommandOutputFix
 
     void 'test readme.md with feature cache-infinispan contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-infinispan'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['cache-infinispan'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -61,6 +61,6 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
     }
     
     public static boolean supports(JdkVersion jdkVersion) {
-        return jdkVersion == JdkVersion.JDK_17;
+        return jdkVersion == JdkVersion.JDK_17 || jdkVersion == JdkVersion.JDK_21;
     }
 }

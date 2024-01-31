@@ -15,6 +15,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -110,6 +111,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
         verifier.hasDependency('io.micronaut.crac', 'micronaut-crac')
+        verifier.hasDependency('com.amazonaws', 'aws-lambda-java-events')
 
         where:
         language << Language.values()
@@ -286,6 +288,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         when:
         String fileName = buildTool.getBuildFileName()
         String buildGradle = output[fileName]
+        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
 
         then:
         !buildGradle.contains('id "application"')
@@ -295,25 +298,27 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildGradle.contains('id("io.micronaut.application")')
 
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert buildGradle.contains('''\
+            assert buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     baseImage.set("amazonlinux:2")
+    jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         } else if (buildTool == BuildTool.GRADLE) {
-            assert buildGradle.contains('''\
+            assert buildGradle.contains("""\
 tasks.named("dockerfileNative") {
     baseImage = "amazonlinux:2"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         }
 
         where:
@@ -354,21 +359,22 @@ tasks.named("dockerfileNative") {
 
         when:
         String buildGradle = output[buildTool.buildFileName]
+        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
 
         then:
         !buildGradle.contains('id "application"')
         buildGradle.contains('mainClass.set')
         buildGradle.contains('id("io.micronaut.application")')
-
-        buildGradle.contains('''\
+        buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     baseImage.set("amazonlinux:2")
+    jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}''')
+}""")
         where:
         language << Language.values().toList()
         extension << Language.extensions()
@@ -422,7 +428,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_java")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+        !template.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         where:
         language << Language.values()
@@ -438,7 +444,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_provided")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        template.contains('implementation("io.micronaut:micronaut-http-client")')
+        template.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
@@ -484,7 +490,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
 
         where:
         [applicationType, language] << [
@@ -510,9 +516,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime")
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws-api-proxy', Scope.COMPILE)
-
-        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.TEST)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
@@ -536,7 +541,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
@@ -554,7 +559,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         build.contains('runtime("lambda_java")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !build.contains('implementation("io.micronaut:micronaut-http-client")')
+        !build.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         output.containsKey("$srcDir/example/micronaut/HomeController.$extension".toString())
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.version.SemanticVersion;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -23,6 +24,7 @@ import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.S01SonatypeSnapshots;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
@@ -46,11 +48,11 @@ import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
-
 import java.util.Optional;
 import java.util.Set;
 
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature {
@@ -129,11 +131,22 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 .findFirst();
     }
 
+    @Nullable
+    private Set<String> ignoredAutomaticDependencies(GeneratorContext generatorContext) {
+        if (generatorContext.hasDependency(MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA, MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE)
+                && generatorContext.countDependencies(MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA) == 1) {
+            return Set.of(MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA + ":" + ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT);
+        }
+        return null;
+    }
+
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext, String id) {
         MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder()
                 .buildTool(generatorContext.getBuildTool())
                 .incremental(true)
-                .packageName(generatorContext.getProject().getPackageName());
+                .javaVersion(generatorContext.getFeatures().getTargetJdk())
+                .packageName(generatorContext.getProject().getPackageName())
+                .ignoredAutomaticDependencies(ignoredAutomaticDependencies(generatorContext));
         generatorContext.getFeatures()
                 .getFeatures()
                 .stream()

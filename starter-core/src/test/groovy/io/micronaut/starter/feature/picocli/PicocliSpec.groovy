@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -17,27 +18,29 @@ import spock.lang.Unroll
 class PicocliSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle cli app contains picocli-gen as annotation processor for language=#language'(Language language, String scope) {
+    void 'test cli app contains picocli-gen as annotation processor for buildTool=#buildTool language=#language'(Language language, BuildTool buildTool) {
+        given:
+        def features = language == Language.KOTLIN ? [Kapt.NAME] : []
+
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
+                .features(features)
                 .applicationType(ApplicationType.CLI)
-                .features(['kapt'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains("$scope(\"info.picocli:picocli-codegen\")")
-        if (language in [Language.KOTLIN, Language.GROOVY]) {
-            assert !template.contains('annotationProcessor("info.picocli:picocli-codegen')
+        verifier.hasDependency("info.picocli", "picocli")
+        verifier.hasDependency("io.micronaut.picocli", "micronaut-picocli")
+        if (language == Language.KOTLIN && buildTool.isGradle()) {
+            assert verifier.hasDependency("info.picocli", "picocli-codegen", "kapt")
+        } else {
+            assert verifier.hasAnnotationProcessor("info.picocli", "picocli-codegen")
         }
-        template.contains('implementation("info.picocli:picocli")')
-        template.contains('implementation("io.micronaut.picocli:micronaut-picocli")')
 
         where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
-        Language.GROOVY | "compileOnly"
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {
@@ -95,6 +98,7 @@ class PicocliSpec extends ApplicationContextSpec {
         features.contains("picocli-junit")
         features.contains("junit")
         generatorContext.getTemplates().containsKey("picocliJunitTest")
+        !features.contains(Kapt.NAME)
         !features.contains("picocli-spock")
         !features.contains("picocli-kotlintest")
         !generatorContext.getTemplates().containsKey("testDir")
@@ -115,11 +119,12 @@ class PicocliSpec extends ApplicationContextSpec {
 
         when:
         options = new Options(Language.KOTLIN, null, BuildTool.GRADLE)
-        features = getFeatures([], options, ApplicationType.CLI)
-        generatorContext = buildGeneratorContext([], options, ApplicationType.CLI)
+        features = getFeatures([Kapt.NAME], options, ApplicationType.CLI)
+        generatorContext = buildGeneratorContext([Kapt.NAME], options, ApplicationType.CLI)
 
         then:
         features.contains("picocli")
+        features.contains(Kapt.NAME)
         features.contains("picocli-junit")
         features.contains("junit")
         generatorContext.getTemplates().containsKey("picocliJunitTest")
@@ -128,9 +133,10 @@ class PicocliSpec extends ApplicationContextSpec {
         !generatorContext.getTemplates().containsKey("testDir")
 
         when:
+        def kaptFeatures = language == Language.KOTLIN ? [Kapt.NAME] : []
         options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE)
-        features = getFeatures([], options, ApplicationType.CLI)
-        generatorContext = buildGeneratorContext([], options, ApplicationType.CLI)
+        features = getFeatures(kaptFeatures, options, ApplicationType.CLI)
+        generatorContext = buildGeneratorContext(kaptFeatures, options, ApplicationType.CLI)
 
         then:
         features.contains("picocli")
@@ -143,5 +149,30 @@ class PicocliSpec extends ApplicationContextSpec {
 
         where:
         language << Language.values()
+    }
+
+    void "test that picocli with kotlin language requires kapt with buildTool=#buildTool"() {
+        when:
+        new BuildBuilder(beanContext, buildTool)
+                .language(Language.KOTLIN)
+                .applicationType(ApplicationType.CLI)
+                .render()
+
+        then:
+        def ex = thrown(IllegalArgumentException)
+        ex.getMessage() == 'Feature picocli-kotlin-application is incompatible with Kotlin KSP and requires Kapt instead.'
+
+        when:
+        new BuildBuilder(beanContext, buildTool)
+                .language(Language.KOTLIN)
+                .features([Kapt.NAME])
+                .applicationType(ApplicationType.CLI)
+                .render()
+
+        then:
+        noExceptionThrown()
+
+        where: "BuildTool.MAVEN always includes Kapt"
+        buildTool << BuildTool.valuesGradle()
     }
 }

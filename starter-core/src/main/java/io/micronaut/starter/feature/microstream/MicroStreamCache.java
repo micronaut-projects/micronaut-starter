@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
@@ -27,6 +28,11 @@ import jakarta.inject.Singleton;
 public class MicroStreamCache implements MicroStreamFeature {
 
     public static final String NAME = "microstream-cache";
+    public static final String ARTIFACT_ID_MICRONAUT_MICROSTREAM_CACHE = "micronaut-microstream-cache";
+    public static final Dependency DEPENDENCY_MICROSTREAM_CACHE = MicronautDependencyUtils.microstreamDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_MICROSTREAM_CACHE)
+            .compile()
+            .build();
 
     @Override
     @NonNull
@@ -59,12 +65,7 @@ public class MicroStreamCache implements MicroStreamFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("microstream.cache.my-cache.key-type", "java.lang.Integer");
         generatorContext.getConfiguration().put("microstream.cache.my-cache.value-type", "java.lang.String");
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
-                .artifactId("micronaut-microstream-cache")
-                .build()
-        );
+        generatorContext.addDependency(DEPENDENCY_MICROSTREAM_CACHE);
     }
 
     @Override

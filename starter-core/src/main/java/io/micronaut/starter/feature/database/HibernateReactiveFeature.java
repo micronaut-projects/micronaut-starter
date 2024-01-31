@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
-    private static final String ORACLE_12C_DIALECT = "org.hibernate.dialect.Oracle12cDialect";
-    
+    private static final String ORACLE_DIALECT = "org.hibernate.dialect.OracleDialect";
+
     HibernateReactiveFeature(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
     }
@@ -61,14 +61,18 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
             generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
                     migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
         } else {
-            optionalDbType.ifPresent(type ->
-                    generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString())
-            );
+            optionalDbType.ifPresent(type -> {
+                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString());
+                // MySql 8.3 doesn't work with TestContainers 1.19.3 https://github.com/testcontainers/testcontainers-java/issues/8130
+                if (type == DbType.MYSQL) {
+                    generatorContext.getConfiguration().addNested("test-resources.containers.mysql.image-name", "mysql:8.2");
+                }
+            });
         }
         if (optionalDbType.isPresent()) {
             DbType dbType = optionalDbType.get();
             if (dbType == DbType.ORACLEXE) {
-                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_12C_DIALECT);
+                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_DIALECT);
             }
         }
     }

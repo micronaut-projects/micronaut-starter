@@ -10,8 +10,8 @@ class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements Command
 
     void 'test readme.md with feature azure-key-vault contains links to micronaut and microsoft docs'() {
         when:
-        def output = generate(['azure-key-vault'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['azure-key-vault'])
+        String readme = output["README.md"]
 
         then:
         readme

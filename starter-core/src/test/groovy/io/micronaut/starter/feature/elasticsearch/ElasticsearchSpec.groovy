@@ -13,8 +13,8 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
 
     void 'test readme.md with feature elasticsearch contains links to micronaut docs'() {
         when:
-        def output = generate(['elasticsearch'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['elasticsearch'])
+        String readme = output["README.md"]
 
         then:
         readme

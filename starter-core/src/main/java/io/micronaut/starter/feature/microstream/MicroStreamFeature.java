@@ -18,5 +18,5 @@ package io.micronaut.starter.feature.microstream;
 import io.micronaut.starter.feature.Feature;
 
 public interface MicroStreamFeature extends Feature {
-    String MICRONAUT_MICROSTREAM_GROUP_ID = "io.micronaut.microstream";
+
 }

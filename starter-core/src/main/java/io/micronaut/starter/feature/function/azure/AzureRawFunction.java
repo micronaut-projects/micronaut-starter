@@ -22,6 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
@@ -69,7 +70,9 @@ public class AzureRawFunction extends AbstractAzureFunction {
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         super.applyFunction(generatorContext, type);
 
-        if (type == ApplicationType.FUNCTION && !(generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN)) {
+        if (type == ApplicationType.FUNCTION
+                && generatorContext.isFeatureMissing(CodeContributingFeature.class)
+                && !(generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN)) {
             Project project = generatorContext.getProject();
 
             generateJavaTestClass(generatorContext,

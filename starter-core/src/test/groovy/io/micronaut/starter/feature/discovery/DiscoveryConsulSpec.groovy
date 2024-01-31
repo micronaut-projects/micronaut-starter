@@ -16,8 +16,8 @@ class DiscoveryConsulSpec extends ApplicationContextSpec  implements CommandOutp
 
     void 'test readme.md with feature discovery-consul contains links to micronaut docs'() {
         when:
-        def output = generate(['discovery-consul'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['discovery-consul'])
+        String readme = output["README.md"]
 
         then:
         readme

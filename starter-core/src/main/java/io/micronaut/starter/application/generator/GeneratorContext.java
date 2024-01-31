@@ -309,6 +309,10 @@ public class GeneratorContext implements DependencyContext {
         return features.isFeaturePresent(feature);
     }
 
+    public boolean isFeatureMissing(Class<? extends Feature> feature) {
+        return !features.isFeaturePresent(feature);
+    }
+
     public <T extends Feature> Optional<T> getFeature(Class<T> feature) {
         return features.getFeature(feature);
     }
@@ -423,5 +427,18 @@ public class GeneratorContext implements DependencyContext {
                 .anyMatch(dependency -> dependency.getGroupId().equals(groupId) &&
                         dependency.getArtifactId().equals(artifactId)
                         && dependency.getScope() == scope);
+    }
+
+    public boolean hasDependency(@NonNull String groupId,
+                                        @NonNull String artifactId) {
+        return getDependencies().stream()
+                .anyMatch(dependency -> dependency.getGroupId().equals(groupId) &&
+                        dependency.getArtifactId().equals(artifactId));
+    }
+
+    public long countDependencies(@NonNull String groupId) {
+        return getDependencies().stream()
+                .filter(dependency -> dependency.getGroupId().equals(groupId))
+                .count();
     }
 }

@@ -29,11 +29,14 @@ import jakarta.inject.Singleton;
 @Singleton
 public class JaxRs implements Feature, MicronautServerDependent {
 
-    public static final String MICRONAUT_JAX_RS_GROUP = "io.micronaut.jaxrs";
     public static final String MICRONAUT_JAXRS_VERSION = "micronaut.jaxrs.version";
     public static final String MICRONAUT_JAXRS_PROCESSOR = "micronaut-jaxrs-processor";
     public static final String NAME = "jax-rs";
-
+    private static final String ARTIFACT_ID_MICRONAUT_JAXRS_SERVER = "micronaut-jaxrs-server";
+    private static final Dependency DEPENDENCY_JAXRS_SERVER_COMPILE = MicronautDependencyUtils.jaxrsDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_JAXRS_SERVER)
+            .compile()
+            .build();
     private final JaxRsSecurity jaxRsSecurity;
 
     public JaxRs(JaxRsSecurity jaxRsSecurity) {
@@ -64,25 +67,19 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder jaxrs = Dependency.builder()
-                .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId(MICRONAUT_JAXRS_PROCESSOR)
-                .versionProperty(MICRONAUT_JAXRS_VERSION)
-                .template();
+        addDependencies(generatorContext);
+    }
 
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(jaxrs.annotationProcessor());
-        } else {
-            generatorContext.addDependency(MicronautDependencyUtils
-                    .moduleMavenAnnotationProcessor(MICRONAUT_JAX_RS_GROUP, MICRONAUT_JAXRS_PROCESSOR, MICRONAUT_JAXRS_VERSION, false)
-            );
-        }
-
-        generatorContext.addDependency(jaxrs.testAnnotationProcessor());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId("micronaut-jaxrs-server")
-                .compile());
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MicronautDependencyUtils.annotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_JAXRS,
+                MICRONAUT_JAXRS_PROCESSOR,
+                MICRONAUT_JAXRS_VERSION));
+        generatorContext.addDependency(MicronautDependencyUtils.testAnnotationProcessor(generatorContext.getBuildTool(),
+                MicronautDependencyUtils.GROUP_ID_MICRONAUT_JAXRS,
+                MICRONAUT_JAXRS_PROCESSOR,
+                MICRONAUT_JAXRS_VERSION));
+        generatorContext.addDependency(DEPENDENCY_JAXRS_SERVER_COMPILE);
     }
 
     @Override

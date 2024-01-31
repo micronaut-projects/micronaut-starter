@@ -17,8 +17,8 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature dynamodb contains links to micronaut docs'() {
         when:
-        def output = generate([DynamoDb.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([DynamoDb.NAME])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Amazon DynamoDB documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)")
@@ -29,7 +29,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
-                .features([DynamoDb.NAME, 'kapt'])
+                .features([DynamoDb.NAME])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
@@ -39,7 +39,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         and: 'validation feature is applied since the rocker templates of dynamodb use annotations'
         verifier.hasDependency("io.micronaut.validation", "micronaut-validation", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.validation", "micronaut-validation-processor", Scope.ANNOTATION_PROCESSOR)
+        verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
@@ -56,10 +56,8 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
-        template.contains("""    implementation("software.amazon.awssdk:dynamodb") {
-                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "apache-client")
-                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "netty-nio-client")
-                            |    }""".stripMargin())
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "apache-client")
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "netty-nio-client")
         verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
 
         where:
@@ -77,25 +75,12 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
-        template.contains("""
-    <dependency>
-      <groupId>software.amazon.awssdk</groupId>
-      <artifactId>dynamodb</artifactId>
-      <scope>compile</scope>
-      <exclusions>
-          <exclusion>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>apache-client</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>netty-nio-client</artifactId>
-          </exclusion>
-        </exclusions>
-    </dependency>
-""")
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         verifier.hasDependency("software.amazon.awssdk", "url-connection-client", Scope.COMPILE)
+
+        verifier.hasDependency("software.amazon.awssdk", "dynamodb", Scope.COMPILE)
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "apache-client")
+        verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "netty-nio-client")
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()

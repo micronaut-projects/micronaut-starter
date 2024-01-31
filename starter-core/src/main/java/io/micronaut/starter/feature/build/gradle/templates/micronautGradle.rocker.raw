@@ -1,4 +1,5 @@
 @import java.util.List
+@import java.util.Set
 @import java.util.Map
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
@@ -6,6 +7,7 @@
 @args(
     GradleDsl dsl,
     BuildTool build,
+    String javaVersion,
     Dockerfile dockerfile,
     Dockerfile dockerfileNative,
     List<String> dockerBuilderImages,
@@ -18,9 +20,15 @@
     List<String> additionalTestResourceModules,
     boolean sharedTestResources,
     Map<String, String> aotKeys,
-    String lambdaRuntimeMainClass
+    String lambdaRuntimeMainClass,
+    Set<String> ignoredAutomaticDependencies
 )
 micronaut {
+@if(ignoredAutomaticDependencies != null) {
+@for (String ignoredAutomaticDependency : ignoredAutomaticDependencies) {
+    ignoredAutomaticDependencies.add("@(ignoredAutomaticDependency)")
+}
+}
 @if(runtime != null) {
     runtime("@(runtime)")
 }
@@ -91,9 +99,11 @@ dockerfile {
 @if(dockerfileNative.getBaseImage() != null) {
 @if(build == BuildTool.GRADLE) {
     baseImage = "@(dockerfileNative.getBaseImage())"
+    jdkVersion = "@javaVersion"
 }
 @if(build == BuildTool.GRADLE_KOTLIN) {
     baseImage.set("@(dockerfileNative.getBaseImage())")
+    jdkVersion.set("@javaVersion")
 }
 }
 
