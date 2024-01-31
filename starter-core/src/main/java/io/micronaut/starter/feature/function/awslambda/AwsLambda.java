@@ -18,12 +18,17 @@ package io.micronaut.starter.feature.function.awslambda;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.*;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.CodeContributingFeature;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
@@ -56,8 +61,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerKo
 import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.feature.json.SerializationJacksonFeature;
-import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -65,6 +70,7 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -111,13 +117,36 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private final AwsLambdaCustomRuntime customRuntime;
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
-    private final HttpClient httpClient;
+    private final HttpClientJdk httpClientJdk;
 
     private final AwsLambdaEventsSerde awsLambdaEventsSerde;
 
     private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
     private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
+    @Inject
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86,
+                     AwsLambdaSnapstart snapstart,
+                     HttpClientJdk httpClientJdk,
+                     AwsLambdaEventsSerde awsLambdaEventsSerde,
+                     DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
+                     FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
+        this.shadePlugin = shadePlugin;
+        this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = x86;
+        this.snapstart = snapstart;
+        this.httpClientJdk = httpClientJdk;
+        this.awsLambdaEventsSerde = awsLambdaEventsSerde;
+        this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
+        this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
+    }
+
+    /**
+     * @deprecated Use {@link #AwsLambda(ShadePlugin, AwsLambdaCustomRuntime, X86, AwsLambdaSnapstart, HttpClientJdk, AwsLambdaEventsSerde, DefaultAwsLambdaHandlerProvider, FunctionAwsLambdaHandlerProvider)} instead.
+     */
+    @Deprecated
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
@@ -126,14 +155,14 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                      AwsLambdaEventsSerde awsLambdaEventsSerde,
                      DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
                      FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
-        this.shadePlugin = shadePlugin;
-        this.customRuntime = customRuntime;
-        this.defaultCpuArchitecture = x86;
-        this.snapstart = snapstart;
-        this.httpClient = httpClient;
-        this.awsLambdaEventsSerde = awsLambdaEventsSerde;
-        this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
-        this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
+        this(shadePlugin,
+                customRuntime,
+                x86,
+                snapstart,
+                new HttpClientJdk(),
+                awsLambdaEventsSerde,
+                defaultAwsLambdaHandlerProvider,
+                functionAwsLambdaHandlerProvider);
     }
 
     @Override
@@ -155,7 +184,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         }
 
         if (featureContext.isPresent(GraalVM.class) && !featureContext.isPresent(HttpClientFeature.class)) {
-            featureContext.addFeature(httpClient);
+            featureContext.addFeature(httpClientJdk);
         }
 
         if (shouldAddSnapstartFeature(featureContext)) {

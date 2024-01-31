@@ -30,8 +30,8 @@ class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutput
     @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void 'test readme.md with feature camunda-external-worker contains links to micronaut docs'() {
         when:
-        def output = generate(['camunda-external-worker'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['camunda-external-worker'])
+        String readme = output["README.md"]
 
         then:
         readme

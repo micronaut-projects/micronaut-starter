@@ -1,0 +1,39 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+
+@args (
+Project project,
+Features features,
+String buildCommand
+)
+
+## Deploying the function to GCP
+
+Once you have a Google Cloud project selected (with billing enabled), build the function with:
+
+```bash
+$ ./@buildCommand
+```
+
+Then `cd` into the `@features.build().getJarDirectory()` directory (deployment has to be done from the location where the JAR lives):
+
+```bash
+$ cd @features.build().getJarDirectory()
+```
+
+Now run:
+
+```bash
+gcloud functions deploy @project.getName() \
+    --entry-point io.micronaut.chatbots.basecamp.googlecloud.Handler \
+    --runtime java17 \
+    --trigger-http
+```
+
+Choose unauthenticated access when prompted.
+
+To obtain the trigger URL do the following:
+
+```bash
+$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe @project.getName() --format='value(httpsTrigger.url)')
+```

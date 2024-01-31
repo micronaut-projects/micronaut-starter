@@ -12,8 +12,8 @@ class HystrixSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'test readme.md with feature netflix-hystrix contains links to micronaut docs'() {
         when:
-        def output = generate(['netflix-hystrix'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['netflix-hystrix'])
+        String readme = output["README.md"]
 
         then:
         readme

@@ -12,8 +12,8 @@ class GoogleCloudRawFunctionSpec extends BeanContextSpec  implements CommandOutp
     void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        def output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function'])
+        String readme = output["README.md"]
 
         then:
         readme

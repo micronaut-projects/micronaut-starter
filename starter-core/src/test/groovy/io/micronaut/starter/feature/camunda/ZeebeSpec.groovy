@@ -29,8 +29,8 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @PendingFeature(reason = "camunda community features do not support Micronaut Framework 4 yet")
     void 'test readme.md with feature camunda-zeebe contains links to micronaut docs'() {
         when:
-        def output = generate(['camunda-zeebe'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['camunda-zeebe'])
+        String readme = output["README.md"]
 
         then:
         readme

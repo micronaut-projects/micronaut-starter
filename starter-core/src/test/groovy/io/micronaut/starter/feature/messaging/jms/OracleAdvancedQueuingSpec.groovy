@@ -11,8 +11,8 @@ class OracleAdvancedQueuingSpec extends ApplicationContextSpec  implements Comma
 
     void 'test readme.md with feature jms-oracle-aq contains links to micronaut jms docs'() {
         when:
-        def output = generate(['jms-oracle-aq'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jms-oracle-aq'])
+        String readme = output["README.md"]
 
         then:
         readme
