@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.RequireKaptFeature;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class PicocliKotlinApplication implements KotlinApplicationFeature {
+public class PicocliKotlinApplication implements RequireKaptFeature, KotlinApplicationFeature {
 
     @Override
     @Nullable

@@ -21,8 +21,8 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
 
     void 'test readme.md with feature projectLombok contains links to micronaut docs'() {
         when:
-        def output = generate(['lombok'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['lombok'])
+        String readme = output["README.md"]
 
         then:
         readme

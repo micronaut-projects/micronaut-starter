@@ -12,8 +12,8 @@ class JTESpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-jte contains links to micronaut docs'() {
         when:
-        def output = generate(['views-jte'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['views-jte'])
+        String readme = output["README.md"]
 
         then:
         readme

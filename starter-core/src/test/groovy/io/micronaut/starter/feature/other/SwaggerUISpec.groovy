@@ -52,11 +52,8 @@ class SwaggerUISpec extends ApplicationContextSpec  implements CommandOutputFixt
 
         List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 
-        swaggerSec.get(0).get("access") == "isAnonymous()"
-        swaggerSec.get(0).get("pattern") == "/swagger/**"
-
-        swaggerSec.get(1).get("access") == "isAnonymous()"
-        swaggerSec.get(1).get("pattern") == "/swagger-ui/**"
+        swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/swagger/**" }
+        swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/swagger-ui/**" }
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=true"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=false"

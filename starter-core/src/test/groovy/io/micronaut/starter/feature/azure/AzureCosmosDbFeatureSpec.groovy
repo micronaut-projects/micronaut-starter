@@ -16,8 +16,8 @@ class AzureCosmosDbFeatureSpec extends ApplicationContextSpec implements Command
 
     void 'test README.md with feature azure-cosmos-db contains links to micronaut and microsoft docs'() {
         when:
-        def output = generate(['azure-cosmos-db'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['azure-cosmos-db'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Azure Cosmos DB documentation](https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureCosmosClient)")

@@ -1,0 +1,48 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import io.micronaut.chatbots.basecamp.api.Query
+import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
+import io.micronaut.chatbots.core.Dispatcher
+import io.micronaut.context.BeanContext
+import io.micronaut.json.JsonMapper
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Test
+import java.io.IOException
+
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertTrue
+
+@@MicronautTest(startApplication = false)
+class BasecampAboutCommandHandlerTest {
+
+    @@Inject
+    BeanContext ctx
+
+    @@Inject
+    Dispatcher<BasecampBotConfiguration, Query, String> dispatcher
+
+    @@Inject
+    JsonMapper jsonMapper
+
+    @@Test
+    void beanOfTypeHelloWorldHandlerExists() {
+        assertTrue(ctx.containsBean(BasecampAboutCommandHandler))
+    }
+
+    @@Test
+    void aboutCommandHandlerExists() throws Exception {
+        String send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Query)).get()
+
+        assertEquals('Basecamp Bot developed with 💙 and <a href="https://micronaut.io">Micronaut</a>.', send.trim())
+    }
+
+    private String getAboutCommandJson() {
+        BasecampAboutCommandHandlerTest.getResourceAsStream("/mockBasecampAboutCommand.json").text
+    }
+}

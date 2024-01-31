@@ -15,8 +15,8 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
 
     void 'test readme.md with feature discovery-kubernetes contains links to micronaut docs'() {
         when:
-        def output = generate(['discovery-kubernetes'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['discovery-kubernetes'])
+        String readme = output["README.md"]
 
         then:
         readme

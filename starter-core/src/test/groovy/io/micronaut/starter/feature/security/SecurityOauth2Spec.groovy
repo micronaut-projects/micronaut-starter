@@ -17,8 +17,8 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
 
     void 'test readme.md with feature security-oauth2 contains links to micronaut docs'() {
         when:
-        def output = generate(['security-oauth2'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security-oauth2'])
+        String readme = output["README.md"]
 
         then:
         readme
