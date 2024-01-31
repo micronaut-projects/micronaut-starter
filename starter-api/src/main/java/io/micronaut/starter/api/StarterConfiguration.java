@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.Optional;
 
 /**
- * Allows configuration of the the links exposed in URLs.
+ * Allows configuration of the links exposed in URLs.
  *
  * @author graemerocher
  * @since 1.0.0
@@ -87,59 +87,5 @@ public class StarterConfiguration {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    @ConfigurationProperties(GitHubConfiguration.PREFIX)
-    public static class GitHubConfiguration {
-        public static final String PREFIX = "github";
-
-        private String clientId;
-        private String clientSecret;
-        private String tokenPermissions;
-
-        /**
-         * @return GitHub OAuth App client id
-         */
-        public String getClientId() {
-            return clientId;
-        }
-
-        /**
-         * Sets GitHub OAuth App client id
-         * @param clientId client id
-         */
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-        /**
-         * @return GitHub OAuth App secret id
-         */
-        public String getClientSecret() {
-            return clientSecret;
-        }
-
-        /**
-         * Sets GitHub OAuth App secret
-         * @param clientSecret secret
-         */
-        public void setClientSecret(String clientSecret) {
-            this.clientSecret = clientSecret;
-        }
-
-        /**
-         * @return token permission to request from user
-         */
-        public String getTokenPermissions() {
-            return tokenPermissions;
-        }
-
-        /**
-         * Sets GitHub token permissions
-         * @param tokenPermissions token permissions
-         */
-        public void setTokenPermissions(String tokenPermissions) {
-            this.tokenPermissions = tokenPermissions;
-        }
     }
 }
