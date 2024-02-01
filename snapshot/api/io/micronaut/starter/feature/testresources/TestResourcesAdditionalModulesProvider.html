@@ -76,13 +76,8 @@ loadScripts(document, 'script');</script>
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="../database/DatabaseDriverFeature.html" title="class in io.micronaut.starter.feature.database">DatabaseDriverFeature</a></code>, <code><a href="../database/H2.html" title="class in io.micronaut.starter.feature.database">H2</a></code>, <code><a href="../database/MariaDB.html" title="class in io.micronaut.starter.feature.database">MariaDB</a></code>, <code><a href="../database/MySQL.html" title="class in io.micronaut.starter.feature.database">MySQL</a></code>, <code><a href="../database/MySQLCompatibleFeature.html" title="class in io.micronaut.starter.feature.database">MySQLCompatibleFeature</a></code>, <code><a href="../database/Oracle.html" title="class in io.micronaut.starter.feature.database">Oracle</a></code>, <code><a href="../oraclecloud/OracleCloudAutonomousDatabase.html" title="class in io.micronaut.starter.feature.oraclecloud">OracleCloudAutonomousDatabase</a></code>, <code><a href="../database/PostgreSQL.html" title="class in io.micronaut.starter.feature.database">PostgreSQL</a></code>, <code><a href="../database/SQLServer.html" title="class in io.micronaut.starter.feature.database">SQLServer</a></code>, <code><a href="../messaging/jms/SQS.html" title="class in io.micronaut.starter.feature.messaging.jms">SQS</a></code></dd>
 </dl>
-<dl class="notes">
-<dt>Functional Interface:</dt>
-<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
-</dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/FunctionalInterface.html" title="class or interface in java.lang" class="external-link">@FunctionalInterface</a>
-</span><span class="modifiers">public interface </span><span class="element-name type-name-label">TestResourcesAdditionalModulesProvider</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">TestResourcesAdditionalModulesProvider</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,6 +95,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTestResourcesAdditionalModules(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">getTestResourcesAdditionalModules</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/MavenCoordinate.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTestResourcesDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">getTestResourcesDependencies</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -119,6 +117,14 @@ loadScripts(document, 'script');</script>
 <h3>getTestResourcesAdditionalModules</h3>
 <div class="member-signature"><span class="annotations">@NonNull
 </span><span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getTestResourcesAdditionalModules</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTestResourcesDependencies(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>getTestResourcesDependencies</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/MavenCoordinate.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt;</span>&nbsp;<span class="element-name">getTestResourcesDependencies</span><wbr><span class="parameters">(@NonNull
  @NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
