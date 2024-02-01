@@ -28,7 +28,7 @@ import java.util.Set;
 public class AzureFunctionFeatureValidator implements FeatureValidator {
 
     public static boolean supports(JdkVersion jdkVersion) {
-        return jdkVersion == JdkVersion.JDK_8 || jdkVersion == JdkVersion.JDK_11 || jdkVersion == JdkVersion.JDK_17;
+        return JdkVersion.JDK_8.equals(jdkVersion) || JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion);
     }
 
     @Override
