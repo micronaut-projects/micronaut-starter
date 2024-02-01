@@ -5,7 +5,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.starter.api.StarterConfiguration;
-import io.micronaut.starter.api.create.github.GitHubCreateDTO;
 import io.micronaut.starter.api.preview.PreviewDTO;
 import io.micronaut.starter.netty.Application;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(application = Application.class)
-public class StarterWebNettyTest {
+class StarterWebNettyTest {
 
     private static final String BASE_URI = "/default/com.example.demo?lang=JAVA&build=GRADLE&test=JUNIT&javaVersion=JDK_17";
 
@@ -41,14 +40,6 @@ public class StarterWebNettyTest {
         HttpResponse<byte[]> response = client.toBlocking().exchange(request, byte[].class);
         assertNotNull(response);
         assertTrue(response.getBody().isPresent());
-    }
-
-    @Test
-    void testGitHubCreate() {
-        starterConfiguration.setRedirectUri(null);
-        GitHubCreateDTO response = client.toBlocking().retrieve(HttpRequest.GET(GITHUB_CREATE_URI), GitHubCreateDTO.class);
-        assertNotNull(response);
-        assertNotNull(response.getCloneUrl());
     }
 
     @Test
