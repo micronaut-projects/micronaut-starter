@@ -123,13 +123,13 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+            if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
                 return Optional.of("Java 17");
             } else {
                 return Optional.empty();
             }
         }
-        if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+        if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
             return Optional.of("17");
         } else {
             return Optional.empty();

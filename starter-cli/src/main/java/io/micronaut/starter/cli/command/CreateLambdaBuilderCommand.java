@@ -50,6 +50,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static picocli.CommandLine.Help.Ansi.AUTO;
+
 @CommandLine.Command(name = CreateLambdaBuilderCommand.NAME, description = "A guided walk-through to create an lambda function")
 @Prototype
 public class CreateLambdaBuilderCommand extends BuilderCommand {
@@ -102,13 +104,19 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     protected JdkVersion getJdkVersion(LambdaDeployment deployment, LineReader reader) {
         JdkVersion[] versions = jdkVersionsForDeployment(deployment);
+        JdkVersion defaultOption = versions.length > 0 ? versions[0] : JdkVersion.JDK_17;
         out("Choose the target JDK. (enter for default)");
-        return getEnumOption(
-                versions,
-                jdkVersion -> Integer.toString(jdkVersion.majorVersion()),
-                versions.length > 0 ? versions[0] : JdkVersion.JDK_17,
-                reader
-        );
+
+        for (int i = 0; i < versions.length; i++) {
+            out(AUTO.string("@|blue " + (versions[i].equals(defaultOption) ? '*' : ' ') + (i + 1) + ")|@ " + versions[i].majorVersion()));
+        }
+        int option = getOption(reader, versions.length);
+        out("");
+        if (option == -1) {
+            return defaultOption;
+        }
+        int choice = option - 1;
+        return versions[choice];
     }
 
     JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {

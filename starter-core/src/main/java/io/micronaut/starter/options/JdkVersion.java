@@ -15,8 +15,14 @@
  */
 package io.micronaut.starter.options;
 
-import java.util.Arrays;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.serde.annotation.Serdeable;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * JDK versions.
@@ -24,43 +30,92 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-public enum JdkVersion {
-    JDK_8(8),
-    JDK_9(9),
-    JDK_10(10),
-    JDK_11(11),
-    JDK_12(12),
-    JDK_13(13),
-    JDK_14(14),
-    JDK_15(15),
-    JDK_16(16),
-    JDK_17(17),
-    JDK_18(18),
-    JDK_19(19),
-    JDK_20(20),
-    JDK_21(21);
+@Serdeable
+public final class JdkVersion {
 
-    private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).toList();
+    private static final Map<Integer, JdkVersion> INSTANCES = new TreeMap<>();
 
-    private final int majorVersion;
+    public static final JdkVersion JDK_8 = new JdkVersion(8);
+    public static final JdkVersion JDK_9 = new JdkVersion(9);
+    public static final JdkVersion JDK_10 = new JdkVersion(10);
+    public static final JdkVersion JDK_11 = new JdkVersion(11);
+    public static final JdkVersion JDK_12 = new JdkVersion(12);
+    public static final JdkVersion JDK_13 = new JdkVersion(13);
+    public static final JdkVersion JDK_14 = new JdkVersion(14);
+    public static final JdkVersion JDK_15 = new JdkVersion(15);
+    public static final JdkVersion JDK_16 = new JdkVersion(16);
+    public static final JdkVersion JDK_17 = new JdkVersion(17);
+    public static final JdkVersion JDK_18 = new JdkVersion(18);
+    public static final JdkVersion JDK_19 = new JdkVersion(19);
+    public static final JdkVersion JDK_20 = new JdkVersion(20);
+    public static final JdkVersion JDK_21 = new JdkVersion(21);
+    private static final String PREFIX_JDK = "JDK_";
 
-    JdkVersion(int majorVersion) {
+    int majorVersion;
+
+    public JdkVersion(int majorVersion) {
         this.majorVersion = majorVersion;
+        INSTANCES.put(majorVersion, this);
+    }
+
+    /**
+     * @return the name
+     */
+    @JsonValue
+    public String name() {
+        return PREFIX_JDK + majorVersion;
+    }
+
+    @Override
+    public String toString() {
+        return name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof JdkVersion other && other.majorVersion == majorVersion;
+    }
+
+    @Override
+    public int hashCode() {
+        return majorVersion;
+    }
+
+    @JsonCreator
+    public static JdkVersion valueOf(String jdkVersion) {
+        if (StringUtils.isEmpty(jdkVersion)) {
+            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
+        }
+        if (!jdkVersion.startsWith(PREFIX_JDK)) {
+            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
+        }
+        String version = jdkVersion.substring(PREFIX_JDK.length());
+        try {
+            int majorVersion = Integer.parseInt(version);
+            return valueOf(majorVersion);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("cannot parse JDK major version of " + version);
+        }
     }
 
     public static JdkVersion valueOf(int majorVersion) {
-        return Arrays
-                .stream(JdkVersion.values())
+        return INSTANCES.values().stream()
                 .filter(jdkVersion -> jdkVersion.majorVersion == majorVersion)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " + SUPPORTED_JDKS));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Unsupported JDK version: " + majorVersion + ". Supported values are " + INSTANCES.keySet()));
     }
 
     public int majorVersion() {
         return majorVersion;
     }
 
-    public boolean greaterThanEqual(JdkVersion jdk) {
+    // for serialization
+    int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public boolean greaterThanEqual(@NonNull JdkVersion jdk) {
         return majorVersion >= jdk.majorVersion;
     }
 }
