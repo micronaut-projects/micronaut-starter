@@ -157,12 +157,11 @@ public class AppStack extends Stack {
                 .timeout(Duration.seconds(10))
                 .memorySize(2048)
                 .logRetention(RetentionDays.ONE_WEEK)
+                .tracing(Tracing.ACTIVE)
 @if (features.contains("snapstart")) {
-                .tracing(Tracing.DISABLED)
                 .architecture(Architecture.X86_64)
                 .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
 } else {
-                .tracing(Tracing.ACTIVE)
     @if (architecture instanceof Arm) {
                 .architecture(Architecture.ARM_64)
     } else if (architecture instanceof X86) {
