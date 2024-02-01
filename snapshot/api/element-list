@@ -4,7 +4,6 @@ io.micronaut.starter.api
 io.micronaut.starter.api.analytics
 io.micronaut.starter.api.bind
 io.micronaut.starter.api.create
-io.micronaut.starter.api.create.github
 io.micronaut.starter.api.create.zip
 io.micronaut.starter.api.diff
 io.micronaut.starter.api.event
@@ -48,7 +47,6 @@ io.micronaut.starter.cli.feature.picocli
 io.micronaut.starter.cli.feature.server.controller
 io.micronaut.starter.cli.feature.server.websocket
 io.micronaut.starter.cli.util
-io.micronaut.starter.client.github.oauth
 io.micronaut.starter.client.github.v3
 io.micronaut.starter.defaults
 io.micronaut.starter.diff
