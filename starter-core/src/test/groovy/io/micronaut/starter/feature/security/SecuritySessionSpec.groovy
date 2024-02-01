@@ -15,8 +15,8 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
 
     void 'test readme.md with feature security-session contains links to micronaut docs'() {
         when:
-        def output = generate(['security-session'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security-session'])
+        String readme = output["README.md"]
 
         then:
         readme

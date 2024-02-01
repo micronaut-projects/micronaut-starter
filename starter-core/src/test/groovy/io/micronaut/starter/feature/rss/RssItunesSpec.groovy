@@ -11,8 +11,8 @@ class RssItunesSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature rss-itunes-podcast contains links to micronaut docs'() {
         when:
-        def output = generate(['rss-itunes-podcast'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['rss-itunes-podcast'])
+        String readme = output["README.md"]
 
         then:
         readme

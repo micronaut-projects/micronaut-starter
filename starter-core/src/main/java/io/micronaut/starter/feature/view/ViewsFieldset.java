@@ -43,6 +43,7 @@ public class ViewsFieldset implements Feature {
     private static final String INPUTDATE_HTML = "inputdate.html";
     private static final String INPUTDATETIMELOCAL_HTML = "inputdatetimelocal.html";
     private static final String INPUTEMAIL_HTML = "inputemail.html";
+    private static final String INPUTFILE_HTML = "inputfile.html";
     private static final String INPUTHIDDEN_HTML = "inputhidden.html";
     private static final String INPUTNUMBER_HTML = "inputnumber.html";
     private static final String INPUTPASSWORD_HTML = "inputpassword.html";
@@ -68,6 +69,7 @@ public class ViewsFieldset implements Feature {
             INPUTDATE_HTML,
             INPUTDATETIMELOCAL_HTML,
             INPUTEMAIL_HTML,
+            INPUTFILE_HTML,
             INPUTHIDDEN_HTML,
             INPUTNUMBER_HTML,
             INPUTPASSWORD_HTML,

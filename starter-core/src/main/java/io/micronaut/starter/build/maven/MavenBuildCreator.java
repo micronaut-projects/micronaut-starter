@@ -54,7 +54,9 @@ public class MavenBuildCreator {
 
         for (Dependency dependency : generatorContext.getDependencies()) {
             if (dependency.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
-                if (dependency.getScope().getSource() == Source.MAIN) {
+                if (dependency.getScope().getSource() == Source.MAIN && generatorContext.getLanguage() != Language.GROOVY) {
+                    // Don't add these for Groovy projects: it results in multiple dependencies.
+                    // DependencyContext has already resolved Groovy annotation processors as dependencies
                     annotationProcessorsCoordinates.add(new DependencyCoordinate(dependency, true));
                     if (dependency.isAnnotationProcessorPriority()) {
                         combineAttribute = MavenCombineAttribute.OVERRIDE;

@@ -32,8 +32,8 @@ class BasecampAzureChatBotSpec extends BaseBasecampChatBotSpec {
 
     void 'test README contains docs for #buildTool and command "#command"'(BuildTool buildTool, String command) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
+        String readme = output["README.md"]
 
         then:
         readme.contains("Basecamp ChatBot")

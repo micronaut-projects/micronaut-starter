@@ -11,8 +11,8 @@ class CaffeineSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature cache-caffeine contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-caffeine'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['cache-caffeine'])
+        String readme = output["README.md"]
 
         then:
         readme

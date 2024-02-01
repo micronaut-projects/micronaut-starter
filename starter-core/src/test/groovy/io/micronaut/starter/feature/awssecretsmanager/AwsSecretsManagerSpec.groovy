@@ -11,8 +11,8 @@ import spock.lang.Unroll
 class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature aws-secrets-manager contains links to micronaut docs'() {
         when:
-        def output = generate(['aws-secrets-manager'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['aws-secrets-manager'])
+        String readme = output["README.md"]
 
         then:
         readme

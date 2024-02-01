@@ -14,8 +14,8 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature kafka-streams contains links to micronaut docs'() {
         when:
-        def output = generate(['kafka-streams'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kafka-streams'])
+        String readme = output["README.md"]
 
         then:
         readme

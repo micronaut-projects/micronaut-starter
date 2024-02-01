@@ -15,8 +15,8 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature eclipsestore contains links to micronaut docs'() {
         when:
-        def output = generate(['eclipsestore'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['eclipsestore'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut EclipseStore documentation](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")
@@ -25,8 +25,8 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature eclipsestore-rest contains links to micronaut docs'() {
         when:
-        def output = generate(['eclipsestore-rest'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['eclipsestore-rest'])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut EclipseStore documentation](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")

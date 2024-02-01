@@ -51,9 +51,9 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
     void 'test readme.md and function for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_8)
-        def output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function-cloudevents'])
-        def function = output['src/main/java/example/micronaut/Function.java']
-        def readme = output['README.md']
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function-cloudevents'])
+        String function = output['src/main/java/example/micronaut/Function.java']
+        String readme = output['README.md']
 
         then:
         function

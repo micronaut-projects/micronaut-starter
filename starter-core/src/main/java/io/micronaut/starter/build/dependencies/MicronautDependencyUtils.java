@@ -28,8 +28,8 @@ public final class MicronautDependencyUtils {
             .build();
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
-
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
+    public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
@@ -82,6 +82,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
+    }
+
+    @NonNull
+    public static Dependency.Builder jaxrsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JAXRS);
     }
 
     @NonNull
@@ -281,7 +286,30 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .annotationProcessor();
-            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, requiresPriority);
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false, requiresPriority);
+        };
+    }
+
+    @NonNull
+    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+                                                             @NonNull String groupId,
+                                                             @NonNull String artifactId,
+                                                             @NonNull String propertyName) {
+        return testAnnotationProcessor(buildTool, groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName,
+                                                         boolean requiresPriority) {
+        return switch (buildTool) {
+            case GRADLE, GRADLE_KOTLIN -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .testAnnotationProcessor();
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, true, requiresPriority);
         };
     }
 
@@ -289,13 +317,15 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
                                                                     @NonNull String artifactId,
                                                                     @NonNull String propertyName,
+                                                                    boolean isTestScope,
                                                                     boolean requiresPriority) {
-        return Dependency.builder()
+        Dependency.Builder dependency = Dependency.builder()
                 .groupId(groupId)
                 .artifactId(artifactId)
-                .annotationProcessor(requiresPriority)
-                .versionProperty(propertyName)
-                .exclude(MICRONAUT_INJECT);
+                .exclude(MICRONAUT_INJECT)
+                .versionProperty(propertyName);
+
+        return isTestScope ? dependency.testAnnotationProcessor(requiresPriority) : dependency.annotationProcessor(requiresPriority);
     }
 
     @NonNull

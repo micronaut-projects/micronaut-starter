@@ -22,8 +22,8 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
 
     void 'test readme.md with feature aws-lambda-custom-runtime contains links to micronaut docs'() {
         when:
-        def output = generate(['aws-lambda-custom-runtime'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['aws-lambda-custom-runtime'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -33,13 +33,13 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/723")
     void 'test readme.md with feature aws-lambda-custom-runtime and graalvm contains extra documentation. language = #language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 ['aws-lambda-custom-runtime', 'graalvm']
         )
 
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
