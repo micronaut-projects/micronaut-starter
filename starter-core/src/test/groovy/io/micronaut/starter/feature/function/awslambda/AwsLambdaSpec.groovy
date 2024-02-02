@@ -300,7 +300,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2")
+    baseImage.set("amazonlinux:2023")
     jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
@@ -311,7 +311,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         } else if (buildTool == BuildTool.GRADLE) {
             assert buildGradle.contains("""\
 tasks.named("dockerfileNative") {
-    baseImage = "amazonlinux:2"
+    baseImage = "amazonlinux:2023"
     jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
@@ -367,7 +367,7 @@ tasks.named("dockerfileNative") {
         buildGradle.contains('id("io.micronaut.application")')
         buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2")
+    baseImage.set("amazonlinux:2023")
     jdkVersion.set("${javaVersion}")
     args(
         "-XX:MaximumHeapSizePercent=80",
