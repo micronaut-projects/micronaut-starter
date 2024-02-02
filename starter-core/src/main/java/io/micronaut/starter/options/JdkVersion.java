@@ -118,4 +118,8 @@ public final class JdkVersion {
     public boolean greaterThanEqual(@NonNull JdkVersion jdk) {
         return majorVersion >= jdk.majorVersion;
     }
+
+    public String asString() {
+        return "" + majorVersion;
+    }
 }

@@ -144,6 +144,28 @@ abstract class CommandSpec extends Specification {
         )
     }
 
+    void generateProjectForVersion(
+            Language lang,
+            JdkVersion jdkVersion,
+            BuildTool buildTool = BuildTool.DEFAULT_OPTION,
+            List<String> features = [],
+            ApplicationType applicationType = ApplicationType.DEFAULT,
+            TestFramework testFramework = lang.getDefaults().test,
+            boolean addMicronautGradleEnterpriseFeature = true
+    ) {
+        if (addMicronautGradleEnterpriseFeature) {
+            features += [MicronautGradleEnterprise.NAME]
+        }
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, testFramework, buildTool, jdkVersion),
+                io.micronaut.starter.application.OperatingSystem.LINUX,
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
+
     void generateProject(Project project,
                          Language lang,
                          BuildTool buildTool = BuildTool.DEFAULT_OPTION,
