@@ -18,9 +18,7 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
-@if (!nativeImage) {
 import software.amazon.awscdk.services.lambda.Runtime;
-}
 import software.amazon.awscdk.services.lambda.Architecture;
 @if (features.contains("dynamodb")) {
 import software.amazon.awscdk.services.dynamodb.Attribute;
