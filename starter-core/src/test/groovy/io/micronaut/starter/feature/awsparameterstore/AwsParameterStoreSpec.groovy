@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.awsparameterstore
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -27,54 +30,32 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
 
         then:
         bootstrap
-        bootstrap.contains('''\
-micronaut:
-  application:
-    name: foo
-  config-client:
-    enabled: true
-''')
-        bootstrap.contains('''\
-aws.client.system-manager.parameterstore.enabled: true
-''')
+
+        when:
+        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
+
+        then:
+        'foo' == bootstrapYml['micronaut']['application']['name']
+        true == bootstrapYml['micronaut']['config-client']['enabled']
+        true == bootstrapYml['aws']['client']['system-manager']['parameterstore']['enabled']
+        false == bootstrapYml['aws']['distributed-configuration']['search-active-environments']
+        false == bootstrapYml['aws']['distributed-configuration']['search-common-application']
     }
 
     @Unroll
-    void 'test gradle aws-parameter-store feature for language=#language'() {
+    void 'test #buildTool aws-parameter-store feature for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['aws-parameter-store'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.count('implementation("io.micronaut.aws:micronaut-aws-parameter-store")') == 1
-
-        and: 'micronaut-aws-parameter-store exposes aws-sdk-v2 transitively'
-        !template.contains('implementation("io.micronaut.aws:aws-sdk-v2")')
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-parameter-store", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.aws", ":aws-sdk-v2", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven aws-parameter-store feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['aws-parameter-store'])
-                .render()
-
-        then:
-        template.count('''
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-parameter-store</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
-
-        where:
-        language << Language.values().toList()
+        [buildTool, language] << [BuildTool.values(), Language.values().toList()].combinations()
     }
 }
