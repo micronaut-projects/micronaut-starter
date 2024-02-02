@@ -150,6 +150,11 @@ public class AppStack extends Stack {
 @if (jdkVersion == JdkVersion.JDK_17) {
                 .runtime(Runtime.JAVA_17)
 }
+@if (jdkVersion == JdkVersion.JDK_21) {
+                .runtime(Runtime.JAVA_21)
+}
+} else {
+                .runtime(Runtime.PROVIDED_AL2023)
 }
                 .handler("@(handler)")
                 .environment(environmentVariables)
