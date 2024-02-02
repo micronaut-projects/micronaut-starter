@@ -63,4 +63,8 @@ public enum JdkVersion {
     public boolean greaterThanEqual(JdkVersion jdk) {
         return majorVersion >= jdk.majorVersion;
     }
+
+    public String asString() {
+        return "" + majorVersion;
+    }
 }

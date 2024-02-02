@@ -46,8 +46,12 @@ import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
+
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -61,10 +65,20 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
     public static final String AOT_KEY_SECURITY_JWKS = "micronaut.security.jwks.enabled";
     public static final String AOT_KEY_SECURITY_OPENID = "micronaut.security.openid-configuration.enabled";
 
+    public static final Map<JdkVersion, String> BASE_IMAGES = Map.of(
+            JdkVersion.JDK_21, "eclipse-temurin:21-jre-jammy"
+    );
+
     protected final CoordinateResolver coordinateResolver;
 
     public MicronautBuildPlugin(CoordinateResolver coordinateResolver) {
         this.coordinateResolver = coordinateResolver;
+    }
+
+    private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().mainClass().isPresent() ||
+                generatorContext.getFeatures().contains("oracle-function") ||
+                generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
     }
 
     @Override
@@ -83,7 +97,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
     }
-    
+
     @NonNull
     protected GradlePlugin gradlePlugin(@NonNull GeneratorContext generatorContext) {
         GradlePlugin.Builder builder = null;
@@ -209,11 +223,19 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
                         (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
-            builder = builder.dockerNative(Dockerfile.builder().baseImage("amazonlinux:2")
+            builder.dockerNative(Dockerfile.builder()
+                    .baseImage("amazonlinux:2")
+                    .javaVersion(generatorContext.getJdkVersion().asString())
                     .arg("-XX:MaximumHeapSizePercent=80")
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")
                     .build());
+        } else if (generatorContext.getJdkVersion() != MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
+            String baseImageForJdkVersion = BASE_IMAGES.get(generatorContext.getJdkVersion());
+            if (baseImageForJdkVersion != null) {
+                builder.docker(Dockerfile.builder().baseImage(baseImageForJdkVersion).build());
+            }
+            builder.dockerNative(Dockerfile.builder().javaVersion(generatorContext.getJdkVersion().asString()).build());
         }
         return builder;
     }
@@ -232,12 +254,6 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
 
     protected GradlePlugin.Builder micronautLibraryGradlePluginBuilder(GeneratorContext generatorContext) {
         return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).builder();
-    }
-
-    private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
-        return generatorContext.getFeatures().mainClass().isPresent() ||
-                generatorContext.getFeatures().contains("oracle-function") ||
-                generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
     }
 
     @Override
