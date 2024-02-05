@@ -76,9 +76,13 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
-          <configuration>
-            <shared>true</shared>
+        template.contains('''\
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.maven</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+        <configuration>
+          <shared>true</shared>
 ''')
     }
 

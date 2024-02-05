@@ -17,7 +17,7 @@ package io.micronaut.starter.api;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.options.ApplicationTypeSelectOptions;
 import io.micronaut.starter.api.options.BuildToolSelectOptions;
 import io.micronaut.starter.api.options.JdkVersionSelectOptions;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  * @since 2.2.0
  */
 @Schema(name = "SelectOptions")
-@Introspected
+@Serdeable
 public class SelectOptionsDTO {
 
     private ApplicationTypeSelectOptions type;

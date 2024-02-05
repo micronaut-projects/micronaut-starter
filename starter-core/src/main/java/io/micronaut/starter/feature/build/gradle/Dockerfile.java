@@ -26,16 +26,25 @@ public class Dockerfile {
     private String baseImage;
 
     @Nullable
+    private String javaVersion;
+
+    @Nullable
     private List<String> args;
 
-    public Dockerfile(@NonNull String baseImage, @NonNull List<String> args) {
+    public Dockerfile(@Nullable String baseImage, @Nullable String javaVersion, @Nullable List<String> args) {
         this.baseImage = baseImage;
+        this.javaVersion = javaVersion;
         this.args = args;
     }
 
     @Nullable
     public String getBaseImage() {
         return baseImage;
+    }
+
+    @Nullable
+    public String getJavaVersion() {
+        return javaVersion;
     }
 
     @Nullable
@@ -51,11 +60,17 @@ public class Dockerfile {
     public static class Builder {
 
         private String baseImage;
+        private String javaVersion;
         private List<String> args;
 
         @NonNull
         public Builder baseImage(String baseImage) {
             this.baseImage = baseImage;
+            return this;
+        }
+
+        public Builder javaVersion(String javaVersion) {
+            this.javaVersion = javaVersion;
             return this;
         }
 
@@ -76,7 +91,7 @@ public class Dockerfile {
 
         @NonNull
         public Dockerfile build() {
-            return new Dockerfile(baseImage, args);
+            return new Dockerfile(baseImage, javaVersion, args);
         }
     }
 }

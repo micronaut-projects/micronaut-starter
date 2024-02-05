@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
@@ -48,32 +51,21 @@ class MySQLSpec extends ApplicationContextSpec {
     }
 
     void 'test maven mysql feature for language=#language'() {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['mysql'])
                 .language(language)
                 .render()
 
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
-        and:
-        template.contains("""
-            <testResourcesDependencies>
-              <dependency>
-                <groupId>io.micronaut.testresources</groupId>
-                <artifactId>micronaut-test-resources-jdbc-mysql</artifactId>
-              </dependency>
-            </testResourcesDependencies>
-""")
+        then:
+        verifier.hasDependency('mysql', "mysql-connector-java", Scope.RUNTIME)
+        verifier.hasTestResourceDependency("micronaut-test-resources-jdbc-mysql")
+
         where:
         language << Language.values().toList()
     }
-
 }
