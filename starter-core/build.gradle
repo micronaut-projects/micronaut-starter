@@ -22,9 +22,11 @@ dependencies {
     api("com.fasterxml.jackson.core:jackson-annotations")
     api "io.micronaut:micronaut-http-client"
     api "io.github.java-diff-utils:java-diff-utils:4.10"
-    api "org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r"
+    api "org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r"
     api("org.yaml:snakeyaml")
-    implementation("com.typesafe:config:1.4.2")
+    implementation("com.typesafe:config:1.4.3")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    api("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
     implementation 'org.apache.commons:commons-compress:1.25.0'
     testImplementation("org.apache.groovy:groovy-xml")
@@ -47,4 +49,3 @@ rocker {
     javaVersion = '17'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
-

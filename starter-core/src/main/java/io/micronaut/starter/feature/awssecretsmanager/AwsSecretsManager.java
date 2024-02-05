@@ -15,11 +15,13 @@
  */
 package io.micronaut.starter.feature.awssecretsmanager;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.awsparameterstore.AwsParameterStore;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
-import java.util.Map;
 
 /**
  * @see <a href="https://micronaut-projects.github.io/micronaut-aws/latest/guide/#distributedconfigurationsecretsmanager">Micronaut AWS Secrets Manager</a>
@@ -28,6 +30,11 @@ import java.util.Map;
  */
 @Singleton
 public class AwsSecretsManager implements DistributedConfigFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER = "micronaut-aws-secretsmanager";
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_AWS_SECRETSMANAGER = MicronautDependencyUtils.awsDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER)
+            .compile();
+
     @Override
     public String getTitle() {
         return "AWS Secrets Manager";
@@ -45,12 +52,8 @@ public class AwsSecretsManager implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.aws")
-                .artifactId("micronaut-aws-secretsmanager")
-                .compile());
-        Map<String, Object> config = populateBootstrapForDistributedConfiguration(generatorContext);
-        config.put("aws.client.system-manager.parameterstore.enabled", true);
+        addDependencies(generatorContext);
+        addBootstrapProperties(generatorContext);
     }
 
     @Override
@@ -61,5 +64,13 @@ public class AwsSecretsManager implements DistributedConfigFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://aws.amazon.com/secrets-manager/";
+    }
+
+    protected void addBootstrapProperties(@NonNull GeneratorContext generatorContext) {
+        populateBootstrapForDistributedConfiguration(generatorContext).putAll(AwsParameterStore.PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION);
+    }
+
+    protected static void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_AWS_SECRETSMANAGER);
     }
 }

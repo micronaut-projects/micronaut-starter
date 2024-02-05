@@ -20,6 +20,7 @@ import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
 
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,7 @@ public class MavenBuild {
     private final List<MavenRepository> repositories;
 
     private final List<DependencyCoordinate> aotDependencies;
+    private final List<MavenCoordinate> testResourcesDependencies;
 
     @NonNull
     private final String artifactId;
@@ -70,6 +72,7 @@ public class MavenBuild {
                 Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
+                Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList());
     }
@@ -88,6 +91,7 @@ public class MavenBuild {
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
                 Collections.emptyList(),
+                Collections.emptyList(),
                 Collections.emptyList());
     }
 
@@ -101,7 +105,8 @@ public class MavenBuild {
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute,
                       @NonNull Collection<Profile> profiles,
-                      @NonNull List<DependencyCoordinate> aotDependencies) {
+                      @NonNull List<DependencyCoordinate> aotDependencies,
+                      @NonNull List<MavenCoordinate> testResourcesDependencies) {
         this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
@@ -113,6 +118,7 @@ public class MavenBuild {
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
         this.profiles = profiles;
         this.aotDependencies = aotDependencies;
+        this.testResourcesDependencies = testResourcesDependencies;
     }
 
     @NonNull
@@ -185,4 +191,9 @@ public class MavenBuild {
     public List<DependencyCoordinate> getAotDependencies() {
         return aotDependencies;
     }
+
+    public List<MavenCoordinate> getTestResourcesDependencies() {
+        return testResourcesDependencies;
+    }
+
 }
