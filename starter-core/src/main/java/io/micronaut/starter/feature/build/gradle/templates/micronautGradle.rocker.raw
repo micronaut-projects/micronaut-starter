@@ -74,49 +74,11 @@ micronaut {
 }
 
 @if(dockerfile != null) {
-dockerfile {
-@if(dockerfile.getBaseImage() != null) {
-    baseImage("@(dockerfile.getBaseImage())")
-}
-@if (dockerfile.getArgs() != null) {
-    args(
-    @for (int i = 0; i < dockerfile.getArgs().size(); i++) {
-        "@(dockerfile.getArgs().get(i))"@if (i < (dockerfile.getArgs().size() -1)) {,}
-    }
-    )
-}
-}
+@dockerfileExtension.template(dsl, dockerfile)
 }
 
 @if(dockerfileNative != null) {
-@if(build == BuildTool.GRADLE) {
-@raw("\ntasks.named(\"dockerfileNative\") {\n")
-}
-@if(build == BuildTool.GRADLE_KOTLIN) {
-@raw("\ntasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>(\"dockerfileNative\") {\n")
-}
-
-@if(dockerfileNative.getBaseImage() != null) {
-@if(build == BuildTool.GRADLE) {
-    baseImage = "@(dockerfileNative.getBaseImage())"
-    jdkVersion = "@javaVersion"
-}
-@if(build == BuildTool.GRADLE_KOTLIN) {
-    baseImage.set("@(dockerfileNative.getBaseImage())")
-    jdkVersion.set("@javaVersion")
-}
-}
-
-@if (dockerfileNative.getArgs() != null) {
-    args(
-    @for (int i = 0; i < dockerfileNative.getArgs().size(); i++) {
-        "@(dockerfileNative.getArgs().get(i))"@if (i < (dockerfileNative.getArgs().size() -1)) {,}
-    }
-    )
-}
-
-@raw("}\n")
-
+@dockerfileNativeExtension.template(dsl, dockerfileNative)
 }
 
 @if(dockerBuilderNativeImages != null) {
