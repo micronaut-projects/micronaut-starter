@@ -57,7 +57,7 @@ public final class MicronautFunction {
     }
 
     private static Runtime runtime(boolean graalVMNative) {
-        return graalVMNative ? Runtime.PROVIDED_AL2023: Runtime.JAVA_21;
+        return graalVMNative ? Runtime.PROVIDED_AL2023 : Runtime.JAVA_21;
     }
 
 }
