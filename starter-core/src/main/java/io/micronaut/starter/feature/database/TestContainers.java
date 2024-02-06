@@ -153,7 +153,7 @@ public class TestContainers implements Feature {
     @NonNull
     private static Optional<String> r2dbcUrlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
         if (driverFeature instanceof MySQL) {
-            return Optional.of("r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8.2");
+            return Optional.of("r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8");
         } else if (driverFeature instanceof PostgreSQL) {
             return Optional.of("r2dbc:tc:postgresql:///db?TC_IMAGE_TAG=12");
         } else if (driverFeature instanceof MariaDB) {
@@ -167,7 +167,7 @@ public class TestContainers implements Feature {
     @NonNull
     private static Optional<String> urlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
         if (driverFeature instanceof MySQL) {
-            return Optional.of("jdbc:tc:mysql:8.2:///db");
+            return Optional.of("jdbc:tc:mysql:8:///db");
 
         } else if (driverFeature instanceof PostgreSQL) {
             return Optional.of("jdbc:tc:postgresql:14:///postgres");
