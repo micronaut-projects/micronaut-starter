@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.view
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -77,7 +78,7 @@ rocker {
       <plugin>
         <groupId>com.fizzed</groupId>
         <artifactId>rocker-maven-plugin</artifactId>
-        <version>1.3.0</version>
+        <version>${StarterCoordinates.ROCKER_MAVEN_PLUGIN.version}</version>
         <executions>
           <execution>
             <id>generate-rocker-templates</id>
