@@ -31,8 +31,8 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
-    private static final String ORACLE_12C_DIALECT = "org.hibernate.dialect.Oracle12cDialect";
-    
+    private static final String ORACLE_DIALECT = "org.hibernate.dialect.OracleDialect";
+
     HibernateReactiveFeature(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
     }
@@ -68,7 +68,7 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
         if (optionalDbType.isPresent()) {
             DbType dbType = optionalDbType.get();
             if (dbType == DbType.ORACLEXE) {
-                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_12C_DIALECT);
+                generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_DIALECT);
             }
         }
     }

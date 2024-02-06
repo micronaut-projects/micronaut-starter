@@ -14,8 +14,8 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
 
     void 'test readme.md with feature kafka-streams contains links to micronaut docs'() {
         when:
-        def output = generate(['kafka-streams'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kafka-streams'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -80,9 +80,13 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
-          <configuration>
-            <shared>true</shared>
+        template.contains('''\
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.maven</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+        <configuration>
+          <shared>true</shared>
 ''')
     }
 

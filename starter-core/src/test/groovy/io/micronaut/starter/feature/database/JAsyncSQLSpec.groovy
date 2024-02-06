@@ -12,8 +12,8 @@ class JAsyncSQLSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature jasync-sql contains links to micronaut and 3rd party docs'() {
         when:
-        def output = generate(['jasync-sql','mysql'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jasync-sql','mysql'])
+        String readme = output["README.md"]
 
         then:
         readme

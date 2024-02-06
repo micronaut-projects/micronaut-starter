@@ -81,8 +81,8 @@ class JdbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test readme.md with feature #jdbcFeature contains links to micronaut docs'() {
         when:
-        def output = generate([jdbcFeature])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([jdbcFeature])
+        String readme = output["README.md"]
 
         then:
         readme

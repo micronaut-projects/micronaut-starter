@@ -10,8 +10,8 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test readme.md with feature rabbitmq contains links to micronaut docs'() {
         when:
-        def output = generate(['rabbitmq'])
-        def readme = output["README.md"]
+        Map<String, String>  output = generate(['rabbitmq'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -43,9 +43,13 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
-          <configuration>
-            <shared>true</shared>
+        template.contains('''\
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.maven</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+        <configuration>
+          <shared>true</shared>
 ''')
     }
 

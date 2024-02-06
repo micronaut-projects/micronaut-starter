@@ -55,6 +55,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.tracing(Tracing.ACTIVE)')
 
         where:
         buildTool << BuildTool.values()

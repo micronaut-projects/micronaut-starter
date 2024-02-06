@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,9 @@ import io.micronaut.context.annotation.Prototype;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AmazonApiGateway;
@@ -34,24 +33,14 @@ import io.micronaut.starter.feature.aws.LambdaTrigger;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
-import io.micronaut.starter.io.FileSystemOutputHandler;
-import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
-import org.fusesource.jansi.AnsiConsole;
-import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
-import org.jline.reader.UserInterruptException;
-import org.jline.reader.impl.DefaultParser;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -61,55 +50,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static picocli.CommandLine.Help.Ansi.AUTO;
+
 @CommandLine.Command(name = CreateLambdaBuilderCommand.NAME, description = "A guided walk-through to create an lambda function")
 @Prototype
 public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     public static final String NAME = "create-aws-lambda";
 
-    private final ProjectGenerator projectGenerator;
-    private final List<Feature> features;
-    private final GraalVMFeatureValidator graalVMFeatureValidator;
-
-    public CreateLambdaBuilderCommand(ProjectGenerator projectGenerator,
-                                      List<Feature> features,
-                                      GraalVMFeatureValidator graalVMFeatureValidator) {
-        this.projectGenerator = projectGenerator;
-        this.features = features;
-        this.graalVMFeatureValidator = graalVMFeatureValidator;
+    public CreateLambdaBuilderCommand(
+            ProjectGenerator projectGenerator,
+            List<Feature> features
+    ) {
+        super(projectGenerator, features);
     }
 
     @Override
-    public Integer call() throws Exception {
-        AnsiConsole.systemInstall();
-        try {
-            Terminal terminal = TerminalBuilder.terminal();
-            LineReader reader = LineReaderBuilder.builder()
-                    .terminal(terminal)
-                    .parser(new DefaultParser())
-                    .build();
-            GenerateOptions options = createGenerateOptions(reader);
-            Set<String> selectedFeatures = options.getFeatures();
-            selectedFeatures.addAll(getFeatures(options.getApplicationType(), terminal, features));
-            Project project = getProject(reader);
-            try (OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this)) {
-                projectGenerator.generate(options.getApplicationType(),
-                        project,
-                        options.getOptions(),
-                        getOperatingSystem(),
-                        new ArrayList<>(selectedFeatures),
-                        outputHandler,
-                        this);
-                out("@|blue ||@ Application created at " + outputHandler.getOutputLocation());
-            }
-        } catch (UserInterruptException | EndOfFileException e) {
-            //no-op
-        } finally {
-            AnsiConsole.systemUninstall();
-        }
-        return 0;
-    }
-
     public GenerateOptions createGenerateOptions(LineReader reader) {
         Set<String> applicationFeatures = new HashSet<>();
         applicationFeatures.add(AwsLambda.FEATURE_NAME_AWS_LAMBDA);
@@ -148,19 +104,25 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     protected JdkVersion getJdkVersion(LambdaDeployment deployment, LineReader reader) {
         JdkVersion[] versions = jdkVersionsForDeployment(deployment);
+        JdkVersion defaultOption = versions.length > 0 ? versions[0] : JdkVersion.JDK_17;
         out("Choose the target JDK. (enter for default)");
-        return getEnumOption(
-                versions,
-                jdkVersion -> Integer.toString(jdkVersion.majorVersion()),
-                versions.length > 0 ? versions[0] : JdkVersion.JDK_17,
-                reader
-        );
+
+        for (int i = 0; i < versions.length; i++) {
+            out(AUTO.string("@|blue " + (versions[i].equals(defaultOption) ? '*' : ' ') + (i + 1) + ")|@ " + versions[i].majorVersion()));
+        }
+        int option = getOption(reader, versions.length);
+        out("");
+        if (option == -1) {
+            return defaultOption;
+        }
+        int choice = option - 1;
+        return versions[choice];
     }
 
     JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {
         switch (deployment) {
             case NATIVE_EXECUTABLE:
-                return new JdkVersion[] {
+                return new JdkVersion[]{
                         JdkVersion.JDK_17
                 };
             case FAT_JAR:
@@ -216,14 +178,14 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
     protected Optional<Feature> getArchitecture(LineReader reader) {
         List<Feature> cpuArchitecturesFeatures = features.stream()
                 .filter(CpuArchitecture.class::isInstance)
-                .collect(Collectors.toList());
+                .toList();
         String defaultCpuArchitecture = X86.NAME;
         out("Choose your Lambda Architecture. (enter for " + defaultCpuArchitecture + ")");
         String option = getListOption(
                 cpuArchitecturesFeatures.stream()
                         .map(Feature::getName)
                         .sorted()
-                        .collect(Collectors.toList()),
+                        .toList(),
                 o -> o,
                 defaultCpuArchitecture,
                 reader);
@@ -262,14 +224,9 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
 
     protected Optional<Feature> getCdk(LineReader reader) {
         out("Do you want to generate infrastructure as code with CDK? (enter for yes)");
-        return getEnumOption(
-                YesOrNo.class,
-                yesOrNo -> StringUtils.capitalize(yesOrNo.toString()),
-                YesOrNo.YES,
-                reader) == YesOrNo.YES ?
-                features.stream()
-                        .filter(Cdk.class::isInstance)
-                        .findFirst() : Optional.empty() ;
+        return getYesOrNo(reader) == YesOrNo.YES
+                ? features.stream().filter(Cdk.class::isInstance).findFirst()
+                : Optional.empty();
     }
 
     protected List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {

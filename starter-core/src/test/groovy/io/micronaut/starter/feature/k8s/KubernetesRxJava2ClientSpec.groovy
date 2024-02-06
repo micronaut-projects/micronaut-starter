@@ -15,8 +15,8 @@ class KubernetesRxJava2ClientSpec extends ApplicationContextSpec  implements Com
 
     void 'test readme.md with feature kubernetes-rxjava2-client contains links to docs'() {
         when:
-        def output = generate(['kubernetes-rxjava2-client'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['kubernetes-rxjava2-client'])
+        String readme = output["README.md"]
 
         then:
         readme

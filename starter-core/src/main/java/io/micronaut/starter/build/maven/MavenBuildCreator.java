@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,18 +23,19 @@ import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Singleton
 public class MavenBuildCreator {
@@ -96,7 +97,7 @@ public class MavenBuildCreator {
                 .filter(MavenPlugin.class::isInstance)
                 .map(MavenPlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
-                .collect(Collectors.toList());
+                .toList();
 
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
@@ -108,6 +109,18 @@ public class MavenBuildCreator {
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles(),
-                generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList());
+                generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList(),
+                testResourcesDependencies(generatorContext));
+    }
+
+    @NonNull
+    private static List<MavenCoordinate> testResourcesDependencies(@NonNull GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().getFeatures()
+                .stream()
+                .filter(TestResourcesAdditionalModulesProvider.class::isInstance)
+                .map(f -> ((TestResourcesAdditionalModulesProvider) f).getTestResourcesDependencies(generatorContext))
+                .flatMap(List::stream)
+                .distinct()
+                .toList();
     }
 }

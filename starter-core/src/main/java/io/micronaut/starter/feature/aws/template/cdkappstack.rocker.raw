@@ -18,9 +18,7 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
-@if (!nativeImage) {
 import software.amazon.awscdk.services.lambda.Runtime;
-}
 import software.amazon.awscdk.services.lambda.Architecture;
 @if (features.contains("dynamodb")) {
 import software.amazon.awscdk.services.dynamodb.Attribute;
@@ -150,6 +148,11 @@ public class AppStack extends Stack {
 @if (jdkVersion == JdkVersion.JDK_17) {
                 .runtime(Runtime.JAVA_17)
 }
+@if (jdkVersion == JdkVersion.JDK_21) {
+                .runtime(Runtime.JAVA_21)
+}
+} else {
+                .runtime(Runtime.PROVIDED_AL2023)
 }
                 .handler("@(handler)")
                 .environment(environmentVariables)
@@ -157,12 +160,11 @@ public class AppStack extends Stack {
                 .timeout(Duration.seconds(10))
                 .memorySize(2048)
                 .logRetention(RetentionDays.ONE_WEEK)
+                .tracing(Tracing.ACTIVE)
 @if (features.contains("snapstart")) {
-                .tracing(Tracing.DISABLED)
                 .architecture(Architecture.X86_64)
                 .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
 } else {
-                .tracing(Tracing.ACTIVE)
     @if (architecture instanceof Arm) {
                 .architecture(Architecture.ARM_64)
     } else if (architecture instanceof X86) {

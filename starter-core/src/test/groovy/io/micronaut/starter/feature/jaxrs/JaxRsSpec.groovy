@@ -4,18 +4,18 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Issue
 import spock.lang.Unroll
 
 class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jax-rs contains links to micronaut docs'() {
         when:
-        def output = generate([JaxRs.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([JaxRs.NAME])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -42,13 +42,15 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         Language.GROOVY | "compileOnly"
     }
 
-    void 'test maven jax-rs feature for language=#language'() {
+    void 'test maven jax-rs feature for language=#language'(Language language) {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features([JaxRs.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.jaxrs", "micronaut-jaxrs-server")
@@ -57,28 +59,12 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
         and:
         if (language == Language.KOTLIN) {
             assert verifier.hasTestAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor")
+        } else {
+            assert verifier.hasExclusion("io.micronaut.jaxrs", "micronaut-jaxrs-processor",
+                    "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
         }
         where:
         language << Language.values()
-    }
-
-    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2264")
-    void "test maven jax-rs feature for Groovy doesn't duplicate annotation processors"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.GROOVY)
-                .features([JaxRs.NAME])
-                .render()
-
-        then:
-        // duplicates were added for Groovy annotationProcessor scope, so avoid regression
-        template.count('''\
-    <dependency>
-      <groupId>io.micronaut.jaxrs</groupId>
-      <artifactId>micronaut-jaxrs-processor</artifactId>
-      <scope>provided</scope>
-    </dependency>
-''') == 1
     }
 
 }

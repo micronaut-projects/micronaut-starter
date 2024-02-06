@@ -28,14 +28,17 @@ public final class MicronautDependencyUtils {
             .build();
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
-
+    public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
+    public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
     public static final String GROUP_ID_MICRONAUT_CASSANDRA = "io.micronaut.cassandra";
+    public static final String GROUP_ID_MICRONAUT_CHATBOTS = "io.micronaut.chatbots";
     public static final String GROUP_ID_MICRONAUT_COHERENCE = "io.micronaut.coherence";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
+    public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
@@ -79,6 +82,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
+    }
+
+    @NonNull
+    public static Dependency.Builder jaxrsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JAXRS);
     }
 
     @NonNull
@@ -156,6 +164,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder eclipsestoreDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ECLIPSESTORE);
+    }
+
+    @NonNull
     public static Dependency.Builder micrometerRegistryDependency(@NonNull String implementationName) {
         return micrometerDependency().artifactId("micronaut-micrometer-registry-" + implementationName);
     }
@@ -179,6 +192,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder cassandraDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CASSANDRA);
+    }
+
+    @NonNull
+    public static Dependency.Builder chatBotsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_CHATBOTS);
     }
 
     @NonNull
@@ -304,6 +322,7 @@ public final class MicronautDependencyUtils {
         Dependency.Builder dependency = Dependency.builder()
                 .groupId(groupId)
                 .artifactId(artifactId)
+                .exclude(MICRONAUT_INJECT)
                 .versionProperty(propertyName);
 
         return isTestScope ? dependency.testAnnotationProcessor(requiresPriority) : dependency.annotationProcessor(requiresPriority);

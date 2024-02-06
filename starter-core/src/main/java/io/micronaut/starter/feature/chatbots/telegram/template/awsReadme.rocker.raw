@@ -1,0 +1,13 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot
+
+@args (
+Project project,
+Features features,
+String buildCommand
+)
+
+## Lambda handler class
+
+When deployed to AWS Lambda, the lambda handler should be defined as `@TelegramAwsChatBot.HANDLER_CLASS`.

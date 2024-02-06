@@ -1,6 +1,8 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
+import io.micronaut.starter.feature.database.Oracle
+import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
@@ -9,14 +11,13 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
 
 // Required so Groovy recognizes these as a class
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
-
-import java.util.stream.Collectors
 
 class TestcontainersSpec extends CommandSpec {
 
@@ -55,7 +56,11 @@ class TestcontainersSpec extends CommandSpec {
         where:
         [buildTool, driverFeature] << [
                 BuildToolCombinations.buildTools,
-                beanContext.getBeansOfType(DatabaseDriverFeature).findAll { !it.embedded() }
+                beanContext.getBeansOfType(DatabaseDriverFeature)
+                        .stream()
+                        .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
+                        .filter( f -> !f.embedded())
+                        .toList()
         ].combinations()
     }
 }

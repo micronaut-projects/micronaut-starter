@@ -26,6 +26,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
 import io.micronaut.starter.feature.function.azure.template.azurefunctions;
@@ -122,13 +123,13 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+            if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
                 return Optional.of("Java 17");
             } else {
                 return Optional.empty();
             }
         }
-        if (generatorContext.getJdkVersion() == JdkVersion.JDK_17) {
+        if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
             return Optional.of("17");
         } else {
             return Optional.empty();
@@ -136,7 +137,8 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION
+                && generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
             generatorContext.addTemplate("trigger", triggerFile,
                     azureRawFunctionTriggerJava.template(project),
@@ -181,13 +183,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @Override
     protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package azure-functions:deploy";
-        } else if (buildTool.isGradle()) {
-            return "gradlew azureFunctionsDeploy";
-        } else {
-            throw new IllegalStateException("Unsupported build tool");
-        }
+        return AzureBuildCommandUtils.getBuildCommand(buildTool);
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
