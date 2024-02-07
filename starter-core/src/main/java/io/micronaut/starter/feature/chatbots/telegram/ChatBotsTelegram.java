@@ -101,12 +101,7 @@ abstract class ChatBotsTelegram extends ChatBots {
             );
         }
 
-        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(
-                rootReadMeTemplate(generatorContext),
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
+        generatorContext.addHelpTemplate(new RockerWritable(telegramReadme.template(rootReadMeTemplate(generatorContext))));
 
         generatorContext.addTemplate(
                 "final-command-handler",

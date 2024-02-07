@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.micronaut.starter.template;
 
 import com.fizzed.rocker.RockerModel;
+import com.fizzed.rocker.RockerOutput;
 
 import java.io.OutputStream;
 
@@ -59,5 +60,9 @@ public class RockerTemplate extends DefaultTemplate {
 
     public RockerWritable getWritable() {
         return writable;
+    }
+
+    public RockerOutput renderModel() {
+        return writable.getModel().render();
     }
 }

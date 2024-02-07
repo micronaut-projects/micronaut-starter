@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -96,7 +97,7 @@ public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeat
     }
 
     @Override
-    protected String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return gcpReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public RockerTemplate rootReadMeTemplate(GeneratorContext generatorContext) {
+        return new RockerTemplate(gcpReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool())));
     }
 }

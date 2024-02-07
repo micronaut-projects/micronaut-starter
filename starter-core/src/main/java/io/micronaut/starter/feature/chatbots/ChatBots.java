@@ -21,6 +21,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.feature.validator.ValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 
 /**
  * Base class for chatbot features.
@@ -65,7 +66,7 @@ public abstract class ChatBots implements ChatBotsFeature {
     protected abstract ChatBotType getChatBotType();
 
     @NonNull
-    protected abstract String rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
+    protected abstract RockerTemplate rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
 
     @NonNull
     protected abstract String getBuildCommand(@NonNull BuildTool buildTool);

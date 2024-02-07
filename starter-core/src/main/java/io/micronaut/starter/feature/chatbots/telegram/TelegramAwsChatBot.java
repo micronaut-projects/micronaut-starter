@@ -31,6 +31,7 @@ import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -97,10 +98,11 @@ public class TelegramAwsChatBot extends ChatBotsTelegram implements AwsFeature, 
     }
 
     @Override
-    public String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return generatorContext.isFeaturePresent(Cdk.class) ?
-            awsCdkReadme.class.getName().replace(".", "/") + ".rocker.raw" :
-            awsReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public RockerTemplate rootReadMeTemplate(GeneratorContext generatorContext) {
+        return new RockerTemplate(generatorContext.isFeaturePresent(Cdk.class)
+                ? awsCdkReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool()))
+                : awsReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool()))
+        );
     }
 
     @Override

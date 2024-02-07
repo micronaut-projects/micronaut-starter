@@ -1,13 +1,6 @@
-@import com.fizzed.rocker.Rocker
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.template.RockerTemplate
 
-@args(
-    String platformTemplate,
-    Project project,
-    Features features,
-    String buildCommand
-)
+@args(RockerTemplate platformTemplate)
 
 # Telegram ChatBot
 
@@ -15,7 +8,7 @@ Follow the instructions in the [Micronaut ChatBot Documentation](https://microna
 
 Once you have a username and HTTP auth key for your new bot, edit the application config in this project to set the bot username and make up a WEBHOOK_TOKEN so you can ensure it's Telegram that's calling your bot.
 
-@Rocker.template(platformTemplate, project, features, buildCommand)
+@platformTemplate.renderModel()
 
 You can then set up the Telegram webhook by running the following command:
 

@@ -93,12 +93,7 @@ abstract class ChatBotsBasecamp extends ChatBots {
             );
         }
 
-        generatorContext.addHelpTemplate(new RockerWritable(basecampReadme.template(
-                rootReadMeTemplate(generatorContext),
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                getBuildCommand(generatorContext.getBuildTool()))
-        ));
+        generatorContext.addHelpTemplate(new RockerWritable(basecampReadme.template(rootReadMeTemplate(generatorContext))));
 
         generatorContext.addTemplate(
                 "final-command-handler",
