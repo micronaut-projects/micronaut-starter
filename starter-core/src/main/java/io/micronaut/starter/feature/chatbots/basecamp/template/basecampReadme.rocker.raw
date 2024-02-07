@@ -1,19 +1,12 @@
-@import com.fizzed.rocker.Rocker
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.template.RockerTemplate
 
-@args(
-    String platformTemplate,
-    Project project,
-    Features features,
-    String buildCommand
-)
+@args(RockerTemplate platformTemplate)
 
 # Basecamp ChatBot
 
 Follow the instructions in the [Micronaut ChatBot Documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/) to create a Basecamp ChatBot.
 
-@Rocker.template(platformTemplate, project, features, buildCommand)
+@platformTemplate.renderModel()
 
 You can then create a Basecamp webhook by running the following command:
 

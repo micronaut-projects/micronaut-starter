@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -98,7 +99,7 @@ public class BasecampAzureChatBot extends ChatBotsBasecamp implements AzureCloud
     }
 
     @Override
-    public String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return azureReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public RockerTemplate rootReadMeTemplate(GeneratorContext generatorContext) {
+        return new RockerTemplate(azureReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool())));
     }
 }
