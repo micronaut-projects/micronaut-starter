@@ -119,7 +119,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         return versions[choice];
     }
 
-    JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {
+    static JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {
         switch (deployment) {
             case NATIVE_EXECUTABLE:
                 return new JdkVersion[]{
@@ -145,7 +145,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         }
     }
 
-    protected Language[] languagesForDeployment(LambdaDeployment deployment) {
+    static Language[] languagesForDeployment(LambdaDeployment deployment) {
         return deployment == LambdaDeployment.NATIVE_EXECUTABLE ?
                 Stream.of(Language.values())
                         .filter(GraalVMFeatureValidator::supports)
@@ -229,15 +229,15 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 : Optional.empty();
     }
 
-    protected List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
+    static List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
         return features.stream()
                 .filter(AwsApiFeature.class::isInstance)
                 .filter(f -> f.supports(applicationType))
                 .sorted(Comparator.comparing(Feature::getTitle).reversed())
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    protected List<Feature> triggerFeatures(Collection<Feature> features) {
+    static List<Feature> triggerFeatures(Collection<Feature> features) {
         return features.stream()
                 .filter(LambdaTrigger.class::isInstance)
                 .sorted((o1, o2) -> {
@@ -252,6 +252,6 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                     }
                     return o1.getTitle().compareTo(o2.getTitle());
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }
