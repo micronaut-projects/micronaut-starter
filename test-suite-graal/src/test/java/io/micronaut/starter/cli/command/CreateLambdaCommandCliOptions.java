@@ -1,19 +1,11 @@
 package io.micronaut.starter.cli.command;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.aws.Cdk;
-import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
-import io.micronaut.starter.feature.chatbots.basecamp.BasecampAwsChatBot;
-import io.micronaut.starter.feature.chatbots.basecamp.BasecampAzureChatBot;
-import io.micronaut.starter.feature.chatbots.basecamp.BasecampGcpChatBot;
-import io.micronaut.starter.feature.chatbots.basecamp.BasecampHttpChatBot;
-import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot;
-import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot;
-import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot;
-import io.micronaut.starter.feature.chatbots.telegram.TelegramHttpChatBot;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.options.BuildTool;
@@ -40,6 +32,8 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
     final List<Feature> allApiFeatures;
     final List<Language> allLanguages;
     final List<JdkVersion> allJdkVersions;
+    @Nullable final String expectedExceptionMessage;
+
     private int index = 0;
 
     CreateLambdaCommandCliOptions(
@@ -54,7 +48,8 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
             TestFramework testFramework,
             BuildTool buildTool,
             JdkVersion javaVersion,
-            JdkVersion[] allJdkVersions
+            JdkVersion[] allJdkVersions,
+            @Nullable String expectedExceptionMessage
     ) {
         this.codingStyle = codingStyle;
         this.apiFeature = apiFeatures;
@@ -68,6 +63,7 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
         this.buildTool = buildTool;
         this.javaVersion = javaVersion;
         this.allJdkVersions = Arrays.asList(allJdkVersions);
+        this.expectedExceptionMessage = expectedExceptionMessage;
     }
 
     List<String> getFeatures() {

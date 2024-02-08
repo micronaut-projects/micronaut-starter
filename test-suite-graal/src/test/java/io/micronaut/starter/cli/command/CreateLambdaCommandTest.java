@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CreateLambdaCommandTest {
 
@@ -48,9 +49,7 @@ class CreateLambdaCommandTest {
                                                 .flatMap(language -> Stream.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST)
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool -> getAllApiFeatures(codingStyle).stream()
-                                                                        .flatMap(feature -> invalid(feature, cdk, buildTool, lambdaDeployment)
-                                                                                ? Stream.empty()
-                                                                                : Stream.of(CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment))
+                                                                        .flatMap(feature -> Stream.of(CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment))
                                                                                 .map(jdkVersion -> new CreateLambdaCommandCliOptions(
                                                                                         codingStyle,
                                                                                         feature,
@@ -63,7 +62,8 @@ class CreateLambdaCommandTest {
                                                                                         testFramework,
                                                                                         buildTool,
                                                                                         jdkVersion,
-                                                                                        CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment)
+                                                                                        CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment),
+                                                                                        invalid(feature, cdk, buildTool, lambdaDeployment)
                                                                                 ))
                                                                         )
                                                                 )
@@ -78,9 +78,12 @@ class CreateLambdaCommandTest {
     /**
      * We don't support GraalVM with Maven and CDK, though the tool does allow this combination.
      */
-    private static boolean invalid(Feature feature, boolean cdk, BuildTool buildTool, LambdaDeployment lambdaDeployment) {
+    private static String invalid(Feature feature, boolean cdk, BuildTool buildTool, LambdaDeployment lambdaDeployment) {
         boolean hasCdk = feature instanceof LambdaFunctionUrl || cdk;
-        return hasCdk && buildTool == BuildTool.MAVEN && lambdaDeployment == LambdaDeployment.NATIVE_EXECUTABLE;
+        if (hasCdk && buildTool == BuildTool.MAVEN && lambdaDeployment == LambdaDeployment.NATIVE_EXECUTABLE) {
+            return "Maven, CDK and GraalVM are not yet supported";
+        }
+        return null;
     }
 
     private static List<Feature> getAllApiFeatures(CodingStyle codingStyle) {
@@ -104,15 +107,24 @@ class CreateLambdaCommandTest {
         assertEquals(cliOptions.testFramework, options.getOptions().getTestFramework());
         assertEquals(cliOptions.javaVersion, options.getOptions().getJavaVersion());
 
-        assertDoesNotThrow(() -> projectGenerator.generate(
-                        options.getApplicationType(),
-                        NameUtils.parse("foo"),
-                        options.getOptions(),
-                        OperatingSystem.LINUX,
-                        cliOptions.getFeatures(),
-                        new TemplateResolvingOutputHandler(),
-                        new LoggingConsoleOutput()
-                )
+        if (cliOptions.expectedExceptionMessage != null) {
+            IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> generate(projectGenerator, options));
+            assertEquals(cliOptions.expectedExceptionMessage, ex.getMessage());
+        } else {
+            assertDoesNotThrow(() -> generate(projectGenerator, options)
+            );
+        }
+    }
+
+    private static void generate(ProjectGenerator projectGenerator, GenerateOptions options) throws Exception {
+        projectGenerator.generate(
+                options.getApplicationType(),
+                NameUtils.parse("foo"),
+                options.getOptions(),
+                OperatingSystem.LINUX,
+                options.getFeatures().stream().toList(),
+                new TemplateResolvingOutputHandler(),
+                new LoggingConsoleOutput()
         );
     }
 }
