@@ -198,4 +198,27 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
         new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }
+
+    void 'Selected jdk = #jdk is specified in Maven for lang = #lang'(
+            Language lang, JdkVersion jdk
+    ) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(lang, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, jdk))
+        def buildFile =  output["pom.xml"]
+
+        then:
+        buildFile
+        if (lang == Language.KOTLIN) {
+            // has kapt so has to be 17
+            assert buildFile.contains("<jdk.version>17</jdk.version>")
+        } else {
+            assert buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
+        }
+
+        where:
+        [lang, jdk] << [
+                Language.values(),
+                [JdkVersion.JDK_17, JdkVersion.JDK_21]
+        ].combinations()
+    }
 }
