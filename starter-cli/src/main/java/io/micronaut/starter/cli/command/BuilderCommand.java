@@ -83,9 +83,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                     .parser(new DefaultParser())
                     .build();
             GenerateOptions options = createGenerateOptions(reader);
-            // options.getFeatures() may be an unmodifiable set, so unpack it into a modifiable set
-            Set<String> selectedFeatures = new HashSet<>(options.getFeatures());
-            selectedFeatures.addAll(getFeatures(options.getApplicationType(), terminal, features));
+            Set<String> selectedFeatures = getFeatures(options, () -> getFeatures(options.getApplicationType(), terminal, features));
             Project project = getProject(reader);
             try (OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this)) {
                 projectGenerator.generate(options.getApplicationType(),
@@ -103,6 +101,12 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
             AnsiConsole.systemUninstall();
         }
         return 0;
+    }
+
+    public Set<String> getFeatures(GenerateOptions options, Supplier<List<String>> featureSupplier) {
+        Set<String> selectedFeatures = new HashSet<>(options.getFeatures());
+        selectedFeatures.addAll(featureSupplier.get());
+        return selectedFeatures;
     }
 
     protected List<String> getFeatures(ApplicationType applicationType, Terminal terminal, List<Feature> features) {

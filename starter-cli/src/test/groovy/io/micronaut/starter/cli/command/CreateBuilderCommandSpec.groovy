@@ -2,17 +2,15 @@ package io.micronaut.starter.cli.command
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.aws.LambdaTrigger
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import org.jline.reader.LineReader
+import spock.lang.Issue
 import spock.lang.Specification
 import spock.lang.Unroll
-
-import java.util.stream.Collectors
 
 class CreateBuilderCommandSpec extends Specification {
     /*
@@ -148,5 +146,21 @@ Choose the target JDK. (enter for default)
                 "3", // Maven
                 "1", // JDK 17
         ]       | ApplicationType.DEFAULT | Language.JAVA | TestFramework.JUNIT | BuildTool.MAVEN | JdkVersion.JDK_17
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2318")
+    void "check features handle unmodifiable features set"() {
+        given:
+        ApplicationContext applicationContext = ApplicationContext.run()
+
+        when:
+        CreateBuilderCommand command = applicationContext.getBean(CreateBuilderCommand)
+        command.getFeatures(new GenerateOptions(ApplicationType.DEFAULT, new Options(), Collections.emptySet()), () -> ["aws-lambda"]);
+
+        then:
+        noExceptionThrown()
+
+        cleanup:
+        applicationContext.close()
     }
 }
