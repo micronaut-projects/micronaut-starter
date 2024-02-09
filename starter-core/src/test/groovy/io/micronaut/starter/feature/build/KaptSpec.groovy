@@ -145,4 +145,29 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         and: 'the config file is added in the right place'
         output.".mvn/jvm.config" == KotlinSupportFeature.JDK_21_KAPT_MODULES
     }
+
+    void 'Corrected jdk21 = jdk17 is specified in build = #buildTool for kapt'(BuildTool buildTool) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),['kapt'])
+        def buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
+
+        then:
+        buildFile
+        buildFile.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        !buildFile.contains('targetCompatibility = JavaVersion.toVersion("17")')
+        !buildFile.contains('targetCompatibility = JavaVersion.toVersion("21")')
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void 'Corrected jdk21 = jdk17 is specified in Maven build for kapt'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21),['kapt'])
+        def buildFile = output["pom.xml"]
+
+        then:
+        buildFile
+        buildFile.contains('<jdk.version>17</jdk.version>')
+    }
 }
