@@ -113,11 +113,12 @@ class CreateLambdaBuilderCommandSpec extends Specification {
         cliOptions.language == options.options.language
         cliOptions.buildTool == options.options.buildTool
         cliOptions.testFramework == options.options.testFramework
-        cliOptions.javaVersion == options.options.javaVersion
+        cliOptions.javaVersion == options.options.javaVersion.asString()
 
         where:
         cliOptions << [CodingStyle.values(), LambdaDeployment.values()].combinations().collectMany { CodingStyle codingStyle, LambdaDeployment deployment ->
             combinations(
+                    command,
                     applicationContext,
                     codingStyle == CodingStyle.CONTROLLERS ?
                             CreateLambdaBuilderCommand.apiTriggerFeatures(ApplicationType.DEFAULT, applicationContext.getBeansOfType(Feature)) :
@@ -128,7 +129,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
         }
     }
 
-    static combinations(ApplicationContext ctx, List<Feature> triggerFeatures, CodingStyle codingStyle, LambdaDeployment deployment) {
+    static combinations(CreateLambdaBuilderCommand command, ApplicationContext ctx, List<Feature> triggerFeatures, CodingStyle codingStyle, LambdaDeployment deployment) {
         [
                 triggerFeatures,
                 [triggerFeatures],
@@ -139,8 +140,8 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 [CreateLambdaBuilderCommand.languagesForDeployment(deployment)],
                 [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST],
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN],
-                CreateLambdaBuilderCommand.jdkVersionsForDeployment(deployment),
-                [CreateLambdaBuilderCommand.jdkVersionsForDeployment(deployment)]
+                command.jdkVersionCandidates,
+                [command.jdkVersionCandidates]
         ].combinations().collect { new LambdaCliOptions(codingStyle, *it) }
     }
 
@@ -154,11 +155,11 @@ class CreateLambdaBuilderCommandSpec extends Specification {
         final Language language
         final TestFramework testFramework
         final BuildTool buildTool
-        final JdkVersion javaVersion
+        final String javaVersion
 
         final List<Feature> allApiFeatures
         final List<Language> allLanguages
-        final List<JdkVersion> allJdkVersions
+        final List<String> allJdkVersions
 
         LambdaCliOptions(
                 CodingStyle codingStyle,
@@ -171,8 +172,8 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 Language[] allLanguages,
                 TestFramework testFramework,
                 BuildTool buildTool,
-                JdkVersion javaVersion,
-                JdkVersion[] allJdkVersions
+                String javaVersion,
+                List<String> allJdkVersions
         ) {
             this.codingStyle = codingStyle
             this.apiFeature = apiFeatures
@@ -185,7 +186,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
             this.testFramework = testFramework
             this.buildTool = buildTool
             this.javaVersion = javaVersion
-            this.allJdkVersions = allJdkVersions.toList()
+            this.allJdkVersions = allJdkVersions
         }
 
         List<String> getFeatures() {
