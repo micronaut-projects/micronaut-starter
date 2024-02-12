@@ -57,7 +57,7 @@ class ReportAnalyticsSpec extends Specification {
 
     void "test report analytics"() {
         when:
-        client.createApp("test", Collections.emptyList(), BuildTool.MAVEN, null, null)
+        client.createApp("test", Collections.emptyList(), BuildTool.MAVEN, null, null, null)
         PollingConditions conditions = new PollingConditions()
 
         then:
