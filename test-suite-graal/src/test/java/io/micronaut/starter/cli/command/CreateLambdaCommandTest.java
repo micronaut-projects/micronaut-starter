@@ -27,10 +27,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CreateLambdaCommandTest {
 
     static ApplicationContext applicationContext;
+    static CreateLambdaBuilderCommand command;
 
     @BeforeAll
     static void setUp() {
         applicationContext = ApplicationContext.run();
+        command = applicationContext.getBean(CreateLambdaBuilderCommand.class);
     }
 
     @AfterAll
@@ -49,7 +51,7 @@ class CreateLambdaCommandTest {
                                                 .flatMap(language -> Stream.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST)
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool -> getAllApiFeatures(codingStyle).stream()
-                                                                        .flatMap(feature -> Stream.of(CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment))
+                                                                        .flatMap(feature -> command.getJdkVersionCandidates().stream()
                                                                                 .map(jdkVersion -> new CreateLambdaCommandCliOptions(
                                                                                         codingStyle,
                                                                                         feature,
@@ -62,7 +64,7 @@ class CreateLambdaCommandTest {
                                                                                         testFramework,
                                                                                         buildTool,
                                                                                         jdkVersion,
-                                                                                        CreateLambdaBuilderCommand.jdkVersionsForDeployment(lambdaDeployment),
+                                                                                        command.getJdkVersionCandidates(),
                                                                                         invalid(feature, cdk, buildTool, lambdaDeployment)
                                                                                 ))
                                                                         )
@@ -105,7 +107,7 @@ class CreateLambdaCommandTest {
         assertEquals(cliOptions.language, options.getOptions().getLanguage());
         assertEquals(cliOptions.buildTool, options.getOptions().getBuildTool());
         assertEquals(cliOptions.testFramework, options.getOptions().getTestFramework());
-        assertEquals(cliOptions.javaVersion, options.getOptions().getJavaVersion());
+        assertEquals(cliOptions.javaVersion, options.getOptions().getJavaVersion().asString());
 
         if (cliOptions.expectedExceptionMessage != null) {
             IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> generate(projectGenerator, options));

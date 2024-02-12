@@ -27,11 +27,11 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
     final Language language;
     final TestFramework testFramework;
     final BuildTool buildTool;
-    final JdkVersion javaVersion;
+    final String javaVersion;
 
     final List<Feature> allApiFeatures;
     final List<Language> allLanguages;
-    final List<JdkVersion> allJdkVersions;
+    final List<String> allJdkVersions;
     @Nullable final String expectedExceptionMessage;
 
     private int index = 0;
@@ -47,8 +47,8 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
             Language[] allLanguages,
             TestFramework testFramework,
             BuildTool buildTool,
-            JdkVersion javaVersion,
-            JdkVersion[] allJdkVersions,
+            String javaVersion,
+            List<String> allJdkVersions,
             @Nullable String expectedExceptionMessage
     ) {
         this.codingStyle = codingStyle;
@@ -62,7 +62,7 @@ class CreateLambdaCommandCliOptions implements CommandSupplier {
         this.testFramework = testFramework;
         this.buildTool = buildTool;
         this.javaVersion = javaVersion;
-        this.allJdkVersions = Arrays.asList(allJdkVersions);
+        this.allJdkVersions = allJdkVersions;
         this.expectedExceptionMessage = expectedExceptionMessage;
     }
 

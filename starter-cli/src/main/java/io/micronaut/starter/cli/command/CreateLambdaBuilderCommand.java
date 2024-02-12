@@ -97,41 +97,17 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         Language language = getLanguage(deployment, reader);
         TestFramework testFramework = getTestFramework(reader, language);
         BuildTool buildTool = getBuildTool(reader, language);
-        JdkVersion jdkVersion = getJdkVersion(deployment, reader);
+        JdkVersion jdkVersion = getJdkVersion(reader);
         Options options = new Options(language, testFramework, buildTool, jdkVersion);
         return new GenerateOptions(applicationType, options, applicationFeatures);
     }
 
-    protected JdkVersion getJdkVersion(LambdaDeployment deployment, LineReader reader) {
-        JdkVersion[] versions = jdkVersionsForDeployment(deployment);
-        JdkVersion defaultOption = versions.length > 0 ? versions[0] : JdkVersion.JDK_17;
-        out("Choose the target JDK. (enter for default)");
-
-        for (int i = 0; i < versions.length; i++) {
-            out(AUTO.string("@|blue " + (versions[i].equals(defaultOption) ? '*' : ' ') + (i + 1) + ")|@ " + versions[i].majorVersion()));
-        }
-        int option = getOption(reader, versions.length);
-        out("");
-        if (option == -1) {
-            return defaultOption;
-        }
-        int choice = option - 1;
-        return versions[choice];
-    }
-
-    static JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {
-        switch (deployment) {
-            case NATIVE_EXECUTABLE:
-                return new JdkVersion[]{
-                        JdkVersion.JDK_17
-                };
-            case FAT_JAR:
-            default:
-                List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
-                JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
-                supportedJdks.toArray(arr);
-                return arr;
-        }
+    @Override
+    protected List<String> getJdkVersionCandidates() {
+        return AwsLambdaFeatureValidator.supportedJdks().stream()
+                .map(JdkVersion::majorVersion)
+                .map(String::valueOf)
+                .toList();
     }
 
     protected ApplicationType applicationTypeForCodingStyle(CodingStyle codingStyle) {

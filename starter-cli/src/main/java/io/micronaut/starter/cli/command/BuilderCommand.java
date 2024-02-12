@@ -148,7 +148,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
     }
 
     protected JdkVersion getJdkVersion(LineReader reader) {
-        List<String> candidates = new JdkVersionCandidates();
+        List<String> candidates = getJdkVersionCandidates();
         JdkVersion defaultOption = MicronautJdkVersionConfiguration.DEFAULT_OPTION;
         if (candidates.size() == 1) {
             return defaultOption;
@@ -160,6 +160,10 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                 String.valueOf(defaultOption.majorVersion()),
                 reader
         )));
+    }
+
+    protected List<String> getJdkVersionCandidates() {
+        return new JdkVersionCandidates();
     }
 
     protected YesOrNo getYesOrNo(LineReader reader) {
