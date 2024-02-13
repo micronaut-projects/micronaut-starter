@@ -10,6 +10,7 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Issue
 import spock.lang.Specification
 
 import jakarta.inject.Inject
@@ -69,14 +70,15 @@ class ZipCreateControllerSpec extends Specification {
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
 
-    void "test create app with jdk"(JdkVersion jdkVersion) {
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2321")
+    void "test create app with jdk=#jdkVersion"(JdkVersion jdkVersion) {
         when:
-        def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY, jdkVersion)
+        def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE_KOTLIN, TestFramework.JUNIT, Language.JAVA, jdkVersion)
         int jdk = jdkVersion.majorVersion
 
         then:
-        ZipUtil.containsFileWithContents(bytes, "build.gradle", "sourceCompatibility = JavaVersion.toVersion(\"${jdk}\")")
-        ZipUtil.containsFileWithContents(bytes, "build.gradle", "targetCompatibility = JavaVersion.toVersion(\"${jdk}\")")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle.kts", "sourceCompatibility = JavaVersion.toVersion(\"${jdk}\")")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle.kts", "targetCompatibility = JavaVersion.toVersion(\"${jdk}\")")
 
         where:
         jdkVersion << MicronautJdkVersionConfiguration.SUPPORTED_JDKS

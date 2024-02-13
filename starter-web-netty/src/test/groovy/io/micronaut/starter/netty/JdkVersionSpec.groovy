@@ -13,7 +13,7 @@ class JdkVersionSpec extends Specification {
     @Inject
     JsonMapper jsonMapper
 
-    void "Serialize and deserialize JDKVersion"(JdkVersion jdkVersion) {
+    void "Serialize and deserialize JdkVersion with jdk=#jdkVersion"(JdkVersion jdkVersion) {
         given:
         int jdk = jdkVersion.majorVersion()
 

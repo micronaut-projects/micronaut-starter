@@ -18,6 +18,7 @@ import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
+import spock.lang.Issue
 import spock.lang.Specification
 
 @MicronautTest
@@ -119,7 +120,8 @@ class ZipCreateControllerSpec extends Specification {
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
 
-    void "test create app with jdk"(JdkVersion jdkVersion) {
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2321")
+    void "test create app with jdk=#jdkVersion"(JdkVersion jdkVersion) {
         when:
         def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY, jdkVersion)
 

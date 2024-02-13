@@ -16,6 +16,7 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
+import spock.lang.Issue
 import spock.lang.Specification
 
 @MicronautTest
@@ -42,7 +43,8 @@ class PreviewControllerSpec extends Specification {
         e.getResponse().getBody(Map).get()._embedded.errors[0].message == 'The requested feature does not exist: juikkkk'
     }
 
-    void "test preview - jdk version"(JdkVersion jdkVersion) {
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2321")
+    void "test preview - jdk version=#jdkVersion"(JdkVersion jdkVersion) {
         when:
         def map = client.previewApp(ApplicationType.DEFAULT, "com.example.demo", Collections.emptyList(),
                 BuildTool.GRADLE_KOTLIN, TestFramework.JUNIT, Language.JAVA, jdkVersion)

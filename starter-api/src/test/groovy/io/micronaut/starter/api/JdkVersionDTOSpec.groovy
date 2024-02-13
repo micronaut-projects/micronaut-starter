@@ -12,7 +12,7 @@ class JdkVersionDTOSpec extends Specification {
     @Inject
     JsonMapper jsonMapper
 
-    void "Serialize JDKVersionDTO"(JdkVersion jdkVersion) {
+    void "Serialize JdkVersionDTO with jdk = #jdkVersion"(JdkVersion jdkVersion) {
         when:
         String json = jsonMapper.writeValueAsString(new JdkVersionDTO(jdkVersion))
         int jdk = jdkVersion.majorVersion()

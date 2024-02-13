@@ -124,29 +124,21 @@ class ZipCreateControllerSpec extends Specification {
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
 
-    void "test create app with jdk"(JdkVersion jdkVersion) {
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/2321")
+    void "test create app with jdk=#jdkVersion"(JdkVersion jdkVersion) {
         when:
-        def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY, jdkVersion)
+        def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE_KOTLIN, TestFramework.JUNIT, Language.JAVA, jdkVersion)
         int jdk = jdkVersion.majorVersion
 
         then:
-        ZipUtil.containsFileWithContents(bytes, "build.gradle", "sourceCompatibility = JavaVersion.toVersion(\"${jdk}\")")
-        ZipUtil.containsFileWithContents(bytes, "build.gradle", "targetCompatibility = JavaVersion.toVersion(\"${jdk}\")")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle.kts", "sourceCompatibility = JavaVersion.toVersion(\"${jdk}\")")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle.kts", "targetCompatibility = JavaVersion.toVersion(\"${jdk}\")")
 
         where:
         jdkVersion << MicronautJdkVersionConfiguration.SUPPORTED_JDKS
     }
 
-    void "test create app with jdk21"() {
-        when:
-        def response = httpClient.toBlocking().exchange(HttpRequest.GET('create/default/com.example.demo?lang=JAVA&build=GRADLE_KOTLIN&test=JUNIT&javaVersion=JDK_21'), Argument.of(String))
-
-        then:
-        noExceptionThrown()
-        response.getBody(String).isPresent()
-    }
-
-        @Client('/create')
+    @Client('/create')
     static interface CreateClient {
         @Get(uri = "/default/{name}{?features,build,test,lang,javaVersion}", consumes = "application/zip")
         byte[] createApp(
