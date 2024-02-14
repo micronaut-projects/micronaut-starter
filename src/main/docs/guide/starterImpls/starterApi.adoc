@@ -9,7 +9,7 @@ $ ./gradlew starter-api:classes
 
 You can open the OPEN API specification in YAML format:
 
-[source, bash]
+[source, bash, subs="attributes"]
 ----
-$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml
+$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-launch-{version}.yml
 ----
