@@ -18,7 +18,7 @@ class ReportAnalyticsNoApiKeySpec extends Specification {
 
     void "test report analytics with no analytics api key configured"() {
         when: "no analytics api key is configured"
-        client.createApp("test", Collections.emptyList(), BuildTool.GRADLE, null, null)
+        client.createApp("test", Collections.emptyList(), BuildTool.GRADLE, null, null, null)
 
         then: "create endpoint completes successfully (analytics are not invoked)"
         noExceptionThrown()
