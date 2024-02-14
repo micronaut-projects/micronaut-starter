@@ -177,13 +177,21 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
             }
         }
         if (generatorContext.getFeatures().hasFeature(HibernateReactiveFeature.class)) {
-            getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
-            if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                getJavaClientDependency().ifPresent(dependencies::add);
-            }
+            dependencies.addAll(dependenciesForHibernateReactive(generatorContext));
         } else {
             getJavaClientDependency().ifPresent(dependencies::add);
         }
         return dependencies;
     }
+
+    @NonNull
+    protected List<Dependency.Builder> dependenciesForHibernateReactive(@NonNull GeneratorContext generatorContext) {
+        List<Dependency.Builder> dependencies = new ArrayList<>();
+        getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
+        if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
+            getJavaClientDependency().ifPresent(dependencies::add);
+        }
+        return dependencies;
+    }
 }
+

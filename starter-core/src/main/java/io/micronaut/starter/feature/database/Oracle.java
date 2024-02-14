@@ -16,12 +16,16 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP;
@@ -135,5 +139,17 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     public boolean embedded() {
         return false;
+    }
+
+    @Override
+    protected List<Dependency.Builder> dependenciesForHibernateReactive(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            List<Dependency.Builder> dependencies = new ArrayList<>();
+            getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
+            //TODO: remove this once MN SQL upgrades to 23. See: https://github.com/micronaut-projects/micronaut-sql/pull/1268
+            getJavaClientDependency().ifPresent(dep -> dependencies.add(dep.version("23.3.0.23.09")));
+            return dependencies;
+        }
+        return super.dependenciesForHibernateReactive(generatorContext);
     }
 }
