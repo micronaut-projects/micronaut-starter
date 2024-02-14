@@ -40,7 +40,6 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         where:
         db << featuresNames().stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
-                .filter(f -> f != Oracle.NAME)
                 .toList()
     }
 
