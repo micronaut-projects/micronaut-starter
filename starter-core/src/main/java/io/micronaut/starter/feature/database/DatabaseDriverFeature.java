@@ -176,7 +176,7 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
                 return dependencies;
             }
         }
-        if (generatorContext.getFeatures().hasFeature(DataHibernateReactive.class) || generatorContext.getFeatures().hasFeature(HibernateReactiveJpa.class)) {
+        if (generatorContext.getFeatures().hasFeature(HibernateReactiveFeature.class)) {
             getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
             if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
                 getJavaClientDependency().ifPresent(dependencies::add);
