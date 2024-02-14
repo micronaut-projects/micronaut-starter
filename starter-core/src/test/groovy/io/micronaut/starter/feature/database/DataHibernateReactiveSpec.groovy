@@ -195,7 +195,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         containsDataHibernateReactive(template)
         !containsHikariDependency(template)
         containsVertXDriver(template, client)
-        !containsJdbcDriver(template, migrationDriver)
+        (db == Oracle.NAME && containsJdbcDriver(template, migrationDriver)) ||  !containsJdbcDriver(template, migrationDriver)
 
         and: "postgres needs another dependency with vert.x"
         db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
