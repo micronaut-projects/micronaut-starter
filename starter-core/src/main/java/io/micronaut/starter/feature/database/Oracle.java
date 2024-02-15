@@ -32,6 +32,9 @@ public class Oracle extends DatabaseDriverFeature {
     public static final String NAME = "oracle";
     public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
 
+    //TODO: enable once ojdbc upgrades to 23. See: https://github.com/micronaut-projects/micronaut-sql/pull/1268
+    public static final boolean COMPATIBLE_WITH_HIBERNATE_REACTIVE = false;
+
     @Deprecated(forRemoval = true)
     public static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
             .groupId("com.oracle.database.jdbc")
@@ -123,7 +126,7 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     @NonNull
     public Optional<Dependency.Builder> getHibernateReactiveJavaClientDependency() {
-        return Optional.of(DEPENDENCY_VERTX_ORACLE_CLIENT);
+        return COMPATIBLE_WITH_HIBERNATE_REACTIVE ? Optional.of(DEPENDENCY_VERTX_ORACLE_CLIENT) : Optional.empty();
     }
 
     @Override

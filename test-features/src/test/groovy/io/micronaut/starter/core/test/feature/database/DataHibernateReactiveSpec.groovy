@@ -42,7 +42,6 @@ class DataHibernateReactiveSpec extends CommandSpec {
         db << featuresNames()
                 .stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
-                .filter(f -> f != Oracle.NAME)
                 .toList()
     }
 
@@ -72,6 +71,8 @@ class DataHibernateReactiveSpec extends CommandSpec {
                 PostgreSQL.NAME,
                 Oracle.NAME,
                 SQLServer.NAME
-        ]
+        ].stream()
+                .filter(n -> n != Oracle.NAME || Oracle.COMPATIBLE_WITH_HIBERNATE_REACTIVE)
+                .toList()
     }
 }
