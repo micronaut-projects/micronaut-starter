@@ -27,6 +27,7 @@ import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
@@ -126,7 +127,7 @@ abstract class CommandSpec extends Specification {
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = lang.getDefaults().test,
                          boolean addMicronautGradleEnterpriseFeature = true,
-                         JdkVersion maxJdkVersion = JdkVersion.JDK_17) {
+                         JdkVersion maxJdkVersion = MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }

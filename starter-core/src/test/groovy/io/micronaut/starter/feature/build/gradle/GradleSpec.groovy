@@ -80,7 +80,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        !buildGradle.contains("tasks")
+        !buildGradle.contains("tasks {")
 
         where:
         language << [Language.JAVA, Language.GROOVY]

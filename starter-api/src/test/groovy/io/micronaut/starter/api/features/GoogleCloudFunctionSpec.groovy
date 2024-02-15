@@ -28,7 +28,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 null,
-                MicronautJdkVersionConfiguration.DEFAULT_OPTION,
+                JdkVersion.JDK_17,
                 new RequestInfo("http://localhost", "", null, Locale.ENGLISH, "")
         )
 
