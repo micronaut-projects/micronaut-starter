@@ -68,6 +68,8 @@ class HibernateReactiveJpaSpec extends CommandSpec {
                 PostgreSQL.NAME,
                 Oracle.NAME,
                 SQLServer.NAME
-        ]
+        ].stream()
+                .filter(n -> n != Oracle.NAME || Oracle.COMPATIBLE_WITH_HIBERNATE_REACTIVE)
+                .toList()
     }
 }
