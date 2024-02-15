@@ -49,7 +49,7 @@ class OracleAdvancedQueuingSpec extends ApplicationContextSpec  implements Comma
         template.contains('implementation("io.micronaut.jms:micronaut-jms-core")')
         template.contains('implementation("javax.transaction:jta:1.1")')
         template.contains('implementation("com.oracle.database.messaging:aqapi:19.3.0.0")')
-        template.contains('runtimeOnly("com.oracle.database.jdbc:ojdbc8")')
+        template.contains('runtimeOnly("com.oracle.database.jdbc:ojdbc11")')
     }
 
     void 'test jms-oracle-aq with Maven'() {
@@ -87,7 +87,7 @@ class OracleAdvancedQueuingSpec extends ApplicationContextSpec  implements Comma
         template.contains("""
     <dependency>
       <groupId>com.oracle.database.jdbc</groupId>
-      <artifactId>ojdbc8</artifactId>
+      <artifactId>ojdbc11</artifactId>
       <scope>runtime</scope>
     </dependency>
 """)

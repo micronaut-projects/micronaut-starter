@@ -31,7 +31,6 @@ import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -124,7 +124,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
@@ -160,12 +160,12 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Liquibase.NAME | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Liquibase.NAME | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Liquibase.NAME | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Liquibase.NAME | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Flyway.NAME    | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Flyway.NAME    | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Flyway.NAME    | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Flyway.NAME    | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
@@ -211,7 +211,7 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
@@ -247,12 +247,12 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Liquibase.NAME | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Liquibase.NAME | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
         MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
         MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
         PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Flyway.NAME    | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC11.build()
         SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Flyway.NAME    | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
