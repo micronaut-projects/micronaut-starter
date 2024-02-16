@@ -69,6 +69,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['azure-function'])
                 .language(language)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -94,6 +95,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
                 .applicationType(ApplicationType.FUNCTION)
                 .features(['azure-function'])
                 .language(language)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

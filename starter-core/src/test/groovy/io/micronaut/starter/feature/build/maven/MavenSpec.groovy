@@ -177,7 +177,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(chosenFeatures)
                 .language(Language.JAVA)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(javaVersionForRuntime(runtime))
                 .render()
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")
@@ -193,6 +193,17 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["jetty-server"]                | "jetty"
         ApplicationType.DEFAULT     | ["netty-server"]                | "netty"
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
+    }
+
+    private static JdkVersion javaVersionForRuntime(String runtime) {
+        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
+        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
+        // Google Cloud Function execution environment supports 21 in preview only
+        // https://cloud.google.com/functions/docs/concepts/execution-environment#runtimes
+        return runtime in ["azure_function",
+                           "google_function"
+        ] ? JdkVersion.JDK_17 :
+                MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {

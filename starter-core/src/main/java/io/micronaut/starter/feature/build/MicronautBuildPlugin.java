@@ -43,7 +43,6 @@ import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -212,7 +211,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")
                     .build());
-        } else if (generatorContext.getJdkVersion() != MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
+        } else if (generatorContext.getJdkVersion() != JdkVersion.JDK_17) {
             String baseImageForJdkVersion = BASE_IMAGES.get(generatorContext.getJdkVersion());
             if (baseImageForJdkVersion != null) {
                 builder.docker(Dockerfile.builder().baseImage(baseImageForJdkVersion).build());

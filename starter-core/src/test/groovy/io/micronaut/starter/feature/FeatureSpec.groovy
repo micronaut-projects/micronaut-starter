@@ -39,7 +39,7 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void "test #feature does not add an unmodifiable map to config"(Feature feature) {
+    void "test #feature.name does not add an unmodifiable map to config"(Feature feature) {
         when:
         JdkVersion javaVersion = javaVersionForFeature(feature.name)
         Language language = Language.JAVA
@@ -95,7 +95,13 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     private static JdkVersion javaVersionForFeature(String feature) {
-        MicronautJdkVersionConfiguration.DEFAULT_OPTION
+        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
+        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
+        return feature in ["azure-function",
+                           "azure-function-http",
+                           "chatbots-basecamp-azure-function",
+                           "chatbots-telegram-azure-function"
+        ] ? JdkVersion.JDK_17 : MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {
