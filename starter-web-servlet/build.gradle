@@ -11,19 +11,21 @@ configurations {
 }
 
 dependencies {
-    developmentOnly platform("io.micronaut.platform:micronaut-platform:$micronautVersion")
-    implementation project(":starter-api")
-    implementation "io.micronaut:micronaut-inject"
+    developmentOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
+    developmentOnly("io.micronaut.servlet:micronaut-http-server-jetty")
 
+    implementation(project(":starter-api"))
+    implementation("io.micronaut:micronaut-inject")
     implementation("io.micronaut.servlet:micronaut-servlet-engine")
     implementation("io.micronaut:micronaut-jackson-databind")
-    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
-    runtimeOnly "ch.qos.logback:logback-classic"
-    testImplementation "io.micronaut.servlet:micronaut-http-server-jetty"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "io.micronaut:micronaut-http-client"
+    runtimeOnly("ch.qos.logback:logback-classic")
+
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
+
+    testImplementation("io.micronaut.servlet:micronaut-http-server-jetty")
+    testImplementation("io.micronaut.test:micronaut-test-spock")
+    testImplementation("io.micronaut:micronaut-http-client")
 }
 
 tasks.named("test", Test) {

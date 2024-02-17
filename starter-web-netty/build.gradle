@@ -12,17 +12,21 @@ micronaut {
 }
 
 dependencies {
-    implementation project(":starter-api")
-    implementation "io.micronaut.gcp:micronaut-gcp-http-client"
-    runtimeOnly "ch.qos.logback:logback-classic"
-    implementation "io.micronaut.crac:micronaut-crac"
 
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+
+    implementation(project(":starter-api"))
+    implementation("io.micronaut.gcp:micronaut-gcp-http-client")
+    implementation("io.micronaut.crac:micronaut-crac")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "io.micronaut:micronaut-http-client"
+    runtimeOnly("ch.qos.logback:logback-classic")
+
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
+
+    testImplementation("io.micronaut.test:micronaut-test-spock")
+    testImplementation("io.micronaut:micronaut-http-client")
+
     testRuntimeOnly("io.micronaut.serde:micronaut-serde-jackson")
 }
 
