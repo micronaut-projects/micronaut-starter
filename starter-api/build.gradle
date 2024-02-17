@@ -8,7 +8,7 @@ dependencies {
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }
-    implementation("io.swagger.core.v3:swagger-annotations")
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     api("io.micronaut:micronaut-inject")
     api("io.micronaut:micronaut-http")
     api("io.micronaut:micronaut-http-client")

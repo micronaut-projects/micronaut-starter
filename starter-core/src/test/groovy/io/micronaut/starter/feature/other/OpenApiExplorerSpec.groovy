@@ -6,11 +6,11 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 
-class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void "test redoc features"() {
+    void "test openapi-explorer features"() {
         when:
-        Features features = getFeatures(['redoc'])
+        Features features = getFeatures(['openapi-explorer'])
 
         then:
         features.contains("openapi")
@@ -18,18 +18,18 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test config without security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
+        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
         def output = generate(ApplicationType.DEFAULT, ctx)
 
         then:
         ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
         ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
+        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
+        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=false"
-        output["openapi.properties"].readLines()[1] == "redoc.enabled=true"
-        output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=false"
+        output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
+        output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=true"
         output["openapi.properties"].readLines()[3] == "rapidoc.enabled=false"
         output["openapi.properties"].readLines()[4] == "rapidoc.bg-color=#14191f"
         output["openapi.properties"].readLines()[5] == "rapidoc.text-color=#aec2e0"
@@ -41,23 +41,23 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test config with security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc', 'security'])
+        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer', 'security'])
         def output = generate(ApplicationType.DEFAULT, ctx)
 
         then:
         ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
         ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
+        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
+        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
 
         List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 
         swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/swagger/**" }
-        swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/redoc/**" }
+        swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/openapi-explorer/**" }
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=false"
-        output["openapi.properties"].readLines()[1] == "redoc.enabled=true"
-        output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=false"
+        output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
+        output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=true"
         output["openapi.properties"].readLines()[3] == "rapidoc.enabled=false"
         output["openapi.properties"].readLines()[4] == "rapidoc.bg-color=#14191f"
         output["openapi.properties"].readLines()[5] == "rapidoc.text-color=#aec2e0"
@@ -68,22 +68,22 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     }
 
-    void "test redoc has third party docs"() {
+    void "test openapi-explorer has third party docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
+        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
         def output = generate(ApplicationType.DEFAULT, ctx)
 
         then:
-        output["README.md"].contains("https://github.com/Redocly/redoc#generate-beautiful-api-documentation-from-openapi")
+        output["README.md"].contains("https://github.com/Authress-Engineering/openapi-explorer")
     }
 
-    void "test redoc has Micronaut docs"() {
+    void "test openapi-explorer has Micronaut docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
+        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
         def output = generate(ApplicationType.DEFAULT, ctx)
 
         then:
-        output["README.md"].contains("https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#redoc")
+        output["README.md"].contains("https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#openapiExplorer")
     }
 
 }
