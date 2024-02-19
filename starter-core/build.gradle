@@ -28,7 +28,7 @@ dependencies {
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     api("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
-    implementation 'org.apache.commons:commons-compress:1.25.0'
+    implementation 'org.apache.commons:commons-compress:1.26.0'
     testImplementation("org.apache.groovy:groovy-xml")
 }
 
