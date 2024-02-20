@@ -64,10 +64,10 @@ slf4j-simple-logger = "2.0.0"
 zeebe-micronaut-client = "1.16.0"
 ktor = "2.2.4"
 jakarta-validation-api = "3.0.2"
-spring-boot-gradle-plugin = "3.1.5"
+spring-boot-gradle-plugin = "3.2.2"
 spring-dependency-management-plugin = "1.1.4"
 micronaut-starter-aws-cdk = "4.2.4"
-spring-boot-starter-parent="3.1.5"
+spring-boot-starter-parent="3.2.2"
 [libraries]
 spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
 spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
