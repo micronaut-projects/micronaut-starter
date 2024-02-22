@@ -1,6 +1,6 @@
 If using Windows, you can use https://chocolatey.org[Chocolatey] to install the Micronaut CLI:
 
-[source, bash]
+[source,bash]
 ----
 $ choco install micronaut
 ----

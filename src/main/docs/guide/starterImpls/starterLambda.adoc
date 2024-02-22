@@ -4,7 +4,7 @@ The subproject `starter-aws-lambda` provides a function that can be deployed to 
 
 From the root of the project run:
 
-[source, cmd]
+[source,cmd]
 ----
 $ docker build . -f DockerfileLambda -t micronaut-starter
 $ mkdir -p build
@@ -22,9 +22,8 @@ And visit http://localhost:3000/
 
 === Continuous Deployment
 
-The Micronaut Starter API is continuously deployed by Github Actions to https://aws.amazon.com/lambda/[AWS Lambda] as a Serverless GraalVM native application using a custom AWS Lambda Runtime .
+The Micronaut Starter API is continuously deployed by GitHub Actions to https://aws.amazon.com/lambda/[AWS Lambda] as a Serverless GraalVM native application using a custom AWS Lambda Runtime .
 
 The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+AWS+Lambda%22[Snapshot to AWS Lambda Workflow] (defined by `.github/workflows/gcf-snapshot.yml`) deploys the application on each commit and the API can be accessed at the following URL:
 
 https://cn58jiuova.execute-api.us-east-1.amazonaws.com/staging/application-types
-

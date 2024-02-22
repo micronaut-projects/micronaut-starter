@@ -1,7 +1,7 @@
-The best way to install Micronaut on Unix systems is with http://sdkman.io/[SDKMAN] which greatly simplifies installing
-and managing multiple Micronaut versions.
+The best way to install Micronaut on Unix systems is with http://sdkman.io/[SDKMAN!] which greatly simplifies installing and managing multiple Micronaut versions.
 
-Before updating make sure you have latest version of SDKMAN installed. If not, run
+Before updating make sure you have the latest version of SDKMAN! installed.
+If not, run
 
 [source,bash]
 ----
@@ -22,7 +22,7 @@ You can also specify the version to the `sdk install` command.
 $ sdk install micronaut {project-version}
 ----
 
-You can find more information about SDKMAN usage on the http://sdkman.io/usage[SDKMAN Docs]
+You can find more information about SDKMAN! usage on the http://sdkman.io/usage[SDKMAN! Docs]
 
 You should now be able to run the Micronaut CLI.
 
