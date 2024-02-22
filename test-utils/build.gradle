@@ -8,5 +8,5 @@ dependencies {
     implementation("org.spockframework:spock-core:$spockVersion") {
         exclude group: "org.apache.groovy", module: "groovy-all"
     }
-    implementation project(":starter-core")
+    implementation(project(":starter-core"))
 }
