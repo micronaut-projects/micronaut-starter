@@ -31,7 +31,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -81,7 +81,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -124,7 +124,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
@@ -205,7 +205,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

@@ -75,6 +75,7 @@ public class PreviewController extends AbstractCreateController implements Previ
      * @param build The build type (optional, defaults to Gradle)
      * @param test The test framework (optional, defaults to JUnit)
      * @param lang The language (optional, defaults to Java)
+     * @param javaVersion The jdk version (optional, defaults to {@link MicronautJdkVersionConfiguration#DEFAULT_OPTION})
      * @return A preview of the application contents.
      */
     @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MediaType.APPLICATION_JSON)

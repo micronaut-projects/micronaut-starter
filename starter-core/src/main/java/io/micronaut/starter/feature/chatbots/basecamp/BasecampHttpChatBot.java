@@ -98,8 +98,8 @@ public class BasecampHttpChatBot extends ChatBotsBasecamp {
     }
 
     @Override
-    protected String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return controllerReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public RockerTemplate rootReadMeTemplate(GeneratorContext generatorContext) {
+        return new RockerTemplate(controllerReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool())));
     }
 
     @Override

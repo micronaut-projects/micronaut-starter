@@ -47,10 +47,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static picocli.CommandLine.Help.Ansi.AUTO;
 
 @CommandLine.Command(name = CreateLambdaBuilderCommand.NAME, description = "A guided walk-through to create an lambda function")
 @Prototype
@@ -97,41 +95,17 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         Language language = getLanguage(deployment, reader);
         TestFramework testFramework = getTestFramework(reader, language);
         BuildTool buildTool = getBuildTool(reader, language);
-        JdkVersion jdkVersion = getJdkVersion(deployment, reader);
+        JdkVersion jdkVersion = getJdkVersion(reader);
         Options options = new Options(language, testFramework, buildTool, jdkVersion);
         return new GenerateOptions(applicationType, options, applicationFeatures);
     }
 
-    protected JdkVersion getJdkVersion(LambdaDeployment deployment, LineReader reader) {
-        JdkVersion[] versions = jdkVersionsForDeployment(deployment);
-        JdkVersion defaultOption = versions.length > 0 ? versions[0] : JdkVersion.JDK_17;
-        out("Choose the target JDK. (enter for default)");
-
-        for (int i = 0; i < versions.length; i++) {
-            out(AUTO.string("@|blue " + (versions[i].equals(defaultOption) ? '*' : ' ') + (i + 1) + ")|@ " + versions[i].majorVersion()));
-        }
-        int option = getOption(reader, versions.length);
-        out("");
-        if (option == -1) {
-            return defaultOption;
-        }
-        int choice = option - 1;
-        return versions[choice];
-    }
-
-    JdkVersion[] jdkVersionsForDeployment(LambdaDeployment deployment) {
-        switch (deployment) {
-            case NATIVE_EXECUTABLE:
-                return new JdkVersion[]{
-                        JdkVersion.JDK_17
-                };
-            case FAT_JAR:
-            default:
-                List<JdkVersion> supportedJdks = AwsLambdaFeatureValidator.supportedJdks();
-                JdkVersion[] arr = new JdkVersion[supportedJdks.size()];
-                supportedJdks.toArray(arr);
-                return arr;
-        }
+    @Override
+    protected List<String> getJdkVersionCandidates() {
+        return AwsLambdaFeatureValidator.supportedJdks().stream()
+                .map(JdkVersion::majorVersion)
+                .map(String::valueOf)
+                .toList();
     }
 
     protected ApplicationType applicationTypeForCodingStyle(CodingStyle codingStyle) {
@@ -145,7 +119,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         }
     }
 
-    protected Language[] languagesForDeployment(LambdaDeployment deployment) {
+    static Language[] languagesForDeployment(LambdaDeployment deployment) {
         return deployment == LambdaDeployment.NATIVE_EXECUTABLE ?
                 Stream.of(Language.values())
                         .filter(GraalVMFeatureValidator::supports)
@@ -229,15 +203,15 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 : Optional.empty();
     }
 
-    protected List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
+    static List<Feature> apiTriggerFeatures(ApplicationType applicationType, Collection<Feature> features) {
         return features.stream()
                 .filter(AwsApiFeature.class::isInstance)
                 .filter(f -> f.supports(applicationType))
                 .sorted(Comparator.comparing(Feature::getTitle).reversed())
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    protected List<Feature> triggerFeatures(Collection<Feature> features) {
+    static List<Feature> triggerFeatures(Collection<Feature> features) {
         return features.stream()
                 .filter(LambdaTrigger.class::isInstance)
                 .sorted((o1, o2) -> {
@@ -252,6 +226,6 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                     }
                     return o1.getTitle().compareTo(o2.getTitle());
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -12,6 +12,7 @@ import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -79,7 +80,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        !buildGradle.contains("tasks")
+        !buildGradle.contains("tasks {")
 
         where:
         language << [Language.JAVA, Language.GROOVY]
@@ -142,6 +143,30 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
                 AwsLambdaFeatureValidator.supportedJdks(),
                 BuildTool.valuesGradle(),
                 ApplicationType.values().toList()
+        ].combinations()
+    }
+
+    void 'Selected jdk = #jdk is specified in build = #buildTool for lang = #lang'(
+            Language lang, JdkVersion jdk, BuildTool buildTool
+    ) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        def buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
+
+        then:
+        buildFile
+        buildFile.contains("sourceCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        if (lang == Language.KOTLIN) {
+            assert !buildFile.contains("targetCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        } else {
+            assert buildFile.contains("targetCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        }
+
+        where:
+        [lang, jdk, buildTool] << [
+                Language.values(),
+                [JdkVersion.JDK_17, JdkVersion.JDK_21],
+                BuildTool.valuesGradle()
         ].combinations()
     }
 
