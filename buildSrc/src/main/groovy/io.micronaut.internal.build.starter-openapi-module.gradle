@@ -10,8 +10,9 @@ def openApiOutputFile = layout.buildDirectory.file('generated/openapi/openapi.pr
 def openApiProperties = tasks.register("openApiProperties", WriteProperties) {
     outputFile(openApiOutputFile.get().asFile)
     properties(
-            'swagger-ui.enabled':true,
-            'redoc.enabled':true,
+            'swagger-ui.enabled': true,
+            'redoc.enabled': true,
+            'openapi-explorer.enabled': true,
             'rapidoc.enabled': true,
             'rapidoc.bg-color': '#14191f',
             'rapidoc.text-color': '#aec2e0',

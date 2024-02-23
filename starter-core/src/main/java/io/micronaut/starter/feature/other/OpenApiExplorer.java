@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,21 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.feature.InterceptUrlMap;
-import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
-import io.micronaut.starter.feature.staticResources.StaticResource;
-import jakarta.inject.Singleton;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Singleton
-public class RapiDoc extends OpenApiView implements ContributingStaticResources {
-    public static final String NAME = "rapidoc";
+import io.micronaut.starter.feature.InterceptUrlMap;
+import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 
-    public RapiDoc(OpenApi openApiFeature) {
+import jakarta.inject.Singleton;
+
+@Singleton
+public class OpenApiExplorer extends OpenApiView implements ContributingStaticResources {
+
+    public static final String NAME = "openapi-explorer";
+
+    public OpenApiExplorer(OpenApi openApiFeature) {
         super(openApiFeature);
     }
 
@@ -38,35 +40,35 @@ public class RapiDoc extends OpenApiView implements ContributingStaticResources 
 
     @Override
     public String getTitle() {
-        return "RapiDoc View";
+        return "OpenAPI Explorer View";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables RapiDoc view for OpenAPI";
+        return "Adds and enables OpenAPI Explorer view for OpenAPI";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://rapidocweb.com/api.html";
+        return "https://github.com/Authress-Engineering/openapi-explorer";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#rapidoc";
+            return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#openapiExplorer";
     }
 
     @Override
     public List<StaticResource> staticResources() {
         List<StaticResource> result = new ArrayList<>(super.staticResources());
-        result.add(new StaticResource("rapidoc", "/rapidoc/**", "classpath:META-INF/swagger/views/rapidoc"));
+        result.add(new StaticResource("openapi-explorer", "/openapi-explorer/**", "classpath:META-INF/swagger/views/openapi-explorer"));
         return result;
     }
 
     @Override
     public List<InterceptUrlMap> interceptUrlMaps() {
         List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
-        result.add(InterceptUrlMap.anonymousAcccess("/rapidoc/**"));
+        result.add(InterceptUrlMap.anonymousAcccess("/openapi-explorer/**"));
         return result;
     }
 }
