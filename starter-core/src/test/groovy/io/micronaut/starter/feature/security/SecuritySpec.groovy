@@ -7,7 +7,6 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import spock.lang.Unroll
 
 class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -21,7 +20,6 @@ class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixtur
         readme.contains("https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html")
     }
 
-    @Unroll
     void 'test #buildTool security-session feature dependencies'(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -31,7 +29,7 @@ class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("io.micronaut.security", "micronaut-security")
-        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-processor", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
         buildTool << BuildTool.values()

@@ -14,9 +14,9 @@ import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
-import spock.lang.Unroll
 
 class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
     @Shared
     @Subject
     KotlinApplication kotlinApplication = beanContext.getBean(KotlinApplication)
@@ -38,10 +38,9 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         buildGradle.contains('id("com.google.devtools.ksp")')
         buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
         buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
-        buildGradle.contains("ksp(\"io.micronaut.security:micronaut-security-annotations\")")
+        buildGradle.contains('ksp("io.micronaut.security:micronaut-security-processor")')
     }
 
-    @Unroll
     void 'Application file is generated for a default application type with #buildTool and language: kotlin and testing framework: #testFramework'(BuildTool buildTool, TestFramework testFramework) {
         when:
         def output = generate(
@@ -75,7 +74,6 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()
     }
 
-    @Unroll
     void "kotlin-application does not support #description"(ApplicationType applicationType, String description) {
         expect:
         !kotlinApplication.supports(applicationType)
@@ -88,7 +86,6 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         description = applicationType.name
     }
 
-    @Unroll
     void "kotlin-application supports #description application type"() {
         expect:
         kotlinApplication.supports(applicationType)

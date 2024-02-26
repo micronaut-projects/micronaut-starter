@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,16 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SecurityAnnotations implements Feature, MicronautServerDependent {
-    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-annotations";
+public class SecurityProcessor implements Feature, MicronautServerDependent {
+
+    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-processor";
     private static final String PROPERTY_MICRONAUT_SECURITY_VERSION = "micronaut.security.version";
+
+    public static final String NAME = "security-processor";
 
     @Override
     public String getName() {
-        return "security-annotations";
+        return NAME;
     }
 
     @Override
