@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,13 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpSession;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.feature.security.SecurityAuthenticationModeProvider.PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION;
-
 @Singleton
 public class SecuritySession extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
     public static final int ORDER = SecurityOAuth2.ORDER + 10;
 
-    public SecuritySession(SecurityAnnotations securityAnnotations) {
-        super(securityAnnotations);
+    public SecuritySession(SecurityProcessor securityProcessor) {
+        super(securityProcessor);
     }
 
     @Override

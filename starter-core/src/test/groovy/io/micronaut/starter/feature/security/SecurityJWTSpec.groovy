@@ -8,8 +8,6 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -32,7 +30,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         then:
         verifier.hasDependency("io.micronaut.security", "micronaut-security-jwt", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-processor", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
         buildTool << BuildTool.values()

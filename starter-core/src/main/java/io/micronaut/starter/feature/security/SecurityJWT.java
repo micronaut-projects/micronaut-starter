@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ public class SecurityJWT extends SecurityFeature implements SecurityAuthenticati
 
     public static final int ORDER = 0;
 
-    public SecurityJWT(SecurityAnnotations securityAnnotations) {
-        super(securityAnnotations);
+    public SecurityJWT(SecurityProcessor securityProcessor) {
+        super(securityProcessor);
     }
 
     @Override
