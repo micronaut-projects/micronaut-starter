@@ -6,6 +6,7 @@ def generateCoordinateUtils = tasks.register("generateCoordinateUtils", io.micro
     packageName = "io.micronaut.starter.build.dependencies"
     outputDirectory = layout.buildDirectory.dir("generated-sources/coordinates")
     versionCatalog = project.extensions.getByType(VersionCatalogsExtension).named("templateLibs")
+    lineSeparator = System.lineSeparator()
 }
 
 sourceSets.main.java.srcDir(generateCoordinateUtils)
