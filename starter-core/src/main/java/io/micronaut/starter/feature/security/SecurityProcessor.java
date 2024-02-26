@@ -25,10 +25,10 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SecurityProcessor implements Feature, MicronautServerDependent {
 
+    public static final String NAME = "security-processor";
+
     private static final String ARTIFACT_ID_MICRONAUT_SECURITY_ANNOTATIONS = "micronaut-security-processor";
     private static final String PROPERTY_MICRONAUT_SECURITY_VERSION = "micronaut.security.version";
-
-    public static final String NAME = "security-processor";
 
     @Override
     public String getName() {
