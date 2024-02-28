@@ -8,17 +8,19 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
+import static io.micronaut.starter.options.BuildTool.GRADLE
+
 class MySQLSpec extends ApplicationContextSpec {
 
     void 'test gradle mysql feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, GRADLE)
                 .features(['mysql'])
                 .language(language)
                 .render()
 
         then:
-        template.contains('runtimeOnly("mysql:mysql-connector-java")')
+        template.contains('runtimeOnly("com.mysql:mysql-connector-j")')
 
         and:
         template.contains("""
@@ -32,13 +34,13 @@ class MySQLSpec extends ApplicationContextSpec {
 
     void 'testresources not configured for Gradle with testContainers feature and language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, GRADLE)
                 .features(['mysql', 'testcontainers'])
                 .language(language)
                 .render()
 
         then:
-        template.contains('runtimeOnly("mysql:mysql-connector-java")')
+        template.contains('runtimeOnly("com.mysql:mysql-connector-j")')
 
         and:
         !template.contains("""
@@ -54,6 +56,7 @@ class MySQLSpec extends ApplicationContextSpec {
         given:
         BuildTool buildTool = BuildTool.MAVEN
         when:
+
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(['mysql'])
                 .language(language)
@@ -62,7 +65,7 @@ class MySQLSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency('mysql', "mysql-connector-java", Scope.RUNTIME)
+        verifier.hasDependency('com.mysql', "mysql-connector-j", Scope.RUNTIME)
         verifier.hasTestResourceDependency("micronaut-test-resources-jdbc-mysql")
 
         where:
