@@ -44,7 +44,7 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        assertEclipeStoreDependencies(verifier, buildTool, language)
+        assertEclipseStoreDependencies(verifier, buildTool, language)
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
@@ -59,7 +59,7 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        assertEclipeStoreDependencies(verifier, buildTool, language)
+        assertEclipseStoreDependencies(verifier, buildTool, language)
         verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-rest", Scope.DEVELOPMENT_ONLY)
 
         where:
@@ -92,13 +92,10 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         eclipsestoreFeature << beanContext.getBeansOfType(EclipseStoreFeature).iterator()
     }
 
-    private void assertEclipeStoreDependencies(BuildTestVerifier verifier, BuildTool buildTool, Language language) {
+    private static void assertEclipseStoreDependencies(BuildTestVerifier verifier, BuildTool buildTool, Language language) {
         assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore", Scope.COMPILE)
-        if (buildTool == BuildTool.MAVEN && language == Language.GROOVY) {
-            assert !verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.COMPILE)
-        } else {
-            assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.COMPILE)
-        }
-        assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.eclipsestore.version', true)
+        assert !verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-annotations")
+        assert !verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-processor", Scope.COMPILE)
+        assert verifier.hasDependency("io.micronaut.eclipsestore", "micronaut-eclipsestore-processor", Scope.ANNOTATION_PROCESSOR, 'micronaut.eclipsestore.version', true)
     }
 }
