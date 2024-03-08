@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.azure;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
@@ -28,6 +29,17 @@ import jakarta.inject.Singleton;
  */
 @Singleton
 public class AzureKeyVaultFeature implements DistributedConfigFeature {
+
+    private static final Dependency KEY_VAULT_DEPENDENCY = MicronautDependencyUtils.azureDependency()
+            .artifactId("micronaut-azure-secret-manager")
+            .compile()
+            .build();
+
+    private static final Dependency DISCOVERY_CLIENT_DEPENDENCY = MicronautDependencyUtils.discovery()
+            .artifactId("micronaut-discovery-client")
+            .compile()
+            .build();
+
     @Override
     public String getTitle() {
         return "Azure Key Vault";
@@ -55,10 +67,12 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.azure")
-                .artifactId("micronaut-azure-secret-manager")
-                .compile());
+        addDependencies(generatorContext);
         populateBootstrapForDistributedConfiguration(generatorContext);
+    }
+
+    private void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(KEY_VAULT_DEPENDENCY);
+        generatorContext.addDependency(DISCOVERY_CLIENT_DEPENDENCY);
     }
 }
