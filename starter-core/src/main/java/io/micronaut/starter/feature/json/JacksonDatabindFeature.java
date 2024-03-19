@@ -15,13 +15,19 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class JacksonDatabindFeature implements JsonFeature {
+public class JacksonDatabindFeature implements JsonFeature, DefaultFeature {
     @Override
     public String getName() {
         return "jackson-databind";
@@ -34,7 +40,7 @@ public class JacksonDatabindFeature implements JsonFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
+        addDependencies(generatorContext);
     }
 
     @Override
@@ -50,5 +56,14 @@ public class JacksonDatabindFeature implements JsonFeature {
     @Override
     public String getTitle() {
         return "Jackson Databind Integration";
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return SerializationJacksonFeature.APPLY_AS_DEFAULT_FEATURE_IF_NO_JSON_FEATURE.test(selectedFeatures) && !SerializationJacksonFeature.APPLY_AS_DEFAULT_FEATURE.test(selectedFeatures);
+    }
+
+    protected void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
     }
 }

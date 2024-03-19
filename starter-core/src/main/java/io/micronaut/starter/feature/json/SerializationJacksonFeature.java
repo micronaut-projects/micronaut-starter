@@ -19,20 +19,28 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.function.gcp.AbstractGoogleCloudFunction;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Singleton
 public class SerializationJacksonFeature implements SerializationFeature, DefaultFeature {
-    private static final String ARTIFACT_ID_MICRONAUT_SERDE_JACKSON = "micronaut-serde-jackson";
+
+    public static final Predicate<Set<Feature>> APPLY_AS_DEFAULT_FEATURE_IF_NO_JSON_FEATURE = selectedFeatures -> selectedFeatures.stream().noneMatch(feature ->
+            feature instanceof JsonFeature);
+
+    public static final Predicate<Set<Feature>> APPLY_AS_DEFAULT_FEATURE = selectedFeatures -> selectedFeatures.stream().noneMatch(feature ->
+            feature instanceof AbstractGoogleCloudFunction || feature instanceof AwsLambda);
+    public static final String NAME = "serialization-jackson";
 
     @Override
     @NonNull
     public String getName() {
-        return "serialization-jackson";
+        return NAME;
     }
 
     @Override
@@ -52,8 +60,6 @@ public class SerializationJacksonFeature implements SerializationFeature, Defaul
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(feature ->
-                feature instanceof JsonFeature || feature instanceof AbstractGoogleCloudFunction);
+        return APPLY_AS_DEFAULT_FEATURE_IF_NO_JSON_FEATURE.test(selectedFeatures) && APPLY_AS_DEFAULT_FEATURE.test(selectedFeatures);
     }
-
 }
