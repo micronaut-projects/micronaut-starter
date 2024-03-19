@@ -44,7 +44,7 @@ dependencies {
     testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.apache.groovy:groovy-xml'
-    implementation("org.jline:jline:3.19.0")
+    implementation("org.jline:jline:3.25.1")
 }
 
 graalvmNative {
