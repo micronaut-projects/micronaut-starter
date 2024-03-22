@@ -18,7 +18,8 @@ java -jar starter-cli/build/libs/micronaut-cli-{version}-all.jar
 
 === Building a Native Image
 
-Install GraalVM and Native Image. Follow the steps in the previous section to build the CLI and then run:
+Install GraalVM and Native Image.
+Follow the steps in the previous section to build the CLI and then run:
 
 [source,bash,subs="attributes"]
 ----
@@ -31,4 +32,3 @@ This will produce the `mn` executable which you can start with:
 ----
 ./mn
 ----
-

@@ -1,12 +1,13 @@
-The subproject `starter-web-servlet` provides an implementation that can be deployed to any recent Servlet 4+ container (Tomcat 9, Jetty 9 etc.).
+The subproject `starter-web-servlet` provides an implementation that can be deployed to any recent Servlet 4+ container (Tomcat 9, Jetty 9 etc).
 
 === Running the Application locally
 
 From the project root:
 
-```cmd
+[source,cmd]
+----
 ./gradlew clean starter-web-servlet:run
-```
+----
 
 And visit http://localhost:8080/application-types
 
@@ -22,8 +23,9 @@ http://localhost:8080/swagger/views/rapidoc
 
 You can build the WAR file with:
 
-```cmd
+[source,cmd]
+----
 ./gradlew clean starter-web-servlet:assemble
-```
+----
 
 The WAR file will be located in `starter-web-servlet/build/libs` and can be deployed to any modern Servlet container (example Jetty 9 or Tomcat 9).

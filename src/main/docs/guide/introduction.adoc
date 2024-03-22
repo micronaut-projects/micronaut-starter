@@ -1,1 +1,1 @@
-This project implements a project generator for Micronaut as is both a Command Line (CLI) application and an API that can be run as a HTTP server, deployed to a Servlet container or executed on a Serverless platform (Google Cloud Run, Google Cloud Function, AWS Lambda or Azure Function).
+This project implements a project generator for Micronaut as is both a Command Line (CLI) application and an API that can be run as an HTTP server, deployed to a Servlet container or executed on a Serverless platform (Google Cloud Run, Google Cloud Function, AWS Lambda or Azure Function).
