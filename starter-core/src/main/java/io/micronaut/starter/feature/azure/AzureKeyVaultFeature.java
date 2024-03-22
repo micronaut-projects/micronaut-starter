@@ -18,7 +18,10 @@ package io.micronaut.starter.feature.azure;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.discovery.DiscoveryClient;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -29,16 +32,23 @@ import jakarta.inject.Singleton;
  */
 @Singleton
 public class AzureKeyVaultFeature implements DistributedConfigFeature {
-
+    private static final String ARTIFACT_ID_MICRONAUT_AZURE_SECRET_MANAGER = "micronaut-azure-secret-manager";
     private static final Dependency KEY_VAULT_DEPENDENCY = MicronautDependencyUtils.azureDependency()
-            .artifactId("micronaut-azure-secret-manager")
+            .artifactId(ARTIFACT_ID_MICRONAUT_AZURE_SECRET_MANAGER)
             .compile()
             .build();
+    private final DiscoveryClient discoveryClient;
 
-    private static final Dependency DISCOVERY_CLIENT_DEPENDENCY = MicronautDependencyUtils.discovery()
-            .artifactId("micronaut-discovery-client")
-            .compile()
-            .build();
+    public AzureKeyVaultFeature(DiscoveryClient discoveryClient) {
+        this.discoveryClient = discoveryClient;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(DiscoveryClient.class)) {
+            featureContext.addFeature(discoveryClient);
+        }
+    }
 
     @Override
     public String getTitle() {
@@ -71,8 +81,7 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
         populateBootstrapForDistributedConfiguration(generatorContext);
     }
 
-    private void addDependencies(GeneratorContext generatorContext) {
+    protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(KEY_VAULT_DEPENDENCY);
-        generatorContext.addDependency(DISCOVERY_CLIENT_DEPENDENCY);
     }
 }
