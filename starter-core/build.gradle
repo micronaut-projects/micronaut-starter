@@ -25,7 +25,7 @@ dependencies {
     api("com.fasterxml.jackson.core:jackson-annotations")
     api("io.micronaut:micronaut-http-client")
     api("io.github.java-diff-utils:java-diff-utils:4.12")
-    api("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
+    api("org.eclipse.jgit:org.eclipse.jgit:6.9.0.202403050737-r")
     api("org.yaml:snakeyaml")
     api("io.micronaut.serde:micronaut-serde-jackson")
 
