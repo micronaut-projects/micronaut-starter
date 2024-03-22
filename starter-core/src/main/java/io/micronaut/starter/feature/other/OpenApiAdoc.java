@@ -49,12 +49,12 @@ public class OpenApiAdoc implements Feature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "OpenAPI Conversion to Asciidoc";
+        return "OpenAPI Conversion to AsciiDoc";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables document conversion to asciidoc";
+        return "Adds and enables document conversion to AsciiDoc";
     }
 
     @Override

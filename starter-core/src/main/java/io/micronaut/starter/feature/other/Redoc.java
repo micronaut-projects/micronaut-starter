@@ -43,7 +43,7 @@ public class Redoc extends OpenApiView implements ContributingStaticResources {
 
     @Override
     public String getDescription() {
-        return "Adds and enables Redoc view for OpenApi";
+        return "Adds and enables Redoc view for OpenAPI";
     }
 
     @Override
