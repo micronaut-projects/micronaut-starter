@@ -24,7 +24,7 @@ public enum DbType {
     MYSQL("mysql", KnownModules.JDBC_MYSQL, KnownModules.R2DBC_MYSQL, KnownModules.HIBERNATE_REACTIVE_MYSQL),
     POSTGRESQL("postgres", KnownModules.JDBC_POSTGRESQL, KnownModules.R2DBC_POSTGRESQL, KnownModules.HIBERNATE_REACTIVE_POSTGRESQL),
     SQLSERVER("mssql", KnownModules.JDBC_MSSQL, KnownModules.R2DBC_MSSQL, KnownModules.HIBERNATE_REACTIVE_MSSQL),
-    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE, KnownModules.HIBERNATE_REACTIVE_ORACLE_XE);
+    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_FREE, KnownModules.R2DBC_ORACLE_FREE, KnownModules.HIBERNATE_REACTIVE_ORACLE_FREE);
 
     private final String name;
     private final String jdbcTestResourcesModuleName;
