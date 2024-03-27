@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,15 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.testresources.EaseTestingFeature;
-import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
 
-public abstract class MongoFeature extends EaseTestingFeature implements MongoContributingTestContainerDependency {
+import java.util.Collections;
+import java.util.List;
 
-    protected MongoFeature(TestContainers testContainers,
-                           TestResources testResources) {
-        super(testContainers, testResources);
+public interface MongoContributingTestContainerDependency extends ContributingTestContainerDependency {
+    @Override
+    default List<Dependency> testContainersDependencies() {
+        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("mongodb"));
     }
 }

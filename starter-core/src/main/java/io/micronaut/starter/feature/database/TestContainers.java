@@ -19,14 +19,13 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
-import io.micronaut.starter.feature.messaging.kafka.Kafka;
-import io.micronaut.starter.feature.test.MockServerClient;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 import jakarta.inject.Singleton;
@@ -35,10 +34,8 @@ import java.util.Optional;
 
 @Singleton
 public class TestContainers implements Feature {
-
     public static final String NAME = "testcontainers";
-
-    public static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
+    private static final String ARTIFACT_ID_TESTCONTAINERS = "testcontainers";
 
     @NonNull
     @Override
@@ -58,7 +55,12 @@ public class TestContainers implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(testContainerTestDependency("testcontainers"));
+        generatorContext.getFeatures().getFeatures()
+                .stream()
+                .filter(ContributingTestContainerDependency.class::isInstance)
+                .forEach(f -> ((ContributingTestContainerDependency) f).testContainersDependencies().forEach(generatorContext::addDependency));
+        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(ARTIFACT_ID_TESTCONTAINERS));
+
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(driverFeature -> {
             generatorContext.getFeature(R2dbc.class).ifPresent(driverConfiguration -> {
                 if (driverFeature instanceof SQLServer) {
@@ -68,11 +70,11 @@ public class TestContainers implements Feature {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                 });
-                generatorContext.addDependency(testContainerTestDependency("r2dbc"));
+                generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency("r2dbc"));
                 // TestContainers requires the database module, a jdbc driver AND the r2dbc module: see https://www.testcontainers.org/modules/databases/r2dbc/
                 driverFeature.getJavaClientDependency().ifPresent(d -> generatorContext.addDependency(d.testRuntime()));
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
-                        generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
+                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
                 String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
@@ -85,7 +87,7 @@ public class TestContainers implements Feature {
                     testConfig.put(driverConfiguration.getDriverKey(), driver);
                 });
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
-                        generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
+                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
             });
             generatorContext.getFeature(HibernateReactiveFeature.class).ifPresent(hibernateReactiveFeature -> {
                 urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
@@ -93,35 +95,12 @@ public class TestContainers implements Feature {
                     testConfig.put(hibernateReactiveFeature.getUrlKey(), url);
                 });
                 artifactIdForDriverFeature(driverFeature)
-                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
+                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
             });
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
-            generatorContext.addDependency(testContainerTestDependency(testArtifactId));
+            generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(testArtifactId));
         });
-
-        if (generatorContext.isFeaturePresent(MongoFeature.class) ||
-                generatorContext.isFeaturePresent(DataMongoFeature.class) ||
-                generatorContext.isFeaturePresent(DataMongoReactive.class)) {
-            generatorContext.addDependency(testContainerTestDependency("mongodb"));
-        }
-        if (generatorContext.isFeaturePresent(Kafka.class)) {
-            generatorContext.addDependency(testContainerTestDependency("kafka"));
-        }
-        if (generatorContext.isFeaturePresent(Cassandra.class)) {
-            generatorContext.addDependency(testContainerTestDependency("cassandra"));
-        }
-        if (generatorContext.isFeaturePresent(MockServerClient.class)) {
-            generatorContext.addDependency(testContainerTestDependency("mockserver"));
-        }
-    }
-
-    @NonNull
-    private static Dependency.Builder testContainerTestDependency(@NonNull String artifactId) {
-        return Dependency.builder()
-                .groupId(TESTCONTAINERS_GROUP_ID)
-                .artifactId(artifactId)
-                .test();
     }
 
     @NonNull
@@ -191,6 +170,11 @@ public class TestContainers implements Feature {
     @Override
     public String getCategory() {
         return Category.DATABASE;
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.TEST.getOrder();
     }
 
     @Nullable
