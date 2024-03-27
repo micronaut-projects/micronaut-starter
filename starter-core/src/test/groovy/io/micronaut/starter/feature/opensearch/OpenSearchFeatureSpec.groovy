@@ -31,9 +31,9 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
     }
 
-    void "test opensearch feature #opensearchFeature.name is client category"(OpenSearchFeature opensearchFeature) {
+    void "test opensearch feature #opensearchFeature.name is search engine category"(OpenSearchFeature opensearchFeature) {
         expect:
-        Category.CLIENT == opensearchFeature.getCategory()
+        Category.SEARCH == opensearchFeature.getCategory()
         where:
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
     }

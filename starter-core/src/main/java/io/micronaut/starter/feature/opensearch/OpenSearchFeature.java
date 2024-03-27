@@ -40,7 +40,7 @@ public interface OpenSearchFeature extends Feature {
 
     @Override
     default String getCategory() {
-        return Category.CLIENT;
+        return Category.SEARCH;
     }
 
     @Override
