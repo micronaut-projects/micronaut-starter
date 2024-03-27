@@ -184,10 +184,10 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
                                        |    val tenancy = "tenancy"
                                        |    val repo = "my-app"'''.stripMargin())
             assert template.contains('''    dockerBuild {
-                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
                                        |    }'''.stripMargin())
             assert template.contains('''    dockerBuildNative {
-                                       |        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+                                       |        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
                                        |    }'''.stripMargin())
         }
 

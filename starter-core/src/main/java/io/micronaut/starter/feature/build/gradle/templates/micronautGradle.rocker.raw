@@ -37,12 +37,7 @@ micronaut {
 }
 @if(lambdaRuntimeMainClass != null) {
     nativeLambda {
-@if (dsl == GradleDsl.KOTLIN) {
-        lambdaRuntimeClassName.set("@(lambdaRuntimeMainClass)")
-}
-@if (dsl == GradleDsl.GROOVY) {
         lambdaRuntimeClassName = "@(lambdaRuntimeMainClass)"
-}
     }
 }
 @if(incremental) {
@@ -59,17 +54,12 @@ micronaut {
             }
         }
         @if(sharedTestResources) {
-            @if (dsl == GradleDsl.KOTLIN) {
-        sharedServer.set(true)
-            }
-            @if (dsl == GradleDsl.GROOVY) {
         sharedServer = true
-            }
         }
     }
 }
 @if(aotVersion != null) {
-@io.micronaut.starter.feature.build.gradle.templates.aotExtension.template(dsl, aotKeys)
+@io.micronaut.starter.feature.build.gradle.templates.aotExtension.template(aotKeys)
 }
 }
 

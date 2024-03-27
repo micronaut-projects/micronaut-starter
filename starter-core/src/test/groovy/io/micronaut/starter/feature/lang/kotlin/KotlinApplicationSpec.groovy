@@ -36,7 +36,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
         !buildGradle.contains('kapt')
         buildGradle.contains('id("com.google.devtools.ksp")')
-        buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
+        buildGradle.contains('mainClass = "example.micronaut.ApplicationKt"')
         buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
         buildGradle.contains("ksp(\"io.micronaut.security:micronaut-security-annotations\")")
     }
@@ -63,7 +63,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
             assert buildGradle
             assert buildGradle.contains('id("org.jetbrains.kotlin.jvm")')
             assert buildGradle.contains('id("com.google.devtools.ksp")')
-            assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
+            assert buildGradle.contains('mainClass = "example.micronaut.ApplicationKt"')
         }
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

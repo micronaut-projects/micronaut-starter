@@ -89,7 +89,7 @@ public class JTE implements ViewFeature, MicronautServerDependent {
 
         GradlePlugin.Builder builder = GradlePlugin.builder()
                 .id("gg.jte.gradle")
-                .extension(new RockerWritable(gradlePluginJTE.template(patchKapt, gradleDsl.orElse(GradleDsl.KOTLIN), JTE_SRC_DIR)))
+                .extension(new RockerWritable(gradlePluginJTE.template(patchKapt, JTE_SRC_DIR)))
                 .lookupArtifactId("jte-gradle-plugin");
         return builder.build();
     }

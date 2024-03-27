@@ -36,11 +36,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
         settings.contains('buildScan {')
         settings.contains('termsOfServiceUrl = "https://gradle.com/terms-of-service"')
         settings.contains('termsOfServiceAgree = "yes"')
-        if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert settings.contains($/id("com.gradle.enterprise") version("$expectedVersion")/$)
-        } else if (buildTool == BuildTool.GRADLE) {
-            assert settings.contains($/id "com.gradle.enterprise" version "$expectedVersion"/$)
-        }
+        settings.contains($/id("com.gradle.enterprise") version("$expectedVersion")/$)
 
         where:
         buildTool << BuildTool.valuesGradle()

@@ -93,12 +93,12 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'ignoredAutomaticDependencies not output by default'() {
@@ -116,12 +116,12 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'Supported languages have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(

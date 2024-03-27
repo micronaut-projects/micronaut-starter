@@ -7,18 +7,10 @@
 @raw("\ntasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>(\"dockerfileNative\") {\n")
 }
 @if(dockerfileNative.getBaseImage() != null) {
-@if (dsl == GradleDsl.GROOVY) {
     baseImage = "@(dockerfileNative.getBaseImage())"
-} else {
-    baseImage.set("@(dockerfileNative.getBaseImage())")
-}
 }
 @if(dockerfileNative.getJavaVersion() != null) {
-@if (dsl == GradleDsl.GROOVY) {
     jdkVersion = "@dockerfileNative.getJavaVersion()"
-} else {
-    jdkVersion.set("@dockerfileNative.getJavaVersion()")
-}
 }
 @if (dockerfileNative.getArgs() != null) {
     args(

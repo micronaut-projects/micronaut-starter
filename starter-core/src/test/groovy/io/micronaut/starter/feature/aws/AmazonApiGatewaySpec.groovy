@@ -78,18 +78,12 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void 'lambda runtime main class configuration is present for amazon-api-gateway and build #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [AmazonApiGateway.NAME])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options.withBuildTool(buildTool), [AmazonApiGateway.NAME])
+        def build = output[buildTool.buildFileName]
 
         then:
-        if (buildTool == BuildTool.GRADLE) {
-            assert output['build.gradle']
-            assert output['build.gradle'].contains('nativeLambda {')
-            assert output['build.gradle'].contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
-        } else if (buildTool == BuildTool.GRADLE) {
-            assert output['build.gradle.kts']
-            assert output['build.gradle.kts'].contains('nativeLambda {')
-            assert output['build.gradle.kts'].contains('lambdaRuntimeClassName.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
-        }
+        build.contains('nativeLambda {')
+        build.contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
         buildTool << BuildTool.valuesGradle()

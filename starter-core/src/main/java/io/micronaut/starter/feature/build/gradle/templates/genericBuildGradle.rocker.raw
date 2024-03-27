@@ -27,7 +27,7 @@ dependencies {
 }
 @if (mainClassName != null) {
 application {
-    mainClass.set("@(project.getPackageName()).@mainClassName")
+    mainClass = "@(project.getPackageName()).@mainClassName"
 }
 }
 
