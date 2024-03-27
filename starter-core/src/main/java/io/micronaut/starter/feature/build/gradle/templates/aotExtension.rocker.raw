@@ -12,6 +12,7 @@
         optimizeClassLoading.set(true)
         deduceEnvironment.set(true)
         optimizeNetty.set(true)
+        replaceLogbackXml.set(true)
 }
 @if (dsl == GradleDsl.GROOVY) {
         optimizeServiceLoading = false
@@ -21,6 +22,7 @@
         optimizeClassLoading = true
         deduceEnvironment = true
         optimizeNetty = true
+        replaceLogbackXml = true
 }
 @if(aotKeys != null) {
 @for (String keyName : aotKeys.keySet()) {

@@ -96,6 +96,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
         output.contains('optimizeNetty = true')
+        output.contains('replaceLogbackXml = true')
 
         where:
         language << Language.values().toList()
@@ -126,6 +127,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('optimizeClassLoading.set(true)')
         output.contains('deduceEnvironment.set(true)')
         output.contains('optimizeNetty.set(true)')
+        output.contains('replaceLogbackXml.set(true)')
 
         where:
         language << Language.values().toList()
