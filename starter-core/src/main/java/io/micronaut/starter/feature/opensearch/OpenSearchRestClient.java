@@ -16,8 +16,6 @@
 package io.micronaut.starter.feature.opensearch;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import jakarta.inject.Singleton;
@@ -28,11 +26,6 @@ public class OpenSearchRestClient implements OpenSearchFeature {
     public static final String NAME = "opensearch-restclient";
 
     private final JacksonDatabindFeature jacksonDatabindFeature;
-    private final Dependency jacksonDatabindDependency = MicronautDependencyUtils
-            .coreDependency()
-            .artifactId("micronaut-jackson-databind")
-            .compile()
-            .build();
 
     public OpenSearchRestClient(JacksonDatabindFeature jacksonDatabindFeature) {
         this.jacksonDatabindFeature = jacksonDatabindFeature;
