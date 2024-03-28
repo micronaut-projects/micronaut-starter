@@ -15,25 +15,20 @@
  */
 package io.micronaut.starter.feature.opensearch;
 
-import jakarta.inject.Singleton;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
 
-@Singleton
-public class OpenSearchHttpClient5 extends OpenSearchFeature {
+import java.util.Collections;
+import java.util.List;
 
-    public static final String NAME = "opensearch-httpclient5";
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
+public interface OpenSearchContributingTestContainerDependency extends ContributingTestContainerDependency {
 
     @Override
-    public String getTitle() {
-        return "OpenSearch HttpClient 5";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for OpenSearch using Apache HttpClient 5 Transport";
+    default List<Dependency> testContainersDependencies() {
+        return Collections.singletonList(Dependency.builder()
+                .groupId("org.opensearch")
+                .artifactId("opensearch-testcontainers")
+                .test()
+                .build());
     }
 }

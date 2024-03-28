@@ -21,30 +21,30 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
-public interface OpenSearchFeature extends Feature {
+public abstract class OpenSearchFeature implements Feature, OpenSearchContributingTestContainerDependency {
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
+    public boolean supports(ApplicationType applicationType) {
         return true;
     }
 
     @Override
-    default String getMicronautDocumentation() {
+    public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/";
     }
 
     @Override
-    default String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation() {
         return "https://opensearch.org/docs/latest/clients/java/";
     }
 
     @Override
-    default String getCategory() {
+    public String getCategory() {
         return Category.SEARCH;
     }
 
     @Override
-    default void apply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MicronautDependencyUtils
                 .opensearchDependency()
                 .artifactId("micronaut-" + getName())

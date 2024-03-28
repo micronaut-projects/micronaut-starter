@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenSearchRestClient implements OpenSearchFeature {
+public class OpenSearchRestClient extends OpenSearchFeature {
 
     public static final String NAME = "opensearch-restclient";
 
@@ -43,7 +43,7 @@ public class OpenSearchRestClient implements OpenSearchFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        OpenSearchFeature.super.apply(generatorContext);
+        super.apply(generatorContext);
     }
 
     @Override

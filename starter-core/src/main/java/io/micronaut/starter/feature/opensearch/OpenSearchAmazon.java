@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.opensearch;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenSearchAmazon implements OpenSearchFeature {
+public class OpenSearchAmazon extends OpenSearchFeature {
 
     public static final String NAME = "opensearch-amazon";
 
