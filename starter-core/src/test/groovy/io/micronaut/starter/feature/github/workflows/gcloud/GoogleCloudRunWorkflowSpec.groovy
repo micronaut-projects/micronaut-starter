@@ -74,12 +74,12 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         } else {
             assert gradle.contains('''
     dockerBuild {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
     }''')
 
             assert gradle.contains('''
     dockerBuildNative {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
     }''')
         }
 
