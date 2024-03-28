@@ -77,13 +77,13 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../testcontainers/ContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.testcontainers">ContributingTestContainerDependency</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">Cassandra</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></span></div>
+implements <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../testcontainers/ContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.testcontainers">ContributingTestContainerDependency</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,6 +100,9 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <div class="col-second even-row-color"><code><a href="#NAME" class="member-name-link">NAME</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency">Fields inherited from interface&nbsp;io.micronaut.starter.feature.testcontainers.<a href="../testcontainers/ContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.testcontainers">ContributingTestContainerDependency</a></h3>
+<code><a href="../testcontainers/ContributingTestContainerDependency.html#TESTCONTAINERS_GROUP_ID">TESTCONTAINERS_GROUP_ID</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
 <code>HIGHEST_PRECEDENCE, LOWEST_PRECEDENCE</code></div>
@@ -162,6 +165,9 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
  application types.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testContainersDependencies()" class="member-name-link">testContainersDependencies</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -334,6 +340,16 @@ implements <a href="../Feature.html" title="interface in io.micronaut.starter.fe
 <dd><code><a href="../Feature.html#getThirdPartyDocumentation()">getThirdPartyDocumentation</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt>Returns:</dt>
 <dd>Returns a link to third party. E.g. https://hazelcast.org</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="testContainersDependencies()">
+<h3>testContainersDependencies</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;</span>&nbsp;<span class="element-name">testContainersDependencies</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../testcontainers/ContributingTestContainerDependency.html#testContainersDependencies()">testContainersDependencies</a></code>&nbsp;in interface&nbsp;<code><a href="../testcontainers/ContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.testcontainers">ContributingTestContainerDependency</a></code></dd>
 </dl>
 </section>
 </li>
