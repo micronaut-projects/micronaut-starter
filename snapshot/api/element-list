@@ -179,6 +179,7 @@ io.micronaut.starter.feature.migration.template
 io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
 io.micronaut.starter.feature.objectstorage
+io.micronaut.starter.feature.opensearch
 io.micronaut.starter.feature.opentelemetry
 io.micronaut.starter.feature.oraclecloud
 io.micronaut.starter.feature.other
