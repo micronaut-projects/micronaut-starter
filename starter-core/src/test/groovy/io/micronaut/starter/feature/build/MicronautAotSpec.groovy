@@ -95,6 +95,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
         output.contains('optimizeNetty = true')
+        output.contains('replaceLogbackXml = true')
 
         where:
         [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()

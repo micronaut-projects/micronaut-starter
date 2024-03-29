@@ -143,6 +143,7 @@ public class MicronautAot implements DefaultFeature {
         final List<MicronautAotOptimization> optimizations = new ArrayList<>();
         optimizations.add(new MicronautAotOptimization("cached.environment.enabled", true, "Caches environment property values: environment properties will be deemed immutable after application startup."));
         optimizations.add(new MicronautAotOptimization("precompute.environment.properties.enabled", true, "Precomputes Micronaut configuration property keys from the current environment variables"));
+        optimizations.add(new MicronautAotOptimization("logback.xml.to.java.enabled", true, "Replaces logback.xml with a pure Java configuration"));
         if (graalvm) {
             optimizations.add(new MicronautAotOptimization("yaml.to.java.config.enabled", false, "Converts YAML configuration files to Java configuration"));
             optimizations.add(new MicronautAotOptimization("graalvm.config.enabled", true, "Generates GraalVM configuration files required to load the AOT optimizations"));

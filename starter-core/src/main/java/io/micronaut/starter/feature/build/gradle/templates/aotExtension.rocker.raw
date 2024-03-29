@@ -11,6 +11,7 @@
         optimizeClassLoading = true
         deduceEnvironment = true
         optimizeNetty = true
+        replaceLogbackXml = true
 @if(aotKeys != null) {
 @for (String keyName : aotKeys.keySet()) {
         configurationProperties.put("@(keyName)","@(aotKeys.get(keyName))")
