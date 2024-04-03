@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.opensearch;
 
-import io.micronaut.starter.feature.testresources.EaseTestingFeature;
-import io.micronaut.starter.feature.testresources.TestResources;
+import jakarta.inject.Singleton;
 
-public abstract class MongoFeature extends EaseTestingFeature implements MongoContributingTestContainerDependency {
+@Singleton
+public class OpenSearchAmazon extends OpenSearchFeature {
 
-    protected MongoFeature(TestContainers testContainers,
-                           TestResources testResources) {
-        super(testContainers, testResources);
+    public static final String NAME = "opensearch-amazon";
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Open Search Amazon";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for Amazon OpenSearch Service";
     }
 }
