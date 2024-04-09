@@ -18,6 +18,9 @@ import groovy.transform.CompileStatic
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.info.*
 }
+@if (features.contains("json-schema")) {
+import io.micronaut.jsonschema.JsonSchemaConfiguration
+}
 
 
 @if (features.contains("openapi")) {
@@ -26,6 +29,11 @@ import io.swagger.v3.oas.annotations.info.*
             title = "@project.getName()",
             version = "0.0"
     )
+)
+}
+@if (features.contains("json-schema")) {
+@@JsonSchemaConfiguration(
+    baseUri = "http://localhost:8080/schemas"
 )
 }
 @@CompileStatic

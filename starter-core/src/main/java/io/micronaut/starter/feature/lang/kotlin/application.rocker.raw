@@ -39,6 +39,9 @@ import io.dekorate.jaeger.annotation.EnableJaegerAgent
 @if (features.contains("dekorate-halkyon")) {
 import io.dekorate.halkyon.annotation.HalkyonComponent
 }
+@if (features.contains("json-schema")) {
+import io.micronaut.jsonschema.JsonSchemaConfiguration
+}
 
 @if (features.contains("openapi")) {
 import io.swagger.v3.oas.annotations.*
@@ -52,6 +55,11 @@ import io.swagger.v3.oas.annotations.info.*
 )
 object Api {
 }
+}
+@if (features.contains("json-schema")) {
+@@JsonSchemaConfiguration(
+    baseUri = "http://localhost:8080/schemas"
+)
 }
 
 @if (features.stream().anyMatch((s) -> s.startsWith("dekorate"))){
