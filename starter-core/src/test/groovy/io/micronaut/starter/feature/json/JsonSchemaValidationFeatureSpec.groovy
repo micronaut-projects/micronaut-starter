@@ -34,7 +34,7 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
         Category.API == jsonSchemaValidationFeature.category
     }
 
-    void "json-schema-validation application type = #applicationType"(ApplicationType applicationType) {
+    void "json-schema-validation supports application type = #applicationType"(ApplicationType applicationType) {
         expect:
         jsonSchemaValidationFeature.supports(applicationType)
 
@@ -58,7 +58,7 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
         [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
     }
 
-    void "adding json-schema-validation feature is error is jason-schema not present "() {
+    void "adding json-schema-validation feature is error if jason-schema not present "() {
         when:
         new BuildBuilder(beanContext, BuildTool.DEFAULT_OPTION)
                 .features([JsonSchemaValidationFeature.NAME])
