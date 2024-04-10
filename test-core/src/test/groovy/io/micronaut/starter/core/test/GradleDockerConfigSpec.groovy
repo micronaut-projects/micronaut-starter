@@ -24,7 +24,7 @@ class GradleDockerConfigSpec extends CommandSpec {
                 BuildTool.valuesGradle(),
                 [17, 21]
         ].combinations()
-        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre-focal" : "eclipse-temurin:21-jre-jammy"
+        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre" : "eclipse-temurin:21-jre-jammy"
     }
 
     void "test dockerfiles can be built"(BuildTool buildTool, String command) {
