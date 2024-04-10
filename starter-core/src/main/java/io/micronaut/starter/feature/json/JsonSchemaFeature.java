@@ -21,6 +21,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -38,6 +40,12 @@ public class JsonSchemaFeature implements Feature {
             .compile()
             .build();
 
+    private final JsonSchemaValidationFeature jsonSchemaValidationFeature;
+
+    public JsonSchemaFeature(JsonSchemaValidationFeature jsonSchemaValidationFeature) {
+        this.jsonSchemaValidationFeature = jsonSchemaValidationFeature;
+    }
+
     @Override
     public String getName() {
         return NAME;
@@ -53,7 +61,6 @@ public class JsonSchemaFeature implements Feature {
         return "Adds JSON Schema to a Micronaut Application";
     }
 
-
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -68,6 +75,15 @@ public class JsonSchemaFeature implements Feature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(JSON_SCHEMA_PROCESSOR_DEPENDENCY);
         generatorContext.addDependency(JSON_SCHEMA_ANNOTAIONS_DEPENDENCY);
+
+        ApplicationConfiguration configuration = generatorContext.getConfiguration();
+        configuration.put("micronaut.router.static-resources.jsonschema.paths", "classpath:META-INF/schemas");
+        configuration.put("micronaut.router.static-resources.jsonschema.mapping", "/schemas/**");
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(JsonSchemaValidationFeature.class, jsonSchemaValidationFeature);
     }
 
     @Override

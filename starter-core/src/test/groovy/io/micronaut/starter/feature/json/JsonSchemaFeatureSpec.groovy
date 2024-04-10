@@ -3,13 +3,13 @@ package io.micronaut.starter.feature.json
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -30,28 +30,27 @@ class JsonSchemaFeatureSpec extends ApplicationContextSpec implements CommandOut
         readme.contains("https://json-schema.org/learn/getting-started-step-by-step")
     }
 
-    void "json-schema belongs to Validation category"() {
+    void 'test json-schema configuration'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext([JsonSchemaFeature.NAME])
+
+        then:
+        commandContext.configuration.get('micronaut.router.static-resources.jsonschema.paths'.toString()) == 'classpath:META-INF/schemas'
+        commandContext.configuration.get('micronaut.router.static-resources.jsonschema.mapping'.toString()) == '/schemas/**'
+    }
+
+
+    void "json-schema belongs to API category"() {
         expect:
         Category.API == jsonSchemaFeature.category
     }
 
-    void 'test application class has default annotation for language=#language'(Language language) {
-        when:
-        Options options = new Options(language)
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [JsonSchemaFeature.NAME])
-        String appSource = output[language.getSourcePath("/example/micronaut/Application")]
-
-        then:
-        appSource
-        appSource.contains("import io.micronaut.jsonschema.JsonSchemaConfiguration")
-        appSource.contains("""
-@JsonSchemaConfiguration(
-    baseUri = "http://localhost:8080/schemas"
-)
-""")
+    void "json-schema supports application type = #applicationType"(ApplicationType applicationType) {
+        expect:
+        jsonSchemaFeature.supports(applicationType)
 
         where:
-        language << Language.values()
+        applicationType << ApplicationType.values()
     }
 
     void "json-schema feature adds dependencies for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
