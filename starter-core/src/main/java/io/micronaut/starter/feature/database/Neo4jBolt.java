@@ -26,18 +26,16 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Neo4jBolt implements Feature {
-
-    public static final String NAME = "neo4j-bolt";
-
-    private static final Dependency DEPENDENCY_NEO4J = MicronautDependencyUtils.neo4j()
-            .artifactId("micronaut-neo4j-bolt")
-            .compile()
+    private static final Dependency DEPENDENCY_NEO4J_HARNESS = Dependency.builder()
+            .groupId("org.neo4j.test")
+            .artifactId("neo4j-harness")
+            .testRuntime()
             .build();
 
     @Override
     @NonNull
     public String getName() {
-        return NAME;
+        return "neo4j-bolt";
     }
 
     @Override
@@ -54,7 +52,10 @@ public class Neo4jBolt implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
-        generatorContext.addDependency(DEPENDENCY_NEO4J);
+        generatorContext.addDependency(MicronautDependencyUtils.neo4j()
+                .artifactId("micronaut-neo4j-bolt")
+                .compile());
+        generatorContext.addDependency(DEPENDENCY_NEO4J_HARNESS);
     }
 
     @Override
@@ -70,10 +71,5 @@ public class Neo4jBolt implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/index.html";
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://neo4j.com/docs/java-manual/current/";
     }
 }

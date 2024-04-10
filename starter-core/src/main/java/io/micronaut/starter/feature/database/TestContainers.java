@@ -114,9 +114,6 @@ public class TestContainers implements Feature {
         if (generatorContext.isFeaturePresent(MockServerClient.class)) {
             generatorContext.addDependency(testContainerTestDependency("mockserver"));
         }
-        if (generatorContext.isFeaturePresent(Neo4jBolt.class)) {
-            generatorContext.addDependency(testContainerTestDependency("neo4j"));
-        }
     }
 
     @NonNull

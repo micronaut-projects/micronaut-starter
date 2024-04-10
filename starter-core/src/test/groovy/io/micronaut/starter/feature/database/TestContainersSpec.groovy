@@ -91,17 +91,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
-    void "test neo4j dependency is present for gradle"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([TestContainers.NAME, Neo4jBolt.NAME])
-                .render()
-
-        then:
-        template.contains('testImplementation("org.testcontainers:neo4j")')
-        template.contains('testImplementation("org.testcontainers:testcontainers")')
-    }
-
     void "test testcontainers core is present when no testcontainer modules are present for gradle"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
