@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.json
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
@@ -58,30 +59,11 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
         [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
     }
 
-    void "adding json-schema-validation feature is error if jason-schema not present "() {
+    void 'test json-schema-validation feature adds jason-schema feature'() {
         when:
-        new BuildBuilder(beanContext, BuildTool.DEFAULT_OPTION)
-                .features([JsonSchemaValidationFeature.NAME])
-                .render()
+        GeneratorContext generatorContext = buildGeneratorContext([JsonSchemaValidationFeature.NAME])
 
         then:
-        def e = thrown(IllegalArgumentException)
-        e.message == 'json-schema-validation requires json-schema'
-
-        when:
-        new BuildBuilder(beanContext, BuildTool.DEFAULT_OPTION)
-                .features([JsonSchemaFeature.NAME, JsonSchemaValidationFeature.NAME])
-                .render()
-
-        then:
-        noExceptionThrown()
-
-        when:
-        new BuildBuilder(beanContext, BuildTool.DEFAULT_OPTION)
-                .features([JsonSchemaFeature.NAME])
-                .render()
-
-        then:
-        noExceptionThrown()
+        generatorContext.hasFeature(JsonSchemaFeature)
     }
 }

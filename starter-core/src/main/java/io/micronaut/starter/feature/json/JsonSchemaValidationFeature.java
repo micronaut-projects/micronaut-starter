@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -32,6 +33,12 @@ public class JsonSchemaValidationFeature implements Feature {
             .artifactId("micronaut-json-schema-validation")
             .test()
             .build();
+
+    private final JsonSchemaFeature jsonSchemaFeature;
+
+    public JsonSchemaValidationFeature(JsonSchemaFeature jsonSchemaFeature) {
+        this.jsonSchemaFeature = jsonSchemaFeature;
+    }
 
     @Override
     public String getName() {
@@ -61,6 +68,11 @@ public class JsonSchemaValidationFeature implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(JSON_SCHEMA_VALIDATION_TEST_DEPENDENCY);
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(JsonSchemaFeature.class, jsonSchemaFeature);
     }
 
     @Override
