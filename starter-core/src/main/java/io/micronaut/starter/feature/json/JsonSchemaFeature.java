@@ -20,13 +20,15 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
+import io.micronaut.starter.feature.staticResources.StaticResource;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+
 @Singleton
-public class JsonSchemaFeature implements Feature {
+public class JsonSchemaFeature implements ContributingStaticResources {
 
     public static final String NAME = "json-schema";
 
@@ -39,12 +41,6 @@ public class JsonSchemaFeature implements Feature {
             .artifactId("micronaut-json-schema-annotations")
             .compile()
             .build();
-
-    private final JsonSchemaValidationFeature jsonSchemaValidationFeature;
-
-    public JsonSchemaFeature(JsonSchemaValidationFeature jsonSchemaValidationFeature) {
-        this.jsonSchemaValidationFeature = jsonSchemaValidationFeature;
-    }
 
     @Override
     public String getName() {
@@ -75,15 +71,6 @@ public class JsonSchemaFeature implements Feature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(JSON_SCHEMA_PROCESSOR_DEPENDENCY);
         generatorContext.addDependency(JSON_SCHEMA_ANNOTAIONS_DEPENDENCY);
-
-        ApplicationConfiguration configuration = generatorContext.getConfiguration();
-        configuration.put("micronaut.router.static-resources.jsonschema.paths", "classpath:META-INF/schemas");
-        configuration.put("micronaut.router.static-resources.jsonschema.mapping", "/schemas/**");
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeatureIfNotPresent(JsonSchemaValidationFeature.class, jsonSchemaValidationFeature);
     }
 
     @Override
@@ -94,5 +81,10 @@ public class JsonSchemaFeature implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-json-schema/latest/guide/";
+    }
+
+    @Override
+    public List<StaticResource> staticResources() {
+        return Collections.singletonList(new StaticResource("jsonschema", "/schemas/**", "classpath:META-INF/schemas"));
     }
 }
