@@ -51,7 +51,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -92,6 +92,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#EXPORTER_OTLP" class="member-name-link">EXPORTER_OTLP</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-io.micronaut.core.order.Ordered">Fields inherited from interface&nbsp;io.micronaut.core.order.Ordered</h3>
 <code>HIGHEST_PRECEDENCE, LOWEST_PRECEDENCE</code></div>
@@ -135,7 +144,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.opentelemetry.OpenTelemetryExporterFeature">Methods inherited from class&nbsp;io.micronaut.starter.feature.opentelemetry.<a href="OpenTelemetryExporterFeature.html" title="class in io.micronaut.starter.feature.opentelemetry">OpenTelemetryExporterFeature</a></h3>
-<code><a href="OpenTelemetryExporterFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="OpenTelemetryExporterFeature.html#exporterArtifactId()">exporterArtifactId</a>, <a href="OpenTelemetryExporterFeature.html#exporterDependency()">exporterDependency</a>, <a href="OpenTelemetryExporterFeature.html#exporterValue()">exporterValue</a>, <a href="OpenTelemetryExporterFeature.html#getDescription()">getDescription</a>, <a href="OpenTelemetryExporterFeature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="OpenTelemetryExporterFeature.html#getName()">getName</a>, <a href="OpenTelemetryExporterFeature.html#getTitle()">getTitle</a></code></div>
+<code><a href="OpenTelemetryExporterFeature.html#addConfiguration(io.micronaut.starter.application.generator.GeneratorContext)">addConfiguration</a>, <a href="OpenTelemetryExporterFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a>, <a href="OpenTelemetryExporterFeature.html#exporterArtifactId()">exporterArtifactId</a>, <a href="OpenTelemetryExporterFeature.html#exporterDependency()">exporterDependency</a>, <a href="OpenTelemetryExporterFeature.html#exporterValue()">exporterValue</a>, <a href="OpenTelemetryExporterFeature.html#getDescription()">getDescription</a>, <a href="OpenTelemetryExporterFeature.html#getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="OpenTelemetryExporterFeature.html#getName()">getName</a>, <a href="OpenTelemetryExporterFeature.html#getTitle()">getTitle</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -154,6 +163,28 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="EXPORTER_OTLP">
+<h3>EXPORTER_OTLP</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">EXPORTER_OTLP</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#io.micronaut.starter.feature.opentelemetry.OpenTelemetryExporterOtlp.EXPORTER_OTLP">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
