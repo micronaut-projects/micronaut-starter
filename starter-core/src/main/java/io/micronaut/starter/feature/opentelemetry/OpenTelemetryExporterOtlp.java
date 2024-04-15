@@ -20,7 +20,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class OpenTelemetryExporterOtlp extends OpenTelemetryExporterFeature {
-    private static final String EXPORTER_OTLP = "OTLP";
+    public static final String EXPORTER_OTLP = "OTLP";
 
     @NonNull
     public String exporterName() {
