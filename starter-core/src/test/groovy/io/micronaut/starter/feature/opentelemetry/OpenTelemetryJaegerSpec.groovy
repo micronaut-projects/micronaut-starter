@@ -97,6 +97,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
+        !verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-jaeger")
         verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp")
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry")
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
@@ -116,6 +117,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
+        !verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-jaeger")
         verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp")
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry")
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
