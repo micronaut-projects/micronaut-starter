@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -341,7 +341,7 @@ jobs:
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
           sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -394,7 +394,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -422,7 +422,7 @@ jobs:
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         continue-on-error: true
         with:
           commit_message: Back Core and Platform version to snapshot
