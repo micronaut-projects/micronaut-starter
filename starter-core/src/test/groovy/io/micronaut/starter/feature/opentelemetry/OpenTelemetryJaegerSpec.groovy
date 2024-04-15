@@ -3,6 +3,8 @@ package io.micronaut.starter.feature.opentelemetry
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -33,7 +35,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
         then:
         assertAnnotationProcessorInGradleTemplate(template, "io.micronaut.tracing:micronaut-tracing-opentelemetry-annotation", language)
-        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-jaeger")')
+        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-otlp")')
         template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
@@ -52,7 +54,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
         then:
         assertAnnotationProcessorInGradleTemplate(template, "io.micronaut.tracing:micronaut-tracing-opentelemetry-annotation", language)
-        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-jaeger")')
+        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-otlp")')
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
         template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
@@ -73,7 +75,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
         then:
         assertAnnotationProcessorInGradleTemplate(template, "io.micronaut.tracing:micronaut-tracing-opentelemetry-annotation", language)
-        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-jaeger")')
+        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-otlp")')
         template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
@@ -87,67 +89,37 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
     void 'test maven tracing-opentelemetry-jaeger feature for language=#language'(Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['tracing-opentelemetry-jaeger'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-jaeger</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp")
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry")
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
+
         where:
         language << Language.values().toList()
     }
 
     void 'for function test maven tracing-opentelemetry-jaeger feature for language=#language'(Language language) {
         when:
+        BuildTool buildTool = BuildTool.MAVEN
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(language)
                 .features(['tracing-opentelemetry-jaeger'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-jaeger</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp")
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry")
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
+
         where:
         language << Language.values().toList()
     }

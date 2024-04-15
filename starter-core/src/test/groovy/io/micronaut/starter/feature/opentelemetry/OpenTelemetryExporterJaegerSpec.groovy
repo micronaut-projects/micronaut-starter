@@ -4,6 +4,8 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -31,7 +33,9 @@ class OpenTelemetryExporterJaegerSpec extends ApplicationContextSpec implements 
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-exporter-jaeger'])
 
         then:
-        commandContext.configuration.get('otel.traces.exporter') == 'jaeger'
+        commandContext.configuration.get('otel.traces.exporter') == 'otlp'
+        commandContext.configuration.get('otel.exporter.otlp.endpoint') == 'http://localhost:4317'
+
     }
 
     @Unroll
@@ -52,36 +56,19 @@ class OpenTelemetryExporterJaegerSpec extends ApplicationContextSpec implements 
         applicationType << (ApplicationType.values().toList() - ApplicationType.CLI)
     }
 
-    void 'test gradle tracing-opentelemetry-exporter-jaeger feature for language=#language'(Language language) {
+    void 'test gradle tracing-opentelemetry-exporter-jaeger feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['tracing-opentelemetry-exporter-jaeger'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-jaeger")')
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp")
+        !verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-jaeger")
 
         where:
-        language << Language.values().toList()
-    }
-
-    void 'test maven tracing-opentelemetry-exporter-jaeger feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['tracing-opentelemetry-exporter-jaeger'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-jaeger</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
     }
 }
