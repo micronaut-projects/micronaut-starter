@@ -1,8 +1,9 @@
 package io.micronaut.starter.feature.azure
 
-import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -19,28 +20,19 @@ class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements Command
         readme.contains("https://azure.microsoft.com/en-us/services/key-vault/#product-overview")
     }
 
-    void "test maven azure-key-vault feature adds dependency"() {
+    void "test azure-key-vault feature adds dependencies for buildTool=#buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["azure-key-vault"])
                 .render()
-        def pom = new XmlSlurper().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        with(pom.dependencies.dependency.find { it.artifactId == "micronaut-azure-secret-manager" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.azure'
-        }
-    }
+        verifier.hasDependency("io.micronaut.azure", "micronaut-azure-secret-manager")
+        verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client")
 
-    void "test gradle azure-key-vault feature adds dependency"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["azure-key-vault"])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.azure:micronaut-azure-secret-manager")')
+        where:
+        buildTool << BuildTool.values()
     }
 
     void "test azure-key-vault feature configuration"() {

@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    picocliVersion = '4.6.3'
+    picocliVersion = '4.7.5'
 }
 
 configurations {
@@ -20,31 +20,28 @@ configurations.all {
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
-    api project(":starter-core")
-    api "info.picocli:picocli:${picocliVersion}"
-    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
-    api "com.fizzed:rocker-runtime:$rockerVersion"
 
-    implementation "org.slf4j:slf4j-nop:2.0.12"
+    compileOnly("org.graalvm.nativeimage:svm")
 
-    compileOnly "org.graalvm.nativeimage:svm"
+    api(project(":starter-core"))
+    api("info.picocli:picocli:$picocliVersion")
+    api("info.picocli:picocli-shell-jline3:$picocliVersion")
+    api("com.fizzed:rocker-runtime:$rockerVersion")
 
-    implementation "org.fusesource.jansi:jansi:1.18"
-    implementation "org.yaml:snakeyaml"
-
-    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-
+    implementation("org.slf4j:slf4j-nop:2.0.13")
+    implementation("org.fusesource.jansi:jansi:1.18")
+    implementation("org.yaml:snakeyaml")
+    implementation("javax.inject:javax.inject:1")
     implementation("org.shredzone.acme4j:acme4j-client")
     implementation("org.shredzone.acme4j:acme4j-utils:2.16")
-
-    generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
+    implementation("org.jline:jline:3.19.0")
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
+    testImplementation("org.testcontainers:spock")
+    testImplementation("org.reflections:reflections:0.10.2")
+    testImplementation("org.apache.groovy:groovy-xml")
 
-    testImplementation "org.testcontainers:spock"
-    testImplementation 'org.reflections:reflections:0.10.2'
-    testImplementation 'org.apache.groovy:groovy-xml'
-    implementation("org.jline:jline:3.19.0")
+    generateConfig("info.picocli:picocli-codegen:$picocliVersion")
 }
 
 graalvmNative {

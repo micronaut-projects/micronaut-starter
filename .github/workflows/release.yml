@@ -4,14 +4,14 @@ on:
     types: [published]
 jobs:
   build:
-    name: Release artifacts to Maven Central & SDKMAN, and publish documentation
+    name: Release artifacts to Maven Central & SDKMAN!, and publish documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - uses: gradle/wrapper-validation-action@v2
+      - uses: gradle/wrapper-validation-action@v3
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -107,7 +107,7 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.6
+        uses: graalvm/setup-graalvm@v1.1.9
         with:
           version: '22.3.2'
           java-version: '17'
@@ -158,7 +158,7 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.6
+        uses: graalvm/setup-graalvm@v1.1.9
         with:
           version: '22.3.2'
           java-version: '17'
@@ -202,7 +202,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.6
+        uses: graalvm/setup-graalvm@v1.1.9
         with:
           version: '22.3.2'
           java-version: '17'
@@ -261,7 +261,7 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-      - name: SDKMAN release
+      - name: SDKMAN! release
         env:
           GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
           GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
@@ -341,7 +341,7 @@ jobs:
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
           sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -394,7 +394,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -410,7 +410,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: ${{ github.event.release.target_commitish }}
-      - uses: gradle/wrapper-validation-action@v2
+      - uses: gradle/wrapper-validation-action@v3
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -422,7 +422,7 @@ jobs:
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         continue-on-error: true
         with:
           commit_message: Back Core and Platform version to snapshot

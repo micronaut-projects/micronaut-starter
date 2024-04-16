@@ -24,7 +24,7 @@ class GradleDependencyComparatorSpec extends Specification {
                 dep(Dependency.builder().groupId("io.micronaut.openapi").artifactId("micronaut-openapi").annotationProcessor(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut.sql").artifactId("micronaut-jdbc-hikari").compile(), ctx),
                 dep(Dependency.builder().groupId("org.testcontainers").artifactId("testcontainers").test(), ctx),
-                dep(Dependency.builder().groupId("mysql").artifactId("mysql-connector-java").runtime(), ctx),
+                dep(Dependency.builder().groupId("com.mysql").artifactId("mysql-connector-j").runtime(), ctx),
                 dep(Dependency.builder().groupId("org.testcontainers").artifactId("junit-jupiter").test(), ctx),
                 dep(Dependency.builder().groupId("org.testcontainers").artifactId("mysql").test(), ctx),
                 dep(Dependency.builder().groupId("ch.qos.logback").artifactId("logback-classic").runtime(), ctx)
@@ -42,7 +42,7 @@ class GradleDependencyComparatorSpec extends Specification {
         "${str(dependencies[5])}" == 'implementation("io.swagger.core.v3:swagger-annotations")'
         "${str(dependencies[6])}" == 'implementation("jakarta.annotation:jakarta.annotation-api")'
         "${str(dependencies[7])}" == 'runtimeOnly("ch.qos.logback:logback-classic")'
-        "${str(dependencies[8])}" == 'runtimeOnly("mysql:mysql-connector-java")'
+        "${str(dependencies[8])}" == 'runtimeOnly("com.mysql:mysql-connector-j")'
         "${str(dependencies[9])}" == 'testImplementation("org.testcontainers:junit-jupiter")'
         "${str(dependencies[10])}" == 'testImplementation("org.testcontainers:mysql")'
         "${str(dependencies[11])}" == 'testImplementation("org.testcontainers:testcontainers")'

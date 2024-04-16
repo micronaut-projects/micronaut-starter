@@ -48,11 +48,11 @@ repositories {
 
 @if (features.mainClass().isPresent()) {
 application {
-    mainClass.set("@features.mainClass().get()")
+    mainClass = "@features.mainClass().get()"
 }
 } else if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
 application {
-    mainClass.set("com.fnproject.fn.runtime.EntryPoint")
+    mainClass = "com.fnproject.fn.runtime.EntryPoint"
 }
 }
 
@@ -104,13 +104,13 @@ tasks {
 } else {
     dockerfileNative {
         args("-XX:MaximumHeapSizePercent=80")
-        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+        buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+        defaultCommand = "@(project.getPackageName()).Function::handleRequest"
     }
 
     dockerfile {
-        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+        buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+        defaultCommand = "@(project.getPackageName()).Function::handleRequest"
     }
 }
 
@@ -130,13 +130,13 @@ tasks {
     dockerBuild {
         @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
             } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
             }
         } else {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
             } else {
         images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
             }
@@ -146,13 +146,13 @@ tasks {
     dockerBuildNative {
         @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
             } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
             }
         } else {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"))
+        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
             } else {
         images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
             }
@@ -161,7 +161,7 @@ tasks {
 } else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
     dockerBuild {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
             } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
             }
@@ -169,7 +169,7 @@ tasks {
 
     dockerBuildNative {
             @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
             } else {
         images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
             }
@@ -188,11 +188,7 @@ tasks {
 }
 
 @if (applicationType == ApplicationType.DEFAULT || features.contains("oracle-function")) {
-    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-graalvmNative.toolchainDetection.set(false)
-    } else {
 graalvmNative.toolchainDetection = false
-    }
 }
 
 @if (features.contains("oracle-function")) {

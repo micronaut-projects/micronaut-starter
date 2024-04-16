@@ -81,10 +81,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         language << Language.values().toList()
     }
 
-    @Unroll
-    void 'application with gradle and feature micronaut-aot for language=#language'() {
+    void 'application with #buildTool and feature micronaut-aot for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String output = build(GRADLE, language)
+        String output = build(buildTool, language)
 
         then:
         output.contains(AOT_PLUGIN)
@@ -96,9 +95,10 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
         output.contains('optimizeNetty = true')
+        output.contains('replaceLogbackXml = true')
 
         where:
-        language << Language.values().toList()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
     }
 
     @Unroll
@@ -109,26 +109,6 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         output.contains(AOT_PLUGIN)
         output.contains('aot {')
-    }
-
-    @Unroll
-    void 'application with gradle and feature micronaut-aot for language=#language and Kotlin DSL'() {
-        when:
-        String output = build(GRADLE_KOTLIN, language)
-
-        then:
-        output.contains(AOT_PLUGIN)
-        output.contains('aot {')
-        output.contains('optimizeServiceLoading.set(false)')
-        output.contains('convertYamlToJava.set(false)')
-        output.contains('precomputeOperations.set(true)')
-        output.contains('cacheEnvironment.set(true)')
-        output.contains('optimizeClassLoading.set(true)')
-        output.contains('deduceEnvironment.set(true)')
-        output.contains('optimizeNetty.set(true)')
-
-        where:
-        language << Language.values().toList()
     }
 
     @Unroll

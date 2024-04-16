@@ -2,7 +2,7 @@ name: Snapshot to GCR
 on:
   push:
     branches:
-      - 4.3.x
+      - 4.4.x
 jobs:
   deploy:
     name: Deploy job

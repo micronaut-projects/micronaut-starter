@@ -11,22 +11,29 @@ configurations {
 }
 
 dependencies {
-    implementation project(":starter-api")
-    implementation "io.micronaut:micronaut-inject"
-
-    implementation "io.micronaut.gcp:micronaut-gcp-function-http"
-    compileOnly("com.google.cloud.functions:functions-framework-api")
-    developmentOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
-    developmentOnly("com.google.cloud.functions:functions-framework-api")
-    runtimeOnly("ch.qos.logback:logback-classic")
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation("com.google.cloud.functions:functions-framework-api")
-    testImplementation "io.micronaut.test:micronaut-test-spock"
-    testRuntimeOnly("io.micronaut.serde:micronaut-serde-jackson")
-    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.3.1'
 
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+
+    compileOnly("com.google.cloud.functions:functions-framework-api")
+
+    implementation(project(":starter-api"))
+    implementation("io.micronaut:micronaut-inject")
+    implementation("io.micronaut.gcp:micronaut-gcp-function-http")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    developmentOnly(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
+    developmentOnly("com.google.cloud.functions:functions-framework-api")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
+
+    testImplementation("com.google.cloud.functions:functions-framework-api")
+    testImplementation("io.micronaut.test:micronaut-test-spock")
+
+    testRuntimeOnly("io.micronaut.serde:micronaut-serde-jackson")
+
+    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.3.1'
 }
 
 tasks.named("test", Test) {

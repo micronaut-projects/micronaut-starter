@@ -4,9 +4,10 @@ The subproject `starter-azure-function` provides a function that can be deployed
 
 First uncomment the Azure plugin from `starter-azure-function/build.grade`:
 
-```cmd
+[source,cmd]
+----
 ./gradlew clean starter-azure-function:azureFunctionsRun
-```
+----
 
 And visit http://localhost:7071/api/application-types
 
@@ -22,6 +23,7 @@ https://micronaut-starter.azurewebsites.net/api/application-types
 
 First uncomment the Azure plugin from `starter-azure-function/build.grade` then run:
 
-```cmd
+[source,cmd]
+----
 ./gradlew clean starter-azure-function:azureFunctionsDeploy
-```
+----

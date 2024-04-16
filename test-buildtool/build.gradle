@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation project(":test-utils")
-    testImplementation project(":starter-core")
+    testImplementation(project(":test-utils"))
+    testImplementation(project(":starter-core"))
     testImplementation("ch.qos.logback:logback-classic")
 }
