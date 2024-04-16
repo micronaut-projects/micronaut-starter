@@ -1,13 +1,13 @@
 api:aws.cdk.function.MicronautFunction[] eases the selection of the correct environment and sets the handler automatically.
 
-[source, java]
+[source,java]
 ----
 include::starter-aws-cdk/src/test/java/io/micronaut/docs/aws/cdk/function/AppStack.java[tag="micronautFunctionDefault",indent=0]
 ----
 
 If you use `ApplicationType.FUNCTION` you have to provide your handler.
 
-[source, java]
+[source,java]
 ----
 include::starter-aws-cdk/src/test/java/io/micronaut/docs/aws/cdk/function/AppStack.java[tag="micronautFunction",indent=0]
 ----

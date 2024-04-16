@@ -24,9 +24,8 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.jms.SQS;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.feature.database.TestContainers.TESTCONTAINERS_GROUP_ID;
 
 /**
  * Adds support for <a href="https://localstack.cloud/">LocalStack</a>.
@@ -35,8 +34,9 @@ import static io.micronaut.starter.feature.database.TestContainers.TESTCONTAINER
  * @since 3.7.1
  */
 @Singleton
-public class LocalStack implements Feature {
+public class LocalStack implements Feature, ContributingTestContainerArtifactId {
 
+    public static final String ARTIFACT_ID_LOCALSTACK = "localstack";
     private final TestContainers testContainers;
 
     public LocalStack(TestContainers testContainers) {
@@ -84,10 +84,6 @@ public class LocalStack implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(TESTCONTAINERS_GROUP_ID)
-                .artifactId("localstack")
-                .test());
         // SQS pulls this in transitively so this is not required
         if (!generatorContext.isFeaturePresent(SQS.class)) {
             generatorContext.addDependency(Dependency.builder()
@@ -95,5 +91,10 @@ public class LocalStack implements Feature {
                     .artifactId("aws-java-sdk-core")
                     .test());
         }
+    }
+
+    @Override
+    public String testContainersArtifactId() {
+        return ARTIFACT_ID_LOCALSTACK;
     }
 }

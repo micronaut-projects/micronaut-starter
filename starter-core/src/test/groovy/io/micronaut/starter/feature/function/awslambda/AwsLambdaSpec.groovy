@@ -293,15 +293,15 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         !buildGradle.contains('id "application"')
         if (applicationType == ApplicationType.DEFAULT) {
-            assert buildGradle.contains('mainClass.set')
+            assert buildGradle.contains('mainClass = ')
         }
         buildGradle.contains('id("io.micronaut.application")')
 
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2023")
-    jdkVersion.set("${javaVersion}")
+    baseImage = "amazonlinux:2023"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
@@ -363,12 +363,12 @@ tasks.named("dockerfileNative") {
 
         then:
         !buildGradle.contains('id "application"')
-        buildGradle.contains('mainClass.set')
+        buildGradle.contains('mainClass = ')
         buildGradle.contains('id("io.micronaut.application")')
         buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2023")
-    jdkVersion.set("${javaVersion}")
+    baseImage = "amazonlinux:2023"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
@@ -411,7 +411,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         def buildGradle = output['build.gradle']
 
         then:
-        buildGradle.contains('mainClass.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
+        buildGradle.contains('mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
         language << Language.values().toList()

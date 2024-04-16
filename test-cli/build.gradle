@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation project(":test-utils")
-    testImplementation project(":micronaut-cli")
+    testImplementation(project(":test-utils"))
+    testImplementation(project(":micronaut-cli"))
     testImplementation("ch.qos.logback:logback-classic")
 }

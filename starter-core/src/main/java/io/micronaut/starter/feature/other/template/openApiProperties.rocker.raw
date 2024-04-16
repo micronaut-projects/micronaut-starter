@@ -4,6 +4,7 @@ Feature feature
 )
 swagger-ui.enabled=@feature.getName().equals("swagger-ui")
 redoc.enabled=@feature.getName().equals("redoc")
+openapi-explorer.enabled=@feature.getName().equals("openapi-explorer")
 rapidoc.enabled=@feature.getName().equals("rapidoc")
 rapidoc.bg-color=#14191f
 rapidoc.text-color=#aec2e0

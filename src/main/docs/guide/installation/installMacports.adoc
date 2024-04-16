@@ -1,4 +1,4 @@
-Before installing it is recommended to sync the latest Portfiles.
+Before installing, it is recommended to sync the latest Portfiles.
 
 [source,bash]
 ----

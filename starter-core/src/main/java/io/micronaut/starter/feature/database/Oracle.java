@@ -99,7 +99,7 @@ public class Oracle extends DatabaseDriverFeature {
     @NonNull
     @Override
     public Optional<DbType> getDbType() {
-        return Optional.of(DbType.ORACLEXE);
+        return Optional.of(DbType.ORACLEFREE);
     }
 
     @Override

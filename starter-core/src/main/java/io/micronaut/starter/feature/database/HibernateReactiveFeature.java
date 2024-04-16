@@ -67,7 +67,7 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
         }
         if (optionalDbType.isPresent()) {
             DbType dbType = optionalDbType.get();
-            if (dbType == DbType.ORACLEXE) {
+            if (dbType == DbType.ORACLEFREE) {
                 generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_DIALECT);
             }
         }
