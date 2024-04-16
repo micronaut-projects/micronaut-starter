@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Main interface on the the starter API.
+ * Main interface on the starter API.
  *
  * @author graemerocher
  * @since 1.0.0

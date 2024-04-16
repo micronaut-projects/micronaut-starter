@@ -29,7 +29,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OCICiWorkflowFeature extends CIWorkflowFeature {
 
-    public static final String NAME = "oci-devops-build-ci";
+    public static final String NAME = "oracle-cloud-devops-build-ci";
     private static final String WORKFLOW_FILENAME = "build_spec.yml";
 
     @NonNull
@@ -77,6 +77,11 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
                     VersionInfo.getDependencyVersion("graal").getValue()
             ));
         }
+    }
+
+    @Override
+    public boolean isPreview() {
+        return false;
     }
 
     @Override

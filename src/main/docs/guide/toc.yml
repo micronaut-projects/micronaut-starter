@@ -3,9 +3,9 @@ cdk:
   title: AWS CDK
   micronautFunctionFile: MicronautFunctionFile
   micronautFunction: MicronautFunction
-installation: 
+installation:
   title: Installation
-  installSdkman: Install with SDKman
+  installSdkman: Install with SDKMAN!
   installHomebrew: Install with Homebrew
   installMacports: Install with MacPorts
   installChocolatey: Install with Chocolatey

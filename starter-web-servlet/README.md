@@ -16,6 +16,14 @@ Or with RapiDoc:
 
 http://localhost:8080/swagger/views/rapidoc
 
+Or with ReDoc:
+
+http://localhost:8080/swagger/views/redoc
+
+Or with OpenAPI Explorer:
+
+http://localhost:8080/swagger/views/openapi-explorer
+
 ## Deployment
 
 You can build the WAR file with:

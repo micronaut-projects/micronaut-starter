@@ -4,16 +4,17 @@ The subproject `starter-web-netty` provides an implementation that can be contin
 
 Install GraalVM and the native image tool and then run:
 
-```cmd
+[source,cmd]
+----
 $ docker build . -t micronaut-starter -f DockerfileCloudRun
 $ docker run -p 8080:8080 micronaut-starter
-```
+----
 
 And then visit http://localhost:8080/swagger/views/swagger-ui/index.html
 
 === Continuous Deployment
 
-Micronaut Starter is continuously deployed to https://cloud.google.com/run[Google Cloud Run] as a native GraalVM application using Github Actions.
+Micronaut Starter is continuously deployed to https://cloud.google.com/run[Google Cloud Run] as a native GraalVM application using GitHub Actions.
 
 The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22[Snapshot to GCR Workflow] (defined by `.github/workflows/gcr-snapshot.yml`) deploys the application on each commit and the application can be accessed at the following URL:
 
@@ -21,7 +22,7 @@ https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-
 
 === Deploying the Application
 
-To build and deploy the project yourself install setup the Google Cloud CLI then from the project root build the docker image and push it to Google Container Registry:
+To build and deploy the project yourself install set up the Google Cloud CLI then from the project root build the docker image and push it to Google Container Registry:
 
 [source]
 ----
@@ -37,7 +38,8 @@ You are now ready to deploy your application:
 $ gcloud beta run deploy --image gcr.io/[PROJECT ID]/micronaut-starter
 ----
 
-Where `[PROJECT ID]` is replaced for your project ID. You should see output like the following:
+Where `[PROJECT ID]` is replaced for your project ID.
+You should see output like the following:
 
 [source]
 ----
