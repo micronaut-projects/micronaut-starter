@@ -44,7 +44,6 @@ public class OpenTelemetryXray extends AbstractOpenTelemetry {
     private static final Dependency OPEN_TELEMETRY_CONTRIB_XRAY_PROPAGATOR = Dependency.builder()
             .groupId(GROUP_ID_IO_OPENTELEMETRY_CONTRIB)
             .artifactId(ARTIFACT_ID_OPENTELEMETRY_AWS_XRAY_PROPAGATOR)
-            .version("1.34.0-alpha") //TODO remove once it is managed https://github.com/micronaut-projects/micronaut-tracing/pull/541
             .compile()
             .build();
     private static final Dependency.Builder OPEN_TELEMETRY_BOM_ALPHA = Dependency.builder()
