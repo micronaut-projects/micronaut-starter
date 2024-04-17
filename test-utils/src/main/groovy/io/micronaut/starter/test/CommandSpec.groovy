@@ -131,7 +131,7 @@ abstract class CommandSpec extends Specification {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }
-        JdkVersion jdkVersion = VersionInfo.getJavaVersion();
+        JdkVersion jdkVersion = VersionInfo.getJavaVersion()
         if (jdkVersion.greaterThanEqual(maxJdkVersion)) {
             jdkVersion = maxJdkVersion
         }
