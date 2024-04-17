@@ -29,6 +29,9 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
             assert verifier.hasDependency("io.micronaut", "micronaut-jackson-databind")
         }
 
+        and:
+        isConfiguredForTestResources(buildTool, verifier, template)
+
         where:
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
     }
@@ -44,6 +47,9 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         then:
         verifier.hasDependency("org.opensearch", "opensearch-testcontainers", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
+
+        and:
+        !isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
@@ -63,5 +69,14 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
 
         where:
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
+    }
+
+    boolean isConfiguredForTestResources(BuildTool buildTool, BuildTestVerifier verifier, String template) {
+        buildTool == BuildTool.MAVEN ?
+            verifier.hasTestResourceDependency("micronaut-test-resources-opensearch") :
+            verifier.hasBuildPlugin("io.micronaut.test-resources") &&
+                    template.contains('''testResources {
+                                    |        additionalModules.add("opensearch")
+                                    |    }'''.stripMargin())
     }
 }
