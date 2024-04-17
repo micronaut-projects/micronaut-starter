@@ -17,7 +17,9 @@ package io.micronaut.starter.feature.opensearch;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -27,7 +29,12 @@ public class OpenSearchRestClient extends OpenSearchFeature {
 
     private final JacksonDatabindFeature jacksonDatabindFeature;
 
-    public OpenSearchRestClient(JacksonDatabindFeature jacksonDatabindFeature) {
+    public OpenSearchRestClient(
+            TestContainers testContainers,
+            TestResources testResources,
+            JacksonDatabindFeature jacksonDatabindFeature
+    ) {
+        super(testContainers, testResources);
         this.jacksonDatabindFeature = jacksonDatabindFeature;
     }
 
@@ -48,6 +55,7 @@ public class OpenSearchRestClient extends OpenSearchFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         if (!featureContext.isPresent(JacksonDatabindFeature.class)) {
             featureContext.addFeature(jacksonDatabindFeature);
         }

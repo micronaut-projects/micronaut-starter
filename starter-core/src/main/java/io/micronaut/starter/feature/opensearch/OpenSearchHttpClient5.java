@@ -15,12 +15,21 @@
  */
 package io.micronaut.starter.feature.opensearch;
 
+import io.micronaut.starter.feature.database.TestContainers;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class OpenSearchHttpClient5 extends OpenSearchFeature {
 
     public static final String NAME = "opensearch-httpclient5";
+
+    public OpenSearchHttpClient5(
+            TestContainers testContainers,
+            TestResources testResources
+    ) {
+        super(testContainers, testResources);
+    }
 
     @Override
     public String getName() {

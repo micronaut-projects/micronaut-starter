@@ -71,7 +71,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
 
         if (type == ApplicationType.DEFAULT) {
 
-            final String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
+            final String className = StringUtils.capitalize(generatorContext.getProject().getClassName());
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();
