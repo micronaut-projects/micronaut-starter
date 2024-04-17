@@ -17,11 +17,28 @@ package io.micronaut.starter.feature.opensearch;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.database.TestContainers;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.testresources.buildtools.KnownModules;
 
-public abstract class OpenSearchFeature implements Feature, OpenSearchContributingTestContainerDependency {
+import java.util.Collections;
+import java.util.List;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
+
+public abstract class OpenSearchFeature extends EaseTestingFeature implements OpenSearchContributingTestContainerDependency, TestResourcesAdditionalModulesProvider {
+
+    protected OpenSearchFeature(
+            TestContainers testContainers,
+            TestResources testResources
+    ) {
+        super(testContainers, testResources);
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -49,5 +66,15 @@ public abstract class OpenSearchFeature implements Feature, OpenSearchContributi
                 .opensearchDependency()
                 .artifactId("micronaut-" + getName())
                 .compile());
+    }
+
+    @Override
+    public List<String> getTestResourcesAdditionalModules(GeneratorContext generatorContext) {
+        return Collections.singletonList(KnownModules.OPENSEARCH);
+    }
+
+    @Override
+    public List<MavenCoordinate> getTestResourcesDependencies(GeneratorContext generatorContext) {
+        return Collections.singletonList(new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-opensearch", null));
     }
 }
