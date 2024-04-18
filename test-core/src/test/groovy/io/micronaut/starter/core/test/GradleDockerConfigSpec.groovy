@@ -7,7 +7,7 @@ import io.micronaut.starter.test.CommandSpec
 
 class GradleDockerConfigSpec extends CommandSpec {
 
-    void "basic dockerfile creation"(BuildTool buildTool, Integer javaVersion) {
+    void "basic dockerfile creation as expected for #buildTool and Java #javaVersion"(BuildTool buildTool, Integer javaVersion) {
         when:
         generateProjectForVersion(Language.JAVA, JdkVersion.valueOf(javaVersion), buildTool)
 
@@ -24,12 +24,12 @@ class GradleDockerConfigSpec extends CommandSpec {
                 BuildTool.valuesGradle(),
                 [17, 21]
         ].combinations()
-        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre-focal" : "eclipse-temurin:21-jre-jammy"
+        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre" : "eclipse-temurin:21-jre"
     }
 
-    void "test dockerfiles can be built"(BuildTool buildTool, String command) {
+    void "test #command works for #buildTool under java #javaVersion"(BuildTool buildTool, String command, Integer javaVersion) {
         when:
-        generateProject(Language.JAVA, buildTool)
+        generateProjectForVersion(Language.JAVA, JdkVersion.valueOf(javaVersion), buildTool)
 
         def result = executeGradle(command)
 
@@ -37,9 +37,10 @@ class GradleDockerConfigSpec extends CommandSpec {
         result.output.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, command] << [
+        [buildTool, command, javaVersion] << [
                 BuildTool.valuesGradle(),
-                ['dockerBuild', 'dockerBuildNative']
+                ['dockerBuild', 'dockerBuildNative'],
+                [17] + (Runtime.version().feature() >= 21 ? [21] : [])
         ].combinations()
     }
 

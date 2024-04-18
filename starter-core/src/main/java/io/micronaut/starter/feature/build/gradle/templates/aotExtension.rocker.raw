@@ -1,19 +1,9 @@
 @import io.micronaut.starter.build.gradle.GradleDsl
 @import java.util.Map
-@args(GradleDsl dsl, Map<String, String> aotKeys)
+@args(Map<String, String> aotKeys)
     aot {
     // Please review carefully the optimizations enabled below
     // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-@if (dsl == GradleDsl.KOTLIN) {
-        optimizeServiceLoading.set(false)
-        convertYamlToJava.set(false)
-        precomputeOperations.set(true)
-        cacheEnvironment.set(true)
-        optimizeClassLoading.set(true)
-        deduceEnvironment.set(true)
-        optimizeNetty.set(true)
-}
-@if (dsl == GradleDsl.GROOVY) {
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
@@ -21,7 +11,7 @@
         optimizeClassLoading = true
         deduceEnvironment = true
         optimizeNetty = true
-}
+        replaceLogbackXml = true
 @if(aotKeys != null) {
 @for (String keyName : aotKeys.keySet()) {
         configurationProperties.put("@(keyName)","@(aotKeys.get(keyName))")

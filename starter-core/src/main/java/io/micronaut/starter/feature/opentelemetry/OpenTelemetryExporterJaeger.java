@@ -16,14 +16,35 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import jakarta.inject.Singleton;
+
+import java.util.Locale;
 
 @Singleton
 public class OpenTelemetryExporterJaeger extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_JAEGER = "Jaeger";
 
     @NonNull
+    @Override
+    public String getName() {
+        return "tracing-opentelemetry-exporter-" + EXPORTER_JAEGER.toLowerCase(Locale.ROOT);
+    }
+
+    @NonNull
+    @Override
+    public String getTitle() {
+        return "OpenTelemetry Exporter " + EXPORTER_JAEGER;
+    }
+
+    @NonNull
     public String exporterName() {
-        return EXPORTER_JAEGER;
+        return OpenTelemetryExporterOtlp.EXPORTER_OTLP;
+    }
+
+    @Override
+    protected void addConfiguration(GeneratorContext generatorContext) {
+        super.addConfiguration(generatorContext);
+        generatorContext.getConfiguration().put("otel.exporter.otlp.endpoint", "http://localhost:4317");
     }
 }

@@ -54,11 +54,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
           |}'''.stripMargin())
 
         settings.contains('plugins {')
-        if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert settings.contains('    id("io.micronaut.build.internal.gradle-enterprise") version("')
-        } else if (buildTool == BuildTool.GRADLE) {
-            assert settings.contains('    id "io.micronaut.build.internal.gradle-enterprise" version "')
-        }
+        settings.contains('    id("io.micronaut.build.internal.gradle-enterprise") version("')
 
         where:
         buildTool << BuildTool.valuesGradle()
