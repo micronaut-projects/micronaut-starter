@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
+import io.micronaut.starter.feature.json.SerializationJacksonFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -133,10 +134,28 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "aws-lambda adds micronaut-aws-lambda-events-serde since serde-jackson is the default json feature for #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
+        BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA, SerializationJacksonFeature.NAME], ApplicationType.DEFAULT)
+
+        then:
+        !verifier.hasDependency("io.micronaut", "micronaut-jackson-databind", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.serde", "micronaut-serde-jackson", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.serde", "micronaut-serde-processor", Scope.ANNOTATION_PROCESSOR)
+
+        where:
+        language << Language.values()
+        buildTool << BuildTool.values()
+    }
+
+    void "aws-lambda defaults to micronaut-jackson-databind as it appears slightly faster than serde"(Language language, BuildTool buildTool) {
+        when:
         BuildTestVerifier verifier = verifier(buildTool, language, [AwsLambda.FEATURE_NAME_AWS_LAMBDA], ApplicationType.DEFAULT)
 
         then:
-        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut", "micronaut-jackson-databind", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.serde", "micronaut-serde-jackson", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.serde", "micronaut-serde-processor", Scope.ANNOTATION_PROCESSOR)
 
         where:
         language << Language.values()
@@ -160,7 +179,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
                             List<String> features,
                             ApplicationType applicationType = ApplicationType.FUNCTION) {
         String template = template(buildTool, language, features, applicationType)
-        BuildTestUtil.verifier(buildTool, template)
+        BuildTestUtil.verifier(buildTool, language, template)
     }
 
     private String template(BuildTool buildTool,
