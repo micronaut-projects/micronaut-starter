@@ -7,7 +7,7 @@
 @raw("tasks.named<io.micronaut.gradle.docker.MicronautDockerfile>(\"dockerfile\") {\n")
 }
 @if(dockerfile.getBaseImage() != null) {
-    baseImage("@(dockerfile.getBaseImage())")
+    baseImage = "@(dockerfile.getBaseImage())"
 }
 @if (dockerfile.getArgs() != null) {
     args(

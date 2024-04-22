@@ -53,17 +53,11 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
     void 'lambda runtime main class configuration is present for #buildTool'(BuildTool buildTool) {
         when:
         Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
+        def build = output["app/$buildTool.buildFileName"]
 
         then:
-        if (buildTool == BuildTool.GRADLE) {
-            assert output['app/build.gradle']
-            assert output['app/build.gradle'].contains('nativeLambda {')
-            assert output['app/build.gradle'].contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
-        } else if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert output['app/build.gradle.kts']
-            assert output['app/build.gradle.kts'].contains('nativeLambda {')
-            assert output['app/build.gradle.kts'].contains('lambdaRuntimeClassName.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
-        }
+        build.contains('nativeLambda {')
+        build.contains('lambdaRuntimeClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
         buildTool << BuildTool.valuesGradle()

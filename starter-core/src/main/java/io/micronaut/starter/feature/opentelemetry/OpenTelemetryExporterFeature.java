@@ -48,6 +48,10 @@ public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeatu
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(exporterDependency());
+        addConfiguration(generatorContext);
+    }
+
+    protected void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().addCommaSeparatedValue("otel.traces.exporter", exporterValue());
     }
 

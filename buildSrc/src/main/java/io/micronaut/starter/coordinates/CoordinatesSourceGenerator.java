@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 
 @CacheableTask
 public abstract class CoordinatesSourceGenerator extends DefaultTask {
+
     @Internal
     public abstract Property<VersionCatalog> getVersionCatalog();
 
@@ -71,6 +72,17 @@ public abstract class CoordinatesSourceGenerator extends DefaultTask {
 
     @Input
     public abstract Property<String> getPackageName();
+
+    /**
+     * The line separator to use.
+     * <p>
+     * We use this as a cache key, as otherwise we can cache the Windows CLI build, which results in checkstyle errors.
+     *
+     * @return The line separator
+     * @see <a href="https://ge.micronaut.io/s/wgjbaaupb3qsy/console-log?page=1#L49">A build with the issue</a>
+     */
+    @Input
+    public abstract Property<String> getLineSeparator();
 
     @OutputDirectory
     public abstract DirectoryProperty getOutputDirectory();

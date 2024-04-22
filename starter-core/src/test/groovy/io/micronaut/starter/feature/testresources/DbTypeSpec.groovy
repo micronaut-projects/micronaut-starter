@@ -14,6 +14,6 @@ class DbTypeSpec extends Specification {
         'mysql'    | DbType.MYSQL
         'mariadb'  | DbType.MARIADB
         'mssql'    | DbType.SQLSERVER
-        'oracle'   | DbType.ORACLEXE
+        'oracle'   | DbType.ORACLEFREE
     }
 }
