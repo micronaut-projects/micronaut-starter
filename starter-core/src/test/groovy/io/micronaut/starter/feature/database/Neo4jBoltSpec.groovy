@@ -1,9 +1,14 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 
 class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -32,5 +37,63 @@ class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixt
 
         then:
         ctx.getConfiguration().get("neo4j.uri") == "bolt://\${NEO4J_HOST:localhost}"
+    }
+
+    void "neo4j-bolt dependency is present for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.neo4j","micronaut-neo4j-bolt")
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "testcontainers neo4j-bolt dependency is present for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt','testcontainers'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "test neo4j-bolt test-resources for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt','test-resources'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+        !verifier.hasDependency("org.testcontainers","testcontainers", Scope.TEST)
+        verifier.hasBuildPlugin("io.micronaut.test-resources")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "test neo4j-bolt test-resources for build tool Maven"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['neo4j-bolt','test-resources'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
+
+        then:
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+        !verifier.hasDependency("org.testcontainers","testcontainers", Scope.TEST)
+        verifier.hasDependency("io.micronaut.testresources","micronaut-test-resources-client")
     }
 }

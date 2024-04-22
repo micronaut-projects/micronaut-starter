@@ -21,18 +21,25 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Neo4jBolt implements Feature {
+public class Neo4jBolt extends EaseTestingFeature implements ContributingTestContainerArtifactId {
 
     public static final String NAME = "neo4j-bolt";
+    private static final String TEST_CONTAINERS_ARTIFACT_ID_NEO4J = "neo4j";
 
     private static final Dependency DEPENDENCY_NEO4J = MicronautDependencyUtils.neo4j()
             .artifactId("micronaut-neo4j-bolt")
             .compile()
             .build();
+
+    public Neo4jBolt(TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
+    }
 
     @Override
     @NonNull
@@ -75,5 +82,10 @@ public class Neo4jBolt implements Feature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://neo4j.com/docs/java-manual/current/";
+    }
+
+    @Override
+    public String testContainersArtifactId() {
+        return TEST_CONTAINERS_ARTIFACT_ID_NEO4J;
     }
 }
