@@ -76,7 +76,7 @@ public class VersionInfo {
         if (micronautVersion != null) {
             return micronautVersion.toString();
         }
-        return "4.0.0";
+        return "5.0.0";
     }
 
     public static Optional<Integer> getMicronautMajorVersion() {
