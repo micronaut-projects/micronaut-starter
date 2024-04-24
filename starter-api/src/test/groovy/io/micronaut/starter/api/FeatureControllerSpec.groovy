@@ -28,8 +28,7 @@ class FeatureControllerSpec extends Specification {
     void "test community features"() {
         given:
         Set<String> expected = [
-                'buildless',
-                'jobrunr-jobrunr'
+                'buildless'
         ]
         when:
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
