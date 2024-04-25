@@ -173,6 +173,7 @@ io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.pubsub
 io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
+io.micronaut.starter.feature.microstream
 io.micronaut.starter.feature.migration
 io.micronaut.starter.feature.migration.template
 io.micronaut.starter.feature.multitenancy
