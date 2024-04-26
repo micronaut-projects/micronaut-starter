@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Builds OS X Native CLI
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: "⬇ Checkout the repository"
         uses: actions/checkout@v4
@@ -18,8 +18,8 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.1.9
         with:
-          version: '22.3.2'
           java-version: '17'
+          distribution: 'graalvm-community'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
