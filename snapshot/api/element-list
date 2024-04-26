@@ -203,6 +203,7 @@ io.micronaut.starter.feature.rxjava
 io.micronaut.starter.feature.security
 io.micronaut.starter.feature.server
 io.micronaut.starter.feature.server.template
+io.micronaut.starter.feature.sourcegen
 io.micronaut.starter.feature.spring
 io.micronaut.starter.feature.springboot.template
 io.micronaut.starter.feature.stackdriver
