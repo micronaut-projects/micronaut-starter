@@ -109,8 +109,8 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.1.9
         with:
-          version: '22.3.2'
           java-version: '17'
+          distribution: 'graalvm-community'
           native-image-musl: 'true'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -143,8 +143,8 @@ jobs:
           asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
   macos:
-    name: Release OS X Native CLI
-    runs-on: macos-latest
+    name: Release OS X Intel Native CLI
+    runs-on: macos-13
     needs: [build]
     steps:
       - name: Checkout repository
@@ -160,8 +160,8 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.1.9
         with:
-          version: '22.3.2'
           java-version: '17'
+          distribution: 'graalvm-community'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -192,6 +192,56 @@ jobs:
           asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
           asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
+  macos-arm:
+    name: Release OS X Arm Native CLI
+    runs-on: macos-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Set the current release version
+        id: release_version
+        run: |
+          release_version=${GITHUB_REF:11}
+          sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
+      - name: "☕️ Setup GraalVM CE"
+        uses: graalvm/setup-graalvm@v1.1.9
+        with:
+          java-version: '17'
+          distribution: 'graalvm-community'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
+      - name: Package Build
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          mkdir -p "mn-darwin-aarch64-${VERSION}/bin"
+          mv ./starter-cli/build/native/nativeCompile/mn "mn-darwin-aarch64-${VERSION}/bin"
+          cp ./LICENSE "mn-darwin-aarch64-${VERSION}/"
+          zip -r "mn-darwin-aarch64-${VERSION}.zip" "mn-darwin-aarch64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
@@ -204,8 +254,8 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.1.9
         with:
-          version: '22.3.2'
           java-version: '17'
+          distribution: 'graalvm-community'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -244,7 +294,7 @@ jobs:
   sdkman:
     name: Release to SDKMAN!
     runs-on: ubuntu-latest
-    needs: [linux, macos, windows]
+    needs: [linux, macos, macos-arm, windows]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -318,7 +368,7 @@ jobs:
           gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
   homebrew:
     name: Update Homebrew cask
-    needs: [macos]
+    needs: [macos, macos-arm]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
@@ -326,20 +376,27 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
-      - name: Download ZIP
-        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
+      - name: Download Intel ZIP
+        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O intel.zip
+      - name: Download Arm ZIP
+        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip -O arm.zip
       - name: Calculate SHA256
         id: sha
         run: |
-          s=$(sha256sum mn.zip | awk  '{ print $1 }')
-          echo "SHA256 is: $s"
-          echo "sha=${s}" >> $GITHUB_OUTPUT
+          s=$(sha256sum intel.zip | awk  '{ print $1 }')
+          echo "INTEL SHA256 is: $s"
+          echo "intelsha=${s}" >> $GITHUB_OUTPUT
+          s=$(sha256sum arm.zip | awk  '{ print $1 }')
+          echo "ARM SHA256 is: $s"
+          echo "armsha=${s}" >> $GITHUB_OUTPUT
       - name: Update Cask file
         env:
-          SHA: ${{ steps.sha.outputs.sha }}
+          INTELSHA: ${{ steps.sha.outputs.intelsha }}
+          ARMSHA: ${{ steps.sha.outputs.armsha }}
         run: |
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
-          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+          sed -i -e "s/  sha256 arm: '.*/  sha256 arm: '${ARMSHA}',/" Casks/micronaut.rb
+          sed -i -e "s/         intel: '.*/         intel: '${INTELSHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
       - uses: stefanzweifel/git-auto-commit-action@v5.0.1
         with:
