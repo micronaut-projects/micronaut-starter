@@ -34,7 +34,7 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
     implementation("org.shredzone.acme4j:acme4j-client")
     implementation("org.shredzone.acme4j:acme4j-utils:2.16")
-    implementation("org.jline:jline:3.19.0")
+    implementation("org.jline:jline:3.26.1")
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
     testImplementation("org.testcontainers:spock")
