@@ -7,8 +7,8 @@ on:
     branches:
       - '[1-9]+.[0-9]+.x'
 jobs:
-  build:
-    name: Builds OS X Native CLI
+  intel:
+    name: Builds OS X Intel Native CLI
     runs-on: macos-13
     steps:
       - name: "⬇ Checkout the repository"
@@ -46,3 +46,42 @@ jobs:
         with:
           name: mn-darwin-amd64-snapshot
           path: mn-darwin-amd64-snapshot.zip
+  arm:
+    name: Builds OS X Arm Native CLI
+    runs-on: macos-latest
+    steps:
+      - name: "⬇ Checkout the repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: "☕️ Setup GraalVM CE"
+        uses: graalvm/setup-graalvm@v1.1.9
+        with:
+          java-version: '17'
+          distribution: 'graalvm-community'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
+      - name: "👷‍♀️Package Build"
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          mkdir -p mn-darwin-aarch64-snapshot/bin
+          mv ./starter-cli/build/native/nativeCompile/mn mn-darwin-aarch64-snapshot/bin
+          cp ./LICENSE mn-darwin-aarch64-snapshot/
+          zip -r mn-darwin-aarch64-snapshot.zip ./mn-darwin-aarch64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
+      - name: "🆙 Upload Snapshot"
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.4.x'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mn-darwin-aarch64-snapshot
+          path: mn-darwin-aarch64-snapshot.zip
