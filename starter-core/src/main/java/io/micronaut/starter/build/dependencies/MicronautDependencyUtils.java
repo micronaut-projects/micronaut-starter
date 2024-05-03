@@ -47,6 +47,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
+    public static final String GROUP_ID_MICRONAUT_SOURCEGEN = "io.micronaut.sourcegen";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
@@ -124,8 +125,14 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
     }
 
+    @NonNull
     public static Dependency.Builder servletDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
+    }
+
+    @NonNull
+    public static Dependency.Builder sourcegenDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SOURCEGEN);
     }
 
     @NonNull
@@ -239,6 +246,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
     }
 
+    @NonNull
     public static Dependency.Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
     }
@@ -267,7 +275,8 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder discovery() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
     }
-    
+
+    @NonNull
     public static Dependency.Builder flywayDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_FLYWAY);
     }
@@ -347,6 +356,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
     }
 
+    @NonNull
     public static Dependency.Builder viewsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
     }
