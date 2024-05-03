@@ -39,6 +39,7 @@ jib-gradle-plugin = "2.8.0"
 jobrunr = "6.3.5"
 jruby = "9.4.5.0"
 json-bind = "2.0.0"
+json-smart = "2.5.1"
 jte-gradle-plugin= "3.1.9"
 jte-maven-plugin= "3.1.9"
 kotest = "5.8.1"
@@ -107,6 +108,7 @@ jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-
 jobrunr-micronaut = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
 jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
 json-bind = { module = "jakarta.json.bind:jakarta.json.bind-api", version.ref = "json-bind" }
+json-smart = { module = "net.minidev:json-smart", version.ref = "json-smart" }
 jte-gradle-plugin = { module = "gg.jte:jte-gradle-plugin", version.ref = "jte-gradle-plugin" }
 jte-maven-plugin = { module = "gg.jte:jte-maven-plugin", version.ref = "jte-maven-plugin" }
 kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
