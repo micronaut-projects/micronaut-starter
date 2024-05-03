@@ -86,8 +86,7 @@ sdkman {
     version = project.version
     hashtag = "#micronautfw"
     platforms = [
-            // TODO:  Once graal native-image works for arm OSX, we should switch to building and publishing a non-rosetta release (https://github.com/oracle/graal/issues/2666)
-            "MAC_ARM64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
+            "MAC_ARM64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-aarch64-v${project.version}.zip",
             "MAC_OSX":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
             "WINDOWS_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-win-amd64-v${project.version}.zip",
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
