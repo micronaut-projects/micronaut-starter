@@ -1,10 +1,11 @@
+@import io.micronaut.starter.util.VersionInfo
 <plugin>
   <groupId>org.openrewrite.maven</groupId>
   <artifactId>rewrite-maven-plugin</artifactId>
   <version>${openrewrite.maven.plugin.version}</version>
   <configuration>
     <activeRecipes>
-      <recipe>org.openrewrite.java.micronaut.Micronaut2to3Migration</recipe>
+      <recipe>org.openrewrite.java.micronaut.Micronaut3to4Migration</recipe>
     </activeRecipes>
     <activeStyles>
     </activeStyles>

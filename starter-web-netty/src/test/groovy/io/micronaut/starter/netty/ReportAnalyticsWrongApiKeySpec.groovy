@@ -30,7 +30,7 @@ class ReportAnalyticsWrongApiKeySpec extends Specification {
 
         when: "the wrong analytics api key is configured"
         UnauthorizedAnalyticsController controller = starterAnalytics.applicationContext.getBean(UnauthorizedAnalyticsController)
-        client.createApp("test", Collections.emptyList(), BuildTool.GRADLE_KOTLIN, null, null)
+        client.createApp("test", Collections.emptyList(), BuildTool.GRADLE_KOTLIN, null, null, null)
         PollingConditions conditions = new PollingConditions()
 
         then: "analytics endpoint is hit and comes back as UNAUTHORIZED"

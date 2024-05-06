@@ -8,4 +8,5 @@
     <suppress checks="FileLength"
               files="DefaultBeanContext.java|BeanDefinitionWriter.java|DefaultHttpClient.java"/>
     <suppress files="[\\/]generated-src[\\/]|RockerSubs.java" checks="[a-zA-Z0-9]*"/>
+    <suppress checks="DeclarationOrder" files="JdkVersion.java"/> <!-- private INSTANCES has to be before the public constants, otherwise the constructors fail with NPE -->
 </suppressions>

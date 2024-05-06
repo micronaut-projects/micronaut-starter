@@ -29,12 +29,12 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
                 ['google-cloud-function']
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
@@ -79,12 +79,12 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test gradle google cloud function feature for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
                 ['google-cloud-function']
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
@@ -124,7 +124,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
@@ -141,13 +141,13 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void 'test gradle google cloud function feature for language=#language - raw function'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
                 new Options(language, BuildTool.GRADLE),
                 ['google-cloud-function']
         )
         String build = output['build.gradle']
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
@@ -205,7 +205,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

@@ -26,7 +26,7 @@ public class MicronautJdkVersionConfiguration implements JdkVersionConfiguration
 
     public static final List<JdkVersion> SUPPORTED_JDKS = List.of(JDK_17, JDK_21);
 
-    public static final JdkVersion DEFAULT_OPTION = JDK_17;
+    public static final JdkVersion DEFAULT_OPTION = JDK_21;
 
     @Override
     public List<JdkVersion> getSupportedJdkVersions() {

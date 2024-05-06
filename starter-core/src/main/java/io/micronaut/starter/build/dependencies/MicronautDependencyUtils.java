@@ -28,7 +28,8 @@ public final class MicronautDependencyUtils {
             .build();
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
-
+    public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
+    public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
@@ -41,11 +42,13 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
+    public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_REACTOR = "io.micronaut.reactor";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
+    public static final String GROUP_ID_MICRONAUT_SOURCEGEN = "io.micronaut.sourcegen";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
@@ -84,6 +87,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder jaxrsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JAXRS);
+    }
+
+    @NonNull
     public static Dependency.Builder awsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AWS);
     }
@@ -118,8 +126,14 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
     }
 
+    @NonNull
     public static Dependency.Builder servletDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
+    }
+
+    @NonNull
+    public static Dependency.Builder sourcegenDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SOURCEGEN);
     }
 
     @NonNull
@@ -214,6 +228,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder opensearchDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_OPENSEARCH);
+    }
+
+    @NonNull
     public static Dependency.Builder platformDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_PLATFORM);
     }
@@ -228,6 +247,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
     }
 
+    @NonNull
     public static Dependency.Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
     }
@@ -256,7 +276,8 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder discovery() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
     }
-    
+
+    @NonNull
     public static Dependency.Builder flywayDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_FLYWAY);
     }
@@ -280,7 +301,30 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .annotationProcessor();
-            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, requiresPriority);
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false, requiresPriority);
+        };
+    }
+
+    @NonNull
+    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+                                                             @NonNull String groupId,
+                                                             @NonNull String artifactId,
+                                                             @NonNull String propertyName) {
+        return testAnnotationProcessor(buildTool, groupId, artifactId, propertyName, false);
+    }
+
+    @NonNull
+    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+                                                         @NonNull String groupId,
+                                                         @NonNull String artifactId,
+                                                         @NonNull String propertyName,
+                                                         boolean requiresPriority) {
+        return switch (buildTool) {
+            case GRADLE, GRADLE_KOTLIN -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .testAnnotationProcessor();
+            case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, true, requiresPriority);
         };
     }
 
@@ -288,13 +332,15 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
                                                                     @NonNull String artifactId,
                                                                     @NonNull String propertyName,
+                                                                    boolean isTestScope,
                                                                     boolean requiresPriority) {
-        return Dependency.builder()
+        Dependency.Builder dependency = Dependency.builder()
                 .groupId(groupId)
                 .artifactId(artifactId)
-                .annotationProcessor(requiresPriority)
-                .versionProperty(propertyName)
-                .exclude(MICRONAUT_INJECT);
+                .exclude(MICRONAUT_INJECT)
+                .versionProperty(propertyName);
+
+        return isTestScope ? dependency.testAnnotationProcessor(requiresPriority) : dependency.annotationProcessor(requiresPriority);
     }
 
     @NonNull
@@ -307,14 +353,17 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD);
     }
 
+    @NonNull
     public static Dependency.Builder microstreamDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MICROSTREAM);
     }
 
+    @NonNull
     public static Dependency.Builder springDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
     }
 
+    @NonNull
     public static Dependency.Builder viewsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
     }

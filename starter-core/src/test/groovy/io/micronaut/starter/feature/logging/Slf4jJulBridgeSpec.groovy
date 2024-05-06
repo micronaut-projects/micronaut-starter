@@ -44,7 +44,7 @@ class Slf4jJulBridgeSpec  extends ApplicationContextSpec  implements CommandOutp
 
         then:
         verifier.hasDependency("ch.qos.logback", "logback-classic", Scope.RUNTIME)
-        verifier.hasDependency("org.slf4j", "jul-to-slf4j", Scope.RUNTIME, "2.0.9", false)
+        verifier.hasDependency("org.slf4j", "jul-to-slf4j", Scope.RUNTIME)
 
         where:
         buildTool << BuildTool.values()

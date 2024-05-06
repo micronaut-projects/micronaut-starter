@@ -1,0 +1,24 @@
+@import io.micronaut.starter.template.RockerTemplate
+
+@args(RockerTemplate platformTemplate)
+
+# Basecamp ChatBot
+
+Follow the instructions in the [Micronaut ChatBot Documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/) to create a Basecamp ChatBot.
+
+@platformTemplate.renderModel()
+
+You can then create a Basecamp webhook by running the following command:
+
+```bash
+curl -s -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Content-Type: application/json" \
+  -d '{"service_name":"${BOTNAME}","command_url":"${YOUR_HTTP_TRIGGER_URL}"}' \
+  https://3.basecampapi.com/${APP_ID}/buckets/${BUCKET_ID}/chats/${CHAT_ID}/integrations.json
+```
+
+Where;
+- `BOTNAME` is the name of your bot
+- `ACCESS_TOKEN` is your Oauth2 Basecamp access token
+- `YOUR_HTTP_TRIGGER_URL` is the https address of your URL of your controller or function
+- `APP_ID`, `BUCKET_ID` and `CHAT_ID` are the IDs of your Basecamp application, bucket and chat respectively
+

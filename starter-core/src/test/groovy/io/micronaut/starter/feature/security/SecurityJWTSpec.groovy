@@ -15,8 +15,8 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
 
     void 'test readme.md with feature security-jwt contains links to micronaut docs'() {
         when:
-        def output = generate(['security-jwt'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['security-jwt'])
+        String readme = output["README.md"]
 
         then:
         readme

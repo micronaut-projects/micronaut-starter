@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.awssecretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -11,8 +14,8 @@ import spock.lang.Unroll
 class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature aws-secrets-manager contains links to micronaut docs'() {
         when:
-        def output = generate(['aws-secrets-manager'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['aws-secrets-manager'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -27,51 +30,31 @@ class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOut
 
         then:
         bootstrap
-        bootstrap.contains('''\
-micronaut:
-  application:
-    name: foo
-  config-client:
-    enabled: true
-''')
+        when:
+        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
+
+        then:
+        'foo' == bootstrapYml['micronaut']['application']['name']
+        true == bootstrapYml['micronaut']['config-client']['enabled']
+        true == bootstrapYml['aws']['client']['system-manager']['parameterstore']['enabled']
+        false == bootstrapYml['aws']['distributed-configuration']['search-active-environments']
+        false == bootstrapYml['aws']['distributed-configuration']['search-common-application']
     }
 
     @Unroll
-    void 'test gradle aws-secrets-manager feature for language=#language'() {
+    void 'test #buildTool aws-secrets-manager feature for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['aws-secrets-manager'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.count('implementation("io.micronaut.aws:micronaut-aws-secretsmanager")') == 1
-
-        and: 'micronaut-aws-secretsmanager exposes aws-sdk-v2 transitively'
-        !template.contains('implementation("io.micronaut.aws:aws-sdk-v2")')
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-secretsmanager", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.aws", ":aws-sdk-v2", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven aws-secrets-manager feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['aws-secrets-manager'])
-                .render()
-
-        then:
-        template.count('''
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-secretsmanager</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
-
-        where:
-        language << Language.values().toList()
+        [buildTool, language] << [BuildTool.values(), Language.values().toList()].combinations()
     }
 }

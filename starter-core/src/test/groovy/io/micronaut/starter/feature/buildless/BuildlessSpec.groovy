@@ -17,8 +17,8 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test README.md with buildless feature contains links to docs'() {
         when:
-        def output = generate([Buildless.NAME])
-        def readme = output["README.md"]
+        Map<String, String> output = generate([Buildless.NAME])
+        String readme = output["README.md"]
 
         then:
         readme.contains("[https://docs.less.build/](https://docs.less.build/)")
@@ -54,7 +54,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
         def version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
         def settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
-        def expectedPlugin = buildTool == BuildTool.GRADLE ? """id "build.less" version "$version\"""" : """id("build.less") version("$version")"""
+        def expectedPlugin = """id("build.less") version("$version\""""
 
         then: 'we have the plugin in the settings file'
         settings.contains("    $expectedPlugin")

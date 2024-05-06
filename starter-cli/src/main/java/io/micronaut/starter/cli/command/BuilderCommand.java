@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@ import org.jline.terminal.TerminalBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static picocli.CommandLine.Help.Ansi.AUTO;
 
@@ -83,7 +83,8 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                     .parser(new DefaultParser())
                     .build();
             GenerateOptions options = createGenerateOptions(reader);
-            Set<String> selectedFeatures = options.getFeatures();
+            // options.getFeatures() may be an unmodifiable set, so unpack it into a modifiable set
+            Set<String> selectedFeatures = new HashSet<>(options.getFeatures());
             selectedFeatures.addAll(getFeatures(options.getApplicationType(), terminal, features));
             Project project = getProject(reader);
             try (OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this)) {
@@ -106,7 +107,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
 
     protected List<String> getFeatures(ApplicationType applicationType, Terminal terminal, List<Feature> features) {
         AvailableFeatures availableFeatures = new BaseAvailableFeatures(features, applicationType);
-        List<String> featureNames = availableFeatures.getFeatures().map(Feature::getName).collect(Collectors.toList());
+        List<String> featureNames = availableFeatures.getFeatures().map(Feature::getName).toList();
         LineReader featuresReader = LineReaderBuilder.builder()
                 .terminal(terminal)
                 .completer(new StringsCompleter(featureNames))
@@ -123,7 +124,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
             List<String> selectedFeatures = Arrays.asList(featuresLine.split(" "));
             List<String> invalidFeatures = new ArrayList<>();
             for (String name: selectedFeatures) {
-                if (!availableFeatures.findFeature(name).isPresent()) {
+                if (availableFeatures.findFeature(name).isEmpty()) {
                     invalidFeatures.add(name);
                 }
             }
@@ -147,7 +148,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
     }
 
     protected JdkVersion getJdkVersion(LineReader reader) {
-        List<String> candidates = new JdkVersionCandidates();
+        List<String> candidates = getJdkVersionCandidates();
         JdkVersion defaultOption = MicronautJdkVersionConfiguration.DEFAULT_OPTION;
         if (candidates.size() == 1) {
             return defaultOption;
@@ -159,6 +160,10 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                 String.valueOf(defaultOption.majorVersion()),
                 reader
         )));
+    }
+
+    protected List<String> getJdkVersionCandidates() {
+        return new JdkVersionCandidates();
     }
 
     protected YesOrNo getYesOrNo(LineReader reader) {

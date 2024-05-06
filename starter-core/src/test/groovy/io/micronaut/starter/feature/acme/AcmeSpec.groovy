@@ -12,8 +12,8 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature acme contains links to micronaut docs'() {
         when:
-        def output = generate(['acme'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['acme'])
+        String readme = output["README.md"]
 
         then:
         readme

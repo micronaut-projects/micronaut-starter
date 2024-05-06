@@ -25,8 +25,8 @@ class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [featureName])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [featureName])
+        String readme = output["README.md"]
 
         then:
         readme.contains("Telegram ChatBot")

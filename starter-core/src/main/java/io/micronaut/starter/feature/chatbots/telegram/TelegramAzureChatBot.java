@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,14 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.template.azureReadme;
+import io.micronaut.starter.feature.chatbots.telegram.template.azureReadme;
 import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.azure.AzureRawFunction;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -98,7 +99,7 @@ public class TelegramAzureChatBot extends ChatBotsTelegram implements AzureCloud
     }
 
     @Override
-    public String rootReadMeTemplate(GeneratorContext generatorContext) {
-        return azureReadme.class.getName().replace(".", "/") + ".rocker.raw";
+    public RockerTemplate rootReadMeTemplate(GeneratorContext generatorContext) {
+        return new RockerTemplate(azureReadme.template(generatorContext.getProject(), generatorContext.getFeatures(), getBuildCommand(generatorContext.getBuildTool())));
     }
 }

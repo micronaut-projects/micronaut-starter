@@ -8,8 +8,8 @@ class KnativeSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature knative contains links to micronaut and knative docs'() {
         when:
-        def output = generate(['knative'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['knative'])
+        String readme = output["README.md"]
 
         then:
         readme

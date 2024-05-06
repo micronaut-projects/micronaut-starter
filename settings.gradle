@@ -4,7 +4,7 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id 'com.microsoft.azure.azurefunctions' version '1.12.1'
+        id 'com.microsoft.azure.azurefunctions' version '1.15.0'
     }
 }
 
@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.6.1'
+    id 'io.micronaut.build.shared.settings' version '6.7.0'
 }
 
 rootProject.name = 'micronaut-starter'

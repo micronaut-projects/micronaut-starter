@@ -4,15 +4,17 @@ plugins {
 }
 
 dependencies {
-    implementation project(":starter-api")
+    implementation(project(":starter-api"))
     implementation("io.micronaut:micronaut-jackson-databind")
-    implementation "io.micronaut.azure:micronaut-azure-function-http"
-    implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.0.0'
-    implementation "io.micronaut:micronaut-inject"
+    implementation("io.micronaut.azure:micronaut-azure-function-http")
+    implementation('com.microsoft.azure.functions:azure-functions-java-library:3.1.0')
+    implementation("io.micronaut:micronaut-inject")
+
     runtimeOnly("ch.qos.logback:logback-classic")
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testCompileOnly("io.micronaut:micronaut-inject-groovy")
+
+    testImplementation("io.micronaut.test:micronaut-test-spock")
 }
 
 

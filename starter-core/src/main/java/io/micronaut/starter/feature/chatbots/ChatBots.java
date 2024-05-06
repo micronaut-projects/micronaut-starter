@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.chatbots;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.template.about;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.feature.validator.ValidationFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -40,12 +39,7 @@ public abstract class ChatBots implements ChatBotsFeature {
         this.validationFeature = validationFeature;
     }
 
-    protected void renderTemplates(@NonNull GeneratorContext generatorContext) {
-        generatorContext.addTemplate(
-                "about-markdown",
-                new RockerTemplate("src/main/resources/botcommands/about.md", about.template(getChatBotType()))
-        );
-    }
+    protected abstract void renderTemplates(@NonNull GeneratorContext generatorContext);
 
     @Override
     public void apply(GeneratorContext generatorContext) {
@@ -72,7 +66,7 @@ public abstract class ChatBots implements ChatBotsFeature {
     protected abstract ChatBotType getChatBotType();
 
     @NonNull
-    protected abstract String rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
+    protected abstract RockerTemplate rootReadMeTemplate(@NonNull GeneratorContext generatorContext);
 
     @NonNull
     protected abstract String getBuildCommand(@NonNull BuildTool buildTool);

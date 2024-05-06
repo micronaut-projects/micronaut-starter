@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,19 @@ package io.micronaut.starter.feature.messaging.jms;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.testresources.buildtools.KnownModules;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+
+import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
+
 @Singleton
-public class SQS extends AbstractJmsFeature {
+public class SQS extends AbstractJmsFeature implements TestResourcesAdditionalModulesProvider {
 
     public static final String NAME = "jms-sqs";
 
@@ -47,5 +55,15 @@ public class SQS extends AbstractJmsFeature {
         generatorContext.addDependency(MicronautDependencyUtils.jmsDependency()
                 .artifactId("micronaut-jms-sqs")
                 .compile());
+    }
+
+    @Override
+    public List<String> getTestResourcesAdditionalModules(GeneratorContext generatorContext) {
+        return Collections.singletonList(KnownModules.LOCALSTACK_SQS);
+    }
+
+    @Override
+    public List<MavenCoordinate> getTestResourcesDependencies(GeneratorContext generatorContext) {
+        return Collections.singletonList(new MavenCoordinate(GROUP_ID_MICRONAUT_TESTRESOURCES, "micronaut-test-resources-localstack-sqs", null));
     }
 }

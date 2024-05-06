@@ -2,6 +2,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.build.Property
 @import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency
 @import io.micronaut.starter.feature.Features
@@ -18,7 +19,6 @@
 @import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.migration.MigrationFeature
 @import io.micronaut.starter.feature.testresources.TestResources
-@import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.util.VersionInfo
 
 @args (
@@ -113,58 +113,40 @@ String jvmArguments
                || features.isFeaturePresent(HibernateReactiveFeature.class)
                || features.isFeaturePresent(R2dbc.class)))
 ) {
-          <configuration>
+        <configuration>
 @if (!mavenBuild.getAotDependencies().isEmpty()) {
 @io.micronaut.starter.feature.build.maven.templates.aotDependencies.template(mavenBuild.getAotDependencies())
 }
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
-            <shared>true</shared>
+          <shared>true</shared>
 }
-@if (features.isFeaturePresent(TestResources.class) &&
-    features.isFeaturePresent(DatabaseDriverFeature.class) &&
-     (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
-){
-@with? (String resourceName = features
-    .getFeature(DatabaseDriverFeature.class)
-    .flatMap(DatabaseDriverFeature::getDbType)
-    .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : features.isFeaturePresent(HibernateReactiveFeature.class) ? dbType.getHibernateReactiveTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
-    .orElse(null)) {
-            <testResourcesDependencies>
-              <dependency>
-                <groupId>io.micronaut.testresources</groupId>
-                <artifactId>micronaut-test-resources-@resourceName</artifactId>
-              </dependency>
-@if ((features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
-     && features.isFeaturePresent(DatabaseDriverFeature.class)
-     && !features.isFeaturePresent(MigrationFeature.class)
-) {
-@with? (Dependency driver = features.getFeature(DatabaseDriverFeature.class)
-                                                      .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
-                                                      .map(Dependency.Builder::build)
-                                                      .orElse(null)) {
-@dependency.template(driver.getGroupId(), driver.getArtifactId(), null, null, false, null)
+@if (features.isFeaturePresent(TestResources.class) && !mavenBuild.getTestResourcesDependencies().isEmpty()) {
+          <testResourcesDependencies>
+@for (MavenCoordinate testResourcesDependency : mavenBuild.getTestResourcesDependencies()) {
+            <dependency>
+              <groupId>@(testResourcesDependency.groupId())</groupId>
+              <artifactId>@(testResourcesDependency.artifactId())</artifactId>
+            </dependency>
 }
-}
-            </testResourcesDependencies>
-}
+          </testResourcesDependencies>
 }
 @if (jvmArguments != null) {
-            <jvmArguments>@(jvmArguments)</jvmArguments>
+          <jvmArguments>@(jvmArguments)</jvmArguments>
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
-            <nativeImageBuildArgs>
-              <arg>-H:+StaticExecutableWithDynamicLibC</arg>
-              <arg>-Dfn.handler=${function.entrypoint}</arg>
-              <arg>--initialize-at-build-time=@project.getPackageName()</arg>
-            </nativeImageBuildArgs>
-            <appArguments>
-              <arg>${function.entrypoint}</arg>
-            </appArguments>
+          <nativeImageBuildArgs>
+            <arg>-H:+StaticExecutableWithDynamicLibC</arg>
+            <arg>-Dfn.handler=${function.entrypoint}</arg>
+            <arg>--initialize-at-build-time=@project.getPackageName()</arg>
+          </nativeImageBuildArgs>
+          <appArguments>
+            <arg>${function.entrypoint}</arg>
+          </appArguments>
 }
 @if (features.contains("micronaut-aot")) {
-            <configFile>aot-${packaging}.properties</configFile>
+          <configFile>aot-${packaging}.properties</configFile>
 }
-          </configuration>
+        </configuration>
 }
       </plugin>
 }

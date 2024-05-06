@@ -30,7 +30,7 @@ class SelectOptionsControllerTest extends Specification {
         ['JDK_17', 'JDK_21'] == selectOptionsDTO.jdkVersion.options.name
 
         and:
-        selectOptionsDTO.jdkVersion.defaultOption.name == 'JDK_17'
+        selectOptionsDTO.jdkVersion.defaultOption.name == 'JDK_21'
     }
 
     void "default build tool is Gradle Kotlin"() {

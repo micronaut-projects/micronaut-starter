@@ -12,8 +12,8 @@ class EHCacheSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'test readme.md with feature cache-ehcache contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-ehcache'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['cache-ehcache'])
+        String readme = output["README.md"]
 
         then:
         readme

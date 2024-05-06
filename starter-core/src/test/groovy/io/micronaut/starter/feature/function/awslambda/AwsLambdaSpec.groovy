@@ -293,15 +293,15 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         !buildGradle.contains('id "application"')
         if (applicationType == ApplicationType.DEFAULT) {
-            assert buildGradle.contains('mainClass.set')
+            assert buildGradle.contains('mainClass = ')
         }
         buildGradle.contains('id("io.micronaut.application")')
 
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2")
-    jdkVersion.set("${javaVersion}")
+    baseImage = "amazonlinux:2023"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
@@ -311,7 +311,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         } else if (buildTool == BuildTool.GRADLE) {
             assert buildGradle.contains("""\
 tasks.named("dockerfileNative") {
-    baseImage = "amazonlinux:2"
+    baseImage = "amazonlinux:2023"
     jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
@@ -363,12 +363,12 @@ tasks.named("dockerfileNative") {
 
         then:
         !buildGradle.contains('id "application"')
-        buildGradle.contains('mainClass.set')
+        buildGradle.contains('mainClass = ')
         buildGradle.contains('id("io.micronaut.application")')
         buildGradle.contains("""\
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage.set("amazonlinux:2")
-    jdkVersion.set("${javaVersion}")
+    baseImage = "amazonlinux:2023"
+    jdkVersion = "${javaVersion}"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
@@ -411,7 +411,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         def buildGradle = output['build.gradle']
 
         then:
-        buildGradle.contains('mainClass.set("io.micronaut.function.aws.runtime.MicronautLambdaRuntime")')
+        buildGradle.contains('mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
         language << Language.values().toList()
@@ -428,7 +428,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_java")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+        !template.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         where:
         language << Language.values()
@@ -444,7 +444,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         template.contains('runtime("lambda_provided")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        template.contains('implementation("io.micronaut:micronaut-http-client")')
+        template.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
@@ -490,7 +490,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
 
         where:
         [applicationType, language] << [
@@ -516,9 +516,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-custom-runtime")
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws-api-proxy', Scope.COMPILE)
-
-        // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.TEST)
+        !verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
@@ -542,7 +541,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         // Specifically added in io.micronaut.starter.feature.other.HttpClientTest.apply
-        verifier.hasDependency("io.micronaut", "micronaut-http-client")
+        verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
 
         where:
         language << GraalVMFeatureValidator.supportedLanguages()
@@ -560,7 +559,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         build.contains('runtime("lambda_java")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !build.contains('implementation("io.micronaut:micronaut-http-client")')
+        !build.contains('implementation("io.micronaut:micronaut-http-client-jdk")')
 
         output.containsKey("$srcDir/example/micronaut/HomeController.$extension".toString())
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))

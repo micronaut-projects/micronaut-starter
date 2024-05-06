@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
         }
         if (optionalDbType.isPresent()) {
             DbType dbType = optionalDbType.get();
-            if (dbType == DbType.ORACLEXE) {
+            if (dbType == DbType.ORACLEFREE) {
                 generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_DIALECT, ORACLE_DIALECT);
             }
         }

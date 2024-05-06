@@ -43,7 +43,7 @@ public class RapiDoc extends OpenApiView implements ContributingStaticResources 
 
     @Override
     public String getDescription() {
-        return "Adds and enables RapiDoc view for OpenApi";
+        return "Adds and enables RapiDoc view for OpenAPI";
     }
 
     @Override

@@ -30,7 +30,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
         when:
         Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
@@ -164,9 +164,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy</artifactId>
 ''')
-        template.contains('''\
-    <groovyVersion>4.0.16</groovyVersion>
-''')
+        template.contains("""\
+    <groovyVersion>${VersionInfo.getBomVersion("groovy")}</groovyVersion>
+""")
     }
 
     @Unroll
@@ -177,7 +177,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(chosenFeatures)
                 .language(Language.JAVA)
-                .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .jdkVersion(javaVersionForRuntime(runtime))
                 .render()
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")
@@ -195,7 +195,41 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
+    private static JdkVersion javaVersionForRuntime(String runtime) {
+        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
+        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
+        // Google Cloud Function execution environment supports 21 in preview only
+        // https://cloud.google.com/functions/docs/concepts/execution-environment#runtimes
+        return runtime in ["azure_function",
+                           "google_function"
+        ] ? JdkVersion.JDK_17 :
+                MicronautJdkVersionConfiguration.DEFAULT_OPTION
+    }
+
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
         new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+    }
+
+    void 'Selected jdk = #jdk is specified in Maven for lang = #lang'(
+            Language lang, JdkVersion jdk
+    ) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(lang, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, jdk))
+        def buildFile =  output["pom.xml"]
+
+        then:
+        buildFile
+        if (lang == Language.KOTLIN) {
+            // has kapt so has to be 17
+            assert buildFile.contains("<jdk.version>17</jdk.version>")
+        } else {
+            assert buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
+        }
+
+        where:
+        [lang, jdk] << [
+                Language.values(),
+                [JdkVersion.JDK_17, JdkVersion.JDK_21]
+        ].combinations()
     }
 }

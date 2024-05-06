@@ -44,9 +44,13 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 assert verifier.hasBuildPlugin("io.micronaut.test-resources")
             } else if (buildTool == BuildTool.MAVEN) {
                 assert template.contains("<$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>true</$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>")
-                assert template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
-          <configuration>
-            <shared>true</shared>
+                template.contains('''\
+    <plugins>
+      <plugin>
+        <groupId>io.micronaut.maven</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+        <configuration>
+          <shared>true</shared>
 ''')
             }
         }

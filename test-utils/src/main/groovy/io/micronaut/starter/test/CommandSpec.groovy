@@ -27,6 +27,7 @@ import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
@@ -126,13 +127,35 @@ abstract class CommandSpec extends Specification {
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = lang.getDefaults().test,
                          boolean addMicronautGradleEnterpriseFeature = true,
-                         JdkVersion maxJdkVersion = JdkVersion.JDK_17) {
+                         JdkVersion maxJdkVersion = MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
         if (addMicronautGradleEnterpriseFeature) {
             features += [MicronautGradleEnterprise.NAME]
         }
-        JdkVersion jdkVersion = VersionInfo.getJavaVersion();
+        JdkVersion jdkVersion = VersionInfo.getJavaVersion()
         if (jdkVersion.greaterThanEqual(maxJdkVersion)) {
             jdkVersion = maxJdkVersion
+        }
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, testFramework, buildTool, jdkVersion),
+                io.micronaut.starter.application.OperatingSystem.LINUX,
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
+
+    void generateProjectForVersion(
+            Language lang,
+            JdkVersion jdkVersion,
+            BuildTool buildTool = BuildTool.DEFAULT_OPTION,
+            List<String> features = [],
+            ApplicationType applicationType = ApplicationType.DEFAULT,
+            TestFramework testFramework = lang.getDefaults().test,
+            boolean addMicronautGradleEnterpriseFeature = true
+    ) {
+        if (addMicronautGradleEnterpriseFeature) {
+            features += [MicronautGradleEnterprise.NAME]
         }
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),

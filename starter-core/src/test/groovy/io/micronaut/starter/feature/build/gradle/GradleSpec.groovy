@@ -5,12 +5,14 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -78,7 +80,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        !buildGradle.contains("tasks")
+        !buildGradle.contains("tasks {")
 
         where:
         language << [Language.JAVA, Language.GROOVY]
@@ -91,12 +93,12 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'ignoredAutomaticDependencies not output by default'() {
@@ -114,20 +116,21 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'Supported languages have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        List<String> features = (apptype == ApplicationType.CLI && lang == Language.KOTLIN) ? [Kapt.NAME] : []
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk), features)
+        String readme = output["README.md"]
 
         then:
         readme
@@ -143,12 +146,36 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         ].combinations()
     }
 
+    void 'Selected jdk = #jdk is specified in build = #buildTool for lang = #lang'(
+            Language lang, JdkVersion jdk, BuildTool buildTool
+    ) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        def buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
+
+        then:
+        buildFile
+        buildFile.contains("sourceCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        if (lang == Language.KOTLIN) {
+            assert !buildFile.contains("targetCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        } else {
+            assert buildFile.contains("targetCompatibility = JavaVersion.toVersion(\"${jdk.majorVersion()}\")")
+        }
+
+        where:
+        [lang, jdk, buildTool] << [
+                Language.values(),
+                [JdkVersion.JDK_17, JdkVersion.JDK_21],
+                BuildTool.valuesGradle()
+        ].combinations()
+    }
+
     void 'Unsupported languages have Gradle but omit GraalVM plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
             ApplicationType apptype, Language lang, BuildTool buildTool
     ) {
         when:
-        def output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
-        def readme = output["README.md"]
+        Map<String, String> output = generate(apptype, new Options(lang, TestFramework.DEFAULT_OPTION, buildTool, jdk))
+        String readme = output["README.md"]
 
         then:
         readme

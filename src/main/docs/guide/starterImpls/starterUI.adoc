@@ -1,1 +1,1 @@
-The https://micronaut.io/launch[UI for Micronaut Launch] is written in React and the sources can be found https://github.com/micronaut-projects/static-website/tree/master/main/src/main/js/launch[here] as a separate project.
+The https://micronaut.io/launch[UI for Micronaut Launch] is written in React and the sources can be found https://github.com/micronaut-projects/micronaut-starter-ui/tree/master/app/launch[here] as a separate project.
