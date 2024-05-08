@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
     public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
     public static final String GROUP_ID_MICRONAUT_MICROSTREAM = "io.micronaut.microstream";
+    public static final String ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR = "micronaut-core-processor";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
@@ -257,6 +258,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder injectJava() {
         return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_INJECT_JAVA);
+    }
+
+    @NonNull
+    public static Dependency.Builder coreProcessor() {
+        return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR);
     }
 
     @NonNull

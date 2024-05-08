@@ -15,7 +15,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature tracing-zipkin contains links to micronaut docs'() {
         when:
-        Map output = generate(['tracing-zipkin'])
+        Map output = generate([Zipkin.NAME])
         String readme = output['README.md']
 
         then:
@@ -27,7 +27,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
     @Unroll
     void 'test gradle tracing-zipkin feature for language=#language'(Language language, BuildTool buildTool) {
         given:
-        String feature = 'tracing-zipkin'
+        String feature = Zipkin.NAME
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features([feature])
@@ -44,7 +44,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test tracing-zipkin configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['tracing-zipkin'])
+        GeneratorContext commandContext = buildGeneratorContext([Zipkin.NAME])
 
         then:
         commandContext.configuration.get('tracing.zipkin.enabled') == true
