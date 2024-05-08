@@ -14,7 +14,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature tracing-jaeger contains links to micronaut docs'() {
         when:
-        Map output = generate(['tracing-jaeger'])
+        Map output = generate([Jaeger.NAME])
         String readme = output['README.md']
 
         then:
@@ -28,7 +28,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         when:
         String template = new BuildBuilder(beanContext, GRADLE)
                 .language(language)
-                .features(['tracing-jaeger'])
+                .features([Jaeger.NAME])
                 .render()
 
         then:
@@ -43,7 +43,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         when:
         String template = new BuildBuilder(beanContext, MAVEN)
                 .language(language)
-                .features(['tracing-jaeger'])
+                .features([Jaeger.NAME])
                 .render()
 
         then:
@@ -61,7 +61,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test tracing-jaeger configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['tracing-jaeger'])
+        GeneratorContext commandContext = buildGeneratorContext([Jaeger.NAME])
 
         then:
         commandContext.configuration.get('tracing.jaeger.enabled') == true
