@@ -154,7 +154,7 @@ public class MicronautAot implements DefaultFeature {
         }
         optimizations.add(new MicronautAotOptimization("scan.reactive.types.enabled", true, "Scans reactive types at build time instead of runtime"));
         optimizations.add(new MicronautAotOptimization("deduce.environment.enabled", true, "Deduces the environment at build time instead of runtime"));
-        optimizations.add(new MicronautAotOptimization("known.missing.types.enabled", true, "Checks of existence of some types at build time instead of runtime"));
+        optimizations.add(new MicronautAotOptimization("known.missing.types.enabled", true, "Checks for the existence of some types at build time instead of runtime"));
         optimizations.add(new MicronautAotOptimization("sealed.property.source.enabled", true, "Precomputes property sources at build time"));
 
         optimizations.add(new MicronautAotOptimization(
