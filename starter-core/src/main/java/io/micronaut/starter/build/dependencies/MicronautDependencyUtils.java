@@ -27,6 +27,7 @@ public final class MicronautDependencyUtils {
             .compile()
             .build();
 
+    public static final String GROUP_ID_MICRONAUT_GUICE = "io.micronaut.guice";
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
     public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
@@ -79,6 +80,11 @@ public final class MicronautDependencyUtils {
 
     private MicronautDependencyUtils() {
 
+    }
+
+    @NonNull
+    public static Dependency.Builder guiceDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GUICE);
     }
 
     @NonNull
