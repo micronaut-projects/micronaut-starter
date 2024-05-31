@@ -32,6 +32,7 @@ public class Category {
     public static final String CONFIGURATION        = "Configuration";
     public static final String DATABASE             = "Database";
     public static final String DEV_TOOLS            = "Development Tools";
+    public static final String DI                   = "Dependency Injection";
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
     public static final String GROOVY_MODULE        = "Groovy Optional Modules";
@@ -58,4 +59,5 @@ public class Category {
     public static final String TRACING              = "Distributed Tracing";
     public static final String VALIDATION           = "Validation";
     public static final String VIEW                 = "View Rendering";
+
 }
