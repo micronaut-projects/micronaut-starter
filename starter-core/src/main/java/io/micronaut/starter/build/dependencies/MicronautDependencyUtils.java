@@ -65,6 +65,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
     public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
+    public static final String GROUP_ID_IO_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_IO_MICRONAUT_VALIDATION = "io.micronaut.validation";
 
     public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
