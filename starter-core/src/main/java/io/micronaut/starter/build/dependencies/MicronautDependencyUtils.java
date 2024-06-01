@@ -42,6 +42,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
+    public static final String GROUP_ID_MICRONAUT_JSON_SCHEMA = "io.micronaut.json-schema";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
@@ -222,6 +223,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder gcpDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GCP);
+    }
+
+    @NonNull
+    public static Dependency.Builder jsonSchemaDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JSON_SCHEMA);
     }
 
     @NonNull
