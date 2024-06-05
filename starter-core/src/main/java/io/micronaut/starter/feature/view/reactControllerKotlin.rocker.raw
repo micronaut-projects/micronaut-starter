@@ -1,0 +1,40 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.HttpResponse
+import io.micronaut.serde.annotation.Serdeable
+import io.micronaut.views.View
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+
+@@Controller
+public class AppController {
+    @@Serdeable.Serializable
+    public data class CurrentTime(val now: String)
+
+    @@Introspected
+    public data class InitialProps(val name: String)
+
+    @@View("App")
+    @@Get
+    public fun index(): HttpResponse<InitialProps> {
+        return HttpResponse.ok(InitialProps("'your name goes here'"))
+    }
+
+    @@Get("/api/time")
+    public fun time(): CurrentTime {
+        return CurrentTime(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).format(LocalDateTime.now()))
+    }
+}
