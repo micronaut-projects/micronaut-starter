@@ -23,7 +23,7 @@ import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Undertow extends AbstractMicronautServerFeature {
+public class Undertow extends AbstractServletFeature {
 
     @Override
     public String getName() {
@@ -42,7 +42,7 @@ public class Undertow extends AbstractMicronautServerFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#undertow";
+        return "https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#undertow";
     }
 
     @Override

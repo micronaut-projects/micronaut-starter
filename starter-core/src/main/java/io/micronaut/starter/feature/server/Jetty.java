@@ -23,7 +23,7 @@ import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jetty extends AbstractMicronautServerFeature {
+public class Jetty extends AbstractServletFeature {
 
     @Override
     public String getName() {
@@ -42,7 +42,7 @@ public class Jetty extends AbstractMicronautServerFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#jetty";
+        return "https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#jetty";
     }
 
     @Override
