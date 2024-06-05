@@ -147,7 +147,7 @@ public class Gradle implements BuildFeature {
 
     @SuppressWarnings("java:S1172") // Unused parameter for extensibility
     protected RockerModel gitignore(GeneratorContext generatorContext) {
-        return gitignore.template();
+        return gitignore.template(generatorContext.getFeatures());
     }
 
     protected void addGradleProperties(GeneratorContext generatorContext) {

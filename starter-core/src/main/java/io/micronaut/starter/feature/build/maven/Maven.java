@@ -126,7 +126,7 @@ public class Maven implements BuildFeature {
 
     @SuppressWarnings("java:S1172") // Unused parameter for extension
     protected RockerModel gitIgnore(GeneratorContext generatorContext) {
-        return gitignore.template();
+        return gitignore.template(generatorContext.getFeatures());
     }
 
     @Override
