@@ -137,7 +137,6 @@ String jvmArguments
           <nativeImageBuildArgs>
             <arg>-H:+StaticExecutableWithDynamicLibC</arg>
             <arg>-Dfn.handler=${function.entrypoint}</arg>
-            <arg>--initialize-at-build-time=@project.getPackageName()</arg>
           </nativeImageBuildArgs>
           <appArguments>
             <arg>${function.entrypoint}</arg>

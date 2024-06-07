@@ -192,22 +192,14 @@ graalvmNative.toolchainDetection = false
 }
 
 @if (features.contains("oracle-function")) {
-@if (features.contains("oracle-function-http")) {
-graalvmNative {
-    binaries.configureEach {
-        buildArgs.add("--initialize-at-build-time=@project.getPackageName()")
-    }
-}
-} else {
+@if (!features.contains("oracle-function-http")) {
 graalvmNative {
     binaries.configureEach {
         buildArgs.addAll(
              "-H:+StaticExecutableWithDynamicLibC",
              "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
-             "--initialize-at-build-time=@project.getPackageName()"
         )
     }
-}
 }
 }
 
