@@ -191,8 +191,7 @@ tasks {
 graalvmNative.toolchainDetection = false
 }
 
-@if (features.contains("oracle-function")) {
-@if (!features.contains("oracle-function-http")) {
+@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
 graalvmNative {
     binaries.configureEach {
         buildArgs.addAll(
