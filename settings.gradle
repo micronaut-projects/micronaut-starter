@@ -16,7 +16,7 @@ buildscript {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.7.1'
+    id 'io.micronaut.build.shared.settings' version '7.1.1'
 }
 
 rootProject.name = 'micronaut-starter'
