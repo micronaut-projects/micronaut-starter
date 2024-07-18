@@ -53,7 +53,7 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
 
         then:
         template
-        verifier.hasDependency("io.micronaut.json-schema", "micronaut-json-schema-validation", Scope.TEST)
+        verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-validation", Scope.TEST)
 
         where:
         [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
