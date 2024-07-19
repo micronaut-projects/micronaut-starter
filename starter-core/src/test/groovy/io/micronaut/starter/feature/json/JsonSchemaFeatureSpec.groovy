@@ -63,8 +63,8 @@ class JsonSchemaFeatureSpec extends ApplicationContextSpec implements CommandOut
 
         then:
         template
-        verifier.hasAnnotationProcessor("io.micronaut.json-schema", "micronaut-json-schema-processor")
-        verifier.hasDependency("io.micronaut.json-schema", "micronaut-json-schema-annotations")
+        verifier.hasAnnotationProcessor("io.micronaut.jsonschema", "micronaut-json-schema-processor")
+        verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-annotations")
 
         where:
         [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
