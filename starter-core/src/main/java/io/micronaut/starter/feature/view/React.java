@@ -32,6 +32,7 @@ import java.net.URL;
 
 @Singleton
 public class React implements ViewFeature, MicronautServerDependent {
+    public static final String NODE_GRADLE_PLUGIN_VERSION = "7.0.2";
     private static final String ARTIFACT_ID = "micronaut-views-react";
     private static final String[] FRONTEND_FILES = new String[]{
             "package.json",
@@ -42,7 +43,6 @@ public class React implements ViewFeature, MicronautServerDependent {
             "components/App.js"
     };
 
-    public static final String NODE_GRADLE_PLUGIN_VERSION = "7.0.2";
 
     @Override
     public String getName() {
