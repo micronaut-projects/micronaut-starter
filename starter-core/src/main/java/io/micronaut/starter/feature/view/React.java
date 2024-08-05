@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.view;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.*;
+import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -86,15 +87,25 @@ public class React implements ViewFeature, MicronautServerDependent {
                         .groupId(StarterCoordinates.JS_COMMUNITY.getGroupId())
                         .artifactId(StarterCoordinates.JS_COMMUNITY.getArtifactId())
                         .version(StarterCoordinates.JS_COMMUNITY.getVersion())
-                        .pom()
                         .build()
                 );
 
+                // This plugin teaches Gradle to download NodeJS and use it to run JS programs.
                 generatorContext.addBuildPlugin(
                         GradlePlugin.builder()
                                 .id("com.github.node-gradle.node")
                                 .version(NODE_GRADLE_PLUGIN_VERSION)
                                 .buildImports("import com.github.gradle.node.npm.task.NpxTask")
+                                .build()
+                );
+
+                // This teaches Gradle to download the right GraalVM automatically (community edition).
+                // For some reason Gradle won't do it out of the box :(
+                generatorContext.addBuildPlugin(
+                        GradlePlugin.builder()
+                                .id("org.gradle.toolchains.foojay-resolver-convention")
+                                .version("0.8.0")
+                                .gradleFile(GradleFile.SETTINGS)
                                 .build()
                 );
             } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {

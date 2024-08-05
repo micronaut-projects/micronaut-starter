@@ -246,6 +246,14 @@ protobuf {
 
 
 @if (features.contains("views-react")) {
+java {
+    // GraalJS for React server side rendering requires GraalVM.
+    toolchain {
+        vendor = JvmVendorSpec.GRAAL_VM
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 // region JavaScript compilation
 @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 node {
