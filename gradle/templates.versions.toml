@@ -70,7 +70,7 @@ spring-boot-gradle-plugin = "3.3.0"
 spring-dependency-management-plugin = "1.1.4"
 micronaut-starter-aws-cdk = "4.3.7"
 spring-boot-starter-parent="3.3.0"
-graaljs = "24.0.1"  # Once this is bumped past 24.1, you should be able to remove the disabling of Loom in the config properties in the React feature.
+graaljs = "24.0.2"  # Once this is bumped past 24.1, you should be able to remove the disabling of Loom in the config properties in the React feature.
 frontend-maven-plugin = "1.15.0"
 
 [libraries]
