@@ -1,0 +1,12 @@
+<plugin>
+    <groupId>org.graalvm.python</groupId>
+    <artifactId>graalpy-maven-plugin</artifactId>
+    <version>${graalpy.maven.plugin.version}</version>
+    <executions>
+      <execution>
+        <goals>
+          <goal>process-graalpy-resources</goal>
+        </goals>
+      </execution>
+    </executions>
+</plugin>
