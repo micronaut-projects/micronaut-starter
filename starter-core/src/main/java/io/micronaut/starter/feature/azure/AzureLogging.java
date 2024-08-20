@@ -28,13 +28,13 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 @Singleton
 public class AzureLogging implements Feature {
 
+    public static final String NAME = "azure-logging";
+
     private static final Dependency AZURE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.azureDependency()
                     .artifactId("micronaut-azure-logging")
                     .compile()
                     .build();
-
-    public static final String NAME = "azure-logging";
 
     @Override
     public String getName() {

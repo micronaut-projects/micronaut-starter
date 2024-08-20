@@ -28,13 +28,13 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 @Singleton
 public class OracleCloudLogging implements Feature {
 
+    public static final String NAME = "oracle-cloud-logging";
+
     private static final Dependency ORACLE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.ociDependency()
                     .artifactId("micronaut-oraclecloud-logging")
                     .compile()
                     .build();
-
-    public static final String NAME = "oracle-cloud-logging";
 
     @Override
     public String getName() {

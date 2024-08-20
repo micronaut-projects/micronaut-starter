@@ -44,7 +44,6 @@ public class React implements ViewFeature, MicronautServerDependent {
             "components/App.js"
     };
 
-
     @Override
     public String getName() {
         return "views-react";

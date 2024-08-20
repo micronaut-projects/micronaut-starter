@@ -28,13 +28,13 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 @Singleton
 public class GoogleLogging implements Feature {
 
+    public static final String NAME = "gcp-logging";
+
     private static final Dependency GOOGLE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.gcpDependency()
                     .artifactId("google-cloud-logging-logback")
                     .compile()
                     .build();
-
-    public static final String NAME = "gcp-logging";
 
     @Override
     public String getName() {

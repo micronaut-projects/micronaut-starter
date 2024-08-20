@@ -27,13 +27,13 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 @Singleton
 public class AwsLogging implements AwsFeature {
 
+    public static final String NAME = "amazon-logging";
+
     private static final Dependency AWS_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.awsDependency()
                     .artifactId("micronaut-aws-cloudwatch-logging")
                     .compile()
                     .build();
-
-    public static final String NAME = "amazon-logging";
 
     @Override
     public String getName() {
