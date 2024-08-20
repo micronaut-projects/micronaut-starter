@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
@@ -27,11 +28,11 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 @Singleton
 public class AzureLogging implements Feature {
 
-    private static final Dependency AZURE_LOGGING_DEPENDENCY = Dependency.builder()
-            .groupId("io.micronaut.azure")
-            .artifactId("micronaut-azure-logging")
-            .compile()
-            .build();
+    private static final Dependency AZURE_LOGGING_DEPENDENCY =
+            MicronautDependencyUtils.azureDependency()
+                    .artifactId("micronaut-azure-logging")
+                    .compile()
+                    .build();
 
     public static final String NAME = "azure-logging";
 

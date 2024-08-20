@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.oraclecloud;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
@@ -26,6 +27,12 @@ import static io.micronaut.starter.feature.Category.CLOUD;
 
 @Singleton
 public class OracleCloudLogging implements Feature {
+
+    private static final Dependency ORACLE_LOGGING_DEPENDENCY =
+            MicronautDependencyUtils.ociDependency()
+                    .artifactId("micronaut-oraclecloud-logging")
+                    .compile()
+                    .build();
 
     public static final String NAME = "oracle-cloud-logging";
 
@@ -68,9 +75,7 @@ public class OracleCloudLogging implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.oracleCloudDependency()
-                .artifactId("micronaut-oraclecloud-logging")
-                .compile());
+        generatorContext.addDependency(ORACLE_LOGGING_DEPENDENCY);
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
     }
 }
