@@ -41,7 +41,7 @@ jobs:
           cp ./LICENSE mn-darwin-amd64-snapshot/
           zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.5.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.6.x'
         uses: actions/upload-artifact@v4
         with:
           name: mn-darwin-amd64-snapshot
