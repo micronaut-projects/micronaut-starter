@@ -21,12 +21,13 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.feature.Category.CLOUD;
 
 @Singleton
-public class AzureLogging implements Feature {
+public class AzureLogging implements AzureCloudFeature, Feature {
 
     public static final String NAME = "azure-logging";
 

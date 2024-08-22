@@ -21,12 +21,13 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.feature.Category.CLOUD;
 
 @Singleton
-public class GoogleLogging implements Feature {
+public class GoogleLogging implements GcpCloudFeature, Feature {
 
     public static final String NAME = "gcp-logging";
 
