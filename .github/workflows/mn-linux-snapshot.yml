@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.1
+        uses: graalvm/setup-graalvm@v1.2.3
         with:
           java-version: '17'
           distribution: 'graalvm-community'
@@ -42,7 +42,7 @@ jobs:
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.5.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.6.x'
         uses: actions/upload-artifact@v4
         with:
           name: mn-linux-amd64-snapshot
