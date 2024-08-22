@@ -26,7 +26,7 @@ jobs:
         run: |
           ./gradlew starter-web-netty:dockerBuild -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
       - name: Authenticate into Google Cloud Platform
-        uses: google-github-actions/setup-gcloud@v0.2.1
+        uses: google-github-actions/setup-gcloud@v0.7.0
         with:
           project_id: ${{ secrets.GCLOUD_PROJECT }}
           service_account_email: ${{ secrets.GCLOUD_EMAIL }}
