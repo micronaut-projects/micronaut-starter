@@ -23,17 +23,17 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.feature.Category.CLOUD;
+import static io.micronaut.starter.feature.Category.LOGGING;
 
 @Singleton
 public class AzureLogging implements AzureCloudFeature, Feature {
 
     public static final String NAME = "azure-logging";
 
+    private static final String ARTIFACT_ID_MICRONAUT_AZURE_LOGGING = "micronaut-azure-logging";
     private static final Dependency AZURE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.azureDependency()
-                    .artifactId("micronaut-azure-logging")
+                    .artifactId(ARTIFACT_ID_MICRONAUT_AZURE_LOGGING)
                     .compile()
                     .build();
 
@@ -66,7 +66,7 @@ public class AzureLogging implements AzureCloudFeature, Feature {
 
     @Override
     public String getCategory() {
-        return CLOUD;
+        return LOGGING;
     }
 
     @Override
