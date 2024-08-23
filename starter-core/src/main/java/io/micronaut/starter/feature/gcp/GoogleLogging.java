@@ -23,17 +23,15 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.feature.Category.CLOUD;
+import static io.micronaut.starter.feature.Category.LOGGING;
 
 @Singleton
 public class GoogleLogging implements GcpCloudFeature, Feature {
-
     public static final String NAME = "gcp-logging";
-
+    private static final String ARTIFACT_ID_MICRONAUT_GCP_LOGGING = "micronaut-gcp-logging";
     private static final Dependency GOOGLE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.gcpDependency()
-                    .artifactId("google-cloud-logging-logback")
+                    .artifactId(ARTIFACT_ID_MICRONAUT_GCP_LOGGING)
                     .compile()
                     .build();
 
@@ -66,7 +64,7 @@ public class GoogleLogging implements GcpCloudFeature, Feature {
 
     @Override
     public String getCategory() {
-        return CLOUD;
+        return LOGGING;
     }
 
     @Override
@@ -76,6 +74,10 @@ public class GoogleLogging implements GcpCloudFeature, Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(GOOGLE_LOGGING_DEPENDENCY);
     }
 }
