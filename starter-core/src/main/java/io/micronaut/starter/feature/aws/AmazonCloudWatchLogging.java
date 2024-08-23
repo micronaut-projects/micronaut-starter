@@ -22,16 +22,17 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.feature.Category.CLOUD;
+import static io.micronaut.starter.feature.Category.LOGGING;
 
 @Singleton
-public class AwsLogging implements AwsFeature {
+public class AmazonCloudWatchLogging implements AwsFeature {
 
-    public static final String NAME = "amazon-logging";
+    public static final String NAME = "amazon-cloudwatch-logging";
 
+    private static final String ARTIFACT_ID_MICRONAUT_AWS_CLOUDWATCH_LOGGING = "micronaut-aws-cloudwatch-logging";
     private static final Dependency AWS_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.awsDependency()
-                    .artifactId("micronaut-aws-cloudwatch-logging")
+                    .artifactId(ARTIFACT_ID_MICRONAUT_AWS_CLOUDWATCH_LOGGING)
                     .compile()
                     .build();
 
@@ -42,7 +43,7 @@ public class AwsLogging implements AwsFeature {
 
     @Override
     public String getTitle() {
-        return "Amazon Logging";
+        return "Amazon CloudWatch Logging";
     }
 
     @Override
@@ -64,7 +65,7 @@ public class AwsLogging implements AwsFeature {
 
     @Override
     public String getCategory() {
-        return CLOUD;
+        return LOGGING;
     }
 
     @Override
@@ -74,6 +75,10 @@ public class AwsLogging implements AwsFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addDependencies(generatorContext);
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(AWS_LOGGING_DEPENDENCY);
     }
 }
