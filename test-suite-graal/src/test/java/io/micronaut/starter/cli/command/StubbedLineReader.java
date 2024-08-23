@@ -258,9 +258,4 @@ class StubbedLineReader implements LineReader {
     public SuggestionType getAutosuggestion() {
         return null;
     }
-
-    @Override
-    public void zeroOut() {
-
-    }
 }
