@@ -40,8 +40,6 @@ import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.reactivestreams.Publisher;
-import reactor.core.publisher.Flux;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -93,7 +91,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Publisher<String> diffFeature(
+    public String diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NonNull @NotBlank String feature,
@@ -127,7 +125,7 @@ public class DiffController implements DiffOperations {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
-        return diffFlowable(projectGenerator, generatorContext);
+        return diff(projectGenerator, generatorContext);
     }
 
     /**
@@ -146,7 +144,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Publisher<String> diffApp(
+    public String diffApp(
             ApplicationType type,
             @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
@@ -179,49 +177,45 @@ public class DiffController implements DiffOperations {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
-        return diffFlowable(projectGenerator, generatorContext);
+        return diff(projectGenerator, generatorContext);
     }
 
-    private Publisher<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
-        return Flux.create(emitter -> {
-            try {
-                // empty string so there is at least some content
-                // if there is no difference
-                emitter.next("");
-                featureDiffer.produceDiff(
-                        projectGenerator,
-                        generatorContext,
-                        new ConsoleOutput() {
-                            @Override
-                            public void out(String message) {
-                                emitter.next(message + LINE_SEPARATOR);
-                            }
-
-                            @Override
-                            public void err(String message) {
-                                // will never be called
-                            }
-
-                            @Override
-                            public void warning(String message) {
-                                // will never be called
-                            }
-
-                            @Override
-                            public boolean showStacktrace() {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean verbose() {
-                                return false;
-                            }
+    private String diff(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
+        final StringBuilder sb = new StringBuilder();
+        try {
+            featureDiffer.produceDiff(
+                    projectGenerator,
+                    generatorContext,
+                    new ConsoleOutput() {
+                        @Override
+                        public void out(String message) {
+                            sb.append(message).append(LINE_SEPARATOR);
                         }
-                );
-                emitter.complete();
-            } catch (Exception e) {
-                emitter.error(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
-            }
-        });
+
+                        @Override
+                        public void err(String message) {
+                            // will never be called
+                        }
+
+                        @Override
+                        public void warning(String message) {
+                            // will never be called
+                        }
+
+                        @Override
+                        public boolean showStacktrace() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean verbose() {
+                            return false;
+                        }
+                    }
+            );
+            return sb.toString();
+        } catch (Exception e) {
+            throw new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage());
+        }
     }
 }
