@@ -130,6 +130,7 @@ io.micronaut.starter.feature.function.oraclefunction.template
 io.micronaut.starter.feature.function.oraclefunction.template.raw
 io.micronaut.starter.feature.function.template
 io.micronaut.starter.feature.function.template.http
+io.micronaut.starter.feature.gcp
 io.micronaut.starter.feature.gcp.secretsmanager
 io.micronaut.starter.feature.github.workflows
 io.micronaut.starter.feature.github.workflows.azure
