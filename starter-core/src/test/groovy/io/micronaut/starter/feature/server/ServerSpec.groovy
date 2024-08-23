@@ -25,6 +25,7 @@ class ServerSpec extends ApplicationContextSpec {
         "jetty-server"    | 'runtime("jetty")'
         "tomcat-server"   | 'runtime("tomcat")'
         "undertow-server" | 'runtime("undertow")'
+        "http-poja"       | 'runtime("http_poja")'
     }
 
     @Unroll
@@ -79,11 +80,12 @@ class ServerSpec extends ApplicationContextSpec {
         "jetty-server"    | 'io.micronaut.servlet' | 'micronaut-http-server-jetty'
         "tomcat-server"   | 'io.micronaut.servlet' | 'micronaut-http-server-tomcat'
         "undertow-server" | 'io.micronaut.servlet' | 'micronaut-http-server-undertow'
+        "http-poja"       | 'io.micronaut.servlet' | 'micronaut-http-poja-apache'
     }
 
     void 'test there can only be one server feature'() {
         when:
-        getFeatures(["netty-server", "jetty-server", "tomcat-server", "undertow-server"])
+        getFeatures(["netty-server", "jetty-server", "tomcat-server", "undertow-server", "http-poja"])
 
         then:
         def ex = thrown(IllegalArgumentException)
