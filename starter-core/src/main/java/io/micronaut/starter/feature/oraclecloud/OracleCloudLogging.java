@@ -25,15 +25,15 @@ import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.feature.Category.CLOUD;
+import static io.micronaut.starter.feature.Category.LOGGING;
 
 @Singleton
 public class OracleCloudLogging implements OracleCloudFeature, Feature {
-
     public static final String NAME = "oracle-cloud-logging";
-
+    private static final String ARTIFACT_ID_MICRONAUT_ORACLECLOUD_LOGGING = "micronaut-oraclecloud-logging";
     private static final Dependency ORACLE_LOGGING_DEPENDENCY =
             MicronautDependencyUtils.ociDependency()
-                    .artifactId("micronaut-oraclecloud-logging")
+                    .artifactId(ARTIFACT_ID_MICRONAUT_ORACLECLOUD_LOGGING)
                     .compile()
                     .build();
 
@@ -66,7 +66,7 @@ public class OracleCloudLogging implements OracleCloudFeature, Feature {
 
     @Override
     public String getCategory() {
-        return CLOUD;
+        return LOGGING;
     }
 
     @Override
@@ -76,7 +76,15 @@ public class OracleCloudLogging implements OracleCloudFeature, Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(ORACLE_LOGGING_DEPENDENCY);
+        addDependencies(generatorContext);
+        addConfiguration(generatorContext);
+    }
+
+    protected void addConfiguration(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(ORACLE_LOGGING_DEPENDENCY);
     }
 }
