@@ -49,7 +49,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    String diffFeature(
+    Publisher<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,
@@ -70,7 +70,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    String diffApp(
+    Publisher<String> diffApp(
             ApplicationType type,
             String name,
             @Nullable List<String> features,
