@@ -28,6 +28,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.api.starterApi;
 import io.micronaut.starter.util.VersionInfo;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -85,7 +86,18 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Get("/versions")
     VersionDTO getInfo(@Parameter(hidden = true) RequestInfo info) {
         return new VersionDTO()
-                 .addLink(Relationship.SELF, info.self());
+                .addLink(Relationship.SELF, info.self());
+    }
+
+    @Hidden
+    @Produces(MediaType.TEXT_HTML)
+    @Get
+    HttpResponse<?> redirectToUi(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+        URI redirectURI = configuration.getRedirectUri().orElse(null);
+        if (redirectURI != null) {
+            return HttpResponse.permanentRedirect(redirectURI);
+        }
+        return home(request, info);
     }
 
     /**
@@ -93,7 +105,7 @@ public class ApplicationController implements ApplicationTypeOperations {
      * @param request The request
      * @return A description of the API.
      */
-    @Get("/")
+    @Get
     @Produces(MediaType.TEXT_PLAIN)
     @ApiResponse(
             responseCode = "200",
@@ -101,27 +113,19 @@ public class ApplicationController implements ApplicationTypeOperations {
             content = @Content(mediaType = MediaType.TEXT_PLAIN)
     )
     HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        Collection<MediaType> accept = request.accept();
-        URI redirectURI = configuration.getRedirectUri().orElse(null);
-        if (accept.contains(MediaType.TEXT_HTML_TYPE) && redirectURI != null) {
-            return HttpResponse.permanentRedirect(redirectURI);
-        } else {
-            return HttpResponse.ok(new Writable() {
-
-                @Override
-                public void writeTo(Writer out) {
-                    // no-op
-                }
-
-                @Override
-                public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
-                    new RockerWritable(new starterApi()
-                            .serverURL(info.getServerURL())
-                            .micronautVersion(VersionInfo.getMicronautVersion()))
-                            .write(outputStream);
-                }
-            });
-        }
+        return HttpResponse.ok(new Writable() {
+            @Override
+            public void writeTo(Writer out) {
+                // no-op
+            }
+            @Override
+            public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
+                new RockerWritable(new starterApi()
+                        .serverURL(info.getServerURL())
+                        .micronautVersion(VersionInfo.getMicronautVersion()))
+                        .write(outputStream);
+            }
+        });
     }
 
     /**
