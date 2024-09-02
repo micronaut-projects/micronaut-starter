@@ -24,8 +24,6 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.Parameter;
-import org.reactivestreams.Publisher;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
