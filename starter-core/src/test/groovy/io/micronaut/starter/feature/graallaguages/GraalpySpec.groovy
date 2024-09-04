@@ -1,30 +1,29 @@
 package io.micronaut.starter.feature.graallaguages
 
-import com.fasterxml.jackson.core.JsonToken
+
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.graallanguages.MicronautGraalPyFeature
+import io.micronaut.starter.feature.graallanguages.Graalpy
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 
-class MicronautGraalPyFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
-    MicronautGraalPyFeature micronautGraalPyFeature = beanContext.getBean(MicronautGraalPyFeature)
+    Graalpy micronautGraalPyFeature = beanContext.getBean(Graalpy)
 
     void 'readme.md with feature micronaut-graalpy contains links to docs'() {
         when:
-        Map<String, String> output = generate([MicronautGraalPyFeature.NAME])
+        Map<String, String> output = generate([Graalpy.NAME])
         String readme = output["README.md"]
 
         then:
@@ -49,7 +48,7 @@ class MicronautGraalPyFeatureSpec extends ApplicationContextSpec implements Comm
     void "micronaut-graalpy feature adds micronaut-graalpy dependency for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features([MicronautGraalPyFeature.NAME])
+                .features([Graalpy.NAME])
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
@@ -65,7 +64,7 @@ class MicronautGraalPyFeatureSpec extends ApplicationContextSpec implements Comm
     void "micronaut-graalpy feature adds maven-graalvm-plugin for language=java buildTool=maven "() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([MicronautGraalPyFeature.NAME])
+                .features([Graalpy.NAME])
                 .language(Language.JAVA)
                 .render()
 

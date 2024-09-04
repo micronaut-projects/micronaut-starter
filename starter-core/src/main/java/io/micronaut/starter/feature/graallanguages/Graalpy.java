@@ -30,7 +30,7 @@ import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.graallanguages.templates.graalPyMavenPlugin;
 
 @Singleton
-public class MicronautGraalPyFeature implements Feature {
+public class Graalpy implements Feature {
 
     public static final String NAME = "micronaut-graalpy";
 
@@ -41,7 +41,7 @@ public class MicronautGraalPyFeature implements Feature {
 
     private final CoordinateResolver coordinateResolver;
 
-    public MicronautGraalPyFeature(CoordinateResolver coordinateResolver) {
+    public Graalpy(CoordinateResolver coordinateResolver) {
         this.coordinateResolver = coordinateResolver;
     }
 
