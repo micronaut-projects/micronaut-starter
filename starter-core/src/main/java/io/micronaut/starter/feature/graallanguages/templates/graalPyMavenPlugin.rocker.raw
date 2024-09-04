@@ -1,7 +1,19 @@
+@import java.util.List
+@args (List<String> packages)
+<!-- tag::graalpy-maven-plugin[] -->
 <plugin>
     <groupId>org.graalvm.python</groupId>
     <artifactId>graalpy-maven-plugin</artifactId>
     <version>${graalpy.maven.plugin.version}</version>
+@if(!packages.isEmpty()) {
+    <configuration>
+      <packages>
+@for (String pkg : packages) {
+        <package>@(pkg)</package>
+}
+      </packages>
+    </configuration>
+}
     <executions>
       <execution>
         <goals>
@@ -10,3 +22,4 @@
       </execution>
     </executions>
 </plugin>
+<!-- end::graalpy-maven-plugin[] -->

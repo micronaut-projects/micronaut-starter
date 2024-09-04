@@ -1,6 +1,5 @@
 package io.micronaut.starter.feature.graallaguages
 
-
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
@@ -28,7 +27,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-graalpy/latest/guide");
+        readme.contains("https://micronaut-projects.github.io/micronaut-graal-languages/latest/guide");
         readme.contains("https://graalvm.org/python");
     }
 
