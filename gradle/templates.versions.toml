@@ -37,6 +37,7 @@ gradle-jrebel-plugin = "1.1.10"
 gradle-shadow-plugin = "8.1.1"
 jib-gradle-plugin = "2.8.0"
 jobrunr = "6.3.5"
+jooq-gradle-plugin = "3.19.0"
 jruby = "9.4.5.0"
 json-bind = "2.0.0"
 json-path = "2.9.0"
@@ -109,6 +110,7 @@ gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebe
 gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
 jobrunr-micronaut = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
+jooq-gradle-plugin = { module = "org.jooq.jooq-codegen-gradle:org.jooq.jooq-codegen-gradle.gradle.plugin", version.ref = "jooq-gradle-plugin" }
 jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
 json-bind = { module = "jakarta.json.bind:jakarta.json.bind-api", version.ref = "json-bind" }
 json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "json-path" }
