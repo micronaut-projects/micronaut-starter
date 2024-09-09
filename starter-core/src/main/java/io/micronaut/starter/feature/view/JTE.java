@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.view;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradleDsl;
@@ -39,6 +40,8 @@ public class JTE implements ViewFeature, MicronautServerDependent {
 
     private static final String MAVEN_PLUGIN_ARTIFACT_ID = "jte-maven-plugin";
     private static final String JTE_SRC_DIR = "src/main/jte";
+    private static final String GROUP_ID_GG_JTE = "gg.jte";
+    private static final String ARTIFACT_ID_JTE_KOTLIN = "jte-kotlin";
 
     @Override
     @NonNull
@@ -69,15 +72,25 @@ public class JTE implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
-                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_JTE)
-                .compile());
+        addDependencies(generatorContext);
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addBuildPlugin(mavenPlugin(generatorContext));
         }
         generatorContext.addTemplate("exampleJte", new RockerTemplate(JTE_SRC_DIR + "/example.jte", exampleJTE.template()));
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
+                .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_JTE)
+                .compile());
+        if (generatorContext.getLanguage() == Language.KOTLIN) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(GROUP_ID_GG_JTE)
+                .artifactId(ARTIFACT_ID_JTE_KOTLIN)
+                .compile());
+        }
     }
 
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
