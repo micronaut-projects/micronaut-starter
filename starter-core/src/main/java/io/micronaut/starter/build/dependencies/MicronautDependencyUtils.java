@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,11 @@ public final class MicronautDependencyUtils {
             .compile()
             .build();
 
+    public static final String GROUP_ID_MICRONAUT_GUICE = "io.micronaut.guice";
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
     public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
+    public static final String ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR = "micronaut-core-processor";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
@@ -39,6 +41,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
+    public static final String GROUP_ID_MICRONAUT_JSON_SCHEMA = "io.micronaut.jsonschema";
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
@@ -62,6 +65,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
     public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
+    public static final String GROUP_ID_IO_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_IO_MICRONAUT_VALIDATION = "io.micronaut.validation";
 
     public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
@@ -78,6 +82,11 @@ public final class MicronautDependencyUtils {
 
     private MicronautDependencyUtils() {
 
+    }
+
+    @NonNull
+    public static Dependency.Builder guiceDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GUICE);
     }
 
     @NonNull
@@ -217,6 +226,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder jsonSchemaDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JSON_SCHEMA);
+    }
+
+    @NonNull
     public static Dependency.Builder kafkaDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KAFKA);
     }
@@ -264,6 +278,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder injectJava() {
         return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_INJECT_JAVA);
+    }
+
+    @NonNull
+    public static Dependency.Builder coreProcessor() {
+        return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR);
     }
 
     @NonNull

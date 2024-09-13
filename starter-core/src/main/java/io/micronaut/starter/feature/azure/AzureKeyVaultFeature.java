@@ -21,7 +21,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryClient;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
-import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import jakarta.inject.Singleton;
 
 /**

@@ -12,7 +12,7 @@ class TomcatSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#tomcat")
+        readme.contains("https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#tomcat")
     }
 
 }

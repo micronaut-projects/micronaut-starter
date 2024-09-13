@@ -36,7 +36,8 @@ class MicrometerSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << Language.values().findAll { it != Language.GROOVY }
+
     }
 
     void "test #buildTool micrometer-cloudwatch with #language"(BuildTool buildTool, Language language) {

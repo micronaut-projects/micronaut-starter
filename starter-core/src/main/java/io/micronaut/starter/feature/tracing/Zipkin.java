@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,20 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Zipkin implements TracingFeature, MicronautServerDependent {
 
+    public static final String NAME = "tracing-zipkin";
     private static final String ARTIFACT_ID_MICRONAUT_TRACING_BRAVE_HTTP = "micronaut-tracing-brave-http";
 
     @NonNull
     @Override
     public String getName() {
-        return "tracing-zipkin";
+        return NAME;
     }
 
     @Override
@@ -56,6 +59,10 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
         generatorContext.addDependency(MicronautDependencyUtils.tracingDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_TRACING_BRAVE_HTTP)
                 .compile());
+
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
+            generatorContext.addDependency(MicronautDependencyUtils.coreProcessor().compileOnly());
+        }
     }
 
     @Override

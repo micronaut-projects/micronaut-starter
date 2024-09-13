@@ -10,6 +10,8 @@ import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.database.HibernateReactiveFeature
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
+import io.micronaut.starter.feature.json.JsonSchemaFeature
+import io.micronaut.starter.feature.json.JsonSchemaValidationFeature
 import io.micronaut.starter.feature.lang.groovy.module.GroovyModuleFeature
 import io.micronaut.starter.options.*
 import spock.lang.Unroll
@@ -64,6 +66,9 @@ class FeatureSpec extends BeanContextSpec {
         } else if (feature instanceof Cdk || feature instanceof AwsLambdaEventFunctionFeature) {
             // Cdk fails unless it is combined with Lambda
             features << AwsLambda.FEATURE_NAME_AWS_LAMBDA
+        } else if (feature instanceof JsonSchemaValidationFeature) {
+            // fails unless it is combined with JsonSchemaFeature
+            features << JsonSchemaFeature.NAME
         }
         ApplicationType applicationType = applicationTypeForFeature(feature)
         def commandCtx = new GeneratorContext(buildProject(),

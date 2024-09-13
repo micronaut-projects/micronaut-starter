@@ -29,7 +29,7 @@ import java.util.Set;
 public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     private static boolean supports(JdkVersion jdkVersion) {
-        return JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion);
+        return JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion)  || JdkVersion.JDK_21.equals(jdkVersion);
     }
 
     @Override

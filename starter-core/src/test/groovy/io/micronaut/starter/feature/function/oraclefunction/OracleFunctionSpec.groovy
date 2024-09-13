@@ -137,7 +137,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
           <nativeImageBuildArgs>
             <arg>-H:+StaticExecutableWithDynamicLibC</arg>
             <arg>-Dfn.handler=${function.entrypoint}</arg>
-            <arg>--initialize-at-build-time=example.micronaut</arg>
           </nativeImageBuildArgs>
           <appArguments>
             <arg>${function.entrypoint}</arg>

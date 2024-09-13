@@ -191,23 +191,14 @@ tasks {
 graalvmNative.toolchainDetection = false
 }
 
-@if (features.contains("oracle-function")) {
-@if (features.contains("oracle-function-http")) {
-graalvmNative {
-    binaries.configureEach {
-        buildArgs.add("--initialize-at-build-time=@project.getPackageName()")
-    }
-}
-} else {
+@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
 graalvmNative {
     binaries.configureEach {
         buildArgs.addAll(
              "-H:+StaticExecutableWithDynamicLibC",
              "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
-             "--initialize-at-build-time=@project.getPackageName()"
         )
     }
-}
 }
 }
 
@@ -251,6 +242,106 @@ protobuf {
     }
 }
 }
+}
+
+
+@if (features.contains("views-react")) {
+java {
+    // GraalJS for React server side rendering requires GraalVM.
+    toolchain {
+        vendor = JvmVendorSpec.GRAAL_VM
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// region JavaScript compilation
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+node {
+    download = true
+    version = "21.7.2"
+    nodeProjectDir = layout.projectDirectory.dir("src/main/js")
+}
+
+val builtJSDir = layout.buildDirectory.dir("js")
+
+val buildClientJS = tasks.register<NpxTask>("buildClientJS") {
+    dependsOn("npmInstall")
+    command = "webpack"
+    args = listOf("--mode", "production", "--config", "webpack.client.js")
+    inputs.dir(fileTree("src/main/js/").exclude(".cache"))
+
+    val outPath = builtJSDir.get().file("views/static/client.js")
+    environment = mapOf("BUILD_DIR" to outPath.asFile.absoluteFile.parent)
+    outputs.file(outPath)
+}
+
+val buildServerJS = tasks.register<NpxTask>("buildServerJS") {
+    dependsOn("npmInstall")
+    command = "webpack"
+    args = listOf("--mode", "production", "--config", "webpack.server.js")
+    inputs.dir(fileTree("src/main/js/").exclude(".cache"))
+
+    val outPath = builtJSDir.get().file("views/ssr-components.mjs")
+    environment = mapOf("BUILD_DIR" to outPath.asFile.absoluteFile.parent)
+    outputs.file(outPath)
+}
+
+val buildJS = tasks.register("buildJS") {
+    dependsOn(buildClientJS, buildServerJS)
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir(files(builtJSDir).builtBy(buildJS))
+        }
+    }
+}
+} else {
+node {
+    download = true
+    version = "21.7.2"
+    nodeProjectDir = layout.projectDirectory.dir("src/main/js")
+}
+
+def builtJSDir = layout.buildDirectory.dir('js')
+
+def buildClientJS = tasks.register('buildClientJS', NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ['--mode', 'production', '--config', 'webpack.client.js']
+    inputs.dir(fileTree('src/main/js/').exclude('.cache'))
+
+    def outPath = builtJSDir.get().file('views/static/client.js')
+    environment = ['BUILD_DIR': outPath.asFile.absoluteFile.parent]
+    outputs.file(outPath)
+}
+
+def buildServerJS = tasks.register('buildServerJS', NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ['--mode', 'production', '--config', 'webpack.server.js']
+    inputs.dir(fileTree('src/main/js/').exclude('.cache'))
+
+    def outPath = builtJSDir.get().file('views/ssr-components.mjs')
+    environment = ['BUILD_DIR': outPath.asFile.absoluteFile.parent]
+    outputs.file(outPath)
+}
+
+def buildJS = tasks.register('buildJS') {
+    it.dependsOn(buildClientJS, buildServerJS)
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir(files(builtJSDir).builtBy(buildJS))
+        }
+    }
+}
+}
+// endregion
+
 }
 @gradleBuild.renderExtensions()
 
