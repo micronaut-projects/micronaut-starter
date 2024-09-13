@@ -22,6 +22,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
+import io.micronaut.starter.feature.build.gradle.templates.buildNativeToolsExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,8 +60,13 @@ public class MicronautApplicationGradlePlugin {
         private boolean incremental;
         private  String packageName;
         private boolean sharedTestResources;
-
         private Set<String> ignoredAutomaticDependencies;
+        private BuildNativeToolsGradlePlugin buildNativeToolsGradlePlugin;
+
+        public Builder buildNativeToolsPlugin(BuildNativeToolsGradlePlugin buildNativeToolsGradlePlugin) {
+            this.buildNativeToolsGradlePlugin = buildNativeToolsGradlePlugin;
+            return this;
+        }
 
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
@@ -155,10 +161,14 @@ public class MicronautApplicationGradlePlugin {
         }
 
         public GradlePlugin.Builder builder() {
-            return GradlePlugin.builder()
+            GradlePlugin.Builder builder = GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
                     .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, javaVersion, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies)));
+            if (buildNativeToolsGradlePlugin != null) {
+                builder.extension(new RockerWritable(buildNativeToolsExtension.template(buildNativeToolsGradlePlugin, dsl)));
+            }
+            return builder;
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

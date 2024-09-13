@@ -1,0 +1,45 @@
+@import io.micronaut.starter.feature.build.maven.MicronautMavenPlugin
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
+@args(MicronautMavenPlugin plugin)
+<plugin>
+    <groupId>io.micronaut.maven</groupId>
+    <artifactId>micronaut-maven-plugin</artifactId>
+    <configuration>
+@if (!plugin.getAotDependencies().isEmpty()) {
+@io.micronaut.starter.feature.build.maven.templates.aotDependencies.template(plugin.getAotDependencies())
+}
+@if (plugin.getShared() != null) {
+        <shared>true</shared>
+}
+@if (plugin.getJvmArguments() != null) {
+        <jvmArguments>@(plugin.getJvmArguments())</jvmArguments>
+}
+@if (plugin.getTestResourcesDependencies() != null && !plugin.getTestResourcesDependencies().isEmpty()) {
+        <testResourcesDependencies>
+@for (MavenCoordinate testResourcesDependency : plugin.getTestResourcesDependencies()) {
+            <dependency>
+                <groupId>@(testResourcesDependency.groupId())</groupId>
+                <artifactId>@(testResourcesDependency.artifactId())</artifactId>
+            </dependency>
+}
+        </testResourcesDependencies>
+}
+@if(plugin.getAppArguments() != null && plugin.getAppArguments() != null) {
+        <appArguments>
+@for (String arg : plugin.getAppArguments()) {
+            <arg>@(arg)</arg>
+}
+        </appArguments>
+}
+@if(plugin.getBuildNativeToolsGradlePlugin() != null && plugin.getBuildNativeToolsGradlePlugin().getBuildArgs() != null) {
+        <nativeImageBuildArgs>
+@for (String arg : plugin.getBuildNativeToolsGradlePlugin().getBuildArgs()) {
+            <arg>@(arg)</arg>
+}
+        </nativeImageBuildArgs>
+}
+@if (plugin.getConfigFile() != null) {
+        <configFile>@(plugin.getConfigFile())</configFile>
+}
+    </configuration>
+</plugin>

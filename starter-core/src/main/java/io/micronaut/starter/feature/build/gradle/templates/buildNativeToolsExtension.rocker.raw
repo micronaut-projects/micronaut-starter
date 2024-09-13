@@ -1,0 +1,19 @@
+@import io.micronaut.starter.feature.build.gradle.BuildNativeToolsGradlePlugin
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args(BuildNativeToolsGradlePlugin plugin, GradleDsl dsl)
+graalvmNative {
+@if (plugin.getToolchainDetection() != null && dsl == GradleDsl.GROOVY) {
+    toolchainDetection = @(plugin.getToolchainDetection())
+} else if(plugin.getToolchainDetection() != null && dsl == GradleDsl.KOTLIN) {
+    toolchainDetection.set(@(plugin.getToolchainDetection()))
+}
+@if(plugin.getBuildArgs() != null) {
+    binaries {
+        all {
+            @for (String arg : plugin.getBuildArgs()) {
+            buildArgs.add("@(arg)")
+            }
+        }
+    }
+}
+}

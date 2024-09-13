@@ -25,6 +25,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.build.gradle.ContributingBuildNativeToolsBuildArgs;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
@@ -39,9 +40,11 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.List;
+
 @Singleton
 @Primary
-public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {
+public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature, ContributingBuildNativeToolsBuildArgs {
     public static final String GROUP_ID_COM_FNPROJECT_FN = "com.fnproject.fn";
     public static final Dependency COM_FNPROJECT_RUNTIME = Dependency.builder()
             .groupId(GROUP_ID_COM_FNPROJECT_FN)
@@ -186,5 +189,11 @@ public class OracleFunction extends AbstractFunctionFeature implements OracleClo
                         projectFnFunc.template(generatorContext.getProject()
                         ))
         );
+    }
+
+    @Override
+    public List<String> getBuildArgs(GeneratorContext generatorContext) {
+        return List.of(H_STATIC_EXECUTABLE_WITH_DYNAMIC_LIB_C,
+                "-Dfn.handler=" + generatorContext.getProject().getPackageName() + ".Function::handleRequest");
     }
 }

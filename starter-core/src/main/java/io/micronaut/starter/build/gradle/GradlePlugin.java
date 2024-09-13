@@ -41,7 +41,7 @@ public class GradlePlugin implements BuildPlugin {
     private final String id;
     private final String version;
     private final String artifactId;
-    private final Writable extension;
+    private final List<Writable> extensions;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
     private final List<GradleRepository> pluginsManagementRepositories;
@@ -65,7 +65,7 @@ public class GradlePlugin implements BuildPlugin {
             id,
             version,
             artifactId,
-            extension,
+            Collections.singletonList(extension),
             settingsExtension,
             pluginsManagementRepositories,
             requiresLookup,
@@ -75,6 +75,7 @@ public class GradlePlugin implements BuildPlugin {
         );
     }
 
+    @Deprecated(since = "4.7.0", forRemoval = true)
     public GradlePlugin(@NonNull GradleFile gradleFile,
                         @Nullable String id,
                         @Nullable String version,
@@ -86,11 +87,35 @@ public class GradlePlugin implements BuildPlugin {
                         int order,
                         Set<String> buildImports,
                         Set<String> settingsImports) {
+        this(gradleFile,
+                id,
+                version,
+                artifactId,
+                Collections.singletonList(extension),
+                settingsExtension,
+                pluginsManagementRepositories,
+                requiresLookup,
+                order,
+                buildImports,
+                settingsImports);
+    }
+
+    public GradlePlugin(@NonNull GradleFile gradleFile,
+                        @Nullable String id,
+                        @Nullable String version,
+                        @Nullable String artifactId,
+                        @Nullable List<Writable> extensions,
+                        @Nullable Writable settingsExtension,
+                        List<GradleRepository> pluginsManagementRepositories,
+                        boolean requiresLookup,
+                        int order,
+                        Set<String> buildImports,
+                        Set<String> settingsImports) {
         this.gradleFile = gradleFile;
         this.id = id;
         this.version = version;
         this.artifactId = artifactId;
-        this.extension = extension;
+        this.extensions = extensions;
         this.settingsExtension = settingsExtension;
         this.pluginsManagementRepositories = pluginsManagementRepositories;
         this.requiresLookup = requiresLookup;
@@ -140,8 +165,8 @@ public class GradlePlugin implements BuildPlugin {
 
     @Override
     @Nullable
-    public Writable getExtension() {
-        return extension;
+    public List<Writable> getExtensions() {
+        return extensions;
     }
 
     @Nullable
@@ -169,7 +194,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, pluginsManagementRepositories, false, order, buildImports, settingsImports);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extensions, settingsExtension, pluginsManagementRepositories, false, order, buildImports, settingsImports);
     }
 
     @Override
@@ -199,7 +224,7 @@ public class GradlePlugin implements BuildPlugin {
         private String id;
         private String artifactId;
         private String version;
-        private Writable extension;
+        private List<Writable> extensions;
         private Writable settingsExtension;
         private List<GradleRepository> pluginsManagementRepositories;
         private boolean requiresLookup;
@@ -253,7 +278,10 @@ public class GradlePlugin implements BuildPlugin {
 
         @NonNull
         public GradlePlugin.Builder extension(@Nullable Writable extension) {
-            this.extension = extension;
+            if (this.extensions == null) {
+                this.extensions = new ArrayList<>();
+            }
+            this.extensions.add(extension);
             return this;
         }
 
@@ -279,7 +307,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, pluginsManagementRepositories, requiresLookup, order, buildImports, settingsImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extensions, settingsExtension, pluginsManagementRepositories, requiresLookup, order, buildImports, settingsImports);
         }
     }
 

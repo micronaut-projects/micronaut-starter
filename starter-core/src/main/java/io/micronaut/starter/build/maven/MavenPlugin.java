@@ -23,17 +23,27 @@ import io.micronaut.starter.feature.build.maven.templates.mavenPlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class MavenPlugin implements BuildPlugin {
 
     private final String artifactId;
-    private final Writable extension;
+    private final List<Writable> extensions;
     private final int order;
 
+    @Deprecated(forRemoval = true)
     public MavenPlugin(String artifactId, Writable extension, int order) {
+        this(artifactId, Collections.singletonList(extension), order);
+    }
+
+    public MavenPlugin(String artifactId,
+                       List<Writable> extensions,
+                       int order) {
         this.artifactId = artifactId;
-        this.extension = extension;
+        this.extensions = extensions;
         this.order = order;
     }
 
@@ -81,8 +91,8 @@ public class MavenPlugin implements BuildPlugin {
 
     @Override
     @Nullable
-    public Writable getExtension() {
-        return extension;
+    public List<Writable> getExtensions() {
+        return extensions;
     }
 
     @Nullable

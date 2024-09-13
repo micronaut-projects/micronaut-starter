@@ -23,8 +23,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.feature.Category.CLOUD;
 import static io.micronaut.starter.feature.Category.LOGGING;
 
 @Singleton

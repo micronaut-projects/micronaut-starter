@@ -32,10 +32,10 @@ import io.micronaut.starter.build.gradle.GradleRepository;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
-import io.micronaut.starter.feature.build.gradle.Dockerfile;
-import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
+import io.micronaut.starter.feature.build.gradle.*;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.security.SecurityJWT;
@@ -52,6 +52,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
+import static io.micronaut.starter.feature.build.gradle.ContributingBuildNativeToolsBuildArgs.STRICT_IMAGE_HEAP;
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
 @Singleton
@@ -191,7 +192,31 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 builder.aotKey(AOT_KEY_SECURITY_OPENID, false);
             }
         }
+        buildNativeToolsGradlePlugin(generatorContext).ifPresent(builder::buildNativeToolsPlugin);
         return builder.id(id);
+    }
+
+    protected Optional<BuildNativeToolsGradlePlugin> buildNativeToolsGradlePlugin(GeneratorContext generatorContext) {
+        BuildNativeToolsGradlePlugin.Builder buildNativeToolsGradlePluginBuilder = BuildNativeToolsGradlePlugin.builder();
+        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT || generatorContext.getFeatures().contains(OracleRawFunction.FEATURE_NAME_ORACLE_RAW_FUNCTION)) {
+            buildNativeToolsGradlePluginBuilder.toolchainDetection(false);
+        }
+        List<ContributingBuildNativeToolsBuildArgs> buildArgsFeatures = generatorContext.getFeatures()
+                .getFeatures().stream().filter(f -> f instanceof ContributingBuildNativeToolsBuildArgs)
+                .map(f -> (ContributingBuildNativeToolsBuildArgs) f)
+                .toList();
+        for (ContributingBuildNativeToolsBuildArgs buildArgsFeature : buildArgsFeatures) {
+            for (String arg : buildArgsFeature.getBuildArgs(generatorContext)) {
+                buildNativeToolsGradlePluginBuilder.buildArg(arg);
+            }
+        }
+        if (generatorContext.getFeatures().getFeatures().stream().noneMatch(f -> f instanceof NotCompatibleWithStrictImageHeap)) {
+            buildNativeToolsGradlePluginBuilder.buildArg(STRICT_IMAGE_HEAP);
+        }
+        BuildNativeToolsGradlePlugin buildNativeToolsGradlePlugin = buildNativeToolsGradlePluginBuilder.build();
+        return buildNativeToolsGradlePlugin.isEmpty()
+                ? Optional.empty() :
+                Optional.of(buildNativeToolsGradlePlugin);
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {

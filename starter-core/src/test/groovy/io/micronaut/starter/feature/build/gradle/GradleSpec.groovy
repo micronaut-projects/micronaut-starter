@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.gradle.GradleDsl
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
@@ -86,19 +87,39 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         language << [Language.JAVA, Language.GROOVY]
     }
 
-    void 'disable Gradle Toolchain by default (dsl = #dsl)'() {
+    void '--strict-image-heap enabled by default'(BuildTool buildTool, String fileName) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool))
         String buildGradle = output[fileName]
 
         then:
         buildGradle
-        buildGradle.contains('graalvmNative.toolchainDetection = false')
+        buildGradle.contains('--strict-image-heap')
 
         where:
-        dsl                     | fileName
+        buildTool               | fileName
         BuildTool.GRADLE        | 'build.gradle'
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
+    }
+
+    void 'disable Gradle Toolchain by default (dsl = #dsl)'(BuildTool buildTool, String fileName, GradleDsl dsl) {
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool))
+        String buildGradle = output[fileName]
+
+        then:
+        buildGradle
+        if (dsl == GradleDsl.KOTLIN) {
+            assert buildGradle.contains('toolchainDetection.set(false)')
+        } else if (dsl == GradleDsl.GROOVY) {
+            assert buildGradle.contains('toolchainDetection = false')
+        }
+
+        where:
+        buildTool                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
+        dsl = buildTool.getGradleDsl().get()
     }
 
     void 'ignoredAutomaticDependencies not output by default'() {
@@ -109,19 +130,25 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         !output["build.gradle.kts"].contains('ignoredAutomaticDependencies')
     }
 
-    void 'disable Gradle Toolchain by default for Oracle function (dsl = #dsl)'() {
+    void 'disable Gradle Toolchain by default for Oracle function (dsl = #dsl)'(BuildTool buildTool, String fileName, GradleDsl dsl) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, dsl), ['oracle-function'])
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), ['oracle-function'])
         def buildGradle = output[fileName]
 
         then:
         buildGradle
-        buildGradle.contains('graalvmNative.toolchainDetection = false')
+        if (dsl == GradleDsl.KOTLIN) {
+            assert buildGradle.contains('toolchainDetection.set(false)')
+        } else if (dsl == GradleDsl.GROOVY) {
+            assert buildGradle.contains('toolchainDetection = false')
+        }
 
         where:
-        dsl                     | fileName
+        buildTool               | fileName
         BuildTool.GRADLE        | 'build.gradle'
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
+        dsl = buildTool.getGradleDsl().get()
+
     }
 
     void 'Supported languages have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
