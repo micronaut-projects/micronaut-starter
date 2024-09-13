@@ -31,4 +31,15 @@ class GoogleCloudRawFunctionSpec extends BeanContextSpec  implements CommandOutp
         !readme.contains("## Feature google-cloud-function documentation")
     }
 
+    void 'test Google Cloud Function Maven plugin is applied for feature google-cloud-function'() {
+        when:
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21)
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function'])
+        String pom = output["pom.xml"]
+
+        then:
+        pom.contains("<groupId>com.google.cloud.functions</groupId>")
+        pom.contains("<artifactId>function-maven-plugin</artifactId>")
+    }
+
 }

@@ -22,6 +22,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
@@ -33,9 +34,11 @@ import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionJava
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKoTest;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
+import io.micronaut.starter.feature.build.maven.templates.googleCloudFunctionsMavenPlugin;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -49,6 +52,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
             .artifactId("micronaut-gcp-function")
             .compile()
             .build();
+    public static final String ARTIFACT_ID_FUNCTION_MAVEN_PLUGIN = "function-maven-plugin";
 
     private final GoogleCloudFunction googleCloudFunction;
 
@@ -80,6 +84,13 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
 
             applyTestTemplate(generatorContext, project, "Function");
             addDependencies(generatorContext);
+        }
+
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addBuildPlugin(MavenPlugin.builder()
+                            .artifactId(ARTIFACT_ID_FUNCTION_MAVEN_PLUGIN)
+                            .extension(new RockerWritable(googleCloudFunctionsMavenPlugin.template()))
+                    .build());
         }
     }
 

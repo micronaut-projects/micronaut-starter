@@ -1,0 +1,7 @@
+<plugin>
+    <groupId>com.google.cloud.functions</groupId>
+    <artifactId>function-maven-plugin</artifactId>
+    <configuration>
+        <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
+    </configuration>
+</plugin>
