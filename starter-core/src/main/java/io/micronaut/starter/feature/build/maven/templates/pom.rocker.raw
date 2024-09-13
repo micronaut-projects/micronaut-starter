@@ -389,12 +389,6 @@ String jvmArguments
         </executions>
       </plugin>
 }
-@if (features.contains("grpc")) {
-      <plugin>
-        <groupId>com.github.os72</groupId>
-        <artifactId>protoc-jar-maven-plugin</artifactId>
-      </plugin>
-}
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow) || features.contains("oracle-function")) {
       <plugin>
         <groupId>com.google.cloud.tools</groupId>

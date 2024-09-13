@@ -32,6 +32,19 @@ class GrpcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         Category.API == grpc.category
     }
 
+
+    void 'test grpc plugin is applied by default for Maven'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .applicationType(ApplicationType.GRPC)
+                .language(Language.JAVA)
+                .render()
+
+        then:
+        template.contains("<groupId>com.github.os72</groupId>")
+        template.contains("<artifactId>protoc-jar-maven-plugin</artifactId>")
+    }
+
     @Unroll
     void 'test grpc plugin is applied by default for Gradle and language=#language'(Language language) {
         given:

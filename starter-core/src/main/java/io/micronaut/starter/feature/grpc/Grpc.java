@@ -23,12 +23,14 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryCore;
 import io.micronaut.starter.feature.grpc.template.proto;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -48,6 +50,12 @@ public class Grpc implements DefaultFeature {
     private static final Dependency DEPENDENCY_MICRONAUT_GRPC_RUNTIME = MicronautDependencyUtils.grpcDependency()
             .artifactId("micronaut-grpc-runtime")
             .compile()
+            .build();
+    private static final String GROUP_ID_COM_GITHUB_OS_72 = "com.github.os72";
+    private static final String ARTIFACT_ID_PROTOC_JAR_MAVEN_PLUGIN = "protoc-jar-maven-plugin";
+    private static final MavenPlugin GRPC_MAVEN_BUILD_PLUGIN = MavenPlugin.builder()
+            .groupId(GROUP_ID_COM_GITHUB_OS_72)
+            .artifactId(ARTIFACT_ID_PROTOC_JAR_MAVEN_PLUGIN)
             .build();
 
     private final DiscoveryCore discoveryCore;
@@ -73,6 +81,8 @@ public class Grpc implements DefaultFeature {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
+        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addBuildPlugin(GRPC_MAVEN_BUILD_PLUGIN);
         }
     }
 
