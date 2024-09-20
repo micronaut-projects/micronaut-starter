@@ -77,10 +77,10 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addHelpLink("Shadow Gradle Plugin", "https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow");
+            generatorContext.addHelpLink("Shadow Gradle Plugin", "https://plugins.gradle.org/plugin/com.gradleup.shadow");
             GradlePlugin.Builder builder = GradlePlugin.builder()
-                    .id("com.github.johnrengelman.shadow")
-                    .lookupArtifactId("shadow");
+                    .id("com.gradleup.shadow")
+                    .lookupArtifactId("shadow-gradle-plugin");
 
             generatorContext.addBuildPlugin(builder.build());
         }
