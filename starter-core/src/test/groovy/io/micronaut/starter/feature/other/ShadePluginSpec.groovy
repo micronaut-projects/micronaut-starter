@@ -17,13 +17,13 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         then:
         readme
-        readme.contains("[Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)")
+        readme.contains("[Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.gradleup.shadow)")
     }
 
     @Unroll
     void 'test shade plugin is applied by default for Gradle and language=#language type=#applicationType'(Language language, ApplicationType applicationType) {
         given:
-        String pluginId = 'com.github.johnrengelman.shadow'
+        String pluginId = 'com.gradleup.shadow'
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
