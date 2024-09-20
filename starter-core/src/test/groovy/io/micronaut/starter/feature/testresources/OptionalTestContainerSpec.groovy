@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MongoReactive
 import io.micronaut.starter.feature.database.MongoSync
 import io.micronaut.starter.feature.database.MySQL
+import io.micronaut.starter.feature.database.Neo4jBolt
 import io.micronaut.starter.feature.database.Oracle
 import io.micronaut.starter.feature.database.PostgreSQL
 import io.micronaut.starter.feature.database.SQLServer
@@ -34,6 +35,7 @@ class OptionalTestContainerSpec extends ApplicationContextSpec {
             Mqtt.NAME,
             MongoSync.NAME,
             MongoReactive.NAME,
+            Neo4jBolt.NAME,
             HibernateReactiveJpa.NAME,
             DataHibernateReactive.NAME,
     ]

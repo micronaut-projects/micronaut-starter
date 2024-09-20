@@ -20,6 +20,7 @@ class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixt
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/index.html")
+        readme.contains("https://neo4j.com/docs/java-manual/current/")
     }
 
     void "test neo4j bolt features"() {
@@ -30,26 +31,69 @@ class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixt
         features.contains("neo4j-bolt")
     }
 
-    void "test dependencies are present for #buildTool"(BuildTool buildTool) {
-        when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .features(["neo4j-bolt"])
-                .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
-
-        then:
-        verifier.hasDependency("io.micronaut.neo4j", "micronaut-neo4j-bolt", Scope.COMPILE)
-        verifier.hasDependency("org.neo4j.test", "neo4j-harness", Scope.TEST_RUNTIME)
-
-        where:
-        buildTool << BuildTool.values()
-    }
-
     void "test config"() {
         when:
         GeneratorContext ctx = buildGeneratorContext(['neo4j-bolt'])
 
         then:
         ctx.getConfiguration().get("neo4j.uri") == "bolt://\${NEO4J_HOST:localhost}"
+    }
+
+    void "neo4j-bolt dependency is present for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.neo4j","micronaut-neo4j-bolt")
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "testcontainers neo4j-bolt dependency is present for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt','testcontainers'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+
+        where:
+        buildTool << BuildTool.values()
+    }
+
+    void "test neo4j-bolt test-resources for build tool #buildTool"(BuildTool buildTool) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(['neo4j-bolt','test-resources'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+        !verifier.hasDependency("org.testcontainers","testcontainers", Scope.TEST)
+        verifier.hasBuildPlugin("io.micronaut.test-resources")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
+    }
+
+    void "test neo4j-bolt test-resources for build tool Maven"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['neo4j-bolt','test-resources'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
+
+        then:
+        !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+        !verifier.hasDependency("org.testcontainers","testcontainers", Scope.TEST)
+        verifier.hasDependency("io.micronaut.testresources","micronaut-test-resources-client")
     }
 }
