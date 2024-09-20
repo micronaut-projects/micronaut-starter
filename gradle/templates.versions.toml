@@ -106,7 +106,7 @@ gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", ver
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
 gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
-gradle-shadow-plugin = { module = "gradle.plugin.com.gradleup.shadow:shadow-gradle-plugin", version.ref = "gradle-shadow-plugin" }
+gradle-shadow-plugin = { module = "com.gradleup.shadow:shadow-gradle-plugin", version.ref = "gradle-shadow-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
 jobrunr-micronaut = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
 jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
