@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,14 +34,9 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
 
     private final HttpClient httpClient;
 
-    @Deprecated
-    public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
-        this(securityAnnotations, new HttpClient());
-    }
-
     @Inject
-    public SecurityOAuth2(SecurityAnnotations securityAnnotations, HttpClient httpClient) {
-        super(securityAnnotations);
+    public SecurityOAuth2(SecurityProcessor securityProcessor, HttpClient httpClient) {
+        super(securityProcessor);
         this.httpClient = httpClient;
     }
 

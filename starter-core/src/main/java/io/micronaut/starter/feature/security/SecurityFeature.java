@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,16 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 public abstract class SecurityFeature implements Feature, MicronautServerDependent {
 
-    private final SecurityAnnotations securityAnnotations;
+    private final SecurityProcessor securityProcessor;
 
-    public SecurityFeature(SecurityAnnotations securityAnnotations) {
-        this.securityAnnotations = securityAnnotations;
+    public SecurityFeature(SecurityProcessor securityProcessor) {
+        this.securityProcessor = securityProcessor;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(SecurityAnnotations.class)) {
-            featureContext.addFeature(securityAnnotations);
+        if (!featureContext.isPresent(SecurityProcessor.class)) {
+            featureContext.addFeature(securityProcessor);
         }
     }
 
