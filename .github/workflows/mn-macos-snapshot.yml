@@ -9,7 +9,7 @@ on:
 jobs:
   intel:
     name: Builds OS X Intel Native CLI
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: "⬇ Checkout the repository"
         uses: actions/checkout@v4
