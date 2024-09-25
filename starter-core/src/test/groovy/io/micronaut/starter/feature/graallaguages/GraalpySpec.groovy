@@ -25,7 +25,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'readme.md with feature micronaut-graalpy contains links to docs'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), [Graalpy.NAME])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21), [Graalpy.NAME])
         String readme = output["README.md"]
 
         then:
@@ -88,7 +88,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         given:
         String featureName = 'graalpy'
         when:
-        getFeatures([featureName], Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE)
+        getFeatures([featureName], new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21))
 
         then:
         IllegalArgumentException ex = thrown()
