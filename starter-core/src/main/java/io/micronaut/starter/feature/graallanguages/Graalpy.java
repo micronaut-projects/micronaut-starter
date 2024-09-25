@@ -23,26 +23,28 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.MavenSpecificFeature;
+import io.micronaut.starter.feature.MinJdkFeature;
+import io.micronaut.starter.feature.graallanguages.templates.graalPyMavenPlugin;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.graallanguages.templates.graalPyMavenPlugin;
 
 import java.util.Collections;
 import java.util.List;
 
 @Singleton
-public class Graalpy implements Feature {
+public class Graalpy implements MinJdkFeature, MavenSpecificFeature {
+    public static final String NAME = "graalpy";
+
     private static final String GROUP_ID_GRAALVM_PYTHON = "org.graalvm.python";
     private static final String ARTIFACT_ID_GRAALPY_MAVEN_PLUGIN = "graalpy-maven-plugin";
-    private static final String NAME = "graalpy";
     private static final String ARTIFACT_ID_MICRONAUT_GRAALPY = "micronaut-graalpy";
     private static final Dependency MICRONAUT_GRAALPY_DEPENDENCY = MicronautDependencyUtils.graalLanguagesDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_GRAALPY)
             .compile()
             .build();
-    private static final String PROPERTY_GRAALPY_MAVEN_PLUGIN_VERSION = "graalpy.maven.plugin.version";
 
     private final CoordinateResolver coordinateResolver;
 
@@ -85,8 +87,6 @@ public class Graalpy implements Feature {
 
     private void addGraalPyMavenPlugin(GeneratorContext generatorContext) {
         BuildProperties buildProperties = generatorContext.getBuildProperties();
-        coordinateResolver.resolve(ARTIFACT_ID_GRAALPY_MAVEN_PLUGIN)
-                .ifPresent(coordinate -> buildProperties.put(PROPERTY_GRAALPY_MAVEN_PLUGIN_VERSION, coordinate.getVersion()));
         generatorContext.addBuildPlugin(graalpyMavenPlugin());
     }
 
@@ -116,4 +116,8 @@ public class Graalpy implements Feature {
         return "https://micronaut-projects.github.io/micronaut-graal-languages/latest/guide/";
     }
 
+    @Override
+    public JdkVersion minJdk() {
+        return JdkVersion.JDK_21;
+    }
 }

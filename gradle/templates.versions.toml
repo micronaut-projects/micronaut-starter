@@ -35,7 +35,6 @@ gradle-enterprise-maven-custom-data = "1.13"
 gradle-enterprise-maven-extension = "1.21.4"
 gradle-jrebel-plugin = "1.1.10"
 gradle-shadow-plugin = "8.1.1"
-graalpy-maven-plugin = "24.1.0"
 jib-gradle-plugin = "2.8.0"
 jobrunr = "6.3.5"
 jruby = "9.4.5.0"
@@ -108,7 +107,6 @@ gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extensi
 gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
-graalpy-maven-plugin = { module = "org.graalvm.python:graalpy-maven-plugin", version.ref = "graalpy-maven-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
 jobrunr-micronaut = { module = "org.jobrunr:jobrunr-micronaut-feature", version.ref = "jobrunr" }
 jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
