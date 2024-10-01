@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.migration;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
 import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.migration.template.liquibaseChangelog;
 import io.micronaut.starter.feature.migration.template.liquibaseSchema;
@@ -37,7 +38,7 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(slf4jJulBridge);
+        featureContext.addFeatureIfNotPresent(LiquibaseSlf4j.class, slf4jJulBridge);
     }
 
     @Override
