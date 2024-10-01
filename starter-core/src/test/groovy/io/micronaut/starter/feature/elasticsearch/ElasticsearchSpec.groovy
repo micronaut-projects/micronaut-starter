@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.elasticsearch
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -67,14 +70,16 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
 
     @Unroll
     void 'test gradle elasticsearch and graalvm features for language=#language'() {
+        BuildTool buildTool = BuildTool.GRADLE
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['elasticsearch', 'graalvm'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:')
+        verifier.hasDependency("org.slf4j", "log4j-over-slf4j", Scope.RUNTIME)
         template.contains('implementation("org.apache.logging.log4j:log4j-api:')
         template.contains('implementation("org.apache.logging.log4j:log4j-core:')
 

@@ -2,7 +2,10 @@ package io.micronaut.starter.feature.migration
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.config.Yaml
+import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -36,6 +39,27 @@ liquibase:
     default:
       change-log: classpath:db/liquibase-changelog.xml
 """)
+
+        when:
+        String applicationJava = output['src/main/java/example/micronaut/Application.java']
+
+
+        then:
+        applicationJava.contains("""
+package example.micronaut;
+
+import org.slf4j.bridge.SLF4JBridgeHandler;
+import io.micronaut.runtime.Micronaut;
+
+public class Application {
+
+    public static void main(String[] args) {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+        Micronaut.run(Application.class, args);
+    }
+}
+""".trim())
     }
 
     void "test the dependency is added to the gradle build"() {
@@ -49,18 +73,16 @@ liquibase:
     }
 
     void "test the dependency is added to the maven build"() {
+        given:
+        BuildTool buildTool = BuildTool.MAVEN
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['liquibase'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.liquibase</groupId>
-      <artifactId>micronaut-liquibase</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.liquibase", "micronaut-liquibase")
+        verifier.hasDependency("org.slf4j", "jul-to-slf4j")
     }
 }
