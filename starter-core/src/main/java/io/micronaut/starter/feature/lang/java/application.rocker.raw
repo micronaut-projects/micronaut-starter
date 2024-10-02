@@ -5,7 +5,7 @@
 @import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors
 
-@args (Project project, Features features, ApplicationRenderingContext context)
+@args (Project project, Features features, ApplicationRenderingContext context, boolean jul)
 
 package @project.getPackageName();
 
@@ -14,6 +14,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
 import io.micronaut.context.annotation.ContextConfigurer;
+}
+@if(jul) {
+import org.slf4j.bridge.SLF4JBridgeHandler;
 }
 import io.micronaut.runtime.Micronaut;
 @if (features.contains("openapi")) {
@@ -84,6 +87,10 @@ public class Application {
 
 @with? (maybeContextConfig = context.getContextConfigurer()) { @maybeContextConfig }
     public static void main(String[] args) {
+@if(jul) {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+}
         Micronaut.run(Application.class, args);
     }
 }

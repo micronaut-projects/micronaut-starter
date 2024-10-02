@@ -25,6 +25,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.spock;
@@ -79,7 +80,8 @@ public class KotlinApplication implements KotlinApplicationFeature {
         return application.template(
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new KotlinApplicationRenderingContext(defaultEnvironment, eagerInitSingleton)
+                new KotlinApplicationRenderingContext(defaultEnvironment, eagerInitSingleton),
+                generatorContext.hasFeature(Slf4jJulBridge.class)
         );
     }
 

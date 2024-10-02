@@ -76,6 +76,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
+    public static final String GROUP_ID_MICRONAUT_ELASTICSEARCH = "io.micronaut.elasticsearch";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
@@ -365,6 +366,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder controlPanelDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
+    }
+
+    @NonNull
+    public static Dependency.Builder elasticSearchDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ELASTICSEARCH);
     }
 
     @NonNull

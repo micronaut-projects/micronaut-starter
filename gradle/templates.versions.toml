@@ -60,8 +60,6 @@ rewrite-micronaut = "2.8.4"
 rocker-gradle-plugin = "3.0.4"
 rocker-maven-plugin = "1.4.0"
 scram-client = "2.1"
-slf4j = "1.7.36"
-jul-to-slf4j="2.0.16"
 slf4j-simple-logger = "2.0.0"
 zeebe-micronaut-client = "1.17.0"
 ktor = "2.3.12"
@@ -72,6 +70,7 @@ micronaut-starter-aws-cdk = "4.6.2"
 spring-boot-starter-parent="3.3.0"
 graaljs = "24.0.2"  # Once this is bumped past 24.1, you should be able to remove the disabling of Loom in the config properties in the React feature.
 frontend-maven-plugin = "1.15.0"
+liquibase-slf4j = "5.0.0"
 
 [libraries]
 spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
@@ -123,8 +122,6 @@ ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.
 kotlin-noarg = { module = "org.jetbrains.kotlin:kotlin-noarg", version.ref = "kotlin" }
 log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
-jul-to-slf4j = { module = "org.slf4j:jul-to-slf4j", version.ref = "jul-to-slf4j" }
-log4j-over-slf4j = { module = "org.slf4j:log4j-over-slf4j", version.ref = "slf4j" }
 log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j-impl", version.ref = "log4j" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson-jvm", version.ref = "ktor" }
@@ -148,6 +145,7 @@ zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature
 buildless-gradle-plugin = { module = "build.less:buildless-plugin-gradle", version.ref = "buildless" }
 graaljs-community = { module = "org.graalvm.polyglot:js-community", version.ref = "graaljs" }
 frontend-maven-plugin = { module = "com.github.eirslett:frontend-maven-plugin", version.ref = "frontend-maven-plugin" }
+liquibase-slf4j = { module = "com.mattbertolini:liquibase-slf4j", version.ref = "liquibase-slf4j" }
 
 [plugins]
 # This is an exception to the rule!

@@ -1,6 +1,5 @@
 package io.micronaut.starter.core.test.feature.database
 
-import io.micronaut.starter.core.test.feature.database.templates.book
 import io.micronaut.starter.feature.database.HibernateReactiveJpa
 import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MySQL
@@ -18,8 +17,10 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
+// Don't delete this import.  It is not an unused import
+import io.micronaut.starter.core.test.feature.database.templates.book
 
-class HibernateReactiveJpaSpec extends CommandSpec {
+class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         return "hibernateReactiveJpa"
