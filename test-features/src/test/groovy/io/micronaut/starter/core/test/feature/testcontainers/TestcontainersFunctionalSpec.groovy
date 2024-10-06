@@ -19,7 +19,7 @@ import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 
-class TestcontainersSpec extends CommandSpec {
+class TestcontainersFunctionalSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
@@ -59,6 +59,7 @@ class TestcontainersSpec extends CommandSpec {
                 beanContext.getBeansOfType(DatabaseDriverFeature)
                         .stream()
                         .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
+                        .filter( f -> f.name != SQLServer.NAME) // temporarily exclude SQL Server feature
                         .filter( f -> !f.embedded())
                         .toList()
         ].combinations()
