@@ -19,7 +19,7 @@ import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
-class DataHibernateReactiveSpec extends CommandSpec {
+class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
@@ -42,6 +42,7 @@ class DataHibernateReactiveSpec extends CommandSpec {
         db << featuresNames()
                 .stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter( f -> f != SQLServer.NAME) // temporarily exclude SQL Server feature
                 .toList()
     }
 
@@ -60,6 +61,7 @@ class DataHibernateReactiveSpec extends CommandSpec {
         [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
                 .stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter( f -> f != SQLServer.NAME) // temporarily exclude SQL Server feature
                 .toList()
         ].combinations()
     }

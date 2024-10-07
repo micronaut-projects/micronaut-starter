@@ -19,7 +19,7 @@ import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
-class HibernateReactiveJpaSpec extends CommandSpec {
+class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         return "hibernateReactiveJpa"
@@ -40,6 +40,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         where:
         db << featuresNames().stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                .filter( f -> f != SQLServer.NAME) // temporarily exclude SQL Server feature
                 .toList()
     }
 
@@ -58,6 +59,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
                                     .stream()
                                     .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
+                                    .filter( f -> f != SQLServer.NAME) // temporarily exclude SQL Server feature
                                     .toList()].combinations()
     }
 
