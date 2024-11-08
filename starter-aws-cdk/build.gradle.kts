@@ -4,7 +4,7 @@ plugins {
 val micronautVersion: String by project
 
 dependencies {
-    api("software.amazon.awscdk:aws-cdk-lib:2.155.0")
+    api("software.amazon.awscdk:aws-cdk-lib:2.166.0")
     api(project(":starter-core"))
 
     testImplementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
