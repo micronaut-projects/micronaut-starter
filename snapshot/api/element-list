@@ -142,6 +142,8 @@ io.micronaut.starter.feature.github.workflows.gcloud.templates
 io.micronaut.starter.feature.github.workflows.oci
 io.micronaut.starter.feature.github.workflows.oci.templates
 io.micronaut.starter.feature.github.workflows.templates
+io.micronaut.starter.feature.graallanguages
+io.micronaut.starter.feature.graallanguages.templates
 io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graphql
 io.micronaut.starter.feature.grpc
