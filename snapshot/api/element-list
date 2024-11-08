@@ -166,6 +166,9 @@ io.micronaut.starter.feature.lang.groovy
 io.micronaut.starter.feature.lang.groovy.module
 io.micronaut.starter.feature.lang.java
 io.micronaut.starter.feature.lang.kotlin
+io.micronaut.starter.feature.langchain4j
+io.micronaut.starter.feature.langchain4j.embeddedstore
+io.micronaut.starter.feature.langchain4j.languagemodels
 io.micronaut.starter.feature.logging
 io.micronaut.starter.feature.logging.template
 io.micronaut.starter.feature.messaging
