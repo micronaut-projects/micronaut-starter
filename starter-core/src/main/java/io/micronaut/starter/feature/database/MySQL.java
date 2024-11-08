@@ -30,7 +30,7 @@ public class MySQL extends MySQLCompatibleFeature {
     public static final String NAME = "mysql";
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_MYSQL = Dependency.builder()
-            .groupId("dev.miku")
+            .groupId("io.asyncer")
                     .artifactId("r2dbc-mysql")
                     .runtime();
 

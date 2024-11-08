@@ -94,6 +94,23 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
     }
 
+    void "test dependencies are present for gradle and mysql r2dbc"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["data-r2dbc", "mysql"])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
+
+        then:
+        jdbcFeature.name == 'jdbc-hikari'
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-processor', Scope.ANNOTATION_PROCESSOR)
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
+        !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
+        verifier.hasDependency('io.asyncer', 'r2dbc-mysql', Scope.RUNTIME)
+        !verifier.hasDependency('com.mysql', 'mysql-connector-j', Scope.RUNTIME)
+        !verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
+    }
+
     void "test dependencies are present for gradle with TestContainers and #featureClassName"(Class<DatabaseDriverFeature> db) {
         when:
         def feature = beanContext.getBean(db)

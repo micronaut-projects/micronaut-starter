@@ -43,6 +43,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_JSON_SCHEMA = "io.micronaut.jsonschema";
+    public static final String GROUP_ID_MICRONAUT_GRAAL_LANGUAGES = "io.micronaut.graal-languages";    
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
@@ -76,6 +77,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
+    public static final String GROUP_ID_MICRONAUT_ELASTICSEARCH = "io.micronaut.elasticsearch";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
@@ -227,6 +229,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder graalLanguagesDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GRAAL_LANGUAGES);
+    }
+
+    @NonNull
     public static Dependency.Builder jsonSchemaDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_JSON_SCHEMA);
     }
@@ -365,6 +372,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder controlPanelDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
+    }
+
+    @NonNull
+    public static Dependency.Builder elasticSearchDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ELASTICSEARCH);
     }
 
     @NonNull

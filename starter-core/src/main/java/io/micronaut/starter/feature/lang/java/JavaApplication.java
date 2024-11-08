@@ -24,6 +24,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -78,7 +79,8 @@ public class JavaApplication implements JavaApplicationFeature  {
         return application.template(
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new JavaApplicationRenderingContext(defaultEnvironment, eagerInitSingleton)
+                new JavaApplicationRenderingContext(defaultEnvironment, eagerInitSingleton),
+                generatorContext.hasFeature(Slf4jJulBridge.class)
         );
     }
 
