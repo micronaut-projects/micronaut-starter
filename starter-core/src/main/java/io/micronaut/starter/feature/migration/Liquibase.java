@@ -17,6 +17,9 @@ package io.micronaut.starter.feature.migration;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
+import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.migration.template.liquibaseChangelog;
 import io.micronaut.starter.feature.migration.template.liquibaseSchema;
 import io.micronaut.starter.template.RockerTemplate;
@@ -26,6 +29,17 @@ import jakarta.inject.Singleton;
 public class Liquibase implements MigrationFeature {
 
     public static final String NAME = "liquibase";
+
+    private final Slf4jJulBridge slf4jJulBridge;
+
+    public Liquibase(Slf4jJulBridge slf4jJulBridge) {
+        this.slf4jJulBridge = slf4jJulBridge;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(LiquibaseSlf4j.class, slf4jJulBridge);
+    }
 
     @Override
     public String getName() {

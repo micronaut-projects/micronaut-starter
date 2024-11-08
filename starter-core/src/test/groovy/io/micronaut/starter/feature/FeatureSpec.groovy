@@ -53,7 +53,11 @@ class FeatureSpec extends BeanContextSpec {
             // because it's valid when using Spock framework too
             language = Language.GROOVY
         }
-        Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
+        def buildTool = BuildTool.GRADLE
+        if (feature instanceof MavenSpecificFeature) {
+            buildTool = BuildTool.MAVEN
+        }
+        Options options = new Options(language, TestFramework.JUNIT, buildTool, javaVersion)
         List<String> features = [feature.getName()]
 
         if (feature instanceof JAsyncSQLFeature) {

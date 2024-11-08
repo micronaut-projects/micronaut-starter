@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.serde.annotation.Serdeable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -49,6 +50,27 @@ public final class JdkVersion {
     public static final JdkVersion JDK_19 = new JdkVersion(19);
     public static final JdkVersion JDK_20 = new JdkVersion(20);
     public static final JdkVersion JDK_21 = new JdkVersion(21);
+    public static final JdkVersion JDK_22 = new JdkVersion(22);
+    public static final JdkVersion JDK_23 = new JdkVersion(23);
+    public static final List<JdkVersion> JDKS = List.of(
+            JDK_8,
+            JDK_9,
+            JDK_10,
+            JDK_11,
+            JDK_12,
+            JDK_13,
+            JDK_14,
+            JDK_15,
+            JDK_16,
+            JDK_17,
+            JDK_18,
+            JDK_19,
+            JDK_20,
+            JDK_21,
+            JDK_22,
+            JDK_23
+    );
+
     private static final String PREFIX_JDK = "JDK_";
 
     int majorVersion;

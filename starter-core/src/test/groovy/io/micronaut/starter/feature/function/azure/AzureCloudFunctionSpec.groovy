@@ -45,7 +45,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                MicronautJdkVersionConfiguration.SUPPORTED_JDKS.findAll { !AzureFunctionFeatureValidator.supports(it) }
+                JdkVersion.JDKS.findAll { !AzureFunctionFeatureValidator.supports(it) }
         ].combinations()
     }
 

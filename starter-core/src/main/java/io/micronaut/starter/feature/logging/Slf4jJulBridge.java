@@ -27,6 +27,12 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Slf4jJulBridge implements Feature {
+    private static final String ARTIFACT_ID_JUL_TO_SLF_4_J = "jul-to-slf4j";
+    private static final Dependency JUL_TO_SLF4J = Slf4j.slf4jDependency()
+            .artifactId(ARTIFACT_ID_JUL_TO_SLF_4_J)
+            .compile()
+            .build();
+
     @Override
     public String getCategory() {
         return Category.LOGGING;
@@ -57,7 +63,7 @@ public class Slf4jJulBridge implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addLoggingProperties(generatorContext);
-        generatorContext.addDependency(Dependency.builder().lookupArtifactId("jul-to-slf4j").runtime());
+        generatorContext.addDependency(JUL_TO_SLF4J);
     }
 
     protected void addLoggingProperties(GeneratorContext generatorContext) {

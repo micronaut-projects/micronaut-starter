@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    //annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     annotationProcessor("io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")

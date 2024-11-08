@@ -13,13 +13,12 @@ import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
-
-// Required so Groovy recognizes these as a class
+// Don't delete these imports. They are not unused imports
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
-import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
+import io.micronaut.starter.core.test.feature.testcontainers.book
 
-class TestcontainersSpec extends CommandSpec {
+class TestContainersFunctionalSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
@@ -34,7 +33,7 @@ class TestcontainersSpec extends CommandSpec {
         if (!skip) {
             generateProject(Language.JAVA, buildTool, ["data-jdbc", "testcontainers", driverFeature.getName()])
         }
-        def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
+        FileSystemOutputHandler fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/BookRepository.java", new RockerWritable(bookRepository.template(driverFeature.getDataDialect())))
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
         fsoh.write("src/main/test/example/micronaut/BookRepositoryTest.java", new RockerWritable(bookRepositoryTest.template()))
