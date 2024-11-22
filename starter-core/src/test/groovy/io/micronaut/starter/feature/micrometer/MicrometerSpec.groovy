@@ -99,18 +99,38 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         template.count("micronaut-micrometer-core") == 1
     }
 
-    @Unroll
-    void 'test micrometer configuration for feature=#micrometerFeature'() {
+    @Unroll('test micrometer configuration for feature=#featureName #configKey')
+    void 'test micrometer configuration'(String featureName, String configKey) {
         when:
-        GeneratorContext commandContext = buildGeneratorContext([micrometerFeature])
+        GeneratorContext commandContext = buildGeneratorContext([featureName])
 
         then: 'the micrometer configuration is enabled for the feature'
         commandContext.configuration.get("micronaut.metrics.export.${configKey}.enabled".toString()) == true
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerRegistryFeature)*.name.iterator()
-        configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
+        featureName | configKey
+        'micrometer-azure-monitor' |  'azuremonitor'
+        'micrometer-new-relic' |  'newrelic'
+        'micrometer-appoptics' | 'appoptics'
+        'micrometer-signalfx' | 'signalfx'
+        'micrometer-dynatrace' | 'dynatrace'
+        'micrometer-prometheus-pushgateway' | 'prometheus.pushgateway'
+        'micrometer-influx' | 'influx'
+        'micrometer-oracle-cloud' | 'oraclecloud'
+        'micrometer-graphite' | 'graphite'
+        'micrometer-kairos' | 'kairos'
+        'micrometer-stackdriver' | 'stackdriver'
+        'micrometer-ganglia' | 'ganglia'
+        'micrometer-elastic' | 'elastic'
+        'micrometer-prometheus' | 'prometheus'
+        'micrometer-statsd' | 'statsd'
+        'micrometer-atlas' | 'atlas'
+        'micrometer-jmx' | 'jmx'
+        'micrometer-cloudwatch' | 'cloudwatch'
+        'micrometer-datadog' | 'datadog'
+        'micrometer-wavefront' | 'wavefront'
+        'micrometer-humio' | 'humio'
     }
 
     void 'test mandatory dependencies for micrometer features are added'() {
