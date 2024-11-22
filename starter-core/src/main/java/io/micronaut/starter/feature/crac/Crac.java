@@ -46,12 +46,7 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
     public String getTitle() {
         return "Support for CRaC (Coordinated Restore at Checkpoint)";
     }
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
-
+    
     @Override
     @NonNull
     public String getDescription() {
