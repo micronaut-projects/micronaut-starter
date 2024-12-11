@@ -21,6 +21,11 @@
       "matchUpdateTypes": ["patch"],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
+    },
+    {
+      "matchDatasources": ["github-runner"],
+      "matchPackageNames": ["macos"],
+      "enabled": false
     }
   ]
 }
