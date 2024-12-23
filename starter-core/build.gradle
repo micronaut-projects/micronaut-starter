@@ -1,7 +1,7 @@
 import io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask
 
 plugins {
-    id "io.micronaut.internal.starter.published-module"
+    id("io.micronaut.internal.build.starter-openapi-module")
     id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
     id "io.micronaut.internal.starter.coordinates"
