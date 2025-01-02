@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '21'
       - name: 'Package Function'
         run: |
           ./gradlew starter-azure-function:azureFunctionsPackage
