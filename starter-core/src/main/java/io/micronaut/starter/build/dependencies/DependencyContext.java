@@ -19,11 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static io.micronaut.starter.build.dependencies.Phase.COMPILATION;
@@ -88,7 +84,37 @@ public interface DependencyContext {
         List<Dependency> result = new ArrayList<>(dependenciesNotInMainOrTestClasspath);
         result.addAll(dependenciesInMainClasspathWithoutDuplicates);
         result.addAll(dependenciesInTestClasspathWithoutDuplicates);
-        return result.stream().sorted(Dependency.COMPARATOR).toList();
+        result = result.stream().sorted(Dependency.COMPARATOR).toList();
+        return filteredMavenRuntimeTestDependencies(result, buildTool);
+    }
+
+    private static List<Dependency> filteredMavenRuntimeTestDependencies(List<Dependency> dependencies, BuildTool buildTool) {
+        if (buildTool.isGradle()) {
+            return dependencies;
+        }
+        List<Dependency> result = new ArrayList<>();
+
+        Set<MavenCoordinate> coordinatesAdded = new HashSet<>();
+        for (Dependency d : dependencies) {
+            MavenCoordinate coord = new MavenCoordinate(d.getGroupId(), d.getArtifactId(), d.getVersion());
+            if (d.getScope() == Scope.RUNTIME &&
+                    dependencies.stream().anyMatch(dep ->
+                            dep.getScope() == Scope.TEST &&
+                                    dep.getGroupId().equals(d.getGroupId()) &&
+                                    dep.getArtifactId().equals(d.getArtifactId()))) {
+                result.add(Dependency.of(d, Scope.COMPILE));
+                coordinatesAdded.add(coord);
+            } else if (d.getScope() == Scope.TEST &&
+                    d.getGroupId().equals(d.getGroupId()) &&
+                    d.getArtifactId().equals(d.getArtifactId())) {
+                if (!coordinatesAdded.contains(coord)) {
+                    result.add(d);
+                }
+            } else {
+                result.add(d);
+            }
+        }
+        return result;
     }
 
     private static List<Dependency> filterDuplicates(List<Dependency> dependencies) {
