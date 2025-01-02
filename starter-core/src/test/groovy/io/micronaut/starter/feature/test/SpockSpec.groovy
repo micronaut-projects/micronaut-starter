@@ -6,7 +6,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import spock.lang.Ignore
 import spock.lang.Issue
 
 class SpockSpec extends ApplicationContextSpec {
@@ -78,7 +77,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         Language.JAVA   | TestFramework.KOTEST
     }
 
-    @Ignore
     void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
