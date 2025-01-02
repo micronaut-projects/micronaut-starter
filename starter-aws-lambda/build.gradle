@@ -33,7 +33,6 @@ graalvmNative {
 
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
-    baseImage = "amazonlinux:2023"
     args(
             "-XX:MaximumHeapSizePercent=80",
             "-Dio.netty.allocator.numDirectArenas=0",
