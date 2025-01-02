@@ -39,13 +39,3 @@ abstract class OpenApiSystemPropertyOverride implements CommandLineArgumentProvi
         ["-Dmicronaut.openapi.config.file=${openApiPropertiesFile.asFile.get().absolutePath}".toString()]
     }
 }
-
-java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
-}
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
