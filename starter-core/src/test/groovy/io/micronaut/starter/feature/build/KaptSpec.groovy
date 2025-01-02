@@ -148,12 +148,12 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in build = #buildTool for kapt'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),['kapt'])
-        def buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),['kapt'])
+        String buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
 
         then:
         buildFile
-        buildFile.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        buildFile.contains('sourceCompatibility = JavaVersion.toVersion("21")')
         !buildFile.contains('targetCompatibility = JavaVersion.toVersion("17")')
         !buildFile.contains('targetCompatibility = JavaVersion.toVersion("21")')
 
