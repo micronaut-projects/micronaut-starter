@@ -1,7 +1,7 @@
 import io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask
 
 plugins {
-    id "io.micronaut.internal.starter.published-module"
+    id("io.micronaut.internal.starter.published-module")
     id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
     id "io.micronaut.internal.starter.coordinates"
@@ -50,6 +50,6 @@ TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.registe
 sourceSets.main.resources.srcDir(micronautVersionInfo)
 
 rocker {
-    javaVersion = '21'
+    javaVersion = '17'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
