@@ -19,11 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static io.micronaut.starter.build.dependencies.Phase.COMPILATION;
@@ -79,8 +75,10 @@ public interface DependencyContext {
         dependenciesInTestClasspathWithoutDuplicates.removeIf(testDep -> {
             MavenCoordinate test = new MavenCoordinate(testDep.getGroupId(), testDep.getArtifactId(), testDep.getVersion());
             return dependenciesInMainClasspathWithoutDuplicates.stream()
-                    .filter(mainDep -> (mainDep.getScope().getPhases().contains(RUNTIME) && mainDep.getScope().getPhases().contains(COMPILATION)))
-                    .anyMatch(mainDep -> {
+                    .filter(mainDep ->
+                            (buildTool == BuildTool.MAVEN && mainDep.getScope().getPhases().contains(RUNTIME)) ||
+                            (mainDep.getScope().getPhases().contains(RUNTIME) && mainDep.getScope().getPhases().contains(COMPILATION))
+                    ).anyMatch(mainDep -> {
                         MavenCoordinate main = new MavenCoordinate(mainDep.getGroupId(), mainDep.getArtifactId(), mainDep.getVersion());
                         return main.equals(test);
                     });

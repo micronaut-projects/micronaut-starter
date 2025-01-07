@@ -28,8 +28,12 @@ class FeatureWithDuplicatesSpec extends BeanContextSpec implements CommandOutput
         verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE)
 
         and: 'for a dependency in runtime and test, both runtime and test should be added'
-        verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
-        verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST)
+        if (buildTool.isGradle()) {
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST)
+        } else if(buildTool == BuildTool.MAVEN) {
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
+        }
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
