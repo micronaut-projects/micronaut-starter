@@ -75,8 +75,10 @@ public interface DependencyContext {
         dependenciesInTestClasspathWithoutDuplicates.removeIf(testDep -> {
             MavenCoordinate test = new MavenCoordinate(testDep.getGroupId(), testDep.getArtifactId(), testDep.getVersion());
             return dependenciesInMainClasspathWithoutDuplicates.stream()
-                    .filter(mainDep -> (mainDep.getScope().getPhases().contains(RUNTIME) && mainDep.getScope().getPhases().contains(COMPILATION)))
-                    .anyMatch(mainDep -> {
+                    .filter(mainDep ->
+                            (buildTool == BuildTool.MAVEN && mainDep.getScope().getPhases().contains(RUNTIME)) ||
+                            (mainDep.getScope().getPhases().contains(RUNTIME) && mainDep.getScope().getPhases().contains(COMPILATION))
+                    ).anyMatch(mainDep -> {
                         MavenCoordinate main = new MavenCoordinate(mainDep.getGroupId(), mainDep.getArtifactId(), mainDep.getVersion());
                         return main.equals(test);
                     });
@@ -84,37 +86,7 @@ public interface DependencyContext {
         List<Dependency> result = new ArrayList<>(dependenciesNotInMainOrTestClasspath);
         result.addAll(dependenciesInMainClasspathWithoutDuplicates);
         result.addAll(dependenciesInTestClasspathWithoutDuplicates);
-        result = result.stream().sorted(Dependency.COMPARATOR).toList();
-        return filteredMavenRuntimeTestDependencies(result, buildTool);
-    }
-
-    private static List<Dependency> filteredMavenRuntimeTestDependencies(List<Dependency> dependencies, BuildTool buildTool) {
-        if (buildTool.isGradle()) {
-            return dependencies;
-        }
-        List<Dependency> result = new ArrayList<>();
-
-        Set<MavenCoordinate> coordinatesAdded = new HashSet<>();
-        for (Dependency d : dependencies) {
-            MavenCoordinate coord = new MavenCoordinate(d.getGroupId(), d.getArtifactId(), d.getVersion());
-            if (d.getScope() == Scope.RUNTIME &&
-                    dependencies.stream().anyMatch(dep ->
-                            dep.getScope() == Scope.TEST &&
-                                    dep.getGroupId().equals(d.getGroupId()) &&
-                                    dep.getArtifactId().equals(d.getArtifactId()))) {
-                result.add(Dependency.of(d, Scope.COMPILE));
-                coordinatesAdded.add(coord);
-            } else if (d.getScope() == Scope.TEST &&
-                    d.getGroupId().equals(d.getGroupId()) &&
-                    d.getArtifactId().equals(d.getArtifactId())) {
-                if (!coordinatesAdded.contains(coord)) {
-                    result.add(d);
-                }
-            } else {
-                result.add(d);
-            }
-        }
-        return result;
+        return result.stream().sorted(Dependency.COMPARATOR).toList();
     }
 
     private static List<Dependency> filterDuplicates(List<Dependency> dependencies) {

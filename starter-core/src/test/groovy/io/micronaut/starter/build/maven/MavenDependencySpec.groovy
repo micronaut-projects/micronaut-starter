@@ -30,14 +30,27 @@ class MavenDependencySpec  extends BeanContextSpec implements CommandOutputFixtu
         dependencies == List.of(
                 Dependency.builder().scope(Scope.COMPILE).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build())
 
-        dependencyContext.removeDuplicates(List.of(
+        when:
+        dependencies = dependencyContext.removeDuplicates(List.of(
+                Dependency.builder().scope(Scope.TEST).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
+                Dependency.builder().scope(Scope.RUNTIME).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
+        ), Language.JAVA, BuildTool.GRADLE)
+
+        then:
+        dependencies == List.of(
+                Dependency.builder().scope(Scope.RUNTIME).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
+                Dependency.builder().scope(Scope.TEST).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
+        )
+
+        when:
+        dependencies = dependencyContext.removeDuplicates(List.of(
                 Dependency.builder().scope(Scope.TEST).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
                 Dependency.builder().scope(Scope.RUNTIME).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build(),
         ), Language.JAVA, BuildTool.MAVEN)
 
         then:
         dependencies == List.of(
-                Dependency.builder().scope(Scope.COMPILE).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build())
+                Dependency.builder().scope(Scope.RUNTIME).groupId(GROUP_ID_LOGBACK).artifactId(ARTIFACT_ID_LOGBACK_CLASSIC).build())
 
         when:
         dependencies = dependencyContext.removeDuplicates(List.of(

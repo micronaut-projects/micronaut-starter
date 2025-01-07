@@ -35,8 +35,7 @@ class LogbackInTestAndRuntimeSpec  extends ApplicationContextSpec implements Com
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
-        verifier.hasDependency(GROUP_ID_LOGBACK, ARTIFACT_ID_LOGBACK_CLASSIC, Scope.COMPILE)
-        !verifier.hasDependency(GROUP_ID_LOGBACK, ARTIFACT_ID_LOGBACK_CLASSIC, Scope.RUNTIME)
+        verifier.hasDependency(GROUP_ID_LOGBACK, ARTIFACT_ID_LOGBACK_CLASSIC, Scope.RUNTIME)
         !verifier.hasDependency(GROUP_ID_LOGBACK, ARTIFACT_ID_LOGBACK_CLASSIC, Scope.TEST)
     }
 

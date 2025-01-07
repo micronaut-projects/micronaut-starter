@@ -32,7 +32,7 @@ class FeatureWithDuplicatesSpec extends BeanContextSpec implements CommandOutput
             assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
             assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST)
         } else if(buildTool == BuildTool.MAVEN) {
-            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.COMPILE)
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
         }
 
         where:
