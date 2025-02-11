@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.elasticsearch;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -26,6 +28,7 @@ import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.logging.Slf4j;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.elasticsearch.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Elasticsearch implements Feature {
     private static final Dependency LOG4J_OVER_SLF4J = Slf4j.slf4jDependency()

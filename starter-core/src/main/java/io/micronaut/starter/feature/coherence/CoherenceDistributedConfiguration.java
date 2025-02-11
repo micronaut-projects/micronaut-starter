@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.coherence;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -30,6 +32,7 @@ import java.util.Map;
  * @author Pavol Gressa
  * @since 2.4
  */
+@Requires(property = "micronaut.starter.feature.coherence.distributed.configuration.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class CoherenceDistributedConfiguration implements DistributedConfigFeature {
 

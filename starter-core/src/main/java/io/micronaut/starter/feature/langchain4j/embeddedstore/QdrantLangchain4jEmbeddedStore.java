@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.langchain4j.embeddedstore;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -22,6 +24,7 @@ import io.micronaut.starter.feature.langchain4j.Langchain4jEmbeddedStore;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.langchain4j.store.qdrant.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class QdrantLangchain4jEmbeddedStore implements Langchain4jEmbeddedStore {
     private static final String NAME = "langchain4j-store-qdrant";

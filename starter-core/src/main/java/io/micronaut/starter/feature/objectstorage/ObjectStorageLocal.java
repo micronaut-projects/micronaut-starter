@@ -15,9 +15,12 @@
  */
 package io.micronaut.starter.feature.objectstorage;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.object.storage.local.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ObjectStorageLocal implements ObjectStorageFeature {
     private static final String LOCAL = "Local";

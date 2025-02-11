@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.build.maven;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.maven.MavenPlugin;
@@ -29,6 +31,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.maven.enforcer.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class EnforcerPlugin implements DefaultFeature {
     private static final String GROUP_ID_ORG_APACHE_MAVEN_PLUGINS = "org.apache.maven.plugins";

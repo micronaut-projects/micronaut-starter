@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.micronaut.aot.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MicronautAot implements DefaultFeature {
     public static final String FEATURE_NAME_AOT = "micronaut-aot";

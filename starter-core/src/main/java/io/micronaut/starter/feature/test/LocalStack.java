@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -33,6 +35,7 @@ import jakarta.inject.Singleton;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.1
  */
+@Requires(property = "micronaut.starter.feature.localstack.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class LocalStack implements Feature, ContributingTestContainerArtifactId {
 

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.github.workflows.docker;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
@@ -29,6 +31,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 2.2
  */
+@Requires(property = "micronaut.starter.feature.github.workflow.graal.docker.registry.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GraalVMDockerRegistryWorkflow extends AbstractDockerRegistryWorkflow {
 

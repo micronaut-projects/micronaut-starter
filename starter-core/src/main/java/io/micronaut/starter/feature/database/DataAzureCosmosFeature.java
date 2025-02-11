@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -32,6 +34,7 @@ import java.util.Map;
 /**
  * Add support for Micronaut Data Azure Cosmos.
  */
+@Requires(property = "micronaut.starter.feature.data.azure.cosmos.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DataAzureCosmosFeature implements DataDocumentFeature {
     private static final String NAME = "data-azure-cosmos";

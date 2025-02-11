@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.discovery;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -28,6 +30,7 @@ import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.discovery.client.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DiscoveryClient implements Feature {
     public static final String NAME = "discovery-client";

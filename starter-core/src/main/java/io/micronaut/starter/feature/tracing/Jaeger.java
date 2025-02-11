@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.tracing;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -24,6 +26,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.tracing.jaeger.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Jaeger implements TracingFeature, MicronautServerDependent {
 

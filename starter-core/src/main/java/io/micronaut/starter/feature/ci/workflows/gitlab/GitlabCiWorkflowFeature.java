@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.ci.workflows.gitlab;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.gitlab.templates.gitlabci;
@@ -24,6 +26,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.gitlab.workflow.ci.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GitlabCiWorkflowFeature extends CIWorkflowFeature {
     public static final String NAME = "gitlab-workflow-ci";
