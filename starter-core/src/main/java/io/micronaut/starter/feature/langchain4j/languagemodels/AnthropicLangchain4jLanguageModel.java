@@ -20,7 +20,6 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.langchain4j.Langchain4jEmbeddedStore;
 import io.micronaut.starter.feature.langchain4j.Langchain4jLanguageModel;
 import jakarta.inject.Singleton;
 
