@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.Property;
@@ -46,6 +48,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.gradle.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Gradle implements BuildFeature {
     public static final boolean DEFAULT_USER_VERSION_CATALOGUE = false;

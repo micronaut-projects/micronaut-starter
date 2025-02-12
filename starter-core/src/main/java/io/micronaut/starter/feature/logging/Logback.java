@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -30,6 +32,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.logback.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
     public static final boolean DEFAULT_COLORING = true;

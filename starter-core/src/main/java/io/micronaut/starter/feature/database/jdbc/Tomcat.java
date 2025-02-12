@@ -15,11 +15,14 @@
  */
 package io.micronaut.starter.feature.database.jdbc;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.jdbc.tomcat.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Tomcat extends JdbcFeature {
 

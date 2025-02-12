@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.graallanguages;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
@@ -34,6 +36,7 @@ import jakarta.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
 
+@Requires(property = "micronaut.starter.feature.graalpy.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Graalpy implements MinJdkFeature, MavenSpecificFeature {
     public static final String NAME = "graalpy";

@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.opensearch;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.opensearch.amazon.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenSearchAmazon extends OpenSearchFeature {
 

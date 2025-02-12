@@ -15,9 +15,12 @@
  */
 package io.micronaut.starter.feature.lang.groovy.module;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.groovy.datetime.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DatetimeGroovyModule implements GroovyModuleFeature {
 

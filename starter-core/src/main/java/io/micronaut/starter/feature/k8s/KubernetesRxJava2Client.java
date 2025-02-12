@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.k8s;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -31,6 +33,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 3.1
  */
+@Requires(property = "micronaut.starter.feature.kubernetes.rxjava2.client.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class KubernetesRxJava2Client implements Feature {
 

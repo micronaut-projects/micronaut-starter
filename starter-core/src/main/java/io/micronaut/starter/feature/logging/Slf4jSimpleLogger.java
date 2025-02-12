@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.ThirdPartyLibraryFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.slf4j.simple.logger.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Slf4jSimpleLogger implements ThirdPartyLibraryFeature, LoggingFeature {
     public static final String NAME = "slf4j-simple-logger";

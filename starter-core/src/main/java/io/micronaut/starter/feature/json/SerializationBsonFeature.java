@@ -15,8 +15,11 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.serialization.bson.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SerializationBsonFeature implements SerializationFeature {
     private static final String ARTIFACT_ID_MICRONAUT_SERDE_BSON = "micronaut-serde-bson";

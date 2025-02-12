@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
@@ -29,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+@Requires(property = "micronaut.starter.feature.java.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Java implements LanguageFeature {
 

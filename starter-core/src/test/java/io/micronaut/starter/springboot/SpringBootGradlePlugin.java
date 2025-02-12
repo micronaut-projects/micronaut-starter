@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.springboot;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleDsl;
@@ -32,6 +34,7 @@ import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.springboot.gradle.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SpringBootGradlePlugin implements GradleSpecificFeature, TestFeature, SpringDefaultFeature {
     private static final String ARTIFACT_ID = "spring-boot-gradle-plugin";

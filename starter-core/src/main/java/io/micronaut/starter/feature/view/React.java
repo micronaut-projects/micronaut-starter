@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.*;
 import io.micronaut.starter.build.gradle.GradleFile;
@@ -31,6 +33,7 @@ import jakarta.inject.Singleton;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Requires(property = "micronaut.starter.feature.views.react.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class React implements ViewFeature, MicronautServerDependent {
     public static final String NODE_GRADLE_PLUGIN_VERSION = "7.0.2";

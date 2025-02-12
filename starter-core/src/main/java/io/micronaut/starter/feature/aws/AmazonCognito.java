@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.aws;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.security.SecurityAuthenticationMode;
@@ -26,6 +28,7 @@ import io.micronaut.starter.feature.security.SecurityOAuth2Configuration;
 import io.micronaut.starter.feature.security.SecurityOAuth2Feature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.amazon.cognito.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AmazonCognito extends SecurityOAuth2Feature implements AwsFeature, SecurityOAuth2Configuration, SecurityAuthenticationModeProvider {
     public static final String NAME = "amazon-cognito";

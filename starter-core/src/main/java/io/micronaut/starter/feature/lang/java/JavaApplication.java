@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.lang.java;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -35,6 +37,7 @@ import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.java.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JavaApplication implements JavaApplicationFeature  {
 

@@ -15,11 +15,14 @@
  */
 package io.micronaut.starter.feature.aws;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.aws.lambda.function.url.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature, LambdaRuntimeMainClass {
 

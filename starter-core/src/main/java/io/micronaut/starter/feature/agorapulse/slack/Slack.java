@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.agorapulse.slack;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -80,6 +82,7 @@ import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTestU
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.mainModel;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.testModel;
 
+@Requires(property = "micronaut.starter.feature.agorapulse.micronaut.slack.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Slack implements AgoraPulseFeature {
 

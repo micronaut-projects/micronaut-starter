@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.GradleSpecificFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.java.gradle.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JavaGradlePlugin implements GradleSpecificFeature {
     @Override

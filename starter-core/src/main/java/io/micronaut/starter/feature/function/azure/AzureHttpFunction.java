@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.function.azure;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -35,6 +37,7 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionTrigger
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.azure.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
 

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.objectstorage;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsV2Sdk;
@@ -27,6 +29,7 @@ import jakarta.inject.Singleton;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
+@Requires(property = "micronaut.starter.feature.object.storage.aws.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ObjectStorageAws implements CloudObjectStorageFeature, AwsCloudFeature {
 
