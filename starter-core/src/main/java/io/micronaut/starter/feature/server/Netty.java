@@ -30,7 +30,7 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
 
-@Requires(property = "micronaut.starter.feature.netty-server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.netty.server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Netty extends AbstractMicronautServerFeature implements DefaultFeature {
 

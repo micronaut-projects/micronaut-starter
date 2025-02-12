@@ -83,7 +83,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 
-@Requires(property = "micronaut.starter.feature.aws-lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.aws.lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, AwsMicronautRuntimeFeature {
 

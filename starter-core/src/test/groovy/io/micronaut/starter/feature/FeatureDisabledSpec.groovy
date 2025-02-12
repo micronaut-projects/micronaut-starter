@@ -419,7 +419,7 @@ class FeatureDisabledSpec extends Specification {
         'config-kubernetes' | 'micronaut.starter.feature.config.kubernetes.enabled' | KubernetesConfig
         'mariadb' | 'micronaut.starter.feature.mariadb.enabled' | MariaDB
         'micrometer-appoptics' | 'micronaut.starter.feature.micrometer.appoptics.enabled' | AppOptics
-        'java-gradle-plugin' | 'micronaut.starter.feature.java-gradle.plugin.enabled' | JavaGradlePlugin
+        'java-gradle-plugin' | 'micronaut.starter.feature.java.gradle.plugin.enabled' | JavaGradlePlugin
         'jackson-databind' | 'micronaut.starter.feature.jackson.databind.enabled' | JacksonDatabindFeature
         'views-pebble' | 'micronaut.starter.feature.views.pebble.enabled' | Pebble
         'coherence-grpc-client' | 'micronaut.starter.feature.coherence.grpc.client.enabled' | CoherenceGrpcClient
@@ -634,7 +634,7 @@ class FeatureDisabledSpec extends Specification {
         'netflix-ribbon' | 'micronaut.starter.feature.netflix.ribbon.enabled' | Ribbon
         'rapidoc' | 'micronaut.starter.feature.rapidoc.enabled' | RapiDoc
         'micrometer-kairos' | 'micronaut.starter.feature.micrometer.kairos.enabled' | Kairos
-        'views-fieldset' | 'micronaut.starter.feature.views-fieldset.enabled' | ViewsFieldset
+        'views-fieldset' | 'micronaut.starter.feature.views.fieldset.enabled' | ViewsFieldset
         'langchain4j-store-elasticsearch' | 'micronaut.starter.feature.langchain4j.store.elasticsearch.enabled' | ElasticSearchLangchain4jEmbeddedStore
         'jax-rs-security' | 'micronaut.starter.feature.jax.rs.security.enabled' | JaxRsSecurity
         'jmx' | 'micronaut.starter.feature.jmx.enabled' | Jmx
@@ -663,8 +663,8 @@ class FeatureDisabledSpec extends Specification {
         'consul' | 'micronaut.starter.feature.consul.enabled' | Consul
         'dekorate-kubernetes' | 'micronaut.starter.feature.dekorate.kubernetes.enabled' | DekorateKubernetes
         'openrewrite' | 'micronaut.starter.feature.openrewrite.enabled' | OpenRewrite
-        'netty-server' | 'micronaut.starter.feature.netty-server.enabled' | Netty
-        'data-mongodb' | 'micronaut.starter.feature.data-mongodb.enabled' | DataMongo
+        'netty-server' | 'micronaut.starter.feature.netty.server.enabled' | Netty
+        'data-mongodb' | 'micronaut.starter.feature.data.mongodb.enabled' | DataMongo
         'groovy-datetime' | 'micronaut.starter.feature.groovy.datetime.enabled' | DatetimeGroovyModule
         'micronaut-aop' | 'micronaut.starter.feature.micronaut.aop.enabled' | AOP
         'langchain4j-vertexai' | 'micronaut.starter.feature.langchain4j.vertexai.enabled' | VertexAiLangchain4jLanguageModel
@@ -680,7 +680,7 @@ class FeatureDisabledSpec extends Specification {
         'chatbots-basecamp-lambda' | 'micronaut.starter.feature.chatbots.basecamp.lambda.enabled' | BasecampAwsChatBot
         'microstream' | 'micronaut.starter.feature.microstream.enabled' | MicroStream
         'oracle-cloud-httpclient-netty' | 'micronaut.starter.feature.oracle.cloud.httpclient.netty.enabled' | OracleCloudMicronautNettyClient
-        'aws-lambda' | 'micronaut.starter.feature.aws-lambda.enabled' | AwsLambda
+        'aws-lambda' | 'micronaut.starter.feature.aws.lambda.enabled' | AwsLambda
         'security-jwt' | 'micronaut.starter.feature.security.jwt.enabled' | SecurityJWT
         'amazon-cognito' | 'micronaut.starter.feature.amazon.cognito.enabled' | AmazonCognito
         'github-workflow-google-cloud-run' | 'micronaut.starter.feature.github.workflow.google.cloud.run.enabled' | GoogleCloudRunJavaWorkflow

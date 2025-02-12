@@ -29,7 +29,7 @@ import jakarta.inject.Singleton;
 import java.util.Arrays;
 import java.util.List;
 
-@Requires(property = "micronaut.starter.feature.views-fieldset.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.views.fieldset.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ViewsFieldset implements Feature {
 

@@ -26,7 +26,7 @@ import jakarta.inject.Singleton;
  
  * @author graemerocher
  */
-@Requires(property = "micronaut.starter.feature.data-mongodb.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.data.mongodb.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DataMongo extends DataMongoFeature {
 
