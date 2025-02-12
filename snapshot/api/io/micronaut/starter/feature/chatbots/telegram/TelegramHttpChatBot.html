@@ -82,7 +82,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../ChatBotsFeature.html" title="interface in io.micronaut.starter.feature.chatbots">ChatBotsFeature</a></code>, <code><a href="../../CodeContributingFeature.html" title="interface in io.micronaut.starter.feature">CodeContributingFeature</a></code>, <code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.chatbots.telegram.http.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">TelegramHttpChatBot</span>
 <span class="extends-implements">extends <a href="../ChatBots.html" title="class in io.micronaut.starter.feature.chatbots">ChatBots</a></span></div>
 <div class="block">Adds support for Telegram chatbots as Google Cloud Functions.</div>

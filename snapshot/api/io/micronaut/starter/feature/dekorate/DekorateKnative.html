@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.dekorate.knative.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">DekorateKnative</span>
 <span class="extends-implements">extends <a href="AbstractDekoratePlatformFeature.html" title="class in io.micronaut.starter.feature.dekorate">AbstractDekoratePlatformFeature</a></span></div>
 <div class="block">Adds Dekorate Knative support.</div>

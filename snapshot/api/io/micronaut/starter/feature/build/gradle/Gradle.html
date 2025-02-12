@@ -80,7 +80,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../BuildFeature.html" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></code>, <code><a href="../../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code>, <code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.gradle.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">Gradle</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../BuildFeature.html" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></span></div>

@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code>, <code><a href="ServerFeature.html" title="interface in io.micronaut.starter.feature.server">ServerFeature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.undertow.server.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">Undertow</span>
 <span class="extends-implements">extends <a href="AbstractServletFeature.html" title="class in io.micronaut.starter.feature.server">AbstractServletFeature</a></span></div>
 </section>

@@ -82,7 +82,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="JmsFeature.html" title="interface in io.micronaut.starter.feature.messaging.jms">JmsFeature</a></code>, <code><a href="../MessagingFeature.html" title="interface in io.micronaut.starter.feature.messaging">MessagingFeature</a></code>, <code><a href="../../testresources/TestResourcesAdditionalModulesProvider.html" title="interface in io.micronaut.starter.feature.testresources">TestResourcesAdditionalModulesProvider</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.jms.sqs.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">SQS</span>
 <span class="extends-implements">extends <a href="AbstractJmsFeature.html" title="class in io.micronaut.starter.feature.messaging.jms">AbstractJmsFeature</a>
 implements <a href="../../testresources/TestResourcesAdditionalModulesProvider.html" title="interface in io.micronaut.starter.feature.testresources">TestResourcesAdditionalModulesProvider</a></span></div>

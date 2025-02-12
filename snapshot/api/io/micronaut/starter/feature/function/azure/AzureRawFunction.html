@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="AzureCloudFeature.html" title="interface in io.micronaut.starter.feature.function.azure">AzureCloudFeature</a></code>, <code><a href="AzureMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.function.azure">AzureMicronautRuntimeFeature</a></code>, <code><a href="../CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a></code>, <code><a href="../../MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.azure.function.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">AzureRawFunction</span>
 <span class="extends-implements">extends <a href="AbstractAzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AbstractAzureFunction</a></span></div>
 </section>

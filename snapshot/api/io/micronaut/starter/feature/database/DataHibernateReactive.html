@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></code>, <code><a href="JpaFeature.html" title="interface in io.micronaut.starter.feature.database">JpaFeature</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.data.hibernate.reactive.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">DataHibernateReactive</span>
 <span class="extends-implements">extends <a href="HibernateReactiveFeature.html" title="class in io.micronaut.starter.feature.database">HibernateReactiveFeature</a>
 implements <a href="DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></span></div>

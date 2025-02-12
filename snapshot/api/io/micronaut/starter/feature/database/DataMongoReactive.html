@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="DataDocumentFeature.html" title="interface in io.micronaut.starter.feature.database">DataDocumentFeature</a></code>, <code><a href="DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></code>, <code><a href="MongoContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.database">MongoContributingTestContainerDependency</a></code>, <code><a href="TransactionalNotSupported.html" title="interface in io.micronaut.starter.feature.database">TransactionalNotSupported</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code>, <code><a href="../testcontainers/ContributingTestContainerDependency.html" title="interface in io.micronaut.starter.feature.testcontainers">ContributingTestContainerDependency</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.data.mongodb.reactive.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">DataMongoReactive</span>
 <span class="extends-implements">extends <a href="DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a>
 implements <a href="TransactionalNotSupported.html" title="interface in io.micronaut.starter.feature.database">TransactionalNotSupported</a></span></div>

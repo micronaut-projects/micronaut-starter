@@ -86,7 +86,10 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="OracleRawFunction.html" title="class in io.micronaut.starter.feature.function.oraclefunction">OracleRawFunction</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.oracle.function.http.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 @Primary
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">OracleFunction</span>
 <span class="extends-implements">extends <a href="../AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a>

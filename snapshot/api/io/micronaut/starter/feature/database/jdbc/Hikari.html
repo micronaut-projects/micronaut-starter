@@ -82,7 +82,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="../DatabaseDriverConfigurationFeature.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverConfigurationFeature</a></code>, <code><a href="../../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.jdbc.hikari.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 @Primary
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">Hikari</span>
 <span class="extends-implements">extends <a href="JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a></span></div>

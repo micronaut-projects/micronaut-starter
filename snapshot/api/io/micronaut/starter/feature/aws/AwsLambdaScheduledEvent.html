@@ -84,7 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code>io.micronaut.core.naming.Described</code>, <code>io.micronaut.core.naming.Named</code>, <code>io.micronaut.core.order.Ordered</code>, <code><a href="AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a></code>, <code><a href="AwsFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsFeature</a></code>, <code><a href="AwsLambdaEventFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsLambdaEventFeature</a></code>, <code><a href="LambdaTrigger.html" title="interface in io.micronaut.starter.feature.aws">LambdaTrigger</a></code>, <code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code>, <code><a href="../function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code>, <code><a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations">@Singleton
+<div class="type-signature"><span class="annotations">@Requires(property="micronaut.starter.feature.aws.lambda.scheduled.event.enabled",
+          value="true",
+          defaultValue="true")
+@Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">AwsLambdaScheduledEvent</span>
 <span class="extends-implements">extends <a href="AwsLambdaEventFunctionFeature.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaEventFunctionFeature</a>
 implements <a href="LambdaTrigger.html" title="interface in io.micronaut.starter.feature.aws">LambdaTrigger</a></span></div>
