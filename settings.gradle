@@ -25,6 +25,7 @@ include 'starter-core'
 include 'starter-cli'
 include 'starter-aws-cdk'
 include 'starter-api'
+include 'starter-openrewrite-recipes'
 include 'starter-web-netty'
 include 'starter-web-servlet'
 

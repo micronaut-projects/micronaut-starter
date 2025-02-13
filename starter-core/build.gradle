@@ -29,6 +29,8 @@ dependencies {
     api("org.yaml:snakeyaml")
     api("io.micronaut.serde:micronaut-serde-jackson")
 
+    implementation(project(":starter-openrewrite-recipes"))
+
     implementation("com.typesafe:config:1.4.3")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
     implementation("org.apache.commons:commons-compress:1.27.1")
