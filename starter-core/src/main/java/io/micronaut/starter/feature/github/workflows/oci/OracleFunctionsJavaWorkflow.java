@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.github.workflows.oci;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 
@@ -27,6 +29,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 2.3
  */
+@Requires(property = "micronaut.starter.feature.github.workflow.oracle.cloud.functions.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OracleFunctionsJavaWorkflow extends AbstractOracleFunctionsWorkflow {
 

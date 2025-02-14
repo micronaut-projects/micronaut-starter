@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
@@ -32,6 +34,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.testcontainers.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TestContainers implements Feature {
     public static final String NAME = "testcontainers";

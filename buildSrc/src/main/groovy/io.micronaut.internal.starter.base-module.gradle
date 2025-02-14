@@ -47,12 +47,3 @@ dependencies {
         exclude group: "org.apache.groovy", module: "groovy-all"
     }
 }
-java {
-    sourceCompatibility = JavaVersion.toVersion("21")
-    targetCompatibility = JavaVersion.toVersion("21")
-}
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}

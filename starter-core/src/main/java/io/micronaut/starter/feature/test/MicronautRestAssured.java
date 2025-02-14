@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -23,6 +25,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.micronaut.test.rest.assured.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MicronautRestAssured implements Feature {
     private static final String ARTIFACT_ID_MICRONAUT_TEST_REST_ASSURED = "micronaut-test-rest-assured";

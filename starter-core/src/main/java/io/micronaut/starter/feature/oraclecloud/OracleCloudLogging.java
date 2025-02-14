@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.oraclecloud;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -25,6 +27,7 @@ import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import jakarta.inject.Singleton;
 import static io.micronaut.starter.feature.Category.LOGGING;
 
+@Requires(property = "micronaut.starter.feature.oracle.cloud.logging.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OracleCloudLogging implements OracleCloudFeature, Feature {
     public static final String NAME = "oracle-cloud-logging";

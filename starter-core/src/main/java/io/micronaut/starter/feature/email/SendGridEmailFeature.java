@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.email;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.email.sendgrid.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SendGridEmailFeature extends EmailFeature {
 

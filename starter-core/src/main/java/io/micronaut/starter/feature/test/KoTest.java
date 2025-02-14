@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -24,6 +26,7 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.kotest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class KoTest implements TestFeature {
     protected static final String ARTIFACT_ID_MICRONAUT_KOTEST5 = "micronaut-test-kotest5";

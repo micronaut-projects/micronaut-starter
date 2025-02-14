@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
 import io.micronaut.starter.feature.InterceptUrlMap;
 import io.micronaut.starter.feature.staticResources.StaticResource;
@@ -23,6 +25,7 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+@Requires(property = "micronaut.starter.feature.swagger.ui.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SwaggerUI extends OpenApiView implements ContributingInterceptUrlMapFeature {
     public static final String NAME = "swagger-ui";

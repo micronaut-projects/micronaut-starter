@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.rxjava;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -27,6 +29,7 @@ import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.server.Netty;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.rxjava2.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class RxJava2 implements Feature {
     public static final String MICRONAUT_RXJAVA2_GROUP_ID = "io.micronaut.rxjava2";

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.reactor;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -25,6 +27,7 @@ import jakarta.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
 
+@Requires(property = "micronaut.starter.feature.reactor.http.client.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ReactorHttpClient implements ReactiveHttpClientFeature {
     public static final String ARTIFACT_ID_MICRONAUT_REACTOR_HTTP_CLIENT = "micronaut-reactor-http-client";

@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.langchain4j.languagemodels;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.langchain4j.Langchain4jLanguageModel;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.langchain4j.hugging.face.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class HuggingFaceLangchain4jLanguageModel implements Langchain4jLanguageModel {
     private static final String NAME = "langchain4j-hugging-face";

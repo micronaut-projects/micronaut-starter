@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.distributedconfig;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -30,6 +32,7 @@ import jakarta.inject.Singleton;
  * @author alvaro
  * @since 2.0.0
  */
+@Requires(property = "micronaut.starter.feature.config.kubernetes.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class KubernetesConfig implements DistributedConfigFeature {
 

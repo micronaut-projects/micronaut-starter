@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.springboot;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.springboot.SpringBootDependencies.DEPENDENCY_SPRINGBOOT_STARTER_TEST;
 import static io.micronaut.starter.springboot.SpringBootDependencies.DEPENDENCY_SPRING_BOOT_STARTER_WEB;
 
+@Requires(property = "micronaut.starter.feature.spring.boot.starter.web.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SpringBootStarterWeb implements SpringBootStarterFeature {
     public static final String NAME = "spring-boot-starter-web";

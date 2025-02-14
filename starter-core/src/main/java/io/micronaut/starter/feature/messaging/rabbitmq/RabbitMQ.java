@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.messaging.rabbitmq;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -25,6 +27,7 @@ import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.rabbitmq.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class RabbitMQ extends EaseTestingFeature implements MessagingFeature, SharedTestResourceFeature {
 

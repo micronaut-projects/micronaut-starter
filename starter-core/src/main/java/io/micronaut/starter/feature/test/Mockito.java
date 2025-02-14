@@ -15,11 +15,14 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.mockito.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Mockito implements MockingFeature,  JunitCompanionFeature {
     public static final String GROUP_ID_MOCKITO = "org.mockito";

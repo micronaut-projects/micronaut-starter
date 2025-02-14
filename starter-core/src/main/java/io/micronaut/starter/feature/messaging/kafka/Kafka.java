@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.messaging.kafka;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -32,6 +34,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.kafka.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Kafka extends EaseTestingFeature
         implements DefaultFeature, MessagingFeature, SharedTestResourceFeature, ContributingTestContainerArtifactId {

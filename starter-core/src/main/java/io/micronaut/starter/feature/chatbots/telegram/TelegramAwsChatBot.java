@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.chatbots.telegram;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -40,6 +42,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.telegram.lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TelegramAwsChatBot extends ChatBotsTelegram implements AwsFeature, AwsMicronautRuntimeFeature, HandlerClassFeature {
 

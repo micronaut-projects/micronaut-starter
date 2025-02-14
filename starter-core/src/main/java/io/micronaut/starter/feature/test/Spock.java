@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -28,6 +30,7 @@ import io.micronaut.starter.options.TestFramework;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.spock.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Spock implements TestFeature {
     protected static final String GROUP_ID_SPOCKFRAMEWORK = "org.spockframework";

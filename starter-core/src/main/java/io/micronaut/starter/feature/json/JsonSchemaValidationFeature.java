@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.json.schema.validation.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JsonSchemaValidationFeature implements Feature {
 
