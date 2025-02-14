@@ -4,7 +4,7 @@ import io.micronaut.starter.feature.eclipsestore.EclipseStore
 import io.micronaut.starter.feature.validator.MicronautValidationFeature
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest

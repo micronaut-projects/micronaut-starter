@@ -3,6 +3,7 @@ package io.micronaut.starter.build.dependencies
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.sdk.dependency.Dependency
 import jakarta.inject.Singleton
 
 @Singleton

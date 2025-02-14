@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
 import io.micronaut.starter.feature.InterceptUrlMap;
 import jakarta.inject.Singleton;

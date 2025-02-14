@@ -3,7 +3,7 @@ package io.micronaut.starter.core.test.feature.aop
 
 import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.feature.validator.MicronautValidationFeature
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult

@@ -22,20 +22,20 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.feature.other.template.openrewriteGradlePlugin;
 import io.micronaut.starter.feature.other.template.openrewriteMavenPlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.build.dependencies.Scope.OPENREWRITE;
+import static io.micronaut.starter.sdk.dependency.Scope.OPENREWRITE;
 import static io.micronaut.starter.feature.Category.DEV_TOOLS;
-import static io.micronaut.starter.options.BuildTool.MAVEN;
+import static io.micronaut.starter.sdk.BuildTool.MAVEN;
 import static io.micronaut.starter.options.Language.JAVA;
 
 @Requires(property = "micronaut.starter.feature.openrewrite.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

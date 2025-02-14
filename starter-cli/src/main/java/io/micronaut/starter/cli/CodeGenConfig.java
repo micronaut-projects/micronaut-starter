@@ -25,7 +25,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.FileSystemOutputHandler;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;

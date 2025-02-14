@@ -6,15 +6,13 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
-
-import java.util.stream.Collectors
 
 class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements CommandOutputFixture {
 

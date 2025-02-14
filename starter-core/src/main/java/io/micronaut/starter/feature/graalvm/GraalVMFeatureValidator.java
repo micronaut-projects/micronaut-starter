@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow;
 import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;

@@ -10,19 +10,19 @@ import groovy.json.JsonSlurper
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.azure.AbstractAzureContainerInstanceWorkflow
 import io.micronaut.starter.feature.github.workflows.azure.AzureContainerInstanceGraalWorkflow
 import io.micronaut.starter.feature.github.workflows.azure.AzureContainerInstanceJavaWorkflow
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.sdk.Project
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.github.WorkflowSpec
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.utils.NameUtils
 import spock.lang.Requires
 import spock.lang.Shared
-import spock.lang.Unroll
 
 import java.util.stream.Collectors
 

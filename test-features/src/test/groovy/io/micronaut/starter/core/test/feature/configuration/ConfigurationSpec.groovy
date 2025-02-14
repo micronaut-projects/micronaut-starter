@@ -5,7 +5,7 @@ import io.micronaut.starter.feature.config.Toml
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.StringTemplate
 import io.micronaut.starter.test.CommandSpec

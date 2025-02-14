@@ -19,9 +19,9 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
+import io.micronaut.starter.sdk.Project;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.aws.lambda.handler.default.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

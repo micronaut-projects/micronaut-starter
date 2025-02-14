@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.function;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
@@ -26,10 +25,11 @@ import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyCon
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
 import io.micronaut.starter.feature.json.SerializationFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
+import io.micronaut.starter.sdk.Project;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 

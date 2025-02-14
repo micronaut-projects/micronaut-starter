@@ -3,7 +3,7 @@ package io.micronaut.starter
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.DefaultRepositoryResolver
 import io.micronaut.starter.build.dependencies.CoordinateResolver
@@ -18,7 +18,10 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
+import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
 import io.micronaut.starter.options.*
+import io.micronaut.starter.sdk.BuildTool
+import io.micronaut.starter.sdk.Project
 
 class BuildBuilder implements ProjectFixture, ContextFixture {
 
@@ -136,7 +139,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {
-        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver))
+        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver), ctx.getBean(RecipeDependencyFetcher))
         ctx.applyFeatures()
         ctx
     }

@@ -5,11 +5,10 @@ import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.Shared
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 

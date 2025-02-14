@@ -5,7 +5,7 @@ import groovy.transform.CompileStatic
 import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.sdk.dependency.Scope
 import io.micronaut.starter.options.Language
 
 @CompileStatic

@@ -3,7 +3,7 @@ package io.micronaut.docs.aws.cdk.function;
 import io.micronaut.aws.cdk.function.MicronautFunction;
 import io.micronaut.aws.cdk.function.MicronautFunctionFile;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;

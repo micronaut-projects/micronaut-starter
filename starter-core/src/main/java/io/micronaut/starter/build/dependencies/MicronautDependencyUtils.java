@@ -16,7 +16,8 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
+import io.micronaut.starter.sdk.dependency.Dependency;
 
 public final class MicronautDependencyUtils {
     public static final String ARTIFACT_ID_MICRONAUT_DATA_TX_HIBERNATE = "micronaut-data-tx-hibernate";

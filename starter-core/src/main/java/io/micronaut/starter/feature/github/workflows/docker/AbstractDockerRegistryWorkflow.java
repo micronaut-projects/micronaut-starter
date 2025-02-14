@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.github.workflows.docker;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.github.workflows.GitHubWorkflowFeature;
 import io.micronaut.starter.feature.github.workflows.Secret;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 import java.util.Arrays;
 import java.util.List;

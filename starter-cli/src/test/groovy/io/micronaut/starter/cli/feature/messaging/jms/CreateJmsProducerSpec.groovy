@@ -8,7 +8,7 @@ import io.micronaut.starter.feature.messaging.jms.ActiveMqArtemis
 import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic
 import io.micronaut.starter.feature.messaging.jms.SQS
 import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared

@@ -3,7 +3,7 @@ package io.micronaut.starter.build
 import groovy.transform.CompileStatic
 import io.micronaut.starter.build.gradle.GradleBuildTestVerifier
 import io.micronaut.starter.build.maven.MavenBuildTestVerifier
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 

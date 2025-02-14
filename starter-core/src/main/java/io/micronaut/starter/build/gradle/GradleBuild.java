@@ -17,10 +17,12 @@ package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.sdk.dependency.DependencyCoordinate;
+import io.micronaut.starter.sdk.gradle.GradleDsl;
+import io.micronaut.starter.sdk.dependency.Substitution;
 import io.micronaut.starter.feature.build.gradle.templates.settingsPluginManagement;
 import io.micronaut.starter.feature.build.gradle.templates.substitutions;
+import io.micronaut.starter.sdk.gradle.GradleFile;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.template.WritableUtils;

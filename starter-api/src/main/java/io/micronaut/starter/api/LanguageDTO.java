@@ -25,7 +25,7 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.starter.defaults.IncludesDefaults;
 import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.sdk.utils.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

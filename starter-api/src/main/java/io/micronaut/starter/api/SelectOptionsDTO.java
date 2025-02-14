@@ -24,7 +24,7 @@ import io.micronaut.starter.api.options.JdkVersionSelectOptions;
 import io.micronaut.starter.api.options.LanguageSelectOptions;
 import io.micronaut.starter.api.options.TestFrameworkSelectOptions;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersionConfiguration;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;

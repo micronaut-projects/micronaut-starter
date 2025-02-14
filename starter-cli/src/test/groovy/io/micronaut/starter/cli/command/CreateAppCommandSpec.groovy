@@ -17,7 +17,7 @@ import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.utils.NameUtils
 import jakarta.inject.Inject
 import spock.lang.AutoCleanup
 import spock.lang.Issue

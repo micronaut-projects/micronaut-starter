@@ -19,12 +19,12 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.groovy.Groovy;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 

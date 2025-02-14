@@ -19,7 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradleFile;
+import io.micronaut.starter.sdk.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradleMavenCentral;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;

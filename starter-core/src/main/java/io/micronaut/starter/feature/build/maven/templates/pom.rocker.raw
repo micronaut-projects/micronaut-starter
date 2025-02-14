@@ -1,7 +1,7 @@
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @import io.micronaut.starter.build.Property
-@import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.sdk.dependency.Dependency
 @import io.micronaut.starter.build.dependencies.MavenCoordinate
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency

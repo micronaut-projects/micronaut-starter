@@ -7,7 +7,7 @@ import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
@@ -23,9 +23,9 @@ class CreateAwsSnapStartSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features for aws SnapStart #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                Language lang,
-                                                                                                                BuildTool build,
-                                                                                                                TestFramework testFramework) {
+                                                                                                                       Language lang,
+                                                                                                                       BuildTool build,
+                                                                                                                       TestFramework testFramework) {
         given:
         List<String> features = [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME]
         generateProject(lang, build, features, applicationType, testFramework)
@@ -42,9 +42,9 @@ class CreateAwsSnapStartSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with graalvm does not enable SnapStart #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                Language lang,
-                                                                                                                BuildTool build,
-                                                                                                                TestFramework testFramework) {
+                                                                                                                              Language lang,
+                                                                                                                              BuildTool build,
+                                                                                                                              TestFramework testFramework) {
         given:
         List<String> features = [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, GraalVM.FEATURE_NAME_GRAALVM]
         generateProject(lang, build, features, applicationType, testFramework)
@@ -65,9 +65,9 @@ class CreateAwsSnapStartSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with graalvm and aws-lambda-function-url does not enable SnapStart #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                              Language lang,
-                                                                                                                              BuildTool build,
-                                                                                                                              TestFramework testFramework) {
+                                                                                                                                                          Language lang,
+                                                                                                                                                          BuildTool build,
+                                                                                                                                                          TestFramework testFramework) {
         given:
         List<String> features = [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, LambdaFunctionUrl.NAME, GraalVM.FEATURE_NAME_GRAALVM]
         generateProject(lang, build, features, applicationType, testFramework)

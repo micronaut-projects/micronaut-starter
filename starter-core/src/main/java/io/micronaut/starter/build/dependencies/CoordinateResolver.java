@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.build.dependencies;
 
+import io.micronaut.starter.sdk.dependency.Coordinate;
+
 import java.util.Optional;
 
 public interface CoordinateResolver {

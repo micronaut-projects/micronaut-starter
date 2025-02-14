@@ -5,7 +5,7 @@ import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared

@@ -20,10 +20,10 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.Project;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
@@ -34,7 +34,7 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.azure.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

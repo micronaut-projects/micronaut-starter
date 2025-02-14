@@ -1,8 +1,9 @@
 package io.micronaut.starter
 
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.Project
+import io.micronaut.starter.sdk.utils.NameUtils
 import spock.lang.Issue
 import spock.lang.Unroll
 

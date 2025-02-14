@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.defaults;
 
-import io.micronaut.starter.sdk.options.TestFramework;
+import io.micronaut.starter.options.TestFramework;
 
 public interface HasDefaultTest {
     TestFramework getTest();

@@ -1,4 +1,4 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.template.WritableUtils
 @import io.micronaut.starter.template.Writable

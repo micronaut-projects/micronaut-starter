@@ -16,14 +16,18 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.sdk.dependency.Dependency;
+import io.micronaut.starter.sdk.dependency.Phase;
+import io.micronaut.starter.sdk.dependency.Scope;
+import io.micronaut.starter.sdk.dependency.Source;
 
 import java.util.*;
 import java.util.function.Predicate;
 
-import static io.micronaut.starter.build.dependencies.Phase.COMPILATION;
-import static io.micronaut.starter.build.dependencies.Phase.RUNTIME;
+import static io.micronaut.starter.sdk.dependency.Phase.COMPILATION;
+import static io.micronaut.starter.sdk.dependency.Phase.RUNTIME;
 
 public interface DependencyContext {
 

@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.email
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import spock.lang.Shared
 import spock.lang.Unroll
 

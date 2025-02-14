@@ -21,6 +21,7 @@ plugins {
 
 rootProject.name = 'micronaut-starter'
 
+include 'starter-sdk'
 include 'starter-core'
 include 'starter-cli'
 include 'starter-aws-cdk'

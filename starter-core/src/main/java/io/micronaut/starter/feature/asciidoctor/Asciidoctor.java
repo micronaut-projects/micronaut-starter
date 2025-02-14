@@ -28,7 +28,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocMavenPlugin;
 import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 

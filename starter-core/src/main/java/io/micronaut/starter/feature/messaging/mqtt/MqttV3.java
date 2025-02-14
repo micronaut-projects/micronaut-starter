@@ -19,7 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.mqttv3.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

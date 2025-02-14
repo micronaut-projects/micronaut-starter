@@ -23,7 +23,7 @@ import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflowReadme;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 

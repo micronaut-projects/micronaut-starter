@@ -1,5 +1,5 @@
 @import java.util.List
-@import io.micronaut.starter.build.dependencies.DependencyCoordinate
+@import io.micronaut.starter.sdk.dependency.DependencyCoordinate
 @args(String groupId, String artifactId, String scope, String version, boolean pom, List<DependencyCoordinate> exclusions)
 
     <dependency>

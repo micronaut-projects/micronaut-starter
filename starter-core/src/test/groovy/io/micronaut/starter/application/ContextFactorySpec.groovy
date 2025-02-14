@@ -9,7 +9,7 @@ import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.feature.test.Junit
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options

@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 
 import java.util.Optional;
 

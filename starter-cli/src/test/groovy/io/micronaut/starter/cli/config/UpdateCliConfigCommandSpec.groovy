@@ -7,7 +7,7 @@ import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.AutoCleanup

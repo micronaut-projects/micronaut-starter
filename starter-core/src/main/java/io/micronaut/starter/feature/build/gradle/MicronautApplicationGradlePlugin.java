@@ -17,9 +17,9 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.build.gradle.GradleDsl;
+import io.micronaut.starter.sdk.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;

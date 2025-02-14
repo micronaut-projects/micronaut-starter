@@ -17,13 +17,13 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

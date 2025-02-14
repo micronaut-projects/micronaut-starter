@@ -1,8 +1,8 @@
 package io.micronaut.starter.feature.validation
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.Project
+import io.micronaut.starter.sdk.utils.NameUtils
 import spock.lang.Shared
 import spock.lang.Unroll
 

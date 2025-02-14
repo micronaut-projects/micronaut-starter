@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 
 public interface AwsMicronautRuntimeFeature extends MicronautRuntimeFeature {

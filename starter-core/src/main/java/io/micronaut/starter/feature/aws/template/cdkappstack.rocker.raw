@@ -1,6 +1,6 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.sdk.BuildTool
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.architecture.CpuArchitecture
 @import io.micronaut.starter.feature.architecture.X86
@@ -13,7 +13,7 @@ package @project.getPackageName();
 import io.micronaut.aws.cdk.function.MicronautFunction;
 import io.micronaut.aws.cdk.function.MicronautFunctionFile;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;

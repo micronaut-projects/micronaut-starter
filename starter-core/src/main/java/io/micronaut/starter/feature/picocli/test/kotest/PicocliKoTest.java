@@ -18,11 +18,11 @@ package io.micronaut.starter.feature.picocli.test.kotest;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.sdk.Project;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;

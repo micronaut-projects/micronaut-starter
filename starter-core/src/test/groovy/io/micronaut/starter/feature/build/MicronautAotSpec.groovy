@@ -6,14 +6,14 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.sdk.dependency.Scope
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.DefaultFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityOAuth2
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -23,9 +23,9 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
-import static io.micronaut.starter.options.BuildTool.MAVEN
+import static io.micronaut.starter.sdk.BuildTool.GRADLE
+import static io.micronaut.starter.sdk.BuildTool.GRADLE_KOTLIN
+import static io.micronaut.starter.sdk.BuildTool.MAVEN
 
 class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFixture {
 

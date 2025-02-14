@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.function.azure
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 import io.micronaut.starter.test.CommandSpec

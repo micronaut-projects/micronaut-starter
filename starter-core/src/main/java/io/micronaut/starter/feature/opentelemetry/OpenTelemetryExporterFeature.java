@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import java.util.Locale;
 
 public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature {

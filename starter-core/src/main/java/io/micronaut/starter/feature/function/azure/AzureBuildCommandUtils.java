@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.function.azure;
 
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 public final class AzureBuildCommandUtils {
 

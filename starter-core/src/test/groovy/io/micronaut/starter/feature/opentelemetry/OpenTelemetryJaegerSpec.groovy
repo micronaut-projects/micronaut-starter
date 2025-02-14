@@ -6,7 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Subject
 

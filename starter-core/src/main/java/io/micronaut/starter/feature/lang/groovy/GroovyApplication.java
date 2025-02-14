@@ -21,7 +21,6 @@ import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
@@ -33,6 +32,7 @@ import io.micronaut.starter.feature.test.template.spock;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.TestRockerModelProvider;
+import io.micronaut.starter.sdk.Project;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 

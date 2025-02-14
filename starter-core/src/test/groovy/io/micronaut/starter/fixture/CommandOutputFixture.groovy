@@ -10,7 +10,7 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.MapOutputHandler
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.utils.NameUtils
 
 @CompileStatic
 trait CommandOutputFixture {

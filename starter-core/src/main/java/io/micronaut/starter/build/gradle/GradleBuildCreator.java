@@ -20,6 +20,7 @@ import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 
 import io.micronaut.starter.build.Repository;
+import io.micronaut.starter.sdk.gradle.GradleDsl;
 import jakarta.inject.Singleton;
 
 import java.util.List;

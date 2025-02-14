@@ -17,7 +17,7 @@ package io.micronaut.aws.cdk.function;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 /**
  * Utility class to generate the filename to upload to AWS Lambda for both Gradle and Maven build tools.

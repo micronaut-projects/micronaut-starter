@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 
 import java.util.HashSet;
 import java.util.Objects;

@@ -3,7 +3,7 @@ package io.micronaut.starter.servlet
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration

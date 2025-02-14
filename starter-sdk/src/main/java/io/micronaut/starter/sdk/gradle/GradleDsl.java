@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.gradle;
+package io.micronaut.starter.sdk.gradle;
 
 public enum GradleDsl {
     KOTLIN,

@@ -16,7 +16,7 @@
 package io.micronaut.starter.io;
 
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
+import io.micronaut.starter.sdk.Project;
 import io.micronaut.starter.template.Template;
 import org.apache.commons.compress.archivers.zip.UnixStat;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;

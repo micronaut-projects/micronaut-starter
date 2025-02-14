@@ -18,12 +18,11 @@ package io.micronaut.starter.defaults;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.sdk.BuildTool;
-import io.micronaut.starter.sdk.options.TestFramework;
-import io.micronaut.starter.sdk.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 /**
  * Default values to be applied when a given
- * {@link Language} is selected
+ * {@link io.micronaut.starter.options.Language} is selected
  */
 @Introspected
 public class LanguageDefaults implements HasDefaultTest, HasDefaultBuild {

@@ -6,14 +6,14 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.ContextFactory
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.Source
+import io.micronaut.starter.sdk.dependency.Source
 import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework

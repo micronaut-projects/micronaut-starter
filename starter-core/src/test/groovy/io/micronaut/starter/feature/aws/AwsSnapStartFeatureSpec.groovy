@@ -6,8 +6,7 @@ import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework

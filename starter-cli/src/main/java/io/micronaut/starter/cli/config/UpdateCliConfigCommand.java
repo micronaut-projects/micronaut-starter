@@ -27,7 +27,7 @@ import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.sdk.utils.NameUtils;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 

@@ -2,6 +2,9 @@ package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.build.maven.MavenScope
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.sdk.dependency.Phase
+import io.micronaut.starter.sdk.dependency.Scope
+import io.micronaut.starter.sdk.dependency.Source
 import spock.lang.Specification
 import spock.lang.Unroll
 

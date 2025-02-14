@@ -23,7 +23,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.sdk.utils.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;

@@ -4,16 +4,16 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.sdk.dependency.Dependency
+import io.micronaut.starter.sdk.dependency.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Feature
 
 import jakarta.inject.Singleton
 
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
-import static io.micronaut.starter.options.BuildTool.MAVEN
+import static io.micronaut.starter.sdk.BuildTool.GRADLE
+import static io.micronaut.starter.sdk.BuildTool.GRADLE_KOTLIN
+import static io.micronaut.starter.sdk.BuildTool.MAVEN
 
 class PomDependencySpec extends ApplicationContextSpec {
 

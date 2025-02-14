@@ -33,7 +33,7 @@ import io.micronaut.starter.feature.aws.LambdaTrigger;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;

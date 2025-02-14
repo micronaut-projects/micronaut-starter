@@ -19,10 +19,11 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.build.BuildPlugin;
-import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.sdk.dependency.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
+import io.micronaut.starter.sdk.gradle.GradleFile;
 import io.micronaut.starter.template.Writable;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import groovy.yaml.YamlSlurper
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec

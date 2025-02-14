@@ -6,7 +6,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import jakarta.inject.Singleton
 
 class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFixture {

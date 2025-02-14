@@ -5,9 +5,9 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import io.micronaut.starter.sdk.BuildTool
 import spock.lang.Requires
 import spock.lang.Subject
 

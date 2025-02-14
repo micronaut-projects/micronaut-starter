@@ -8,13 +8,12 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.build.RepositoryResolver
-import io.micronaut.starter.build.dependencies.Coordinate
+import io.micronaut.starter.sdk.dependency.Coordinate
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.dependencies.DefaultPomDependencyVersionResolver
 import io.micronaut.starter.build.gradle.GradleBuildCreator
-import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import jakarta.inject.Singleton

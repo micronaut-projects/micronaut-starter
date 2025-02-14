@@ -6,7 +6,7 @@ import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.feature.grpc.CreateGrpcServiceCommand
 import io.micronaut.starter.cli.feature.grpc.CreateProtoServiceCommand
 import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf

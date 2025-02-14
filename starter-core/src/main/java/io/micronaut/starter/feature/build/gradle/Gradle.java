@@ -35,7 +35,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
