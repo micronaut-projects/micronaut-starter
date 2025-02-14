@@ -3,4 +3,9 @@ rewrite-recipe-bom = "3.2.0"
 
 [libraries]
 rewrite-recipe-bom = { module = "org.openrewrite.recipe:rewrite-recipe-bom", version.ref = "rewrite-recipe-bom" }
+rewrite-core = { module = "org.openrewrite:rewrite-core" }
 rewrite-gradle = { module = "org.openrewrite:rewrite-gradle" }
+rewrite-java-dependencies = { module = "org.openrewrite.recipe:rewrite-java-dependencies" }
+rewrite-maven = { module = "org.openrewrite:rewrite-maven" }
+rewrite-java = { module = "org.openrewrite:rewrite-java" }
+

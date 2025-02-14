@@ -5,15 +5,13 @@ import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.sdk.dependency.Scope;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-import spock.lang.Specification;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(startApplication = false)
-class RecipeDependencyFetcherTest extends Specification {
-    private static final String NAME = "micronaut.starter.feature.mockito.AddDependencyMockito";
+class RecipeDependencyFetcherTest {
+    private static final String NAME = "micronaut.starter.feature.Mockito";
 
     @Test
     void testFetchDependencies(RecipeDependencyFetcher fetcher) {

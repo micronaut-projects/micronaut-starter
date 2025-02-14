@@ -19,12 +19,13 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.openrewrite.OpenRewriteFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.mockito.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Mockito implements MockingFeature,  JunitCompanionFeature {
-    private static final String RECIPE_ADD_DEPENDENCY_MOCKITO = "micronaut.starter.feature.mockito.AddDependencyMockito";
+public class Mockito implements OpenRewriteFeature, MockingFeature,  JunitCompanionFeature {
+    private static final String RECIPE_ADD_DEPENDENCY_MOCKITO = "micronaut.starter.feature.Mockito";
 
     @Override
     @NonNull
@@ -50,6 +51,11 @@ public class Mockito implements MockingFeature,  JunitCompanionFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependenciesByRecipeName(RECIPE_ADD_DEPENDENCY_MOCKITO);
+        generatorContext.addDependenciesByRecipeName(getRecipeName());
+    }
+
+    @Override
+    public String getRecipeName() {
+        return RECIPE_ADD_DEPENDENCY_MOCKITO;
     }
 }

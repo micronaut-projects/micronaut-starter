@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 
 import java.util.Iterator;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,8 +33,16 @@ public class BaseAvailableFeatures implements AvailableFeatures {
     private final Map<String, Feature> features;
 
     public BaseAvailableFeatures(List<Feature> features, ApplicationType applicationType) {
+        this(features, f -> f.supports(applicationType));
+    }
+
+    public BaseAvailableFeatures(List<Feature> features) {
+        this(features, f -> true);
+    }
+
+    public BaseAvailableFeatures(List<Feature> features, @Nullable Predicate<Feature> predicate) {
         this.features = features.stream()
-                .filter(f -> f.supports(applicationType))
+                .filter(f -> predicate == null || predicate.test(f))
                 .collect(Collectors.toMap(
                         Feature::getName,
                         Function.identity(),

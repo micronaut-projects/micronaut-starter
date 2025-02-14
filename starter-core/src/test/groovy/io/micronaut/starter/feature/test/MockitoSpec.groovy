@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.test
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.openrewrite.OpenRewriteFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
@@ -15,6 +16,12 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
     @Shared
     @Subject
     Mockito mockito = beanContext.getBean(Mockito)
+
+    void "mockito is OpenRewriteFeature"() {
+        expect:
+        mockito instanceof OpenRewriteFeature
+        mockito.recipeName
+    }
 
     void 'test readme.md with feature mockito contains links to 3rd party docs'() {
         when:

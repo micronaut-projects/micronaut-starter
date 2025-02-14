@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @MicronautTest(startApplication = false)
 class ResourceLoaderFactoryTest {
 
-    private static final String NAME = "micronaut.starter.feature.mockito.AddDependencyMockito";
+    private static final String NAME = "micronaut.starter.feature.Mockito";
 
     @Test
     void loadRecipes(Environment env) {

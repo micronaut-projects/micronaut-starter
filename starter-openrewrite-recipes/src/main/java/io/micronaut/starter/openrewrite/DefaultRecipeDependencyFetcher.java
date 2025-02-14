@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <a href="https://docs.openrewrite.org/recipes/java/dependencies/adddependency">Add Gradle or Maven dependency</a>
+ * <a href="https://docs.openrewrite.org/recipes/maven/adddependency">Add Maven Dependency</a>
+ * <a href="https://docs.openrewrite.org/recipes/gradle/adddependency">Add Gradle dependency</a>
+ */
 @Singleton
 public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
     private final Environment env;
@@ -52,6 +57,7 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
     private static List<Dependency> findDependencies(Recipe recipe, BuildTool buildTool) {
         List<Dependency> dependencies = new ArrayList<>();
         for (Recipe r : recipe.getRecipeList()) {
+            findDependency(r).ifPresent(dependencies::add);
             if (buildTool.isGradle()) {
                 findGradleDependency(r).ifPresent(dependencies::add);
             } else if (buildTool == BuildTool.MAVEN) {
@@ -60,7 +66,27 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
         }
         return dependencies;
     }
+    private static Optional<Dependency> findDependency(Recipe recipe) {
+        if (recipe instanceof org.openrewrite.java.dependencies.AddDependency addDependency) {
+            Dependency.Builder builder = Dependency.builder()
+                    .groupId(addDependency.getGroupId())
+                    .artifactId(addDependency.getArtifactId());
+            if (StringUtils.isNotEmpty(addDependency.getVersion())) {
+                builder.version(addDependency.getVersion());
+            }
+            String scope = addDependency.getScope();
+            if (scope != null) {
+                ofMavenScope(scope).ifPresent(builder::scope);
+            }
+            String configuration = addDependency.getConfiguration();
+            if (configuration != null) {
+                ofGradleConfiguration(configuration).ifPresent(builder::scope);
+            }
 
+            return Optional.of(builder.build());
+        }
+        return Optional.empty();
+    }
     private static Optional<Dependency> findGradleDependency(Recipe recipe) {
         if (recipe instanceof org.openrewrite.gradle.AddDependency addDependency) {
             Dependency.Builder builder = Dependency.builder()
