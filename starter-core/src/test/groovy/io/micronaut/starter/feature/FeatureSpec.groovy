@@ -1,10 +1,14 @@
 package io.micronaut.starter.feature
 
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.DependencyCoordinate
+import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
+import io.micronaut.starter.sdk.BuildTool
+import io.micronaut.starter.sdk.dependency.Dependency
+import io.micronaut.starter.sdk.dependency.DependencyCoordinate
 import io.micronaut.starter.feature.aws.AwsLambdaEventFunctionFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.database.HibernateReactiveFeature
@@ -80,7 +84,13 @@ class FeatureSpec extends BeanContextSpec {
                 options,
                 OperatingSystem.LINUX,
                 getFeatures(features, options, applicationType).getFeatures(),
-                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false))
+                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false)),
+                new RecipeDependencyFetcher() {
+                    @Override
+                    List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool b) {
+                        return Collections.emptyList()
+                    }
+                }
         )
         commandCtx.applyFeatures()
 

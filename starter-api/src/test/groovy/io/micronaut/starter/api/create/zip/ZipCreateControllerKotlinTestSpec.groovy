@@ -9,15 +9,18 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.OutputHandler
+import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-
+import io.micronaut.starter.sdk.BuildTool
+import io.micronaut.starter.sdk.Project
+import io.micronaut.starter.sdk.dependency.Dependency
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull
 
@@ -96,7 +99,13 @@ class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {
                                  options,
                                  operatingSystem,
                                  [] as Set<Feature>,
-                    () -> Optional.empty())
+                    () -> Optional.empty(),
+            new RecipeDependencyFetcher() {
+                @Override
+                List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool buildTool) {
+                    return Collections.emptyList()
+                }
+            })
         }
     }
 

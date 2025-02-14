@@ -16,8 +16,8 @@
 package io.micronaut.starter.openrewrite;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
+import io.micronaut.starter.sdk.dependency.Dependency;
 
 import java.util.List;
 
