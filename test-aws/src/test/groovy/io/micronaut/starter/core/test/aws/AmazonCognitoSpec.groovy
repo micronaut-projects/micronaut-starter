@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.aws
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
@@ -17,9 +17,9 @@ class AmazonCognitoSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features amazon-cognito #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                             Language lang,
-                                                                                                                             BuildTool build,
-                                                                                                                             TestFramework testFramework) {
+                                                                                                                    Language lang,
+                                                                                                                    BuildTool build,
+                                                                                                                    TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito']
         if (build.isGradle()) {
@@ -40,9 +40,9 @@ class AmazonCognitoSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features amazon-cognito, aws-lambda #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                    Language lang,
-                                                                                                                    BuildTool build,
-                                                                                                                    TestFramework testFramework) {
+                                                                                                                                Language lang,
+                                                                                                                                BuildTool build,
+                                                                                                                                TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito', 'aws-lambda']
         if (build.isGradle()) {

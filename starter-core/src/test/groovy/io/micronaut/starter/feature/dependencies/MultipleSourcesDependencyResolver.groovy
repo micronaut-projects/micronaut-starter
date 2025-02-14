@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.dependencies
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
 import io.micronaut.core.io.ResourceResolver
-import io.micronaut.starter.build.dependencies.Coordinate
+import io.micronaut.starter.sdk.dependency.Coordinate
 import io.micronaut.starter.build.dependencies.CoordinatesUtils
 import io.micronaut.starter.build.dependencies.PomDependencyVersionResolver
 import io.micronaut.starter.build.dependencies.StarterCoordinates

@@ -14,7 +14,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.starter.analytics.Generated
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Shared
 import spock.lang.Specification

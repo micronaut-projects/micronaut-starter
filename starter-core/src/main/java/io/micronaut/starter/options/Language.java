@@ -20,6 +20,7 @@ import io.micronaut.starter.defaults.IncludesDefaults;
 import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.sdk.BuildTool;
 
 import java.util.Arrays;
 import java.util.Locale;

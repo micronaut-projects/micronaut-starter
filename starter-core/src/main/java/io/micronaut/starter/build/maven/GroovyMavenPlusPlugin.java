@@ -20,7 +20,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MavenSpecificFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.groovy.maven.plus.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

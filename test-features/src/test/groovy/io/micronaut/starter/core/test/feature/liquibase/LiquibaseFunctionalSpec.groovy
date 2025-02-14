@@ -1,6 +1,6 @@
 package io.micronaut.starter.core.test.feature.liquibase
 
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult

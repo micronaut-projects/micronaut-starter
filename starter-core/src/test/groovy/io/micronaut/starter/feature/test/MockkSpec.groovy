@@ -5,15 +5,12 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll

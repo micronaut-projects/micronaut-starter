@@ -5,14 +5,15 @@ import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.sdk.Project
 import spock.lang.Unroll
 
 class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {

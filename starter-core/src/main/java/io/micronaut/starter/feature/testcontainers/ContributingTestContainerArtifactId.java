@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.testcontainers;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import java.util.Collections;
 import java.util.List;
 

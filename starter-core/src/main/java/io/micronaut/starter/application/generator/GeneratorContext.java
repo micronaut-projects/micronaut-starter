@@ -20,7 +20,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.*;
@@ -31,12 +30,17 @@ import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.other.template.markdownLink;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.TestRockerModelProvider;
+import io.micronaut.starter.sdk.Project;
+import io.micronaut.starter.sdk.dependency.Coordinate;
+import io.micronaut.starter.sdk.dependency.Dependency;
+import io.micronaut.starter.sdk.dependency.Scope;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
@@ -82,13 +86,15 @@ public class GeneratorContext implements DependencyContext {
     private final DependencyContext dependencyContext;
     private final Set<Profile> profiles = new HashSet<>();
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
+    private final RecipeDependencyFetcher recipeDependencyFetcher;
 
     public GeneratorContext(Project project,
                             ApplicationType type,
                             Options options,
                             @Nullable OperatingSystem operatingSystem,
                             Set<Feature> features,
-                            CoordinateResolver coordinateResolver) {
+                            CoordinateResolver coordinateResolver,
+                            RecipeDependencyFetcher recipeDependencyFetcher) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
@@ -104,6 +110,7 @@ public class GeneratorContext implements DependencyContext {
         }
         this.coordinateResolver = coordinateResolver;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
+        this.recipeDependencyFetcher = recipeDependencyFetcher;
     }
 
     /**
@@ -440,5 +447,17 @@ public class GeneratorContext implements DependencyContext {
         return getDependencies().stream()
                 .filter(dependency -> dependency.getGroupId().equals(groupId))
                 .count();
+    }
+
+    public void addDependenciesByRecipeName(String recipeName) {
+        if (getBuildTool().isGradle()) {
+            for (Dependency d : recipeDependencyFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.GRADLE)) {
+                addDependency(d);
+            }
+        } else if (getBuildTool() == BuildTool.MAVEN) {
+            for (Dependency d : recipeDependencyFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.MAVEN)) {
+                addDependency(d);
+            }
+        }
     }
 }

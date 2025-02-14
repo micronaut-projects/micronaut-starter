@@ -20,9 +20,9 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.Project;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -37,7 +37,7 @@ import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotl
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;

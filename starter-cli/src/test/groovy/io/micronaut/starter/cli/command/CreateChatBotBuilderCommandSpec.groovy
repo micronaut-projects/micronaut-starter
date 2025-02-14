@@ -14,7 +14,7 @@ import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot
 import io.micronaut.starter.feature.chatbots.telegram.TelegramHttpChatBot
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

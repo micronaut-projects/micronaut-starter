@@ -25,10 +25,12 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.feature.validation.ProjectNameValidator;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
+import io.micronaut.starter.sdk.Project;
 import jakarta.inject.Singleton;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -43,13 +45,16 @@ public class ContextFactory {
     private final ProjectNameValidator projectNameValidator;
 
     private final DefaultCoordinateResolver coordinateResolver;
+    private final RecipeDependencyFetcher recipeDependencyFetcher;
 
     public ContextFactory(FeatureValidator featureValidator,
                           DefaultCoordinateResolver coordinateResolver,
-                          ProjectNameValidator projectNameValidator) {
+                          ProjectNameValidator projectNameValidator,
+                          RecipeDependencyFetcher recipeDependencyFetcher) {
         this.featureValidator = featureValidator;
         this.coordinateResolver = coordinateResolver;
         this.projectNameValidator = projectNameValidator;
+        this.recipeDependencyFetcher = recipeDependencyFetcher;
     }
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
@@ -92,7 +97,7 @@ public class ContextFactory {
 
         featureValidator.validatePostProcessing(featureContext.getOptions(), featureContext.getApplicationType(), featureList);
 
-        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList, coordinateResolver);
+        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList, coordinateResolver, recipeDependencyFetcher);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {

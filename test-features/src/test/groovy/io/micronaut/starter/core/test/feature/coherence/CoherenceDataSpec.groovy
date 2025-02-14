@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.feature.coherence
 
 import io.micronaut.starter.feature.coherence.CoherenceData
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec

@@ -5,9 +5,8 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.config.Yaml
-import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 
 class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 

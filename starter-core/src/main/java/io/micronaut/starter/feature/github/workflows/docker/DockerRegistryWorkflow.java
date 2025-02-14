@@ -21,7 +21,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;

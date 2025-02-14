@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.defaults;
 
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 public interface HasDefaultBuild {
     BuildTool getBuild();

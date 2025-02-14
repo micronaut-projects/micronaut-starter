@@ -5,7 +5,7 @@ import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -14,7 +14,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.utils.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
 
@@ -26,9 +26,9 @@ class CreateOracleFunctionSpec extends CommandSpec{
     }
 
     void 'create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                           Language lang,
-                                                                                                                           BuildTool build,
-                                                                                                                           TestFramework testFramework) {
+                                                                                                                     Language lang,
+                                                                                                                     BuildTool build,
+                                                                                                                     TestFramework testFramework) {
         given:
         List<String> features = ['oracle-function']
         generateProject(lang, build, features, applicationType, testFramework)
@@ -44,7 +44,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
     }
 
     void 'create-#applicationType with features oracle-function and "-" in the app name #lang and #build and test framework: #testFramework'(ApplicationType applicationType, Language lang, BuildTool build,
-                                                                                                                     TestFramework testFramework) {
+                                                                                                                                             TestFramework testFramework) {
         given:
         List<String> features = ['oracle-function']
         JdkVersion jdkVersion = VersionInfo.getJavaVersion()

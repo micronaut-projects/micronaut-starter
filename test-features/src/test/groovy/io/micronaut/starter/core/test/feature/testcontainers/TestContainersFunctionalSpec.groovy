@@ -5,7 +5,7 @@ import io.micronaut.starter.feature.database.Oracle
 import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
@@ -14,9 +14,6 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.PredicateUtils
 import io.micronaut.starter.util.VersionInfo
 // Don't delete these imports. They are not unused imports
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
-import io.micronaut.starter.core.test.feature.testcontainers.book
 
 class TestContainersFunctionalSpec extends CommandSpec {
 

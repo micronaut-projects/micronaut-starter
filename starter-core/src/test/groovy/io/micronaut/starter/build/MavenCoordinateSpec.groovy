@@ -1,6 +1,6 @@
 package io.micronaut.starter.build
 
-import io.micronaut.starter.build.dependencies.Dependency
+import io.micronaut.starter.sdk.dependency.Dependency
 import spock.lang.Specification
 
 class MavenCoordinateSpec extends Specification {

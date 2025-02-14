@@ -1,4 +1,4 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_REGION

@@ -17,9 +17,9 @@ package io.micronaut.starter.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
-import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.sdk.dependency.Coordinate;
 
-import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.sdk.dependency.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;

@@ -3,10 +3,10 @@ package io.micronaut.starter.feature.database
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.sdk.dependency.Dependency
+import io.micronaut.starter.sdk.dependency.Scope
 import io.micronaut.starter.feature.database.jdbc.Hikari
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA

@@ -2,7 +2,7 @@
 @import io.micronaut.starter.feature.function.HandlerClassFeature
 @import io.micronaut.starter.feature.Feature
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 
 @args (
 HandlerClassFeature feature,

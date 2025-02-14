@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.sdk.dependency;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;

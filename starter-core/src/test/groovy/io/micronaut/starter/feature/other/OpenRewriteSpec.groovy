@@ -6,10 +6,10 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.MAVEN
+import static io.micronaut.starter.sdk.BuildTool.GRADLE
+import static io.micronaut.starter.sdk.BuildTool.MAVEN
 import static io.micronaut.starter.options.Language.JAVA
 
 class OpenRewriteSpec extends ApplicationContextSpec implements CommandOutputFixture {

@@ -19,9 +19,9 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;
+import io.micronaut.starter.sdk.Project;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;

@@ -3,12 +3,8 @@ package io.micronaut.starter.feature.chatbots.telegram
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import spock.lang.Shared
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 

@@ -5,6 +5,7 @@ import io.micronaut.starter.build.gradle.GradleDependency
 import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.sdk.dependency.Dependency
 import spock.lang.Specification
 
 class GradleDependencyComparatorSpec extends Specification {

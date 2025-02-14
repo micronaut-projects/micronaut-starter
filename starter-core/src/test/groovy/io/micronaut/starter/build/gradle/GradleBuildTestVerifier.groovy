@@ -2,8 +2,8 @@ package io.micronaut.starter.build.gradle
 
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.dependency.Scope
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 

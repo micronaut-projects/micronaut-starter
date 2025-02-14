@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.springboot;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 
 public final class SpringBootDependencies {
     public static final String GROUP_ID_ORG_SPRINGFRAMEWORK_BOOT = "org.springframework.boot";

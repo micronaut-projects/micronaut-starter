@@ -17,8 +17,8 @@ package io.micronaut.starter.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.starter.build.dependencies.Phase;
-import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.sdk.dependency.Phase;
+import io.micronaut.starter.sdk.dependency.Scope;
 import io.micronaut.starter.options.Language;
 
 import java.util.Optional;

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.application;
+package io.micronaut.starter.sdk;
 
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.sdk.utils.NameUtils;
 
 import java.util.HashMap;
 import java.util.Map;

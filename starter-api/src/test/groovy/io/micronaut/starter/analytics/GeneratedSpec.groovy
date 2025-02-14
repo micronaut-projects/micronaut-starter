@@ -2,7 +2,7 @@ package io.micronaut.starter.analytics
 
 import io.micronaut.json.JsonMapper
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

@@ -13,9 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.gradle;
+package io.micronaut.starter.sdk.dependency;
 
-public enum GradleDsl {
-    KOTLIN,
-    GROOVY
+public enum Phase {
+    ANNOTATION_PROCESSING,
+
+    AOT_PLUGIN,
+    PUBLIC_API,
+    COMPILATION,
+    NATIVE_IMAGE_COMPILATION,
+    DEVELOPMENT,
+    RUNTIME,
+    OPENREWRITE,
+    TEST_RESOURCES_SERVICE,
 }

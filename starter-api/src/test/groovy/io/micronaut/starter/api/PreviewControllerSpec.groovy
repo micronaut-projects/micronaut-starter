@@ -1,6 +1,6 @@
 package io.micronaut.starter.api
 
-import io.micronaut.context.annotation.Property
+
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -9,7 +9,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration

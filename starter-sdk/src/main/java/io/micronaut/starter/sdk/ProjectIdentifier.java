@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.sdk;
 
-public enum Source {
-    MAIN,
-    TEST
+public class ProjectIdentifier {
+    private final String packageName;
+    private final String name;
+
+    public ProjectIdentifier(String packageName, String name) {
+        packageName = packageName.replaceAll("\\.*$", "");
+        this.packageName = packageName;
+        this.name = name;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

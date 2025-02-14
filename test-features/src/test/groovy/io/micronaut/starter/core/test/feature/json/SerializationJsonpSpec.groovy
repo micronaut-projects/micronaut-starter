@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.feature.json
 
 import io.micronaut.starter.feature.json.SerializationJsonpFeature
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 

@@ -2,13 +2,12 @@ package io.micronaut.starter.core.test.cloud.gcp
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.gcp.GoogleCloudEventsFunction
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Requires
-import spock.lang.Retry
 import spock.lang.Unroll
 import spock.util.environment.Jvm
 

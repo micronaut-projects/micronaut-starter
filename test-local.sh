@@ -13,6 +13,18 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
+PREDICTIVE_TEST_SELECTION=false ./gradlew :starter-sdk:build --parallel --rerun-tasks || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+PREDICTIVE_TEST_SELECTION=false ./gradlew :starter-openrewrite-recipes:build --parallel --rerun-tasks || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
 PREDICTIVE_TEST_SELECTION=false ./gradlew :starter-core:build --parallel --rerun-tasks || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then

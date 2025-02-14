@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovyJunit;
 import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovySpock;
@@ -28,7 +28,7 @@ import io.micronaut.starter.feature.chatbots.basecamp.template.controllerJavaJun
 import io.micronaut.starter.feature.chatbots.basecamp.template.controllerKotlinJunit;
 import io.micronaut.starter.feature.chatbots.basecamp.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;

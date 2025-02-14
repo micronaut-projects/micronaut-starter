@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.swagger.v3.oas.annotations.Parameter;

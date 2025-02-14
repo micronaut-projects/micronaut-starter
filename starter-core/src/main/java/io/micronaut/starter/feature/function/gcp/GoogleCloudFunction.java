@@ -19,9 +19,9 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.Project;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
@@ -30,7 +30,7 @@ import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import jakarta.inject.Singleton;
 
 /**

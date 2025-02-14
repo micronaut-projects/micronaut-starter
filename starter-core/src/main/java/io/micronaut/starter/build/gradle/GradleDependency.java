@@ -19,6 +19,10 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.*;
+import io.micronaut.starter.sdk.dependency.Coordinate;
+import io.micronaut.starter.sdk.dependency.Dependency;
+import io.micronaut.starter.sdk.dependency.DependencyCoordinate;
+import io.micronaut.starter.sdk.gradle.GradleDsl;
 
 import java.util.*;
 import static io.micronaut.core.util.CollectionUtils.isNotEmpty;

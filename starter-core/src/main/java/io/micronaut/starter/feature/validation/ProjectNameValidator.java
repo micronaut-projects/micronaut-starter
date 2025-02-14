@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.application.Project;
+import io.micronaut.starter.sdk.Project;
 import jakarta.inject.Singleton;
 
 import java.util.regex.Matcher;

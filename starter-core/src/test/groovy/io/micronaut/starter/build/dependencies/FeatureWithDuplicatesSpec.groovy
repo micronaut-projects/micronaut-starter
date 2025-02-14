@@ -5,8 +5,9 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.sdk.dependency.Scope
 
 
 class FeatureWithDuplicatesSpec extends BeanContextSpec implements CommandOutputFixture {

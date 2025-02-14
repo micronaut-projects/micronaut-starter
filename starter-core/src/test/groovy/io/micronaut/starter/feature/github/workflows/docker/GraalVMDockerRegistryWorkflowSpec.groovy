@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 

@@ -8,12 +8,11 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.template.Template
-import spock.lang.PendingFeature
 import spock.lang.Subject
 
 class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {

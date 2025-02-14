@@ -4,11 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.dependency.Scope
+import io.micronaut.starter.sdk.BuildTool
 import spock.lang.Unroll
-
-import java.util.regex.Pattern
 
 class Log4j2Spec extends ApplicationContextSpec {
 

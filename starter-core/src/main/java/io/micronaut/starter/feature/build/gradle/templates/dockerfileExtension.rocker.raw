@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.sdk.gradle.GradleDsl
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @args(GradleDsl dsl, Dockerfile dockerfile)
 @if (dsl == GradleDsl.GROOVY) {

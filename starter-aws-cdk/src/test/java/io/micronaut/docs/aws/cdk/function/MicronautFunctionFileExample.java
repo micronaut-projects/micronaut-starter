@@ -1,7 +1,7 @@
 package io.micronaut.docs.aws.cdk.function;
 
 import io.micronaut.aws.cdk.function.MicronautFunctionFile;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 
 public class MicronautFunctionFileExample {
     String filename =

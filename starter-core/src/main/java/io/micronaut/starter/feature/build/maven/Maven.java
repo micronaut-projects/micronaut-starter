@@ -35,7 +35,7 @@ import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.feature.build.maven.templates.pom;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;

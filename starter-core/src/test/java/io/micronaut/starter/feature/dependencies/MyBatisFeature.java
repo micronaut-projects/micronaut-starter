@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.dependencies;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.feature.Feature;
 
 import jakarta.inject.Singleton;

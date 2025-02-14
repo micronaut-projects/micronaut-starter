@@ -1,5 +1,6 @@
 package io.micronaut.starter.options
 
+import io.micronaut.starter.sdk.BuildTool
 import spock.lang.Specification
 
 class BuildToolSpec extends Specification {

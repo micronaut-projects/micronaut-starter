@@ -7,8 +7,8 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.MAVEN
+import static io.micronaut.starter.sdk.BuildTool.GRADLE
+import static io.micronaut.starter.sdk.BuildTool.MAVEN
 
 class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutputFixture {
 

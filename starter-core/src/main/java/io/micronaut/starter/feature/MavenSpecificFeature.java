@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature;
 
 /**
- * A feature that only works with {@link io.micronaut.starter.options.BuildTool#MAVEN}.
+ * A feature that only works with {@link io.micronaut.starter.sdk.BuildTool#MAVEN}.
  *
  * @author Dean Wette
  * @since 4.0.3

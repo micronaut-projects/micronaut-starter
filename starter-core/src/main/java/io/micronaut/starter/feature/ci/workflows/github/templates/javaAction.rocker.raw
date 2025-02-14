@@ -1,7 +1,7 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @import io.micronaut.starter.options.JdkDistribution
 @import io.micronaut.starter.options.JdkVersion
-@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.sdk.BuildTool
 
 @args (
 JdkVersion jdkVersion,

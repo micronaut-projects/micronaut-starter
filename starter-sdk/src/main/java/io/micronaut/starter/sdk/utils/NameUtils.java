@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.util;
+package io.micronaut.starter.sdk.utils;
 
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.ProjectIdentifier;
+import io.micronaut.starter.sdk.Project;
+import io.micronaut.starter.sdk.ProjectIdentifier;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.sdk.Project
 @args (Project project)
 @if (project.getPackageName() != null) {
 package @project.getPackageName();

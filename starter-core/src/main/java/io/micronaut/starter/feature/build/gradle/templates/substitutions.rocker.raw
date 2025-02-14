@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.dependencies.Substitution
+@import io.micronaut.starter.sdk.dependency.Substitution
 @import java.util.Set
 @args (Set<Substitution> substitutions)
 

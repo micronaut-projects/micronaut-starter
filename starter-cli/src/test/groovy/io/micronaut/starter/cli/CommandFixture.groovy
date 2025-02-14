@@ -8,10 +8,10 @@ import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.utils.NameUtils
 
 trait CommandFixture {
 

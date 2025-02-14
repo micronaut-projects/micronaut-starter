@@ -16,9 +16,9 @@
 package io.micronaut.starter.application.generator;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.sdk.dependency.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 

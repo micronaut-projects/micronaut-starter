@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.MavenCentral;
 import io.micronaut.starter.build.MavenLocal;
 import io.micronaut.starter.build.Repository;
+import io.micronaut.starter.sdk.gradle.GradleDsl;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.template.WritableUtils;
 

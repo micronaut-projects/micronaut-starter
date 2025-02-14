@@ -25,7 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.sdk.utils.NameUtils;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.micrometer.annotation.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

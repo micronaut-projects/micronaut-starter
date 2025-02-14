@@ -18,19 +18,20 @@ package io.micronaut.starter.test
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
+
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.feature.build.MicronautGradleEnterprise
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.starter.sdk.Project
+import io.micronaut.starter.sdk.utils.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner

@@ -19,8 +19,10 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.build.dependencies.*;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.sdk.dependency.Dependency;
+import io.micronaut.starter.sdk.dependency.DependencyCoordinate;
 
 import java.util.*;
 

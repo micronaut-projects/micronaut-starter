@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.validation;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MavenSpecificFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 

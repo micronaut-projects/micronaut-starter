@@ -1,14 +1,13 @@
 package io.micronaut.starter.core.test.feature.agorapulse.slack
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import org.yaml.snakeyaml.Yaml
 import spock.lang.Ignore
-import spock.lang.IgnoreIf
 
 import java.nio.file.Files
 import java.nio.file.Paths

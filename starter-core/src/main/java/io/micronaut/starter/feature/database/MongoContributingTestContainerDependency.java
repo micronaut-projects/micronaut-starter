@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
 
 import java.util.Collections;

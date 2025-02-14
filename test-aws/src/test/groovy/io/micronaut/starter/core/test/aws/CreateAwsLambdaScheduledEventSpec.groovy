@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.aws
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
@@ -17,9 +17,9 @@ class CreateAwsLambdaScheduledEventSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features aws-lambda-scheduled-event #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                             Language lang,
-                                                                                                                             BuildTool build,
-                                                                                                                             TestFramework testFramework) {
+                                                                                                                                Language lang,
+                                                                                                                                BuildTool build,
+                                                                                                                                TestFramework testFramework) {
         given:
         List<String> features = ['aws-lambda-scheduled-event']
         generateProject(lang, build, features, applicationType, testFramework)
@@ -36,9 +36,9 @@ class CreateAwsLambdaScheduledEventSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features aws-lambda-scheduled-event and aws-cdk #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                                Language lang,
-                                                                                                                                BuildTool build,
-                                                                                                                                TestFramework testFramework) {
+                                                                                                                                            Language lang,
+                                                                                                                                            BuildTool build,
+                                                                                                                                            TestFramework testFramework) {
         given:
         List<String> features = ['aws-lambda-scheduled-event', 'aws-cdk']
         generateProject(lang, build, features, applicationType, testFramework)
