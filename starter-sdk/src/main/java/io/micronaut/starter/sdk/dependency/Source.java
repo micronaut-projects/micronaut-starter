@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.defaults;
+package io.micronaut.starter.sdk.dependency;
 
-import io.micronaut.starter.sdk.options.TestFramework;
-
-public interface HasDefaultTest {
-    TestFramework getTest();
+public enum Source {
+    MAIN,
+    TEST
 }

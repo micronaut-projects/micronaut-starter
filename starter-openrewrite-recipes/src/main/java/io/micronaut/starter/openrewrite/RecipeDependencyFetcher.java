@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.openrewrite;
 
-public enum Phase {
-    ANNOTATION_PROCESSING,
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.options.BuildTool;
 
-    AOT_PLUGIN,
-    PUBLIC_API,
-    COMPILATION,
-    NATIVE_IMAGE_COMPILATION,
-    DEVELOPMENT,
-    RUNTIME,
-    OPENREWRITE,
-    TEST_RESOURCES_SERVICE,
+import java.util.List;
+
+public interface RecipeDependencyFetcher {
+
+    @NonNull
+    List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool buildTool);
 }

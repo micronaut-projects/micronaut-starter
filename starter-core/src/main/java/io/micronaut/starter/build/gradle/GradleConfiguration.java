@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.gradle;
+package io.micronaut.starter.sdk.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Phase;
-import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.sdk.dependency.Phase;
+import io.micronaut.starter.sdk.dependency.Scope;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 

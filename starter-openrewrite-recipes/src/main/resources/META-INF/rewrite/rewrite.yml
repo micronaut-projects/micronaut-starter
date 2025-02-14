@@ -6,4 +6,4 @@ recipeList:
   - org.openrewrite.gradle.AddDependency:
       groupId: org.mockito
       artifactId: mockito-core
-      configuration: testImplementation
+      configuration: implementation
