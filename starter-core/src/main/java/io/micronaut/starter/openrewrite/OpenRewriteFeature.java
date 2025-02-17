@@ -25,5 +25,7 @@ import io.micronaut.starter.feature.Feature;
 public interface OpenRewriteFeature extends Feature {
 
     @NonNull
-    String getRecipeName();
+    default String getRecipeName() {
+        return "io.micronaut.starter.feature." + getName();
+    }
 }

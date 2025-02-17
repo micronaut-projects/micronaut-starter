@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(startApplication = false)
 class RecipeDependencyFetcherTest {
-    private static final String NAME = "micronaut.starter.feature.Mockito";
+    private static final String NAME = "io.micronaut.starter.feature.mockito";
 
     @Test
     void testFetchDependencies(RecipeDependencyFetcher fetcher) {
