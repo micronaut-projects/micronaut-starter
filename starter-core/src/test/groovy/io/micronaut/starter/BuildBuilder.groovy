@@ -19,6 +19,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
+import io.micronaut.starter.openrewrite.RecipePropertiesFetcher
 import io.micronaut.starter.options.*
 import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.sdk.Project
@@ -139,7 +140,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {
-        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver), ctx.getBean(RecipeDependencyFetcher))
+        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver), ctx.getBean(RecipeDependencyFetcher), ctx.getBean(RecipePropertiesFetcher))
         ctx.applyFeatures()
         ctx
     }

@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.rewrite.java.dependencies) {
         exclude(group = "org.openrewrite", module = "rewrite-groovy")
     }
+    implementation(libs.rewrite.properties)
     testAnnotationProcessor(platform("io.micronaut.platform:micronaut-platform:${micronautVersion}"))
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
     testImplementation(platform("io.micronaut.platform:micronaut-platform:${micronautVersion}"))

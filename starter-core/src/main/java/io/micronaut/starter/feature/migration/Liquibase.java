@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.migration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.openrewrite.OpenRewriteFeature;
 import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
@@ -29,7 +30,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.liquibase.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Liquibase implements MigrationFeature {
+public class Liquibase implements MigrationFeature, OpenRewriteFeature {
 
     public static final String NAME = "liquibase";
 
@@ -74,11 +75,9 @@ public class Liquibase implements MigrationFeature {
                         liquibaseChangelog.template()));
         generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
                         liquibaseSchema.template()));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.liquibase")
-                .artifactId("micronaut-liquibase")
-                .compile());
-        generatorContext.getConfiguration().addNested(
-                "liquibase.datasources.default.change-log", "classpath:db/liquibase-changelog.xml");
+
+        generatorContext.addDependenciesByRecipeName(getRecipeName());
+        generatorContext.addConfigurationByRecipeName(getRecipeName());
+
     }
 }

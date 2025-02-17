@@ -1,5 +1,18 @@
 ---
 type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase
+displayName: Adds Micronaut liquibase dependency in the compile classpath
+recipeList:
+  - org.openrewrite.java.dependencies.AddDependency:
+      groupId: io.micronaut.liquibase
+      artifactId: micronaut-liquibase
+      configuration: implementation
+      scope: compile
+  - org.openrewrite.properties.AddProperty: #TODO create a recipe to add a property to a Micronaut configuration file
+        property: liquibase.datasources.default.change-log
+        value: classpath:db/liquibase-changelog.xml
+---
+type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.mockito
 displayName: Add Mockito dependency in the test configuration
 recipeList:

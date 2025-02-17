@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
+import io.micronaut.starter.openrewrite.RecipePropertiesFetcher
 import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.sdk.dependency.Dependency
 import io.micronaut.starter.sdk.dependency.DependencyCoordinate
@@ -90,7 +91,12 @@ class FeatureSpec extends BeanContextSpec {
                     List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool b) {
                         return Collections.emptyList()
                     }
-                }
+                }, new RecipePropertiesFetcher() {
+            @Override
+            Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
+                return Optional.empty()
+            }
+        }
         )
         commandCtx.applyFeatures()
 

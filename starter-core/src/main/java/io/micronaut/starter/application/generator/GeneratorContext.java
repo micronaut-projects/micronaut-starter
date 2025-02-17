@@ -31,6 +31,7 @@ import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.other.template.markdownLink;
 import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
+import io.micronaut.starter.openrewrite.RecipePropertiesFetcher;
 import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -87,6 +88,7 @@ public class GeneratorContext implements DependencyContext {
     private final Set<Profile> profiles = new HashSet<>();
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
     private final RecipeDependencyFetcher recipeDependencyFetcher;
+    private final RecipePropertiesFetcher recipePropertiesFetcher;
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -94,7 +96,8 @@ public class GeneratorContext implements DependencyContext {
                             @Nullable OperatingSystem operatingSystem,
                             Set<Feature> features,
                             CoordinateResolver coordinateResolver,
-                            RecipeDependencyFetcher recipeDependencyFetcher) {
+                            RecipeDependencyFetcher recipeDependencyFetcher,
+                            RecipePropertiesFetcher recipePropertiesFetcher) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
@@ -111,6 +114,7 @@ public class GeneratorContext implements DependencyContext {
         this.coordinateResolver = coordinateResolver;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.recipeDependencyFetcher = recipeDependencyFetcher;
+        this.recipePropertiesFetcher = recipePropertiesFetcher;
     }
 
     /**
@@ -459,5 +463,14 @@ public class GeneratorContext implements DependencyContext {
                 addDependency(d);
             }
         }
+    }
+
+    public void addConfigurationByRecipeName(@NonNull String recipeName) {
+        Configuration config = getConfiguration();
+        recipePropertiesFetcher.findPropertiesByRecipeName(recipeName).ifPresent(properties -> {
+            for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+                config.addNested(entry.getKey().toString(), entry.getValue());
+            }
+        });
     }
 }
