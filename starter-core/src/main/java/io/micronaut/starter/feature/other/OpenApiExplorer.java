@@ -63,14 +63,14 @@ public class OpenApiExplorer extends OpenApiView implements ContributingStaticRe
 
     @Override
     public List<StaticResource> staticResources() {
-        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        var result = new ArrayList<>(super.staticResources());
         result.add(new StaticResource("openapi-explorer", "/openapi-explorer/**", "classpath:META-INF/swagger/views/openapi-explorer"));
         return result;
     }
 
     @Override
     public List<InterceptUrlMap> interceptUrlMaps() {
-        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        var result = new ArrayList<>(super.interceptUrlMaps());
         result.add(InterceptUrlMap.anonymousAcccess("/openapi-explorer/**"));
         return result;
     }

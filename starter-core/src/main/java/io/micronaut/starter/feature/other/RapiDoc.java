@@ -61,14 +61,14 @@ public class RapiDoc extends OpenApiView implements ContributingStaticResources 
 
     @Override
     public List<StaticResource> staticResources() {
-        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        var result = new ArrayList<>(super.staticResources());
         result.add(new StaticResource("rapidoc", "/rapidoc/**", "classpath:META-INF/swagger/views/rapidoc"));
         return result;
     }
 
     @Override
     public List<InterceptUrlMap> interceptUrlMaps() {
-        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        var result = new ArrayList<>(super.interceptUrlMaps());
         result.add(InterceptUrlMap.anonymousAcccess("/rapidoc/**"));
         return result;
     }

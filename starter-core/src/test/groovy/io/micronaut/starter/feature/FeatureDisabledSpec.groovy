@@ -296,6 +296,7 @@ import io.micronaut.starter.feature.other.ProjectLombok
 import io.micronaut.starter.feature.other.RapiDoc
 import io.micronaut.starter.feature.other.Readme
 import io.micronaut.starter.feature.other.Redoc
+import io.micronaut.starter.feature.other.Scalar
 import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.picocli.Picocli
@@ -671,6 +672,7 @@ class FeatureDisabledSpec extends Specification {
         'json-smart' | 'micronaut.starter.feature.json.smart.enabled' | JsonSmart
         'chatbots-telegram-azure-function' | 'micronaut.starter.feature.chatbots.telegram.azure.function.enabled' | TelegramAzureChatBot
         'openapi-explorer' | 'micronaut.starter.feature.openapi.explorer.enabled' | OpenApiExplorer
+        'scalar' | 'micronaut.starter.feature.scalar.enabled' | Scalar
         'grpc' | 'micronaut.starter.feature.grpc.enabled' | Grpc
         'neo4j-bolt' | 'micronaut.starter.feature.neo4j.bolt.enabled' | Neo4jBolt
         'chatbots-basecamp-lambda' | 'micronaut.starter.feature.chatbots.basecamp.lambda.enabled' | BasecampAwsChatBot

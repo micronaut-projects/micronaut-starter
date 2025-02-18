@@ -41,12 +41,12 @@ public class Redoc extends OpenApiView implements ContributingStaticResources {
 
     @Override
     public String getTitle() {
-        return "Redoc View";
+        return "ReDoc View";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables Redoc view for OpenAPI";
+        return "Adds and enables ReDoc view for OpenAPI";
     }
 
     @Override
@@ -61,14 +61,14 @@ public class Redoc extends OpenApiView implements ContributingStaticResources {
 
     @Override
     public List<StaticResource> staticResources() {
-        List<StaticResource> result = new ArrayList<>(super.staticResources());
+        var result = new ArrayList<>(super.staticResources());
         result.add(new StaticResource("redoc", "/redoc/**", "classpath:META-INF/swagger/views/redoc"));
         return result;
     }
 
     @Override
     public List<InterceptUrlMap> interceptUrlMaps() {
-        List<InterceptUrlMap> result = new ArrayList<>(super.interceptUrlMaps());
+        var result = new ArrayList<>(super.interceptUrlMaps());
         result.add(InterceptUrlMap.anonymousAcccess("/redoc/**"));
         return result;
     }

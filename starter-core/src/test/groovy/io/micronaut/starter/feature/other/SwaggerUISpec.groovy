@@ -30,10 +30,11 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=true"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
         output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=false"
-        output["openapi.properties"].readLines()[3] == "rapidoc.enabled=false"
-        output["openapi.properties"].readLines()[4] == "rapidoc.bg-color=#14191f"
-        output["openapi.properties"].readLines()[5] == "rapidoc.text-color=#aec2e0"
-        output["openapi.properties"].readLines()[6] == "rapidoc.sort-endpoints-by=method"
+        output["openapi.properties"].readLines()[3] == "scalar.enabled=false"
+        output["openapi.properties"].readLines()[4] == "rapidoc.enabled=false"
+        output["openapi.properties"].readLines()[5] == "rapidoc.bg-color=#14191f"
+        output["openapi.properties"].readLines()[6] == "rapidoc.text-color=#aec2e0"
+        output["openapi.properties"].readLines()[7] == "rapidoc.sort-endpoints-by=method"
 
         output.containsKey("src/main/java/example/micronaut/FooController.java")
         output.containsKey("src/test/java/example/micronaut/FooTest.java")
@@ -58,10 +59,11 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=true"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
         output["openapi.properties"].readLines()[2] == "openapi-explorer.enabled=false"
-        output["openapi.properties"].readLines()[3] == "rapidoc.enabled=false"
-        output["openapi.properties"].readLines()[4] == "rapidoc.bg-color=#14191f"
-        output["openapi.properties"].readLines()[5] == "rapidoc.text-color=#aec2e0"
-        output["openapi.properties"].readLines()[6] == "rapidoc.sort-endpoints-by=method"
+        output["openapi.properties"].readLines()[3] == "scalar.enabled=false"
+        output["openapi.properties"].readLines()[4] == "rapidoc.enabled=false"
+        output["openapi.properties"].readLines()[5] == "rapidoc.bg-color=#14191f"
+        output["openapi.properties"].readLines()[6] == "rapidoc.text-color=#aec2e0"
+        output["openapi.properties"].readLines()[7] == "rapidoc.sort-endpoints-by=method"
 
         output.containsKey("src/main/java/example/micronaut/FooController.java")
         output.containsKey("src/test/java/example/micronaut/FooTest.java")

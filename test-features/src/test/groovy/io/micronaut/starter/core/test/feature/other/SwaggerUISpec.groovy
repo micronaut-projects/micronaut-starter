@@ -151,6 +151,7 @@ class SwaggerUISpec extends CommandSpec {
         assert openAPIProperties.get("swagger-ui.enabled") == "true"
         assert openAPIProperties.get("redoc.enabled") == "false"
         assert openAPIProperties.get("openapi-explorer.enabled") == "false"
+        assert openAPIProperties.get("scalar.enabled") == "false"
         assert openAPIProperties.get("rapidoc.enabled") == "false"
         assert openAPIProperties.get("rapidoc.bg-color") == "#14191f"
         assert openAPIProperties.get("rapidoc.text-color") == "#aec2e0"

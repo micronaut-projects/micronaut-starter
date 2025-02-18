@@ -13,6 +13,7 @@ def openApiProperties = tasks.register("openApiProperties", WriteProperties) {
             'swagger-ui.enabled': true,
             'redoc.enabled': true,
             'openapi-explorer.enabled': true,
+            'scalar.enabled': true,
             'rapidoc.enabled': true,
             'rapidoc.bg-color': '#14191f',
             'rapidoc.text-color': '#aec2e0',

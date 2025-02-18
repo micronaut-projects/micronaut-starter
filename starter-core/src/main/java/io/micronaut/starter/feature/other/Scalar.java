@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2025 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,21 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
 import io.micronaut.starter.feature.InterceptUrlMap;
+import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Requires(property = "micronaut.starter.feature.swagger.ui.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.scalar.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class SwaggerUI extends OpenApiView implements ContributingInterceptUrlMapFeature {
-    public static final String NAME = "swagger-ui";
+public class Scalar extends OpenApiView implements ContributingStaticResources {
 
-    public SwaggerUI(OpenApi openApiFeature) {
+    public static final String NAME = "scalar";
+
+    public Scalar(OpenApi openApiFeature) {
         super(openApiFeature);
     }
 
@@ -41,35 +42,35 @@ public class SwaggerUI extends OpenApiView implements ContributingInterceptUrlMa
 
     @Override
     public String getTitle() {
-        return "Swagger UI";
+        return "Scalar View";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables Swagger UI by default";
+        return "Adds and enables Scalar view for OpenAPI";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://swagger.io/tools/swagger-ui/";
+        return "https://github.com/scalar/scalar";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html";
+            return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#scalar";
     }
 
     @Override
     public List<StaticResource> staticResources() {
         var result = new ArrayList<>(super.staticResources());
-        result.add(new StaticResource("swagger-ui", "/swagger-ui/**", "classpath:META-INF/swagger/views/swagger-ui"));
+        result.add(new StaticResource("scalar", "/scalar/**", "classpath:META-INF/swagger/views/scalar"));
         return result;
     }
 
     @Override
     public List<InterceptUrlMap> interceptUrlMaps() {
         var result = new ArrayList<>(super.interceptUrlMaps());
-        result.add(InterceptUrlMap.anonymousAcccess("/swagger-ui/**"));
+        result.add(InterceptUrlMap.anonymousAcccess("/scalar/**"));
         return result;
     }
 }
