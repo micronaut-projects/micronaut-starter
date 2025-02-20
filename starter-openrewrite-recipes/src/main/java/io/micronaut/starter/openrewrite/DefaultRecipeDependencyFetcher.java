@@ -25,6 +25,7 @@ import org.openrewrite.Recipe;
 import org.openrewrite.RecipeException;
 import org.openrewrite.config.Environment;
 import io.micronaut.starter.sdk.dependency.Scope;
+import org.openrewrite.maven.AddAnnotationProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,11 @@ import java.util.Optional;
  */
 @Singleton
 public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
+    private static final Dependency MICRONAUT_INJECT = Dependency.builder()
+            .groupId("io.micronaut")
+            .artifactId("micronaut-inject")
+            .compile()
+            .build();
     private final Environment env;
 
     public DefaultRecipeDependencyFetcher(Environment env) {
@@ -56,69 +62,78 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
 
     private static List<Dependency> findDependencies(Recipe recipe, BuildTool buildTool) {
         List<Dependency> dependencies = new ArrayList<>();
-        for (Recipe r : recipe.getRecipeList()) {
-            findDependency(r).ifPresent(dependencies::add);
-            if (buildTool.isGradle()) {
-                findGradleDependency(r).ifPresent(dependencies::add);
-            } else if (buildTool == BuildTool.MAVEN) {
-                findMavenDependency(r).ifPresent(dependencies::add);
-            }
+        Recipe resolvedRecipe = RecipeUtils.resolveRecipe(recipe);
+        if (resolvedRecipe instanceof org.openrewrite.java.dependencies.AddDependency d) {
+            dependencies.add(findDependency(d));
+        } else if (buildTool.isGradle() && resolvedRecipe instanceof org.openrewrite.gradle.AddDependency d) {
+            dependencies.add(findGradleDependency(d));
+        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddDependency d) {
+            dependencies.add(findMavenDependency(d));
+        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddAnnotationProcessor d) {
+            dependencies.add(findMavenAnnotationProcessor(d));
+        }
+        for (Recipe r : resolvedRecipe.getRecipeList()) {
+            Recipe resolvedRecipeChild = RecipeUtils.resolveRecipe(r);
+            dependencies.addAll(findDependencies(resolvedRecipeChild, buildTool));
         }
         return dependencies;
     }
-    private static Optional<Dependency> findDependency(Recipe recipe) {
-        if (recipe instanceof org.openrewrite.java.dependencies.AddDependency addDependency) {
-            Dependency.Builder builder = Dependency.builder()
-                    .groupId(addDependency.getGroupId())
-                    .artifactId(addDependency.getArtifactId());
-            if (StringUtils.isNotEmpty(addDependency.getVersion())) {
-                builder.version(addDependency.getVersion());
-            }
-            String scope = addDependency.getScope();
-            if (scope != null) {
-                ofMavenScope(scope).ifPresent(builder::scope);
-            }
-            String configuration = addDependency.getConfiguration();
-            if (configuration != null) {
-                ofGradleConfiguration(configuration).ifPresent(builder::scope);
-            }
 
-            return Optional.of(builder.build());
-        }
-        return Optional.empty();
-    }
-    private static Optional<Dependency> findGradleDependency(Recipe recipe) {
-        if (recipe instanceof org.openrewrite.gradle.AddDependency addDependency) {
-            Dependency.Builder builder = Dependency.builder()
-                    .groupId(addDependency.getGroupId())
-                    .artifactId(addDependency.getArtifactId());
-            if (StringUtils.isNotEmpty(addDependency.getVersion())) {
-                builder.version(addDependency.getVersion());
-            }
-            String configuration = addDependency.getConfiguration();
-            if (configuration != null) {
-                ofGradleConfiguration(configuration).ifPresent(builder::scope);
-            }
-            return Optional.of(builder.build());
-        }
-        return Optional.empty();
+    @NonNull
+    private static Dependency findMavenAnnotationProcessor(@NonNull AddAnnotationProcessor recipe) {
+        return Dependency.builder()
+                .groupId(recipe.getGroupId())
+                .artifactId(recipe.getArtifactId())
+                .exclude(MICRONAUT_INJECT)
+                .versionProperty(recipe.getVersion())
+                .annotationProcessor(false)
+                .build();
     }
 
-    private static Optional<Dependency> findMavenDependency(Recipe recipe) {
-        if (recipe instanceof org.openrewrite.maven.AddDependency addDependency) {
-            Dependency.Builder builder = Dependency.builder()
-                    .groupId(addDependency.getGroupId())
-                    .artifactId(addDependency.getArtifactId());
-            if (StringUtils.isNotEmpty(addDependency.getVersion())) {
-                builder.version(addDependency.getVersion());
-            }
-            String scope = addDependency.getScope();
-            if (scope != null) {
-                ofMavenScope(scope).ifPresent(builder::scope);
-            }
-            return Optional.of(builder.build());
+    private static Dependency findDependency(org.openrewrite.java.dependencies.AddDependency recipe) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(recipe.getGroupId())
+                .artifactId(recipe.getArtifactId());
+        if (StringUtils.isNotEmpty(recipe.getVersion())) {
+            builder.version(recipe.getVersion());
         }
-        return Optional.empty();
+        String scope = recipe.getScope();
+        if (scope != null) {
+            ofMavenScope(scope).ifPresent(builder::scope);
+        }
+        String configuration = recipe.getConfiguration();
+        if (configuration != null) {
+            ofGradleConfiguration(configuration).ifPresent(builder::scope);
+        }
+        return builder.build();
+    }
+
+    private static Dependency findGradleDependency(org.openrewrite.gradle.AddDependency recipe) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(recipe.getGroupId())
+                .artifactId(recipe.getArtifactId());
+        if (StringUtils.isNotEmpty(recipe.getVersion())) {
+            builder.version(recipe.getVersion());
+        }
+        String configuration = recipe.getConfiguration();
+        if (configuration != null) {
+            ofGradleConfiguration(configuration).ifPresent(builder::scope);
+        }
+        return builder.build();
+    }
+
+    private static Dependency findMavenDependency(org.openrewrite.maven.AddDependency recipe) {
+        Dependency.Builder builder = Dependency.builder()
+                .groupId(recipe.getGroupId())
+                .artifactId(recipe.getArtifactId());
+        if (StringUtils.isNotEmpty(recipe.getVersion())) {
+            builder.version(recipe.getVersion());
+        }
+        String scope = recipe.getScope();
+        if (scope != null) {
+            ofMavenScope(scope).ifPresent(builder::scope);
+        }
+        return builder.build();
     }
 
     private static Optional<Scope> ofGradleConfiguration(String configuration) {
@@ -126,6 +141,10 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
             return Optional.of(Scope.COMPILE);
         } else if (configuration.equals("compileOnly")) {
             return Optional.of(Scope.COMPILE_ONLY);
+        } else if (configuration.equals("annotationProcessor")) {
+            return Optional.of(Scope.ANNOTATION_PROCESSOR);
+        } else if (configuration.equals("testAnnotationProcessor")) {
+            return Optional.of(Scope.TEST_ANNOTATION_PROCESSOR);
         } else if (configuration.equals("runtimeOnly")) {
             return Optional.of(Scope.RUNTIME);
         } else if (configuration.equals("testRuntimeOnly")) {

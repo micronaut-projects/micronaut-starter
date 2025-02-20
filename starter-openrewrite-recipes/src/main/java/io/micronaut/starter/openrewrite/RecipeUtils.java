@@ -15,24 +15,15 @@
  */
 package io.micronaut.starter.openrewrite;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import org.openrewrite.Recipe;
 
-/**
- * A feature backed by an OpenRewrite recipe.
- * @author Sergio del Amo
- */
-public interface OpenRewriteFeature extends Feature {
-
-    @NonNull
-    default String getRecipeName() {
-        return "io.micronaut.starter.feature." + getName();
+public final class RecipeUtils {
+    private RecipeUtils() {
     }
 
-    @Override
-    default void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependenciesByRecipeName(getRecipeName());
-        generatorContext.addConfigurationByRecipeName(getRecipeName());
+    public static Recipe resolveRecipe(Recipe recipe) {
+        return recipe instanceof Recipe.DelegatingRecipe delegatingRecipe
+                ? delegatingRecipe.getDelegate()
+                : recipe;
     }
 }

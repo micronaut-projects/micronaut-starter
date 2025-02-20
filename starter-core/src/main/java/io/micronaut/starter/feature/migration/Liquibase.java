@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.openrewrite.OpenRewriteFeature;
-import io.micronaut.starter.sdk.dependency.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
 import io.micronaut.starter.feature.logging.Slf4jJulBridge;
@@ -71,13 +70,10 @@ public class Liquibase implements MigrationFeature, OpenRewriteFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        OpenRewriteFeature.super.apply(generatorContext);
         generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate("src/main/resources/db/liquibase-changelog.xml",
                         liquibaseChangelog.template()));
         generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
                         liquibaseSchema.template()));
-
-        generatorContext.addDependenciesByRecipeName(getRecipeName());
-        generatorContext.addConfigurationByRecipeName(getRecipeName());
-
     }
 }

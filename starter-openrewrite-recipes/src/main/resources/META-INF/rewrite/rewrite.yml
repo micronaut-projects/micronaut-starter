@@ -1,6 +1,70 @@
 ---
 type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.validation
+displayName: Adds Micronaut Validation dependencies
+recipeList:
+  - io.micronaut.starter.feature.dependencies.jakarta.validation.api
+  - io.micronaut.starter.feature.dependencies.gradle.micronaut.validation.processor
+  - io.micronaut.starter.feature.dependencies.maven.micronaut.validation.processor
+  - io.micronaut.starter.feature.dependencies.micronaut.validation
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.dependencies.jakarta.validation.api
+displayName: Adds Jakarta Validation API as a compile dependency
+recipeList:
+  - org.openrewrite.java.dependencies.AddDependency:
+      groupId: jakarta.validation
+      artifactId: jakarta.validation-api
+      configuration: implementation
+      scope: compile
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.dependencies.micronaut.validation
+displayName: Adds Micronaut Validation dependency to a Gradle or Maven Build
+recipeList:
+  - org.openrewrite.java.dependencies.AddDependency:
+      groupId: io.micronaut.validation
+      artifactId: micronaut-validation
+      configuration: implementation
+      scope: compile
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.dependencies.maven.micronaut.validation.processor
+displayName: Adds Micronaut Validation annotation Processor to the Maven compiler plugin
+recipeList:
+  - org.openrewrite.maven.AddAnnotationProcessor:
+      groupId: io.micronaut.validation
+      artifactId: micronaut-validation-processor
+      version: ${micronaut.validation.version}
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.dependencies.gradle.micronaut.validation.processor
+displayName: Adds Micronaut Validation Processor dependency to a Gradle Build
+recipeList:
+  - org.openrewrite.gradle.AddDependency:
+      groupId: io.micronaut.validation
+      artifactId: micronaut-validation-processor
+      configuration: annotationProcessor
+---
+type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.liquibase
+displayName: Adds Micronaut liquibase dependency in the compile classpath
+recipeList:
+  - io.micronaut.starter.feature.liquibase.configuration
+  - io.micronaut.starter.feature.liquibase.dependencies
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.configuration
+displayName: Adds Micronaut liquibase configuration
+preconditions:
+  - io.micronaut.starter.openrewrite.recipes.FindApplicationProperties
+recipeList:
+  - org.openrewrite.properties.AddProperty:
+      property: liquibase.datasources.default.change-log
+      value: classpath:db/liquibase-changelog.xml
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.dependencies
 displayName: Adds Micronaut liquibase dependency in the compile classpath
 recipeList:
   - org.openrewrite.java.dependencies.AddDependency:
@@ -8,9 +72,12 @@ recipeList:
       artifactId: micronaut-liquibase
       configuration: implementation
       scope: compile
-  - org.openrewrite.properties.AddProperty: #TODO create a recipe to add a property to a Micronaut configuration file
-        property: liquibase.datasources.default.change-log
-        value: classpath:db/liquibase-changelog.xml
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.openrewrite.recipes.FindApplicationProperties
+recipeList:
+  - org.openrewrite.FindSourceFiles:
+      filePattern: "**/application.properties"
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.mockito
