@@ -31,7 +31,9 @@ import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.other.template.markdownLink;
 import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
+import io.micronaut.starter.openrewrite.RecipeMicronautDocumentationFetcher;
 import io.micronaut.starter.openrewrite.RecipePropertiesFetcher;
+import io.micronaut.starter.openrewrite.RecipeThirdPartyDocumentationFetcher;
 import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -89,6 +91,8 @@ public class GeneratorContext implements DependencyContext {
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
     private final RecipeDependencyFetcher recipeDependencyFetcher;
     private final RecipePropertiesFetcher recipePropertiesFetcher;
+    private final RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher;
+    private final RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher;
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -97,7 +101,9 @@ public class GeneratorContext implements DependencyContext {
                             Set<Feature> features,
                             CoordinateResolver coordinateResolver,
                             RecipeDependencyFetcher recipeDependencyFetcher,
-                            RecipePropertiesFetcher recipePropertiesFetcher) {
+                            RecipePropertiesFetcher recipePropertiesFetcher,
+                            RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher,
+                            RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
@@ -115,6 +121,8 @@ public class GeneratorContext implements DependencyContext {
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
         this.recipeDependencyFetcher = recipeDependencyFetcher;
         this.recipePropertiesFetcher = recipePropertiesFetcher;
+        this.recipeMicronautDocumentationFetcher = recipeMicronautDocumentationFetcher;
+        this.recipeThirdPartyDocumentationFetcher = recipeThirdPartyDocumentationFetcher;
     }
 
     /**
@@ -472,5 +480,13 @@ public class GeneratorContext implements DependencyContext {
                 config.addNested(entry.getKey().toString(), entry.getValue());
             }
         });
+    }
+
+    public Optional<String> findMicronautDocumentationByRecipeName(@NonNull String recipeName) {
+        return recipeMicronautDocumentationFetcher.findMicronautDocumentationByRecipeName(recipeName);
+    }
+
+    public Optional<String> findThirdPartyDocumentationByRecipeName(@NonNull String recipeName) {
+        return recipeThirdPartyDocumentationFetcher.findThirdPartyDocumentationByRecipeName(recipeName);
     }
 }

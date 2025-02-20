@@ -37,7 +37,6 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Requires(property = "micronaut.starter.feature.readme.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
@@ -56,9 +55,14 @@ public class Readme implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null).collect(Collectors.toList());
         List<Writable> helpTemplates = generatorContext.getHelpTemplates();
-        if (!helpTemplates.isEmpty() || !featuresWithDocumentationLinks.isEmpty()) {
+        boolean anyFeatureHasDocumentationLinks = generatorContext.getFeatures().getFeatures().stream()
+                .anyMatch(f -> {
+                    String micronautDocumentation = micronautDocumentation(f, generatorContext);
+                    String thirdPartyLinkDocumentation = thirdPartyLinkDocumentation(f, generatorContext);
+                    return micronautDocumentation != null || thirdPartyLinkDocumentation != null;
+                });
+        if (!helpTemplates.isEmpty() || anyFeatureHasDocumentationLinks) {
             generatorContext.addTemplate("readme", new DefaultTemplate(Template.ROOT, "README.md") {
                 @Override
                 public void write(OutputStream outputStream) throws IOException {
@@ -71,14 +75,34 @@ public class Readme implements DefaultFeature {
                         outputStream.write(lineSeparator);
                     }
 
-                    for (Feature feature : featuresWithDocumentationLinks) {
-                        Writable writable = new RockerWritable(readme.template(feature));
-                        writable.write(outputStream);
-                        outputStream.write(lineSeparator);
+                    for (Feature f : generatorContext.getFeatures().getFeatures()) {
+                        String micronautDocumentation = micronautDocumentation(f, generatorContext);
+                        String thirdPartyLinkDocumentation = thirdPartyLinkDocumentation(f, generatorContext);
+                        if (micronautDocumentation != null || thirdPartyLinkDocumentation != null) {
+                            Writable writable = new RockerWritable(readme.template(f.getTitle(), f.getName(), micronautDocumentation, thirdPartyLinkDocumentation));
+                            writable.write(outputStream);
+                            outputStream.write(lineSeparator);
+                        }
                     }
                 }
             });
         }
+    }
+
+    private static String micronautDocumentation(Feature feature, GeneratorContext generatorContext) {
+        String documentation = feature.getMicronautDocumentation(generatorContext);
+        if (StringUtils.isNotEmpty(documentation)) {
+            return documentation;
+        }
+        return feature.getMicronautDocumentation();
+    }
+
+    private static String thirdPartyLinkDocumentation(Feature feature, GeneratorContext generatorContext) {
+        String documentation = feature.getThirdPartyDocumentation(generatorContext);
+        if (StringUtils.isNotEmpty(documentation)) {
+            return documentation;
+        }
+        return feature.getThirdPartyDocumentation();
     }
 
     @Override

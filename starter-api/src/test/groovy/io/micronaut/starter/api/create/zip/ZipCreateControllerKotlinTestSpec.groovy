@@ -105,7 +105,7 @@ class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {
                 List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool buildTool) {
                     return Collections.emptyList()
                 }
-            })
+            }, () -> Optional.empty(),() -> Optional.empty())
         }
     }
 

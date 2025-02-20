@@ -42,9 +42,4 @@ public class MicronautValidationFeature implements ValidationFeature, OpenRewrit
     public String getDescription() {
         return "Adds support for Micronaut Validation";
     }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-validation/latest/guide/";
-    }
 }

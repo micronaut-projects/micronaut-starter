@@ -89,6 +89,9 @@ class PreviewControllerKotlinTestSpec extends EmbeddedServerSpecification {
                     options,
                     operatingSystem,
                     [] as Set<Feature>,
+                    () -> Optional.empty(),
+                    () -> Collections.emptyList(),
+                    () -> Optional.empty(),
                     () -> Optional.empty())
         }
     }

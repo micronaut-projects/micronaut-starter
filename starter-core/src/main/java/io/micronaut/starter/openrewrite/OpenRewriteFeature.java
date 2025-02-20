@@ -35,4 +35,20 @@ public interface OpenRewriteFeature extends Feature {
         generatorContext.addDependenciesByRecipeName(getRecipeName());
         generatorContext.addConfigurationByRecipeName(getRecipeName());
     }
+
+    @Override
+    default String getMicronautDocumentation(GeneratorContext gc) {
+        if (gc == null) {
+            return null;
+        }
+        return gc.findMicronautDocumentationByRecipeName(getRecipeName()).orElse(null);
+    }
+
+    @Override
+    default String getThirdPartyDocumentation(GeneratorContext gc) {
+        if (gc == null) {
+            return null;
+        }
+        return gc.findThirdPartyDocumentationByRecipeName(getRecipeName()).orElse(null);
+    }
 }

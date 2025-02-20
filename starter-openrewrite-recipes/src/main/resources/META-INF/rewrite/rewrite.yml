@@ -3,10 +3,20 @@ type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.validation
 displayName: Adds Micronaut Validation dependencies
 recipeList:
+  - io.micronaut.starter.feature.validation.documentation.micronaut
   - io.micronaut.starter.feature.dependencies.jakarta.validation.api
   - io.micronaut.starter.feature.dependencies.gradle.micronaut.validation.processor
   - io.micronaut.starter.feature.dependencies.maven.micronaut.validation.processor
   - io.micronaut.starter.feature.dependencies.micronaut.validation
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.validation.documentation.micronaut
+displayName: Append a link to the Micronaut Validation documentation in the README.md
+recipeList:
+  - org.openrewrite.text.AppendToTextFile:
+      relativeFileName: README.md
+      content: https://micronaut-projects.github.io/micronaut-validation/latest/guide/
+      appendNewline: true
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.dependencies.jakarta.validation.api
@@ -83,8 +93,24 @@ type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.mockito
 displayName: Add Mockito dependency in the test configuration
 recipeList:
+  - io.micronaut.starter.feature.mockito.dependencies
+  - io.micronaut.starter.feature.mockito.documentation.thirdparty
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.mockito.dependencies
+displayName: Add Mockito dependency in the test configuration
+recipeList:
   - org.openrewrite.java.dependencies.AddDependency:
       groupId: org.mockito
       artifactId: mockito-core
       configuration: testImplementation
       scope: test
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.mockito.documentation.thirdparty
+displayName: Append a link to the Mockito Website
+recipeList:
+  - org.openrewrite.text.AppendToTextFile:
+      relativeFileName: README.md
+      content: https://site.mockito.org
+      appendNewline: true

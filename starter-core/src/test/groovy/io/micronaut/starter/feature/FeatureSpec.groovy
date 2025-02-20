@@ -96,7 +96,8 @@ class FeatureSpec extends BeanContextSpec {
             Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
                 return Optional.empty()
             }
-        }
+        }, () -> Optional.empty(),
+                () -> Optional.empty()
         )
         commandCtx.applyFeatures()
 

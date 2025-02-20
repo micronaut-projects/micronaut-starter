@@ -147,6 +147,16 @@ public interface Feature extends Named, Ordered, Described {
      */
     @Nullable
     default String getMicronautDocumentation() {
+        return getMicronautDocumentation(null);
+    }
+
+    /**
+     *
+     * @param generatorContext Generator Context
+     * @return Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast
+     */
+    @Nullable
+    default String getMicronautDocumentation(GeneratorContext generatorContext) {
         return null;
     }
 
@@ -157,5 +167,14 @@ public interface Feature extends Named, Ordered, Described {
     @Nullable
     default String getThirdPartyDocumentation() {
         return null;
+    }
+
+    /**
+     * @param generatorContext Generator Context
+     * @return Returns a link to third party. E.g. https://hazelcast.org
+     */
+    @Nullable
+    default String getThirdPartyDocumentation(GeneratorContext generatorContext) {
+        return getMicronautDocumentation(generatorContext);
     }
 }

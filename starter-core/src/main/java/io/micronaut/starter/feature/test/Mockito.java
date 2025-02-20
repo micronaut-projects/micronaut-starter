@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.openrewrite.OpenRewriteFeature;
 import jakarta.inject.Singleton;
 
@@ -41,15 +40,5 @@ public class Mockito implements OpenRewriteFeature, MockingFeature,  JunitCompan
     @NonNull
     public String getDescription() {
         return "Mockito test mocking framework for JUnit";
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://site.mockito.org";
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependenciesByRecipeName(getRecipeName());
     }
 }
