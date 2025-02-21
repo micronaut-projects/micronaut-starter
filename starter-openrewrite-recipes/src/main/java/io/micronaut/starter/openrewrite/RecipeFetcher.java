@@ -19,5 +19,7 @@ public interface RecipeFetcher {
     @NonNull
     Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe);
 
+    @NonNull
+    List<FileContents> findAllFilesByRecipeName(@NonNull String recipe);
 
 }

@@ -45,6 +45,17 @@ class DefaultRecipeFetcher implements RecipeFetcher {
 
     @Override
     @NonNull
+    public List<FileContents> findAllFilesByRecipeName(@NonNull String recipeName) {
+        try {
+            var recipe = env.activateRecipes(recipeName);
+            return findAllFilesContents(recipe);
+        } catch (RecipeException e) {
+            throw new ConfigurationException("Error activating recipe: " + recipeName, e);
+        }
+    }
+
+    @Override
+    @NonNull
     public List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipeName, @NonNull BuildTool buildTool) {
         try {
             var recipe = env.activateRecipes(recipeName);
@@ -100,6 +111,18 @@ class DefaultRecipeFetcher implements RecipeFetcher {
             dependencies.addAll(findDependencies(resolvedRecipeChild, buildTool));
         }
         return dependencies;
+    }
+
+    private static List<FileContents> findAllFilesContents(Recipe recipe) {
+        Recipe resolvedRecipe = resolveRecipe(recipe);
+        List<FileContents> result = new ArrayList<>();
+        if (resolvedRecipe instanceof org.openrewrite.xml.CreateXmlFile createXmlFile) {
+            result.add(new FileContents(createXmlFile.getRelativeFileName(), createXmlFile.getFileContents()));
+        }
+        for (Recipe r : resolvedRecipe.getRecipeList()) {
+            result.addAll(findAllFilesContents(r));
+        }
+        return result;
     }
 
     private static Dependency findGradleDependency(org.openrewrite.gradle.AddDependency recipe) {
