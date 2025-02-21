@@ -14,7 +14,8 @@ class RecipeMicronautDocumentationFetcherTest {
     private static final String RECIPE_VALIDATION = "io.micronaut.starter.feature.validation";
 
     @Inject
-    RecipeMicronautDocumentationFetcher fetcher;
+    RecipeFetcher fetcher;
+
     @Test
     void testFetchMicronautDocumentation() {
         Optional<String> documentation = fetcher.findMicronautDocumentationByRecipeName(RECIPE_MOCKITO);

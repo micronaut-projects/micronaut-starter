@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecipePropertiesFetcherTest {
     private static final String NAME = "io.micronaut.starter.feature.liquibase";
     @Test
-    void testFetchProperties(RecipePropertiesFetcher fetcher) {
+    void testFetchProperties(RecipeFetcher fetcher) {
         Optional<Properties> propertiesOptional = fetcher.findPropertiesByRecipeName(NAME);
         assertTrue(propertiesOptional.isPresent());
         Properties properties = propertiesOptional.get();

@@ -17,7 +17,7 @@ class RecipeDependencyFetcherTest {
     private static final String RECIPE_VALIDATION = "io.micronaut.starter.feature.validation";
 
     @Test
-    void testFetchDependencies(RecipeDependencyFetcher fetcher) {
+    void testFetchDependencies(RecipeFetcher fetcher) {
         List<Dependency> dependencies = fetcher.findAllByRecipeNameAndBuildTool(RECIPE_MOCKITO, BuildTool.GRADLE);
         assertEquals(1, dependencies.size());
         Dependency dependency = dependencies.get(0);

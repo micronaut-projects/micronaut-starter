@@ -18,10 +18,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
-import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
-import io.micronaut.starter.openrewrite.RecipeMicronautDocumentationFetcher
-import io.micronaut.starter.openrewrite.RecipePropertiesFetcher
-import io.micronaut.starter.openrewrite.RecipeThirdPartyDocumentationFetcher
+import io.micronaut.starter.openrewrite.RecipeFetcher
 import io.micronaut.starter.options.*
 import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.sdk.Project
@@ -148,10 +145,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
                 null,
                 features.features,
                 ctx.getBean(CoordinateResolver),
-                ctx.getBean(RecipeDependencyFetcher),
-                ctx.getBean(RecipePropertiesFetcher),
-                ctx.getBean(RecipeMicronautDocumentationFetcher),
-                ctx.getBean(RecipeThirdPartyDocumentationFetcher))
+                ctx.getBean(RecipeFetcher))
         ctx.applyFeatures()
         ctx
     }

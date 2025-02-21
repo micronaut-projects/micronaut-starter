@@ -5,8 +5,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.openrewrite.RecipeDependencyFetcher
-import io.micronaut.starter.openrewrite.RecipePropertiesFetcher
+import io.micronaut.starter.openrewrite.RecipeFetcher
 import io.micronaut.starter.sdk.BuildTool
 import io.micronaut.starter.sdk.dependency.Dependency
 import io.micronaut.starter.sdk.dependency.DependencyCoordinate
@@ -86,18 +85,27 @@ class FeatureSpec extends BeanContextSpec {
                 OperatingSystem.LINUX,
                 getFeatures(features, options, applicationType).getFeatures(),
                 (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false)),
-                new RecipeDependencyFetcher() {
+                new RecipeFetcher() {
                     @Override
-                    List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool b) {
-                        return Collections.emptyList()
+                    Optional<String> findMicronautDocumentationByRecipeName(String recipeName) {
+                        return Optional.empty()
                     }
-                }, new RecipePropertiesFetcher() {
-            @Override
-            Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
-                return Optional.empty()
-            }
-        }, () -> Optional.empty(),
-                () -> Optional.empty()
+
+                    @Override
+                    Optional<String> findThirdPartyDocumentationByRecipeName(String recipeName) {
+                        return Optional.empty()
+                    }
+
+                    @Override
+                    List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool bt) {
+                        return List.of()
+                    }
+
+                    @Override
+                    Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
+                        return Optional.empty()
+                    }
+                }
         )
         commandCtx.applyFeatures()
 

@@ -62,6 +62,42 @@ displayName: Adds Micronaut liquibase dependency in the compile classpath
 recipeList:
   - io.micronaut.starter.feature.liquibase.configuration
   - io.micronaut.starter.feature.liquibase.dependencies
+  - io.micronaut.starter.feature.liquibase.file.create.xml.changelog
+  - io.micronaut.starter.feature.liquibase.file.create.xml.changeset
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.file.create.xml.changelog
+displayName: Adds a Liquibase Changelog referencing a changeset
+recipeList:
+  - org.openrewrite.xml.CreateXmlFile:
+      relativeFileName: src/main/resources/db/liquibase-changelog.xml
+      fileContents: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <databaseChangeLog
+          xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+          <include file="changelog/01-schema.xml" relativeToChangelogFile="true"/>
+        </databaseChangeLog>
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.file.create.xml.changeset
+displayName: Adds an empty Liquibase Changeset
+recipeList:
+  - org.openrewrite.xml.CreateXmlFile:
+      relativeFileName: src/main/resources/db/changelog/01-schema.xml
+      fileContents: >
+        <?xml version="1.0" encoding="UTF-8"?>
+
+        <databaseChangeLog
+          xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+          <changeSet id="01" author="username">
+          </changeSet>
+        </databaseChangeLog>
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.liquibase.configuration

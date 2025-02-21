@@ -30,10 +30,7 @@ import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.other.template.markdownLink;
-import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
-import io.micronaut.starter.openrewrite.RecipeMicronautDocumentationFetcher;
-import io.micronaut.starter.openrewrite.RecipePropertiesFetcher;
-import io.micronaut.starter.openrewrite.RecipeThirdPartyDocumentationFetcher;
+import io.micronaut.starter.openrewrite.RecipeFetcher;
 import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -89,10 +86,7 @@ public class GeneratorContext implements DependencyContext {
     private final DependencyContext dependencyContext;
     private final Set<Profile> profiles = new HashSet<>();
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
-    private final RecipeDependencyFetcher recipeDependencyFetcher;
-    private final RecipePropertiesFetcher recipePropertiesFetcher;
-    private final RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher;
-    private final RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher;
+    private final RecipeFetcher recipeFetcher;
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -100,10 +94,7 @@ public class GeneratorContext implements DependencyContext {
                             @Nullable OperatingSystem operatingSystem,
                             Set<Feature> features,
                             CoordinateResolver coordinateResolver,
-                            RecipeDependencyFetcher recipeDependencyFetcher,
-                            RecipePropertiesFetcher recipePropertiesFetcher,
-                            RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher,
-                            RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher) {
+                            RecipeFetcher recipeFetcher) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
@@ -119,10 +110,7 @@ public class GeneratorContext implements DependencyContext {
         }
         this.coordinateResolver = coordinateResolver;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
-        this.recipeDependencyFetcher = recipeDependencyFetcher;
-        this.recipePropertiesFetcher = recipePropertiesFetcher;
-        this.recipeMicronautDocumentationFetcher = recipeMicronautDocumentationFetcher;
-        this.recipeThirdPartyDocumentationFetcher = recipeThirdPartyDocumentationFetcher;
+        this.recipeFetcher = recipeFetcher;
     }
 
     /**
@@ -463,11 +451,11 @@ public class GeneratorContext implements DependencyContext {
 
     public void addDependenciesByRecipeName(String recipeName) {
         if (getBuildTool().isGradle()) {
-            for (Dependency d : recipeDependencyFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.GRADLE)) {
+            for (Dependency d : recipeFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.GRADLE)) {
                 addDependency(d);
             }
         } else if (getBuildTool() == BuildTool.MAVEN) {
-            for (Dependency d : recipeDependencyFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.MAVEN)) {
+            for (Dependency d : recipeFetcher.findAllByRecipeNameAndBuildTool(recipeName, BuildTool.MAVEN)) {
                 addDependency(d);
             }
         }
@@ -475,7 +463,7 @@ public class GeneratorContext implements DependencyContext {
 
     public void addConfigurationByRecipeName(@NonNull String recipeName) {
         Configuration config = getConfiguration();
-        recipePropertiesFetcher.findPropertiesByRecipeName(recipeName).ifPresent(properties -> {
+        recipeFetcher.findPropertiesByRecipeName(recipeName).ifPresent(properties -> {
             for (Map.Entry<Object, Object> entry : properties.entrySet()) {
                 config.addNested(entry.getKey().toString(), entry.getValue());
             }
@@ -483,10 +471,10 @@ public class GeneratorContext implements DependencyContext {
     }
 
     public Optional<String> findMicronautDocumentationByRecipeName(@NonNull String recipeName) {
-        return recipeMicronautDocumentationFetcher.findMicronautDocumentationByRecipeName(recipeName);
+        return recipeFetcher.findMicronautDocumentationByRecipeName(recipeName);
     }
 
     public Optional<String> findThirdPartyDocumentationByRecipeName(@NonNull String recipeName) {
-        return recipeThirdPartyDocumentationFetcher.findThirdPartyDocumentationByRecipeName(recipeName);
+        return recipeFetcher.findThirdPartyDocumentationByRecipeName(recipeName);
     }
 }

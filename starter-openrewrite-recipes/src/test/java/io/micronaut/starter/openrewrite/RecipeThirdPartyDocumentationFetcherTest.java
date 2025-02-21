@@ -15,7 +15,7 @@ class RecipeThirdPartyDocumentationFetcherTest {
     private static final String RECIPE_VALIDATION = "io.micronaut.starter.feature.validation";
 
     @Inject
-    RecipeThirdPartyDocumentationFetcher fetcher;
+    RecipeFetcher fetcher;
 
     @Test
     void testFetchThirdPartyDocumentation() {

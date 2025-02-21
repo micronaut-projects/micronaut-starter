@@ -25,10 +25,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.feature.validation.ProjectNameValidator;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.openrewrite.RecipeDependencyFetcher;
-import io.micronaut.starter.openrewrite.RecipeMicronautDocumentationFetcher;
-import io.micronaut.starter.openrewrite.RecipePropertiesFetcher;
-import io.micronaut.starter.openrewrite.RecipeThirdPartyDocumentationFetcher;
+import io.micronaut.starter.openrewrite.RecipeFetcher;
 import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -48,25 +45,16 @@ public class ContextFactory {
     private final ProjectNameValidator projectNameValidator;
 
     private final DefaultCoordinateResolver coordinateResolver;
-    private final RecipeDependencyFetcher recipeDependencyFetcher;
-    private final RecipePropertiesFetcher recipePropertiesFetcher;
-    private final RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher;
-    private final RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher;
+    private final RecipeFetcher recipeFetcher;
 
     public ContextFactory(FeatureValidator featureValidator,
                           DefaultCoordinateResolver coordinateResolver,
                           ProjectNameValidator projectNameValidator,
-                          RecipeDependencyFetcher recipeDependencyFetcher,
-                          RecipePropertiesFetcher recipePropertiesFetcher,
-                          RecipeMicronautDocumentationFetcher recipeMicronautDocumentationFetcher,
-                          RecipeThirdPartyDocumentationFetcher recipeThirdPartyDocumentationFetcher) {
+                          RecipeFetcher recipeFetcher) {
         this.featureValidator = featureValidator;
         this.coordinateResolver = coordinateResolver;
         this.projectNameValidator = projectNameValidator;
-        this.recipeDependencyFetcher = recipeDependencyFetcher;
-        this.recipePropertiesFetcher = recipePropertiesFetcher;
-        this.recipeMicronautDocumentationFetcher = recipeMicronautDocumentationFetcher;
-        this.recipeThirdPartyDocumentationFetcher = recipeThirdPartyDocumentationFetcher;
+        this.recipeFetcher = recipeFetcher;
     }
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
@@ -115,10 +103,7 @@ public class ContextFactory {
                 featureContext.getOperatingSystem(),
                 featureList,
                 coordinateResolver,
-                recipeDependencyFetcher,
-                recipePropertiesFetcher,
-                recipeMicronautDocumentationFetcher,
-                recipeThirdPartyDocumentationFetcher);
+                recipeFetcher);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {

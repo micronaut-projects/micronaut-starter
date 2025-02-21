@@ -1,18 +1,3 @@
-/*
- * Copyright 2017-2022 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package io.micronaut.starter.openrewrite;
 
 import io.micronaut.context.exceptions.ConfigurationException;
@@ -20,16 +5,21 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.sdk.dependency.Dependency;
+import io.micronaut.starter.sdk.dependency.Scope;
 import jakarta.inject.Singleton;
 import org.openrewrite.Recipe;
 import org.openrewrite.RecipeException;
 import org.openrewrite.config.Environment;
-import io.micronaut.starter.sdk.dependency.Scope;
 import org.openrewrite.maven.AddAnnotationProcessor;
+import org.openrewrite.properties.AddProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
+import java.util.function.Function;
+
+import static io.micronaut.starter.openrewrite.RecipeUtils.resolveRecipe;
 
 /**
  * <a href="https://docs.openrewrite.org/recipes/java/dependencies/adddependency">Add Gradle or Maven dependency</a>
@@ -37,15 +27,19 @@ import java.util.Optional;
  * <a href="https://docs.openrewrite.org/recipes/gradle/adddependency">Add Gradle dependency</a>
  */
 @Singleton
-public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
+class DefaultRecipeFetcher implements RecipeFetcher {
     private static final Dependency MICRONAUT_INJECT = Dependency.builder()
             .groupId("io.micronaut")
             .artifactId("micronaut-inject")
             .compile()
             .build();
     private final Environment env;
+    private static final Function<String, Boolean> MICRONAUT_DOCUMENTATION_LINK =
+            s -> (s.startsWith("https://micronaut-projects.github.io") || s.startsWith("https://docs.micronaut.io"));
+    private static final Function<String, Boolean> LINK_NOT_MICRONAUT_DOC =
+            s -> s.startsWith("http") && !MICRONAUT_DOCUMENTATION_LINK.apply(s);
 
-    public DefaultRecipeDependencyFetcher(Environment env) {
+    DefaultRecipeFetcher(Environment env) {
         this.env = env;
     }
 
@@ -58,25 +52,6 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
         } catch (RecipeException e) {
             throw new ConfigurationException("Error activating recipe: " + recipeName, e);
         }
-    }
-
-    private static List<Dependency> findDependencies(Recipe recipe, BuildTool buildTool) {
-        List<Dependency> dependencies = new ArrayList<>();
-        Recipe resolvedRecipe = RecipeUtils.resolveRecipe(recipe);
-        if (resolvedRecipe instanceof org.openrewrite.java.dependencies.AddDependency d) {
-            dependencies.add(findDependency(d));
-        } else if (buildTool.isGradle() && resolvedRecipe instanceof org.openrewrite.gradle.AddDependency d) {
-            dependencies.add(findGradleDependency(d));
-        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddDependency d) {
-            dependencies.add(findMavenDependency(d));
-        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddAnnotationProcessor d) {
-            dependencies.add(findMavenAnnotationProcessor(d));
-        }
-        for (Recipe r : resolvedRecipe.getRecipeList()) {
-            Recipe resolvedRecipeChild = RecipeUtils.resolveRecipe(r);
-            dependencies.addAll(findDependencies(resolvedRecipeChild, buildTool));
-        }
-        return dependencies;
     }
 
     @NonNull
@@ -106,6 +81,25 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
             ofGradleConfiguration(configuration).ifPresent(builder::scope);
         }
         return builder.build();
+    }
+
+    private static List<Dependency> findDependencies(Recipe recipe, BuildTool buildTool) {
+        List<Dependency> dependencies = new ArrayList<>();
+        Recipe resolvedRecipe = RecipeUtils.resolveRecipe(recipe);
+        if (resolvedRecipe instanceof org.openrewrite.java.dependencies.AddDependency d) {
+            dependencies.add(findDependency(d));
+        } else if (buildTool.isGradle() && resolvedRecipe instanceof org.openrewrite.gradle.AddDependency d) {
+            dependencies.add(findGradleDependency(d));
+        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddDependency d) {
+            dependencies.add(findMavenDependency(d));
+        } else if (buildTool == BuildTool.MAVEN && resolvedRecipe instanceof org.openrewrite.maven.AddAnnotationProcessor d) {
+            dependencies.add(findMavenAnnotationProcessor(d));
+        }
+        for (Recipe r : resolvedRecipe.getRecipeList()) {
+            Recipe resolvedRecipeChild = RecipeUtils.resolveRecipe(r);
+            dependencies.addAll(findDependencies(resolvedRecipeChild, buildTool));
+        }
+        return dependencies;
     }
 
     private static Dependency findGradleDependency(org.openrewrite.gradle.AddDependency recipe) {
@@ -165,6 +159,73 @@ public class DefaultRecipeDependencyFetcher implements RecipeDependencyFetcher {
             return Optional.of(Scope.TEST);
         }
         //TODO other scopes
+        return Optional.empty();
+    }
+
+    @Override
+    @NonNull
+    public Optional<Properties> findPropertiesByRecipeName(@NonNull String recipeName) {
+        try {
+            var recipe = env.activateRecipes(recipeName);
+            return findProperties(recipe);
+        } catch (RecipeException e) {
+            throw new ConfigurationException("Error activating recipe: " + recipeName, e);
+        }
+    }
+
+    @Override
+    public Optional<String> findMicronautDocumentationByRecipeName(String recipeName) {
+        return findLinkInAppendToTextFileRecipeByRecipeName(recipeName, MICRONAUT_DOCUMENTATION_LINK);
+    }
+
+    @Override
+    public Optional<String> findThirdPartyDocumentationByRecipeName(String recipeName) {
+        return findLinkInAppendToTextFileRecipeByRecipeName(recipeName, LINK_NOT_MICRONAUT_DOC);
+    }
+
+    private @NonNull Optional<Properties> findProperties(@NonNull Recipe recipe) {
+        Recipe resolvedRecipe = resolveRecipe(recipe);
+        Properties properties = new Properties();
+        for (Recipe r : resolvedRecipe.getRecipeList()) {
+            Recipe resolvedRecipeChild = resolveRecipe(r);
+            if (resolvedRecipeChild instanceof AddProperty addProperty) {
+                properties.put(addProperty.getProperty(), addProperty.getValue());
+            }
+            Optional<Properties> nestedPropertiesOptional = findProperties(resolvedRecipeChild);
+            if (nestedPropertiesOptional.isPresent()) {
+                Properties nestedProperties = nestedPropertiesOptional.get();
+                nestedProperties.forEach(properties::putIfAbsent);
+            }
+        }
+        if (properties.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(properties);
+    }
+
+    public Optional<String> findLinkInAppendToTextFileRecipeByRecipeName(String recipeName, Function<String, Boolean> contentFunction) {
+        try {
+            var recipe = env.activateRecipes(recipeName);
+            return findLinkInAppendToTextFileRecipeByRecipeName(recipe, contentFunction);
+        } catch (RecipeException e) {
+            throw new ConfigurationException("Error activating recipe: " + recipeName, e);
+        }
+    }
+
+    private Optional<String> findLinkInAppendToTextFileRecipeByRecipeName(Recipe recipe, Function<String, Boolean> contentFunction) {
+        Recipe resolvedRecipe = resolveRecipe(recipe);
+        if (resolvedRecipe instanceof org.openrewrite.text.AppendToTextFile appendToTextFile) {
+            String content = appendToTextFile.getContent();
+            if (Boolean.TRUE.equals(contentFunction.apply(content))) {
+                return Optional.of(content);
+            }
+        }
+        for (Recipe r : resolvedRecipe.getRecipeList()) {
+            Optional<String> documentation = findLinkInAppendToTextFileRecipeByRecipeName(r, contentFunction);
+            if (documentation.isPresent()) {
+                return documentation;
+            }
+        }
         return Optional.empty();
     }
 }
