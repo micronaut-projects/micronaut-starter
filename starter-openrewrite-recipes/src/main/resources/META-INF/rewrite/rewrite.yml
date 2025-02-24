@@ -64,6 +64,26 @@ recipeList:
   - io.micronaut.starter.feature.liquibase.dependencies
   - io.micronaut.starter.feature.liquibase.file.create.xml.changelog
   - io.micronaut.starter.feature.liquibase.file.create.xml.changeset
+  - io.micronaut.starter.feature.liquibase.documentation.thirdparty
+  - io.micronaut.starter.feature.liquibase.documentation.micronaut
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.documentation.thirdparty
+displayName: Append a link to the Micronaut Liquibase documentation in the README.md
+recipeList:
+  - org.openrewrite.text.AppendToTextFile:
+      relativeFileName: README.md
+      content: https://www.liquibase.org/
+      appendNewline: true
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.micronaut.starter.feature.liquibase.documentation.micronaut
+displayName: Append a link to the Micronaut Liquibase documentation in the README.md
+recipeList:
+  - org.openrewrite.text.AppendToTextFile:
+      relativeFileName: README.md
+      content: https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html
+      appendNewline: true
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: io.micronaut.starter.feature.liquibase.file.create.xml.changelog

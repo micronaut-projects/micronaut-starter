@@ -30,6 +30,7 @@ import io.micronaut.starter.sdk.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.sdk.Project;
 import jakarta.inject.Singleton;
 import java.util.Collections;

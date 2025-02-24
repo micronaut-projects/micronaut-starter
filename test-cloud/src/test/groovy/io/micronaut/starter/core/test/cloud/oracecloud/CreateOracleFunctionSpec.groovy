@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.cloud.oracecloud
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.sdk.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler

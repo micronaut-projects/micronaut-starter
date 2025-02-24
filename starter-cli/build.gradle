@@ -6,7 +6,9 @@ plugins {
 ext {
     picocliVersion = '4.7.6'
 }
-
+repositories {
+    maven { url = 'https://repo.gradle.org/gradle/libs-releases' }
+}
 configurations {
     generateConfig
 }
@@ -27,7 +29,8 @@ dependencies {
     api("info.picocli:picocli:$picocliVersion")
     api("info.picocli:picocli-shell-jline3:$picocliVersion")
     api("com.fizzed:rocker-runtime:$rockerVersion")
-
+    implementation(libs.maven.invoker)
+    implementation(libs.gradle.tooling.api)
     implementation("org.slf4j:slf4j-nop:2.0.16")
     implementation("org.fusesource.jansi:jansi:1.18")
     implementation("org.yaml:snakeyaml")

@@ -3,7 +3,7 @@ package io.micronaut.starter.cli
 import io.micronaut.context.BeanContext
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.sdk.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler

@@ -20,23 +20,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
-import io.micronaut.starter.cli.command.BaseCommand;
-import io.micronaut.starter.cli.command.BuildToolCandidates;
-import io.micronaut.starter.cli.command.BuildToolConverter;
-import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.cli.command.CreateAppCommand;
-import io.micronaut.starter.cli.command.CreateBuilderCommand;
-import io.micronaut.starter.cli.command.CreateChatBotBuilderCommand;
-import io.micronaut.starter.cli.command.CreateCliCommand;
-import io.micronaut.starter.cli.command.CreateFunctionCommand;
-import io.micronaut.starter.cli.command.CreateGrpcCommand;
-import io.micronaut.starter.cli.command.CreateLambdaBuilderCommand;
-import io.micronaut.starter.cli.command.CreateMessagingCommand;
-import io.micronaut.starter.cli.command.JdkVersionCandidates;
-import io.micronaut.starter.cli.command.LanguageCandidates;
-import io.micronaut.starter.cli.command.LanguageConverter;
-import io.micronaut.starter.cli.command.TestFrameworkCandidates;
-import io.micronaut.starter.cli.command.TestFrameworkConverter;
+import io.micronaut.starter.cli.command.*;
 import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
 import io.micronaut.starter.io.ConsoleOutput;
 import picocli.CommandLine;
@@ -51,6 +35,7 @@ import java.util.function.BiFunction;
             "Application generation commands are:",
             "",
             "*  @|bold create-app|@ @|yellow NAME|@",
+            "*  @|bold add-feature|@",
             "*  @|bold create-chatbot|@ @|yellow NAME|@",
             "*  @|bold create-cli-app|@ @|yellow NAME|@",
             "*  @|bold create-function-app|@ @|yellow NAME|@",
@@ -62,6 +47,7 @@ import java.util.function.BiFunction;
         commandListHeading = "%n@|bold,underline Commands:|@%n",
         subcommands = {
                 // Creation commands
+                AddFeatureCommand.class,
                 CreateAppCommand.class,
                 CreateChatBotBuilderCommand.class,
                 CreateCliCommand.class,

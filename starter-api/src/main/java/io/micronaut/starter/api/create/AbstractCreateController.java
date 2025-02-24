@@ -26,7 +26,7 @@ import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.io.ConsoleOutput;

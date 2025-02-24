@@ -17,7 +17,7 @@ package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.sdk.BuildTool;

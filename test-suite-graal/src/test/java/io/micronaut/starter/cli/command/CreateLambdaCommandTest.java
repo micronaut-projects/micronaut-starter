@@ -2,7 +2,7 @@ package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.architecture.Arm;

@@ -7,7 +7,7 @@ import io.micronaut.context.env.Environment
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.DefaultAvailableFeatures
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.sdk.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture

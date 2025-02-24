@@ -59,15 +59,6 @@ public class Liquibase implements MigrationFeature, OpenRewriteFeature {
         return "Adds support for Liquibase database migrations";
     }
 
-    public String getThirdPartyDocumentation() {
-        return "https://www.liquibase.org/";
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html";
-    }
-
     @Override
     public void apply(GeneratorContext generatorContext) {
         OpenRewriteFeature.super.apply(generatorContext);

@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.cli;

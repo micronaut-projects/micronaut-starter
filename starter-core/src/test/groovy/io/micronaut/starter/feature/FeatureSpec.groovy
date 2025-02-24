@@ -3,7 +3,8 @@ package io.micronaut.starter.feature
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.openrewrite.FileContents
+import io.micronaut.starter.sdk.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.openrewrite.RecipeFetcher
 import io.micronaut.starter.sdk.BuildTool
@@ -104,6 +105,11 @@ class FeatureSpec extends BeanContextSpec {
                     @Override
                     Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
                         return Optional.empty()
+                    }
+
+                    @Override
+                    List<FileContents> findAllFilesByRecipeName(@NonNull String recipe) {
+                        return Collections.emptyList()
                     }
                 }
         )

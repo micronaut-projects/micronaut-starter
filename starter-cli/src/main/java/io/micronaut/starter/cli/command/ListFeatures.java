@@ -18,7 +18,7 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;

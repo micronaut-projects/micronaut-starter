@@ -6,7 +6,7 @@ import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.sdk.OperatingSystem
 
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator

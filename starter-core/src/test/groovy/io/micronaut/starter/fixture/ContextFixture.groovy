@@ -4,7 +4,7 @@ import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.ContextFactory
-import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.sdk.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.sdk.dependency.Source
 import io.micronaut.starter.feature.AvailableFeatures

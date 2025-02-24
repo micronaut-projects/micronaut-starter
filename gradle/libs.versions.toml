@@ -1,5 +1,8 @@
 [versions]
 rewrite-recipe-bom = "3.2.0"
+maven-invoker = "3.3.0"
+maven-plugin-api = "3.9.9"
+gradle-tooling-api = "8.12"
 
 [libraries]
 rewrite-recipe-bom = { module = "org.openrewrite.recipe:rewrite-recipe-bom", version.ref = "rewrite-recipe-bom" }
@@ -9,4 +12,6 @@ rewrite-gradle = { module = "org.openrewrite:rewrite-gradle" }
 rewrite-java-dependencies = { module = "org.openrewrite.recipe:rewrite-java-dependencies" }
 rewrite-maven = { module = "org.openrewrite:rewrite-maven" }
 rewrite-java = { module = "org.openrewrite:rewrite-java" }
+maven-invoker = { module = "org.apache.maven.shared:maven-invoker", version.ref = "maven-invoker" }
 
+gradle-tooling-api = { module = "org.gradle:gradle-tooling-api", version.ref = "gradle-tooling-api" }

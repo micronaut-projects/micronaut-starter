@@ -1,7 +1,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.sdk.OperatingSystem;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.X86;
