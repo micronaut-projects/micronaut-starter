@@ -5,7 +5,7 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton

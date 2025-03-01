@@ -17,13 +17,15 @@ package io.micronaut.starter.feature.awsalexa;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovyJunit;
@@ -74,7 +76,7 @@ import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKoTest;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlin;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.TestRockerModelProvider;
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.aws.alexa.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -98,8 +100,9 @@ public class AwsAlexa implements Feature, AwsCloudFeature, CodeContributingFeatu
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions &&
+                (mnOptions.applicationType() == ApplicationType.FUNCTION || mnOptions.applicationType() == ApplicationType.DEFAULT);
     }
 
     @Override
@@ -124,13 +127,13 @@ public class AwsAlexa implements Feature, AwsCloudFeature, CodeContributingFeatu
         stopIntentHandler(generatorContext, project);
         stopIntentHandlerTest(generatorContext, project);
 
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.aws")
                     .artifactId("micronaut-function-aws-alexa")
                     .compile());
         }
-        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.DEFAULT) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.aws")
                     .artifactId("micronaut-aws-alexa-httpserver")
@@ -256,7 +259,7 @@ public class AwsAlexa implements Feature, AwsCloudFeature, CodeContributingFeatu
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#alexa";
     }
 }

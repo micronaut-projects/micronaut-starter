@@ -4,18 +4,19 @@ import groovy.namespace.QName
 import groovy.xml.XmlParser
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradlePluginPortal
-import io.micronaut.starter.build.gradle.GradleRepository
+import io.micronaut.projectgen.core.buildtools.gradle.GradleRepository
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 import jakarta.inject.Singleton
 import spock.lang.Subject
 
@@ -67,7 +68,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/extensions dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(BuildTool.MAVEN).build(), ["micronaut-gradle-enterprise"])
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
@@ -83,7 +84,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise-custom-user-data dot groovy file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(BuildTool.MAVEN).build(), ["micronaut-gradle-enterprise"])
 
         then:
         output[".mvn/gradle-enterprise-custom-user-data.groovy"] == "buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null"
@@ -91,7 +92,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise does not create maven files for #buildTool'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(buildTool).build(), ["micronaut-gradle-enterprise"])
 
         then:
         output[".mvn/gradle-enterprise.xml"] == null
@@ -104,7 +105,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(BuildTool.MAVEN).build(), ["micronaut-gradle-enterprise"])
         def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
 
         then:

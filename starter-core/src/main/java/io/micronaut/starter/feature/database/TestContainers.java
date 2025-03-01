@@ -19,16 +19,16 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
-import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration;
+import io.micronaut.projectgen.core.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 import jakarta.inject.Singleton;
 
@@ -70,7 +70,7 @@ public class TestContainers implements Feature {
                     generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04"));
                 }
                 r2dbcUrlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
-                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    Configuration testConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                 });
                 generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency("r2dbc"));
@@ -85,7 +85,7 @@ public class TestContainers implements Feature {
                     generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04"));
                 }
                 urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
-                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    Configuration testConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                     testConfig.put(driverConfiguration.getDriverKey(), driver);
                 });
@@ -94,7 +94,7 @@ public class TestContainers implements Feature {
             });
             generatorContext.getFeature(HibernateReactiveFeature.class).ifPresent(hibernateReactiveFeature -> {
                 urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
-                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    Configuration testConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig("test", ApplicationConfiguration.testConfig());
                     testConfig.put(hibernateReactiveFeature.getUrlKey(), url);
                 });
                 artifactIdForDriverFeature(driverFeature)
@@ -166,11 +166,6 @@ public class TestContainers implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public String getCategory() {
         return Category.DATABASE;
     }
@@ -182,7 +177,7 @@ public class TestContainers implements Feature {
 
     @Nullable
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.testcontainers.org/";
     }
 }

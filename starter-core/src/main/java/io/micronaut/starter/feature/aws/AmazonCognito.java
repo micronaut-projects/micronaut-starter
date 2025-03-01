@@ -18,7 +18,9 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.security.SecurityAuthenticationMode;
 import io.micronaut.starter.feature.security.SecurityAuthenticationModeProvider;
@@ -56,8 +58,8 @@ public class AmazonCognito extends SecurityOAuth2Feature implements AwsFeature, 
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override

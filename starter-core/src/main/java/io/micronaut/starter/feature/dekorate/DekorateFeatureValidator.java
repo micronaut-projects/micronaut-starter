@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.dekorate;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -42,13 +42,13 @@ public class DekorateFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(AbstractDekorateFeature.class::isInstance)) {
-            if (options.getLanguage() == Language.GROOVY) {
+            if (options.language() == Language.GROOVY) {
                 throw new IllegalArgumentException("Dekorate is not supported in Groovy applications");
             }
 

@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 
 public final class GcpCloudFunctionBuildCommandUtils {
 

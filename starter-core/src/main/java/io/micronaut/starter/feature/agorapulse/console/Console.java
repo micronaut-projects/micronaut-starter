@@ -19,19 +19,22 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyDsl;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyHttp;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleKotlinHttp;
 import io.micronaut.starter.feature.agorapulse.worker.Worker;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -67,13 +70,13 @@ public class Console implements AgoraPulseFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://agorapulse.github.io/micronaut-console/";
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override
@@ -102,7 +105,7 @@ public class Console implements AgoraPulseFeature {
     }
 
     protected void addGroovyDependency(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
         Dependency.Builder groovy = Dependency.builder()

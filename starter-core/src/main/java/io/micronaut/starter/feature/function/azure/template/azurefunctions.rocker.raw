@@ -1,5 +1,5 @@
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.gradle.GradleDsl;
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
 
 @args (Project project, GradleDsl dsl, String javaVersion)
 azurefunctions {

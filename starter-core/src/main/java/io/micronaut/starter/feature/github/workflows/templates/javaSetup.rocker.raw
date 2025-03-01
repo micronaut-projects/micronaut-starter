@@ -1,6 +1,6 @@
-@import io.micronaut.starter.options.JdkVersion
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.projectgen.core.options.JdkVersion
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.BuildTool
 
 @args (
 BuildTool buildTool,

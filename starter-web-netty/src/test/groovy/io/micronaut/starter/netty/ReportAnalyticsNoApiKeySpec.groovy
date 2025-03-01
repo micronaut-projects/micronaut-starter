@@ -1,7 +1,7 @@
 package io.micronaut.starter.netty
 
 import io.micronaut.context.annotation.Property
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification

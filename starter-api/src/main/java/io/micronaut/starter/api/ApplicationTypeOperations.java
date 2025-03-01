@@ -16,7 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.swagger.v3.oas.annotations.Parameter;
 
 /**

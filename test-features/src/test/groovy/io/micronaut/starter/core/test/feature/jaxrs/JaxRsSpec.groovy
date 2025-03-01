@@ -3,11 +3,11 @@ package io.micronaut.starter.core.test.feature.jaxrs
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.jaxrs.JaxRs
 import io.micronaut.starter.feature.validator.MicronautValidationFeature
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.template.RockerWritable
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.FileSystemOutputHandler
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations

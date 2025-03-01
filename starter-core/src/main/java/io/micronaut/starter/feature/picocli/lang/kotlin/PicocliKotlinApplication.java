@@ -18,12 +18,14 @@ package io.micronaut.starter.feature.picocli.lang.kotlin;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.RequireKaptFeature;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.picocli.kotlin.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -43,8 +45,8 @@ public class PicocliKotlinApplication implements RequireKaptFeature, KotlinAppli
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.CLI;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.CLI;
     }
 
     @Override

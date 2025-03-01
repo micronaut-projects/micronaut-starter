@@ -21,12 +21,13 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
@@ -37,8 +38,8 @@ import io.micronaut.starter.feature.server.template.javaJunit;
 import io.micronaut.starter.feature.server.template.koTest;
 import io.micronaut.starter.feature.server.template.kotlinJunit;
 import io.micronaut.starter.feature.server.template.spock;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.oracle.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -164,7 +165,7 @@ public class OracleFunction extends AbstractFunctionFeature implements OracleClo
 
     @Nullable
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#httpFunctions";
     }
 
@@ -175,7 +176,7 @@ public class OracleFunction extends AbstractFunctionFeature implements OracleClo
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(COM_FNPROJECT_RUNTIME);
             generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP);
             generatorContext.addDependency(MICRONAUT_OCI_FUNCTION_HTTP_TEST);

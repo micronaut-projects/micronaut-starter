@@ -18,16 +18,17 @@ package io.micronaut.starter.feature.logging;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.LoggingFeature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.options.OperatingSystem;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.logging.template.logback;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -61,7 +62,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(LoggingFeature.class::isInstance);
     }
 
@@ -77,7 +78,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected boolean useJansi(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getOperatingSystem() == OperatingSystem.WINDOWS) {
+        if (generatorContext.getOptions().operatingSystem() != null &&  generatorContext.getOptions().operatingSystem() == OperatingSystem.WINDOWS) {
             return false;
         }
         if (generatorContext.getFeatures().hasFeature(AwsLambda.class)) {
@@ -88,10 +89,5 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     protected void addDependency(GeneratorContext generatorContext) {
         generatorContext.addDependency(LOGBACK_CLASSIC);
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }

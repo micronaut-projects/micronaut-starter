@@ -18,8 +18,11 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import jakarta.inject.Singleton;
@@ -45,7 +48,7 @@ public class AwsLambdaSnapstart implements Feature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html";
     }
 
@@ -54,8 +57,10 @@ public class AwsLambdaSnapstart implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT
-                || applicationType == ApplicationType.FUNCTION;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions &&
+                (mnOptions.applicationType() == ApplicationType.DEFAULT
+                        ||
+                mnOptions.applicationType() == ApplicationType.FUNCTION);
     }
 }

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires

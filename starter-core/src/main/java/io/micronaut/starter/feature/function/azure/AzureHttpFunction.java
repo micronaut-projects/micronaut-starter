@@ -19,13 +19,15 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionKoTest;
@@ -34,7 +36,7 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.azure.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -97,7 +99,7 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
 
     @Override
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
-        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.DEFAULT) {
             String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
             generatorContext.addTemplate("trigger", triggerFile,
                     azureFunctionTriggerJava.template(project),
@@ -108,14 +110,14 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions";
     }
 
     @Override
     protected void addDependencies(GeneratorContext generatorContext) {
         super.addDependencies(generatorContext);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP);
             generatorContext.addDependency(MICRONAUT_AZURE_FUNCTION_HTTP_TEST);
         }

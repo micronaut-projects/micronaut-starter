@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.messaging;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 /**
  * Sub interface for messaging features.
@@ -26,11 +26,6 @@ import io.micronaut.starter.feature.Feature;
  * @since 1.0.0
  */
 public interface MessagingFeature extends Feature {
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 
     @Override
     default String getCategory() {

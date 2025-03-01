@@ -17,9 +17,10 @@ package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.maven.JvmArgumentsFeature;
 import jakarta.inject.Singleton;
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class Jrebel implements ReloadingFeature, JvmArgumentsFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
             generatorContext.getBuildProperties().addComment("rebelAgent=" + JVM_ARGUMENT_AGENT_PATH);
             generatorContext.addBuildPlugin(GradlePlugin.builder()
@@ -68,7 +69,7 @@ public class Jrebel implements ReloadingFeature, JvmArgumentsFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/latest/guide/index.html#jrebel";
     }
 

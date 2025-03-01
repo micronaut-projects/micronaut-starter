@@ -1,14 +1,15 @@
 package io.micronaut.starter.feature.chatbots.basecamp
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 
 class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
 
@@ -34,7 +35,7 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).language(Language.JAVA).buildTool(buildTool).features([featureName]).build())
         String readme = output["README.md"]
 
         then:
@@ -51,7 +52,7 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
 
     void 'test README contains docs for #buildTool with CDK'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName, 'aws-cdk'])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).language(Language.JAVA).buildTool(buildTool).features([featureName, 'aws-cdk']).build())
         String readme = output["README.md"]
 
         then:
@@ -71,8 +72,9 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
 
     void 'Handler is is set to io.micronaut.chatbots.basecamp.lambda.Handler in CDK when features chatbots-basecamp-lambda and aws-cdk'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN, AwsLambdaFeatureValidator.firstSupportedJdk())
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, [BasecampAwsChatBot.NAME, Cdk.NAME])
+        Options options = MicronautOptions.builder().language(Language.JAVA).testFramework(TestFramework.JUNIT).buildTool(BuildTool.GRADLE_KOTLIN).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+        .applicationType(ApplicationType.FUNCTION).features([BasecampAwsChatBot.NAME, Cdk.NAME]).build()
+        Map<String, String> output = generate(options)
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('io.micronaut.chatbots.basecamp.lambda.Handler')

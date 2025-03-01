@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.knative
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
 
 class KnativeSpec extends BeanContextSpec  implements CommandOutputFixture {

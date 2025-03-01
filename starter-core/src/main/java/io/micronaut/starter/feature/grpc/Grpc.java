@@ -18,21 +18,23 @@ package io.micronaut.starter.feature.grpc;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildPlugin;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildPlugin;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.gradle.GradleDsl;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryCore;
 import io.micronaut.starter.feature.grpc.template.proto;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
@@ -65,15 +67,15 @@ public class Grpc implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.GRPC;
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.GRPC;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         addDependencies(generatorContext);
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
@@ -103,11 +105,6 @@ public class Grpc implements DefaultFeature {
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

@@ -18,15 +18,13 @@ package io.micronaut.starter.feature.config;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.projectgen.core.feature.*;
+import io.micronaut.projectgen.core.feature.config.Configuration;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.options.Language;
 import io.micronaut.starter.template.Config4kTemplate;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.template.Template;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -76,11 +74,6 @@ public class Config4k implements ConfigurationFeature, KotlinSpecificFeature {
     @Override
     public int getOrder() {
         return FeaturePhase.HIGHEST.getOrder();
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

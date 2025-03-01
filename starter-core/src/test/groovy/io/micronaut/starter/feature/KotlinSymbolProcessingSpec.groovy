@@ -1,16 +1,19 @@
 package io.micronaut.starter.feature
 
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature
+import io.micronaut.projectgen.core.feature.OneOfFeature
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -76,8 +79,15 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
     }
 
     void "org.gradle.jvmargs is only added for KSP"() {
+        given:
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.DEFAULT_OPTION)
+                .buildTool(BuildTool.GRADLE_KOTLIN)
+                .javaVersion(JdkVersion.JDK_17)
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options)
 
         then:
         output."gradle.properties" =~ /(?m)^micronautVersion=.+/
@@ -88,8 +98,15 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
     }
 
     void "org.gradle.jvmargs is added for KSP"() {
+        given:
+        Options options = MicronautOptions.builder()
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.DEFAULT_OPTION)
+                .buildTool(BuildTool.GRADLE_KOTLIN)
+                .javaVersion(JdkVersion.JDK_17)
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options)
 
         then:
         output."gradle.properties" =~ /(?m)^micronautVersion=.+/

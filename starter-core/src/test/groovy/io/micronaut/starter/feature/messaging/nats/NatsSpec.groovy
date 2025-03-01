@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.messaging.nats
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.BuildTool
 
 class NatsSpec extends ApplicationContextSpec {
 

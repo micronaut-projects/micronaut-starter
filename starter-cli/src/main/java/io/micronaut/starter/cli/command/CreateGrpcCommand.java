@@ -18,16 +18,16 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.projectgen.core.generator.ContextFactory;
 import io.micronaut.starter.application.GrpcAvailableFeatures;
-import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.projectgen.core.generator.ProjectGenerator;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.micronaut.starter.application.ApplicationType.GRPC;
+import static io.micronaut.projectgen.micronaut.ApplicationType.GRPC;
 
 @Command(name = CreateGrpcCommand.NAME, description = "Creates a gRPC application")
 @Prototype

@@ -3,10 +3,10 @@ package io.micronaut.starter.feature.dekorate
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.feature.Feature
+import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.Unroll
 
 class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixture {

@@ -1,5 +1,6 @@
 package io.micronaut.starter.template
 
+import io.micronaut.projectgen.core.template.PropertiesTemplate
 import spock.lang.Specification
 
 class PropertiesTemplateSpec extends Specification {

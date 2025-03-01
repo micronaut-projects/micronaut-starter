@@ -15,7 +15,7 @@
  */
 package io.micronaut.aws.cdk.function;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.amazon.awscdk.services.lambda.Function;

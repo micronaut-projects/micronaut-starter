@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import java.util.Set;
 public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
             if (feature instanceof LanguageSpecificFeature specificFeature) {
@@ -58,13 +59,13 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
         Language requiredLanguage = languageIterator.hasNext() ? languageIterator.next() : null;
 
-        if (options != null && requiredLanguage != null && requiredLanguage != options.getLanguage()) {
-            throw new IllegalArgumentException("The selected features are incompatible. %s requires %s but %s was the selected language.".formatted(requiredLanguages.get(requiredLanguage), requiredLanguage, options.getLanguage()));
+        if (options != null && requiredLanguage != null && requiredLanguage != options.language()) {
+            throw new IllegalArgumentException("The selected features are incompatible. %s requires %s but %s was the selected language.".formatted(requiredLanguages.get(requiredLanguage), requiredLanguage, options.language()));
         }
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 }

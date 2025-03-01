@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.rxjava;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.reactive.ReactiveFeature;
 
 import jakarta.inject.Singleton;
@@ -44,7 +44,7 @@ public class RxJava1 implements ReactiveFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-rxjava1/latest/guide/index.html";
     }
 

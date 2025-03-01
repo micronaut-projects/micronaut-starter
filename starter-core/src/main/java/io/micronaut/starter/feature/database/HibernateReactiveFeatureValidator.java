@@ -16,11 +16,11 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -51,16 +51,16 @@ public class HibernateReactiveFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(HibernateReactiveFeature.class::isInstance) && !isThereADatabaseDriverFeatureCompatibleWithHibernateReactive(features)) {
             throw new IllegalArgumentException(errorMsg);
         }
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(HibernateReactiveFeature.class::isInstance)
-                && options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
+                && options.javaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
             throw new IllegalArgumentException("Hibernate Reactive requires at least JDK 11");
         }
     }

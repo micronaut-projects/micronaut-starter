@@ -16,10 +16,10 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.ProjectGenerator;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.options.Options;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.UserInterruptException;

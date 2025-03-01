@@ -17,14 +17,14 @@ package io.micronaut.starter.feature.coherence;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -62,12 +62,12 @@ public class CoherenceGrpcClient implements Feature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://coherence.java.net/";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#grpc";
     }
 
@@ -91,11 +91,6 @@ public class CoherenceGrpcClient implements Feature {
 
         generatorContext.addDependency(MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-grpc-client").compile());
         generatorContext.addDependency(Dependency.builder().groupId("com.oracle.coherence.ce").artifactId("coherence-java-client").compile());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

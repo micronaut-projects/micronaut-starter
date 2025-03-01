@@ -5,12 +5,12 @@ import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.options.Options
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.AutoCleanup
 import spock.lang.Shared

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 
 public abstract class CdkFeature implements AwsFeature {
 

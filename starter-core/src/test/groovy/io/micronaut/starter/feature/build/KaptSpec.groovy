@@ -1,20 +1,21 @@
 package io.micronaut.starter.feature.build
 
 import groovy.xml.XmlParser
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.LanguageSpecificFeature
-import io.micronaut.starter.feature.OneOfFeature
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature
+import io.micronaut.projectgen.core.feature.OneOfFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -98,7 +99,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_17).build())
 
         then:
         !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
@@ -111,7 +112,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),
+                MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).build(),
                 [Kapt.NAME]
         )
 
@@ -124,7 +125,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 17, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build())
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
@@ -136,7 +137,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).build())
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
@@ -148,7 +149,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in build = #buildTool for kapt'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),['kapt'])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).build(),['kapt'])
         String buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
 
         then:
@@ -163,7 +164,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in Maven build for kapt'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21),['kapt'])
+        def output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool( BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).build(),['kapt'])
         def buildFile = output["pom.xml"]
 
         then:

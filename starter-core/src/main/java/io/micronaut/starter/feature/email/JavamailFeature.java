@@ -19,8 +19,8 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.email.javamail.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -61,13 +61,13 @@ public class JavamailFeature extends EmailFeature {
 
     @Override
     @Nullable
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-email/latest/guide/index.html#javamail";
     }
 
     @Override
     @Nullable
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://jakartaee.github.io/mail-api/";
     }
 }

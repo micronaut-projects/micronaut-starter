@@ -18,12 +18,13 @@ package io.micronaut.starter.feature.tracing;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.tracing.zipkin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -63,18 +64,18 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
                 .artifactId(ARTIFACT_ID_MICRONAUT_TRACING_BRAVE_HTTP)
                 .compile());
 
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && generatorContext.getLanguage() == Language.GROOVY) {
             generatorContext.addDependency(MicronautDependencyUtils.coreProcessor().compileOnly());
         }
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://zipkin.io/";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#zipkin";
     }
 }

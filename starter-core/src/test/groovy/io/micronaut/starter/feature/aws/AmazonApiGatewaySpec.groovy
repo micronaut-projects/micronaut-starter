@@ -1,14 +1,15 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -18,7 +19,12 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
     AmazonApiGateway amazonApiGateway = beanContext.getBean(AmazonApiGateway)
 
     @Shared
-    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+    Options options = MicronautOptions.builder()
+            .language(Language.JAVA)
+            .testFramework(TestFramework.JUNIT)
+            .buildTool(BuildTool.GRADLE)
+            .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+            .build()
 
     void 'amazon-api-gateway feature is in the cloud category'() {
         expect:

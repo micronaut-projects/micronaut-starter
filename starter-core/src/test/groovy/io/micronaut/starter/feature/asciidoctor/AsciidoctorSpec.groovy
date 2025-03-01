@@ -3,8 +3,8 @@ package io.micronaut.starter.feature.asciidoctor
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 
 class AsciidoctorSpec extends ApplicationContextSpec {
 

@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.email.sendgrid.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -47,13 +48,13 @@ public class SendGridEmailFeature extends EmailFeature {
 
     @Override
     @Nullable
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-email/latest/guide/index.html#sendgrid";
     }
 
     @Override
     @Nullable
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.sendgrid.com/for-developers";
     }
 }

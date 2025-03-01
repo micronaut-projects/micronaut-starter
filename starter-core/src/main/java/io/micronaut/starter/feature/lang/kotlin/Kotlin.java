@@ -18,17 +18,18 @@ package io.micronaut.starter.feature.lang.kotlin;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.ApplicationFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.LanguageFeature;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -62,9 +63,10 @@ public class Kotlin implements LanguageFeature {
 
     protected void processSelectedFeatures(FeatureContext featureContext, Predicate<Feature> filter) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
+            ApplicationType type = featureContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
             applicationFeatures.stream()
                     .filter(filter)
-                    .filter(f -> !f.isVisible() && f.supports(featureContext.getApplicationType()))
+                    .filter(f -> !f.isVisible() && f.supports(MicronautOptions.builder().applicationType(type).build()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }
@@ -103,7 +105,7 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.KOTLIN;
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return options.language() == Language.KOTLIN;
     }
 }

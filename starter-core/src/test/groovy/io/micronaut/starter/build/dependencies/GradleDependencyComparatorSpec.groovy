@@ -1,10 +1,11 @@
 package io.micronaut.starter.build.dependencies
 
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.gradle.GradleDependency
-import io.micronaut.starter.feature.build.gradle.Gradle
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDependency
+import io.micronaut.projectgen.core.buildtools.gradle.Gradle
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Specification
 
 class GradleDependencyComparatorSpec extends Specification {

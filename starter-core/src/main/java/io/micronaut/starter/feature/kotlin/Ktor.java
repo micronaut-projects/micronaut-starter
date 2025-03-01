@@ -19,16 +19,18 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeaturePredicate;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
 import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
@@ -37,8 +39,8 @@ import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
 import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -59,8 +61,8 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && (mnOptions.applicationType() == ApplicationType.DEFAULT);
     }
 
     @Override
@@ -164,7 +166,7 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-kotlin/latest/guide/index.html#ktor";
     }
 }

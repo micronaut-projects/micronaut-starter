@@ -1,9 +1,9 @@
 package io.micronaut.starter.core.test.create
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.kotlin.Ktor
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 

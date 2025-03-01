@@ -1,7 +1,7 @@
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.GradlePlugin
-@import io.micronaut.starter.build.gradle.GradleDependency
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
+@import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDependency
 @args (Project project, GradleBuild gradleBuild, String mainClassName, String version, String groupId)
 plugins {
 @for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {

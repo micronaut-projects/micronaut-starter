@@ -17,9 +17,9 @@ package io.micronaut.starter.feature.netflix;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 
 import jakarta.inject.Singleton;
 

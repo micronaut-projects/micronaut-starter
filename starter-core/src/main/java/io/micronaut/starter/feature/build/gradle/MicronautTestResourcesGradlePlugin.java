@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 
 public class MicronautTestResourcesGradlePlugin {
 

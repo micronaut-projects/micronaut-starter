@@ -19,15 +19,15 @@ import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.CliAvailableFeatures;
-import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.projectgen.core.generator.ContextFactory;
+import io.micronaut.projectgen.core.generator.ProjectGenerator;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.micronaut.starter.application.ApplicationType.CLI;
+import static io.micronaut.projectgen.micronaut.ApplicationType.CLI;
 
 @Command(name = CreateCliCommand.NAME, description = "Creates a CLI application")
 @Prototype

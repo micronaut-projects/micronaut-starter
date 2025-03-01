@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 
 public abstract class AwsLambdaRelatedFeature implements AwsLambdaEventFeature {

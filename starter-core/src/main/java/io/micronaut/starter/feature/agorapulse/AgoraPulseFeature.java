@@ -18,12 +18,13 @@ package io.micronaut.starter.feature.agorapulse;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautCommunityFeature;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.options.Language;
 import io.micronaut.starter.options.MicronautVersion;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import org.openrewrite.groovy.tree.G;
 
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public interface AgoraPulseFeature extends MicronautCommunityFeature {
     }
 
     @Override
-    default String getThirdPartyDocumentation() {
+    default String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries";
     }
 

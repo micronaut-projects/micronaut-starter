@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.objectstorage;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import jakarta.inject.Singleton;
 
@@ -38,7 +39,7 @@ public class ObjectStorageGcp implements CloudObjectStorageFeature, GcpCloudFeat
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://cloud.google.com/storage";
     }
 }

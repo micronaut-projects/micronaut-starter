@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.MinJdkFeature;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -28,8 +29,8 @@ import java.util.Set;
 public class MinJdkFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        JdkVersion jdk = options.getJavaVersion();
+    public void validatePreProcessing(Options options, Set<Feature> features) {
+        JdkVersion jdk = options.javaVersion();
         for (Feature f : features) {
             if (f instanceof MinJdkFeature feature) {
                 JdkVersion min = feature.minJdk();
@@ -41,7 +42,7 @@ public class MinJdkFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 }

@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature;
+import io.micronaut.projectgen.core.options.Language;
 
 /**
  * A feature that only works with Kotlin specific language.

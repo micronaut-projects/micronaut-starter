@@ -1,7 +1,7 @@
-@import io.micronaut.starter.build.maven.ParentPom
-@import io.micronaut.starter.build.maven.MavenBuild
-@import io.micronaut.starter.build.maven.MavenDependency
-@import io.micronaut.starter.build.Property;
+@import io.micronaut.projectgen.core.buildtools.maven.ParentPom
+@import io.micronaut.projectgen.core.buildtools.maven.MavenBuild
+@import io.micronaut.projectgen.core.buildtools.maven.MavenDependency
+@import io.micronaut.projectgen.core.buildtools.Property;
 @args (ParentPom parentPom, MavenBuild mavenBuild)
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

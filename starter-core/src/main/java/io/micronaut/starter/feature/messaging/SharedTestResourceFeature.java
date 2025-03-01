@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.messaging;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 public interface SharedTestResourceFeature extends Feature {
 }

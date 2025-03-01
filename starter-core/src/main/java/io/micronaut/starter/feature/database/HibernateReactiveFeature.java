@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.DbType;

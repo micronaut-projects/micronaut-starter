@@ -19,13 +19,15 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
@@ -36,8 +38,8 @@ import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKoTe
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
-import io.micronaut.starter.feature.other.ShadePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.features.gradle.ShadePlugin;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -69,7 +71,8 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        ApplicationType type = generatorContext.getApplicationType();
+        ApplicationType type = generatorContext.getOptions() instanceof MicronautOptions mnOptions
+                ? mnOptions.applicationType() : null;
         if (type == ApplicationType.FUNCTION && generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             Project project = generatorContext.getProject();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
@@ -89,7 +92,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     void addDependencies(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_GCP_FUNCTION);
         generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.test());
         }
     }
@@ -115,7 +118,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),
                 getBuildCommand(buildTool),
-                generatorContext.getApplicationType() == ApplicationType.FUNCTION
+                    generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION
             )
         );
     }
@@ -123,7 +126,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT) {
             featureContext.addFeature(
                     googleCloudFunction
             );
@@ -132,7 +135,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
 
     @Override
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION) {
             super.applyTestTemplate(generatorContext, project, name);
         }
     }
@@ -173,7 +176,7 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions";
     }
 }

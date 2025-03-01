@@ -1,6 +1,6 @@
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Feature
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.feature.Feature
+@import io.micronaut.projectgen.core.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors

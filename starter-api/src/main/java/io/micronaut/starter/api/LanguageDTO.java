@@ -22,10 +22,10 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
-import io.micronaut.starter.defaults.IncludesDefaults;
-import io.micronaut.starter.defaults.LanguageDefaults;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.projectgen.core.options.IncludesDefaults;
+import io.micronaut.projectgen.core.options.LanguageDefaults;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.utils.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

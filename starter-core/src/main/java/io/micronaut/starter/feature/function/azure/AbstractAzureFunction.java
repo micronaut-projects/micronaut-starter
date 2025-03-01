@@ -17,15 +17,18 @@ package io.micronaut.starter.feature.function.azure;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.gradle.GradleDsl;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildProperties;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
@@ -38,10 +41,9 @@ import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunction
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerGroovy;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.template.URLTemplate;
 
 import java.util.Optional;
 
@@ -122,7 +124,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
                 return Optional.of("Java 17");
             } else {
@@ -137,7 +139,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION
                 && generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
             String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
             generatorContext.addTemplate("trigger", triggerFile,
@@ -194,9 +196,9 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         Dependency.Builder builder = Dependency.builder()
                 .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
                 .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(builder.developmentOnly());
-        } else if (generatorContext.getBuildTool().isGradle()) {
+        } else if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(builder.compile());
         }
     }

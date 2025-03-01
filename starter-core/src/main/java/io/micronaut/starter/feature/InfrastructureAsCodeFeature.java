@@ -15,7 +15,10 @@
  */
 package io.micronaut.starter.feature;
 
-public interface InfrastructureAsCodeFeature extends Feature  {
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
+
+public interface InfrastructureAsCodeFeature extends Feature {
     @Override
     default int getOrder() {
         return FeaturePhase.INFRASTRUCTURE_AS_CODE.getOrder();

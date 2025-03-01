@@ -16,12 +16,12 @@
 package io.micronaut.starter.feature.email;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.view.ViewFeature;
 
 abstract class EmailFeature implements Feature {
@@ -37,11 +37,6 @@ abstract class EmailFeature implements Feature {
     @Override
     public String getCategory() {
         return Category.MESSAGING;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     abstract String getModule();

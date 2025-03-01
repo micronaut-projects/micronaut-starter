@@ -18,10 +18,10 @@ package io.micronaut.starter.feature.ci.workflows.aws;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.Template;
 import io.micronaut.starter.feature.ci.workflows.aws.templates.buildSpec;
 
 import jakarta.inject.Singleton;
@@ -72,7 +72,7 @@ public class AWSCiWorkflowFeature extends CIWorkflowFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.aws.amazon.com/codebuild/latest/userguide";
     }
 }

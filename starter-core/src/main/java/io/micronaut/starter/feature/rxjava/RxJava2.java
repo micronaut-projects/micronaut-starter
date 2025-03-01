@@ -18,13 +18,13 @@ package io.micronaut.starter.feature.rxjava;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.server.Netty;
 import jakarta.inject.Singleton;
@@ -44,11 +44,6 @@ public class RxJava2 implements Feature {
     public RxJava2(RxJava2HttpServerNetty rxJava2HttpServerNetty, RxJava2HttpClient rxJava2HttpClient) {
         this.rxJava2HttpServerNetty = rxJava2HttpServerNetty;
         this.rxJava2HttpClient = rxJava2HttpClient;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @NonNull
@@ -73,7 +68,7 @@ public class RxJava2 implements Feature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-rxjava2/snapshot/guide/index.html";
     }
 

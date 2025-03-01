@@ -2,9 +2,9 @@ package io.micronaut.starter.feature.database.jdbc
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Unroll
 
 class JdbcSpec extends ApplicationContextSpec implements CommandOutputFixture {

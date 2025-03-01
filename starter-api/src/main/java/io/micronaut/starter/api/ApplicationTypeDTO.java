@@ -23,7 +23,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Collections;

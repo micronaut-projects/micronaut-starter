@@ -1,7 +1,7 @@
 package io.micronaut.starter.core.test.feature.buildless
 
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Unroll

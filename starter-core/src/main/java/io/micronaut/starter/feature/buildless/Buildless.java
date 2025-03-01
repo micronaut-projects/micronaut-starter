@@ -17,15 +17,16 @@ package io.micronaut.starter.feature.buildless;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradleFile;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleFile;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
-import io.micronaut.starter.feature.GradleSpecificFeature;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleSpecificFeature;
 import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
-import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.buildless.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -39,11 +40,6 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
     @Override
     public String getName() {
         return FEATURE_NAME_BUILDLESS;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override
@@ -77,7 +73,7 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.less.build/";
     }
 
@@ -93,7 +89,7 @@ public class Buildless implements CommunityFeature, GradleSpecificFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.getBuildProperties().put("org.gradle.caching", "true");
             generatorContext.addBuildPlugin(buildPlugin(generatorContext));
         }

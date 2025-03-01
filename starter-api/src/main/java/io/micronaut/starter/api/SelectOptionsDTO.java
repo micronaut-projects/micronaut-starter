@@ -23,11 +23,11 @@ import io.micronaut.starter.api.options.BuildToolSelectOptions;
 import io.micronaut.starter.api.options.JdkVersionSelectOptions;
 import io.micronaut.starter.api.options.LanguageSelectOptions;
 import io.micronaut.starter.api.options.TestFrameworkSelectOptions;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.options.JdkVersionConfiguration;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Arrays;

@@ -1,11 +1,12 @@
 package io.micronaut.starter.feature.build.maven
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -46,7 +47,7 @@ class EnforcerPluginSpec extends ApplicationContextSpec  implements CommandOutpu
 
     void "test enforcer only applied for maven"(boolean expected, BuildTool buildTool) {
         expect:
-        expected == feature.shouldApply(ApplicationType.DEFAULT, new Options().withBuildTool(buildTool), [] as Set)
+        expected == feature.shouldApply(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(buildTool).build(), [] as Set)
 
         where:
         expected | buildTool

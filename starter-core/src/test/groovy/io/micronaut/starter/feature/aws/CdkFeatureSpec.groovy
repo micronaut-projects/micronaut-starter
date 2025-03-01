@@ -1,18 +1,19 @@
 package io.micronaut.starter.feature.aws
 
 import groovy.xml.XmlParser
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.template.Template
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.core.template.Template
 import spock.lang.PendingFeature
 import spock.lang.Subject
 
@@ -67,7 +68,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         Map<String, String> output = generate(ApplicationType.FUNCTION, options, [Cdk.NAME])
 
         then:
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(Runtime.JAVA_${options.getJavaVersion().majorVersion()})")
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(Runtime.JAVA_${options.javaVersion().majorVersion()})")
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.architecture(Architecture.X86_64)')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 
@@ -125,6 +126,11 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
     }
 
     private static Options createOptions(BuildTool buildTool) {
-        new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+        MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .build()
     }
 }

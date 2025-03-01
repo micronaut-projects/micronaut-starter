@@ -1,8 +1,8 @@
 package io.micronaut.starter.feature.function.azure
 
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.Unroll
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult

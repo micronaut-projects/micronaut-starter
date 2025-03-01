@@ -19,10 +19,11 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import io.micronaut.starter.feature.function.template.handlerReadme;
 import io.micronaut.starter.feature.aws.AwsFeature;
@@ -42,15 +43,19 @@ public interface HandlerClassFeature extends Feature, AwsFeature {
     static RockerModel readmeRockerModel(@NonNull HandlerClassFeature feature,
                                           @NonNull GeneratorContext generatorContext,
                                           @Nullable DocumentationLink documentationLink) {
+        ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions
+                ? mnOptions.applicationType() : null;
         return handlerReadme.template(feature,
-                generatorContext.getApplicationType(),
+                applicationType,
                 generatorContext.getProject(),
                 documentationLink);
     }
 
     @NonNull
     default String handlerClass(@NonNull GeneratorContext generatorContext) {
-        return handlerClass(generatorContext.getApplicationType(), generatorContext.getProject());
+        ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions
+                ? mnOptions.applicationType() : null;
+        return handlerClass(applicationType, generatorContext.getProject());
     }
 
     /**

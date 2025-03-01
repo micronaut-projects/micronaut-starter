@@ -1,11 +1,12 @@
 package io.micronaut.starter.feature.build
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 
 class KotlinSupportFeatureSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -13,7 +14,7 @@ class KotlinSupportFeatureSpec extends BeanContextSpec implements CommandOutputF
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, buildTool),
+                MicronautOptions.builder().language(Language.KOTLIN).buildTool(buildTool).build(),
                 []
         )
 

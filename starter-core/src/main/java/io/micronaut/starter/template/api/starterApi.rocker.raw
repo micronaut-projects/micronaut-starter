@@ -1,4 +1,4 @@
-@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.projectgen.micronaut.ApplicationType
 @import java.util.List
 
 @args (

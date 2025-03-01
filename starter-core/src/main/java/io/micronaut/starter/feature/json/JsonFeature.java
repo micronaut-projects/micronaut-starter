@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.json;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 public interface JsonFeature extends Feature {
 

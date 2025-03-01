@@ -17,7 +17,7 @@ package io.micronaut.starter.api;
 
 import io.micronaut.core.convert.ConversionContext;
 import io.micronaut.core.convert.TypeConverter;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.options.JdkVersion;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;

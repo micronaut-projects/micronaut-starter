@@ -15,10 +15,10 @@
  */
 package io.micronaut.starter.feature.server;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class MicronautServerDependentValidator implements FeatureValidator {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
 
         features.stream().filter(ThirdPartyServerFeature.class::isInstance).findFirst().ifPresent(feature -> {
             List<String> dependents = features.stream()
@@ -50,7 +50,7 @@ public class MicronautServerDependentValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 }

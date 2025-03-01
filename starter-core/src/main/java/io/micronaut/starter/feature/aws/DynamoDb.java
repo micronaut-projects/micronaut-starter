@@ -18,11 +18,11 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.aws.template.dynamodbConfigurationGroovy;
 import io.micronaut.starter.feature.aws.template.dynamodbConfigurationJava;
 import io.micronaut.starter.feature.aws.template.dynamodbConfigurationKotlin;
@@ -35,8 +35,8 @@ import io.micronaut.starter.feature.aws.template.ciawsconditionKotlin;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionGroovy;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionJava;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionKotlin;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
-import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration;
+import io.micronaut.projectgen.core.feature.config.Configuration;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.feature.validator.ValidationFeature;
 import jakarta.inject.Singleton;
@@ -96,7 +96,7 @@ public class DynamoDb implements AwsFeature {
                 ciawsregionconditionKotlin.template(generatorContext.getProject()),
                 ciawsregionconditionGroovy.template(generatorContext.getProject()));
 
-        Configuration testConfig = generatorContext.getConfiguration("function", new ApplicationConfiguration("test", "function"));
+        Configuration testConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig("function", new ApplicationConfiguration("test", "function"));
         testConfig.put("aws.region", "us-east-1");
     }
 
@@ -124,17 +124,12 @@ public class DynamoDb implements AwsFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://aws.amazon.com/dynamodb/";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }

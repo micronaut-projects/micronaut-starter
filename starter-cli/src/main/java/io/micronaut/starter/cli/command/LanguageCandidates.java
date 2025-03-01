@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.options.Language;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

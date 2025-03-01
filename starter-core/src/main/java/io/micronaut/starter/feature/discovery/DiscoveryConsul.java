@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.discovery;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.consul.Consul;
 import jakarta.inject.Singleton;
 
@@ -63,12 +63,12 @@ public class DiscoveryConsul implements DiscoveryFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.consul.io";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryConsul";
     }
 }

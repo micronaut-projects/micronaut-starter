@@ -20,7 +20,7 @@ import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.starter.analytics.Generated;
 import io.micronaut.starter.analytics.SelectedFeature;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

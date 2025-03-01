@@ -3,15 +3,13 @@ package io.micronaut.starter.feature.dev
 import io.micronaut.context.env.Environment
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.validator.MicronautHttpValidation
+import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Subject
 
 class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFixture {

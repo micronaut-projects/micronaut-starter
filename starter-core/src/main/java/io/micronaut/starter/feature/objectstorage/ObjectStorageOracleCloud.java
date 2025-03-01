@@ -18,7 +18,8 @@ package io.micronaut.starter.feature.objectstorage;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
 import jakarta.inject.Singleton;
@@ -53,7 +54,7 @@ public class ObjectStorageOracleCloud implements CloudObjectStorageFeature, Orac
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.oracle.com/cloud/storage/object-storage/";
     }
 }

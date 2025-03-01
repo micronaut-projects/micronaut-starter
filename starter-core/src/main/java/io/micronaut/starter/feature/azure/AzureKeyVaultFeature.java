@@ -17,12 +17,13 @@ package io.micronaut.starter.feature.azure;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.features.config.MicronautDistributedConfigurationFeature;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryClient;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -33,7 +34,7 @@ import jakarta.inject.Singleton;
  */
 @Requires(property = "micronaut.starter.feature.azure.key.vault.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class AzureKeyVaultFeature implements DistributedConfigFeature {
+public class AzureKeyVaultFeature implements MicronautDistributedConfigurationFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AZURE_SECRET_MANAGER = "micronaut-azure-secret-manager";
     private static final Dependency KEY_VAULT_DEPENDENCY = MicronautDependencyUtils.azureDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_AZURE_SECRET_MANAGER)
@@ -68,12 +69,12 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureKeyVault";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://azure.microsoft.com/en-us/services/key-vault/#product-overview";
     }
 

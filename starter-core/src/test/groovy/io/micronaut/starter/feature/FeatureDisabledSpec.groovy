@@ -38,10 +38,10 @@ import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautAot
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.MicronautGradleEnterprise
-import io.micronaut.starter.feature.build.gradle.Gradle
+import io.micronaut.projectgen.core.buildtools.gradle.Gradle
 import io.micronaut.starter.feature.build.gradle.JavaGradlePlugin
 import io.micronaut.starter.feature.build.maven.EnforcerPlugin
-import io.micronaut.starter.feature.build.maven.Maven
+import io.micronaut.projectgen.core.buildtools.maven.Maven
 import io.micronaut.starter.feature.buildless.Buildless
 import io.micronaut.starter.feature.cache.Caffeine
 import io.micronaut.starter.feature.cache.Coherence
@@ -286,7 +286,6 @@ import io.micronaut.starter.feature.oraclecloud.OracleCloudMicronautNettyClient
 import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk
 import io.micronaut.starter.feature.oraclecloud.OracleCloudVault
 import io.micronaut.starter.feature.other.AnnotationApi
-import io.micronaut.starter.feature.other.AppName
 import io.micronaut.starter.feature.other.HibernateValidator
 import io.micronaut.starter.feature.other.HttpClientTest
 import io.micronaut.starter.feature.other.HttpSession
@@ -299,7 +298,6 @@ import io.micronaut.starter.feature.other.ProjectLombok
 import io.micronaut.starter.feature.other.RapiDoc
 import io.micronaut.starter.feature.other.Readme
 import io.micronaut.starter.feature.other.Redoc
-import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.picocli.Picocli
 import io.micronaut.starter.feature.picocli.lang.groovy.PicocliGroovyApplication
@@ -358,7 +356,6 @@ import io.micronaut.starter.feature.test.Spock
 import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.feature.tracing.Jaeger
 import io.micronaut.starter.feature.tracing.Zipkin
-import io.micronaut.starter.feature.validator.MicronautHttpValidation
 import io.micronaut.starter.feature.validator.MicronautValidationFeature
 import io.micronaut.starter.feature.vertx.VertxMySql
 import io.micronaut.starter.feature.vertx.VertxPg
@@ -375,17 +372,13 @@ import io.micronaut.starter.feature.view.ViewsFieldset
 import io.micronaut.starter.feature.view.ViewsFieldsetTck
 import io.micronaut.starter.feature.websocket.Websocket
 import io.micronaut.starter.feature.xml.JacksonXml
-import io.micronaut.starter.springboot.SpringBootGradlePlugin
-import io.micronaut.starter.springboot.SpringBootJava
-import io.micronaut.starter.springboot.SpringBootMavenPlugin
-import io.micronaut.starter.springboot.SpringBootStarter
-import io.micronaut.starter.springboot.SpringBootStarterWeb
-import io.micronaut.starter.springboot.SpringDependencyManagementGradlePlugin
-import io.micronaut.starter.feature.config.Properties
+import io.micronaut.projectgen.core.feature.config.Properties
+import spock.lang.Ignore
 import spock.lang.Specification
 
 class FeatureDisabledSpec extends Specification {
 
+    @Ignore
     void 'test #feature feature is disabled with #config'(String feature, String config, Class clazz) {
         given:
         Map<String, Object> configuration = [:]

@@ -1,11 +1,11 @@
 package io.micronaut.starter.cli
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification

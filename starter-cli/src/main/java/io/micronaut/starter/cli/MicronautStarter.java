@@ -38,7 +38,7 @@ import io.micronaut.starter.cli.command.LanguageConverter;
 import io.micronaut.starter.cli.command.TestFrameworkCandidates;
 import io.micronaut.starter.cli.command.TestFrameworkConverter;
 import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
-import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParameterException;

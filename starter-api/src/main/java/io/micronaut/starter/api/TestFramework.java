@@ -35,16 +35,16 @@ public enum TestFramework {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
-    public io.micronaut.starter.options.TestFramework toTestFramework() {
+    public io.micronaut.projectgen.core.options.TestFramework toTestFramework() {
         switch (this) {
             case SPOCK:
-                return io.micronaut.starter.options.TestFramework.SPOCK;
+                return io.micronaut.projectgen.core.options.TestFramework.SPOCK;
             case KOTLINTEST:
             case KOTEST:
-                return io.micronaut.starter.options.TestFramework.KOTEST;
+                return io.micronaut.projectgen.core.options.TestFramework.KOTEST;
             case JUNIT:
             default:
-                return io.micronaut.starter.options.TestFramework.JUNIT;
+                return io.micronaut.projectgen.core.options.TestFramework.JUNIT;
         }
     }
 

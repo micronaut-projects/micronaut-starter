@@ -1,11 +1,11 @@
-@import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.Property
-@import io.micronaut.starter.build.dependencies.Dependency
-@import io.micronaut.starter.build.dependencies.MavenCoordinate
-@import io.micronaut.starter.build.maven.MavenBuild
-@import io.micronaut.starter.build.maven.MavenDependency
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.projectgen.micronaut.ApplicationType
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.Property
+@import io.micronaut.projectgen.core.buildtools.dependencies.Dependency
+@import io.micronaut.projectgen.core.buildtools.dependencies.MavenCoordinate
+@import io.micronaut.projectgen.core.buildtools.maven.MavenBuild
+@import io.micronaut.projectgen.core.buildtools.maven.MavenDependency
+@import io.micronaut.projectgen.core.feature.Features
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.feature.database.Data
 @import io.micronaut.starter.feature.database.DatabaseDriverFeature
@@ -20,6 +20,7 @@
 @import io.micronaut.starter.feature.migration.MigrationFeature
 @import io.micronaut.starter.feature.testresources.TestResources
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.util.FeaturesUtils
 
 @args (
 ApplicationType applicationType,
@@ -57,9 +58,9 @@ String jvmArguments
   <properties>
     <packaging>jar</packaging>
 @if (features.language().isKotlin()) {
-    <jdk.version>@features.getTargetJdk(17)</jdk.version>
+    <jdk.version>@FeaturesUtils.getTargetJdk(features, 17)</jdk.version>
 } else {
-    <jdk.version>@features.getTargetJdk()</jdk.version>
+    <jdk.version>@FeaturesUtils.getTargetJdk(features)</jdk.version>
 }
     <release.version>@features.javaVersion().majorVersion()</release.version>
 @for (Property prop : mavenBuild.getProperties()) {
@@ -102,8 +103,7 @@ String jvmArguments
       <plugin>
         <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (!mavenBuild.getAotDependencies().isEmpty()
-     || jvmArguments != null
+@if (jvmArguments != null
      || features.contains("oracle-function")
      || features.contains("micronaut-aot")
      || features.isFeaturePresent(TestResources.class)
@@ -114,21 +114,8 @@ String jvmArguments
                || features.isFeaturePresent(R2dbc.class)))
 ) {
         <configuration>
-@if (!mavenBuild.getAotDependencies().isEmpty()) {
-@io.micronaut.starter.feature.build.maven.templates.aotDependencies.template(mavenBuild.getAotDependencies())
-}
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
           <shared>true</shared>
-}
-@if (features.isFeaturePresent(TestResources.class) && !mavenBuild.getTestResourcesDependencies().isEmpty()) {
-          <testResourcesDependencies>
-@for (MavenCoordinate testResourcesDependency : mavenBuild.getTestResourcesDependencies()) {
-            <dependency>
-              <groupId>@(testResourcesDependency.groupId())</groupId>
-              <artifactId>@(testResourcesDependency.artifactId())</artifactId>
-            </dependency>
-}
-          </testResourcesDependencies>
 }
 @if (jvmArguments != null) {
           <jvmArguments>@(jvmArguments)</jvmArguments>

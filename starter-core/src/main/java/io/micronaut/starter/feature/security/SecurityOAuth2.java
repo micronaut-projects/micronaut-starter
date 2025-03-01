@@ -19,10 +19,10 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Inject;
@@ -79,7 +79,7 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
 
         SecurityOAuth2Configuration oAuth2Config = securityOAuth2Configuration(generatorContext);
 
-        ApplicationConfiguration devConfig = generatorContext.getConfiguration(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
+        ApplicationConfiguration devConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
         devConfig.put("micronaut.security.oauth2.clients.default.client-id", oAuth2Config.getClientId());
         devConfig.put("micronaut.security.oauth2.clients.default.client-secret", oAuth2Config.getClientSecret());
         if (generatorContext.isFeaturePresent(SecurityJWT.class)) {
@@ -102,7 +102,7 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth";
     }
 

@@ -18,13 +18,13 @@ package io.micronaut.starter.feature.dev;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
@@ -70,13 +70,8 @@ public class ControlPanel implements Feature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-control-panel/latest/guide/index.html";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
@@ -94,7 +89,7 @@ public class ControlPanel implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MicronautDependencyUtils.controlPanelDependency().artifactId("micronaut-control-panel-ui"));
-        ApplicationConfiguration devConfig = generatorContext.getConfiguration(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
+        ApplicationConfiguration devConfig = generatorContext.getConfigurationByEnvironmentOrDefaultConfig(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
 
         generatorContext.addDependency(MicronautDependencyUtils.controlPanelDependency().artifactId("micronaut-control-panel-management"));
         devConfig.put("endpoints.all.enabled", true);

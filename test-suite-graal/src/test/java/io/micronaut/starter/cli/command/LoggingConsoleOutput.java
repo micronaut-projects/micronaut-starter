@@ -1,6 +1,6 @@
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

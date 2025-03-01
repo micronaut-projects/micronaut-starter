@@ -18,20 +18,21 @@ package io.micronaut.starter.feature.view;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
 import java.util.Optional;
-import io.micronaut.starter.build.maven.MavenPlugin;
-import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
+import io.micronaut.projectgen.core.buildtools.BuildPlugin;
 import io.micronaut.starter.feature.build.Kapt;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.views.jte.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -61,12 +62,12 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://jte.gg/";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/#jte";
     }
 
@@ -75,9 +76,9 @@ public class JTE implements ViewFeature, MicronautServerDependent {
         generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_JTE)
                 .compile());
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        } else if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(mavenPlugin(generatorContext));
         }
         generatorContext.addTemplate("exampleJte", new RockerTemplate(JTE_SRC_DIR + "/example.jte", exampleJTE.template()));
@@ -86,7 +87,7 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
         Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
 
-        boolean patchKapt = generatorContext.getBuildTool().isGradle()
+        boolean patchKapt = OptionUtils.hasGradleBuildTool(generatorContext.getOptions())
                 && generatorContext.getLanguage() == Language.KOTLIN
                 && generatorContext.hasFeature(Kapt.class);
 

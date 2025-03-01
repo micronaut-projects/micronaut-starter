@@ -15,16 +15,11 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 public interface MockingFeature extends Feature {
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
     @Override
     default String getCategory() {
         return Category.DEV_TOOLS;

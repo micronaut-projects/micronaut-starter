@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.MavenSpecificFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.buildtools.maven.MavenSpecificFeature;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -27,12 +28,12 @@ import java.util.Set;
 @Singleton
 public class MavenSpecificFeatureValidator implements FeatureValidator {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
 
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(MavenSpecificFeature.class::isInstance) && options.getBuildTool() != BuildTool.MAVEN) {
             throw new IllegalArgumentException("Feature only supported by Maven");
         }

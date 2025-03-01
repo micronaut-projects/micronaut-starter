@@ -15,15 +15,19 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.*;
 import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
 import io.micronaut.starter.feature.other.template.openApiProperties;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import java.util.*;
 
@@ -35,8 +39,8 @@ abstract class OpenApiView implements Feature, MicronautServerDependent, Contrib
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override

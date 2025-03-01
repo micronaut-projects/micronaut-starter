@@ -17,14 +17,14 @@ package io.micronaut.starter.feature.migration;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
 import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.migration.template.liquibaseChangelog;
 import io.micronaut.starter.feature.migration.template.liquibaseSchema;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.liquibase.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -59,12 +59,12 @@ public class Liquibase implements MigrationFeature {
         return "Adds support for Liquibase database migrations";
     }
 
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.liquibase.org/";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html";
     }
 

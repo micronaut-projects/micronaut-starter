@@ -16,7 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import picocli.CommandLine;
 
 @Introspected

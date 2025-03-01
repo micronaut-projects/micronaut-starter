@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 
 import java.util.List;
 import java.util.Locale;

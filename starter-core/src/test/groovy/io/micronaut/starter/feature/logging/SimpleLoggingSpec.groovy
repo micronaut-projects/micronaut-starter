@@ -3,8 +3,8 @@ package io.micronaut.starter.feature.logging
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.Unroll
 
 class SimpleLoggingSpec extends ApplicationContextSpec  implements CommandOutputFixture {

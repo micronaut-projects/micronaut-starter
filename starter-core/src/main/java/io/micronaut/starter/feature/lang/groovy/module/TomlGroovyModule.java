@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.lang.groovy.module;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.groovy.toml.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -44,7 +45,7 @@ public class TomlGroovyModule implements GroovyModuleFeature {
 
     @Override
     @NonNull
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.groovy-lang.org/docs/latest/html/documentation/#_processing_toml";
     }
 }

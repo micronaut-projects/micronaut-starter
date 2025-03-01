@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.json;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
@@ -29,11 +29,6 @@ public class JacksonDatabindFeature implements JsonFeature {
     public String getName() {
         return "jackson-databind";
     }    
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 
     @Override
     public void apply(GeneratorContext generatorContext) {

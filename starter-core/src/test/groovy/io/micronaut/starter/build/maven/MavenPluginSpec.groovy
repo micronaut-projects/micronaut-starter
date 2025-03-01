@@ -1,8 +1,10 @@
 package io.micronaut.starter.build.maven
 
 import com.fizzed.rocker.RockerModel
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin
+import io.micronaut.projectgen.core.rocker.RockerWritable
 import io.micronaut.starter.feature.view.mvnPluginRocker
-import io.micronaut.starter.template.RockerWritable
+
 import spock.lang.Specification
 
 class MavenPluginSpec extends Specification {

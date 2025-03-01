@@ -17,10 +17,11 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.GradleSpecificFeature;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleSpecificFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.java.gradle.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -47,18 +48,13 @@ public class JavaGradlePlugin implements GradleSpecificFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.gradle.org/current/userguide/java_plugin.html";
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("java")
                     .build());

@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.options;
 
-import io.micronaut.starter.application.Project;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.rocker.JunitRockerModelProvider;
 
 /**
  * Abstract implementation for {@link JunitRockerModelProvider} which supplies a {@link Project} in the constructor. You can use it to provide rocker models for each language supported by {@link TestFramework#JUNIT}.

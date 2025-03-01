@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.feature.langchain4j;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 
 public interface Langchain4jEmbeddedStore extends Langchain4jFeature {
@@ -29,11 +29,6 @@ public interface Langchain4jEmbeddedStore extends Langchain4jFeature {
     @Override
     default String getDescription() {
         return "Integration with " + getTitle() + " Embedded Store.";
-    }
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

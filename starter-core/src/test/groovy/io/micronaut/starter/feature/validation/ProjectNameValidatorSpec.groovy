@@ -1,8 +1,9 @@
 package io.micronaut.starter.feature.validation
 
+import io.micronaut.projectgen.core.generator.ProjectNameValidator
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.utils.NameUtils
 import spock.lang.Shared
 import spock.lang.Unroll
 

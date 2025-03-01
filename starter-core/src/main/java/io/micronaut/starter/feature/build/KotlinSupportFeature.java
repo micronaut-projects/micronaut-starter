@@ -16,18 +16,19 @@
 package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.JpaFeature;
-import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.feature.test.TestFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.feature.LanguageFeature;
+import io.micronaut.projectgen.core.feature.TestFeature;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 
 import java.util.stream.Collectors;
@@ -58,11 +59,6 @@ public interface KotlinSupportFeature extends OneOfFeature {
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     default String getCategory() {
         return Category.LANGUAGES;
     }
@@ -76,7 +72,7 @@ public interface KotlinSupportFeature extends OneOfFeature {
             }
         }
         if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_21) && generatorContext.hasFeature(Kapt.class)) {
-            if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
                 generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES));
             } else {
                 generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
@@ -85,7 +81,7 @@ public interface KotlinSupportFeature extends OneOfFeature {
     }
 
     static boolean shouldApply(GeneratorContext generatorContext) {
-        return generatorContext.getBuildTool().isGradle() &&
+        return OptionUtils.hasGradleBuildTool(generatorContext.getOptions()) &&
                 KotlinSupportFeature.shouldApply(generatorContext.getFeatures().language(), generatorContext.getFeatures().testFramework());
     }
 

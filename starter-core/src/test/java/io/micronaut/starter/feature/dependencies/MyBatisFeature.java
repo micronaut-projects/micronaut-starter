@@ -1,10 +1,10 @@
 package io.micronaut.starter.feature.dependencies;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import jakarta.inject.Singleton;
 
@@ -15,11 +15,6 @@ public class MyBatisFeature implements Feature {
     @Override
     public String getName() {
         return "mybatis";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

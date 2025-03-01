@@ -1,7 +1,7 @@
 package io.micronaut.starter.build
 
 
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.Scope
 
 /**
  * You can get an instance via {@link io.micronaut.starter.build.BuildTestUtil}.

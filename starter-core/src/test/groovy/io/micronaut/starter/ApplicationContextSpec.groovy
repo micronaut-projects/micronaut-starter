@@ -3,10 +3,10 @@ package io.micronaut.starter
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.core.version.SemanticVersion
-import io.micronaut.starter.feature.Feature
+import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification

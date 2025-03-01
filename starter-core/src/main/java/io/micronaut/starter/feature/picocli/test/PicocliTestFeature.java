@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.picocli.test;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
+import io.micronaut.projectgen.core.feature.TestFeature;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 
 public interface PicocliTestFeature extends TestFeature {
 
@@ -29,7 +31,7 @@ public interface PicocliTestFeature extends TestFeature {
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.CLI;
+    default boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.CLI;
     }
 }

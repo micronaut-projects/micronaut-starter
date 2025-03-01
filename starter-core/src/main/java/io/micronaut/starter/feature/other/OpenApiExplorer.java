@@ -20,6 +20,7 @@ import java.util.List;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.InterceptUrlMap;
 import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;
@@ -52,12 +53,12 @@ public class OpenApiExplorer extends OpenApiView implements ContributingStaticRe
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://github.com/Authress-Engineering/openapi-explorer";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
             return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#openapiExplorer";
     }
 

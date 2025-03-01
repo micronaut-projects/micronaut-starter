@@ -17,10 +17,11 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.build.gradle.GradleDsl;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.buildtools.Dockerfile;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
 import java.util.Arrays;

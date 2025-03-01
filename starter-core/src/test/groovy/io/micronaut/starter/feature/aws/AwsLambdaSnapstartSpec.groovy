@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.aws
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.feature.architecture.CpuArchitecture
 import io.micronaut.starter.feature.architecture.X86

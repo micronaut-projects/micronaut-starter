@@ -17,13 +17,15 @@ package io.micronaut.starter.feature.config;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.feature.ConfigurationFeature;
+import io.micronaut.projectgen.core.feature.config.Configuration;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
+import io.micronaut.projectgen.core.template.Template;
 import io.micronaut.starter.template.TomlTemplate;
 import jakarta.inject.Singleton;
 
@@ -44,11 +46,6 @@ public class Toml implements ConfigurationFeature {
             @Override
             public String getName() {
                 return "toml-build";
-            }
-
-            @Override
-            public boolean supports(ApplicationType applicationType) {
-                return true;
             }
 
             @Override
@@ -79,11 +76,6 @@ public class Toml implements ConfigurationFeature {
     @Override
     public int getOrder() {
         return FeaturePhase.HIGHEST.getOrder();
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

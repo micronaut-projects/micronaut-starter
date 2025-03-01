@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 
 public final class OpenTelemetryDependencyUtils {
     public static final String GROUP_ID_OPENTELEMETRY = "io.opentelemetry";

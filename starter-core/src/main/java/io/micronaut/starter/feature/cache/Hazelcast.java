@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.cache;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.cache.hazelcast.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -50,11 +50,11 @@ public class Hazelcast implements CacheFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast";
     }
 
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://hazelcast.org/";
     }
 }

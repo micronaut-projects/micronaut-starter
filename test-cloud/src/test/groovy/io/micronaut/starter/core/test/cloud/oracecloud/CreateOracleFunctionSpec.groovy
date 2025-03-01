@@ -1,20 +1,20 @@
 package io.micronaut.starter.core.test.cloud.oracecloud
 
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.generator.ProjectGenerator
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.options.OperatingSystem
+import io.micronaut.projectgen.core.generator.ProjectGenerator
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.FileSystemOutputHandler
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.core.utils.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
 

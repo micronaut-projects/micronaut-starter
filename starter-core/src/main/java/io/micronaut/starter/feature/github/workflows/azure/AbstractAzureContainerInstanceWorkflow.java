@@ -15,8 +15,9 @@
  */
 package io.micronaut.starter.feature.github.workflows.azure;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
 import io.micronaut.starter.feature.github.workflows.azure.template.azureContainerInstanceWorkflow;
@@ -24,8 +25,7 @@ import io.micronaut.starter.feature.github.workflows.azure.template.azureContain
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
 import io.micronaut.starter.feature.server.Netty;
 import io.micronaut.starter.feature.server.ServerFeature;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +52,7 @@ public abstract class AbstractAzureContainerInstanceWorkflow extends AbstractDoc
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.github.com/en/free-pro-team@latest/actions";
     }
 

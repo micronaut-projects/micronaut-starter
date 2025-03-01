@@ -1,14 +1,14 @@
 package io.micronaut.starter.build.maven
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.generator.DependencyContextImpl
-import io.micronaut.starter.build.dependencies.CoordinateResolver
-import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.DependencyContext
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.dependencies.DependencyContextImpl
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency
+import io.micronaut.projectgen.core.buildtools.dependencies.DependencyContext
+import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 
 class MavenDependencySpec  extends BeanContextSpec implements CommandOutputFixture {
 

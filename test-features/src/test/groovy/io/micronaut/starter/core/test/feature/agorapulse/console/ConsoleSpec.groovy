@@ -1,9 +1,9 @@
 package io.micronaut.starter.core.test.feature.agorapulse.console
 
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore

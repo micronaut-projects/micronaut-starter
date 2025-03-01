@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

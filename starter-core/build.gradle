@@ -14,7 +14,9 @@ sourceSets {
         }
     }
 }
-
+repositories {
+    mavenLocal()
+}
 dependencies {
 
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
@@ -29,6 +31,7 @@ dependencies {
     api("org.yaml:snakeyaml")
     api("io.micronaut.serde:micronaut-serde-jackson")
 
+    implementation("io.micronaut.projectgen:micronaut-projectgen-micronaut:0.0.1-SNAPSHOT")
     implementation("com.typesafe:config:1.4.3")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
     implementation("org.apache.commons:commons-compress:1.27.1")

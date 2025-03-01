@@ -15,17 +15,19 @@
  */
 package io.micronaut.starter.feature.github.workflows.oci;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflowReadme;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +66,7 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.github.com/en/free-pro-team@latest/actions";
     }
 
@@ -97,8 +99,8 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-
-        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN) && generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
+        ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && applicationType.equals(ApplicationType.FUNCTION)) {
             generatorContext.getBuildProperties().put("exec.mainClass", generatorContext.getProject().getPackageName() + ".Function");
         }
 
@@ -110,6 +112,6 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
                 )
         );
         generatorContext.addHelpTemplate(new RockerWritable(ociFunctionsWorkflowReadme.template(
-                this, generatorContext.getProject(), generatorContext.getApplicationType(), workflowFilePath)));
+                this, generatorContext.getProject(), applicationType, workflowFilePath)));
     }
 }

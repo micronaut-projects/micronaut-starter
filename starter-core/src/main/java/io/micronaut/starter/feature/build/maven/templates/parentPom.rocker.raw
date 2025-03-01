@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.maven.ParentPom
+@import io.micronaut.projectgen.core.buildtools.maven.ParentPom
 
 @args (ParentPom parentPom)
 

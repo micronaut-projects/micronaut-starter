@@ -16,7 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.projectgen.core.options.OperatingSystem;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

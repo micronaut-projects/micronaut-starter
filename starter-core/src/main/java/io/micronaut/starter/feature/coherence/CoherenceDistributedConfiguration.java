@@ -17,11 +17,12 @@ package io.micronaut.starter.feature.coherence;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -59,12 +60,12 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://coherence.java.net/";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#distributedConfiguration";
     }
 
@@ -91,7 +92,7 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
         Dependency.Builder distributedConfiguration = MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-distributed-configuration").compile();
         generatorContext.addDependency(distributedConfiguration);
 
-        if (generatorContext.getBuildTool().isGradle() && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions()) && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.oracle.coherence.ce")
                     .artifactId("coherence-java-client")

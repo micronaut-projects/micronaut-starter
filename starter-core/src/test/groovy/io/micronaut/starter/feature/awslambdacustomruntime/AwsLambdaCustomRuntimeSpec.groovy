@@ -1,11 +1,16 @@
 package io.micronaut.starter.feature.awslambdacustomruntime
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.Scope
+import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -34,8 +39,13 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     void 'test readme.md with feature aws-lambda-custom-runtime and graalvm contains extra documentation. language = #language'() {
         when:
         Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+                MicronautOptions.builder()
+                        .applicationType(ApplicationType.DEFAULT)
+                        .language(language)
+                        .testFramework(TestFramework.JUNIT)
+                        .buildTool(BuildTool.GRADLE)
+                        .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                        .build(),
                 ['aws-lambda-custom-runtime', 'graalvm']
         )
 

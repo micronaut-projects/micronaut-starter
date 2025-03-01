@@ -104,6 +104,8 @@ public abstract class CoordinatesSourceGenerator extends DefaultTask {
             writer.println("import java.util.HashMap;");
             writer.println("import java.util.Map;");
             writer.println("import java.util.Collections;");
+            writer.println("import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;");
+            writer.println("import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;");
             writer.println();
             writer.println("public class StarterCoordinates {");
             writer.println("    public static final Map<String, Coordinate> ALL_COORDINATES;");

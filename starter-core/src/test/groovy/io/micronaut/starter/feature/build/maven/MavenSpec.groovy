@@ -1,17 +1,19 @@
 package io.micronaut.starter.feature.build.maven
 
+import io.micronaut.projectgen.core.buildtools.maven.Maven
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -42,7 +44,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "multi-module-pom isn't created for single-module builds"() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN)
+        Options options = MicronautOptions.builder().language(Language.JAVA).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).build()
         GeneratorContext generatorContext = buildGeneratorContext([], options, ApplicationType.DEFAULT)
 
         then:
@@ -52,7 +54,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "multi-module-pom is created for multi-module builds"() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN)
+        Options options = MicronautOptions.builder().language(Language.JAVA).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).build()
         GeneratorContext generatorContext = buildGeneratorContext(['aws-cdk'], options, ApplicationType.DEFAULT)
 
         then:
@@ -208,14 +210,14 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
-        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+        MicronautOptions.builder().language(language).testFramework(language.getDefaults().getTest()).buildTool(buildTool).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk()).build()
     }
 
     void 'Selected jdk = #jdk is specified in Maven for lang = #lang'(
             Language lang, JdkVersion jdk
     ) {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(lang, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, jdk))
+        def output = generate(MicronautOptions.builder().language(lang).applicationType(ApplicationType.DEFAULT).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(jdk).build())
         def buildFile =  output["pom.xml"]
 
         then:

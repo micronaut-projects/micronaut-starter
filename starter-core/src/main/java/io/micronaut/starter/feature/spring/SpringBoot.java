@@ -17,12 +17,13 @@ package io.micronaut.starter.feature.spring;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.spring.boot.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -53,11 +54,6 @@ public class SpringBoot extends SpringFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder springBoot = MicronautDependencyUtils.springDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_SPRING_BOOT_ANNOTATION)
@@ -74,7 +70,7 @@ public class SpringBoot extends SpringFeature {
                 .groupId("io.micronaut.spring")
                 .artifactId("micronaut-spring-boot")
                 .runtime();
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && generatorContext.getLanguage() == Language.GROOVY) {
             micronautSpringBoot = micronautSpringBoot.compile();
         }
         generatorContext.addDependency(micronautSpringBoot);

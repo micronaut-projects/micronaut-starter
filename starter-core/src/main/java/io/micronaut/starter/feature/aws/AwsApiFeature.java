@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 
 public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
@@ -27,19 +29,18 @@ public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
             .build();
 
     @Override
-    default String getMicronautDocumentation() {
+    default String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway";
     }
 
     @Override
-    default String getThirdPartyDocumentation() {
+    default String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.aws.amazon.com/apigateway/";
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT ||
-                applicationType == ApplicationType.FUNCTION;
+    default boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && (mnOptions.applicationType() == ApplicationType.CLI || mnOptions.applicationType() == ApplicationType.DEFAULT);
     }
 
     @Override

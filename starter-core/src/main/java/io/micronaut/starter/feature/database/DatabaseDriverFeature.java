@@ -16,13 +16,13 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MavenCoordinate;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
@@ -57,11 +57,6 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     @Override
     public Class<?> getFeatureClass() {
         return DatabaseDriverFeature.class;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

@@ -2,9 +2,9 @@ package io.micronaut.starter.core.test.feature.cdk
 
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.template.Template
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.template.Template
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult

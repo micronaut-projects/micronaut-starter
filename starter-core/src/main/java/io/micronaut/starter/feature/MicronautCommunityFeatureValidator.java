@@ -15,9 +15,10 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -26,11 +27,11 @@ import java.util.Set;
 public class MicronautCommunityFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         for (Feature feature : features) {
             if (feature instanceof MicronautCommunityFeature f && !f.supportsCurrentMicronautVersion()) {
                 throw new IllegalArgumentException("Community feature " + f.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(4));

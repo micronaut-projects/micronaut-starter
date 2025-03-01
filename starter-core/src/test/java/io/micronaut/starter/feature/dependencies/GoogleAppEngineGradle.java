@@ -3,11 +3,12 @@ package io.micronaut.starter.feature.dependencies;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import jakarta.inject.Singleton;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +23,7 @@ public class GoogleAppEngineGradle implements Feature {
     }
 
     @Nullable
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://github.com/GoogleCloudPlatform/app-gradle-plugin";
     }
 
@@ -45,13 +46,8 @@ public class GoogleAppEngineGradle implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.google.cloud.tools.appengine")
                     .lookupArtifactId("appengine-gradle-plugin")

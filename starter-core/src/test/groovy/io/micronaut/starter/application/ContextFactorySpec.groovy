@@ -3,16 +3,18 @@ package io.micronaut.starter.application
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
-import io.micronaut.starter.feature.AvailableFeatures
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.FeatureContext
+import io.micronaut.projectgen.core.feature.AvailableFeatures
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.feature.FeatureContext
+import io.micronaut.projectgen.core.generator.ContextFactory
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.test.Junit
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.AutoCleanup
 import spock.lang.Issue
 import spock.lang.Shared
@@ -37,7 +39,7 @@ class ContextFactorySpec extends Specification {
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 [],
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_17),
+                io.micronaut.projectgen.micronaut.MicronautOptions.builder().language(Language.KOTLIN).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build(),
                 null
         )
         then:

@@ -1,9 +1,9 @@
 package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.Features
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 
 class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutputFixture {

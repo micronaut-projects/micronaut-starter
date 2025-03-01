@@ -2,7 +2,7 @@ package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp

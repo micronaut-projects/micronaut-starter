@@ -20,12 +20,14 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
@@ -36,9 +38,9 @@ import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleR
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.logging.SimpleLogging;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.oracle.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -83,7 +85,7 @@ public class OracleRawFunction extends OracleFunction {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT) {
             featureContext.addFeature(
                     httpFunction
             );
@@ -95,7 +97,7 @@ public class OracleRawFunction extends OracleFunction {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        ApplicationType type = generatorContext.getApplicationType();
+        ApplicationType type = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
         if (type == ApplicationType.FUNCTION) {
             applyFunction(generatorContext,
                     type);
@@ -120,7 +122,7 @@ public class OracleRawFunction extends OracleFunction {
                             oracleRawFunctionJava.template(project)));
             }
 
-            if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
                 addMicronautRuntimeBuildProperty(generatorContext);
                 generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
                 generatorContext.getBuildProperties().put("exec.mainClass", "com.fnproject.fn.runtime.EntryPoint");
@@ -135,7 +137,7 @@ public class OracleRawFunction extends OracleFunction {
 
     @Override
     protected void addDependencies(GeneratorContext generatorContext) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION) {
             generatorContext.addDependency(MICRONAUT_OCI_FUNCTION);
             generatorContext.addDependency(COM_FNPROJECT_RUNTIME);
             generatorContext.addDependency(COM_FNPROJECT_API);
@@ -175,13 +177,13 @@ public class OracleRawFunction extends OracleFunction {
 
     @Nullable
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions";
     }
 
     @Nullable
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.cloud.oracle.com/iaas/Content/Functions/Concepts/functionsoverview.htm";
     }
 }

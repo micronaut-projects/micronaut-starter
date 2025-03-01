@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.opentelemetry;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;

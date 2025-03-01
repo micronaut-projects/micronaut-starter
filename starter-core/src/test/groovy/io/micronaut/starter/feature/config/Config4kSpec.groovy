@@ -1,13 +1,19 @@
 package io.micronaut.starter.feature.config
 
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.FeaturePhase
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.feature.FeaturePhase
+import io.micronaut.starter.feature.ci.workflows.oci.OCICiWorkflowFeature
+import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -45,11 +51,16 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test configuration files generated for config4k feature"() {
         when:
+        Options options = MicronautOptions.builder()
+                .language(Language.KOTLIN)
+                .buildTool(BuildTool.GRADLE)
+                .build()
+
         GeneratorContext generatorContext = buildGeneratorContext(['config4k'], {context ->
             context.getBootstrapConfiguration().put("abc", 123)
             context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
-        }, new Options(Language.KOTLIN, null, BuildTool.GRADLE))
+        }, options)
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:

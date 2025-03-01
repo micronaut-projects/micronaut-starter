@@ -3,10 +3,10 @@ package io.micronaut.starter.feature.distributedconfig
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.Unroll
 
 class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOutputFixture {

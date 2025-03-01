@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.opentelemetry;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.aws.AwsV2Sdk;
 import jakarta.inject.Singleton;
 
@@ -91,7 +91,7 @@ public class OpenTelemetryXray extends AbstractOpenTelemetry {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html";
     }
 }

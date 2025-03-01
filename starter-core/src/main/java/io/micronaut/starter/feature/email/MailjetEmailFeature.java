@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.email.mailjet.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -47,12 +48,12 @@ public class MailjetEmailFeature extends EmailFeature {
 
     @Override
     @Nullable
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-email/latest/guide/index.html#mailjet";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.mailjet.com";
     }
 }

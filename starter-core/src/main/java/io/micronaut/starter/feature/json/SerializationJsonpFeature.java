@@ -18,9 +18,10 @@ package io.micronaut.starter.feature.json;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class SerializationJsonpFeature implements SerializationFeature {
     @Override
     public List<Dependency.Builder> dependencies(@NonNull GeneratorContext generatorContext) {
         List<Dependency.Builder> dependencyList = SerializationFeature.super.dependencies(generatorContext);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             dependencyList.add(Dependency.builder()
                     .lookupArtifactId("jakarta.json.bind-api")
                     .compile());

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature
 
+import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.starter.BeanContextSpec
 import spock.lang.Unroll
 

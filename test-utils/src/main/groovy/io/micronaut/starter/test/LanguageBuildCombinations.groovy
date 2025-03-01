@@ -17,15 +17,15 @@ package io.micronaut.starter.test
 
 import groovy.transform.AutoFinal
 import groovy.transform.Memoized
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 
 @AutoFinal
 class LanguageBuildCombinations {
 
     /**
      *
-     * @return a List where each element is the list is a triple of [{@link io.micronaut.starter.options.Language}, {@link io.micronaut.starter.options.BuildTool}]
+     * @return a List where each element is the list is a triple of [{@link io.micronaut.projectgen.core.options.Language}, {@link io.micronaut.projectgen.core.buildtools.BuildTool}]
      */
     @Memoized
     static List<List> combinations(List<String> features = null) {

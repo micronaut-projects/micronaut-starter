@@ -1,10 +1,11 @@
 package io.micronaut.starter.feature.chatbots.basecamp
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 
 class BasecampHttpChatBotSpec extends BaseBasecampChatBotSpec {
 
@@ -25,7 +26,8 @@ class BasecampHttpChatBotSpec extends BaseBasecampChatBotSpec {
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [featureName])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(buildTool).features([featureName]).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:

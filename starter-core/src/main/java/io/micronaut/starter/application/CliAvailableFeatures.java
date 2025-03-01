@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.starter.feature.BaseAvailableFeatures;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.BaseAvailableFeatures;
+import io.micronaut.projectgen.core.feature.Feature;
 
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -25,9 +27,7 @@ import java.util.List;
 @Named("cli")
 @Singleton
 public class CliAvailableFeatures extends BaseAvailableFeatures {
-
     public CliAvailableFeatures(List<Feature> features) {
-        super(features, ApplicationType.CLI);
+        super(features, f -> f.supports(MicronautOptions.builder().applicationType(ApplicationType.CLI).build()));
     }
-
 }

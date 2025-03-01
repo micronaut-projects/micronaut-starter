@@ -4,9 +4,9 @@ import groovy.xml.XmlParser
 import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import jakarta.inject.Singleton
 
 class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -49,11 +49,6 @@ class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFix
         @Override
         String getName() {
             "maven-local-feature"
-        }
-
-        @Override
-        boolean supports(ApplicationType applicationType) {
-            return true;
         }
     }
 }

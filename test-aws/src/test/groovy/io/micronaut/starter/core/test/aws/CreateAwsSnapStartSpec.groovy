@@ -1,15 +1,15 @@
 package io.micronaut.starter.core.test.aws
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.aws.AmazonApiGateway
 import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll

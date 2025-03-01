@@ -15,10 +15,11 @@
  */
 package io.micronaut.starter.feature.github.workflows.docker;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.feature.github.workflows.GitHubWorkflowFeature;
 import io.micronaut.starter.feature.github.workflows.Secret;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +48,7 @@ public abstract class AbstractDockerRegistryWorkflow extends GitHubWorkflowFeatu
     }
 
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN)) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.getBuildProperties().put("jib.docker.image", "${project.artifactId}");
             generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
         }

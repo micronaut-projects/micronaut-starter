@@ -18,25 +18,25 @@ package io.micronaut.starter.feature.other;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildProperties;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature;
 import io.micronaut.starter.feature.other.template.openrewriteGradlePlugin;
 import io.micronaut.starter.feature.other.template.openrewriteMavenPlugin;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.build.dependencies.Scope.OPENREWRITE;
+import static io.micronaut.projectgen.core.buildtools.Scope.OPENREWRITE;
 import static io.micronaut.starter.feature.Category.DEV_TOOLS;
-import static io.micronaut.starter.options.BuildTool.MAVEN;
-import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.projectgen.core.buildtools.BuildTool.MAVEN;
+import static io.micronaut.projectgen.core.options.Language.JAVA;
 
 @Requires(property = "micronaut.starter.feature.openrewrite.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
@@ -106,17 +106,12 @@ public class OpenRewrite implements LanguageSpecificFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public String getCategory() {
         return DEV_TOOLS;
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.openrewrite.org/";
     }
 

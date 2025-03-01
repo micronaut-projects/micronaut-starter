@@ -2,7 +2,7 @@ package io.micronaut.starter.netty
 
 import io.micronaut.json.JsonMapper
 import io.micronaut.serde.annotation.Serdeable
-import io.micronaut.starter.options.JdkVersion
+import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject

@@ -18,23 +18,25 @@ package io.micronaut.starter.feature.function.azure;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionResponseBuilderJava;
-import io.micronaut.starter.feature.other.ShadePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.features.gradle.ShadePlugin;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestRockerModelProvider;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import jakarta.inject.Singleton;
 import java.util.Optional;
@@ -57,14 +59,14 @@ public class AzureRawFunction extends AbstractAzureFunction {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.exclude(ShadePlugin.class::isInstance);
-        if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT) {
             featureContext.addFeature(httpFunction);
         }
     }
 
     @Override
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION) {
             super.applyTestTemplate(generatorContext, project, name);
         }
     }
@@ -75,7 +77,7 @@ public class AzureRawFunction extends AbstractAzureFunction {
 
         if (type == ApplicationType.FUNCTION
                 && generatorContext.isFeatureMissing(CodeContributingFeature.class)
-                && !(generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN)) {
+                && !(OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && generatorContext.getLanguage() == Language.KOTLIN)) {
             Project project = generatorContext.getProject();
 
             generateJavaTestClass(generatorContext,
@@ -119,12 +121,12 @@ public class AzureRawFunction extends AbstractAzureFunction {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.microsoft.com/azure";
     }
 

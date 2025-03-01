@@ -2,9 +2,9 @@ package io.micronaut.starter.cli.test
 
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.feature.messaging.nats.CreateNatsListener
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.Unroll

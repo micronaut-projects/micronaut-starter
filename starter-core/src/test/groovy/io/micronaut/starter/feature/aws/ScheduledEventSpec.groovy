@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.aws
 
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
 import spock.lang.Subject
 

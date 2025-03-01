@@ -17,17 +17,20 @@ package io.micronaut.starter.feature.view;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.*;
-import io.micronaut.starter.build.gradle.GradleFile;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleFile;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.URLTemplate;
 import jakarta.inject.Singleton;
 
 import java.net.MalformedURLException;
@@ -63,12 +66,12 @@ public class React implements ViewFeature, MicronautServerDependent {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://react.dev/reference/react-dom/server";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#react";
     }
 
@@ -83,7 +86,7 @@ public class React implements ViewFeature, MicronautServerDependent {
         try {
             generatorContext.addDependency(MicronautDependencyUtils.viewsDependency().artifactId(ARTIFACT_ID).compile());
 
-            if (generatorContext.getBuildTool().isGradle()) {
+            if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
                 generatorContext.addDependency(Dependency.builder()
                         .runtime()
                         .groupId(StarterCoordinates.JS_COMMUNITY.getGroupId())
@@ -110,7 +113,7 @@ public class React implements ViewFeature, MicronautServerDependent {
                                 .gradleFile(GradleFile.SETTINGS)
                                 .build()
                 );
-            } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            } else if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
                 // We spell out the individual dependencies here because the Starter dependency management code for
                 // Maven builds can't express the direct pom dependency needed by Truffle.
                 generatorContext.addDependency(Dependency.builder()

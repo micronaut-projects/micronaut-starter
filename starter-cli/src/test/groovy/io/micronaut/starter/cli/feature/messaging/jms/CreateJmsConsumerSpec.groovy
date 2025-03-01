@@ -7,9 +7,9 @@ import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.feature.messaging.jms.ActiveMqArtemis
 import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic
 import io.micronaut.starter.feature.messaging.jms.SQS
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Unroll

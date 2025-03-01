@@ -1,12 +1,13 @@
-@import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.GradleDsl
-@import io.micronaut.starter.build.gradle.GradlePlugin
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.projectgen.micronaut.ApplicationType
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl
+@import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin
+@import io.micronaut.projectgen.core.feature.Features
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.projectgen.core.options.TestFramework
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.util.FeaturesUtils
 
 @args (
 ApplicationType applicationType,
@@ -58,19 +59,19 @@ application {
 
 java {
 @if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
-    sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+    sourceCompatibility = JavaVersion.toVersion("@FeaturesUtils.getTargetJdk(features)")
 } else {
-    sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+    sourceCompatibility = JavaVersion.toVersion("@FeaturesUtils.getTargetJdk(features)")
 }
 @if (!features.language().isKotlin()) {
-    targetCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+    targetCompatibility = JavaVersion.toVersion("@FeaturesUtils.getTargetJdk(features)")
 }
 }
 
 @if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(@features.getTargetJdk()))
+        languageVersion.set(JavaLanguageVersion.of(@FeaturesUtils.getTargetJdk(features)))
     }
 }
 }

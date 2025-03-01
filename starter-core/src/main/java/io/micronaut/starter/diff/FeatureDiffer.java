@@ -19,14 +19,15 @@ import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
 import com.github.difflib.patch.Patch;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.io.MapOutputHandler;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.options.OperatingSystem;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.ProjectGenerator;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.MapOutputHandler;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import jakarta.inject.Singleton;
 
 import java.util.Arrays;
@@ -64,15 +65,15 @@ public class FeatureDiffer {
             List<String> features,
             ConsoleOutput consoleOutput) throws Exception {
 
-        GeneratorContext generatorContext = projectGenerator.createGeneratorContext(
-                applicationType,
-                project,
-                options,
-                operatingSystem,
-                features,
-                consoleOutput
-        );
-        produceDiff(projectGenerator, generatorContext, consoleOutput);
+//        GeneratorContext generatorContext = projectGenerator.createGeneratorContext(
+//                applicationType,
+//                project,
+//                options,
+//                operatingSystem,
+//                features,
+//                consoleOutput
+//        );
+//        produceDiff(projectGenerator, generatorContext, consoleOutput);
     }
 
     /**
@@ -86,80 +87,80 @@ public class FeatureDiffer {
             ProjectGenerator projectGenerator,
             GeneratorContext generatorContext,
             ConsoleOutput consoleOutput) throws Exception {
-        MapOutputHandler outputHandler = new MapOutputHandler();
-        Project project = generatorContext.getProject();
-        ApplicationType applicationType = generatorContext.getApplicationType();
-        projectGenerator.generate(
-                applicationType,
-                project,
-                new Options(generatorContext.getLanguage(), generatorContext.getTestFramework(), generatorContext.getBuildTool(), generatorContext.getJdkVersion()),
-                generatorContext.getOperatingSystem(),
-                Collections.emptyList(),
-                outputHandler,
-                ConsoleOutput.NOOP
-        );
-        Map<String, String> oldProject = outputHandler.getProject();
-
-        outputHandler = new MapOutputHandler();
-        projectGenerator.generate(
-                applicationType,
-                project,
-                outputHandler,
-                generatorContext
-        );
-        Map<String, String> newProject = outputHandler.getProject();
-
-        for (Map.Entry<String, String> entry: newProject.entrySet()) {
-            String oldFile = oldProject.remove(entry.getKey());
-
-            if (entry.getValue() == null) {
-                continue;
-            }
-
-            List<String> oldFileLines = oldFile == null ? Collections.emptyList() : toLines(oldFile);
-
-            String newFile = entry.getValue();
-            List<String> newFileLines = toLines(newFile);
-
-            Patch<String> diff = DiffUtils.diff(oldFileLines, newFileLines);
-            List<String> unifiedDiff = UnifiedDiffUtils
-                    .generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
-
-            if (!unifiedDiff.isEmpty()) {
-                for (String delta : unifiedDiff) {
-                    if (delta.startsWith("+")) {
-                        consoleOutput.green(delta);
-                    } else if (delta.startsWith("-")) {
-                        consoleOutput.red(delta);
-                    } else {
-                        consoleOutput.out(delta);
-                    }
-                }
-                consoleOutput.out("\n");
-            }
-        }
-
-        for (Map.Entry<String, String> entry: oldProject.entrySet()) {
-            if (entry.getValue() == null) {
-                continue;
-            }
-            List<String> oldFileLines = toLines(entry.getValue());
-            Patch<String> diff = DiffUtils.diff(oldFileLines, Collections.emptyList());
-            List<String> unifiedDiff = UnifiedDiffUtils.generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
-
-            if (!unifiedDiff.isEmpty()) {
-                for (String delta : unifiedDiff) {
-                    if (delta.startsWith("+")) {
-                        consoleOutput.green(delta);
-                    } else if (delta.startsWith("-")) {
-                        consoleOutput.red(delta);
-                    } else {
-                        consoleOutput.out(delta);
-                    }
-                }
-                consoleOutput.out("\n");
-            }
-        }
+//        MapOutputHandler outputHandler = new MapOutputHandler();
+//        Project project = generatorContext.getProject();
+//        ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
+//        projectGenerator.generate(
+//                applicationType,
+//                project,
+//                new Options(generatorContext.getLanguage(), generatorContext.getTestFramework(), generatorContext.getBuildTool(), generatorContext.getJdkVersion()),
+//                generatorContext.getOperatingSystem(),
+//                Collections.emptyList(),
+//                outputHandler,
+//                ConsoleOutput.NOOP
+//        );
+//        Map<String, String> oldProject = outputHandler.getProject();
+//
+//        outputHandler = new MapOutputHandler();
+//        projectGenerator.generate(
+//                applicationType,
+//                project,
+//                outputHandler,
+//                generatorContext
+//        );
+//        Map<String, String> newProject = outputHandler.getProject();
+//
+//        for (Map.Entry<String, String> entry: newProject.entrySet()) {
+//            String oldFile = oldProject.remove(entry.getKey());
+//
+//            if (entry.getValue() == null) {
+//                continue;
+//            }
+//
+//            List<String> oldFileLines = oldFile == null ? Collections.emptyList() : toLines(oldFile);
+//
+//            String newFile = entry.getValue();
+//            List<String> newFileLines = toLines(newFile);
+//
+//            Patch<String> diff = DiffUtils.diff(oldFileLines, newFileLines);
+//            List<String> unifiedDiff = UnifiedDiffUtils
+//                    .generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
+//
+//            if (!unifiedDiff.isEmpty()) {
+//                for (String delta : unifiedDiff) {
+//                    if (delta.startsWith("+")) {
+//                        consoleOutput.green(delta);
+//                    } else if (delta.startsWith("-")) {
+//                        consoleOutput.red(delta);
+//                    } else {
+//                        consoleOutput.out(delta);
+//                    }
+//                }
+//                consoleOutput.out("\n");
+//            }
+//        }
+//
+//        for (Map.Entry<String, String> entry: oldProject.entrySet()) {
+//            if (entry.getValue() == null) {
+//                continue;
+//            }
+//            List<String> oldFileLines = toLines(entry.getValue());
+//            Patch<String> diff = DiffUtils.diff(oldFileLines, Collections.emptyList());
+//            List<String> unifiedDiff = UnifiedDiffUtils.generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
+//
+//            if (!unifiedDiff.isEmpty()) {
+//                for (String delta : unifiedDiff) {
+//                    if (delta.startsWith("+")) {
+//                        consoleOutput.green(delta);
+//                    } else if (delta.startsWith("-")) {
+//                        consoleOutput.red(delta);
+//                    } else {
+//                        consoleOutput.out(delta);
+//                    }
+//                }
+//                consoleOutput.out("\n");
+//            }
+//        }
     }
 
     private List<String> toLines(String file) {

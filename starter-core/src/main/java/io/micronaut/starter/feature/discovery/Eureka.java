@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.discovery.eureka.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -57,7 +57,7 @@ public class Eureka implements DiscoveryFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryEureka";
     }
 }

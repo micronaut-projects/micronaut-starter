@@ -18,15 +18,15 @@ package io.micronaut.starter.feature.kotlin;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeaturePredicate;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.options.Language;
 
 import jakarta.inject.Singleton;
 import java.util.Optional;
@@ -34,11 +34,6 @@ import java.util.Optional;
 @Requires(property = "micronaut.starter.feature.kotlin.extension.functions.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class KotlinExtensionFunctions implements Feature, KotlinSpecificFeature {
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {

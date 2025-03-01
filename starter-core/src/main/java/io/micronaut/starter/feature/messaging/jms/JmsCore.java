@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.messaging.jms;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jms.core.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)

@@ -1,8 +1,9 @@
 package io.micronaut.starter.build
 
+import io.micronaut.projectgen.core.buildtools.DefaultRepositoryResolver
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Specification
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 
 class DefaultRepositoryResolverSpec extends Specification {
 

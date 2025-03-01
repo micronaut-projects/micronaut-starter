@@ -18,11 +18,11 @@ package io.micronaut.starter.feature.github.workflows.docker;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -48,7 +48,7 @@ public class GraalVMDockerRegistryWorkflow extends AbstractDockerRegistryWorkflo
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.github.com/en/free-pro-team@latest/actions";
     }
 

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database.r2dbc;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 public interface R2dbcFeature extends Feature {
 }

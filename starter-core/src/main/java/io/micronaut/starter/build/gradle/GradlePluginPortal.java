@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.build.gradle;
 
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleRepository;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;

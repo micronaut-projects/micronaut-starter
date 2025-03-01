@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import java.util.List;
 

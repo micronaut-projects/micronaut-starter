@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.gradle.GradleRepository
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleRepository
 @import java.util.List
 @args (List<GradleRepository> gradleRepositories)
 pluginManagement {

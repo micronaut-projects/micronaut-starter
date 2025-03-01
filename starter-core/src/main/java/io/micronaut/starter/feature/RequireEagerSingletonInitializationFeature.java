@@ -15,5 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.projectgen.core.feature.Feature;
+
 public interface RequireEagerSingletonInitializationFeature extends Feature {
 }

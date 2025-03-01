@@ -1,17 +1,17 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.TestFramework;
 
 import java.util.ArrayList;
 import java.util.Arrays;

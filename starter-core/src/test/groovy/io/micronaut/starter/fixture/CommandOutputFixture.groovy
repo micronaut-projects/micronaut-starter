@@ -2,15 +2,15 @@ package io.micronaut.starter.fixture
 
 import groovy.transform.CompileStatic
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.application.generator.ProjectGenerator
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.io.MapOutputHandler
-import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.options.OperatingSystem
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.ProjectGenerator
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.MapOutputHandler
+import io.micronaut.projectgen.core.io.OutputHandler
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.utils.NameUtils
 
 @CompileStatic
 trait CommandOutputFixture {
@@ -20,13 +20,9 @@ trait CommandOutputFixture {
         beanContext.getBean(ProjectGenerator)
     }
 
-    Map<String, String> generate(ApplicationType type, Options options, List<String> features = []) {
+    Map<String, String> generate(Options options) {
         OutputHandler handler = new MapOutputHandler()
-        projectGenerator.generate(type,
-                NameUtils.parse("example.micronaut.foo"),
-                options,
-                OperatingSystem.LINUX,
-                features,
+        projectGenerator.generate(options,
                 handler,
                 ConsoleOutput.NOOP
         )

@@ -16,14 +16,15 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
 
 /**
  * Base class for our data-mongo features.
@@ -49,7 +50,7 @@ public abstract class DataMongoFeature extends EaseTestingFeature implements Dat
             generatorContext.getConfiguration().put(MONGODB_URI_CONFIGURATION_KEY, MONGODB_URI_CONFIGURATION_VALUE);
         }
 
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(DataFeature.dataProcessorDependency(generatorContext.getBuildTool()));
         }
         generatorContext.addDependency(DataDocumentFeature.dataDocumentProcessorDependency(generatorContext.getBuildTool()));
@@ -67,7 +68,7 @@ public abstract class DataMongoFeature extends EaseTestingFeature implements Dat
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo";
     }
 
@@ -78,7 +79,7 @@ public abstract class DataMongoFeature extends EaseTestingFeature implements Dat
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.mongodb.com";
     }
 

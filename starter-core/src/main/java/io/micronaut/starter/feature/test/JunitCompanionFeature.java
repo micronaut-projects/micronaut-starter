@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 /**
  * Marker interface for Feature which extend JUnit and hence require Junit to be present.

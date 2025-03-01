@@ -1,15 +1,16 @@
 package io.micronaut.starter.feature.awsalexa
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -135,7 +136,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.GRADLE),
+                MicronautOptions.builder()
+                        .language(language)
+                        .buildTool(BuildTool.GRADLE)
+                        .build(),
                 ['aws-alexa']
         )
 
@@ -213,7 +217,11 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                MicronautOptions.builder()
+                        .language(language)
+                        .testFramework(TestFramework.JUNIT)
+                        .buildTool(BuildTool.MAVEN)
+                        .build(),
                 ['aws-alexa']
         )
 
@@ -233,6 +241,11 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
-        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+        MicronautOptions.builder()
+                .language(language)
+                .testFramework(language.getDefaults().getTest())
+                .buildTool(buildTool)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .build()
     }
 }

@@ -17,7 +17,7 @@ package io.micronaut.starter.test.github
 
 import groovy.util.logging.Slf4j
 import io.micronaut.context.annotation.Property
-import io.micronaut.starter.application.Project
+import io.micronaut.projectgen.core.generator.Project
 import io.micronaut.starter.client.github.v3.*
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.test.CommandSpec

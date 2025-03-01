@@ -18,14 +18,16 @@ package io.micronaut.starter.feature.server;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -50,14 +52,14 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.DEFAULT &&
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
     }
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
                     .artifactId("micronaut-http-server-netty")
                     .compile());

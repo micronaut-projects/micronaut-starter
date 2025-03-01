@@ -17,9 +17,9 @@ package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.ProjectGenerator;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
@@ -31,7 +31,7 @@ import io.micronaut.starter.feature.chatbots.telegram.TelegramAwsChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramAzureChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramGcpChatBot;
 import io.micronaut.starter.feature.chatbots.telegram.TelegramHttpChatBot;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import org.jline.reader.LineReader;
 import picocli.CommandLine.Command;
 

@@ -16,15 +16,16 @@
 package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -35,23 +36,23 @@ import java.util.stream.Stream;
 public class GraalVMFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
 
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(f -> f instanceof GraalVM || f instanceof GraalVMDockerRegistryWorkflow)) {
-            if (!supports(options.getLanguage())) {
-                throw new IllegalArgumentException("GraalVM is not supported in " + StringUtils.capitalize(options.getLanguage().getName()) + " applications");
+            if (!supports(options.language())) {
+                throw new IllegalArgumentException("GraalVM is not supported in " + StringUtils.capitalize(options.language().getName()) + " applications");
             }
 
-            if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_21.majorVersion()) {
+            if (options.javaVersion().majorVersion() > JdkVersion.JDK_21.majorVersion()) {
                 throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 21");
             }
 
             // See https://github.com/micronaut-projects/micronaut-maven-plugin/issues/373
-            if (options.getBuildTool() == BuildTool.MAVEN && features.stream().anyMatch(Cdk.class::isInstance)) {
+            if (OptionUtils.hasMavenBuildTool(options) && features.stream().anyMatch(Cdk.class::isInstance)) {
                 throw new IllegalArgumentException("Maven, CDK and GraalVM are not yet supported");
             }
         }

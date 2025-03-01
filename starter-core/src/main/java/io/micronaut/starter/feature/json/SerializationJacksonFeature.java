@@ -18,11 +18,11 @@ package io.micronaut.starter.feature.json;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.function.gcp.AbstractGoogleCloudFunction;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -54,7 +54,7 @@ public class SerializationJacksonFeature implements SerializationFeature, Defaul
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(feature ->
                 feature instanceof JsonFeature || feature instanceof AbstractGoogleCloudFunction);
     }

@@ -18,13 +18,15 @@ package io.micronaut.starter.feature.config;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.feature.ConfigurationFeature;
+import io.micronaut.projectgen.core.feature.config.Configuration;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
+import io.micronaut.projectgen.core.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 import jakarta.inject.Singleton;
 
@@ -70,11 +72,6 @@ public class Yaml implements ConfigurationFeature {
             }
 
             @Override
-            public boolean supports(ApplicationType applicationType) {
-                return true;
-            }
-
-            @Override
             public void apply(GeneratorContext generatorContext) {
                 generatorContext.addDependency(DEPENDENCY_YAML);
             }
@@ -89,10 +86,5 @@ public class Yaml implements ConfigurationFeature {
     @Override
     public Function<Configuration, Template> createTemplate() {
         return config -> new YamlTemplate(config.getFullPath(EXTENSION), config);
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }

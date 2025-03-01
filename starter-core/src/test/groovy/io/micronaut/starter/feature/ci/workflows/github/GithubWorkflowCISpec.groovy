@@ -1,23 +1,32 @@
 package io.micronaut.starter.feature.ci.workflows.github
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.starter.feature.ci.workflows.gcp.GoogleCloudCiWorkflowFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Unroll
 
 class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test github-workflow-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, int jdkVersion, String workflowName) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion)),
-                [GithubCiWorkflowFeature.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(JdkVersion.valueOf(jdkVersion))
+                .features([GithubCiWorkflowFeature.NAME])
+                .build()
+
+        Map<String, String> output = generate(options)
         String workflow = output[".github/workflows/${workflowName}"]
 
         then:
@@ -37,9 +46,16 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
     @Unroll
     void 'test github-workflow-ci wrapper validation and upload is created for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [GithubCiWorkflowFeature.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([GithubCiWorkflowFeature.NAME])
+                .build()
+
+        def output = generate(options)
         def workflow = output[".github/workflows/gradle.yml"]
 
         then:

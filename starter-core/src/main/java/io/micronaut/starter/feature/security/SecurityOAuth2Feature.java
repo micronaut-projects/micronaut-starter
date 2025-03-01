@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.security;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 
 public abstract class SecurityOAuth2Feature implements Feature {
     private final SecurityOAuth2 securityOAuth2;

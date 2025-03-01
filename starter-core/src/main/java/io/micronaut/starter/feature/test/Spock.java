@@ -18,15 +18,17 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.TestFeature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.groovy.Groovy;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.TestFramework;
 
 import jakarta.inject.Singleton;
 
@@ -66,7 +68,7 @@ public class Spock implements TestFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(featureContext.getOptions())) {
             featureContext.addFeature(groovyMavenPlusPlugin);
         }
     }
@@ -78,9 +80,9 @@ public class Spock implements TestFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             if (generatorContext.getLanguage() != Language.GROOVY) {
                 generatorContext.addDependency(DEPENDENCY_MICRONAUT_INJECT_GROOVY);
             }

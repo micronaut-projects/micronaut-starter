@@ -19,8 +19,8 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.utils.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

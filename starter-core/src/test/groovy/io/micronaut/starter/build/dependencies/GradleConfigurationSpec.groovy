@@ -1,10 +1,13 @@
 package io.micronaut.starter.build.dependencies
 
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.gradle.GradleConfiguration
-import io.micronaut.starter.build.gradle.KotlinSymbolProcessingFeature
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.Phase
+import io.micronaut.projectgen.core.buildtools.Scope
+import io.micronaut.projectgen.core.buildtools.Source
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.gradle.GradleConfiguration
+import io.micronaut.projectgen.core.feature.KotlinSymbolProcessingFeature
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Specification
 
 class GradleConfigurationSpec extends Specification {

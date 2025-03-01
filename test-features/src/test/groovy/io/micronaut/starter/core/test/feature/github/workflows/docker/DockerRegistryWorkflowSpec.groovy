@@ -4,11 +4,11 @@ import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 import io.micronaut.starter.feature.github.workflows.docker.DockerRegistryWorkflow
 import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.github.WorkflowSpec
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.core.utils.NameUtils
 import spock.lang.IgnoreIf
 import spock.lang.Requires
 import spock.lang.Shared

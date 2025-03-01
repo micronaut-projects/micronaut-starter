@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.dekorate;
 
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 
 /**

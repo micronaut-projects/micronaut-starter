@@ -1,7 +1,8 @@
 package io.micronaut.starter.feature.test
 
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.feature.TestFeature
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Specification
 import spock.lang.Unroll
 

@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 
 public interface KotlinSymbolProcessingFeature extends Feature {
     @Override
-    default String getThirdPartyDocumentation() {
+    default String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://kotlinlang.org/docs/ksp-overview.html";
     }
 }

@@ -3,10 +3,10 @@ package io.micronaut.starter.feature.azure
 import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Shared
 
 class AzureCosmosDbFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {

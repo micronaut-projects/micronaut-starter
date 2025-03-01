@@ -1,6 +1,7 @@
 package io.micronaut.starter.build.dependencies
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.projectgen.core.buildtools.dependencies.PomDependencyVersionResolver
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 
 /**

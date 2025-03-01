@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.lang.java;
 
 import io.micronaut.starter.feature.ApplicationFeature;
-import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
 
 public interface JavaApplicationFeature extends ApplicationFeature {
     @Override

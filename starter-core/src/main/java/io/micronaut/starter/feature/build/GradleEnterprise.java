@@ -19,16 +19,17 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradleFile;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleFile;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.build.gradle.templates.gradleEnterprise;
 import io.micronaut.starter.feature.build.maven.templates.extensions;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.gradle.enterprise.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -64,9 +65,10 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(gradlePlugin(this));
-        } else {
+        }
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             applyMaven(generatorContext, this);
         }
     }
@@ -103,12 +105,7 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.gradle.com/enterprise/gradle-plugin/";
     }
 }

@@ -17,8 +17,8 @@ package io.micronaut.starter.build.maven;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.build.Repository;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.buildtools.Repository;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.feature.build.maven.templates.repository;
 import java.util.List;
 import java.util.stream.Collectors;

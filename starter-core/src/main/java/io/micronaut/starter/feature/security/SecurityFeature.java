@@ -15,10 +15,10 @@
  */
 package io.micronaut.starter.feature.security;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 public abstract class SecurityFeature implements Feature, MicronautServerDependent {
@@ -39,10 +39,5 @@ public abstract class SecurityFeature implements Feature, MicronautServerDepende
     @Override
     public String getCategory() {
         return Category.SECURITY;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }

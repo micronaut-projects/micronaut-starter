@@ -18,14 +18,14 @@ package io.micronaut.starter.feature.picocli.test.junit;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
 import io.micronaut.starter.options.AbstractJunitRockerModelProvider;
-import io.micronaut.starter.options.JunitRockerModelProvider;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.rocker.JunitRockerModelProvider;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
@@ -39,7 +39,7 @@ public class PicocliJunit implements PicocliTestFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
     }
 

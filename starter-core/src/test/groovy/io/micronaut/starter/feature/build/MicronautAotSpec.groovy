@@ -2,30 +2,31 @@ package io.micronaut.starter.feature.build
 
 import groovy.xml.XmlSlurper
 import io.micronaut.core.util.StringUtils
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.build.dependencies.StarterCoordinates
-import io.micronaut.starter.feature.DefaultFeature
+import io.micronaut.projectgen.core.feature.DefaultFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityOAuth2
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import jakarta.inject.Inject
 import spock.lang.Subject
 import spock.lang.Unroll
 
-import static io.micronaut.starter.application.ApplicationType.DEFAULT
-import static io.micronaut.starter.options.BuildTool.GRADLE
-import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
-import static io.micronaut.starter.options.BuildTool.MAVEN
+import static io.micronaut.projectgen.micronaut.ApplicationType.DEFAULT
+import static io.micronaut.projectgen.core.buildtools.BuildTool.GRADLE
+import static io.micronaut.projectgen.core.buildtools.BuildTool.GRADLE_KOTLIN
+import static io.micronaut.projectgen.core.buildtools.BuildTool.MAVEN
 
 class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -228,6 +229,6 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     }
 
     private Options mavenAotOptions() {
-        return new Options(Language.DEFAULT_OPTION, TestFramework.DEFAULT_OPTION, MAVEN)
+        return MicronautOptions.builder().language(Language.DEFAULT_OPTION).testFramework(TestFramework.DEFAULT_OPTION).buildTool(MAVEN).build()
     }
 }

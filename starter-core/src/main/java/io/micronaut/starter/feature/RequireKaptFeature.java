@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.projectgen.core.feature.Feature;
+
 /**
  * Some third party features apply annotation processors that are not compatible with Kotlin Symbol Processing (KSP)
  * for Kotlin language projects. They require using the kapt compiler plugin (Kapt) instead. Note that Maven

@@ -1,12 +1,12 @@
 package io.micronaut.starter.core.test.feature.aws
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.aws.AwsLambdaS3EventNotification
 import io.micronaut.starter.feature.aws.AwsLambdaScheduledEvent
 import io.micronaut.starter.feature.aws.AwsV2Sdk
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult

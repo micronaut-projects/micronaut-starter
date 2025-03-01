@@ -1,16 +1,18 @@
 package io.micronaut.starter.feature.config
 
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.feature.FeaturePhase
+import io.micronaut.projectgen.core.buildtools.Scope
+import io.micronaut.projectgen.core.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -58,7 +60,7 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
             context.getBootstrapConfiguration().put("abc", 123)
             context.getConfiguration("test", new ApplicationConfiguration("test", "test")).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
-        }, new Options())
+        }, MicronautOptions.builder().build())
         Map<String, String> output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:

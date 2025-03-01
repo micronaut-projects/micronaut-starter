@@ -19,12 +19,13 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.config.NestedConfiguration;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.config.NestedConfiguration;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import jakarta.inject.Singleton;
 
 import java.util.Arrays;
@@ -92,7 +93,7 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
     }
 
     protected List<Dependency> getDependencies(GeneratorContext generatorContext) {
-        return (generatorContext.getBuildTool() == BuildTool.MAVEN) ?
+        return (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) ?
                 Arrays.asList(
                         DataDocumentFeature.dataDocumentProcessorDependency(generatorContext.getBuildTool()),
                         DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA,
@@ -103,7 +104,7 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-data/latest/guide/#azureCosmos";
     }
 
@@ -113,7 +114,7 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://learn.microsoft.com/en-us/azure/cosmos-db/";
     }
 

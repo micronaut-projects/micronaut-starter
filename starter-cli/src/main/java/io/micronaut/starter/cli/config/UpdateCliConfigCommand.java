@@ -18,16 +18,16 @@ package io.micronaut.starter.cli.config;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.cli;
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
-import io.micronaut.starter.template.TemplateRenderer;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.OutputHandler;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.Template;
+import io.micronaut.projectgen.core.template.TemplateRenderer;
+import io.micronaut.projectgen.core.utils.NameUtils;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 
@@ -36,11 +36,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static io.micronaut.starter.application.ApplicationType.CLI;
-import static io.micronaut.starter.application.ApplicationType.DEFAULT;
-import static io.micronaut.starter.application.ApplicationType.FUNCTION;
-import static io.micronaut.starter.application.ApplicationType.GRPC;
-import static io.micronaut.starter.application.ApplicationType.MESSAGING;
+import static io.micronaut.projectgen.micronaut.ApplicationType.CLI;
+import static io.micronaut.projectgen.micronaut.ApplicationType.DEFAULT;
+import static io.micronaut.projectgen.micronaut.ApplicationType.FUNCTION;
+import static io.micronaut.projectgen.micronaut.ApplicationType.GRPC;
+import static io.micronaut.projectgen.micronaut.ApplicationType.MESSAGING;
 
 @Command(name = "update-cli-config", description = "Replaces the CLI configuration with the updated format")
 @Prototype

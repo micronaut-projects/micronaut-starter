@@ -1,10 +1,19 @@
 package io.micronaut.starter.feature
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.buildtools.maven.MavenSpecificFeature
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.feature.LanguageSpecificFeature
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.DependencyCoordinate
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.options.OperatingSystem
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.dependencies.DependencyCoordinate
 import io.micronaut.starter.feature.aws.AwsLambdaEventFunctionFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.database.HibernateReactiveFeature
@@ -57,7 +66,12 @@ class FeatureSpec extends BeanContextSpec {
         if (feature instanceof MavenSpecificFeature) {
             buildTool = BuildTool.MAVEN
         }
-        Options options = new Options(language, TestFramework.JUNIT, buildTool, javaVersion)
+        Options options = MicronautOptions.builder()
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(javaVersion)
+                .build()
         List<String> features = [feature.getName()]
 
         if (feature instanceof JAsyncSQLFeature) {

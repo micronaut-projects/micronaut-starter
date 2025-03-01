@@ -19,9 +19,10 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.features.config.MicronautDistributedConfigurationFeature;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
 import java.util.Collections;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.oracle.cloud.vault.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class OracleCloudVault implements DistributedConfigFeature {
+public class OracleCloudVault implements MicronautDistributedConfigurationFeature {
 
     @NonNull
     @Override
@@ -51,13 +52,13 @@ public class OracleCloudVault implements DistributedConfigFeature {
 
     @Nullable
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#vault";
     }
 
     @Nullable
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.oracle.com/en-us/iaas/Content/KeyManagement/home.htm";
     }
 

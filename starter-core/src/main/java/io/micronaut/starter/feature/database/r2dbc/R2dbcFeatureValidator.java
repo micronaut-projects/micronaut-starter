@@ -15,12 +15,12 @@
  */
 package io.micronaut.starter.feature.database.r2dbc;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.migration.MigrationFeature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -29,11 +29,11 @@ import java.util.Set;
 public class R2dbcFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (hasSubclassOf(features, R2dbcFeature.class) &&
                 hasSubclassOf(features, MigrationFeature.class) &&
                 hasInstance(features, TestContainers.class)) {

@@ -2,18 +2,24 @@ package io.micronaut.starter
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.DefaultRepositoryResolver
-import io.micronaut.starter.build.dependencies.CoordinateResolver
-import io.micronaut.starter.build.gradle.GradleBuild
-import io.micronaut.starter.build.gradle.GradleBuildCreator
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.DefaultRepositoryResolver
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
+import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
+import io.micronaut.projectgen.core.buildtools.gradle.GradleBuildCreator
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.build.maven.JvmArgumentsFeature
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.build.maven.MavenBuildCreator
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.Gradle
+import io.micronaut.projectgen.core.buildtools.maven.MavenBuild
+import io.micronaut.projectgen.core.buildtools.maven.MavenBuildCreator
+import io.micronaut.projectgen.core.feature.Features
+import io.micronaut.projectgen.core.buildtools.gradle.Gradle
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -88,7 +94,9 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
         Project project = getProject()
         JdkVersion jdkVersion = this.jdkVersion ?: MicronautJdkVersionConfiguration.DEFAULT_OPTION
-        Options options = new Options(language, testFramework, buildTool, jdkVersion, Collections.emptyMap(), framework)
+        Options options = MicronautOptions.builder()
+                .language(language)
+                .testFramework(testFramework).buildTool(buildTool).javaVersion(jdkVersion).build()
         Features features = getFeatures(featureNames, options, type)
 
         if (buildTool.isGradle()) {

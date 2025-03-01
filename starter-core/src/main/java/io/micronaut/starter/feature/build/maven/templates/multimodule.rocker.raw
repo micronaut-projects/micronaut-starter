@@ -1,8 +1,8 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.projectgen.core.generator.Project
 @import io.micronaut.starter.util.VersionInfo
-@import io.micronaut.starter.template.WritableUtils
-@import io.micronaut.starter.template.Writable
-@import io.micronaut.starter.build.maven.MavenRepository
+@import io.micronaut.projectgen.core.template.WritableUtils
+@import io.micronaut.projectgen.core.template.Writable
+@import io.micronaut.projectgen.core.buildtools.maven.MavenRepository
 @import java.util.Collection
 @import java.util.List
 @import java.util.stream.Collectors

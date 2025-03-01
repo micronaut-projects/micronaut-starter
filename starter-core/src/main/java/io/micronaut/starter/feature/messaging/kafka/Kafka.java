@@ -17,19 +17,20 @@ package io.micronaut.starter.feature.messaging.kafka;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -72,13 +73,13 @@ public class Kafka extends EaseTestingFeature
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.MESSAGING &&
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.MESSAGING &&
                 selectedFeatures.stream().noneMatch(MessagingFeature.class::isInstance);
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html";
     }
 

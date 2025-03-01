@@ -1,6 +1,6 @@
 package io.micronaut.starter.template
 
-import io.micronaut.starter.feature.config.Configuration
+import io.micronaut.projectgen.core.feature.config.Configuration
 import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets

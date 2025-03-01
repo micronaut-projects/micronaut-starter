@@ -20,9 +20,11 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -31,9 +33,9 @@ import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.options.TestRockerModelProvider;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.groovy.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -52,8 +54,8 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && (mnOptions.applicationType() != ApplicationType.CLI && mnOptions.applicationType() != ApplicationType.FUNCTION);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+        return generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.DEFAULT
                 || !generatorContext.getFeatures().hasFeature(FunctionFeature.class);
     }
 
@@ -83,7 +85,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     private static String getDefaultEnvironment(GeneratorContext generatorContext) {
-        return generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+        return generatorContext.hasConfigurationByEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
     }
 
     protected void addApplication(GeneratorContext generatorContext) {

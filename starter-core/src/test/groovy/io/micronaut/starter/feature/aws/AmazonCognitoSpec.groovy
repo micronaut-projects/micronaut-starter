@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.aws
 
 import io.micronaut.context.env.Environment
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.feature.Category
 import spock.lang.Subject
 

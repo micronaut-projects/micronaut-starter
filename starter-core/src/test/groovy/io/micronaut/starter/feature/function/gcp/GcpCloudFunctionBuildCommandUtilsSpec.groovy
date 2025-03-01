@@ -1,6 +1,6 @@
 package io.micronaut.starter.feature.function.gcp
 
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Specification
 
 class GcpCloudFunctionBuildCommandUtilsSpec extends Specification {

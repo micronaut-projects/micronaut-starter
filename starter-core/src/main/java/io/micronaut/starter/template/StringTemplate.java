@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.template;
 
+import io.micronaut.projectgen.core.template.DefaultTemplate;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;

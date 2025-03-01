@@ -1,7 +1,7 @@
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.io.OutputHandler;
+import io.micronaut.projectgen.core.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

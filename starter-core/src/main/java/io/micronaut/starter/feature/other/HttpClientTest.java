@@ -18,21 +18,23 @@ package io.micronaut.starter.feature.other;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
+import io.micronaut.projectgen.micronaut.features.validation.MicronautHttpValidation;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Scope;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.projectgen.core.buildtools.Scope;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
-import io.micronaut.starter.feature.validator.MicronautHttpValidation;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
 
@@ -74,13 +76,8 @@ public class HttpClientTest implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(HttpClientFeature.class::isInstance);
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override
@@ -88,11 +85,11 @@ public class HttpClientTest implements DefaultFeature {
         if (!hasHttpClientFeatureDependencyInScope(generatorContext, Scope.COMPILE)) {
             if (generatorContext.getFeatures().hasFeature(AwsLambdaCustomRuntime.class) || (generatorContext.getFeatures().hasFeature(AwsLambda.class) && generatorContext.getFeatures().hasFeature(GraalVM.class))) {
                 generatorContext.addDependency(HttpClientJdk.DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK);
-            } else if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+            } else if (generatorContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT) {
                 generatorContext.addDependency(generatorContext.getFeatures().hasFeature(AwsLambda.class)
                                 ? DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK_TEST
                                 : DEPENDENCY_MICRONAUT_HTTP_CLIENT_TEST);
-                if (generatorContext.hasFeature(MicronautHttpValidation.class) && generatorContext.getBuildTool().isGradle()) {
+                if (generatorContext.hasFeature(MicronautHttpValidation.class) && OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
                     generatorContext.addDependency(generatorContext.getFeatures().hasFeature(AwsLambda.class)
                             ? DEPENDENCY_MICRONAUT_HTTP_CLIENT_JDK_COMPILE_ONLY
                             : DEPENDENCY_MICRONAUT_HTTP_CLIENT_COMPILE_ONLY);

@@ -1,5 +1,5 @@
-@import io.micronaut.starter.build.gradle.GradleDsl
-@import io.micronaut.starter.feature.build.gradle.Dockerfile
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl
+@import io.micronaut.projectgen.core.buildtools.Dockerfile
 @args(GradleDsl dsl, Dockerfile dockerfile)
 @if (dsl == GradleDsl.GROOVY) {
 @raw("tasks.named(\"dockerfile\") {\n")

@@ -17,10 +17,14 @@ package io.micronaut.starter.feature.distributedconfig;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
+import io.micronaut.projectgen.micronaut.features.config.MicronautDistributedConfigurationFeature;
 import io.micronaut.starter.feature.k8s.Kubernetes;
 
 import io.micronaut.starter.feature.k8s.KubernetesClient;
@@ -34,7 +38,7 @@ import jakarta.inject.Singleton;
  */
 @Requires(property = "micronaut.starter.feature.config.kubernetes.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class KubernetesConfig implements DistributedConfigFeature {
+public class KubernetesConfig implements MicronautDistributedConfigurationFeature {
 
     private final Kubernetes kubernetes;
 
@@ -65,8 +69,9 @@ public class KubernetesConfig implements DistributedConfigFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions &&
+                (mnOptions.applicationType() != ApplicationType.CLI && mnOptions.applicationType() != ApplicationType.FUNCTION);
     }
 
     @Override
@@ -79,7 +84,7 @@ public class KubernetesConfig implements DistributedConfigFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#config-client";
     }
 }

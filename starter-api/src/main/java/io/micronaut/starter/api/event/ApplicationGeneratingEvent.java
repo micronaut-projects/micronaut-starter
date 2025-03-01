@@ -16,7 +16,7 @@
 package io.micronaut.starter.api.event;
 
 import io.micronaut.context.event.ApplicationEvent;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 
 /**
  * An event fired when an application is generated.

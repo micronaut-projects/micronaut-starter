@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 
 public interface MicronautRuntimeFeature {
 

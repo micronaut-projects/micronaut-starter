@@ -16,9 +16,10 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 
 public interface AwsMicronautRuntimeFeature extends MicronautRuntimeFeature {
@@ -26,7 +27,7 @@ public interface AwsMicronautRuntimeFeature extends MicronautRuntimeFeature {
     @Override
     @NonNull
     default String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             return "lambda";
         }
         return generatorContext.getFeatures().contains(GraalVM.FEATURE_NAME_GRAALVM) ? "lambda_provided" : "lambda_java";

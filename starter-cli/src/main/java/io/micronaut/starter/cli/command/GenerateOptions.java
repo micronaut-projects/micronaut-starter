@@ -16,8 +16,8 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.options.Options;
 
 import java.util.Set;
 

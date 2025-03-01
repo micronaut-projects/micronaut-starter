@@ -18,11 +18,14 @@ package io.micronaut.starter.feature.crac;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.jdbc.Hikari;
@@ -57,18 +60,19 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://wiki.openjdk.org/display/CRaC";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-crac/latest/guide";
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.CLI;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions micronautOptions &&
+                (micronautOptions.applicationType() == ApplicationType.DEFAULT || micronautOptions.applicationType() == ApplicationType.CLI);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_CRAC);
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("io.micronaut.crac")
                     .lookupArtifactId("micronaut-crac-plugin")

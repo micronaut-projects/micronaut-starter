@@ -1,6 +1,9 @@
 package io.micronaut.starter.options
 
 import com.fizzed.rocker.RockerModel
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider
 import spock.lang.Specification
 import spock.lang.Unroll
 

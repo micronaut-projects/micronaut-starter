@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.build
 
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin
 import jakarta.inject.Singleton
 

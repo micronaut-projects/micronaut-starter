@@ -11,15 +11,15 @@ import com.google.auth.oauth2.GoogleCredentials
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
-import io.micronaut.starter.application.Project
+import io.micronaut.projectgen.core.generator.Project
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunGraalWorkflow
 import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunJavaWorkflow
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.github.WorkflowSpec
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.core.utils.NameUtils
 import spock.lang.Requires
 import spock.lang.Shared
 

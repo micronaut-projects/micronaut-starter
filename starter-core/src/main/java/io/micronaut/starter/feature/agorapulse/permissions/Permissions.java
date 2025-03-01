@@ -20,11 +20,11 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageGroovy;
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageJava;
@@ -41,7 +41,7 @@ import io.micronaut.starter.feature.agorapulse.permissions.template.messageServi
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestJava;
 import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.test.Mockito;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.options.TestFramework;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -79,11 +79,6 @@ public class Permissions implements AgoraPulseFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public String getCategory() {
         return Category.SECURITY;
     }
@@ -95,7 +90,7 @@ public class Permissions implements AgoraPulseFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://agorapulse.github.io/micronaut-permissions/";
     }
 

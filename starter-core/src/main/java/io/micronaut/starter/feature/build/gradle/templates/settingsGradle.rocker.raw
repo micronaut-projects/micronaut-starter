@@ -1,7 +1,7 @@
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.GradlePlugin
-@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
+@import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl
 @import java.util.Collection;
 @args (Project project, GradleBuild gradleBuild, boolean hasMultiProjectFeature, Collection<String> moduleNames)
 

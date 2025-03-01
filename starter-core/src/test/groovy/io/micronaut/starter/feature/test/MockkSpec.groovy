@@ -2,17 +2,17 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.Features
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject

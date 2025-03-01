@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.tracing;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 
-import static io.micronaut.starter.application.ApplicationType.CLI;
+import static io.micronaut.projectgen.micronaut.ApplicationType.CLI;
 import static io.micronaut.starter.feature.Category.TRACING;
 
 public interface TracingFeature extends OneOfFeature {
@@ -29,8 +31,8 @@ public interface TracingFeature extends OneOfFeature {
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType != CLI;
+    default boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() != ApplicationType.CLI;
     }
 
     @Override

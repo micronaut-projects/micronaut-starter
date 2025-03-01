@@ -18,9 +18,9 @@ package io.micronaut.starter.api;
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.MessageSource;
 import io.micronaut.inject.qualifiers.Qualifiers;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.AvailableFeatures;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import jakarta.inject.Singleton;
 import java.util.Comparator;

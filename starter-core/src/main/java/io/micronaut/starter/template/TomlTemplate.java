@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.projectgen.core.feature.config.Configuration;
+import io.micronaut.projectgen.core.template.DefaultTemplate;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

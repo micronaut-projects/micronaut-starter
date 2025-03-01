@@ -18,9 +18,9 @@ package io.micronaut.starter.feature.messaging.jms;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Oracle;
 import jakarta.inject.Singleton;
 
@@ -67,7 +67,7 @@ public class OracleAdvancedQueuing extends AbstractJmsFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.oracle.com/en/database/oracle/oracle-database/21/adque/aq-introduction.html";
     }
 

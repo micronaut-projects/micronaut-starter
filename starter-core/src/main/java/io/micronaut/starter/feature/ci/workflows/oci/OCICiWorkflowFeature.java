@@ -18,13 +18,13 @@ package io.micronaut.starter.feature.ci.workflows.oci;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpec;
 import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpecGraal;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.Template;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -88,7 +88,7 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.oracle.com/en-us/iaas/Content/devops/using/build_specs.htm";
     }
 }

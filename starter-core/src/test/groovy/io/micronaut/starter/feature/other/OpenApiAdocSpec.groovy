@@ -5,11 +5,11 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.Features
+import io.micronaut.projectgen.core.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Unroll
 
 class OpenApiAdocSpec extends ApplicationContextSpec implements CommandOutputFixture {

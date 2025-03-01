@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.messaging.mqtt
 
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import spock.lang.Shared

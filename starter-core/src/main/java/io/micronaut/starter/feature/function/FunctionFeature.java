@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.function;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 /**
  * Marker interface for function features.
@@ -28,8 +30,8 @@ import io.micronaut.starter.feature.Feature;
 public interface FunctionFeature extends Feature {
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;
+    default boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && (mnOptions.applicationType() == ApplicationType.DEFAULT || mnOptions.applicationType() == ApplicationType.FUNCTION);
     }
 
     @Override

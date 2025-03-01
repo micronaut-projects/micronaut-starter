@@ -1,8 +1,8 @@
 @import io.micronaut.starter.feature.function.DocumentationLink
 @import io.micronaut.starter.feature.function.HandlerClassFeature
-@import io.micronaut.starter.feature.Feature
-@import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
+@import io.micronaut.projectgen.core.feature.Feature
+@import io.micronaut.projectgen.micronaut.ApplicationType
+@import io.micronaut.projectgen.core.generator.Project
 
 @args (
 HandlerClassFeature feature,

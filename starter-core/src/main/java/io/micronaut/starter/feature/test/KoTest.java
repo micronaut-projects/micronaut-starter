@@ -18,12 +18,14 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.TestFeature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.template.URLTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.kotest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -59,13 +61,13 @@ public class KoTest implements TestFeature {
     }
 
     @Override
-    public void doApply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         generatorContext.addTemplate("koTestConfig",
                 new URLTemplate("src/test/kotlin/io/kotest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotest/ProjectConfig.kt")));
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_KOTEST);
             generatorContext.addDependency(DEPENDENCY_KOTEST_RUNNER_JUNIT_5_JVM);
             generatorContext.addDependency(DEPENDENCY_KOTEST_ASSERTIONS_CORE_JVM);
@@ -83,12 +85,12 @@ public class KoTest implements TestFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-test/latest/guide/#kotest5";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://kotest.io/";
     }
 }

@@ -7,16 +7,16 @@ import io.micronaut.core.annotation.NonNull
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.application.generator.ProjectGenerator
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.options.OperatingSystem
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.ProjectGenerator
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.OutputHandler
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull

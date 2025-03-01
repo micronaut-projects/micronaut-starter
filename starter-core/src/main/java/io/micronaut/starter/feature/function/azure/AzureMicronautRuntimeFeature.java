@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.function.azure;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 
 public interface AzureMicronautRuntimeFeature extends MicronautRuntimeFeature {

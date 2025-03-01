@@ -1,4 +1,4 @@
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.projectgen.core.feature.Features
 @args (Features features)
 Thumbs.db
 .DS_Store

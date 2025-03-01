@@ -18,11 +18,12 @@ package io.micronaut.starter.feature.awssecretsmanager;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.features.config.MicronautDistributedConfigurationFeature;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.awsparameterstore.AwsParameterStore;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -32,7 +33,7 @@ import jakarta.inject.Singleton;
  */
 @Requires(property = "micronaut.starter.feature.aws.secrets.manager.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class AwsSecretsManager implements DistributedConfigFeature {
+public class AwsSecretsManager implements MicronautDistributedConfigurationFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER = "micronaut-aws-secretsmanager";
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_AWS_SECRETSMANAGER = MicronautDependencyUtils.awsDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER)
@@ -60,12 +61,12 @@ public class AwsSecretsManager implements DistributedConfigFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/#distributedconfigurationsecretsmanager";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://aws.amazon.com/secrets-manager/";
     }
 

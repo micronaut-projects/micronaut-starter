@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.Property
+@import io.micronaut.projectgen.core.buildtools.Property
 @import java.util.List
 
 @args (List<Property> properties)

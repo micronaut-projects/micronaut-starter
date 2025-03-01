@@ -19,9 +19,10 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
@@ -29,8 +30,8 @@ import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
-import io.micronaut.starter.feature.other.ShadePlugin;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.features.gradle.ShadePlugin;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import jakarta.inject.Singleton;
 
 /**
@@ -114,7 +115,7 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(GCP_FUNCTIONS_FRAMEWORK_API.compileOnly());
             generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP);
             generatorContext.addDependency(MICRONAUT_GCP_FUNCTION_HTTP_TEST);
@@ -132,7 +133,7 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions";
     }
 

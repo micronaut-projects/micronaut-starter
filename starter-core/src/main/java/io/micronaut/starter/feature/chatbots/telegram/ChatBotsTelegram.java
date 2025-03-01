@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.chatbots.telegram;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.feature.chatbots.ChatBotType;
 import io.micronaut.starter.feature.chatbots.ChatBots;
 import io.micronaut.starter.feature.chatbots.telegram.template.aboutCommandHandlerGroovy;
@@ -32,9 +33,8 @@ import io.micronaut.starter.feature.chatbots.telegram.template.mockAboutCommandJ
 import io.micronaut.starter.feature.chatbots.telegram.template.telegramReadme;
 import io.micronaut.starter.feature.chatbots.telegram.template.about;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 /**
  * Base class for Telegram chatbot features.

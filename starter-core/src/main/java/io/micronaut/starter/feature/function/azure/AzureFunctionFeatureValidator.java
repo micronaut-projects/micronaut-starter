@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.function.azure;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -35,12 +35,12 @@ public class AzureFunctionFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.getJavaVersion())) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
+        if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.javaVersion())) {
             throw new IllegalArgumentException("""
                     Azure Function currently only supports JDK 8, 11 and 17 -- \
                     https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure""");

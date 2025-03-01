@@ -15,12 +15,12 @@
  */
 package io.micronaut.starter.feature.messaging.jms;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.Oracle;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class OracleAdvancedQueuingValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(OracleAdvancedQueuing.class::isInstance)) {
             Optional<Feature> first = features.stream().filter(DatabaseDriverFeature.class::isInstance).findFirst();
             if (first.isPresent()) {
@@ -43,7 +43,7 @@ public class OracleAdvancedQueuingValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         // no-op
     }
 }

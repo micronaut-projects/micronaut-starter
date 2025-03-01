@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.reactive;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -27,7 +27,7 @@ import java.util.Set;
 @Singleton
 public class ReactiveHttpClientFeatureValidator implements FeatureValidator {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(ReactiveHttpClientFeature.class::isInstance)) {
             if (features.stream().anyMatch(HttpClientJdk.class::isInstance)) {
                 throw new IllegalArgumentException("http-client-jdk feature is not compatible with a reactive HTTP Client");
@@ -36,7 +36,7 @@ public class ReactiveHttpClientFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 }

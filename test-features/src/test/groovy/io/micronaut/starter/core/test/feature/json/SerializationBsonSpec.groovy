@@ -1,8 +1,8 @@
 package io.micronaut.starter.core.test.feature.json
 
 import io.micronaut.starter.feature.json.SerializationBsonFeature
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 

@@ -15,10 +15,11 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -27,12 +28,12 @@ import java.util.Set;
 public class RequireKaptFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (options.getLanguage() == Language.KOTLIN) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
+        if (options.language() == Language.KOTLIN) {
             for (Feature feature : features) {
                 if (feature instanceof RequireKaptFeature) {
                     if (features.stream().anyMatch(KotlinSymbolProcessing.class::isInstance)) {

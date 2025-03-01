@@ -3,8 +3,8 @@ package io.micronaut.starter.core.test.feature.database
 import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations

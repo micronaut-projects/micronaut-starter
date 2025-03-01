@@ -18,13 +18,13 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * API for a {@link io.micronaut.starter.feature.Feature} which contributes additional arguments that will be passed to the JVM process, such as Java agent properties.
+ * API for a {@link io.micronaut.projectgen.core.feature.Feature} which contributes additional arguments that will be passed to the JVM process, such as Java agent properties.
  * @see <a href="https://micronaut-projects.github.io/micronaut-maven-plugin/latest/run-mojo.html#jvmArguments"></a>
  */
 public interface JvmArgumentsFeature {

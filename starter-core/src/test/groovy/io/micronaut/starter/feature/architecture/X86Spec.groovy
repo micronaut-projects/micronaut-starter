@@ -1,18 +1,20 @@
 package io.micronaut.starter.feature.architecture
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.OneOfFeature
+import io.micronaut.projectgen.core.feature.OneOfFeature
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Subject
 
 class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -41,7 +43,13 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'x86 plus cdk feature sets lambda function architecture for #buildTool'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .build()
+
         Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, X86.NAME])
 

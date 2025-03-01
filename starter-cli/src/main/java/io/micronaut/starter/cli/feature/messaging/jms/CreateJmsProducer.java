@@ -20,7 +20,7 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.Project;
+import io.micronaut.projectgen.core.generator.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.jms.template.producer.groovyProducer;
@@ -29,20 +29,20 @@ import io.micronaut.starter.cli.feature.messaging.jms.template.producer.kotlinPr
 import io.micronaut.starter.feature.messaging.jms.ActiveMqArtemis;
 import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic;
 import io.micronaut.starter.feature.messaging.jms.SQS;
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.template.RenderResult;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.TemplateRenderer;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.OutputHandler;
+import io.micronaut.projectgen.core.template.RenderResult;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.TemplateRenderer;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
-import static io.micronaut.starter.options.Language.GROOVY;
-import static io.micronaut.starter.options.Language.JAVA;
-import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.projectgen.core.options.Language.GROOVY;
+import static io.micronaut.projectgen.core.options.Language.JAVA;
+import static io.micronaut.projectgen.core.options.Language.KOTLIN;
 
 @Command(name = "create-jms-producer", description = "Creates a producer class for JMS")
 @Prototype

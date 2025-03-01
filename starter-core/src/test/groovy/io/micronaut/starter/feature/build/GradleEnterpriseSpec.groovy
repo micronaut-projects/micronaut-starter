@@ -2,17 +2,18 @@ package io.micronaut.starter.feature.build
 
 import groovy.namespace.QName
 import groovy.xml.XmlParser
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.dependencies.CoordinateResolver
-import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
+import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Unroll
 
 class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -44,7 +45,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise creates a .mvn/extensions dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(BuildTool.MAVEN).build(), ["gradle-enterprise"])
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
@@ -60,7 +61,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise does not create maven files for #buildTool'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(buildTool).build(), ["gradle-enterprise"])
 
         then:
         output[".mvn/gradle-enterprise.xml"] == null
@@ -72,7 +73,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.JAVA).buildTool(BuildTool.MAVEN).build(), ["gradle-enterprise"])
         def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
 
         then:

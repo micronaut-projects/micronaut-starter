@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
@@ -43,7 +44,7 @@ public class ObjectStorageLocal implements ObjectStorageFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return URL;
     }
 }

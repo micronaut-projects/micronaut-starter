@@ -18,12 +18,12 @@ package io.micronaut.starter.feature.ci.workflows.github;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.github.templates.javaAction;
-import io.micronaut.starter.options.JdkDistribution;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
+import io.micronaut.projectgen.core.options.JdkDistribution;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.Template;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.github.workflow.ci.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -69,7 +69,7 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.github.com/en/actions";
     }
 

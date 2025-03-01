@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 
 public abstract class SpringFeature implements Feature {
 

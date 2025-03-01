@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 
 public abstract class AbstractMicronautServerFeature implements ServerFeature, MicronautRuntimeFeature {

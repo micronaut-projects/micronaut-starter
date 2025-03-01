@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.feature.testresources;
 
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.database.TestContainers;
 
 public abstract class EaseTestingFeature implements Feature  {

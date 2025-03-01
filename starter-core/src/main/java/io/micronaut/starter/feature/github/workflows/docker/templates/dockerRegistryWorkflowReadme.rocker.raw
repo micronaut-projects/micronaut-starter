@@ -1,4 +1,4 @@
-@import io.micronaut.starter.application.Project
+@import io.micronaut.projectgen.core.generator.Project
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 
 @args (

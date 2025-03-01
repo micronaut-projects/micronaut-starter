@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.email
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Shared
 import spock.lang.Unroll
 

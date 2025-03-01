@@ -16,7 +16,7 @@
 package io.micronaut.starter.util;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.options.JdkVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

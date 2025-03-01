@@ -20,11 +20,13 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
 import io.micronaut.starter.feature.agorapulse.gru.GruHttp;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerGroovy;
@@ -65,8 +67,8 @@ import io.micronaut.starter.feature.cache.Caffeine;
 import io.micronaut.starter.feature.cache.EHCache;
 import io.micronaut.starter.feature.redis.RedisLettuce;
 import io.micronaut.starter.feature.test.Mockito;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
@@ -106,8 +108,8 @@ public class Slack implements AgoraPulseFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override
@@ -122,7 +124,7 @@ public class Slack implements AgoraPulseFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://agorapulse.github.io/micronaut-slack/";
     }
 

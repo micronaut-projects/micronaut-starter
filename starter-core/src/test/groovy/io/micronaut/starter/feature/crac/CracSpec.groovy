@@ -1,19 +1,20 @@
 package io.micronaut.starter.feature.crac
 
 import groovy.xml.XmlSlurper
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.feature.database.jdbc.Hikari
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 
 class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -33,7 +34,8 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test singletons are eager for #language"(Language language) {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language), [Crac.NAME])
+        Options options = MicronautOptions.builder().language(language).features([Crac.NAME]).build()
+        def output = generate(options)
         def application = output[language.getSourcePath("/example/micronaut/Application")]
 
         then:

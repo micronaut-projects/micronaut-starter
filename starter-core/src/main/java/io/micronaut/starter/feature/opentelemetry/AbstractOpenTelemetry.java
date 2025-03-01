@@ -15,8 +15,9 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 
 public class AbstractOpenTelemetry implements OpenTelemetryFeature {
     private final OpenTelemetry otel;
@@ -42,11 +43,11 @@ public class AbstractOpenTelemetry implements OpenTelemetryFeature {
         if (!featureContext.isPresent(OpenTelemetryAnnotations.class)) {
             featureContext.addFeature(otelAnnotations);
         }
-        if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
+        if (featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT) {
             if (!featureContext.isPresent(OpenTelemetryHttp.class)) {
                 featureContext.addFeature(otelHttp);
             }
-        } else if (featureContext.getApplicationType() == ApplicationType.GRPC) {
+        } else if (featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.GRPC) {
             if (!featureContext.isPresent(OpenTelemetryGrpc.class)) {
                 featureContext.addFeature(openTelemetryGrpc);
             }

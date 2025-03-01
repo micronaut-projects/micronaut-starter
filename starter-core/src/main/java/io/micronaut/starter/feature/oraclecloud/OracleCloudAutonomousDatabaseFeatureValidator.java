@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.oraclecloud;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -34,14 +34,14 @@ import java.util.Set;
 public class OracleCloudAutonomousDatabaseFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         // no-op
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(OracleCloudAutonomousDatabase.class::isInstance)) {
-            if (options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
+            if (options.javaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
                 throw new IllegalArgumentException("Oracle Cloud Autonomous Database needs at least JDK 11");
             }
         }

@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.projectgen.core.feature.Feature;
+
 /**
  * Marker interface for {@link Feature} which contribute code to the generated project.
  */

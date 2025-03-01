@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Priority;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 
 /**
  * Marker features for data document features such as {@link DataMongo} and {@link DataAzureCosmosFeature}.

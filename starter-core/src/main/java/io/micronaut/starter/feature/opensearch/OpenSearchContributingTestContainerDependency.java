@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.opensearch;
 
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerDependency;
 
 import java.util.Collections;

@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.options;
 
+import io.micronaut.projectgen.core.options.JdkVersion;
 import jakarta.inject.Singleton;
 import java.util.List;
 
-import static io.micronaut.starter.options.JdkVersion.JDK_17;
-import static io.micronaut.starter.options.JdkVersion.JDK_21;
+import static io.micronaut.projectgen.core.options.JdkVersion.JDK_17;
+import static io.micronaut.projectgen.core.options.JdkVersion.JDK_21;
 
 @Singleton
 public class MicronautJdkVersionConfiguration implements JdkVersionConfiguration {

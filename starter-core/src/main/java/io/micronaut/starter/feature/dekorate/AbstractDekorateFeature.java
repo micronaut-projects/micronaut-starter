@@ -16,9 +16,10 @@
 package io.micronaut.starter.feature.dekorate;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 /**
  * Abstract implementation of Dekorate feature.
@@ -34,18 +35,13 @@ public abstract class AbstractDekorateFeature implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.GRPC;
-    }
-
-    @Override
     public boolean isPreview() {
         return true;
     }
 
     @Nullable
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html";
     }
 }

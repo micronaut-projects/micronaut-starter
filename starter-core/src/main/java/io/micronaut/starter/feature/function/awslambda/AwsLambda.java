@@ -21,16 +21,19 @@ import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.HttpClient;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CodeContributingFeature;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
@@ -40,7 +43,7 @@ import io.micronaut.starter.feature.aws.AwsLambdaEventsSerde;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.projectgen.core.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -65,13 +68,12 @@ import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.feature.json.SerializationJacksonFeature;
-import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.projectgen.features.gradle.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.options.TestRockerModelProvider;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -79,8 +81,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.micronaut.starter.application.ApplicationType.DEFAULT;
-import static io.micronaut.starter.application.ApplicationType.FUNCTION;
+import static io.micronaut.projectgen.micronaut.ApplicationType.DEFAULT;
+import static io.micronaut.projectgen.micronaut.ApplicationType.FUNCTION;
 import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 
 @Requires(property = "micronaut.starter.feature.aws.lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -170,8 +172,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        ApplicationType applicationType = featureContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
         Stream.of(defaultAwsLambdaHandlerProvider, functionAwsLambdaHandlerProvider)
-                .filter(f -> f.supports(featureContext.getApplicationType()))
+                .filter(f -> f.supports(MicronautOptions.builder().applicationType(applicationType).build()))
                 .findFirst()
                 .ifPresent(f -> featureContext.addFeatureIfNotPresent(HandlerClassFeature.class, f));
 
@@ -179,8 +182,8 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         featureContext.addFeatureIfNotPresent(CpuArchitecture.class, defaultCpuArchitecture);
         if (featureContext.isPresent(GraalVM.class) &&
                 (
-                        featureContext.getBuildTool() == BuildTool.MAVEN ||
-                        (featureContext.getBuildTool().isGradle() && featureContext.getApplicationType() == FUNCTION)
+                        OptionUtils.hasMavenBuildTool(featureContext.getOptions()) ||
+                        (OptionUtils.hasGradleBuildTool(featureContext.getOptions()) && featureContext.getOptions() instanceof MicronautOptions mnOptions && mnOptions.applicationType() == FUNCTION)
                 )
         ) {
             featureContext.addFeature(customRuntime);
@@ -229,7 +232,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.isFeatureMissing(CodeContributingFeature.class)) {
-            ApplicationType applicationType = generatorContext.getApplicationType();
+            ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
             if (applicationType == DEFAULT || applicationType == FUNCTION) {
                 addCode(generatorContext);
                 if (applicationType == FUNCTION) {
@@ -244,14 +247,14 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     }
 
     private void addDependencies(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+        if (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS);
         }
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getApplicationType() == DEFAULT) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == DEFAULT) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY);
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY_TEST);
         }
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.hasFeature(GraalVM.class)) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions()) && generatorContext.hasFeature(GraalVM.class)) {
             generatorContext.addDependency(AwsLambdaCustomRuntime.DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
         }
 
@@ -260,7 +263,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         }
 
         if (generatorContext.getFeatures().testFramework().isSpock() &&
-                generatorContext.getBuildTool().isGradle()) {
+                OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             // maven has this in parent pom
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_TEST);
         }
@@ -268,7 +271,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     protected void addCode(@NonNull GeneratorContext generatorContext) {
         Project project = generatorContext.getProject();
-        ApplicationType applicationType = generatorContext.getApplicationType();
+        ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
         if (applicationType == DEFAULT) {
             addHomeController(generatorContext, project);
             addHomeControllerTest(generatorContext, project);
@@ -295,7 +298,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
 
     protected void disableSecurityFilterInTestConfiguration(@NonNull GeneratorContext generatorContext) {
         if (generatorContext.getFeatures().hasFeature(SecurityFeature.class)) {
-            ApplicationConfiguration test = generatorContext.getConfiguration(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
+            ApplicationConfiguration test = generatorContext.getConfigurationByEnvironmentOrDefaultConfig(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
             test.put("micronaut.security.filter.enabled", false);
         }
     }
@@ -338,8 +341,8 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == FUNCTION &&
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == FUNCTION &&
                 selectedFeatures.stream().filter(CloudFeature.class::isInstance)
                         .noneMatch(cloudFeature -> ((CloudFeature) cloudFeature).getCloud() != getCloud());
     }
@@ -350,7 +353,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda";
     }
 }

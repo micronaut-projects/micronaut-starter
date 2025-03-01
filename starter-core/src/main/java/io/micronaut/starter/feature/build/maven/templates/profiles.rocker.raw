@@ -1,7 +1,7 @@
 @import java.util.Collection
-@import io.micronaut.starter.feature.build.maven.Profile
-@import io.micronaut.starter.feature.build.maven.Property
-@import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.projectgen.core.buildtools.maven.Profile
+@import io.micronaut.projectgen.core.buildtools.Property
+@import io.micronaut.projectgen.core.buildtools.dependencies.Dependency
 @args(Collection<Profile> profiles)
 @if (profiles != null && !profiles.isEmpty()) {
     <profiles>
@@ -12,7 +12,7 @@
             <activation>
 @for (Property property : profile.getActivationProperties()) {
                 <property>
-                    <name>@property.getName()</name>
+                    <name>@property.getKey()</name>
                     <value>@property.getValue()</value>
                 </property>
 }

@@ -17,20 +17,20 @@ package io.micronaut.starter.test
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.functional.ThrowingSupplier
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.generator.ProjectGenerator
 import io.micronaut.starter.feature.build.MicronautGradleEnterprise
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.io.FileSystemOutputHandler
-import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.FileSystemOutputHandler
+import io.micronaut.projectgen.core.io.OutputHandler
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.core.utils.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
@@ -138,7 +138,7 @@ abstract class CommandSpec extends Specification {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool, jdkVersion),
-                io.micronaut.starter.application.OperatingSystem.LINUX,
+                io.micronaut.projectgen.core.options.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -160,7 +160,7 @@ abstract class CommandSpec extends Specification {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool, jdkVersion),
-                io.micronaut.starter.application.OperatingSystem.LINUX,
+                io.micronaut.projectgen.core.options.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -176,7 +176,7 @@ abstract class CommandSpec extends Specification {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 project,
                 new Options(lang, testFramework, buildTool),
-                io.micronaut.starter.application.OperatingSystem.LINUX,
+                io.micronaut.projectgen.core.options.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP

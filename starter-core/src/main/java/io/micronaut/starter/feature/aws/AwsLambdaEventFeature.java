@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 
 public interface AwsLambdaEventFeature extends OneOfFeature, AwsFeature {
 

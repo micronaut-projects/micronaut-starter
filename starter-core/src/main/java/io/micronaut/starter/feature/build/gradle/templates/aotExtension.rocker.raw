@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl
 @import java.util.Map
 @args(Map<String, String> aotKeys)
     aot {

@@ -18,17 +18,14 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.*;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -65,14 +62,14 @@ public class Mockk implements MockingFeature, DefaultFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://mockk.io";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(DEPENDENCY_MOCKK);
         }
     }
@@ -83,10 +80,10 @@ public class Mockk implements MockingFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return isValid(selectedFeatures, options::getBuildTool, t -> t == BuildTool.MAVEN, BuildFeature.class, BuildFeature::isMaven)
-                && isValid(selectedFeatures, options::getLanguage, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
-                && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return isValid(selectedFeatures, options::buildTools, t -> t.stream().anyMatch(bt -> bt ==  BuildTool.MAVEN), BuildFeature.class, BuildFeature::isMaven)
+                && isValid(selectedFeatures, options::language, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
+                && isValid(selectedFeatures, options::testFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
     }
 
     private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures,

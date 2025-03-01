@@ -1,14 +1,15 @@
 package io.micronaut.starter.feature.chatbots.telegram
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 
 class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
@@ -35,7 +36,8 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'test README contains docs for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).language(Language.JAVA).buildTool(buildTool).features([featureName]).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -52,7 +54,8 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'test README contains docs for #buildTool with CDK'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [featureName, 'aws-cdk'])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).language(Language.JAVA).buildTool(buildTool).features([featureName, 'aws-cdk']).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -72,8 +75,15 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
 
     void 'Handler is is set to io.micronaut.chatbots.telegram.lambda.Handler in CDK when features chatbots-telegram-lambda and aws-cdk'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN, AwsLambdaFeatureValidator.firstSupportedJdk())
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, [TelegramAwsChatBot.NAME, Cdk.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE_KOTLIN)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features([TelegramAwsChatBot.NAME, Cdk.NAME])
+                .build()
+        Map<String, String> output = generate(options)
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('io.micronaut.chatbots.telegram.lambda.Handler')

@@ -18,13 +18,14 @@ package io.micronaut.starter.feature.build;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -52,12 +53,12 @@ public class Kapt implements KotlinSupportFeature, DefaultFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/snapshot/guide/#kapt";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://kotlinlang.org/docs/kapt.html";
     }
 
@@ -75,8 +76,8 @@ public class Kapt implements KotlinSupportFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.MAVEN &&
-                KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return OptionUtils.hasMavenBuildTool(options) &&
+                KotlinSupportFeature.shouldApply(options.language(), options.testFramework()) && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }

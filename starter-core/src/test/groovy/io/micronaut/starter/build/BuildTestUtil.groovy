@@ -3,9 +3,9 @@ package io.micronaut.starter.build
 import groovy.transform.CompileStatic
 import io.micronaut.starter.build.gradle.GradleBuildTestVerifier
 import io.micronaut.starter.build.maven.MavenBuildTestVerifier
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.TestFramework
 
 @CompileStatic
 class BuildTestUtil {

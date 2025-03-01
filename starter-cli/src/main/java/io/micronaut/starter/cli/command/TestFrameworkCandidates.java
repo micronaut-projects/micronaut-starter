@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.projectgen.core.options.TestFramework;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

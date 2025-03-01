@@ -1,6 +1,6 @@
 package io.micronaut.aws.cdk.function
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import software.amazon.awscdk.Stack
 import software.amazon.awscdk.assertions.Template
 import software.amazon.awscdk.services.lambda.Code

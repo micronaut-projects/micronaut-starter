@@ -18,15 +18,17 @@ package io.micronaut.starter.feature.distributedconfig;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.DistributedConfigFeature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.micronaut.features.config.MicronautDistributedConfigurationFeature;
 import io.micronaut.starter.feature.consul.Consul;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.config.consul.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class DistributedConfigConsul implements DistributedConfigFeature {
+public class DistributedConfigConsul implements MicronautDistributedConfigurationFeature {
 
     private final Consul consul;
 
@@ -67,12 +69,12 @@ public class DistributedConfigConsul implements DistributedConfigFeature {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://www.consul.io";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/latest/guide/index.html#distributedConfigurationConsul";
     }
 }

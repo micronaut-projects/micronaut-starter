@@ -18,15 +18,16 @@ package io.micronaut.starter.feature.k8s;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.discovery.DiscoveryCore;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.Language;
 import jakarta.inject.Singleton;
 
 /**
@@ -40,11 +41,6 @@ import jakarta.inject.Singleton;
 public class KubernetesClient implements Feature {
 
     public static final String MICRONAUT_KUBERNETES_GROUP_ID = "io.micronaut.kubernetes";
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 
     @NonNull
     @Override
@@ -68,12 +64,12 @@ public class KubernetesClient implements Feature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#kubernetes-client";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://github.com/kubernetes-client/java/wiki";
     }
 
@@ -88,7 +84,7 @@ public class KubernetesClient implements Feature {
 
     static void fixupDependencies(GeneratorContext generatorContext) {
         if (!generatorContext.hasFeature(DiscoveryCore.class)
-                && generatorContext.getBuildTool() == BuildTool.MAVEN
+                && OptionUtils.hasMavenBuildTool(generatorContext.getOptions())
                 && generatorContext.getLanguage() == Language.GROOVY
         ) {
             // Maven requires discovery core provided to work with http-validation under groovy

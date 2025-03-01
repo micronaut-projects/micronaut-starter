@@ -18,6 +18,7 @@ package io.micronaut.starter.template;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
+import io.micronaut.projectgen.core.template.DefaultTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;

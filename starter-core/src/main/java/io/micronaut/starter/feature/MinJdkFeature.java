@@ -16,7 +16,8 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.options.JdkVersion;
 
 /**
  * A feature that only works with a minimum JDK.

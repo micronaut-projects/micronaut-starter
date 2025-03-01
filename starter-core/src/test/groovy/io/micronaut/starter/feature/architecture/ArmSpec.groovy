@@ -1,17 +1,19 @@
 package io.micronaut.starter.feature.architecture
 
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.OneOfFeature
+import io.micronaut.projectgen.core.feature.OneOfFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Subject
 
 class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -39,8 +41,15 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     void 'arm plus cdk feature sets lambda function architecture for #buildTool'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTIO)
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, Arm.NAME])
 
         then:

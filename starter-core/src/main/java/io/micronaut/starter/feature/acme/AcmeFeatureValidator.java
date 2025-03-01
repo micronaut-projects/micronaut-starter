@@ -16,11 +16,11 @@
 package io.micronaut.starter.feature.acme;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.server.Netty;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -29,7 +29,7 @@ import java.util.Set;
 @Singleton
 public class AcmeFeatureValidator implements FeatureValidator {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(Acme.class::isInstance)) {
             if (features.stream().noneMatch(Netty.class::isInstance)) {
                 throw new IllegalArgumentException("Acme only supports Netty");
@@ -38,7 +38,7 @@ public class AcmeFeatureValidator implements FeatureValidator {
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 }

@@ -18,9 +18,11 @@ package io.micronaut.starter.feature.chatbots.telegram;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovyJunit;
 import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovySpock;
@@ -28,9 +30,9 @@ import io.micronaut.starter.feature.chatbots.telegram.template.controllerJavaJun
 import io.micronaut.starter.feature.chatbots.telegram.template.controllerKotlinJunit;
 import io.micronaut.starter.feature.chatbots.telegram.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.options.TestFramework;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 
 /**
@@ -56,8 +58,8 @@ public class TelegramHttpChatBot extends ChatBotsTelegram {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override

@@ -16,16 +16,19 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 
-import static io.micronaut.starter.application.ApplicationType.CLI;
+import static io.micronaut.projectgen.micronaut.ApplicationType.CLI;
 import static io.micronaut.starter.feature.Category.TRACING;
 
 public interface OpenTelemetryFeature extends Feature  {
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType != CLI;
+    default boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() != ApplicationType.CLI;
     }
 
     @Override
@@ -40,12 +43,12 @@ public interface OpenTelemetryFeature extends Feature  {
     }
 
     @Override
-    default String getMicronautDocumentation() {
+    default String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#opentelemetry";
     }
 
     @Override
-    default String getThirdPartyDocumentation() {
+    default String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://opentelemetry.io";
     }
 }

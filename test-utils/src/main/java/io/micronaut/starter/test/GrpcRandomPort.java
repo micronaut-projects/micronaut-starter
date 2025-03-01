@@ -17,11 +17,11 @@ package io.micronaut.starter.test;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.socket.SocketUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -30,18 +30,13 @@ import java.util.Set;
 public class GrpcRandomPort implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.GRPC;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("grpc.server.port", SocketUtils.findAvailableTcpPort());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @NonNull

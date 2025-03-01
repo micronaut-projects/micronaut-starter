@@ -1,4 +1,4 @@
-@import io.micronaut.starter.build.gradle.GradleDsl;
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
 @args(GradleDsl dsl)
 
 @if(dsl == GradleDsl.KOTLIN) {

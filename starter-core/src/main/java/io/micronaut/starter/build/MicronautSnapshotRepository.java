@@ -16,6 +16,7 @@
 package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.projectgen.core.buildtools.Repository;
 
 public class MicronautSnapshotRepository implements Repository {
 

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.options.JdkVersion;
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
 
 import java.util.ArrayList;

@@ -17,10 +17,12 @@ package io.micronaut.starter.build.maven;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.MavenSpecificFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.maven.MavenSpecificFeature;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.groovy.maven.plus.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -47,7 +49,7 @@ public class GroovyMavenPlusPlugin implements MavenSpecificFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addBuildPlugin(MavenPlugin.builder()
                     .groupId(GROUP_ID_GMAVEN)
                     .artifactId(ARTIFACT_ID_GMAVEN)
@@ -56,12 +58,7 @@ public class GroovyMavenPlusPlugin implements MavenSpecificFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://github.com/groovy/GMavenPlus/wiki/Usage";
     }
 }

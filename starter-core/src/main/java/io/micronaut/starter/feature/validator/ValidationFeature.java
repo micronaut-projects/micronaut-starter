@@ -15,20 +15,17 @@
  */
 package io.micronaut.starter.feature.validator;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 
 public interface ValidationFeature extends OneOfFeature {
 
     @Override
     default Class<?> getFeatureClass() {
         return ValidationFeature.class;
-    }
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

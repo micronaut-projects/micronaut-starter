@@ -22,7 +22,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.serde.annotation.Serdeable;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.options.JdkVersion;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

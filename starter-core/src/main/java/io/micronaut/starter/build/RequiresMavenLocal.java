@@ -16,6 +16,10 @@
 package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.projectgen.core.buildtools.MavenLocal;
+import io.micronaut.projectgen.core.buildtools.Repository;
+import io.micronaut.projectgen.core.buildtools.RequiresRepository;
+
 import java.util.Collections;
 import java.util.List;
 

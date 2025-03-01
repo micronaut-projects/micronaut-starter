@@ -16,11 +16,11 @@
 package io.micronaut.starter.feature.httpclient;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 
 import java.util.List;
 
@@ -28,11 +28,6 @@ public interface HttpClientFeature  extends OneOfFeature {
     @Override
     default Class<?> getFeatureClass() {
         return HttpClientFeature.class;
-    }
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

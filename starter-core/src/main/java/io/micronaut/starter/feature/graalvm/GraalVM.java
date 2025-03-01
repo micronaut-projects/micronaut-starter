@@ -17,11 +17,11 @@ package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.graalvm.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -50,11 +50,6 @@ public class GraalVM implements Feature {
     @Override
     public String getDescription() {
         return "Allows Building a GraalVM Native Image";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

@@ -2,21 +2,22 @@ package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.ContextFactory
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.Source
-import io.micronaut.starter.feature.AvailableFeatures
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.FeatureContext
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.validation.FeatureValidator
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.ContextFactory
+import io.micronaut.projectgen.core.options.OperatingSystem
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.buildtools.Source
+import io.micronaut.projectgen.core.feature.AvailableFeatures
+import io.micronaut.projectgen.core.feature.Feature
+import io.micronaut.projectgen.core.feature.FeatureContext
+import io.micronaut.projectgen.core.feature.Features
+import io.micronaut.projectgen.core.feature.FeatureValidator
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 
 import java.util.function.Consumer
 
@@ -62,7 +63,7 @@ trait ContextFixture {
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
+                                       Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).build(),
                                        ApplicationType applicationType = ApplicationType.DEFAULT) {
 
         AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
@@ -77,7 +78,7 @@ trait ContextFixture {
     }
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
-                                           Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
+                                           Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).build(),
                                            ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
@@ -92,7 +93,7 @@ trait ContextFixture {
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
                                            Consumer<GeneratorContext> mutate,
-                                           Options options = new Options(null, null, BuildTool.DEFAULT_OPTION),
+                                           Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).build(),
                                            ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)

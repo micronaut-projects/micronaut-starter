@@ -20,22 +20,24 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildProperties;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Scope;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.Scope;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -71,7 +73,7 @@ public class MicronautAot implements DefaultFeature {
 
     @Override
     @Nullable
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aot/latest/guide/";
     }
 
@@ -81,14 +83,14 @@ public class MicronautAot implements DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         addAotPluginsDependencies(generatorContext);
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             addAotGradlePlugin(generatorContext);
         } else {
             addAotBuildProperties(generatorContext);
@@ -127,7 +129,7 @@ public class MicronautAot implements DefaultFeature {
                     .artifactId("micronaut-security-aot")
                     .scope(Scope.AOT_PLUGIN);
 
-            if (generatorContext.getBuildTool().isGradle()) {
+            if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
                 generatorContext.addDependency(MicronautDependencyUtils.platformDependency()
                         .artifactId("micronaut-platform")
                         .version(VersionInfo.getMicronautVersion())
@@ -185,7 +187,7 @@ public class MicronautAot implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return true;
     }
 }

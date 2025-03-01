@@ -15,17 +15,18 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
@@ -58,11 +59,6 @@ public interface DataFeature extends OneOfFeature {
         return MicronautDependencyUtils.annotationProcessor(buildTool, GROUP_ID_MICRONAUT_DATA, artifactId, MICRONAUT_DATA_VERSION, true)
                 .order(order)
                 .build();
-    }
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

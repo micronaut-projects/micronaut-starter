@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.options.JdkVersion;
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -33,17 +33,17 @@ import java.util.stream.Collectors;
 public class AwsLambdaFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
         if (features.stream().anyMatch(AwsLambda.class::isInstance) && features.stream().noneMatch(GraalVM.class::isInstance)) {
-            JdkVersion javaVersion = options.getJavaVersion();
-            if (!supports(options.getJavaVersion())) {
+            JdkVersion javaVersion = options.javaVersion();
+            if (!supports(options.javaVersion())) {
                 throw new IllegalArgumentException("AWS Lambda does not have a Java %s runtime".formatted(javaVersion.majorVersion()));
             }
         }
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
 
     }
 

@@ -17,15 +17,17 @@ package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.util.NameUtils;
+import io.micronaut.projectgen.core.utils.NameUtils;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.micrometer.annotation.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -75,8 +77,8 @@ public class MicrometerAnnotations implements Feature, MicronautServerDependent 
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions mnOptions && mnOptions.applicationType() == ApplicationType.DEFAULT;
     }
 
     @Override

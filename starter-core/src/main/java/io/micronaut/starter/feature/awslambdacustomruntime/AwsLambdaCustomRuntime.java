@@ -21,15 +21,18 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.HttpClient;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.Project;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.Features;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.Features;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
@@ -40,7 +43,6 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
-import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
@@ -80,7 +82,8 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         AwsLambda awsLambda = this.awsLambda.get();
-        if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
+        ApplicationType applicationType = featureContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
+        if (awsLambda.supports(MicronautOptions.builder().applicationType(applicationType).build()) && !featureContext.isPresent(AwsLambda.class)) {
             featureContext.addFeature(awsLambda);
         }
         if (!featureContext.isPresent(HttpClientFeature.class)) {
@@ -128,14 +131,14 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     private void addDependencies(@NonNull GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
         if (generatorContext.getFeatures().testFramework().isSpock() &&
-                generatorContext.getBuildTool().isGradle()) {
+                OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             // maven has this in parent pom
             generatorContext.addDependency(AwsLambda.DEPENDENCY_MICRONAUT_FUNCTION_TEST);
         }
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {
-        return generatorContext.getApplicationType() == ApplicationType.FUNCTION &&
+        return generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.FUNCTION &&
                 generatorContext.getFeatures().isFeaturePresent(AwsLambda.class);
     }
 
@@ -144,7 +147,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public String mainClassName(GeneratorContext generatorContext) {
         Features features = generatorContext.getFeatures();
         if (features.isFeaturePresent(AwsLambda.class)) {
-            ApplicationType applicationType = generatorContext.getApplicationType();
+            ApplicationType applicationType = generatorContext.getOptions() instanceof MicronautOptions mnOptions ? mnOptions.applicationType() : null;
             if (applicationType == ApplicationType.DEFAULT) {
                 return AwsLambdaCustomRuntime.MAIN_CLASS_NAME;
             } else if (applicationType == ApplicationType.FUNCTION) {
@@ -168,12 +171,12 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html";
     }
 }

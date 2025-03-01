@@ -1,5 +1,6 @@
 package io.micronaut.starter.io
 
+import io.micronaut.projectgen.core.io.FileSystemOutputHandler
 import io.micronaut.starter.template.StringTemplate
 import spock.lang.Specification
 
@@ -14,7 +15,7 @@ class FileSystemOutputHandlerSpec extends Specification {
         String path = "test.template";
         StringTemplate stringTemplate1 = new StringTemplate(path, "123");
         StringTemplate stringTemplate2 = new StringTemplate(path, "12");
-        FileSystemOutputHandler  fileSystemOutputHandler = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
+        FileSystemOutputHandler fileSystemOutputHandler = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fileSystemOutputHandler.write("test.template", stringTemplate1);
         fileSystemOutputHandler.write("test.template", stringTemplate2);
         String result

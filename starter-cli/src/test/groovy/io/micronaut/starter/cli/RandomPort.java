@@ -1,10 +1,10 @@
 package io.micronaut.starter.cli;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.options.Options;
 
 import jakarta.inject.Singleton;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class RandomPort implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT;
     }
 
@@ -31,10 +31,4 @@ public class RandomPort implements DefaultFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.server.port", "-1");
     }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
 }

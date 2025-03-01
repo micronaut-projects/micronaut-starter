@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.MavenCoordinate;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.MavenCoordinate;
 
 import java.util.List;
 

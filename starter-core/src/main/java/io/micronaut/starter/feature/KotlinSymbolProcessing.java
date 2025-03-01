@@ -18,12 +18,16 @@ package io.micronaut.starter.feature;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.gradle.KotlinSymbolProcessingFeature;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleSpecificFeature;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.feature.KotlinSymbolProcessingFeature;
 import io.micronaut.starter.feature.build.KotlinSupportFeature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -55,12 +59,12 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeat
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://docs.micronaut.io/latest/guide/#kotlin";
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://kotlinlang.org/docs/ksp-overview.html";
     }
 
@@ -78,9 +82,9 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeat
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool().isGradle()
-                && KotlinSupportFeature.shouldApply(options.getLanguage(), options.getTestFramework())
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return OptionUtils.hasGradleBuildTool(options)
+                && KotlinSupportFeature.shouldApply(options.language(), options.testFramework())
                 && selectedFeatures.stream().noneMatch(KotlinSupportFeature.class::isInstance);
     }
 }

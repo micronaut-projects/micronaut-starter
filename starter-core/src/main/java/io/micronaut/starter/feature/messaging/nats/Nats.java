@@ -18,9 +18,9 @@ package io.micronaut.starter.feature.messaging.nats;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import jakarta.inject.Singleton;
@@ -55,7 +55,7 @@ public class Nats implements MessagingFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-nats/snapshot/guide/";
     }
 
@@ -63,10 +63,5 @@ public class Nats implements MessagingFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("nats.default.addresses", Collections.singletonList("nats://localhost:4222"));
         generatorContext.addDependency(MICRONAUT_NATS);
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }

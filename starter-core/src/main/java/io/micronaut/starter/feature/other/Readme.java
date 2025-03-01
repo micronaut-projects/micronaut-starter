@@ -18,18 +18,18 @@ package io.micronaut.starter.feature.other;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeaturePhase;
 import io.micronaut.starter.feature.other.template.maindocs;
 import io.micronaut.starter.feature.other.template.readme;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.template.DefaultTemplate;
-import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.Template;
-import io.micronaut.starter.template.Writable;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.projectgen.core.template.DefaultTemplate;
+import io.micronaut.projectgen.core.template.Template;
+import io.micronaut.projectgen.core.template.Writable;
 import jakarta.inject.Singleton;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 public class Readme implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
         return true;
     }
 
@@ -56,7 +56,7 @@ public class Readme implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null).collect(Collectors.toList());
+        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getFrameworkDocumentation(generatorContext) != null || feature.getThirdPartyDocumentation(generatorContext) != null).collect(Collectors.toList());
         List<Writable> helpTemplates = generatorContext.getHelpTemplates();
         if (!helpTemplates.isEmpty() || !featuresWithDocumentationLinks.isEmpty()) {
             generatorContext.addTemplate("readme", new DefaultTemplate(Template.ROOT, "README.md") {
@@ -79,11 +79,6 @@ public class Readme implements DefaultFeature {
                 }
             });
         }
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

@@ -1,4 +1,4 @@
-@import io.micronaut.starter.template.RockerTemplate
+@import io.micronaut.projectgen.core.rocker.RockerTemplate
 
 @args(RockerTemplate platformTemplate)
 

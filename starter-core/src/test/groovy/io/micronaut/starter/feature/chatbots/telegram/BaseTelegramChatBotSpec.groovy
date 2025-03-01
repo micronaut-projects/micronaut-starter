@@ -1,11 +1,12 @@
 package io.micronaut.starter.feature.chatbots.telegram
 
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.feature.chatbots.BaseChatBotSpec
 
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 
 abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
@@ -35,7 +36,8 @@ abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
     void 'example chat commands are generated in #language for #applicationType apps'(Language language, ApplicationType applicationType) {
         when:
-        def output = generate(applicationType, new Options(language, TestFramework.JUNIT), [featureName])
+        Options options = MicronautOptions.builder().applicationType(applicationType).language(language).testFramework(TestFramework.JUNIT).features([featureName]).build()
+        def output = generate(options)
 
         then:
         output.containsKey("src/main/$language.name/example/micronaut/AboutCommandHandler.$language.extension".toString())

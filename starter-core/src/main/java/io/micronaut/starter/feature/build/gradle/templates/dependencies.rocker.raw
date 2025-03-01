@@ -1,9 +1,9 @@
-@import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.GradleDependency
+@import io.micronaut.projectgen.micronaut.ApplicationType
+@import io.micronaut.projectgen.core.generator.Project
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleBuild
+@import io.micronaut.projectgen.core.buildtools.gradle.GradleDependency
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
-@import io.micronaut.starter.feature.Features
+@import io.micronaut.projectgen.core.feature.Features
 
 @args (
 ApplicationType applicationType,

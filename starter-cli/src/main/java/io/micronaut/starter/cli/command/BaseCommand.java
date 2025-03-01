@@ -18,9 +18,9 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.projectgen.core.options.OperatingSystem;
 import io.micronaut.starter.cli.CommonOptionsMixin;
-import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Spec;
@@ -28,10 +28,10 @@ import picocli.CommandLine.Spec;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-import static io.micronaut.starter.application.OperatingSystem.LINUX;
-import static io.micronaut.starter.application.OperatingSystem.MACOS;
-import static io.micronaut.starter.application.OperatingSystem.SOLARIS;
-import static io.micronaut.starter.application.OperatingSystem.WINDOWS;
+import static io.micronaut.projectgen.core.options.OperatingSystem.LINUX;
+import static io.micronaut.projectgen.core.options.OperatingSystem.MACOS;
+import static io.micronaut.projectgen.core.options.OperatingSystem.SOLARIS;
+import static io.micronaut.projectgen.core.options.OperatingSystem.WINDOWS;
 import static picocli.CommandLine.Help.Ansi.AUTO;
 
 public class BaseCommand implements ConsoleOutput {

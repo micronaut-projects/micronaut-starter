@@ -20,21 +20,24 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.version.SemanticVersion;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.Property;
+import io.micronaut.projectgen.core.feature.BuildPluginFeature;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.Property;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.S01SonatypeSnapshots;
-import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.gradle.GradleDsl;
-import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleDsl;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
-import io.micronaut.starter.build.gradle.GradleRepository;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleRepository;
+import io.micronaut.projectgen.core.feature.DefaultFeature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
-import io.micronaut.starter.feature.build.gradle.Dockerfile;
+import io.micronaut.projectgen.core.buildtools.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
 import io.micronaut.starter.feature.function.LambdaRuntimeMainClass;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
@@ -44,8 +47,9 @@ import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
-import io.micronaut.starter.options.JdkVersion;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.options.JdkVersion;
+import io.micronaut.projectgen.core.options.Options;
+import io.micronaut.starter.util.FeaturesUtils;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -78,7 +82,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addHelpLink("Micronaut Gradle Plugin documentation", MICRONAUT_GRADLE_DOCS_URL);
             if (GraalVMFeatureValidator.supports(generatorContext.getLanguage())) {
                 generatorContext.addHelpLink("GraalVM Gradle Plugin documentation", GRAALVM_GRADLE_DOCS_URL);
@@ -147,7 +151,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder()
                 .buildTool(generatorContext.getBuildTool())
                 .incremental(true)
-                .javaVersion(generatorContext.getFeatures().getTargetJdk())
+                .javaVersion(FeaturesUtils.getTargetJdk(generatorContext.getFeatures()))
                 .packageName(generatorContext.getProject().getPackageName())
                 .ignoredAutomaticDependencies(ignoredAutomaticDependencies(generatorContext));
         generatorContext.getFeatures()
@@ -199,9 +203,9 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
         MicronautApplicationGradlePlugin.Builder builder = micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.APPLICATION);
-        if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
-                (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
-                        (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
+        if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (generatorContext.getOptions() instanceof MicronautOptions micronautOptions && (
+                (micronautOptions.applicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
+                        (micronautOptions.applicationType() == ApplicationType.DEFAULT)))) {
             builder.dockerNative(Dockerfile.builder()
                     .javaVersion(generatorContext.getJdkVersion().asString())
                     .arg("-XX:MaximumHeapSizePercent=80")
@@ -233,7 +237,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
     private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
         return generatorContext.getFeatures().mainClass().isPresent() ||
                 generatorContext.getFeatures().contains("oracle-function") ||
-                generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
+                generatorContext.getOptions() instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
     }
 
     @Override
@@ -241,12 +245,8 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         return false;
     }
 
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool().isGradle();
-    }
-
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+    public boolean shouldApply(Options options, Set<Feature> selectedFeatures) {
+        return OptionUtils.hasGradleBuildTool(options);
     }
 }

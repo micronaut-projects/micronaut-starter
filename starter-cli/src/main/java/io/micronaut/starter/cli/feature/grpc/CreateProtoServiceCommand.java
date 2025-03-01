@@ -19,21 +19,21 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.Project;
+import io.micronaut.projectgen.core.generator.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.grpc.template.proto;
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.template.RenderResult;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.TemplateRenderer;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
+import io.micronaut.projectgen.core.io.OutputHandler;
+import io.micronaut.projectgen.core.template.RenderResult;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
+import io.micronaut.projectgen.core.template.TemplateRenderer;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
-import static io.micronaut.starter.application.ApplicationType.GRPC;
+import static io.micronaut.projectgen.micronaut.ApplicationType.GRPC;
 
 @Command(name = "create-proto-service", description = "Creates a protobuf file for the given ame")
 @Prototype

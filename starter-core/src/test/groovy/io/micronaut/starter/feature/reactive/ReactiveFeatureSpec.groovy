@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.reactive
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.projectgen.core.buildtools.BuildTool
 import spock.lang.Unroll
 
 class ReactiveFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {

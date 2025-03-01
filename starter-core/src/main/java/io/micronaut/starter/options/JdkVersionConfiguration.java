@@ -17,6 +17,7 @@ package io.micronaut.starter.options;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.projectgen.core.options.JdkVersion;
 
 import java.util.List;
 

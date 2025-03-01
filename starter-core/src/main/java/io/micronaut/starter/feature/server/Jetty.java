@@ -18,10 +18,11 @@ package io.micronaut.starter.feature.server;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
 
+import io.micronaut.projectgen.core.utils.OptionUtils;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jetty.server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -44,13 +45,13 @@ public class Jetty extends AbstractServletFeature {
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#jetty";
     }
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.servlet")
                     .artifactId("micronaut-http-server-jetty")

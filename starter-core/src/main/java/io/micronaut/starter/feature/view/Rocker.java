@@ -17,13 +17,13 @@ package io.micronaut.starter.feature.view;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Coordinate;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.views.rocker.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -48,12 +48,12 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
     }
 
     @Override
-    public String getThirdPartyDocumentation() {
+    public String getThirdPartyDocumentation(GeneratorContext generatorContext) {
         return "https://github.com/fizzed/rocker";
     }
 
     @Override
-    public String getMicronautDocumentation() {
+    public String getFrameworkDocumentation(GeneratorContext generatorContext) {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker";
     }
 

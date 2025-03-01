@@ -16,15 +16,15 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.ContextFactory;
+import io.micronaut.projectgen.core.options.OperatingSystem;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.feature.AvailableFeatures;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.feature.FeatureContext;
+import io.micronaut.projectgen.core.io.ConsoleOutput;
+import io.micronaut.projectgen.core.options.Options;
 
 import java.util.Collections;
 import java.util.Comparator;

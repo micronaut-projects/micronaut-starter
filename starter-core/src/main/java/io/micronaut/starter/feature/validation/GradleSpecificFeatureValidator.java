@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.GradleSpecificFeature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.projectgen.core.feature.FeatureValidator;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.buildtools.gradle.GradleSpecificFeature;
+import io.micronaut.projectgen.core.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -26,13 +28,13 @@ import java.util.Set;
 @Singleton
 public class GradleSpecificFeatureValidator implements FeatureValidator {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+    public void validatePreProcessing(Options options, Set<Feature> features) {
 
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(GradleSpecificFeature.class::isInstance) && !options.getBuildTool().isGradle()) {
+    public void validatePostProcessing(Options options, Set<Feature> features) {
+        if (features.stream().anyMatch(GradleSpecificFeature.class::isInstance) && !OptionUtils.hasGradleBuildTool(options)) {
             throw new IllegalArgumentException("Feature only supported by Gradle");
         }
     }

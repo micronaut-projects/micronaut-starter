@@ -18,9 +18,9 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.data.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -36,11 +36,6 @@ public class Data implements Feature {
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

@@ -1,13 +1,14 @@
 package io.micronaut.starter.feature.buildless
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
 
 class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Override
@@ -39,7 +40,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "feature buildless is unsupported with maven and #language"(Language language) {
         when:
-        generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [Buildless.NAME])
+        generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(language).buildTool(BuildTool.MAVEN).build(), [Buildless.NAME])
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -51,7 +52,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "buildless configured correctly for #buildTool"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(buildTool).build(), [Buildless.NAME])
         def version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
         def settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
         def expectedPlugin = """id("build.less") version("$version\""""

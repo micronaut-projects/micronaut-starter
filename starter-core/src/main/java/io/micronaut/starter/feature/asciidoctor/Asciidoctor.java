@@ -17,20 +17,21 @@ package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.projectgen.core.rocker.RockerWritable;
+import io.micronaut.projectgen.core.utils.OptionUtils;
+import io.micronaut.projectgen.micronaut.ApplicationType;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildProperties;
+import io.micronaut.projectgen.core.buildtools.dependencies.CoordinateResolver;
+import io.micronaut.projectgen.core.buildtools.gradle.GradlePlugin;
+import io.micronaut.projectgen.core.buildtools.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocMavenPlugin;
 import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.rocker.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
@@ -61,7 +62,7 @@ public class Asciidoctor implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
+        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
             generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
 
             generatorContext.addBuildPlugin(GradlePlugin.builder()
@@ -69,7 +70,7 @@ public class Asciidoctor implements Feature {
                     .lookupArtifactId("asciidoctor-gradle-jvm")
                     .build());
 
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        } else if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             String mavenPluginArtifactId = "asciidoctor-maven-plugin";
             BuildProperties props = generatorContext.getBuildProperties();
             coordinateResolver.resolve(mavenPluginArtifactId)
@@ -87,11 +88,6 @@ public class Asciidoctor implements Feature {
                     .build());
         }
         generatorContext.addTemplate("indexAdoc", new RockerTemplate("src/docs/asciidoc/index.adoc", indexAdoc.template()));
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

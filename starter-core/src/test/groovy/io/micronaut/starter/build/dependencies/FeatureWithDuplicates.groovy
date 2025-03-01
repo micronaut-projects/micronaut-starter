@@ -1,8 +1,8 @@
 package io.micronaut.starter.build.dependencies
 
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.Feature
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.core.generator.GeneratorContext
+import io.micronaut.projectgen.core.feature.Feature
 import jakarta.inject.Singleton
 
 @Singleton
@@ -18,11 +18,6 @@ class FeatureWithDuplicates implements Feature {
     @Override
     String getName() {
         return "feature-with-duplicates"
-    }
-
-    @Override
-    boolean supports(ApplicationType applicationType) {
-        true
     }
 
     @Override

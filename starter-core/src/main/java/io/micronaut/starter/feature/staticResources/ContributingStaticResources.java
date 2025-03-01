@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.staticResources;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 import java.util.List;
 

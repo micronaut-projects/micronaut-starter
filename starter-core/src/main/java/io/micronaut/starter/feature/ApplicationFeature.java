@@ -16,9 +16,11 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.projectgen.core.feature.Feature;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.BuildProperties;
+import io.micronaut.projectgen.core.buildtools.BuildTool;
+import io.micronaut.projectgen.core.utils.OptionUtils;
 
 public interface ApplicationFeature extends Feature {
 
@@ -32,7 +34,7 @@ public interface ApplicationFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (OptionUtils.hasMavenBuildTool(generatorContext.getOptions())) {
             String mainClass = mainClassName(generatorContext);
             if (mainClass != null) {
                 BuildProperties buildProperties = generatorContext.getBuildProperties();

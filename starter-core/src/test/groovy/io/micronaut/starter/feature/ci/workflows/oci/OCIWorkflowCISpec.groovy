@@ -1,15 +1,17 @@
 package io.micronaut.starter.feature.ci.workflows.oci
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.starter.feature.ci.workflows.gitlab.GitlabCiWorkflowFeature
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Unroll
 
 class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture {
@@ -25,9 +27,16 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     @Unroll
     void 'test oracle-cloud-devops-build-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
-                [OCICiWorkflowFeature.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(jdkVersion)
+                .features([OCICiWorkflowFeature.NAME])
+                .build()
+
+        def output = generate(options)
         def workflow = output["build_spec.yml"]
 
         then:
@@ -64,9 +73,15 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     @Unroll
     void 'test oracle-cloud-devops-build-ci and graalvm is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion.majorVersion())),
-                [OCICiWorkflowFeature.NAME, GraalVM.FEATURE_NAME_GRAALVM])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(JdkVersion.valueOf(jdkVersion.majorVersion()))
+                .features([OCICiWorkflowFeature.NAME, GraalVM.FEATURE_NAME_GRAALVM])
+                .build()
+        def output = generate(options)
         def workflow = output["build_spec.yml"]
 
         then:

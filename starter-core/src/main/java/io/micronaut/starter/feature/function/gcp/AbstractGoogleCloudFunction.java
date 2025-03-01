@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.feature.function.gcp;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
-import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.projectgen.features.gradle.ShadePlugin;
 
 public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
     public static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()

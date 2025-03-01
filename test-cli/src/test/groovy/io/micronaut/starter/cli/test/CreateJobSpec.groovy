@@ -2,8 +2,8 @@ package io.micronaut.starter.cli.test
 
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.command.project.job.CreateJobCommand
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.Language
+import io.micronaut.projectgen.core.io.ConsoleOutput
+import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 

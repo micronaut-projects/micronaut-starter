@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.projectgen.core.feature.Feature;
 
 /**
  * Marker interface for JPA features, such as DataJpa and HibernateJpa.

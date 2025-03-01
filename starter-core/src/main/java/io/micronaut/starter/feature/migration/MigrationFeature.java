@@ -15,20 +15,15 @@
  */
 package io.micronaut.starter.feature.migration;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.projectgen.core.feature.OneOfFeature;
 
 public interface MigrationFeature extends OneOfFeature {
 
     @Override
     default Class<?> getFeatureClass() {
         return MigrationFeature.class;
-    }
-
-    @Override
-    default boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

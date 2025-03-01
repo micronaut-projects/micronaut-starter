@@ -3,11 +3,11 @@ package io.micronaut.starter.feature.database.r2dbc
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
-import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.feature.Features
+import io.micronaut.projectgen.core.feature.Features
 import io.micronaut.starter.feature.database.DataJdbcSpec
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.H2
@@ -21,8 +21,8 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Options
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 
 class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {

@@ -17,7 +17,7 @@
 package io.micronaut.starter.cli.feature.acme
 
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.projectgen.core.io.ConsoleOutput
 import org.shredzone.acme4j.Account
 import org.shredzone.acme4j.AccountBuilder
 import org.shredzone.acme4j.Session

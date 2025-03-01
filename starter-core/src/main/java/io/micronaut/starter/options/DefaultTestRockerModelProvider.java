@@ -16,6 +16,7 @@
 package io.micronaut.starter.options;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
 
 public class DefaultTestRockerModelProvider implements TestRockerModelProvider {
     private final RockerModel spock;

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.github.workflows.docker
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import io.micronaut.starter.util.VersionInfo
