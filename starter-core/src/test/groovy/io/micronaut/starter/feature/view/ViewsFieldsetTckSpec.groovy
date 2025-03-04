@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.view
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -29,7 +30,7 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
 
     void "views-fieldset supports #applicationType"(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.DEFAULT]
@@ -37,7 +38,7 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
 
     void "views-fieldset does not support #applicationType"(ApplicationType applicationType) {
         expect:
-        !feature.supports(applicationType)
+        !feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values() - ApplicationType.DEFAULT

@@ -1,5 +1,6 @@
 package io.micronaut.starter.options
 
+import io.micronaut.projectgen.core.options.JdkVersion
 import spock.lang.Specification
 
 class JdkVersionSpec extends Specification {

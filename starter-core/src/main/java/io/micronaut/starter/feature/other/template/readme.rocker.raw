@@ -1,6 +1,7 @@
+@option discardLogicWhitespace=true
 @import io.micronaut.projectgen.core.feature.Feature
-
-@args (
-Feature feature
-)
-
+@import java.util.List
+@args (Feature feature, List<String> links)
+@for (String link : links) {
+- [@link](@link)
+}

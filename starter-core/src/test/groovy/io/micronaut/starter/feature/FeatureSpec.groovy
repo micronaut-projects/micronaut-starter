@@ -1,9 +1,14 @@
 package io.micronaut.starter.feature
 
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.buildtools.dependencies.Dependency
 import io.micronaut.projectgen.core.buildtools.maven.MavenSpecificFeature
+import io.micronaut.projectgen.core.feature.DefaultFeature
 import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.projectgen.core.feature.LanguageSpecificFeature
+import io.micronaut.projectgen.core.openrewrite.FileContents
+import io.micronaut.projectgen.core.openrewrite.RecipeFetcher
 import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.projectgen.core.options.Language
 import io.micronaut.projectgen.core.options.Options
@@ -66,12 +71,7 @@ class FeatureSpec extends BeanContextSpec {
         if (feature instanceof MavenSpecificFeature) {
             buildTool = BuildTool.MAVEN
         }
-        Options options = MicronautOptions.builder()
-                .language(language)
-                .testFramework(TestFramework.JUNIT)
-                .buildTool(buildTool)
-                .javaVersion(javaVersion)
-                .build()
+
         List<String> features = [feature.getName()]
 
         if (feature instanceof JAsyncSQLFeature) {
@@ -89,12 +89,45 @@ class FeatureSpec extends BeanContextSpec {
             features << JsonSchemaFeature.NAME
         }
         ApplicationType applicationType = applicationTypeForFeature(feature)
+        Options options = MicronautOptions.builder()
+                .applicationType(applicationType)
+                .language(language)
+                .operatingSystem(OperatingSystem.LINUX)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(javaVersion)
+                .build()
         def commandCtx = new GeneratorContext(buildProject(),
-                applicationType,
                 options,
-                OperatingSystem.LINUX,
                 getFeatures(features, options, applicationType).getFeatures(),
-                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false))
+                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false)),
+                new RecipeFetcher() {
+
+                    @Override
+                    Optional<String> findFrameworkDocumentationByRecipeName(String recipeName) {
+                        return Optional.empty()
+                    }
+
+                    @Override
+                    Optional<String> findThirdPartyDocumentationByRecipeName(String recipeName) {
+                        return Optional.empty()
+                    }
+
+                    @Override
+                    List<Dependency> findAllByRecipeNameAndBuildTool(@NonNull String recipe, @NonNull BuildTool bt) {
+                        return Collections.emptyList()
+                    }
+
+                    @Override
+                    Optional<Properties> findPropertiesByRecipeName(@NonNull String recipe) {
+                        return Optional.empty()
+                    }
+
+                    @Override
+                    List<FileContents> findAllFilesByRecipeName(@NonNull String recipe) {
+                        return Collections.emptyList()
+                    }
+                }
         )
         commandCtx.applyFeatures()
 
@@ -128,6 +161,6 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {
-        feature.supports(ApplicationType.FUNCTION) ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
+        feature.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build()) ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
     }
 }

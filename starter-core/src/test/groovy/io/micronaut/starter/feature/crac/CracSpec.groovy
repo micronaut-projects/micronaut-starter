@@ -28,7 +28,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut Support for CRaC (Coordinated Restore at Checkpoint) documentation](https://micronaut-projects.github.io/micronaut-crac/latest/guide)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-crac/latest/guide](https://micronaut-projects.github.io/micronaut-crac/latest/guide)")
         readme.contains("[https://wiki.openjdk.org/display/CRaC](https://wiki.openjdk.org/display/CRaC)")
     }
 
@@ -47,7 +47,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "feature crac #desc for #applicationType"(ApplicationType applicationType) {
         expect:
-        crac.supports(applicationType) == expected
+        crac.supports(MicronautOptions.builder().applicationType(applicationType).build()) == expected
 
         where:
         applicationType           | expected

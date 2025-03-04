@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.multitenancy
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -42,7 +43,7 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
     @Unroll("feature multi-tenancy works for application type: #applicationType")
     void "feature multi-tenancy works for every type of application type"(ApplicationType applicationType) {
         expect:
-        multitenancy.supports(applicationType)
+        multitenancy.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.kotlin
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -43,7 +44,7 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
     @Unroll("feature kotlin-extension-functions works for application type: #applicationType")
     void "feature kotlin-extension-functions works for every type of application type"(ApplicationType applicationType) {
         expect:
-        kotlinExtensionFunctions.supports(applicationType)
+        kotlinExtensionFunctions.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList()

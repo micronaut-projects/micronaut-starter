@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aop
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -20,16 +21,16 @@ class AOPSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "AOP supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        micronautAOP.supports(applicationType)
+        micronautAOP.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
         description = applicationType.name
     }
 
-    void "AOP overrides Feature->getMicronautDocumentation"() {
+    void "AOP overrides Feature->getFrameworkDocumentation"() {
         expect:
-        micronautAOP.micronautDocumentation
+        micronautAOP.getFrameworkDocumentation(null)
     }
 
     void "AOP belongs to API category"() {

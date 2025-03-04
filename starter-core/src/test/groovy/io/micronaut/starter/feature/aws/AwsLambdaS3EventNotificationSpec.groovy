@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
@@ -24,7 +25,7 @@ class AwsLambdaS3EventNotificationSpec extends ApplicationContextSpec {
 
     void "aws-lambda-s3-event-notification does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !awsLambdaS3EventNotification.supports(applicationType)
+        !awsLambdaS3EventNotification.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.FUNCTION)
@@ -32,6 +33,6 @@ class AwsLambdaS3EventNotificationSpec extends ApplicationContextSpec {
 
     void "aws-lambda-s3-event-notification supports function application type"() {
         expect:
-        awsLambdaS3EventNotification.supports(ApplicationType.FUNCTION)
+        awsLambdaS3EventNotification.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
     }
 }

@@ -35,7 +35,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     void "aws-alexa does not support #description"(ApplicationType applicationType,
                                                         String description) {
         expect:
-        !alexaFunction.supports(applicationType)
+        !alexaFunction.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList() - [
@@ -48,7 +48,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     @Unroll
     void "aws-alexa supports #description application type"() {
         expect:
-        alexaFunction.supports(applicationType)
+        alexaFunction.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [

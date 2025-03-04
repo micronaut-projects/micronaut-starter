@@ -38,8 +38,8 @@ class TelegramHttpChatBotSpec extends BaseTelegramChatBotSpec {
         then:
         readme.contains("Telegram ChatBot")
         readme.contains("This project has a dependency on `micronaut-chatbots-telegram-http` which has added a controller to your application with the path `/telegram`.")
-        readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Telegram ChatBot as a controller documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-validation/latest/guide/](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

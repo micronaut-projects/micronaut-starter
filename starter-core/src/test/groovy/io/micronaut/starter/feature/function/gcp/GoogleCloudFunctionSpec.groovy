@@ -67,7 +67,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {
         expect:
-        !googleCloudFunction.supports(applicationType)
+        !googleCloudFunction.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList() - [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
@@ -76,7 +76,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     void "google-cloud-function supports #description"(ApplicationType applicationType, String description) {
         expect:
-        googleCloudFunction.supports(applicationType)
+        googleCloudFunction.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]

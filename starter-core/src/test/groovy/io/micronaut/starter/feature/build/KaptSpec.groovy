@@ -48,7 +48,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'kapt supports every application type'(ApplicationType applicationType) {
         expect:
-        kapt.supports(applicationType)
+        kapt.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
@@ -56,8 +56,8 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'kapt defines documentation'() {
         expect:
-        kapt.micronautDocumentation
-        kapt.thirdPartyDocumentation
+        kapt.getFrameworkDocumentation(null)
+        kapt.getThirdPartyDocumentation(null)
     }
 
     void "test #buildTool kapt feature adds build plugin"(BuildTool buildTool) {

@@ -86,7 +86,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
     @Unroll
     void "kotlin-application does not support #description"(ApplicationType applicationType, String description) {
         expect:
-        !kotlinApplication.supports(applicationType)
+        !kotlinApplication.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [
@@ -99,7 +99,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
     @Unroll
     void "kotlin-application supports #description application type"() {
         expect:
-        kotlinApplication.supports(applicationType)
+        kotlinApplication.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList() - [

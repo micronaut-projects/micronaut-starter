@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.oracecloud
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -26,7 +27,7 @@ class OracleCloudLoggingSpec extends ApplicationContextSpec implements CommandOu
 
     void "oraclecloud-logging supports #applicationType application type"(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

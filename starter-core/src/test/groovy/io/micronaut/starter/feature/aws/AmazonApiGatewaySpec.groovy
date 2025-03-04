@@ -39,7 +39,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void "amazon-api-gateway does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !amazonApiGateway.supports(applicationType)
+        !amazonApiGateway.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.FUNCTION - ApplicationType.DEFAULT)
@@ -47,14 +47,13 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void "amazon-api-gateway supports function application type"() {
         expect:
-        amazonApiGateway.supports(ApplicationType.FUNCTION)
-        amazonApiGateway.supports(ApplicationType.DEFAULT)
+        amazonApiGateway.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
+        amazonApiGateway.supports(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).build())
     }
 
     void 'amazon-api-gateway feature with Cdk has doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, options,
-                [Cdk.NAME, AmazonApiGateway.NAME])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).features([Cdk.NAME, AmazonApiGateway.NAME]).build())
 
         then:
         output."README.md".contains($/https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway/$)
@@ -63,8 +62,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void 'amazon-api-gateway feature without Cdk has doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, options,
-                [AmazonApiGateway.NAME])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).features([AmazonApiGateway.NAME]).build())
 
         then:
         output."README.md".contains($/https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway/$)
@@ -74,8 +72,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void 'amazon-api-gateway feature is a OneOfFeature with amazon-api-gateway-http'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, options,
-                [AmazonApiGateway.NAME, AmazonApiGatewayHttp.NAME])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).features([AmazonApiGateway.NAME, AmazonApiGatewayHttp.NAME]).build())
 
         then:
         def ex = thrown IllegalArgumentException
@@ -84,7 +81,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
 
     void 'lambda runtime main class configuration is present for amazon-api-gateway and build #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options.withBuildTool(buildTool), [AmazonApiGateway.NAME])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(buildTool).features([AmazonApiGateway.NAME]).build())
         def build = output[buildTool.buildFileName]
 
         then:

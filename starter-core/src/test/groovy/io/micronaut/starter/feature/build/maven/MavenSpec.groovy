@@ -31,7 +31,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Readme has Maven plugin docs (lang = #lang, apptype = #apptype)'(ApplicationType apptype, Language lang) {
         when:
-        Map<String, String> output = generate(apptype, createOptions(lang, BuildTool.MAVEN))
+        Map<String, String> output = generate(createOptions(apptype, lang, BuildTool.MAVEN))
         String readme = output["README.md"]
 
         then:
@@ -209,6 +209,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
+    private static Options createOptions(ApplicationType applicationType, Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
+        MicronautOptions.builder().applicationType(applicationType).language(language).testFramework(language.getDefaults().getTest()).buildTool(buildTool).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk()).build()
+    }
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
         MicronautOptions.builder().language(language).testFramework(language.getDefaults().getTest()).buildTool(buildTool).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk()).build()
     }

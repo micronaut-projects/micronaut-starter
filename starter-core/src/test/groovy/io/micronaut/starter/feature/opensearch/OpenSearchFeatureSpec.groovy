@@ -64,8 +64,8 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
 
     void "test opensearch feature #opensearchFeature.name documentation links"(OpenSearchFeature opensearchFeature) {
         expect:
-        opensearchFeature.getMicronautDocumentation() == 'https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/'
-        opensearchFeature.getThirdPartyDocumentation() == 'https://opensearch.org/docs/latest/clients/java/'
+        opensearchFeature.getFrameworkDocumentation(null) == 'https://micronaut-projects.github.io/micronaut-opensearch/latest/guide/'
+        opensearchFeature.getThirdPartyDocumentation(null) == 'https://opensearch.org/docs/latest/clients/java/'
 
         where:
         [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.guice
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -56,7 +57,7 @@ class MicronautGuiceSpec  extends ApplicationContextSpec implements CommandOutpu
 
         and: 'supports every application type'
         for (ApplicationType applicationType : ApplicationType.values()) {
-            assert f.supports(applicationType)
+            assert f.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
     }
 }

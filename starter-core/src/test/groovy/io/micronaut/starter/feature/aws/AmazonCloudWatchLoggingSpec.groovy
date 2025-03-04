@@ -1,5 +1,6 @@
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -27,7 +28,7 @@ class AmazonCloudWatchLoggingSpec extends ApplicationContextSpec implements Comm
 
     void "amazon-cloudwatch-logging supports #applicationType application type"(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

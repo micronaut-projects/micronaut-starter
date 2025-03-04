@@ -8,7 +8,7 @@ import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.projectgen.core.feature.FeatureContext
 import io.micronaut.projectgen.core.generator.ContextFactory
 import io.micronaut.projectgen.micronaut.ApplicationType
-
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
 import io.micronaut.projectgen.core.buildtools.BuildTool
@@ -37,9 +37,7 @@ class ContextFactorySpec extends Specification {
         when:
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 [],
-                ApplicationType.DEFAULT,
-                io.micronaut.projectgen.micronaut.MicronautOptions.builder().language(Language.KOTLIN).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build(),
-                null
+                MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build()
         )
         then:
         noExceptionThrown()

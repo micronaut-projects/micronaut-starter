@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.httpclient
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -43,7 +44,7 @@ class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture
 
     void "http-client-jdk supports #applicationType application type"(ApplicationType applicationType) {
         expect:
-        httpClientJdk.supports(applicationType)
+        httpClientJdk.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

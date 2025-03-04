@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.logging
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,7 +25,7 @@ class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOut
 
     void "Slf4jSimpleLogger supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        slf4jSimpleLogger.supports(applicationType)
+        slf4jSimpleLogger.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

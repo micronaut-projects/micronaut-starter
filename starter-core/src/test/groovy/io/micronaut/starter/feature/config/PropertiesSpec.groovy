@@ -7,10 +7,10 @@ import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.projectgen.core.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.projectgen.core.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
+import io.micronaut.projectgen.core.feature.config.Properties
 
 class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -26,7 +26,7 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "properties supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        props.supports(applicationType)
+        props.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

@@ -17,7 +17,7 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         then:
         readme
-        readme.contains("[Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)")
+        readme.contains("[https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)")
     }
 
     @Unroll

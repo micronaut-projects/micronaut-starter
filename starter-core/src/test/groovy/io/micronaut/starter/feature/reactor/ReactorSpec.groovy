@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.reactor
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -45,7 +46,7 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     @Unroll("feature reactor works for application type: #applicationType")
     void "feature reactor works for every type of application type"(ApplicationType applicationType) {
         expect:
-        reactor.supports(applicationType)
+        reactor.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

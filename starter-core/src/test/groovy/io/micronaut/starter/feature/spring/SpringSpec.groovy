@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.spring
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -52,7 +53,7 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
     @Unroll
     void 'feature spring supports every type of application type. applicationType=#applicationType'() {
         expect:
-        spring.supports(applicationType)
+        spring.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList()

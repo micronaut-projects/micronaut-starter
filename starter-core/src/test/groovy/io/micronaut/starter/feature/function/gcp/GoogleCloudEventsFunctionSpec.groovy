@@ -25,12 +25,12 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
 
     void "google-cloud-function-cloudevents supports function application type"() {
         expect:
-        googleCloudEventsFunction.supports(ApplicationType.FUNCTION)
+        googleCloudEventsFunction.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
     }
 
     void "google-cloud-function-cloudevents does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !googleCloudEventsFunction.supports(applicationType)
+        !googleCloudEventsFunction.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.FUNCTION)

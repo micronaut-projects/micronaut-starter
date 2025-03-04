@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.micrometer
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -43,7 +44,7 @@ class MicrometerObservationSpec extends ApplicationContextSpec implements Comman
 
     void "micrometer-observation supports every application type"(ApplicationType applicationType) {
         expect:
-        !feature.supports(applicationType)
+        !feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values() - ApplicationType.DEFAULT

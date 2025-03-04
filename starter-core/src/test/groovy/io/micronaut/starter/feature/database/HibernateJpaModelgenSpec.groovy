@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -29,7 +30,7 @@ class HibernateJpaModelgenSpec extends ApplicationContextSpec implements Command
 
     void "feature hibernate-jpamodelgen supports applicationType=#applicationType"(ApplicationType applicationType) {
         expect:
-        hibernateJpaModelgen.supports(applicationType)
+        hibernateJpaModelgen.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

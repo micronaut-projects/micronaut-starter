@@ -40,10 +40,10 @@ class BasecampAzureChatBotSpec extends BaseBasecampChatBotSpec {
         then:
         readme.contains("Basecamp ChatBot")
         readme.contains("./$command")
-        readme.contains("- [Micronaut Azure Function documentation](https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions](https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions)")
         readme.contains("- [https://docs.microsoft.com/azure](https://docs.microsoft.com/azure)")
-        readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Basecamp ChatBot as an Azure Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-validation/latest/guide/](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

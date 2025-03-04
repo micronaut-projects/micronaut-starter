@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.websocket
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -46,7 +47,7 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void "websocket supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        websocket.supports(applicationType)
+        websocket.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

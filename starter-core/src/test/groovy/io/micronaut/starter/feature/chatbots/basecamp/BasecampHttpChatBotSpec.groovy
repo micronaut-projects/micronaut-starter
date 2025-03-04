@@ -33,8 +33,8 @@ class BasecampHttpChatBotSpec extends BaseBasecampChatBotSpec {
         then:
         readme.contains("Basecamp ChatBot")
         readme.contains("This project has a dependency on `micronaut-chatbots-basecamp-http` which has added a controller to your application with the path `/basecamp`.")
-        readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut Basecamp ChatBot as a controller documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-validation/latest/guide/](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()

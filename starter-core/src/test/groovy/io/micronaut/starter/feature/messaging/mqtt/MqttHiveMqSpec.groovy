@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.messaging.mqtt
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.Category
@@ -15,21 +16,21 @@ class MqttHiveMqSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "mqtt-hivemq supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
         description = applicationType.name
     }
 
-    void "mqtt-hivemq overrides Feature->getMicronautDocumentation"() {
+    void "mqtt-hivemq overrides Feature->getFrameworkDocumentation"() {
         expect:
-        feature.micronautDocumentation
+        feature.getFrameworkDocumentation(null)
     }
 
     void "mqtt-hivemq overrides Feature->getThirdPartyDocumentation"() {
         expect:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
     }
 
     void "AOP belongs to API category"() {

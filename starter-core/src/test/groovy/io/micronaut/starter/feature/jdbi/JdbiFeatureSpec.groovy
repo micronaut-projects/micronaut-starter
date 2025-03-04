@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.jdbi
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -29,7 +30,7 @@ class JdbiFeatureSpec extends ApplicationContextSpec  implements CommandOutputFi
     @Unroll("feature sql-jdbi works for application type: #applicationType")
     void "feature sql-jdbi works for every type of application type"(ApplicationType applicationType) {
         expect:
-        jdbiFeature.supports(applicationType)
+        jdbiFeature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

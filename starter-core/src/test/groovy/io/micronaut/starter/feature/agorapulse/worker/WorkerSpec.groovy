@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.agorapulse.worker
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,7 +25,7 @@ class WorkerSpec extends ApplicationContextSpec {
         Feature feature = featureOptional.get()
 
         then:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
 
         and: 'is in the SCHEDULING category'
         feature.category == "Scheduling"
@@ -34,10 +35,10 @@ class WorkerSpec extends ApplicationContextSpec {
 
         and: 'supports only a ApplicationType.DEFAULT'
         for (ApplicationType type : (ApplicationType.values() - supportedApplicationTypes)) {
-            assert !feature.supports(type)
+            assert !feature.supports(MicronautOptions.builder().applicationType(type).build())
         }
         for (ApplicationType type : supportedApplicationTypes) {
-            assert feature.supports(type)
+            assert feature.supports(MicronautOptions.builder().applicationType(type).build())
         }
     }
 

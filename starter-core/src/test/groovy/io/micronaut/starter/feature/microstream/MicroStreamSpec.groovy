@@ -19,7 +19,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-microstream/latest/guide](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
         readme.contains("[https://microstream.one/](https://microstream.one/)")
     }
 
@@ -29,9 +29,9 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-microstream/latest/guide](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
         readme.contains("[https://microstream.one/](https://microstream.one/)")
-        readme.contains("[Micronaut MicroStream REST documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#rest)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#rest](https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#rest)")
         readme.contains("[https://docs.microstream.one/manual/storage/rest-interface/index.html](https://docs.microstream.one/manual/storage/rest-interface/index.html)")
     }
 
@@ -41,9 +41,9 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        !readme.contains("[Micronaut MicroStream documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
+        !readme.contains("[https://micronaut-projects.github.io/micronaut-microstream/latest/guide](https://micronaut-projects.github.io/micronaut-microstream/latest/guide)")
         !readme.contains("[https://microstream.one/](https://microstream.one/)")
-        readme.contains("[Micronaut MicroStream Cache documentation](https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#cache)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#cache](https://micronaut-projects.github.io/micronaut-microstream/latest/guide/#cache)")
         readme.contains("[https://docs.microstream.one/manual/cache/index.html](https://docs.microstream.one/manual/cache/index.html)")
     }
 

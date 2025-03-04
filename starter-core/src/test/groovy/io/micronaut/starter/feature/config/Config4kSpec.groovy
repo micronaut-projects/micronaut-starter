@@ -42,7 +42,7 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "config4k supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        config4k.supports(applicationType)
+        config4k.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

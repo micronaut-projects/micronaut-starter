@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,21 +23,21 @@ class AwsLambdaEventsSerdeSpec extends ApplicationContextSpec implements Command
 
     void "aws-lambda-events-serde supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
         description = applicationType.name
     }
 
-    void "aws-lambda-events-serde overrides Feature->getMicronautDocumentation"() {
+    void "aws-lambda-events-serde overrides Feature->getFrameworkDocumentation"() {
         expect:
-        feature.micronautDocumentation
+        feature.getFrameworkDocumentation(null)
     }
 
     void "aws-lambda-events-serde overrides Feature->getThirdPartyDocumentation"() {
         expect:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
     }
 
     void "aws-lambda-events-serde belongs to API category"() {

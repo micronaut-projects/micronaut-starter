@@ -68,7 +68,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void "feature ktor does not support type: #applicationType"(ApplicationType applicationType) {
         expect:
-        !ktor.supports(applicationType)
+        !ktor.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values().toList() - ApplicationType.DEFAULT)
@@ -77,7 +77,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void "feature ktor supports #applicationType"(ApplicationType applicationType) {
         expect:
-        ktor.supports(applicationType)
+        ktor.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.DEFAULT]

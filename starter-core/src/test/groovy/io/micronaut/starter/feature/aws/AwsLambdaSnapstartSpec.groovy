@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.architecture.Arm
@@ -24,7 +25,7 @@ class AwsLambdaSnapstartSpec extends BeanContextSpec implements CommandOutputFix
     @Unroll
     void "snapstart does not support #description application type"(ApplicationType applicationType, String description) {
         expect:
-        !snapstart.supports(applicationType)
+        !snapstart.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - supportedApplicationTypesForSnapStart())
@@ -33,13 +34,13 @@ class AwsLambdaSnapstartSpec extends BeanContextSpec implements CommandOutputFix
 
     void "snapstart overrides Feature->getThirdPartyDocumentation"() {
         expect:
-        snapstart.thirdPartyDocumentation
+        snapstart.getThirdPartyDocumentation(null)
     }
 
     @Unroll
     void "snapstart supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        snapstart.supports(applicationType)
+        snapstart.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << supportedApplicationTypesForSnapStart()

@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.dev
 
 import io.micronaut.context.env.Environment
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -19,13 +20,13 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
     void 'test control-panel feature supports default application type'() {
 
         expect:
-        controlPanel.supports(ApplicationType.DEFAULT)
+        controlPanel.supports(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).build())
 
         and:
-        !controlPanel.supports(ApplicationType.FUNCTION)
-        !controlPanel.supports(ApplicationType.CLI)
-        !controlPanel.supports(ApplicationType.MESSAGING)
-        !controlPanel.supports(ApplicationType.GRPC)
+        !controlPanel.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
+        !controlPanel.supports(MicronautOptions.builder().applicationType(ApplicationType.CLI).build())
+        !controlPanel.supports(MicronautOptions.builder().applicationType(ApplicationType.MESSAGING).build())
+        !controlPanel.supports(MicronautOptions.builder().applicationType(ApplicationType.GRPC).build())
     }
 
     void 'test readme.md with feature control-panel contains links to micronaut docs'() {

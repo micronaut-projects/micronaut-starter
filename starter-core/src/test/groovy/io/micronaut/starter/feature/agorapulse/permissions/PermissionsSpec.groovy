@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.agorapulse.permissions
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -21,7 +22,7 @@ class PermissionsSpec extends ApplicationContextSpec {
         Feature feature = featureOptional.get()
 
         then:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
 
         and: 'is in the SECURITY category'
         feature.category == "Security"
@@ -31,7 +32,7 @@ class PermissionsSpec extends ApplicationContextSpec {
 
         and: 'supports all types'
         for (ApplicationType type : ApplicationType.values()) {
-            assert feature.supports(type)
+            assert feature.supports(MicronautOptions.builder().applicationType(type).build())
         }
     }
 

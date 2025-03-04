@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.opentelemetry
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -38,7 +39,7 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
     @Unroll
     void 'feature tracing-opentelemetry-exporter-logging does not support type: #applicationType'(ApplicationType applicationType) {
         expect:
-        !feature.supports(applicationType)
+        !feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.CLI]
@@ -47,7 +48,7 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
     @Unroll
     void 'feature tracing-opentelemetry-exporter-logging supports #applicationType'(ApplicationType applicationType) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values().toList() - ApplicationType.CLI)

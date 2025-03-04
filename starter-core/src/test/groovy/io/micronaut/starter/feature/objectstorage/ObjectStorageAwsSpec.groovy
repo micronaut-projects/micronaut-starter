@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.objectstorage
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,7 +23,7 @@ class ObjectStorageAwsSpec extends ApplicationContextSpec implements CommandOutp
         feature.category == Category.CLOUD
         feature.cloud == Cloud.AWS
         for (ApplicationType applicationType : ApplicationType.values()) {
-            assert feature.supports(applicationType)
+            assert feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
     }
 

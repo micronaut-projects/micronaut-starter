@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,14 +25,14 @@ class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements Comma
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut Data Azure Cosmos documentation](https://micronaut-projects.github.io/micronaut-data/latest/guide/#azureCosmos)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-data/latest/guide/#azureCosmos](https://micronaut-projects.github.io/micronaut-data/latest/guide/#azureCosmos)")
         readme.contains("[https://learn.microsoft.com/en-us/azure/cosmos-db/](https://learn.microsoft.com/en-us/azure/cosmos-db/)")
     }
 
     void "feature data-azure-cosmos properties validation"() {
         expect:
         for (applicationType in ApplicationType.values())
-            feature.supports(applicationType)
+            feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
         feature.category == Category.DATABASE
         feature.name == 'data-azure-cosmos'
     }

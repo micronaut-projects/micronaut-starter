@@ -39,7 +39,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void "amazon-api-gateway-http does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !amazonApiGatewayHttp.supports(applicationType)
+        !amazonApiGatewayHttp.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.FUNCTION - ApplicationType.DEFAULT)
@@ -47,13 +47,13 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void "amazon-api-gateway-http supports function application type"() {
         expect:
-        amazonApiGatewayHttp.supports(ApplicationType.FUNCTION)
-        amazonApiGatewayHttp.supports(ApplicationType.DEFAULT)
+        amazonApiGatewayHttp.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
+        amazonApiGatewayHttp.supports(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).build())
     }
 
     void 'lambda runtime main class configuration is present for amazon-api-gateway-http and build #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options.withBuildTool(buildTool), [AmazonApiGatewayHttp.NAME])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(buildTool).features([AmazonApiGatewayHttp.NAME]).build())
         def build = output[buildTool.buildFileName]
 
         then:

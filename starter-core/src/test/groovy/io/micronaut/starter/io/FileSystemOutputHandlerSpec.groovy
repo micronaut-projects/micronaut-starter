@@ -1,5 +1,6 @@
 package io.micronaut.starter.io
 
+import io.micronaut.projectgen.core.io.ConsoleOutput
 import io.micronaut.projectgen.core.io.FileSystemOutputHandler
 import io.micronaut.starter.template.StringTemplate
 import spock.lang.Specification

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.retry
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -31,7 +32,7 @@ class RetrySpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void "retry supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        retry.supports(applicationType)
+        retry.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

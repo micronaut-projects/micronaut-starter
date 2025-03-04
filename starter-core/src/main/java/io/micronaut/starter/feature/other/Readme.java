@@ -35,6 +35,7 @@ import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,7 +57,11 @@ public class Readme implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getFrameworkDocumentation(generatorContext) != null || feature.getThirdPartyDocumentation(generatorContext) != null).collect(Collectors.toList());
+        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(feature -> feature.getFrameworkDocumentation(generatorContext) != null || feature.getThirdPartyDocumentation(generatorContext) != null)
+                .toList();
         List<Writable> helpTemplates = generatorContext.getHelpTemplates();
         if (!helpTemplates.isEmpty() || !featuresWithDocumentationLinks.isEmpty()) {
             generatorContext.addTemplate("readme", new DefaultTemplate(Template.ROOT, "README.md") {
@@ -72,7 +77,16 @@ public class Readme implements DefaultFeature {
                     }
 
                     for (Feature feature : featuresWithDocumentationLinks) {
-                        Writable writable = new RockerWritable(readme.template(feature));
+                        List<String> links = new ArrayList<>();
+                        String link = feature.getFrameworkDocumentation(generatorContext);
+                        if (StringUtils.isNotEmpty(link)) {
+                            links.add(link);
+                        }
+                        link = feature.getThirdPartyDocumentation(generatorContext);
+                        if (StringUtils.isNotEmpty(link)) {
+                            links.add(link);
+                        }
+                        Writable writable = new RockerWritable(readme.template(feature, links));
                         writable.write(outputStream);
                         outputStream.write(lineSeparator);
                     }

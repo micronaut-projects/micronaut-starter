@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.spring
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -39,7 +40,7 @@ class SpringWebSpec extends ApplicationContextSpec {
     @Unroll
     void 'feature spring-web does not support type: #applicationType'(ApplicationType applicationType) {
         expect:
-        !springWeb.supports(applicationType)
+        !springWeb.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values().toList() - ApplicationType.DEFAULT)
@@ -48,7 +49,7 @@ class SpringWebSpec extends ApplicationContextSpec {
     @Unroll
     void 'feature spring-web supports #applicationType'(ApplicationType applicationType) {
         expect:
-        springWeb.supports(applicationType)
+        springWeb.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.DEFAULT]

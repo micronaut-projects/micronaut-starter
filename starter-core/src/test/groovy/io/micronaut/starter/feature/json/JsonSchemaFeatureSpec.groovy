@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.json
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -47,7 +48,7 @@ class JsonSchemaFeatureSpec extends ApplicationContextSpec implements CommandOut
 
     void "json-schema supports application type = #applicationType"(ApplicationType applicationType) {
         expect:
-        jsonSchemaFeature.supports(applicationType)
+        jsonSchemaFeature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

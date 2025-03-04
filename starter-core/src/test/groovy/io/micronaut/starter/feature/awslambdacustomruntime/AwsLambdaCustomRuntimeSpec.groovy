@@ -62,7 +62,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     @Unroll
     void "aws-lambda-custom-runtime does not support #description"(ApplicationType applicationType, String description) {
         expect:
-        !awsLambdaCustomRuntime.supports(applicationType)
+        !awsLambdaCustomRuntime.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList() - [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
@@ -71,7 +71,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
 
     void "aws-lambda-custom-runtime supports #description application type"() {
         expect:
-        awsLambdaCustomRuntime.supports(applicationType)
+        awsLambdaCustomRuntime.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [

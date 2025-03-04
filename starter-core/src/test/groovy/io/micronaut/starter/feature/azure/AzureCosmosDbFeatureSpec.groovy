@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.azure
 
 import groovy.xml.XmlSlurper
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -20,14 +21,14 @@ class AzureCosmosDbFeatureSpec extends ApplicationContextSpec implements Command
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut Azure Cosmos DB documentation](https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureCosmosClient)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureCosmosClient](https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureCosmosClient)")
         readme.contains("[https://learn.microsoft.com/en-us/azure/cosmos-db/](https://learn.microsoft.com/en-us/azure/cosmos-db/)")
     }
 
     void "feature azure-cosmos-db properties validation"() {
         expect:
         for (applicationType in ApplicationType.values())
-            feature.supports(applicationType) == true
+            feature.supports(MicronautOptions.builder().applicationType(applicationType).build()) == true
         feature.category == Category.DATABASE
         feature.name == 'azure-cosmos-db'
     }

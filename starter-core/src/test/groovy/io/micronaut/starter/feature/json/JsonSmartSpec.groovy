@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.json
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -29,7 +30,7 @@ class JsonSmartSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "feature json-smart supports applicationType=#applicationType"(ApplicationType applicationType) {
         expect:
-        jsonSmart.supports(applicationType)
+        jsonSmart.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

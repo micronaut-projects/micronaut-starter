@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.objectstorage
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -25,7 +26,7 @@ class ObjectStorageLocalSpec extends ApplicationContextSpec implements CommandOu
         feature.description == "Micronaut Object Storage provides a uniform API to create, read and delete objects in the major cloud providers. This feature adds a local implementation to save to a folder in your computer which you may want to use during testing and development.";
         feature.category == Category.DEV_TOOLS
         for (ApplicationType applicationType : ApplicationType.values()) {
-            assert feature.supports(applicationType)
+            assert feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
     }
 

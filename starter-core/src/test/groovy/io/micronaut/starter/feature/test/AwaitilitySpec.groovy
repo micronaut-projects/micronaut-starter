@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.test
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,14 +23,14 @@ class AwaitilitySpec extends ApplicationContextSpec {
         Feature feature = featureOptional.get()
 
         then:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
 
         and: 'is in the DEV TOOLS category'
         feature.category == Category.DEV_TOOLS
 
         and: 'supports every ApplicationType'
         for (ApplicationType type : ApplicationType.values()) {
-            assert feature.supports(type)
+            assert feature.supports(MicronautOptions.builder().applicationType(type).build())
         }
     }
 

@@ -31,7 +31,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         expect:
         for (applicationType in ApplicationType.values()) {
-            assert feature.supports(applicationType)
+            assert feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
 
         feature.category == Category.DEV_TOOLS

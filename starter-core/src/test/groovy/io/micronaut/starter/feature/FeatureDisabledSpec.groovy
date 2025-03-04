@@ -2,8 +2,10 @@ package io.micronaut.starter.feature
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.StringUtils
+import io.micronaut.projectgen.features.gradle.ShadePlugin
 import io.micronaut.projectgen.micronaut.features.MicronautAot
-import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin
+import io.micronaut.projectgen.micronaut.features.test.MicronautTestSpock
+import io.micronaut.projectgen.features.maven.GroovyMavenPlusPlugin
 import io.micronaut.starter.feature.agorapulse.gru.GruHttp
 import io.micronaut.starter.feature.agorapulse.permissions.Permissions
 import io.micronaut.starter.feature.agorapulse.slack.Slack
@@ -349,7 +351,6 @@ import io.micronaut.starter.feature.test.MicronautRestAssured
 import io.micronaut.starter.feature.test.MockServerClient
 import io.micronaut.starter.feature.test.Mockito
 import io.micronaut.starter.feature.test.Mockk
-import io.micronaut.starter.feature.test.Spock
 import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.feature.tracing.Jaeger
 import io.micronaut.starter.feature.tracing.Zipkin
@@ -752,15 +753,13 @@ class FeatureDisabledSpec extends Specification {
         'ktor' | 'micronaut.starter.feature.ktor.enabled' | Ktor
         'groovy-application' | 'micronaut.starter.feature.groovy.application.enabled' | GroovyApplication
         'kotlin' | 'micronaut.starter.feature.kotlin.enabled' | Kotlin
-        'springboot-java' | 'micronaut.starter.feature.springboot.java.enabled' | SpringBootJava
         'java-application' | 'micronaut.starter.feature.java.application.enabled' | JavaApplication
         'kotest' | 'micronaut.starter.feature.kotest.enabled' | KoTest
         'junit' | 'micronaut.starter.feature.junit.enabled' | Junit
         'shade' | 'micronaut.starter.feature.shade.enabled' | ShadePlugin
         'micronaut-build' | 'micronaut.starter.feature.micronaut.build.enabled' | MicronautBuildPlugin
-        'springboot-gradle-plugin' | 'micronaut.starter.feature.springboot.gradle.plugin.enabled' | SpringBootGradlePlugin
         'http-client-test' | 'micronaut.starter.feature.http.client.test.enabled' | HttpClientTest
-        'spock' | 'micronaut.starter.feature.spock.enabled' | Spock
+        'spock' | 'micronaut.starter.feature.spock.enabled' | MicronautTestSpock
         'testcontainers' | 'micronaut.starter.feature.testcontainers.enabled' | TestContainers
         'picocli-kotest' | 'micronaut.starter.feature.picocli.kotest.enabled' | PicocliKoTest
         'picocli-spock' | 'micronaut.starter.feature.picocli.spock.enabled' | PicocliSpock

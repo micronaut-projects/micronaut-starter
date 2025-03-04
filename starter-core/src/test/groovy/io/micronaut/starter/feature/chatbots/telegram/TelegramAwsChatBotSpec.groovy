@@ -44,9 +44,9 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("Telegram ChatBot")
         readme.contains("## Lambda handler class")
         readme.contains("When deployed to AWS Lambda, the lambda handler should be defined as `io.micronaut.chatbots.telegram.lambda.Handler`.")
-        readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut AWS Lambda Function documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda)")
-        readme.contains("- [Micronaut Telegram ChatBot as AWS Lambda function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-validation/latest/guide/](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda](https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
         buildTool << BuildTool.values()
@@ -63,9 +63,9 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("## Lambda handler class")
         readme.contains("The Cdk project defined in `infra` is already configured to use `io.micronaut.chatbots.telegram.lambda.Handler` as the handler for your Lambda function.")
         readme.contains("## How to deploy")
-        readme.contains("- [Micronaut Validation documentation](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
-        readme.contains("- [Micronaut AWS Lambda Function documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda)")
-        readme.contains("- [Micronaut Telegram ChatBot as AWS Lambda function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-validation/latest/guide/](https://micronaut-projects.github.io/micronaut-validation/latest/guide/)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda](https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda)")
+        readme.contains("- [https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
         readme.contains("## Feature aws-cdk documentation")
         readme.contains("- [https://docs.aws.amazon.com/cdk/v2/guide/home.html](https://docs.aws.amazon.com/cdk/v2/guide/home.html)")
 

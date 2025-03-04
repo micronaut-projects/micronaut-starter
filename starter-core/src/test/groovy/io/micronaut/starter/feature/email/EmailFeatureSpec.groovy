@@ -38,14 +38,14 @@ class EmailFeatureSpec extends ApplicationContextSpec {
         feature << emailFeatures*.name
     }
 
-    @Unroll("#feature overrides Feature->getMicronautDocumentation")
-    void "Email Features override Feature->getMicronautDocumentation"(String feature) {
+    @Unroll("#feature overrides Feature->getFrameworkDocumentation")
+    void "Email Features override Feature->getFrameworkDocumentation"(String feature) {
         when:
         Optional<Feature> featureOptional = findFeatureByName(feature)
 
         then:
         featureOptional.isPresent()
-        featureOptional.get().getMicronautDocumentation()
+        featureOptional.get().getFrameworkDocumentation(null)
 
         where:
         feature << emailFeatures*.name

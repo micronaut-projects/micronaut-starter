@@ -19,7 +19,7 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut EclipseStore documentation](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")
         readme.contains("[https://docs.eclipsestore.io/](https://docs.eclipsestore.io/)")
     }
 
@@ -29,9 +29,9 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut EclipseStore documentation](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide](https://micronaut-projects.github.io/micronaut-eclipsestore/latest/guide)")
         readme.contains("[https://docs.eclipsestore.io/](https://docs.eclipsestore.io/)")
-        readme.contains("[Micronaut EclipseStore REST documentation](https://micronaut-projects.github.io/micronaut-eclipseStore/latest/guide/#rest)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-eclipseStore/latest/guide/#rest](https://micronaut-projects.github.io/micronaut-eclipseStore/latest/guide/#rest)")
         readme.contains("[https://docs.eclipsestore.io/manual/storage/rest-interface/index.html](https://docs.eclipsestore.io/manual/storage/rest-interface/index.html)")
     }
 

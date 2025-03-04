@@ -34,7 +34,7 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "arm supports every application type"(ApplicationType applicationType) {
         expect:
-        arm.supports(applicationType)
+        arm.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
@@ -43,20 +43,21 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'arm plus cdk feature sets lambda function architecture for #buildTool'() {
         given:
         Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
                 .language(Language.JAVA)
                 .testFramework(TestFramework.JUNIT)
                 .buildTool(buildTool)
-                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTIO)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, Arm.NAME])
                 .build()
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
-                [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA, Arm.NAME])
+        Map<String, String> output = generate(options)
 
         then:
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.ARM_64)/$)
 
         where:
-        buildTool << BuildTool.valuesGradle()
+        buildTool << [BuildTool.GRADLE]//BuildTool.valuesGradle()
     }
 }

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.logging
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,7 +25,7 @@ class LiquibaseSlf4jSpec extends ApplicationContextSpec implements CommandOutput
 
     void "liquibase-slf4j supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        feature.supports(applicationType)
+        feature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

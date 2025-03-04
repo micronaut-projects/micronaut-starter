@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.sourcegen
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -29,7 +30,7 @@ class SourcegenJavaSpec extends ApplicationContextSpec  implements CommandOutput
 
     void "feature sourcegen-generator supports applicationType=#applicationType"(ApplicationType applicationType) {
         expect:
-        sourcegenJava.supports(applicationType)
+        sourcegenJava.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

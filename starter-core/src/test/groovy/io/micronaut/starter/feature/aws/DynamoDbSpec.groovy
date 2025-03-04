@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -21,7 +22,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut Amazon DynamoDB documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb](https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb)")
         readme.contains("[https://aws.amazon.com/dynamodb/](https://aws.amazon.com/dynamodb/)")
     }
 
@@ -104,7 +105,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         and: 'supports every application type'
         for (ApplicationType applicationType : ApplicationType.values()) {
-            assert f.supports(applicationType)
+            assert f.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
     }
 }

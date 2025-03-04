@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.spring
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -39,7 +40,7 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
     @Unroll
     void 'feature spring-data-jdbc supports every type of application type. applicationType=#applicationType'() {
         expect:
-        springDataJdbc.supports(applicationType)
+        springDataJdbc.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList()

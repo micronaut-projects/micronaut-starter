@@ -28,7 +28,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
     void "aws-lambda-function-url does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !lambdaFunctionUrl.supports(applicationType)
+        !lambdaFunctionUrl.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.FUNCTION)
@@ -36,12 +36,12 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
     void "aws-lambda-function-url supports function application type"() {
         expect:
-        lambdaFunctionUrl.supports(ApplicationType.FUNCTION)
+        lambdaFunctionUrl.supports(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).build())
     }
 
     void 'Function AppStack log retention is included for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).buildTool(buildTool).features([LambdaFunctionUrl.NAME]).build())
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
@@ -53,7 +53,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
     void 'lambda runtime main class configuration is present for #buildTool'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [LambdaFunctionUrl.NAME])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.FUNCTION).buildTool(buildTool).features([LambdaFunctionUrl.NAME]).build())
         def build = output["app/$buildTool.buildFileName"]
 
         then:

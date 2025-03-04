@@ -12,7 +12,7 @@ abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(feature).supports(type) == supports
+        beanContext.getBean(feature).supports(MicronautOptions.builder().applicationType(type).build()) == supports
 
         where:
         type << ApplicationType.values()

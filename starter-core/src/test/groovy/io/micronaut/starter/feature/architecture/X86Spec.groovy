@@ -35,7 +35,7 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "x86 supports every application type"(ApplicationType applicationType) {
         expect:
-        x86.supports(applicationType)
+        x86.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

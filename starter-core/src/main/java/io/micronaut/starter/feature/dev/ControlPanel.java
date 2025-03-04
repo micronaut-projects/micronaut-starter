@@ -18,8 +18,10 @@ package io.micronaut.starter.feature.dev;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.projectgen.core.generator.GeneratorContext;
+import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.projectgen.core.feature.Feature;
@@ -96,5 +98,10 @@ public class ControlPanel implements Feature {
         devConfig.put("endpoints.all.sensitive", false);
         devConfig.put("endpoints.health.details-visible", "ANONYMOUS");
         devConfig.put("endpoints.loggers.write-sensitive", false);
+    }
+
+    @Override
+    public boolean supports(Options options) {
+        return options instanceof MicronautOptions micronautOptions && micronautOptions.applicationType() == ApplicationType.DEFAULT;
     }
 }

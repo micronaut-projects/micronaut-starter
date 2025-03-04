@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.stackdriver
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -36,7 +37,7 @@ class CloudTraceSpec extends ApplicationContextSpec {
     @Unroll("feature cloudtrace works for application type: #applicationType")
     void "feature cloudtrace works for every type of application type"(ApplicationType applicationType) {
         expect:
-        cloudtrace.supports(applicationType)
+        cloudtrace.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.aws
 
 import io.micronaut.context.env.Environment
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -37,7 +38,7 @@ class AmazonCognitoSpec extends ApplicationContextSpec {
 
     void "amazon-cognito does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
-        !amazonCognito.supports(applicationType)
+        !amazonCognito.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << (ApplicationType.values() - ApplicationType.DEFAULT)
@@ -45,6 +46,6 @@ class AmazonCognitoSpec extends ApplicationContextSpec {
 
     void "amazon-cognito supports function application type"() {
         expect:
-        amazonCognito.supports(ApplicationType.DEFAULT)
+        amazonCognito.supports(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).build())
     }
 }

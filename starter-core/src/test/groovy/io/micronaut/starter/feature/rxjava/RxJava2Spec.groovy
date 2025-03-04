@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.rxjava
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -38,7 +39,7 @@ class RxJava2Spec extends ApplicationContextSpec implements CommandOutputFixture
     @Unroll("feature rxjava2 works for application type: #applicationType")
     void "feature rxjava2 works for every type of application type"(ApplicationType applicationType) {
         expect:
-        rxJavaThree.supports(applicationType)
+        rxJavaThree.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

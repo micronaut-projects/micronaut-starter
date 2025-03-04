@@ -51,7 +51,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void "micronaut-graalpy supports application type = #applicationType"(ApplicationType applicationType) {
         expect:
-        micronautGraalPyFeature.supports(applicationType)
+        micronautGraalPyFeature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

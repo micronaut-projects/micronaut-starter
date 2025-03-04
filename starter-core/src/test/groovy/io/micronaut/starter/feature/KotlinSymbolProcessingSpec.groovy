@@ -47,7 +47,7 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
 
     void 'ksp supports every application type'(ApplicationType applicationType) {
         expect:
-        ksp.supports(applicationType)
+        ksp.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
@@ -55,8 +55,8 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
 
     void 'ksp defines documentation'() {
         expect:
-        ksp.micronautDocumentation
-        ksp.thirdPartyDocumentation
+        ksp.getFrameworkDocumentation(null)
+        ksp.getThirdPartyDocumentation(null)
     }
 
     void "test #buildTool ksp feature adds build plugin"(BuildTool buildTool) {

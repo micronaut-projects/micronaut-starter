@@ -68,6 +68,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
         when:
         FeatureContext featureContext = contextFactory.createFeatureContext(
                 beanContext.getBean(DefaultAvailableFeatures),
+                [],
                 options
         )
 

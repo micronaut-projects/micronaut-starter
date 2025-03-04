@@ -23,17 +23,15 @@ import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.projectgen.core.buildtools.dependencies.Dependency;
 import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.projectgen.core.feature.Feature;
 import io.micronaut.projectgen.core.feature.FeatureContext;
 import io.micronaut.projectgen.core.feature.LanguageFeature;
-import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.projectgen.core.options.Language;
 import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
-
+import io.micronaut.projectgen.features.maven.GroovyMavenPlusPlugin;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;

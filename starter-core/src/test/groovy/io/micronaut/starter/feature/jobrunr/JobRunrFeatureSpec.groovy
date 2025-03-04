@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.jobrunr
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -25,7 +26,7 @@ class JobRunrFeatureSpec extends ApplicationContextSpec implements CommandOutput
 
     void "JobRunr supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        jobRunrFeature.supports(applicationType)
+        jobRunrFeature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

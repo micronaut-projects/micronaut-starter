@@ -11,7 +11,7 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
     void 'feature #supportMsg ApplicationType #type'(ApplicationType type, boolean supports) {
         expect:
-        beanContext.getBean(feature).supports(type) == supports
+        beanContext.getBean(feature).supports(MicronautOptions.builder().applicationType(type).build()) == supports
 
         where:
         type << ApplicationType.values()
@@ -33,7 +33,7 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
     void 'example chat commands are generated in #language for #applicationType apps'(Language language, ApplicationType applicationType) {
         when:
-        def output = generate(MicronautOptions.builder().applicationType(applicationType).language(language).testFramework(TestFramework.JUNIT).build(), [featureName])
+        def output = generate(MicronautOptions.builder().applicationType(applicationType).language(language).testFramework(TestFramework.JUNIT).features([featureName]).build())
 
         then:
         output.containsKey("src/main/$language.name/example/micronaut/BasecampAboutCommandHandler.$language.extension".toString())

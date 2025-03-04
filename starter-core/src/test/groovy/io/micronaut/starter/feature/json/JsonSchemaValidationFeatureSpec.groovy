@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.json
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -37,7 +38,7 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
 
     void "json-schema-validation supports application type = #applicationType"(ApplicationType applicationType) {
         expect:
-        jsonSchemaValidationFeature.supports(applicationType)
+        jsonSchemaValidationFeature.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

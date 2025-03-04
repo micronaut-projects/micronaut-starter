@@ -76,7 +76,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "aws-lambda does not support #description"(ApplicationType applicationType, String description) {
         expect:
-        !awsLambda.supports(applicationType)
+        !awsLambda.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values().toList() -  [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
@@ -85,7 +85,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "aws-lambda supports function application type"(ApplicationType applicationType) {
         expect:
-        awsLambda.supports(applicationType)
+        awsLambda.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]

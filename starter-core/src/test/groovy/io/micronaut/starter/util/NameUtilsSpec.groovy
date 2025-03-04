@@ -1,5 +1,6 @@
 package io.micronaut.starter.util
 
+import io.micronaut.projectgen.core.utils.NameUtils
 import spock.lang.Specification
 
 class NameUtilsSpec extends Specification {

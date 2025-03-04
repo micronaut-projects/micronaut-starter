@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.aws
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -16,7 +17,7 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
         String readme = output["README.md"]
 
         then:
-        readme.contains("[Micronaut AWS SDK 2.x documentation](https://micronaut-projects.github.io/micronaut-aws/latest/guide/)")
+        readme.contains("[https://micronaut-projects.github.io/micronaut-aws/latest/guide/](https://micronaut-projects.github.io/micronaut-aws/latest/guide/)")
         readme.contains("[https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html](https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html)")
     }
 
@@ -38,7 +39,7 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         and: 'supports every application type'
         for (ApplicationType applicationType : ApplicationType.values()) {
-            assert f.supports(applicationType)
+            assert f.supports(MicronautOptions.builder().applicationType(applicationType).build())
         }
     }
 

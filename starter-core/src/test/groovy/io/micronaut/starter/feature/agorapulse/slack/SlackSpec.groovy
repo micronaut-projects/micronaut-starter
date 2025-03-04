@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.agorapulse.slack
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,7 +23,7 @@ class SlackSpec extends ApplicationContextSpec {
         Feature feature = featureOptional.get()
 
         then:
-        feature.thirdPartyDocumentation
+        feature.getThirdPartyDocumentation(null)
 
         and: 'is in the CLIENT category'
         feature.category == 'Client'
@@ -31,7 +32,7 @@ class SlackSpec extends ApplicationContextSpec {
         feature.community
 
         and: 'supports default type'
-        assert feature.supports(ApplicationType.DEFAULT)
+        assert feature.supports(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).build())
     }
 
     @PendingFeature(reason = "agora community features do not support Micronaut Framework 4 yet")

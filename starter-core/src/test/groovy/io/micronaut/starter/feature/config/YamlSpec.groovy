@@ -31,7 +31,7 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "yaml supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        yaml.supports(applicationType)
+        yaml.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()
