@@ -1,6 +1,8 @@
 package io.micronaut.starter.feature.database.r2dbc
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.ApplicationType
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -23,6 +25,7 @@ import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.projectgen.core.buildtools.BuildTool
 import io.micronaut.projectgen.core.options.Options
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Shared
 
 class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -337,8 +340,8 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test config #driver and build #buildTool"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
         given:
-        Options options = new Options(null, null, buildTool)
-        GeneratorContext ctx = buildGeneratorContext([DataR2dbc.NAME, featureClass.NAME], options)
+        Options options = MicronautOptions.builder().buildTool(buildTool).features([DataR2dbc.NAME, featureClass.NAME]).build()
+        GeneratorContext ctx = buildGeneratorContext(options)
         def feature = ctx.getRequiredFeature(featureClass)
         def dialect = feature.dataDialect
 

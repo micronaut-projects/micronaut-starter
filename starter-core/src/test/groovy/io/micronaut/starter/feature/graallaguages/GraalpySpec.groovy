@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.graallaguages
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,8 +25,17 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
     Graalpy micronautGraalPyFeature = beanContext.getBean(Graalpy)
 
     void 'readme.md with feature micronaut-graalpy contains links to docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(JdkVersion.JDK_21)
+                .features([Graalpy.NAME])
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21), [Graalpy.NAME])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -87,8 +97,14 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
     void 'test feature graalpy is only supported for Maven'() {
         given:
         String featureName = 'graalpy'
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_21)
+                .build()
         when:
-        getFeatures([featureName], new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21))
+        getFeatures([featureName], options)
 
         then:
         IllegalArgumentException ex = thrown()

@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.validation
 
 import io.micronaut.projectgen.core.feature.FeatureValidator
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.feature.LanguageSpecificFeature
@@ -18,8 +19,13 @@ class FeatureValidatorSpec extends BeanContextSpec {
     FeatureValidator featureValidator = beanContext.getBean(FeatureValidator)
 
     void "test feature conflicts with language selection"() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .build()
         when:
-        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+        featureValidator.validatePreProcessing(options, [new LanguageSpecificFeature() {
             String name = "test-feature"
             String description = "test desc"
             String title = "test title"
@@ -32,8 +38,13 @@ class FeatureValidatorSpec extends BeanContextSpec {
     }
 
     void "test conflicting features required language"() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .build()
         when:
-        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+        featureValidator.validatePreProcessing(options, [new LanguageSpecificFeature() {
             String name = "groovy-feature"
             String description = "groovy"
             String title = "groovy title"
@@ -54,7 +65,11 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test one of"() {
         when:
-        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new OneOfFeature() {
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .build()
+        featureValidator.validatePreProcessing(options, [new OneOfFeature() {
             String name = "a"
             String description = "groovy"
             String title = "groovy title"
@@ -75,9 +90,13 @@ class FeatureValidatorSpec extends BeanContextSpec {
     void "test acme : #serverType"() {
         given:
         def language = serverType instanceof Ktor ? Language.KOTLIN : Language.JAVA
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .build()
 
         when:
-        featureValidator.validatePreProcessing(new Options(language, null, null), ApplicationType.DEFAULT, [
+        featureValidator.validatePreProcessing(options, [
                 new Acme(),
                 serverType
         ] as Set)

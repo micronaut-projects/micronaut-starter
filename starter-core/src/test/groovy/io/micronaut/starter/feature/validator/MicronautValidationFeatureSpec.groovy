@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.validator
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -44,7 +45,8 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1914")
     void 'jakarta.validation:jakarta.validation-api for maven should not include version'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN),['validation'])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(BuildTool.MAVEN).features(['validation']).build()
+        Map<String, String> output = generate(options)
         String pom = output["pom.xml"]
 
         then:

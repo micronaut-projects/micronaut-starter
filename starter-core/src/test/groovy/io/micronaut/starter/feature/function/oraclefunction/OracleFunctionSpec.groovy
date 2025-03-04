@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.function.oraclefunction
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -17,9 +18,17 @@ import io.micronaut.projectgen.core.options.TestFramework
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature oracle-function contains links to docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(appType)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['oracle-function'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        def output = generate(appType, options, ['oracle-function'])
+        def output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -41,12 +50,17 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
     }
 
     void 'test gradle oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind']))
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
-        )
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
         String funcYaml = output["func.yml"]
 
@@ -83,12 +97,17 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
     }
 
     void 'test maven oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind']))
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
-        )
+        Map<String, String> output = generate(options)
         String build = output['pom.xml']
         String readme = output["README.md"]
         String funcYaml = output["func.yml"]
@@ -113,12 +132,17 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
     }
 
     void 'test maven oracle cloud function app for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind']))
+                .build()
         when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
-        )
+        def output = generate(options)
         String build = output['pom.xml']
 
         then:

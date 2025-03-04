@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.logging
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
@@ -13,7 +14,12 @@ import spock.lang.Shared
 
 class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixture {
     @Shared
-    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+    Options options = MicronautOptions.builder()
+            .language(Language.JAVA)
+            .testFramework(TestFramework.JUNIT)
+            .buildTool(BuildTool.GRADLE)
+            .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+            .build()
 
     void 'by default jansi false, coloring true, and jul false'() {
         when:

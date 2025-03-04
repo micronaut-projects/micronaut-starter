@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.kotlin
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,9 +25,16 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
     Ktor ktor = beanContext.getBean(Ktor)
 
     void 'test readme.md with feature ktor contains links to micronaut docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .features( [Ktor.NAME])
+                .build()
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [Ktor.NAME])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -149,12 +157,15 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'sample route, feature and singletons are generated for ktor feature'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .buildTool(BuildTool.MAVEN)
+                .features([Ktor.NAME])
+                .build()
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, BuildTool.MAVEN),
-                [Ktor.NAME]
-        )
+        def output = generate(options)
 
         then:
         output.containsKey("$srcDir/example/micronaut/HomeRoute.$extension".toString())

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.test
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -24,9 +25,17 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
     Mockk mockk = beanContext.getBean(Mockk)
 
     void 'test readme.md with feature mockk contains links to 3rd party docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['mockk'])
+                .build()
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION, Collections.emptyMap())
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['mockk'])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -42,9 +51,15 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Unroll
     void 'mockk feature should not be applied for languages other than Kotlin'(Language language) {
         given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.KOTEST)
+                .buildTool(BuildTool.MAVEN)
+                .build()
         Set<Feature> features = [mockk] as Set<Feature>
         expect:
-        !mockk.shouldApply(ApplicationType.DEFAULT, new Options(language, TestFramework.KOTEST, BuildTool.MAVEN), features)
+        !mockk.shouldApply(options, features)
 
         where:
         language << Language.values() - Language.KOTLIN

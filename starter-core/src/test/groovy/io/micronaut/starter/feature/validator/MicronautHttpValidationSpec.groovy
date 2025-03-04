@@ -1,5 +1,7 @@
 package io.micronaut.starter.feature.validator
 
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.projectgen.micronaut.features.validation.MicronautHttpValidation
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -12,6 +14,8 @@ import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.projectgen.core.buildtools.BuildTool
 import io.micronaut.projectgen.core.options.Options
+import io.micronaut.starter.feature.function.awslambda.AwsLambda
+import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import spock.lang.Subject
 
 class MicronautHttpValidationSpec  extends ApplicationContextSpec {
@@ -22,21 +26,7 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
         expect:
         micronautHttpValidation.category == Category.VALIDATION
     }
-
-    void "micronaut-http-validation does not support #applicationType application type"(ApplicationType applicationType) {
-        expect:
-        !micronautHttpValidation.supports(applicationType)
-        !micronautHttpValidation.shouldApply(applicationType, new Options(), [] as Set)
-        
-        where:
-        applicationType << (ApplicationType.values() - ApplicationType.DEFAULT)
-    }
-
-    void "micronaut-http-validation supports function application type"() {
-        expect:
-        micronautHttpValidation.supports(ApplicationType.DEFAULT)
-    }
-
+    
     void "dependency added for micronaut-http-validation feature in the main classpath"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool).features(['micronaut-http-validation']).render()
@@ -65,8 +55,10 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
     }
 
     void "test micronaut-http-validation is applied by default for appType=#appType and buildTool=#buildTool"(ApplicationType appType, BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(buildTool).build()
         expect:
-        micronautHttpValidation.shouldApply(ApplicationType.DEFAULT, new Options().withBuildTool(buildTool), [] as Set)
+        micronautHttpValidation.shouldApply(options)
 
         where:
         [appType, buildTool] << [ApplicationType.values(), BuildTool.values()].combinations()

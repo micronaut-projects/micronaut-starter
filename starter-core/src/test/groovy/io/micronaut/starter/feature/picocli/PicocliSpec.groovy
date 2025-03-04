@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.picocli
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -89,7 +90,11 @@ class PicocliSpec extends ApplicationContextSpec {
 
     void "test the test features are applied"() {
         when:
-        Options options = new Options(Language.JAVA, null, BuildTool.GRADLE)
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.CLI)
+                .language(Language.JAVA)
+                .buildTool(BuildTool.GRADLE)
+                .build()
         Features features = getFeatures([], options, ApplicationType.CLI)
         GeneratorContext generatorContext = buildGeneratorContext([], options, ApplicationType.CLI)
 
@@ -104,7 +109,11 @@ class PicocliSpec extends ApplicationContextSpec {
         !generatorContext.getTemplates().containsKey("testDir")
 
         when:
-        options = new Options(Language.GROOVY, null, BuildTool.GRADLE)
+        options = MicronautOptions.builder()
+                .applicationType(ApplicationType.CLI)
+                .language(Language.GROOVY)
+                .buildTool(BuildTool.GRADLE)
+                .build()
         features = getFeatures([], options, ApplicationType.CLI)
         generatorContext = buildGeneratorContext([], options, ApplicationType.CLI)
 
@@ -118,7 +127,11 @@ class PicocliSpec extends ApplicationContextSpec {
         !generatorContext.getTemplates().containsKey("testDir")
 
         when:
-        options = new Options(Language.KOTLIN, null, BuildTool.GRADLE)
+        options = MicronautOptions.builder()
+                .applicationType(ApplicationType.CLI)
+                .language(Language.KOTLIN)
+                .buildTool(BuildTool.GRADLE)
+                .build()
         features = getFeatures([Kapt.NAME], options, ApplicationType.CLI)
         generatorContext = buildGeneratorContext([Kapt.NAME], options, ApplicationType.CLI)
 
@@ -134,7 +147,13 @@ class PicocliSpec extends ApplicationContextSpec {
 
         when:
         def kaptFeatures = language == Language.KOTLIN ? [Kapt.NAME] : []
-        options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE)
+        options = MicronautOptions.builder()
+                .applicationType(ApplicationType.CLI)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .build()
+
         features = getFeatures(kaptFeatures, options, ApplicationType.CLI)
         generatorContext = buildGeneratorContext(kaptFeatures, options, ApplicationType.CLI)
 

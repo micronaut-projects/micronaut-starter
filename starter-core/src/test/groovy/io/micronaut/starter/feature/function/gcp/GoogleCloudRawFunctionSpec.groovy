@@ -1,5 +1,11 @@
 package io.micronaut.starter.feature.function.gcp
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -10,9 +16,17 @@ import spock.lang.Requires
 class GoogleCloudRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function'])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:

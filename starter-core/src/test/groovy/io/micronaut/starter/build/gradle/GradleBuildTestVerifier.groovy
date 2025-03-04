@@ -1,6 +1,7 @@
 package io.micronaut.starter.build.gradle
 
 import io.micronaut.context.exceptions.ConfigurationException
+import io.micronaut.projectgen.core.buildtools.gradle.GradleConfiguration
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.projectgen.core.buildtools.BuildTool

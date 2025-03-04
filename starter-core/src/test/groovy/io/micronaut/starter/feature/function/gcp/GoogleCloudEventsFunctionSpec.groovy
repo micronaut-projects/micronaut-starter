@@ -1,5 +1,11 @@
 package io.micronaut.starter.feature.function.gcp
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -49,9 +55,17 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
     }
 
     void 'test readme.md and function for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['google-cloud-function-cloudevents'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_8)
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function-cloudevents'])
+        Map<String, String> output = generate(options)
         String function = output['src/main/java/example/micronaut/Function.java']
         String readme = output['README.md']
 

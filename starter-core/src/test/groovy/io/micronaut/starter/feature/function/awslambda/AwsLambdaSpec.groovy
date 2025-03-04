@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.function.awslambda
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -8,6 +9,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.projectgen.core.buildtools.BuildTool
@@ -26,7 +28,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
 
     @Shared
-    Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, AwsLambdaFeatureValidator.firstSupportedJdk())
+    Options options = MicronautOptions.builder().language(Language.JAVA).testFramework(TestFramework.JUNIT).buildTool(BuildTool.GRADLE).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk()).build()
 
     void 'test gradle.properties does not contain micronaut.runtime'(ApplicationType applicationType) {
         when:
@@ -382,11 +384,16 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
 
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm']
-        )
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm'])
+                .build()
+
+        def output = generate(options)
 
         then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
@@ -398,11 +405,15 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
 
     void 'Application file is generated for a default application type with gradle and features aws-lambda and aws-lambda-custom-runtime for language: #language'(Language language, String extension) {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'aws-lambda-custom-runtime']
-        )
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'aws-lambda-custom-runtime'])
+                .build()
+        def output = generate(options)
 
         then:
         !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
@@ -475,11 +486,15 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
             Language language
     ) {
         when:
-        def output = generate(
-                applicationType,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm']
-        )
+        Options options = MicronautOptions.builder()
+                .applicationType(applicationType)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm'])
+                .build()
+        def output = generate(options)
         String build = output['build.gradle']
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, build)
@@ -525,11 +540,15 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
 
     void 'app with maven and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm']
-        )
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm'])
+                .build()
+        def output = generate(options)
         String build = output['pom.xml']
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, build)
 
@@ -594,6 +613,11 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {
-        new Options(language, language.getDefaults().getTest(), buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
+        MicronautOptions.builder()
+                .language(language)
+                .testFramework(language.getDefaults().getTest())
+                .buildTool(buildTool)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .build()
     }
 }

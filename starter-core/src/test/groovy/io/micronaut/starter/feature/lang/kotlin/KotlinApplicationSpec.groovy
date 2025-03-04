@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.lang.kotlin
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,12 +23,16 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
     KotlinApplication kotlinApplication = beanContext.getBean(KotlinApplication)
 
     void 'test KSP feature'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .features(["ksp", "security"])
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE),
-                ["ksp", "security"]
-        )
+        Map<String, String> output = generate(options)
         String buildGradle = output[BuildTool.GRADLE.getBuildFileName()]
 
         then:
@@ -43,12 +48,15 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
 
     @Unroll
     void 'Application file is generated for a default application type with #buildTool and language: kotlin and testing framework: #testFramework'(BuildTool buildTool, TestFramework testFramework) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(testFramework)
+                .buildTool(buildTool)
+                .build()
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, testFramework, buildTool),
-                []
-        )
+        def output = generate(options)
 
         then:
         output.containsKey("src/main/kotlin/example/micronaut/Application.${Language.KOTLIN.extension}".toString())

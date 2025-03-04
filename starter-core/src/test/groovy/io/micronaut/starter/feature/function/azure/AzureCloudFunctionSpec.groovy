@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.function.azure
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -15,12 +16,18 @@ import io.micronaut.projectgen.core.options.TestFramework
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "verify for #jdkVersion application #applicationType with azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(applicationType)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features(['azure-function'])
+                .build()
         when:
-        generate(
-                applicationType,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['azure-function']
-        )
+        generate(options)
+
         then:
         noExceptionThrown()
 
@@ -32,12 +39,17 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     void "verify for #jdkVersion application #applicationType with azure-function illegal argument exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(applicationType)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features(['azure-function'])
+                .build()
         when:
-        generate(
-                applicationType,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['azure-function']
-        )
+        generate(options)
         then:
         def ex = thrown(IllegalArgumentException)
         ex.message == 'Azure Function currently only supports JDK 8, 11 and 17 -- https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure'
@@ -50,12 +62,17 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     void 'test gradle raw azure function feature for language=#language'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['azure-function'])
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function']
-        )
+        Map<String, String> output = generate(options)
         String build = output['build.gradle']
         String readme = output["README.md"]
 
@@ -133,12 +150,17 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind']))
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
-        )
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -163,12 +185,17 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind']))
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
-                ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
-        )
+        Map<String, String> output = generate(options)
         String build = output['pom.xml']
         String readme = output["README.md"]
 

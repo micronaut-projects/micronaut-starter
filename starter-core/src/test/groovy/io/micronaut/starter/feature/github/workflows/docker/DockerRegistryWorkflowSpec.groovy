@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.github.workflows.docker
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -32,10 +33,17 @@ Add the following GitHub secrets:
     }
 
     void 'test github workflow is created for #buildTool'(BuildTool buildTool, String workflowName) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([DockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [DockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/${workflowName}"]
 
         then:
@@ -49,10 +57,17 @@ Add the following GitHub secrets:
     }
 
     void 'test push to docker workflow for maven'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([DockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [DockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def maven = output['.github/workflows/maven.yml']
 
         then:
@@ -61,8 +76,15 @@ Add the following GitHub secrets:
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(buildTool)
+                .features([DockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [DockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def gradle = output[buildTool.buildFileName]
 
         then:
@@ -84,10 +106,17 @@ Add the following GitHub secrets:
     }
 
     void 'test github gradle workflow java version for #version'(JdkVersion version){
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(version)
+                .features([DockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, version),
-                [DockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def workflow = output['.github/workflows/gradle.yml']
 
         then:

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.oracecloud
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -53,10 +54,17 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     }
 
     void 'test ATP config file'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([Yaml.NAME, 'oracle-cloud-atp'])
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [Yaml.NAME, 'oracle-cloud-atp'])
+        Map<String, String> output = generate(options)
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -72,10 +80,17 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     }
 
     void 'test ATP config file no jdbc config'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([Yaml.NAME, 'jdbc-hikari', 'oracle-cloud-atp'])
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [Yaml.NAME, 'jdbc-hikari', 'oracle-cloud-atp'])
+        Map<String, String> output = generate(options)
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -84,10 +99,17 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/912")
     void 'test default database driver not present in config'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
+        Map<String, String> output = generate(options)
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -95,10 +117,17 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     }
 
     void 'test config with a driver config feature'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
+                .build()
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
+        Map<String, String> output = generate(options)
         String config = output["src/main/resources/application.yml"]
 
         then:
@@ -119,25 +148,44 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/942")
     void 'test oracle-cloud-atp requires java 11 or higher'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['oracle-cloud-atp'])
+                .build()
         when:
-        generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_8),
-                ['oracle-cloud-atp'])
-
+        generate(options)
         then:
         thrown(IllegalArgumentException)
 
         when:
-        generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['oracle-cloud-atp'])
+        options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['oracle-cloud-atp'])
+                .build()
+        generate(options)
         then:
         noExceptionThrown()
 
         when:
-        generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_17),
-                ['oracle-cloud-atp'])
+        options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(JdkVersion.JDK_17)
+                .features(['oracle-cloud-atp'])
+                .build()
+
+        generate(options)
         then:
         noExceptionThrown()
     }

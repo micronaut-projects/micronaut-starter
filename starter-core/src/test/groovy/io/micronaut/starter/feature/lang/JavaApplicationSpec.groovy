@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.lang
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
@@ -17,12 +18,15 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
         given:
         def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
         def testPolicy = "enforcedPlatform"
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .build()
+
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
-                []
-        )
+        def output = generate(options)
 
         then:
         output.containsKey("src/main/java/example/micronaut/Application.${Language.JAVA.extension}".toString())

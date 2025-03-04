@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -93,7 +94,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void "test config for #features and #buildTool"(List<String> features, String dialect, BuildTool buildTool) {
         given:
-        Options options = new Options(null, TestFramework.DEFAULT_OPTION, buildTool)
+        Options options = MicronautOptions.builder().testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).build()
 
         when:
         GeneratorContext ctx = buildGeneratorContext(features, options)

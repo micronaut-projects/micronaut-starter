@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.view
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -46,7 +47,8 @@ class ThymeleafSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test fieldset resources are generated for #buildTool views-thymeleaf feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), ['views-thymeleaf'])
+        Options options = MicronautOptions.builder().language(language).buildTool(buildTool).applicationType(ApplicationType.DEFAULT).features(['views-thymeleaf']).build()
+        def output = generate(options)
 
         then: 'files are created in src/main/resources/views/fieldset'
         output.keySet().findAll { it.startsWith("src/main/resources/views/fieldset") }

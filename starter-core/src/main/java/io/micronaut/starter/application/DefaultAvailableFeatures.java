@@ -20,6 +20,7 @@ import io.micronaut.projectgen.core.feature.Feature;
 
 import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.projectgen.micronaut.MicronautOptions;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import java.util.List;

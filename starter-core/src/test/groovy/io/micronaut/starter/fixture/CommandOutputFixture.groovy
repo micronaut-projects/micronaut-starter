@@ -2,6 +2,11 @@ package io.micronaut.starter.fixture
 
 import groovy.transform.CompileStatic
 import io.micronaut.context.BeanContext
+import io.micronaut.context.Qualifier
+import io.micronaut.inject.qualifiers.Qualifiers
+import io.micronaut.projectgen.core.feature.AvailableFeatures
+import io.micronaut.projectgen.core.generator.Project
+import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.options.OperatingSystem
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -11,6 +16,8 @@ import io.micronaut.projectgen.core.io.MapOutputHandler
 import io.micronaut.projectgen.core.io.OutputHandler
 import io.micronaut.projectgen.core.options.Options
 import io.micronaut.projectgen.core.utils.NameUtils
+import io.micronaut.projectgen.micronaut.MicronautOptions
+import jakarta.inject.Provider
 
 @CompileStatic
 trait CommandOutputFixture {
@@ -22,9 +29,11 @@ trait CommandOutputFixture {
 
     Map<String, String> generate(Options options) {
         OutputHandler handler = new MapOutputHandler()
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(((MicronautOptions) options).applicationType().name().toLowerCase()))
         projectGenerator.generate(options,
                 handler,
-                ConsoleOutput.NOOP
+                ConsoleOutput.NOOP,
+                () -> availableFeatures
         )
         handler.getProject()
     }
@@ -43,24 +52,17 @@ trait CommandOutputFixture {
 
     Map<String, String> generate(String name, ApplicationType type, List<String> features = []) {
         OutputHandler handler = new MapOutputHandler()
-        Options options = new Options()
-        projectGenerator.generate(type,
-                NameUtils.parse(name),
-                options,
-                OperatingSystem.LINUX,
-                features,
-                handler,
-                ConsoleOutput.NOOP
-        )
-        handler.getProject()
-    }
-
-    Map<String, String> generate(ApplicationType type, GeneratorContext generatorContext) {
-        OutputHandler handler = new MapOutputHandler()
-        projectGenerator.generate(type,
-                NameUtils.parse("example.micronaut.foo"),
-                handler,
-                generatorContext)
+        Project project = NameUtils.parse(name)
+        Options options = MicronautOptions.builder()
+                .name(project.name)
+                .packageName(project.packageName)
+                .applicationType(type)
+                .features(features)
+                .operatingSystem(OperatingSystem.LINUX)
+                .javaVersion(JdkVersion.JDK_17)
+                .build()
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(type.name().toLowerCase()))
+        projectGenerator.generate(options, handler, () -> availableFeatures)
         handler.getProject()
     }
 }

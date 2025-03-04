@@ -1,6 +1,8 @@
 package io.micronaut.starter.feature.database
 
 import groovy.xml.XmlParser
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -14,7 +16,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a #buildTool app in #language"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), [feature, 'kapt'])
+        Options options = MicronautOptions.builder().language(language).buildTool(buildTool).applicationType(ApplicationType.DEFAULT).features([feature, 'kapt']).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
         String build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
 
@@ -56,7 +59,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a Maven app in #language"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(language).buildTool(BuildTool.MAVEN).features([feature]).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
         def project = new XmlParser().parseText(output['pom.xml'])
 
@@ -122,7 +126,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "adding testcontainers to a #feature feature #buildTool app adds a testcontainers-mongo dependency"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ['testcontainers', feature])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(buildTool).features(['testcontainers', feature]).build()
+        def output = generate(options)
         def build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
 
         then:
@@ -138,7 +143,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "adding testcontainers to a #feature feature maven app adds a testcontainers-mongo dependency"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ['testcontainers', feature])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool( BuildTool.MAVEN).features(['testcontainers', feature]).build()
+        def output = generate(options)
         def project = new XmlParser().parseText(output['pom.xml'])
 
         then:

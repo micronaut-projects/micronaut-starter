@@ -8,13 +8,12 @@ import io.micronaut.projectgen.core.feature.Feature
 import io.micronaut.projectgen.core.feature.FeatureContext
 import io.micronaut.projectgen.core.generator.ContextFactory
 import io.micronaut.projectgen.micronaut.ApplicationType
-import io.micronaut.starter.feature.test.Junit
+
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
 import io.micronaut.projectgen.core.buildtools.BuildTool
 import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.projectgen.core.options.Language
-import io.micronaut.projectgen.core.options.Options
 import spock.lang.AutoCleanup
 import spock.lang.Issue
 import spock.lang.Shared
@@ -52,25 +51,16 @@ class ContextFactorySpec extends Specification {
         selectedFeatures.stream()
                 .anyMatch(f -> f.name == Mockk.NAME_MOCKK)
     }
-
-    @Requires(property = 'spec.name', value = 'ContextFactorySpec')
-    @Replaces(Junit.class)
-    @Singleton
-    static class JunitReplacement extends Junit {
-
-        @Override
-        boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-            false
-        }
-    }
+//
+//    @Requires(property = 'spec.name', value = 'ContextFactorySpec')
+//    @Replaces(Junit.class)
+//    @Singleton
+//    static class JunitReplacement extends Junit {
+//    }
 
     @Requires(property = 'spec.name', value = 'ContextFactorySpec')
     @Replaces(KoTest.class)
     @Singleton
     static class KoTestReplacement extends KoTest {
-        @Override
-        boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-            true
-        }
     }
 }

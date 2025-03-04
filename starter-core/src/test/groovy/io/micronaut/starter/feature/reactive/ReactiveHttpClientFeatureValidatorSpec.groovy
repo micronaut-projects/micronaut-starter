@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.reactive
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -9,8 +10,11 @@ class ReactiveHttpClientFeatureValidatorSpec extends BeanContextSpec  implements
 
     void 'test third part server validation fails with micronaut server features'() {
         when:
-        Options options = new Options()
-        generate(ApplicationType.DEFAULT, options, ['reactor-http-client', 'http-client-jdk'])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .features(['reactor-http-client', 'http-client-jdk'])
+                .build()
+        generate(options)
 
         then:
         IllegalArgumentException e = thrown()

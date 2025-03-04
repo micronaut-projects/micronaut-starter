@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.build
 import groovy.xml.XmlSlurper
 import io.micronaut.core.util.StringUtils
 import io.micronaut.projectgen.micronaut.MicronautOptions
+import io.micronaut.projectgen.micronaut.features.MicronautAot
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil

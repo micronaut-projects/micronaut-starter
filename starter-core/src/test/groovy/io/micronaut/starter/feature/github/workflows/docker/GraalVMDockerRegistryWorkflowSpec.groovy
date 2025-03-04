@@ -1,5 +1,11 @@
 package io.micronaut.starter.feature.github.workflows.docker
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -30,10 +36,17 @@ Add the following GitHub secrets:
 
     @Unroll
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([GraalVMDockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [GraalVMDockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/graalvm.yml"]
 
         then:
@@ -44,8 +57,15 @@ Add the following GitHub secrets:
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(buildTool)
+                .features([GraalVMDockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [GraalVMDockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def gradle = output[buildTool.buildFileName]
 
         then:
@@ -67,10 +87,17 @@ Add the following GitHub secrets:
     }
 
     void 'test push to docker workflow for maven'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([GraalVMDockerRegistryWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [GraalVMDockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def maven = output['.github/workflows/graalvm.yml']
 
         then:
@@ -84,11 +111,17 @@ Add the following GitHub secrets:
         given:
         def graalvmVersion = "${VersionInfo.getDependencyVersion('graal').getValue()}" +
                 ".java${graalVersion.majorVersion()}"
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features([GraalVMDockerRegistryWorkflow.NAME])
+                .build()
 
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [GraalVMDockerRegistryWorkflow.NAME])
+        def output = generate(options)
         def workflow = output['.github/workflows/graalvm.yml']
 
         then:

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -14,7 +15,8 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jooq contains links to micronaut docs'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options().withJavaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION), ['jooq'])
+        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION).features(['jooq']).build()
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:

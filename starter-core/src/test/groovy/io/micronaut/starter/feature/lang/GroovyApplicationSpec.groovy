@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.lang
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -11,12 +12,15 @@ import spock.lang.Unroll
 
 class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: groovy'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.GROOVY)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(BuildTool.GRADLE)
+                .build()
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.GROOVY, TestFramework.SPOCK, BuildTool.GRADLE),
-                []
-        )
+        def output = generate(options)
 
         then:
         output.containsKey("src/main/groovy/example/micronaut/Application.${Language.GROOVY.extension}".toString())
@@ -31,7 +35,13 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
     @Unroll
     void "test generated Groovy application for build tool - #build"() {
         given:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.GROOVY, TestFramework.SPOCK, build))
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.GROOVY)
+                .testFramework(TestFramework.SPOCK)
+                .buildTool(build)
+                .build()
+        def output = generate(options)
 
         expect:
         output[build.buildFileName].contains(dependency)

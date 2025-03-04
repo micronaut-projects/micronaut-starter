@@ -4,6 +4,7 @@ import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.xml.XmlParser
 import io.micronaut.context.exceptions.ConfigurationException
+import io.micronaut.projectgen.core.buildtools.maven.MavenScope
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.projectgen.core.options.Language

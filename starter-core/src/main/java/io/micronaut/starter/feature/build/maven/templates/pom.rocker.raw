@@ -137,7 +137,7 @@ String jvmArguments
       </plugin>
 }
 
-@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock()) {
+@if (features.testFramework() != null && (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock())) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.messaging.kafka
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -23,8 +24,14 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
     }
 
     void 'test java project with feature kafka-streams for #language includes example listener'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .features(['kafka-streams'])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language), ['kafka-streams'])
+        def output = generate(options)
         def listener = output["src/main/${language}/example/micronaut/ExampleListener.${language.extension}"]
         def factory = output["src/main/${language}/example/micronaut/ExampleFactory.${language.extension}"]
 

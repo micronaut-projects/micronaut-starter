@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database.r2dbc
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -128,8 +129,8 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test config #driver and build #buildTool"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
         given:
-        Options options = new Options(null, null, buildTool)
-        GeneratorContext ctx = buildGeneratorContext([R2dbc.NAME, featureClass.NAME], options)
+        Options options = MicronautOptions.builder().buildTool(buildTool).features([DataR2dbc.NAME, featureClass.NAME]).build()
+        GeneratorContext ctx = buildGeneratorContext(options)
         def feature = ctx.getRequiredFeature(featureClass)
 
         expect: 'the URL is only applied for H2, as otherwise test-resources will provide it'
@@ -151,8 +152,8 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1960")
     void "test-resources needs db dialect for #featureClass"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
         given:
-        Options options = new Options(null, null, buildTool)
-        GeneratorContext ctx = buildGeneratorContext([R2dbc.NAME, featureClass.NAME], options)
+        Options options = MicronautOptions.builder().buildTool(buildTool).features([DataR2dbc.NAME, featureClass.NAME]).build()
+        GeneratorContext ctx = buildGeneratorContext(options)
         def feature = ctx.getRequiredFeature(featureClass)
 
         expect: 'dialect must be set when using test-resources'

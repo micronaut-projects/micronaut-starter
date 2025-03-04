@@ -1,7 +1,6 @@
 package io.micronaut.starter.core.test.feature.json
 
 
-import io.micronaut.starter.feature.json.SerializationJacksonFeature
 import io.micronaut.projectgen.core.buildtools.BuildTool
 import io.micronaut.projectgen.core.options.Language
 import io.micronaut.starter.test.CommandSpec

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.other
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -18,14 +19,15 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test config without security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['redoc']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
+        properties.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        properties.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        properties.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
+        properties.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=false"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=true"
@@ -41,16 +43,17 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test config with security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc', 'security'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['redoc', 'security']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
-        ctx.configuration.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
+        properties.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        properties.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        properties.get('micronaut.router.static-resources.redoc.paths') == "classpath:META-INF/swagger/views/redoc"
+        properties.get('micronaut.router.static-resources.redoc.mapping') == "/redoc/**"
 
-        List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
+        List<Map<String, String>> swaggerSec = properties.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 
         swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/swagger/**" }
         swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/redoc/**" }
@@ -70,8 +73,7 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test redoc has third party docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['redoc']).build())
 
         then:
         output["README.md"].contains("https://github.com/Redocly/redoc#generate-beautiful-api-documentation-from-openapi")
@@ -79,8 +81,7 @@ class RedocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test redoc has Micronaut docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['redoc'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['redoc']).build())
 
         then:
         output["README.md"].contains("https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#redoc")

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.other
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -18,14 +19,15 @@ class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutpu
 
     void "test config without security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['openapi-explorer']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
-        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
+        properties.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        properties.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        properties.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
+        properties.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=false"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
@@ -41,16 +43,17 @@ class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutpu
 
     void "test config with security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer', 'security'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['openapi-explorer', 'security']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
-        ctx.configuration.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
+        output.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        output.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        output.get('micronaut.router.static-resources.openapi-explorer.paths') == "classpath:META-INF/swagger/views/openapi-explorer"
+        output.get('micronaut.router.static-resources.openapi-explorer.mapping') == "/openapi-explorer/**"
 
-        List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
+        List<Map<String, String>> swaggerSec = output.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 
         swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/swagger/**" }
         swaggerSec.any { it.access == "isAnonymous()" && it.pattern == "/openapi-explorer/**" }
@@ -70,8 +73,7 @@ class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutpu
 
     void "test openapi-explorer has third party docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['openapi-explorer']).build())
 
         then:
         output["README.md"].contains("https://github.com/Authress-Engineering/openapi-explorer")
@@ -79,8 +81,7 @@ class OpenApiExplorerSpec extends ApplicationContextSpec implements CommandOutpu
 
     void "test openapi-explorer has Micronaut docs"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['openapi-explorer'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['openapi-explorer']).build())
 
         then:
         output["README.md"].contains("https://micronaut-projects.github.io/micronaut-openapi/latest/guide/#openapiExplorer")

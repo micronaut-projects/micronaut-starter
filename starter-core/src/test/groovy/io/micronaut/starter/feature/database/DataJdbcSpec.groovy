@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -85,7 +86,7 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
                                       String dialect,
                                       List<String> features) {
         given:
-        Options options = new Options(null, null, buildTool)
+        Options options = MicronautOptions.builder().buildTool(buildTool).build()
 
         when:
         GeneratorContext ctx = buildGeneratorContext(features, options)

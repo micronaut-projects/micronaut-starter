@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.projectgen.features.gradle.ShadePlugin
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -28,12 +29,17 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction(new ShadePlugin(), new JacksonDatabindFeature())
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_17)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
-                ['google-cloud-function']
-        )
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -78,12 +84,17 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     }
 
     void 'test gradle google cloud function feature for language=#language'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_17)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
-                ['google-cloud-function']
-        )
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -140,12 +151,15 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     }
 
     void 'test gradle google cloud function feature for language=#language - raw function'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(language)
+                .buildTool(BuildTool.GRADLE)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        Map<String, String> output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, BuildTool.GRADLE),
-                ['google-cloud-function']
-        )
+        Map<String, String> output = generate(options)
         String build = output['build.gradle']
         String readme = output["README.md"]
 
@@ -170,12 +184,17 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     }
 
     void 'test Google Cloud JDK support fails with #jdkVersion'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['google-cloud-function']
-        )
+        generate(options)
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -185,12 +204,17 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         jdkVersion << [JdkVersion.JDK_8]
     }
     void 'test Google Cloud JDK supports Java #jdkVersion'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features(['google-cloud-function'])
+                .build()
         when:
-        generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['google-cloud-function']
-        )
+        generate(options)
 
         then:
         noExceptionThrown()
@@ -200,12 +224,17 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['google-cloud-function','graalvm'])
+                .build()
         when:
-        generate(
-            ApplicationType.DEFAULT,
-            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-            ['google-cloud-function','graalvm']
-        )
+        generate(options)
 
         then:
         def e = thrown(IllegalArgumentException)

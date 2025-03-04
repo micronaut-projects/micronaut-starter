@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.github.workflows.gcloud
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -25,10 +26,17 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     }
 
     void 'test graalvm github workflow is created for #buildTool'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([GoogleCloudRunGraalWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [GoogleCloudRunGraalWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/google-cloud-run-graalvm.yml"]
 
         then:
@@ -40,10 +48,17 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     }
 
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([GoogleCloudRunJavaWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [GoogleCloudRunJavaWorkflow.NAME])
+        def output = generate(options)
         println(output)
         def workflow = output[".github/workflows/google-cloud-run.yml"]
 
@@ -56,8 +71,15 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(buildTool)
+                .features([GoogleCloudRunGraalWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [GoogleCloudRunGraalWorkflow.NAME])
+        def output = generate(options)
         def gradle = output[buildTool.buildFileName]
 
         then:
@@ -93,11 +115,17 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         given:
         def graalvmVersion = "${VersionInfo.getDependencyVersion( 'graal').getValue()}" +
                 ".java${graalVersion.majorVersion()}"
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features([GoogleCloudRunGraalWorkflow.NAME])
+                .build()
 
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [GoogleCloudRunGraalWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/google-cloud-run-graalvm.yml"]
 
         then:
@@ -110,10 +138,17 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
     }
 
     void 'test github #buildTool with java #jdkVersion workflow'(BuildTool buildTool, JdkVersion jdkVersion) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(jdkVersion)
+                .features([GoogleCloudRunJavaWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
-                [GoogleCloudRunJavaWorkflow.NAME])
+        def output = generate(options)
         def workflow = output['.github/workflows/google-cloud-run.yml']
 
         then:

@@ -2,6 +2,7 @@ package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
+import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.ContextFactory
 import io.micronaut.projectgen.core.options.OperatingSystem
@@ -48,41 +49,42 @@ trait ContextFixture {
                          TestFramework testFramework = null,
                          BuildTool buildTool = BuildTool.GRADLE,
                          ApplicationType applicationType = ApplicationType.DEFAULT) {
-        Options options = new Options(language, testFramework, buildTool)
+        Options options = MicronautOptions.builder()
+                .language(language)
+                .testFramework(testFramework)
+                .buildTool(buildTool)
+                .javaVersion(JdkVersion.JDK_17)
+                .build()
         return getFeatures(features, options, applicationType)
     }
 
     Features getFeatures(List<String> features,
                          Options options,
                          ApplicationType applicationType = ApplicationType.DEFAULT) {
-        FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
+        FeatureContext featureContext = buildFeatureContext(features, options)
         featureContext.processSelectedFeatures()
         Set<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
-        beanContext.getBean(FeatureValidator).validatePostProcessing(featureContext.getOptions(), applicationType, finalFeatures)
+        beanContext.getBean(FeatureValidator).validatePostProcessing(featureContext.getOptions(), finalFeatures)
         return new Features(buildGeneratorContext(features, options, applicationType), finalFeatures, options)
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).build(),
-                                       ApplicationType applicationType = ApplicationType.DEFAULT) {
-
-        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
+                                       Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(BuildTool.DEFAULT_OPTION).operatingSystem(OperatingSystem.LINUX).build()) {
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(((MicronautOptions) options).applicationType().name))
 
         ContextFactory factory = beanContext.getBean(ContextFactory)
 
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
-                applicationType,
-                options,
-                OperatingSystem.LINUX)
+                options)
     }
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
-                                           Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).build(),
+                                           Options options = MicronautOptions.builder().buildTool(BuildTool.DEFAULT_OPTION).javaVersion(JdkVersion.JDK_17).build(),
                                            ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
-            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
+            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)
             GeneratorContext generatorContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
             generatorContext.applyFeatures()
             return generatorContext

@@ -67,10 +67,8 @@ import io.micronaut.starter.feature.function.awslambda.template.homeControllerSp
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
-import io.micronaut.starter.feature.json.SerializationJacksonFeature;
 import io.micronaut.projectgen.features.gradle.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
-import io.micronaut.projectgen.core.buildtools.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.projectgen.core.rocker.TestRockerModelProvider;
@@ -196,9 +194,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         if (shouldAddSnapstartFeature(featureContext)) {
             featureContext.addFeature(snapstart);
         }
-        if (featureContext.isPresent(SerializationJacksonFeature.class)) {
-            featureContext.addFeature(awsLambdaEventsSerde);
-        }
+//        if (featureContext.isPresent(SerializationJacksonFeature.class)) {
+//            featureContext.addFeature(awsLambdaEventsSerde);
+//        }
     }
 
     protected boolean shouldAddSnapstartFeature(FeatureContext featureContext) {

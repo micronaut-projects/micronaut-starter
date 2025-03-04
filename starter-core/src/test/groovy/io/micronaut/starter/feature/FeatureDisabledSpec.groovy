@@ -2,10 +2,8 @@ package io.micronaut.starter.feature
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.StringUtils
-import io.micronaut.http.client.HttpClient
-import io.micronaut.starter.build.dependencies.FeatureWithDuplicates
+import io.micronaut.projectgen.micronaut.features.MicronautAot
 import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin
-import io.micronaut.starter.feature.acme.Acme
 import io.micronaut.starter.feature.agorapulse.gru.GruHttp
 import io.micronaut.starter.feature.agorapulse.permissions.Permissions
 import io.micronaut.starter.feature.agorapulse.slack.Slack
@@ -35,11 +33,10 @@ import io.micronaut.starter.feature.azure.AzureKeyVaultFeature
 import io.micronaut.starter.feature.azure.AzureLogging
 import io.micronaut.starter.feature.build.GradleEnterprise
 import io.micronaut.starter.feature.build.Kapt
-import io.micronaut.starter.feature.build.MicronautAot
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
 import io.micronaut.starter.feature.build.MicronautGradleEnterprise
 import io.micronaut.projectgen.core.buildtools.gradle.Gradle
-import io.micronaut.starter.feature.build.gradle.JavaGradlePlugin
+
 import io.micronaut.starter.feature.build.maven.EnforcerPlugin
 import io.micronaut.projectgen.core.buildtools.maven.Maven
 import io.micronaut.starter.feature.buildless.Buildless
@@ -166,7 +163,7 @@ import io.micronaut.starter.feature.json.JsonSchemaFeature
 import io.micronaut.starter.feature.json.JsonSchemaValidationFeature
 import io.micronaut.starter.feature.json.JsonSmart
 import io.micronaut.starter.feature.json.SerializationBsonFeature
-import io.micronaut.starter.feature.json.SerializationJacksonFeature
+
 import io.micronaut.starter.feature.json.SerializationJsonpFeature
 import io.micronaut.starter.feature.k8s.Kubernetes
 import io.micronaut.starter.feature.k8s.KubernetesClient
@@ -209,9 +206,9 @@ import io.micronaut.starter.feature.langchain4j.languagemodels.VertexAiGeminiLan
 import io.micronaut.starter.feature.langchain4j.languagemodels.VertexAiLangchain4jLanguageModel
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j
 import io.micronaut.starter.feature.logging.Log4j2
-import io.micronaut.starter.feature.logging.Logback
+
 import io.micronaut.starter.feature.logging.SimpleLogging
-import io.micronaut.starter.feature.logging.Slf4jJulBridge
+
 import io.micronaut.starter.feature.logging.Slf4jSimpleLogger
 import io.micronaut.starter.feature.messaging.jms.ActiveMqArtemis
 import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic
@@ -343,7 +340,7 @@ import io.micronaut.starter.feature.staticResources.StaticResourceFeature
 import io.micronaut.starter.feature.test.AssertJ
 import io.micronaut.starter.feature.test.Awaitility
 import io.micronaut.starter.feature.test.Hamcrest
-import io.micronaut.starter.feature.test.Junit
+
 import io.micronaut.starter.feature.test.JunitParams
 import io.micronaut.starter.feature.test.JunitPlatformSuiteEngine
 import io.micronaut.starter.feature.test.KoTest

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.test
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -56,14 +57,18 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
     void 'test gradle assertj succeeds for defaults as JUnit is automatically selected'() {
         given:
         ContextFactory contextFactory = beanContext.getBean(ContextFactory)
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(BuildTool.GRADLE_KOTLIN)
+                .javaVersion(JdkVersion.JDK_17)
+                .features(["assertj"])
+                .build()
 
         when:
         FeatureContext featureContext = contextFactory.createFeatureContext(
                 beanContext.getBean(DefaultAvailableFeatures),
-                ["assertj"],
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, null, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17),
-                null
+                options
         )
 
         then:

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.rxjava
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -22,7 +23,7 @@ class RxJava2HttpClientSpec extends BeanContextSpec implements CommandOutputFixt
 
     void "rxjava2-http-client supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        rxjava2HttpClient.supports(applicationType)
+        rxjava2HttpClient.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.k8s
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -43,7 +44,7 @@ class KubernetesRxJava2ClientSpec extends ApplicationContextSpec  implements Com
     @Unroll("feature kubernetes-rxjava2-client works for application type: #applicationType")
     void "feature kubernetes-rxjava2-client works for every type of application type"(ApplicationType applicationType) {
         expect:
-        client.supports(applicationType)
+        client.supports(MicronautOptions.builder().applicationType(applicationType).build())
 
         where:
         applicationType << ApplicationType.values()

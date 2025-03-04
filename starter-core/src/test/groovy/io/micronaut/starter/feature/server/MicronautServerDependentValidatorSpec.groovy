@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.server
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.feature.kotlin.Ktor
@@ -13,8 +14,15 @@ class MicronautServerDependentValidatorSpec extends BeanContextSpec  implements 
 
     void 'test third part server validation fails with micronaut server features'() {
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        generate(ApplicationType.DEFAULT, options, [Ktor.NAME, 'management', 'tracing-zipkin'])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .features([Ktor.NAME, 'management', 'tracing-zipkin'])
+                .build()
+
+        generate(options)
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -22,9 +30,16 @@ class MicronautServerDependentValidatorSpec extends BeanContextSpec  implements 
     }
 
     void 'test third part server validation fails with some micronaut server features'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.KOTLIN)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .features([Ktor.NAME, 'management', 'tracing-zipkin', 'kafka'])
+                .build()
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
-        generate(ApplicationType.DEFAULT, options, [Ktor.NAME, 'management', 'tracing-zipkin', 'kafka'])
+        generate(options)
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -32,9 +47,16 @@ class MicronautServerDependentValidatorSpec extends BeanContextSpec  implements 
     }
 
     void 'test micronaut server validation passes with micronaut server features'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .features(['netty-server', 'management', 'tracing-zipkin'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE)
-        generate(ApplicationType.DEFAULT, options, ['netty-server', 'management', 'tracing-zipkin'])
+        generate(options)
 
         then:
         notThrown(Exception)

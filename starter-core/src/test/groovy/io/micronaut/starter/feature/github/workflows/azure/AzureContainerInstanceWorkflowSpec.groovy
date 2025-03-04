@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.github.workflows.azure
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -34,10 +35,17 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
     }
 
     void 'test java github workflow is created for #buildTool'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([AzureContainerInstanceJavaWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [AzureContainerInstanceJavaWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/azure-container-instance.yml"]
 
         then:
@@ -49,8 +57,15 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
     }
 
     void 'test docker image is configured in #buildFileName for #feature'(BuildTool buildTool, String feature) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(buildTool)
+                .features([feature])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [feature])
+        def output = generate(options)
         def gradle = output[buildTool.buildFileName]
 
         then:
@@ -86,11 +101,17 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         given:
         def graalvmVersion = "${VersionInfo.getDependencyVersion( 'graal').getValue()}" +
                 ".java${graalVersion.majorVersion()}"
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features([AzureContainerInstanceGraalWorkflow.NAME])
+                .build()
 
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [AzureContainerInstanceGraalWorkflow.NAME])
+        def output = generate(options)
         def workflow = output['.github/workflows/azure-container-instance-graalvm.yml']
 
         then:

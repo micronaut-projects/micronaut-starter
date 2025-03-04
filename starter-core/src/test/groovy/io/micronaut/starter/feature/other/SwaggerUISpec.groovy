@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.other
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.projectgen.core.generator.GeneratorContext
@@ -18,14 +19,15 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test config without security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['swagger-ui'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['swagger-ui']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.swagger-ui.paths') == "classpath:META-INF/swagger/views/swagger-ui"
-        ctx.configuration.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
+        properties.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        properties.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        properties.get('micronaut.router.static-resources.swagger-ui.paths') == "classpath:META-INF/swagger/views/swagger-ui"
+        properties.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
 
         output["openapi.properties"].readLines()[0] == "swagger-ui.enabled=true"
         output["openapi.properties"].readLines()[1] == "redoc.enabled=false"
@@ -41,14 +43,15 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test config with security feature"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['swagger-ui', 'security'])
-        def output = generate(ApplicationType.DEFAULT, ctx)
+        Map<String, String> output = generate(MicronautOptions.builder().features(['swagger-ui', 'security']).build())
+        Properties properties = new Properties()
+        properties.load(new StringReader(output['src/main/resources/application.properties']))
 
         then:
-        ctx.configuration.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
-        ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
-        ctx.configuration.get('micronaut.router.static-resources.swagger-ui.paths') == "classpath:META-INF/swagger/views/swagger-ui"
-        ctx.configuration.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
+        output.get('micronaut.router.static-resources.swagger.paths') == "classpath:META-INF/swagger"
+        output.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
+        output.get('micronaut.router.static-resources.swagger-ui.paths') == "classpath:META-INF/swagger/views/swagger-ui"
+        output.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
 
         List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 

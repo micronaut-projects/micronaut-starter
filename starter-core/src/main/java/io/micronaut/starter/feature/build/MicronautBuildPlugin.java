@@ -188,16 +188,16 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
             }
         }
 
-        if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
-            Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
-            builder.aot(coordinate.getVersion());
-            if (generatorContext.getFeatures().hasFeature(SecurityJWT.class) || generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
-                builder.aotKey(AOT_KEY_SECURITY_JWKS, false);
-            }
-            if (generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
-                builder.aotKey(AOT_KEY_SECURITY_OPENID, false);
-            }
-        }
+//        if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
+//            Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
+//            builder.aot(coordinate.getVersion());
+//            if (generatorContext.getFeatures().hasFeature(SecurityJWT.class) || generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
+//                builder.aotKey(AOT_KEY_SECURITY_JWKS, false);
+//            }
+//            if (generatorContext.getFeatures().hasFeature(SecurityOAuth2.class)) {
+//                builder.aotKey(AOT_KEY_SECURITY_OPENID, false);
+//            }
+//        }
         return builder.id(id);
     }
 
@@ -219,6 +219,9 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
     }
 
     private Optional<String> resolveTestRuntime(GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().testFramework() == null) {
+            return Optional.empty();
+        }
         if (generatorContext.getFeatures().testFramework().isJunit()) {
             return Optional.of("junit5");
         } else if (generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {

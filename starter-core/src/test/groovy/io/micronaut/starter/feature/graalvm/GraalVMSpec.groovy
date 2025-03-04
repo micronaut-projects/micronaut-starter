@@ -1,5 +1,10 @@
 package io.micronaut.starter.feature.graalvm
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -18,15 +23,6 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
     @Subject
     @Shared
     GraalVM graalNativeImage = beanContext.getBean(GraalVM)
-
-    @Unroll("feature graalvm works for application type: #applicationType")
-    void "feature graalvm works for every type of application type"(ApplicationType applicationType) {
-        expect:
-        graalNativeImage.supports(applicationType)
-
-        where:
-        applicationType << ApplicationType.values()
-    }
 
     void "test dependency added for AOP feature"(BuildTool buildTool) {
         when:
@@ -132,12 +128,17 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     @Unroll
     void 'Application file is generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features(['graalvm', 'aws-lambda'])
+                .build()
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                ['graalvm', 'aws-lambda']
-        )
+        def output = generate(options)
 
         then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())

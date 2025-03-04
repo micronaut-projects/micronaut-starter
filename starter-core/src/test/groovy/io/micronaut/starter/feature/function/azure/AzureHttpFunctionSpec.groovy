@@ -1,5 +1,11 @@
 package io.micronaut.starter.feature.function.azure
 
+import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.options.JdkVersion
+import io.micronaut.projectgen.core.options.Language
+import io.micronaut.projectgen.core.options.Options
+import io.micronaut.projectgen.core.options.TestFramework
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -7,14 +13,21 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.projectgen.core.buildtools.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
 
 class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['azure-function'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8)
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -26,9 +39,17 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
     }
 
     void 'test readme.md with feature azure-function contains links to docs'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(JdkVersion.JDK_8)
+                .features(['azure-function'])
+                .build()
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:

@@ -65,24 +65,24 @@ public class TestResources implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
-            generatorContext.addBuildPlugin(MicronautTestResourcesGradlePlugin.builder().build());
-            if (isReactive(generatorContext)
-                    && generatorContext.isFeaturePresent(DatabaseDriverFeature.class)
-                    && !generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                generatorContext.getFeature(DatabaseDriverFeature.class)
-                        .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
-                        .map(Dependency.Builder::testResourcesService)
-                        .ifPresent(generatorContext::addDependency);
-            }
-        } else {
-            BuildProperties buildProperties = generatorContext.getBuildProperties();
-            buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut.testresources")
-                    .artifactId("micronaut-test-resources-client")
-                    .developmentOnly());
-        }
+//        if (OptionUtils.hasGradleBuildTool(generatorContext.getOptions())) {
+//            generatorContext.addBuildPlugin(MicronautTestResourcesGradlePlugin.builder().build());
+//            if (isReactive(generatorContext)
+//                    && generatorContext.isFeaturePresent(DatabaseDriverFeature.class)
+//                    && !generatorContext.isFeaturePresent(MigrationFeature.class)) {
+//                generatorContext.getFeature(DatabaseDriverFeature.class)
+//                        .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
+//                        .map(Dependency.Builder::testResourcesService)
+//                        .ifPresent(generatorContext::addDependency);
+//            }
+//        } else {
+//            BuildProperties buildProperties = generatorContext.getBuildProperties();
+//            buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
+//            generatorContext.addDependency(Dependency.builder()
+//                    .groupId("io.micronaut.testresources")
+//                    .artifactId("micronaut-test-resources-client")
+//                    .developmentOnly());
+//        }
     }
 
     private boolean isReactive(GeneratorContext generatorContext) {

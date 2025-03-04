@@ -1,7 +1,6 @@
 package io.micronaut.starter.feature.test
 
 import io.micronaut.projectgen.core.feature.TestFeature
-import io.micronaut.projectgen.core.generator.GeneratorContext
 import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -12,11 +11,6 @@ class TestFeatureSpec extends Specification {
     void "isKotlinTestFramework returns true for test framework which require Kotlin dependencies"(TestFramework testFramework) {
         given:
         TestFeature feature = new TestFeature() {
-
-            @Override
-            void doApply(GeneratorContext generatorContext) {
-
-            }
 
             @Override
             TestFramework getTestFramework() {

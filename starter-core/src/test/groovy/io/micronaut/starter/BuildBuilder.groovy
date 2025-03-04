@@ -3,6 +3,7 @@ package io.micronaut.starter
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.projectgen.core.buildtools.BuildTool
+import io.micronaut.projectgen.core.openrewrite.RecipeFetcher
 import io.micronaut.projectgen.core.options.JdkVersion
 import io.micronaut.projectgen.core.options.Language
 import io.micronaut.projectgen.core.options.Options
@@ -95,8 +96,13 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         Project project = getProject()
         JdkVersion jdkVersion = this.jdkVersion ?: MicronautJdkVersionConfiguration.DEFAULT_OPTION
         Options options = MicronautOptions.builder()
+                .name("demo")
+                .packageName("com.example")
                 .language(language)
-                .testFramework(testFramework).buildTool(buildTool).javaVersion(jdkVersion).build()
+                .testFramework(testFramework)
+                .buildTool(buildTool)
+                .javaVersion(jdkVersion)
+                .build()
         Features features = getFeatures(featureNames, options, type)
 
         if (buildTool.isGradle()) {
@@ -144,7 +150,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {
-        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver))
+        GeneratorContext ctx = new GeneratorContext(project, options, features.features, ctx.getBean(CoordinateResolver), ctx.getBean(RecipeFetcher))
         ctx.applyFeatures()
         ctx
     }

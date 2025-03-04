@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.github.workflows.oci
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.projectgen.micronaut.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -34,10 +35,17 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     }
 
     void 'test github workflow is created for #buildTool with #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(jdkVersion)
+                .features([OracleFunctionsJavaWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
-                [OracleFunctionsJavaWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/oracle-cloud-functions.yml"]
 
         then:
@@ -56,10 +64,17 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     }
 
     void 'test github graalvm workflow is created for #buildTool'(BuildTool buildTool) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(buildTool)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([OracleFunctionsGraalWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [OracleFunctionsGraalWorkflow.NAME])
+        def output = generate(options)
         def workflow = output[".github/workflows/oracle-cloud-functions-graalvm.yml"]
 
         then:
@@ -72,10 +87,17 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     }
 
     void 'test http function pom.xml configuration for #feature'(String feature) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([OracleFunctionsJavaWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [OracleFunctionsJavaWorkflow.NAME])
+        def output = generate(options)
         def pom = output["pom.xml"]
 
         then:
@@ -97,10 +119,17 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     }
 
     void 'test graalvm http function pom.xml configuration'() {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.MAVEN)
+                .javaVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
+                .features([OracleFunctionsGraalWorkflow.NAME])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
-                [OracleFunctionsGraalWorkflow.NAME])
+        def output = generate(options)
         def pom = output["pom.xml"]
 
         then:
@@ -120,8 +149,15 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
     }
 
     void 'test docker image is configured in #buildFileName for #feature'(BuildTool buildTool, String feature) {
+        given:
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .buildTool(buildTool)
+                .features([feature])
+                .build()
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [feature])
+        def output = generate(options)
         def gradle = output[buildTool.buildFileName]
 
         then:
@@ -157,11 +193,17 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         given:
         def graalvmVersion = "${VersionInfo.getDependencyVersion('graal').getValue()}" +
                 ".java${graalVersion.majorVersion()}"
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(jdkVersion)
+                .features([OracleFunctionsGraalWorkflow.NAME])
+                .build()
 
         when:
-        def output = generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [OracleFunctionsGraalWorkflow.NAME])
+        def output = generate(options)
         def workflow = output['.github/workflows/oracle-cloud-functions-graalvm.yml']
 
         then:
