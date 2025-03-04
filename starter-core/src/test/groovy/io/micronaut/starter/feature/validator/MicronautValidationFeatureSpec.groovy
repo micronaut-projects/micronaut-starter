@@ -71,7 +71,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
 
     void "test Micronaut Validation supports application type=#appType"(ApplicationType appType) {
         expect:
-        micronautValidationFeature.supports(appType)
+        micronautValidationFeature.supports(MicronautOptions.builder().applicationType(appType).build())
 
         where:
         appType << ApplicationType.values().toList()

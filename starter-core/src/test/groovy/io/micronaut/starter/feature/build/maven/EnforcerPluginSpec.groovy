@@ -39,7 +39,7 @@ class EnforcerPluginSpec extends ApplicationContextSpec  implements CommandOutpu
 
     void "test enforcer supports application type=#appType"(ApplicationType appType) {
         expect:
-        feature.supports(appType)
+        feature.supports(MicronautOptions.builder().applicationType(appType).build())
 
         where:
         appType << ApplicationType.values().toList()

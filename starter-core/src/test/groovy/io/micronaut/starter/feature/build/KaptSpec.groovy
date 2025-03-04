@@ -136,7 +136,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).build())
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).build())
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
@@ -148,7 +148,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in build = #buildTool for kapt'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).build(),['kapt'])
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).features(['kapt']).build())
         String buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
 
         then:
@@ -163,7 +163,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in Maven build for kapt'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool( BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).build(),['kapt'])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool( BuildTool.MAVEN).javaVersion(JdkVersion.JDK_21).features(['kapt']).build())
         def buildFile = output["pom.xml"]
 
         then:

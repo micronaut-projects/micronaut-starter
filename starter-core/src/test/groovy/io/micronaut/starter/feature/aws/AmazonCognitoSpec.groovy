@@ -20,10 +20,10 @@ class AmazonCognitoSpec extends ApplicationContextSpec {
         then:
         commandContext.configuration.containsKey("micronaut.security.authentication")
         commandContext.configuration.get("micronaut.security.authentication") == 'idtoken'
-        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
-        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
-        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
-        commandContext.getConfiguration(Environment.DEVELOPMENT).get('micronaut.security.oauth2.clients.default.openid.issuer') ==  'https://cognito-idp.${COGNITO_REGION:us-east-1}.amazonaws.com/${COGNITO_POOL_ID:ZZZ}/'
+        commandContext.getConfigurationByEnvironment(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
+        commandContext.getConfigurationByEnvironment(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
+        commandContext.getConfigurationByEnvironment(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
+        commandContext.getConfigurationByEnvironment(Environment.DEVELOPMENT).get('micronaut.security.oauth2.clients.default.openid.issuer') ==  'https://cognito-idp.${COGNITO_REGION:us-east-1}.amazonaws.com/${COGNITO_POOL_ID:ZZZ}/'
     }
 
     void 'amazon-cognito feature is in the cloud category'() {

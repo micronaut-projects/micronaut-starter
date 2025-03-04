@@ -26,7 +26,7 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
         expect:
         micronautHttpValidation.category == Category.VALIDATION
     }
-    
+
     void "dependency added for micronaut-http-validation feature in the main classpath"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool).features(['micronaut-http-validation']).render()
@@ -53,15 +53,4 @@ class MicronautHttpValidationSpec  extends ApplicationContextSpec {
         where:
         buildTool << BuildTool.values()
     }
-
-    void "test micronaut-http-validation is applied by default for appType=#appType and buildTool=#buildTool"(ApplicationType appType, BuildTool buildTool) {
-        given:
-        Options options = MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).buildTool(buildTool).build()
-        expect:
-        micronautHttpValidation.shouldApply(options)
-
-        where:
-        [appType, buildTool] << [ApplicationType.values(), BuildTool.values()].combinations()
-    }
-
 }

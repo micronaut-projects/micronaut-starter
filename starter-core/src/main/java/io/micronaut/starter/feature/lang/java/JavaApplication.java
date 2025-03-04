@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.feature.JavaApplicationFeature;
 import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.projectgen.javalibs.logging.Slf4jJulBridge;
 import io.micronaut.projectgen.micronaut.ApplicationType;
@@ -41,7 +42,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.java.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class JavaApplication implements JavaApplicationFeature  {
+public class JavaApplication implements JavaApplicationFeature {
 
     @Override
     @Nullable

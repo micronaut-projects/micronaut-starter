@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database
 
+import io.micronaut.projectgen.micronaut.MicronautOptions
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.projectgen.micronaut.ApplicationType
@@ -37,7 +38,7 @@ class DataSpringJdbcSpec extends ApplicationContextSpec  implements CommandOutpu
 
     void "test data spring jdbc supports application type #appType"(ApplicationType appType) {
         expect:
-        dataSpringJdbcFeature.supports(appType)
+        dataSpringJdbcFeature.supports(MicronautOptions.builder().applicationType(appType).build())
 
         where:
         appType << ApplicationType.values()

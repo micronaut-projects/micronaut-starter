@@ -21,6 +21,7 @@ import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.feature.KotlinApplicationFeature;
 import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.projectgen.javalibs.logging.Slf4jJulBridge;
 import io.micronaut.projectgen.micronaut.ApplicationType;

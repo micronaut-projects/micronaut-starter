@@ -18,14 +18,6 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
     @Subject
     AmazonApiGatewayHttp amazonApiGatewayHttp = beanContext.getBean(AmazonApiGatewayHttp)
 
-    @Shared
-    Options options = MicronautOptions.builder()
-            .language(Language.JAVA)
-            .testFramework(TestFramework.JUNIT)
-            .buildTool(BuildTool.GRADLE)
-            .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
-            .build();
-
     void 'amazon-api-gateway-http feature is in the cloud category'() {
         expect:
         amazonApiGatewayHttp.category == Category.SERVERLESS
@@ -66,8 +58,14 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature has dependencies, imports and code'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options,
-                [Cdk.NAME, AmazonApiGatewayHttp.NAME])
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features([Cdk.NAME, AmazonApiGatewayHttp.NAME])
+                .build()
+        Map<String, String> output = generate(options)
 
         then:
         output."$Cdk.INFRA_MODULE/build.gradle".contains($/implementation("software.amazon.awscdk:apigatewayv2-alpha/$)
@@ -100,8 +98,15 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http and arm do not use SnapStart'() {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options,
-                [Cdk.NAME, AmazonApiGatewayHttp.NAME, Arm.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features([Cdk.NAME, AmazonApiGatewayHttp.NAME, Arm.NAME])
+                .build()
+        Map<String, String> output = generate(options)
         String appStack = output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java"
         then:
         appStack.contains('''
@@ -111,8 +116,15 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'amazon-api-gateway-http feature without Cdk has dependency in project and doc links'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, options,
-                [AmazonApiGatewayHttp.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features( [AmazonApiGatewayHttp.NAME])
+                .build()
+        def output = generate(options)
 
         then:
         output."build.gradle".contains($/implementation("io.micronaut.aws:micronaut-aws-apigateway/$)
@@ -123,7 +135,15 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
 
     void 'Selecting more than one AmazonApiGateway feature fails with exception'() {
         when:
-        generate(ApplicationType.FUNCTION, options, [Cdk.NAME, AmazonApiGatewayHttp.NAME, AmazonApiGateway.NAME])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features([Cdk.NAME, AmazonApiGatewayHttp.NAME, AmazonApiGateway.NAME])
+                .build()
+        generate(options)
 
         then:
         def e = thrown(IllegalArgumentException)

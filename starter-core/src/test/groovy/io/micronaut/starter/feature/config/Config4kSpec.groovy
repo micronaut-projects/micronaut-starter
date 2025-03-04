@@ -52,6 +52,7 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test configuration files generated for config4k feature"() {
         when:
         Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.DEFAULT)
                 .language(Language.KOTLIN)
                 .buildTool(BuildTool.GRADLE)
                 .build()
@@ -61,7 +62,7 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
             context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
             context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
         }, options)
-        def output = generate(ApplicationType.DEFAULT, generatorContext)
+        def output = generate( generatorContext)
 
         then:
         output["src/main/resources/application.conf"].contains '''\

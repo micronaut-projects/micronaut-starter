@@ -13,9 +13,7 @@ class KotlinSupportFeatureSpec extends BeanContextSpec implements CommandOutputF
     void "test default plugins added for kotlin with buildTool=#buildTool"(BuildTool buildTool) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                MicronautOptions.builder().language(Language.KOTLIN).buildTool(buildTool).build(),
-                []
+                MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).buildTool(buildTool).build()
         )
 
         String buildGradle = output[buildTool.getBuildFileName()]

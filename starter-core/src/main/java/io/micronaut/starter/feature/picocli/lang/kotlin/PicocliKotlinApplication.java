@@ -18,13 +18,13 @@ package io.micronaut.starter.feature.picocli.lang.kotlin;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.feature.KotlinApplicationFeature;
 import io.micronaut.projectgen.core.options.Options;
 import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.projectgen.core.generator.Project;
 import io.micronaut.projectgen.core.generator.GeneratorContext;
 import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.RequireKaptFeature;
-import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.projectgen.core.rocker.RockerTemplate;
 import jakarta.inject.Singleton;
 

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.lang.java;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.projectgen.core.feature.JavaApplicationFeature;
 import io.micronaut.projectgen.micronaut.ApplicationType;
 import io.micronaut.projectgen.micronaut.MicronautOptions;
 import io.micronaut.starter.feature.ApplicationFeature;

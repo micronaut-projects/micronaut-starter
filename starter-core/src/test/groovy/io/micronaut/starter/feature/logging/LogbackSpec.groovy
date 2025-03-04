@@ -13,14 +13,6 @@ import io.micronaut.projectgen.core.options.TestFramework
 import spock.lang.Shared
 
 class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixture {
-    @Shared
-    Options options = MicronautOptions.builder()
-            .language(Language.JAVA)
-            .testFramework(TestFramework.JUNIT)
-            .buildTool(BuildTool.GRADLE)
-            .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
-            .build()
-
     void 'by default jansi false, coloring true, and jul false'() {
         when:
         Map<String, String> output = generate([])
@@ -36,7 +28,15 @@ class LogbackSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void 'with aws-lambda with jansi false since CloudWatch does not works with jansi'() {
         when:
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Options options = MicronautOptions.builder()
+                .applicationType(ApplicationType.FUNCTION)
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+                .build()
+        Map<String, String> output = generate(options)
         String xml = output["src/main/resources/logback.xml"]
 
         then:
