@@ -27,12 +27,19 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Subject
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
 
-    @Shared
-    Options options = MicronautOptions.builder().language(Language.JAVA).testFramework(TestFramework.JUNIT).buildTool(BuildTool.GRADLE).javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk()).build()
 
     void 'test gradle.properties does not contain micronaut.runtime'(ApplicationType applicationType) {
         when:
-        Map<String, String> output = generate(applicationType, options, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .applicationType(applicationType)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+                .build()
+
+        Map<String, String> output = generate(options)
         String properties = output["gradle.properties"]
 
         then:
@@ -45,8 +52,17 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     void 'test readme.md with feature aws-lambda contains links to micronaut docs'(ApplicationType applicationType) {
+        given:
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .applicationType(applicationType)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+                .build()
         when:
-        Map<String, String> output = generate(applicationType, options, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:
@@ -59,8 +75,17 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md for application #applicationType feature aws-lambda contains Handler '(ApplicationType applicationType,
                                                                                                 String handler) {
+        given:
+        Options options = MicronautOptions.builder()
+                .language(Language.JAVA)
+                .testFramework(TestFramework.JUNIT)
+                .buildTool(BuildTool.GRADLE)
+                .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
+                .applicationType(applicationType)
+                .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+                .build()
         when:
-        Map<String, String> output = generate(applicationType, options, [AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(options)
         String readme = output["README.md"]
 
         then:

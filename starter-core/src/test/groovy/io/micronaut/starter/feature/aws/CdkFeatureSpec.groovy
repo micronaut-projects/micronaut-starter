@@ -31,7 +31,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'submodules are created for #buildTool'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        def output = generate(createOptions(buildTool).applicationType(ApplicationType.DEFAULT).features([Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA]).build())
 
         then:
         output.'micronaut-cli.yml'
@@ -51,7 +51,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'Function AppStack log retention is included for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [Cdk.NAME])
+        def output = generate(createOptions(buildTool).applicationType(ApplicationType.FUNCTION).features([Cdk.NAME]).build())
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
@@ -64,8 +64,8 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'architecture defaults to X86 for  #buildTool'(BuildTool buildTool) {
         when:
-        Options options = createOptions(buildTool)
-        Map<String, String> output = generate(ApplicationType.FUNCTION, options, [Cdk.NAME])
+        Options options = createOptions(buildTool).applicationType(ApplicationType.FUNCTION).features([Cdk.NAME]).build()
+        Map<String, String> output = generate(options)
 
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(Runtime.JAVA_${options.javaVersion().majorVersion()})")
@@ -79,7 +79,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "dependencies are added for cdk to infra project for #buildTool"(BuildTool buildTool, String buildFile) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(createOptions(buildTool).applicationType(ApplicationType.DEFAULT).features([Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA]).build())
         String infraBuild = output."$Cdk.INFRA_MODULE/$buildFile"
 
         then:
@@ -93,7 +93,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void 'Function AppStack with Alexa Skills is included for #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, createOptions(buildTool), [Cdk.NAME,AwsAlexa.NAME])
+        def output = generate(createOptions(buildTool).applicationType(ApplicationType.FUNCTION).features([Cdk.NAME,AwsAlexa.NAME]).build())
 
         then:
         // aws-lambda is automatic, but if that assumption changes might need to fix cdkappstack rocker file
@@ -114,7 +114,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "dependencies are added for cdk to infra project for maven"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, createOptions(BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        Map<String, String> output = generate(createOptions(BuildTool.MAVEN).applicationType(ApplicationType.DEFAULT).features([Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA]).build())
         def dependency = new XmlParser().parseText(output."$Cdk.INFRA_MODULE/pom.xml").dependencies.dependency.find {
             it.artifactId.text() == 'micronaut-starter-aws-cdk'
         }
@@ -125,12 +125,11 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         }
     }
 
-    private static Options createOptions(BuildTool buildTool) {
+    private static MicronautOptions.Builder createOptions(BuildTool buildTool) {
         MicronautOptions.builder()
                 .language(Language.JAVA)
                 .testFramework(TestFramework.JUNIT)
                 .buildTool(buildTool)
                 .javaVersion(AwsLambdaFeatureValidator.firstSupportedJdk())
-                .build()
     }
 }

@@ -40,7 +40,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "feature buildless is unsupported with maven and #language"(Language language) {
         when:
-        generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(language).buildTool(BuildTool.MAVEN).build(), [Buildless.NAME])
+        generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(language).buildTool(BuildTool.MAVEN).features([Buildless.NAME]).build())
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -52,7 +52,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "buildless configured correctly for #buildTool"() {
         when:
-        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(buildTool).build(), [Buildless.NAME])
+        def output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.JAVA).buildTool(buildTool).features([Buildless.NAME]).build())
         def version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
         def settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
         def expectedPlugin = """id("build.less") version("$version\""""

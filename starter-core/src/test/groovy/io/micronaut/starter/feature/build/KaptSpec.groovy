@@ -99,7 +99,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_17).build())
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_17).build())
 
         then:
         !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
@@ -111,9 +111,8 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void "for java 21, with #buildTool and Kapt we add the add-opens hack"() {
         when:
         Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).build(),
-                [Kapt.NAME]
+                MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(buildTool).javaVersion(JdkVersion.JDK_21).features([Kapt.NAME]).build(),
+
         )
 
         then:
@@ -125,7 +124,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "for java 17, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, MicronautOptions.builder().language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build())
+        Map<String, String> output = generate(MicronautOptions.builder().applicationType(ApplicationType.DEFAULT).language(Language.KOTLIN).testFramework(TestFramework.DEFAULT_OPTION).buildTool(BuildTool.MAVEN).javaVersion(JdkVersion.JDK_17).build())
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
