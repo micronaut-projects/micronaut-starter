@@ -1,19 +1,25 @@
 package io.micronaut.starter.feature.json
 
+import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.BuildTestUtil
-import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
+import spock.lang.Unroll
+
+import static io.micronaut.starter.application.ApplicationType.DEFAULT
+import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    private static final String GRADLE_PLUGIN_VERSION = StarterCoordinates.MICRONAUT_GRADLE_PLUGIN.version
+    private static final String JSONSCHEMA_PLUGIN = 'id("io.micronaut.jsonschema") version "' + GRADLE_PLUGIN_VERSION + '"'
 
     @Shared
     @Subject
@@ -31,7 +37,7 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
 
     void "json-schema-generator belongs to API category"() {
         expect:
-        Category.API == jsonSchemaGeneratorFeature.category
+        Category.PACKAGING == jsonSchemaGeneratorFeature.category
     }
 
     void "json-schema-generator supports application type = #applicationType"(ApplicationType applicationType) {
@@ -42,21 +48,35 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
         applicationType << ApplicationType.values()
     }
 
-    void "json-schema-generator feature adds dependencies for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
+    void 'application with #buildTool and feature json-schema-generator for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .features([JsonSchemaGeneratorFeature.NAME])
-                .language(language)
-                .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
-
+        String output = build(buildTool, language)
         then:
-        template
-        verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-generator")
-        verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-annotations")
+        output.contains(JSONSCHEMA_PLUGIN)
+        output.contains('jsonschema {')
+        output.contains('fromUrl(')
+        output.contains('outputPackageName.set("com.example.animals")')
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+    }
+
+    @Unroll
+    void 'application with maven and feature json-schema-generator for language=#language'() {
+        when:
+        String output = build(MAVEN, language)
+
+        then:
+        output.contains("<micronaut.jsonschema.generator.outputPackageName>com.example.animals</micronaut.jsonschema.generator.outputPackageName>")
+
+        when:
+        String expected = "<micronaut.jsonschema.generator.enabled>${StringUtils.TRUE}</micronaut.jsonschema.generator.enabled>"
+
+        then:
+        output.contains(expected)
+
+        where:
+        language << Language.values().toList()
     }
 
     void 'test json-schema-generator feature does NOT add jason-schema feature'() {
@@ -65,5 +85,13 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
 
         then:
         !generatorContext.hasFeature(JsonSchemaFeature)
+    }
+
+    private String build(BuildTool buildTool, Language language, List<String> features = [JsonSchemaGeneratorFeature.NAME]) {
+        new BuildBuilder(beanContext, buildTool)
+                .language(language)
+                .applicationType(DEFAULT)
+                .features(features)
+                .render()
     }
 }
