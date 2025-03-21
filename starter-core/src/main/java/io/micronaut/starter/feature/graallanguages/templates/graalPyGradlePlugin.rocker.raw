@@ -1,0 +1,9 @@
+@import java.util.List
+@args (List<String> packages)
+// tag::graalpy-gradle-plugin[]
+graalPy {
+@if(!packages.isEmpty()) {
+    packages = @("[\"" + String.join("\",\"",packages) + "\"]")
+}
+}
+// end::graalpy-gradle-plugin[]

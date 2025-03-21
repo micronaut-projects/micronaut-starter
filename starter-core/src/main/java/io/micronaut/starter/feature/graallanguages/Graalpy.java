@@ -19,15 +19,18 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.MavenSpecificFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MinJdkFeature;
+import io.micronaut.starter.feature.graallanguages.templates.graalPyGradleKotlinPlugin;
 import io.micronaut.starter.feature.graallanguages.templates.graalPyMavenPlugin;
+import io.micronaut.starter.feature.graallanguages.templates.graalPyGradlePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.template.RockerWritable;
@@ -38,7 +41,7 @@ import java.util.List;
 
 @Requires(property = "micronaut.starter.feature.graalpy.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Graalpy implements MinJdkFeature, MavenSpecificFeature {
+public class Graalpy implements MinJdkFeature, Feature {
     public static final String NAME = "graalpy";
 
     private static final String GROUP_ID_GRAALVM_PYTHON = "org.graalvm.python";
@@ -85,20 +88,40 @@ public class Graalpy implements MinJdkFeature, MavenSpecificFeature {
         addDependencies(generatorContext);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             addGraalPyMavenPlugin(generatorContext);
+        } else if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+            addGraalPyGradlePlugin(generatorContext);
+        } else if (generatorContext.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
+            addGraalPyGradleKotlinPlugin(generatorContext);
         }
     }
 
     private void addGraalPyMavenPlugin(GeneratorContext generatorContext) {
-        BuildProperties buildProperties = generatorContext.getBuildProperties();
-        generatorContext.addBuildPlugin(graalpyMavenPlugin());
-    }
-
-    protected MavenPlugin graalpyMavenPlugin() {
-        return MavenPlugin.builder()
+        MavenPlugin plugin = MavenPlugin.builder()
                 .groupId(GROUP_ID_GRAALVM_PYTHON)
                 .artifactId(ARTIFACT_ID_GRAALPY_MAVEN_PLUGIN)
                 .extension(new RockerWritable(graalPyMavenPlugin.template(pythonPackages())))
                 .build();
+        generatorContext.addBuildPlugin(plugin);
+    }
+
+    private void addGraalPyGradlePlugin(GeneratorContext generatorContext) {
+        GradlePlugin plugin = GradlePlugin.builder()
+                .id("org.graalvm.python")
+                .lookupArtifactId("org.graalvm.python.gradle.plugin")
+                .extension(new RockerWritable(graalPyGradlePlugin.template(pythonPackages())))
+                .pluginsManagementRepository(new GradlePluginPortal())
+                .build();
+        generatorContext.addBuildPlugin(plugin);
+    }
+
+    private void addGraalPyGradleKotlinPlugin(GeneratorContext generatorContext) {
+        GradlePlugin plugin = GradlePlugin.builder()
+                .id("org.graalvm.python")
+                .lookupArtifactId("org.graalvm.python.gradle.plugin")
+                .extension(new RockerWritable(graalPyGradleKotlinPlugin.template(pythonPackages())))
+                .pluginsManagementRepository(new GradlePluginPortal())                
+                .build();
+        generatorContext.addBuildPlugin(plugin);
     }
 
     protected List<String> pythonPackages() {

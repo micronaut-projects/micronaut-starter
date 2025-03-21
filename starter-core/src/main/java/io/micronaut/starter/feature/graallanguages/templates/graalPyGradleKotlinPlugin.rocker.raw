@@ -1,0 +1,11 @@
+@import java.util.List
+@args (List<String> packages)
+// tag::graalpy-gradle-kotlin-plugin[]
+graalPy {
+@if(!packages.isEmpty()) {
+    @for (String pkg : packages) {
+        packages.add(@(pkg))
+    }
+}
+}
+// end::graalpy-gradle-kotlin-plugin[] -->
