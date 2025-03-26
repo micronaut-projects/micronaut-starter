@@ -30,7 +30,7 @@ class SpringBootStarterSpec extends ApplicationContextSpec implements CommandOut
         verifier.hasBuildPlugin("io.spring.dependency-management")
         !verifier.hasBuildPlugin("io.micronaut.application")
         !verifier.hasBuildPlugin("io.micronaut.library")
-        !verifier.hasBuildPlugin("com.github.johnrengelman.shadow")
+        !verifier.hasBuildPlugin("com.gradleup.shadow")
         verifier.hasDependency("org.springframework.boot", "spring-boot-starter", Scope.COMPILE)
         verifier.hasDependency("org.springframework.boot", "spring-boot-starter-test", Scope.TEST)
         template.contains("mavenCentral()")
