@@ -46,7 +46,7 @@ public class JsonSchemaGeneratorFeature implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.PACKAGING;
+        return Category.API;
     }
 
     @Override
