@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     implementation "com.fizzed:rocker-compiler:1.4.0"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.17.1"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.18.3"
     implementation "io.sdkman:gradle-sdkvendor-plugin:3.0.0"
     implementation "org.asciidoctor:asciidoctor-gradle-jvm:2.4.0"
     implementation "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin:8.3.6"
