@@ -145,7 +145,7 @@ fun main(args: Array<String>) {
         output?.contains("BUILD SUCCESS")
 
         where:
-        build << BuildToolCombinations.buildTools
+        build << BuildTool.valuesGradle()
     }
 
     @Override

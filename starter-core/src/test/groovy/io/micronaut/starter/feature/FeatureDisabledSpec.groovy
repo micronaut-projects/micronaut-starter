@@ -2,10 +2,7 @@ package io.micronaut.starter.feature
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.StringUtils
-import io.micronaut.http.client.HttpClient
-import io.micronaut.starter.build.dependencies.FeatureWithDuplicates
 import io.micronaut.starter.build.maven.GroovyMavenPlusPlugin
-import io.micronaut.starter.feature.acme.Acme
 import io.micronaut.starter.feature.agorapulse.gru.GruHttp
 import io.micronaut.starter.feature.agorapulse.permissions.Permissions
 import io.micronaut.starter.feature.agorapulse.slack.Slack
@@ -67,7 +64,7 @@ import io.micronaut.starter.feature.ci.workflows.oci.OCICiWorkflowFeature
 import io.micronaut.starter.feature.coherence.CoherenceData
 import io.micronaut.starter.feature.coherence.CoherenceDistributedConfiguration
 import io.micronaut.starter.feature.coherence.CoherenceFeature
-import io.micronaut.starter.feature.coherence.CoherenceGrpcClient
+
 import io.micronaut.starter.feature.coherence.CoherenceSessionStore
 import io.micronaut.starter.feature.config.Config4k
 import io.micronaut.starter.feature.config.Toml
@@ -422,7 +419,6 @@ class FeatureDisabledSpec extends Specification {
         'java-gradle-plugin' | 'micronaut.starter.feature.java.gradle.plugin.enabled' | JavaGradlePlugin
         'jackson-databind' | 'micronaut.starter.feature.jackson.databind.enabled' | JacksonDatabindFeature
         'views-pebble' | 'micronaut.starter.feature.views.pebble.enabled' | Pebble
-        'coherence-grpc-client' | 'micronaut.starter.feature.coherence.grpc.client.enabled' | CoherenceGrpcClient
         'langchain4j-store-pgvector' | 'micronaut.starter.feature.langchain4j.store.pgvector.enabled' | PgVectorLangchain4jEmbeddedStore
         'spring' | 'micronaut.starter.feature.spring.enabled' | Spring
         'kotlin-extension-functions' | 'micronaut.starter.feature.kotlin.extension.functions.enabled' | KotlinExtensionFunctions

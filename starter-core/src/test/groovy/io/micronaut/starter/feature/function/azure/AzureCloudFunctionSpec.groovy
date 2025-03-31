@@ -69,7 +69,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
-        !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('"com.gradleup.shadow"')
         !build.contains('shadowJar')
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
@@ -108,7 +108,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
-        !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('"com.gradleup.shadow"')
         !build.contains('shadowJar')
 
         when:

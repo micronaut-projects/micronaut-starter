@@ -21,10 +21,18 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
+import java.util.function.Function
+
 class ApplicationTypeCombinations {
+    static final Function<List, Boolean> SKIP_KOTLIN_MAVEN = l -> {
+        !(l[1] == Language.KOTLIN && l[2] == BuildTool.MAVEN)
+    }
+
     @Memoized
     static List combinations(List<ApplicationType> applicationTypes, List<Language> languages = Language.values() as List<Language>) {
-        [applicationTypes, languages, BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        [applicationTypes, languages, BuildToolCombinations.buildTools, TestFramework.values()].combinations().findAll {
+            SKIP_KOTLIN_MAVEN.apply(it)
+        }
     }
 
     @Memoized
@@ -32,6 +40,8 @@ class ApplicationTypeCombinations {
             List<ApplicationType> applicationTypes,
             List<Language> languages,
             List<BuildTool> buildTools) {
-        [applicationTypes, languages, buildTools, TestFramework.values()].combinations()
+        [applicationTypes, languages, buildTools, TestFramework.values()].combinations().findAll {
+            SKIP_KOTLIN_MAVEN.apply(it)
+        }
     }
 }

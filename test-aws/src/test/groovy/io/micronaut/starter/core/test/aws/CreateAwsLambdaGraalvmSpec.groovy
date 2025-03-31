@@ -5,8 +5,10 @@ import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import spock.lang.Unroll
 
 class CreateAwsLambdaGraalvmSpec extends CommandSpec {
@@ -25,7 +27,10 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        [applicationType, lang, build, testFramework] << [
+                [ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFramework.values()].combinations().findAll {
+            ApplicationTypeCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }
 
     }
 

@@ -90,12 +90,5 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
 
         Dependency.Builder distributedConfiguration = MicronautDependencyUtils.coherenceDependency().artifactId("micronaut-coherence-distributed-configuration").compile();
         generatorContext.addDependency(distributedConfiguration);
-
-        if (generatorContext.getBuildTool().isGradle() && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("com.oracle.coherence.ce")
-                    .artifactId("coherence-java-client")
-                    .compile());
-        }
     }
 }
