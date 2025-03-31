@@ -5,6 +5,8 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -51,11 +53,18 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
     void 'application with #buildTool and feature json-schema-generator for language=#language'(BuildTool buildTool, Language language) {
         when:
         String output = build(buildTool, language)
+
         then:
         output.contains(JSONSCHEMA_PLUGIN)
         output.contains('jsonschema {')
         output.contains('fromUrl(')
         output.contains('outputPackageName.set("com.example.animals")')
+
+        when:
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, output)
+
+        then:
+        verifier.hasBuildPlugin("io.micronaut.jsonschema")
 
         where:
         [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
