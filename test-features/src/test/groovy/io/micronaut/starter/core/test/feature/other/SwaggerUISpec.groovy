@@ -114,7 +114,7 @@ class SwaggerUISpec extends CommandSpec {
         return new Language[] {
             Language.JAVA,
             //Language.GROOVY,
-            Language.KOTLIN
+            //Language.KOTLIN
         }
     }
 

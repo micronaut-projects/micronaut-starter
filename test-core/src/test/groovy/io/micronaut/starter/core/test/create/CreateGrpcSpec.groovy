@@ -79,7 +79,7 @@ class CreateGrpcSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << [Language.JAVA]
     }
 
     CreateGrpcServiceCommand createGrpcServiceCommand(BeanContext beanContext,

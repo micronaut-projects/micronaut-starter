@@ -6,6 +6,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 
 class TelegramGcpChatBotFunctionSpec extends CommandSpec {
 
@@ -26,7 +27,7 @@ class TelegramGcpChatBotFunctionSpec extends CommandSpec {
         result.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
         feature = TelegramGcpChatBot.NAME
     }
 }

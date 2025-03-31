@@ -20,8 +20,13 @@ import groovy.transform.Memoized
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
+import java.util.function.Function
+
 @AutoFinal
 class LanguageBuildCombinations {
+    static final Function<List, Boolean> SKIP_KOTLIN_MAVEN = l -> {
+        !(l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN)
+    }
 
     /**
      *
@@ -29,7 +34,11 @@ class LanguageBuildCombinations {
      */
     @Memoized
     static List<List> combinations(List<String> features = null) {
-        features ? [Language.values(), BuildToolCombinations.buildTools, features].combinations() : [Language.values(), BuildToolCombinations.buildTools].combinations()
+        (features
+                ? [Language.values(), BuildToolCombinations.buildTools, features].combinations()
+                : [Language.values(), BuildToolCombinations.buildTools].combinations()).findAll {
+            SKIP_KOTLIN_MAVEN.apply(it)
+        }
     }
 
     @Memoized

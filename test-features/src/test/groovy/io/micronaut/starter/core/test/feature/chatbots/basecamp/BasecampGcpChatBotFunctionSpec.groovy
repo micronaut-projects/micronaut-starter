@@ -6,6 +6,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 
 class BasecampGcpChatBotFunctionSpec extends CommandSpec {
 
@@ -25,7 +26,7 @@ class BasecampGcpChatBotFunctionSpec extends CommandSpec {
         result.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
+        [language, buildTool, testFramework] <<  LanguageBuildTestFrameworkCombinations.combinations()
         feature = BasecampGcpChatBot.NAME
     }
 }

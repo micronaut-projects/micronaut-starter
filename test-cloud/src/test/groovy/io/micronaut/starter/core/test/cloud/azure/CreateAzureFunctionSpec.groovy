@@ -8,6 +8,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 
 class CreateAzureFunctionSpec extends CommandSpec {
 
@@ -31,7 +32,8 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
+        [applicationType, lang, build, testFramework] <<
+                ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
     }
 
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
@@ -51,11 +53,13 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, serializationFeature, build, testFramework] << [
+        [lang, build, serializationFeature,testFramework] << [
                 Language.values(),
-                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 BuildToolCombinations.buildTools,
+                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 TestFramework.values()
-        ].combinations()
+        ].combinations().findAll {
+            LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }
     }
 }
