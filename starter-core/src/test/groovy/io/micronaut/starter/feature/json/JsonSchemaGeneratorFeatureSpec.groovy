@@ -37,7 +37,7 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
 
     void "json-schema-generator belongs to API category"() {
         expect:
-        Category.PACKAGING == jsonSchemaGeneratorFeature.category
+        Category.API == jsonSchemaGeneratorFeature.category
     }
 
     void "json-schema-generator supports application type = #applicationType"(ApplicationType applicationType) {
