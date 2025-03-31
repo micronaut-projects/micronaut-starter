@@ -1,9 +1,16 @@
 @import java.util.List
-@args (List<String> packages)
-// tag::graalpy-gradle-plugin[]
-graalPy {
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args (List<String> packages, GradleDsl dsl)
+//tag::graalpy-gradle-plugin[]
 @if(!packages.isEmpty()) {
-    packages = @("[\"" + String.join("\",\"",packages) + "\"]")
+graalPy {
+@if(dsl == GradleDsl.KOTLIN) {
+    @for (String pkg : packages) {
+        packages.add(@(pkg))
+    }
+} else {
+packages = @("[\"" + String.join("\",\"",packages) + "\"]")
 }
 }
-// end::graalpy-gradle-plugin[]
+}
+//end::graalpy-gradle-plugin[]

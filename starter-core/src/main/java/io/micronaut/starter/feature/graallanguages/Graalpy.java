@@ -22,13 +22,13 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MinJdkFeature;
-import io.micronaut.starter.feature.graallanguages.templates.graalPyGradleKotlinPlugin;
 import io.micronaut.starter.feature.graallanguages.templates.graalPyMavenPlugin;
 import io.micronaut.starter.feature.graallanguages.templates.graalPyGradlePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -88,10 +88,8 @@ public class Graalpy implements MinJdkFeature, Feature {
         addDependencies(generatorContext);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             addGraalPyMavenPlugin(generatorContext);
-        } else if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+        } else if (generatorContext.getBuildTool().isGradle()) {
             addGraalPyGradlePlugin(generatorContext);
-        } else if (generatorContext.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
-            addGraalPyGradleKotlinPlugin(generatorContext);
         }
     }
 
@@ -105,21 +103,12 @@ public class Graalpy implements MinJdkFeature, Feature {
     }
 
     private void addGraalPyGradlePlugin(GeneratorContext generatorContext) {
+        GradleDsl dsl = generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.KOTLIN);
         GradlePlugin plugin = GradlePlugin.builder()
                 .id("org.graalvm.python")
                 .lookupArtifactId("org.graalvm.python.gradle.plugin")
-                .extension(new RockerWritable(graalPyGradlePlugin.template(pythonPackages())))
+                .extension(new RockerWritable(graalPyGradlePlugin.template(pythonPackages(), dsl)))
                 .pluginsManagementRepository(new GradlePluginPortal())
-                .build();
-        generatorContext.addBuildPlugin(plugin);
-    }
-
-    private void addGraalPyGradleKotlinPlugin(GeneratorContext generatorContext) {
-        GradlePlugin plugin = GradlePlugin.builder()
-                .id("org.graalvm.python")
-                .lookupArtifactId("org.graalvm.python.gradle.plugin")
-                .extension(new RockerWritable(graalPyGradleKotlinPlugin.template(pythonPackages())))
-                .pluginsManagementRepository(new GradlePluginPortal())                
                 .build();
         generatorContext.addBuildPlugin(plugin);
     }

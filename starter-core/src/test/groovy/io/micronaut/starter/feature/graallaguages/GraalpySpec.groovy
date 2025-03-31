@@ -61,24 +61,10 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         then:
         template
         verifier.hasDependency("io.micronaut.graal-languages", "micronaut-graalpy", Scope.COMPILE)
-
-        where:
-        [buildTool, language] << [BuildTool.values(), Language.JAVA].combinations()
-    }
-
-    void "micronaut-graalpy feature adds graalPy plugin for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .features([Graalpy.NAME])
-                .language(language)
-                .render()
-
-        then:
-        template
         if (buildTool == BuildTool.MAVEN) {
             assert template.contains("<artifactId>graalpy-maven-plugin</artifactId>")
-        } else {
-            assert template.contains("graalPy {")
+        } else if (buildTool.isGradle()) {
+            assert verifier.hasBuildPlugin("org.graalvm.python")
         }
 
         where:
