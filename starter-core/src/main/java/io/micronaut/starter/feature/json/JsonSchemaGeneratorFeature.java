@@ -26,9 +26,9 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.build.gradle.templates.jsonschemaExtension;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
+import io.micronaut.starter.feature.validator.ValidationFeature;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
-
 
 @Requires(property = "micronaut.starter.feature.json.schema.generator.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
@@ -42,6 +42,11 @@ public class JsonSchemaGeneratorFeature implements Feature {
 
     public JsonSchemaGeneratorFeature(MicronautValidationFeature validationFeature) {
         this.validationFeature = validationFeature;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeatureIfNotPresent(ValidationFeature.class, validationFeature);
     }
 
     @Override
@@ -69,15 +74,9 @@ public class JsonSchemaGeneratorFeature implements Feature {
         return true;
     }
 
-
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-json-schema/latest/guide/index.html#generator";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeatureIfNotPresent(MicronautValidationFeature.class, validationFeature);
     }
 
     @Override
@@ -99,7 +98,6 @@ public class JsonSchemaGeneratorFeature implements Feature {
 
     protected void addMavenPlugin(GeneratorContext generatorContext) {
         String schemaUrl = "https://raw.githubusercontent.com/micronaut-projects/micronaut-json-schema/refs/heads/1.5.x/test-suite-generator-java/src/test/resources/animal.schema.json";
-
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         buildProperties.put("micronaut.jsonschema.generator.enabled", StringUtils.TRUE);
         buildProperties.put("micronaut.jsonschema.generator.input-url", schemaUrl);
