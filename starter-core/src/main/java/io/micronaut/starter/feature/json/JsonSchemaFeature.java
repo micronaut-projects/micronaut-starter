@@ -57,7 +57,7 @@ public class JsonSchemaFeature implements ContributingStaticResources {
 
     @Override
     public String getDescription() {
-        return "Adds JSON Schema to a Micronaut Application";
+        return "Adds capability to generate JSON Schema from Java beans to a Micronaut Application";
     }
 
     @Override
