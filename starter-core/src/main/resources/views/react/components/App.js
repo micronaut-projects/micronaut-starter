@@ -9,8 +9,11 @@ function App({name, url}) {
             <meta charSet="UTF-8"/>
         </head>
         <body>
-            <p>Hello there {name}, I'm saying hi from SSR React!</p>
-            <p>URL is {url}</p>
+            <p>Current URL is {url}</p>
+
+            <button onClick={() => { alert('Hello from an event handler.'); }}>
+                Hello {name}
+            </button>
         </body>
         </html>
     );
