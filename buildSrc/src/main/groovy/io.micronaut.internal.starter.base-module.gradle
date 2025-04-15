@@ -47,12 +47,3 @@ dependencies {
         exclude group: "org.apache.groovy", module: "groovy-all"
     }
 }
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == "io.micronaut.sourcegen") {
-                details.useVersion("1.7.2")
-            }
-        }
-    }
-}
