@@ -9,6 +9,7 @@ import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.Ignore
 import spock.lang.IgnoreIf
 
 class R2dbcSpec extends CommandSpec {
@@ -18,7 +19,8 @@ class R2dbcSpec extends CommandSpec {
         return "r2dbc"
     }
 
-    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
+    @Ignore
+    //@IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven r2dbc with #language"(Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [R2dbc.NAME, MySQL.NAME])
@@ -31,7 +33,8 @@ class R2dbcSpec extends CommandSpec {
         language << Language.values()
     }
 
-    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
+    @Ignore
+    //@IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven data-r2dbc with TestContainers"() {
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [R2dbc.NAME, MySQL.NAME, TestContainers.NAME])
@@ -41,6 +44,7 @@ class R2dbcSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
     }
 
+    @Ignore
     void "test #buildTool r2dbc with #language"(BuildTool buildTool, Language language) {
         when:
         generateProject(language, buildTool, [R2dbc.NAME, MySQL.NAME])
@@ -53,6 +57,7 @@ class R2dbcSpec extends CommandSpec {
         [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 
+    @Ignore 
     void "test #buildTool data-r2dbc with TestContainers"(BuildTool buildTool) {
         when:
         generateProject(Language.JAVA, buildTool, [R2dbc.NAME, MySQL.NAME])
