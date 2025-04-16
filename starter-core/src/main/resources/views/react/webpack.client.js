@@ -13,6 +13,10 @@ module.exports = {
             SERVER: false,
         })
     ],
+    optimization: {
+        // Minification currently breaks Micronaut React SSR.
+        minimize: false,
+    },
     module: {
         rules: [
             {

@@ -40,6 +40,7 @@ public class React implements ViewFeature, MicronautServerDependent {
     private static final String ARTIFACT_ID = "micronaut-views-react";
     private static final String[] FRONTEND_FILES = new String[]{
             "package.json",
+            "package-lock.json",
             "client.js",
             "server.js",
             "webpack.client.js",
@@ -147,6 +148,10 @@ public class React implements ViewFeature, MicronautServerDependent {
                 );
             }
 
+            generatorContext.getConfiguration().addNested("micronaut.views.react.server-bundle-path", "classpath:views/ssr-components.mjs");
+            generatorContext.getConfiguration().addNested("micronaut.router.static-resources.js.mapping", "/static/**");
+            generatorContext.getConfiguration().addNested("micronaut.router.static-resources.js.paths", "classpath:views/static");
+
             // Set up the frontend project. These are *not* resources under views/ because they're raw inputs that will
             // be minified and transpiled as part of the build pipeline.
             var ourResourceURL = Thread.currentThread().getContextClassLoader().getResource("views/react").toString();
@@ -166,7 +171,8 @@ public class React implements ViewFeature, MicronautServerDependent {
                         new RockerTemplate(sourceFile, reactControllerKotlin.template(generatorContext.getProject())));
             }
 
-            // This will stop being necessary in Truffle 24.1
+            // This is technically no longer necessary, but as of Truffle 24.2 still prints a scary warning about it
+            // being experimental to the console. So we disable virtual threads in Micronaut by default.
             generatorContext.getConfiguration().addNested("micronaut.executors.blocking.virtual", "false");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);   // Cannot happen.
