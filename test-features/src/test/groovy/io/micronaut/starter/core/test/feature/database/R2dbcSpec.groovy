@@ -57,7 +57,7 @@ class R2dbcSpec extends CommandSpec {
         [language, buildTool] << LanguageBuildCombinations.gradleCombinations()
     }
 
-    @Ignore 
+    @Ignore
     void "test #buildTool data-r2dbc with TestContainers"(BuildTool buildTool) {
         when:
         generateProject(Language.JAVA, buildTool, [R2dbc.NAME, MySQL.NAME])
