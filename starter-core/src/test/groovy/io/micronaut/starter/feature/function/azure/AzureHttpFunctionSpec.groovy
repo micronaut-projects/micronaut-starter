@@ -7,7 +7,11 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 
 class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -77,13 +81,12 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         if (buildTool.isGradle()) {
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
-
         } else if (buildTool == BuildTool.MAVEN) {
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.DEVELOPMENT_ONLY)
         }
+
+        assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
