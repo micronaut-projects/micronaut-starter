@@ -4,6 +4,6 @@ import {hydrateRoot} from 'react-dom/client';
 const pageComponentName = Micronaut.rootComponent;
 
 import(`./components/${pageComponentName}.js`).then(module => {
-    const PageComponent = module[pageComponentName]
+    const PageComponent = module[pageComponentName] ?? module['default'];
     hydrateRoot(document, <PageComponent {...Micronaut.rootProps}/>)
 })

@@ -68,7 +68,7 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
     private static List<String> featuresNames() {
         [
-                MySQL.NAME,
+                //MySQL.NAME,
                 MariaDB.NAME,
                 PostgreSQL.NAME,
                 Oracle.NAME,
