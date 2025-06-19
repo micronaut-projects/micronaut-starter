@@ -112,6 +112,12 @@ implements <a href="AzureCloudFeature.html" title="interface in io.micronaut.sta
 <div class="col-second even-row-color"><code><a href="#ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY" class="member-name-link">ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#AZURE_FUNCTIONS_EXTENSION_VERSION" class="member-name-link">AZURE_FUNCTIONS_EXTENSION_VERSION</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="../../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY" class="member-name-link">DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS" class="member-name-link">GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
@@ -151,54 +157,51 @@ implements <a href="AzureCloudFeature.html" title="interface in io.micronaut.sta
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAzureFunctionsJavaLibraryDependency(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addAzureFunctionsJavaLibraryDependency</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addDependencies</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDependencies(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">addDependencies</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFunctionTemplate(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.application.Project)" class="member-name-link">addFunctionTemplate</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFunctionTemplate(io.micronaut.starter.application.generator.GeneratorContext,io.micronaut.starter.application.Project)" class="member-name-link">addFunctionTemplate</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
  <a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature that means the feature was explicitly selected,
  included by default as a result of <a href="../../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
  or added explicitly by another feature through <a href="../../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBuildCommand(io.micronaut.starter.options.BuildTool)" class="member-name-link">getBuildCommand</a><wbr>(<a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBuildCommand(io.micronaut.starter.options.BuildTool)" class="member-name-link">getBuildCommand</a><wbr>(<a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRunCommand(io.micronaut.starter.options.BuildTool)" class="member-name-link">getRunCommand</a><wbr>(<a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRunCommand(io.micronaut.starter.options.BuildTool)" class="member-name-link">getRunCommand</a><wbr>(<a href="../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#groovyJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">groovyJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#javaJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">javaJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#groovyJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">groovyJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#koTestTemplate(io.micronaut.starter.application.Project)" class="member-name-link">koTestTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#javaJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">javaJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#kotlinJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">kotlinJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#koTestTemplate(io.micronaut.starter.application.Project)" class="member-name-link">koTestTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.fizzed.rocker.RockerModel</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spockTemplate(io.micronaut.starter.application.Project)" class="member-name-link">spockTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.RockerModel</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#kotlinJUnitTemplate(io.micronaut.starter.application.Project)" class="member-name-link">kotlinJUnitTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.fizzed.rocker.RockerModel</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#spockTemplate(io.micronaut.starter.application.Project)" class="member-name-link">spockTemplate</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -263,6 +266,26 @@ implements <a href="AzureCloudFeature.html" title="interface in io.micronaut.sta
 </ul>
 </dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="AZURE_FUNCTIONS_EXTENSION_VERSION">
+<h3>AZURE_FUNCTIONS_EXTENSION_VERSION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">AZURE_FUNCTIONS_EXTENSION_VERSION</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#io.micronaut.starter.feature.function.azure.AbstractAzureFunction.AZURE_FUNCTIONS_EXTENSION_VERSION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY">
+<h3>DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../../../build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></span>&nbsp;<span class="element-name">DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY</span></div>
 </section>
 </li>
 <li>
@@ -448,12 +471,6 @@ implements <a href="AzureCloudFeature.html" title="interface in io.micronaut.sta
 <section class="detail" id="addDependencies(io.micronaut.starter.application.generator.GeneratorContext)">
 <h3>addDependencies</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDependencies</span><wbr><span class="parameters">(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="addAzureFunctionsJavaLibraryDependency(io.micronaut.starter.application.generator.GeneratorContext)">
-<h3>addAzureFunctionsJavaLibraryDependency</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAzureFunctionsJavaLibraryDependency</span><wbr><span class="parameters">(<a href="../../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
 </section>
 </li>
 </ul>
