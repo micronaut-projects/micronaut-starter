@@ -38,7 +38,7 @@ public class MicronautGradleEnterprise extends GradleEnterprise {
     private static final String SERVER = "https://ge.micronaut.io";
     private static final String GE_CUSTOM_USER_DATA_GROOVY = "gradle-enterprise-custom-user-data.groovy";
     private static final String ARTIFACT_ID_MICRONAUT_GRADLE_PLUGINS = "micronaut-gradle-plugins";
-    private static final String GRADLE_PLUGIN_ID_MICRONAUT_GRADLE_ENTERPRISE = "io.micronaut.build.internal.gradle-enterprise";
+    private static final String GRADLE_PLUGIN_ID_MICRONAUT_GRADLE_ENTERPRISE = "io.micronaut.build.internal.develocity";
 
     @Override
     @NonNull

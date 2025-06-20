@@ -54,7 +54,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
           |}'''.stripMargin())
 
         settings.contains('plugins {')
-        settings.contains('    id("io.micronaut.build.internal.gradle-enterprise") version("')
+        settings.contains('    id("io.micronaut.build.internal.develocity") version("')
 
         where:
         buildTool << BuildTool.valuesGradle()
