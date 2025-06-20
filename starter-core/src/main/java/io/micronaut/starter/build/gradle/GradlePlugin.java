@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.StringWritable;
 import io.micronaut.starter.template.Writable;
 
 import java.util.ArrayList;
@@ -254,6 +255,12 @@ public class GradlePlugin implements BuildPlugin {
         @NonNull
         public GradlePlugin.Builder extension(@Nullable Writable extension) {
             this.extension = extension;
+            return this;
+        }
+
+        @NonNull
+        public GradlePlugin.Builder extension(@Nullable String extension) {
+            this.extension = new StringWritable(extension);
             return this;
         }
 
