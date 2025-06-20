@@ -129,7 +129,7 @@ abstract class CommandSpec extends Specification {
                          boolean addMicronautGradleEnterpriseFeature = true,
                          JdkVersion maxJdkVersion = MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
         if (addMicronautGradleEnterpriseFeature) {
-            features += [MicronautGradleEnterprise.NAME]
+        //    features += [MicronautGradleEnterprise.NAME]
         }
         JdkVersion jdkVersion = VersionInfo.getJavaVersion()
         if (jdkVersion.greaterThanEqual(maxJdkVersion)) {
@@ -155,7 +155,7 @@ abstract class CommandSpec extends Specification {
             boolean addMicronautGradleEnterpriseFeature = true
     ) {
         if (addMicronautGradleEnterpriseFeature) {
-            features += [MicronautGradleEnterprise.NAME]
+        //    features += [MicronautGradleEnterprise.NAME]
         }
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
