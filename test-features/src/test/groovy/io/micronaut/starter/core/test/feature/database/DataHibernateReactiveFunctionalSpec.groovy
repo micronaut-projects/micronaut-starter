@@ -20,6 +20,9 @@ import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 // Don't delete this import.  It is not an unused import
 import io.micronaut.starter.core.test.feature.database.templates.book
+import spock.util.environment.RestoreSystemProperties
+
+import static io.micronaut.starter.core.test.feature.database.HibernateReactiveJpaFunctionalSpec.setDefaultEndpointVerificationAlgorithmToNone
 
 class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
@@ -28,8 +31,12 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
         return "hibernateReactiveJpa"
     }
 
+    @RestoreSystemProperties
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven data-hibernate-reactive with java and #db"(String db) {
+        given:
+        setDefaultEndpointVerificationAlgorithmToNone()
+
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [DataHibernateReactive.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
@@ -47,7 +54,11 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
                 .toList()
     }
 
+    @RestoreSystemProperties
     void "test #buildTool data-hibernate-reactive with java and #db"(BuildTool buildTool, String db) {
+        given:
+        setDefaultEndpointVerificationAlgorithmToNone()
+
         when:
         generateProject(Language.JAVA, buildTool, [DataHibernateReactive.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
