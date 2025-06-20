@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
@@ -37,6 +38,21 @@ public abstract class MySQLCompatibleFeature extends DatabaseDriverFeature {
 
     public MySQLCompatibleFeature(JdbcFeature jdbcFeature, TestContainers testContainers, TestResources testResources) {
         super(jdbcFeature, testContainers, testResources);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        // see:
+        // https://github.com/testcontainers/testcontainers-java/issues/8798
+        // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
+        if (generatorContext.hasFeature(TestContainers.class)) {
+            generatorContext.addDependency(
+                    Dependency.builder()
+                            .lookupArtifactId("commons-compress")
+                            .test()
+            );
+        }
     }
 
     @Override

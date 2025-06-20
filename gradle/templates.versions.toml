@@ -72,8 +72,10 @@ graaljs = "24.2.1"  # On upgrade, please check if Loom/Truffle interop is still 
 frontend-maven-plugin = "1.15.0"
 liquibase-slf4j = "5.0.0"
 graalpy = "24.2.1"
-
+commons-compress = "1.27.1"
 [libraries]
+
+commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
 spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot-gradle-plugin" }
