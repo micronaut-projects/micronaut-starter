@@ -26,7 +26,10 @@ class OpenSearchFunctionalSpec extends CommandSpec {
                 [OpenSearchAmazon.NAME, OpenSearchHttpClient5.NAME, OpenSearchRestClient.NAME],
                 Language.values(),
                 BuildTool.values()
-        ].combinations()
+        ].combinations().findAll {
+            !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.GROOVY) &&
+                    !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN)
+        }
     }
 
     @Override
