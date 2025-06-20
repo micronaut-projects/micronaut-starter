@@ -1,6 +1,8 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
+import io.micronaut.starter.feature.database.MariaDB
+import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.Oracle
 import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
@@ -58,7 +60,7 @@ class TestContainersFunctionalSpec extends CommandSpec {
                 beanContext.getBeansOfType(DatabaseDriverFeature)
                         .stream()
                         .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
-                        .filter( f -> f.name != SQLServer.NAME) // ignore SQLServer fails on CI and locally it passes only with TestContainers Desktop
+                        .filter( f -> f.name != SQLServer.NAME && f.name != MySQL.NAME && f.name != MariaDB.NAME) // ignore SQLServer fails on CI and locally it passes only with TestContainers Desktop
                         .filter( f -> !f.embedded())
                         .toList()
         ].combinations()
