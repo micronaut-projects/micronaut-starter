@@ -30,6 +30,7 @@ import io.micronaut.starter.feature.awssecretsmanager.AwsSecretsManager
 import io.micronaut.starter.feature.azure.AzureCosmosDbFeature
 import io.micronaut.starter.feature.azure.AzureKeyVaultFeature
 import io.micronaut.starter.feature.azure.AzureLogging
+import io.micronaut.starter.feature.azure.AzureTracing
 import io.micronaut.starter.feature.build.GradleEnterprise
 import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautAot
@@ -562,6 +563,7 @@ class FeatureDisabledSpec extends Specification {
         'rss' | 'micronaut.starter.feature.rss.enabled' | Rss
         'picocli' | 'micronaut.starter.feature.picocli.enabled' | Picocli
         'azure-logging' | 'micronaut.starter.feature.azure.logging.enabled' | AzureLogging
+        'azure-tracing' | 'micronaut.starter.feature.azure.tracing.enabled' | AzureTracing
         'amazon-cloudwatch-logging' | 'micronaut.starter.feature.amazon.cloudwatch.logging.enabled' | AmazonCloudWatchLogging
         'github-workflow-ci' | 'micronaut.starter.feature.github.workflow.ci.enabled' | GithubCiWorkflowFeature
         'eclipsestore' | 'micronaut.starter.feature.eclipsestore.enabled' | EclipseStore

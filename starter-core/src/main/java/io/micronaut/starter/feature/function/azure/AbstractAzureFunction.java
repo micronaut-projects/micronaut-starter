@@ -55,6 +55,13 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     public static final String GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS = "com.microsoft.azure.functions";
     public static final String ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY = "azure-functions-java-library";
+    public static final String AZURE_FUNCTIONS_EXTENSION_VERSION = "~4";
+
+    public static final Dependency DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY = Dependency.builder()
+            .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
+            .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY)
+            .compile()
+            .build();
 
     public static final String NAME = "azure-function";
     private final CoordinateResolver coordinateResolver;
@@ -103,7 +110,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
             generatorContext.addBuildPlugin(MavenPlugin.builder()
                     .artifactId(mavenPluginArtifactId)
-                    .extension(new RockerWritable(azureFunctionMavenPlugin.template()))
+                    .extension(new RockerWritable(azureFunctionMavenPlugin.template(AZURE_FUNCTIONS_EXTENSION_VERSION)))
                     .build());
             BuildProperties props = generatorContext.getBuildProperties();
             coordinateResolver.resolve(mavenPluginArtifactId)
@@ -112,6 +119,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("functionResourceGroup", "java-functions-group");
             props.put("functionAppRegion", "westus");
             props.put("functionRuntimeOs", "windows");
+            props.put("functionAppServicePlanName", "java-functions-app-service-plan");
             javaVersionValue(generatorContext).ifPresent(value -> props.put("functionRuntimeJavaVersion", value));
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
@@ -187,17 +195,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        addAzureFunctionsJavaLibraryDependency(generatorContext);
-    }
-
-    protected void addAzureFunctionsJavaLibraryDependency(GeneratorContext generatorContext) {
-        Dependency.Builder builder = Dependency.builder()
-                .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
-                .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(builder.developmentOnly());
-        } else if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(builder.compile());
-        }
+        generatorContext.addDependency(DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY);
     }
 }

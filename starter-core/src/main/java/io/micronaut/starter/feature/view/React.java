@@ -40,7 +40,6 @@ public class React implements ViewFeature, MicronautServerDependent {
     private static final String ARTIFACT_ID = "micronaut-views-react";
     private static final String[] FRONTEND_FILES = new String[]{
             "package.json",
-            "package-lock.json",
             "client.js",
             "server.js",
             "webpack.client.js",
@@ -107,7 +106,7 @@ public class React implements ViewFeature, MicronautServerDependent {
                 generatorContext.addBuildPlugin(
                         GradlePlugin.builder()
                                 .id("org.gradle.toolchains.foojay-resolver-convention")
-                                .version("0.8.0")
+                                .version("0.10.0")
                                 .gradleFile(GradleFile.SETTINGS)
                                 .build()
                 );
@@ -166,9 +165,13 @@ public class React implements ViewFeature, MicronautServerDependent {
             if (generatorContext.getLanguage() == Language.JAVA) {
                 generatorContext.addTemplate("AppController.java",
                         new RockerTemplate(sourceFile, reactControllerJava.template(generatorContext.getProject())));
+                String unitTestSource = generatorContext.getTestSourcePath("/{packagePath}/RootView");
+                generatorContext.addTemplate(unitTestSource, new RockerTemplate(unitTestSource, reactTestJava.template(generatorContext.getProject())));
             } else if (generatorContext.getLanguage() == Language.KOTLIN) {
                 generatorContext.addTemplate("AppController.kt",
                         new RockerTemplate(sourceFile, reactControllerKotlin.template(generatorContext.getProject())));
+                String unitTestSource = generatorContext.getTestSourcePath("/{packagePath}/RootView");
+                generatorContext.addTemplate(unitTestSource, new RockerTemplate(unitTestSource, reactTestKotlin.template(generatorContext.getProject())));
             }
 
             // This is technically no longer necessary, but as of Truffle 24.2 still prints a scary warning about it
