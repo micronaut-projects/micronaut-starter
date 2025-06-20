@@ -72,7 +72,7 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
                 MariaDB.NAME,
                 PostgreSQL.NAME,
                 Oracle.NAME,
-                //SQLServer.NAME
+                SQLServer.NAME
         ].stream()
                 .filter(n -> n != Oracle.NAME || Oracle.COMPATIBLE_WITH_HIBERNATE_REACTIVE)
                 .toList()
