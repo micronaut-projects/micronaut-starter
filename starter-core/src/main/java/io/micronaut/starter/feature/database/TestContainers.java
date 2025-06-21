@@ -102,17 +102,16 @@ public class TestContainers implements Feature {
                         .ifPresent(dependencyArtifactId -> generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
             });
 
-            // see:
-            // https://github.com/testcontainers/testcontainers-java/issues/8798
-            // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
-            if (generatorContext.hasFeature(TestContainers.class)) {
-                generatorContext.addDependency(Dependency.builder().lookupArtifactId("commons-compress").test());
-            }
-
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
             generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(testArtifactId));
         });
+        // see:
+        // https://github.com/testcontainers/testcontainers-java/issues/8798
+        // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
+        if (generatorContext.hasFeature(TestContainers.class)) {
+            generatorContext.addDependency(Dependency.builder().lookupArtifactId("commons-compress").test());
+        }
     }
 
     @NonNull
