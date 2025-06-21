@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -100,6 +101,14 @@ public class TestContainers implements Feature {
                 artifactIdForDriverFeature(driverFeature)
                         .ifPresent(dependencyArtifactId -> generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
             });
+
+            // see:
+            // https://github.com/testcontainers/testcontainers-java/issues/8798
+            // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
+            if (generatorContext.hasFeature(TestContainers.class)) {
+                generatorContext.addDependency(Dependency.builder().lookupArtifactId("commons-compress").test());
+            }
+
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
             generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(testArtifactId));
