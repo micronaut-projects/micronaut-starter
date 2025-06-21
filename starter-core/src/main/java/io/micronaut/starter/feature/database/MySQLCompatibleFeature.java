@@ -41,21 +41,6 @@ public abstract class MySQLCompatibleFeature extends DatabaseDriverFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-        // see:
-        // https://github.com/testcontainers/testcontainers-java/issues/8798
-        // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
-        if (generatorContext.hasFeature(TestContainers.class)) {
-            generatorContext.addDependency(
-                    Dependency.builder()
-                            .lookupArtifactId("commons-compress")
-                            .test()
-            );
-        }
-    }
-
-    @Override
     @NonNull
     public Optional<Dependency.Builder> getHibernateReactiveJavaClientDependency() {
         return Optional.of(DEPENDENCY_VERTX_MYSQL_CLIENT);
