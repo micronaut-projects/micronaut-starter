@@ -28,20 +28,8 @@ class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
         return "hibernateReactiveJpa"
     }
 
-    static void setDefaultEndpointVerificationAlgorithmToNone() {
-        // In netty 4.2.2 SslContextBuilder defaults endpointIdentificationAlgorithm to "HTTPS" if system property
-        // "io.netty.handler.ssl.defaultEndpointVerificationAlgorithm" is not set. This makes sun.security.util.HostnameChecker.match(String expectedName, X509Certificate cert, boolean chainsToPublicCA)
-        // method to throw error "javax.net.ssl.SSLHandshakeException: No name matching localhost found" and this is workaround.
-        // Which could be documented or suggested if users experience this issue
-        System.setProperty("io.netty.handler.ssl.defaultEndpointVerificationAlgorithm", "NONE");
-    }
-
-    @RestoreSystemProperties
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven hibernate-reactive-jpa with java and #db"(String db) {
-        given:
-        setDefaultEndpointVerificationAlgorithmToNone()
-
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [HibernateReactiveJpa.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
@@ -58,16 +46,13 @@ class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
                 .toList()
     }
 
-    @RestoreSystemProperties
     void "test #buildTool hibernate-reactive-jpa with java and #db"(BuildTool buildTool, String db) {
-        given:
-        setDefaultEndpointVerificationAlgorithmToNone()
-
         when:
         generateProject(Language.JAVA, buildTool, [HibernateReactiveJpa.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
-
+        File buildToolFile = new File(dir.path + "/build.gradle")
+        if (buildToolFile)
         BuildResult result = executeGradle("test")
 
         then:

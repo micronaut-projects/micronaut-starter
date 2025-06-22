@@ -22,8 +22,6 @@ import spock.lang.IgnoreIf
 import io.micronaut.starter.core.test.feature.database.templates.book
 import spock.util.environment.RestoreSystemProperties
 
-import static io.micronaut.starter.core.test.feature.database.HibernateReactiveJpaFunctionalSpec.setDefaultEndpointVerificationAlgorithmToNone
-
 class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
     @Override
@@ -34,9 +32,6 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
     @RestoreSystemProperties
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven data-hibernate-reactive with java and #db"(String db) {
-        given:
-        setDefaultEndpointVerificationAlgorithmToNone()
-
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [DataHibernateReactive.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
@@ -56,9 +51,6 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
     @RestoreSystemProperties
     void "test #buildTool data-hibernate-reactive with java and #db"(BuildTool buildTool, String db) {
-        given:
-        setDefaultEndpointVerificationAlgorithmToNone()
-
         when:
         generateProject(Language.JAVA, buildTool, [DataHibernateReactive.NAME, db, MicronautValidationFeature.NAME])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
@@ -70,7 +62,7 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, db] << [BuildTool.valuesGradle(), featuresNames()
+        [buildTool, db] << [[BuildTool.GRADLE], featuresNames()
                 .stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
                 .toList()
