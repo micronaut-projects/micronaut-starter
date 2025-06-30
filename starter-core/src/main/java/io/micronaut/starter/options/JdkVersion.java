@@ -108,10 +108,8 @@ public final class JdkVersion {
         if (StringUtils.isEmpty(jdkVersion)) {
             throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
         }
-        if (!jdkVersion.startsWith(PREFIX_JDK)) {
-            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
-        }
-        String version = jdkVersion.substring(PREFIX_JDK.length());
+        String version = jdkVersion.startsWith(PREFIX_JDK) ?
+                jdkVersion.substring(PREFIX_JDK.length()) : jdkVersion;
         try {
             int majorVersion = Integer.parseInt(version);
             return valueOf(majorVersion);
