@@ -26,7 +26,7 @@ import jakarta.inject.Singleton;
 public class JakartaData implements Feature {
     private static final Dependency DEPENDENCY_JAKARTA_DATA_API = Dependency.builder()
             .groupId("jakarta.data")
-            .artifactId("jakarta-data-api")
+            .artifactId("jakarta.data-api")
             .compile()
             .build();
 
