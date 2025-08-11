@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-13
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
@@ -51,7 +51,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
