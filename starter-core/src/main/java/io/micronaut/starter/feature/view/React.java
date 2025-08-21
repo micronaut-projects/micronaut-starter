@@ -111,24 +111,11 @@ public class React implements ViewFeature, MicronautServerDependent {
                                 .build()
                 );
             } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                // We spell out the individual dependencies here because the Starter dependency management code for
-                // Maven builds can't express the direct pom dependency needed by Truffle.
                 generatorContext.addDependency(Dependency.builder()
-                        .groupId("org.graalvm.js")
-                        .artifactId("js-language")
+                        .groupId("org.graalvm.polyglot")
+                        .artifactId("js-community")
                         .version(StarterCoordinates.JS_COMMUNITY.getVersion())
-                        .runtime()
-                );
-                generatorContext.addDependency(Dependency.builder()
-                        .groupId("org.graalvm.truffle")
-                        .artifactId("truffle-enterprise")
-                        .version(StarterCoordinates.JS_COMMUNITY.getVersion())
-                        .runtime()
-                );
-                generatorContext.addDependency(Dependency.builder()
-                        .groupId("org.graalvm.truffle")
-                        .artifactId("truffle-runtime")
-                        .version(StarterCoordinates.JS_COMMUNITY.getVersion())
+                        .pom(true)
                         .runtime()
                 );
                 generatorContext.addDependency(Dependency.builder()
