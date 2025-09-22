@@ -18,6 +18,13 @@ configurations.all {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://repo.gradle.org/gradle/libs-releases")
+    }
+}
+
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
 
@@ -35,6 +42,8 @@ dependencies {
     implementation("org.shredzone.acme4j:acme4j-client")
     implementation("org.shredzone.acme4j:acme4j-utils:2.16")
     implementation('org.jline:jline:3.27.1')
+    implementation("org.apache.maven.shared:maven-invoker:3.3.0")
+    implementation("org.gradle:gradle-tooling-api:8.12")
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
     testImplementation("org.testcontainers:spock")
