@@ -34,10 +34,10 @@ public class UpdateCommand extends BaseCommand implements Callable<Integer> {
 
     @ReflectiveAccess
     @Option(
-            names = {"--project", "-p"},
-            required = true,
-            paramLabel = "DIR",
-            description = "The project folder"
+        names = {"--project", "-p"},
+        required = false,
+        paramLabel = "DIR",
+        description = "The project folder (defaults to current directory)"
     )
     protected File projectDir;
 
