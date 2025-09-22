@@ -53,8 +53,16 @@ public class UpdateCommand extends BaseCommand implements Callable<Integer> {
     @Override
     public Integer call() {
         try {
-            if (projectDir == null || !projectDir.exists() || !projectDir.isDirectory()) {
-                err("Invalid project directory: " + (projectDir == null ? "null" : projectDir.getAbsolutePath()));
+            if (projectDir == null) {
+                projectDir = new File(System.getProperty("user.dir"));
+            }
+            try {
+                projectDir = projectDir.getCanonicalFile();
+            } catch (Exception e) {
+                projectDir = projectDir.getAbsoluteFile();
+            }
+            if (!projectDir.exists() || !projectDir.isDirectory()) {
+                err("Invalid project directory: " + projectDir.getAbsolutePath());
                 return 2;
             }
 
