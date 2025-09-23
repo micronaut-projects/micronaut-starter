@@ -44,6 +44,10 @@ include 'test-suite-graal'
 project(':starter-cli').name = "micronaut-cli"
 
 dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+    }
     versionCatalogs {
         templateLibs {
             from(files("gradle/templates.versions.toml"))
