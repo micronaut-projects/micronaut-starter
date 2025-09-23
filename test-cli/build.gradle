@@ -2,6 +2,11 @@ plugins {
     id "io.micronaut.internal.starter.test-module"
 }
 
+repositories {
+    mavenCentral()
+    maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+}
+
 dependencies {
     testImplementation(project(":test-utils"))
     testImplementation(project(":micronaut-cli"))
