@@ -23,6 +23,12 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.io.InputStream;
 
 import java.io.File;
 import java.util.HashMap;
@@ -43,16 +49,43 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
                     @NonNull Consumer<String> out,
                     @NonNull Consumer<String> err) {
 
-        try (ProjectConnection connection = GradleConnector.newConnector()
-                .forProjectDirectory(folder)
-                .connect()) {
-            connection.newBuild()
-                    .forTasks(TASK_REWRITE_RUN)
-                    .withArguments("-Duser.dir=" + folder.getAbsolutePath())
-                    .withSystemProperties(systemProperties(configuration))
-                    .setStandardOutput(new ConsumerOutputStream(out))
-                    .setStandardError(new ConsumerOutputStream(err))
-                    .run();
+        Path initScript = null;
+        try {
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream("openrewrite/init.gradle")) {
+                if (is == null) {
+                    throw new IllegalStateException("Missing classpath resource: openrewrite/init.gradle");
+                }
+                initScript = Files.createTempFile("mn-openrewrite-init", ".gradle");
+                Files.writeString(initScript, new String(is.readAllBytes(), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            }
+
+            Map<String, String> sysProps = systemProperties(configuration);
+            List<String> args = new ArrayList<>();
+            args.add("-Duser.dir=" + folder.getAbsolutePath());
+            args.add("--init-script");
+            args.add(initScript.toString());
+
+            try (ProjectConnection connection = GradleConnector.newConnector()
+                    .forProjectDirectory(folder)
+                    .connect()) {
+                connection.newBuild()
+                        .forTasks(TASK_REWRITE_RUN)
+                        .withArguments(args.toArray(new String[0]))
+                        .withSystemProperties(sysProps)
+                        .setStandardOutput(new ConsumerOutputStream(out))
+                        .setStandardError(new ConsumerOutputStream(err))
+                        .run();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (initScript != null) {
+                try {
+                    Files.deleteIfExists(initScript);
+                } catch (IOException ignored) {
+
+                }
+            }
         }
     }
 
