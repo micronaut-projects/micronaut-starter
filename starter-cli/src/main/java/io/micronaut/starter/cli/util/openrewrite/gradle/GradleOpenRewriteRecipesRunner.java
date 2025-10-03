@@ -16,13 +16,12 @@
 package io.micronaut.starter.cli.util.openrewrite.gradle;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.cli.util.openrewrite.ConsumerOutputStream;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteConfiguration;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteRecipesRunner;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import org.gradle.tooling.GradleConnector;
-import org.gradle.tooling.ProjectConnection;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,16 +64,51 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
             args.add("--init-script");
             args.add(initScript.toString());
 
-            try (ProjectConnection connection = GradleConnector.newConnector()
-                    .forProjectDirectory(folder)
-                    .connect()) {
-                connection.newBuild()
-                        .forTasks(TASK_REWRITE_RUN)
-                        .withArguments(args.toArray(new String[0]))
-                        .withSystemProperties(sysProps)
-                        .setStandardOutput(new ConsumerOutputStream(out))
-                        .setStandardError(new ConsumerOutputStream(err))
-                        .run();
+            List<String> cmd = new ArrayList<>();
+            File wrapper = new File(folder, System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "gradlew");
+            if (wrapper.isFile()) {
+                if (wrapper.getName().endsWith(".bat")) {
+                    cmd.add("cmd");
+                    cmd.add("/c");
+                    cmd.add(wrapper.getAbsolutePath());
+                } else {
+                    wrapper.setExecutable(true);
+                    cmd.add(wrapper.getAbsolutePath());
+                }
+            } else {
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    cmd.add("cmd");
+                    cmd.add("/c");
+                    cmd.add("gradle.bat");
+                } else {
+                    cmd.add("gradle");
+                }
+            }
+            cmd.add("--init-script");
+            cmd.add(initScript.toString());
+            cmd.addAll(configuration.getSystemPropertiesList());
+            cmd.add(TASK_REWRITE_RUN);
+
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            pb.directory(folder);
+            Process process = pb.start();
+
+            Thread outPump = new Thread(() -> pump(process.getInputStream(), out));
+            Thread errPump = new Thread(() -> pump(process.getErrorStream(), err));
+            outPump.start();
+            errPump.start();
+
+            int exit;
+            try {
+                exit = process.waitFor();
+                outPump.join();
+                errPump.join();
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException(ie);
+            }
+            if (exit != 0) {
+                throw new IllegalStateException("Gradle exited with code " + exit + " while running " + TASK_REWRITE_RUN);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -100,5 +134,16 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
 
         }
         return systemProperties;
+    }
+
+    private void pump(InputStream in, Consumer<String> consumer) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                consumer.accept(line);
+            }
+        } catch (IOException ioe) {
+            consumer.accept(ioe.getMessage() != null ? ioe.getMessage() : ioe.toString());
+        }
     }
 }
