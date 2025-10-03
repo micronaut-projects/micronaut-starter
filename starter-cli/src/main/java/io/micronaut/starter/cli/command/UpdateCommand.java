@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteConfiguration;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteRecipesRunner;
+import io.micronaut.starter.io.FileSystemOutputHandler;
 import jakarta.inject.Named;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -26,7 +27,6 @@ import picocli.CommandLine.Option;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
-
 
 @Command(name = "update", description = "Update an existing project to latest Micronaut version")
 @Prototype
@@ -53,18 +53,8 @@ public class UpdateCommand extends BaseCommand implements Callable<Integer> {
     public Integer call() {
         try {
             if (projectDir == null) {
-                projectDir = new File(System.getProperty("user.dir"));
+                projectDir = FileSystemOutputHandler.getDefaultBaseDirectory();
             }
-            try {
-                projectDir = projectDir.getCanonicalFile();
-            } catch (Exception e) {
-                projectDir = projectDir.getAbsoluteFile();
-            }
-            if (!projectDir.exists() || !projectDir.isDirectory()) {
-                err("Invalid project directory: " + projectDir.getAbsolutePath());
-                return 2;
-            }
-
             List<String> recipes = List.of(IO_MICRONAUT_OPENREWRITE_UPDATE);
             OpenRewriteConfiguration configuration = OpenRewriteConfiguration.builder()
                     .activeRecipes(recipes)
