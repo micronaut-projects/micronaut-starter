@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.util.openrewrite.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteConfiguration;
 import io.micronaut.starter.cli.util.openrewrite.OpenRewriteRecipesRunner;
 import jakarta.inject.Named;
@@ -58,9 +59,10 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
 
 
             List<String> cmd = new ArrayList<>();
-            File wrapper = new File(folder, System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "gradlew");
+            boolean isWindows = configuration.operatingSystem() == OperatingSystem.WINDOWS;
+            File wrapper = new File(folder, isWindows ? "gradlew.bat" : "gradlew");
             if (wrapper.isFile()) {
-                if (wrapper.getName().endsWith(".bat")) {
+                if (isWindows) {
                     cmd.add("cmd");
                     cmd.add("/c");
                     cmd.add(wrapper.getAbsolutePath());
@@ -69,7 +71,7 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
                     cmd.add(wrapper.getAbsolutePath());
                 }
             } else {
-                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                if (isWindows) {
                     cmd.add("cmd");
                     cmd.add("/c");
                     cmd.add("gradle.bat");
