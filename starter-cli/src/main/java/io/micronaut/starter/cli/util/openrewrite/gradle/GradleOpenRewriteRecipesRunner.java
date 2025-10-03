@@ -30,9 +30,7 @@ import java.util.ArrayList;
 import java.io.InputStream;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Named("gradle")
@@ -58,11 +56,6 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
                 Files.writeString(initScript, new String(is.readAllBytes(), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
             }
 
-            Map<String, String> sysProps = systemProperties(configuration);
-            List<String> args = new ArrayList<>();
-            args.add("-Duser.dir=" + folder.getAbsolutePath());
-            args.add("--init-script");
-            args.add(initScript.toString());
 
             List<String> cmd = new ArrayList<>();
             File wrapper = new File(folder, System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "gradlew");
@@ -123,18 +116,6 @@ public class GradleOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner 
         }
     }
 
-    private Map<String, String> systemProperties(OpenRewriteConfiguration configuration) {
-        Map<String, String> systemProperties = new HashMap<>();
-        Map<String, Object> configurationSystemProperties = configuration.getSystemProperties();
-        for (String k : configurationSystemProperties.keySet()) {
-            Object value = configurationSystemProperties.get(k);
-            if (value != null) {
-                systemProperties.put(k, value.toString());
-            }
-
-        }
-        return systemProperties;
-    }
 
     private void pump(InputStream in, Consumer<String> consumer) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
