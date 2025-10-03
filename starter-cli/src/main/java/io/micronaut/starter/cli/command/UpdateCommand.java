@@ -31,7 +31,7 @@ import java.util.concurrent.Callable;
 @Command(name = "update", description = "Update an existing project to latest Micronaut version")
 @Prototype
 public class UpdateCommand extends BaseCommand implements Callable<Integer> {
-
+    private static final String IO_MICRONAUT_OPENREWRITE_UPDATE = "io.micronaut.openrewrite.update";
     @ReflectiveAccess
     @Option(
         names = {"--project", "-p"},
@@ -66,7 +66,7 @@ public class UpdateCommand extends BaseCommand implements Callable<Integer> {
                 return 2;
             }
 
-            List<String> recipes = List.of("io.micronaut.openrewrite.update");
+            List<String> recipes = List.of(IO_MICRONAUT_OPENREWRITE_UPDATE);
             OpenRewriteConfiguration configuration = OpenRewriteConfiguration.builder()
                     .activeRecipes(recipes)
                     .exportDatatables(true)
