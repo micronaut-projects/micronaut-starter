@@ -36,6 +36,7 @@ import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
@@ -43,10 +44,7 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Requires(property = "micronaut.starter.feature.gradle.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
@@ -54,8 +52,32 @@ public class Gradle implements BuildFeature {
     public static final boolean DEFAULT_USER_VERSION_CATALOGUE = false;
     protected static final GradlePlugin GROOVY_GRADLE_PLUGIN = GradlePlugin.builder().id("groovy").build();
 
-    protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
-    protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
+    private static final String GRADLE = "gradle";
+    private static final String DASH = "-";
+    private static final String SLASH = "/";
+    private static final String GRADLE_8_14_2 = "8.14.2";
+    private static final String GRADLE_9_1_0 = "9.1.0";
+    private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
+    private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
+    private static final String GRADLEW = "gradlew";
+    private static final String GRADLEW_BAT = "gradlew.bat";
+
+    private static final Map<String, String> gradlewMap = Map.of(
+            GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + GRADLEW,
+            GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + GRADLEW
+    );
+    private static final Map<String, String> gradlewBatMap = Map.of(
+            GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + GRADLEW_BAT,
+            GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + GRADLEW_BAT);
+
+    private static final Map<String, String> wrapperJarMap = Map.of(
+            GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + WRAPPER_JAR,
+            GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + WRAPPER_JAR
+    );
+    private static final Map<String, String> wrapperPropsMap = Map.of(
+            GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + WRAPPER_PROPS,
+            GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + WRAPPER_PROPS);
+
     protected static final String DEFAULT_VERSION = "0.1";
     private static final Property PROPERTY_GRADLE_JVMARGS = new Property() {
         @Override
@@ -116,10 +138,15 @@ public class Gradle implements BuildFeature {
 
     protected void addGradleInitFiles(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
-        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
-        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
-        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
+        String gradleVersion = generatorContext.getJdkVersion() == JdkVersion.JDK_25 ? GRADLE_9_1_0 : GRADLE_8_14_2;
+        String gradleJarPath = wrapperJarMap.get(gradleVersion);
+        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(gradleJarPath)));
+        String gradlePropertiesPath = wrapperPropsMap.get(gradleVersion);
+        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(gradlePropertiesPath)));
+        String gradlewPath = gradlewMap.get(gradleVersion);
+        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, GRADLEW, classLoader.getResource(gradlewPath), true));
+        String gradlewBatPath = gradlewBatMap.get(gradleVersion);
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, GRADLEW_BAT, classLoader.getResource(gradlewBatPath), false));
     }
 
     protected List<GradlePlugin> extraPlugins(GeneratorContext generatorContext) {
