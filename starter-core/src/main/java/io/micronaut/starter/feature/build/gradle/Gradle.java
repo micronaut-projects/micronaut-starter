@@ -62,19 +62,19 @@ public class Gradle implements BuildFeature {
     private static final String GRADLEW = "gradlew";
     private static final String GRADLEW_BAT = "gradlew.bat";
 
-    private static final Map<String, String> gradlewMap = Map.of(
+    private static final Map<String, String> GRADLEW_MAP = Map.of(
             GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + GRADLEW,
             GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + GRADLEW
     );
-    private static final Map<String, String> gradlewBatMap = Map.of(
+    private static final Map<String, String> GRADLEW_BAT_MAP = Map.of(
             GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + GRADLEW_BAT,
             GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + GRADLEW_BAT);
 
-    private static final Map<String, String> wrapperJarMap = Map.of(
+    private static final Map<String, String> WRAPPER_JAR_MAP = Map.of(
             GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + WRAPPER_JAR,
             GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + WRAPPER_JAR
     );
-    private static final Map<String, String> wrapperPropsMap = Map.of(
+    private static final Map<String, String> WRAPPER_PROPS_MAP = Map.of(
             GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + WRAPPER_PROPS,
             GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + WRAPPER_PROPS);
 
@@ -139,13 +139,13 @@ public class Gradle implements BuildFeature {
     protected void addGradleInitFiles(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String gradleVersion = generatorContext.getJdkVersion() == JdkVersion.JDK_25 ? GRADLE_9_1_0 : GRADLE_8_14_2;
-        String gradleJarPath = wrapperJarMap.get(gradleVersion);
+        String gradleJarPath = WRAPPER_JAR_MAP.get(gradleVersion);
         generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(gradleJarPath)));
-        String gradlePropertiesPath = wrapperPropsMap.get(gradleVersion);
+        String gradlePropertiesPath = WRAPPER_PROPS_MAP.get(gradleVersion);
         generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(gradlePropertiesPath)));
-        String gradlewPath = gradlewMap.get(gradleVersion);
+        String gradlewPath = GRADLEW_MAP.get(gradleVersion);
         generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, GRADLEW, classLoader.getResource(gradlewPath), true));
-        String gradlewBatPath = gradlewBatMap.get(gradleVersion);
+        String gradlewBatPath = GRADLEW_BAT_MAP.get(gradleVersion);
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, GRADLEW_BAT, classLoader.getResource(gradlewBatPath), false));
     }
 
