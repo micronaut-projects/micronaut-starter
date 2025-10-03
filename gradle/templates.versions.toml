@@ -134,6 +134,7 @@ micronaut-build-plugins = { module = "io.micronaut.build.internal:micronaut-grad
 micronaut-crac-plugin = { module = "io.micronaut.gradle:micronaut-crac-plugin", version.ref = "micronaut-gradle-plugin" }
 micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
 micronaut-test-resources-plugin = { module = "io.micronaut.gradle:micronaut-test-resources-plugin", version.ref = "micronaut-gradle-plugin" }
+micronaut-openrewrite-plugin = { module = "io.micronaut.gradle:micronaut-openrewrite-plugin", version.ref = "micronaut-gradle-plugin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockserver-client-java = { module = "org.mock-server:mockserver-client-java", version.ref = "mockserver-client-java" }
 protobuf-gradle-plugin = { module = "gradle.plugin.com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-gradle-plugin" }
