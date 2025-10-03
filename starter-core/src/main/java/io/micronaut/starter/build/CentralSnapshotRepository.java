@@ -17,20 +17,20 @@ package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
 
-public class MicronautSnapshotRepository implements Repository {
+public class CentralSnapshotRepository implements Repository {
 
-    private static final String SONATYPE_OSS_SNAPSHOT = "https://s01.oss.sonatype.org/content/repositories/snapshots/";
+    private static final String CENTRAL_SONATYPE_SNAPSHOT = "https://central.sonatype.com/repository/maven-snapshots/";
 
     @Override
     @NonNull
     public String getUrl() {
-        return SONATYPE_OSS_SNAPSHOT;
+        return CENTRAL_SONATYPE_SNAPSHOT;
     }
 
     @Override
     @NonNull
     public String getId() {
-        return "sonatype-snapshots";
+        return "central-sonatype-snapshots";
     }
 
     @Override

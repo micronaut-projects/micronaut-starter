@@ -52,6 +52,8 @@ public final class JdkVersion {
     public static final JdkVersion JDK_21 = new JdkVersion(21);
     public static final JdkVersion JDK_22 = new JdkVersion(22);
     public static final JdkVersion JDK_23 = new JdkVersion(23);
+    public static final JdkVersion JDK_24 = new JdkVersion(24);
+    public static final JdkVersion JDK_25 = new JdkVersion(25);
     public static final List<JdkVersion> JDKS = List.of(
             JDK_8,
             JDK_9,
@@ -68,7 +70,9 @@ public final class JdkVersion {
             JDK_20,
             JDK_21,
             JDK_22,
-            JDK_23
+            JDK_23,
+            JDK_24,
+            JDK_25
     );
 
     private static final String PREFIX_JDK = "JDK_";
@@ -108,10 +112,8 @@ public final class JdkVersion {
         if (StringUtils.isEmpty(jdkVersion)) {
             throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
         }
-        if (!jdkVersion.startsWith(PREFIX_JDK)) {
-            throw new IllegalArgumentException("cannot parse JdkVersion from " + jdkVersion);
-        }
-        String version = jdkVersion.substring(PREFIX_JDK.length());
+        String version = jdkVersion.startsWith(PREFIX_JDK) ?
+                jdkVersion.substring(PREFIX_JDK.length()) : jdkVersion;
         try {
             int majorVersion = Integer.parseInt(version);
             return valueOf(majorVersion);
