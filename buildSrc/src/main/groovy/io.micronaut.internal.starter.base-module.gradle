@@ -2,6 +2,12 @@ plugins {
     id "io.micronaut.build.internal.common"
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 repositories {
     mavenCentral()
     maven {
