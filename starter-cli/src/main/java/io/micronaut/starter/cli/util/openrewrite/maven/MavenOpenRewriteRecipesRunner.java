@@ -32,7 +32,8 @@ import java.util.function.Consumer;
 public class MavenOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner {
 
     private static final String SYS_PROPERTY_REWRITE_RECIPE_ARTIFACT_COORDINATES = "rewrite.recipeArtifactCoordinates";
-    private static final String DEFAULT_MICRONAUT_REWRITE_RECIPE_ARTIFACT_COORDINATES = "io.micronaut.openrewrite:micronaut-openrewrite:LATEST";
+    private static final String DEFAULT_MICRONAUT_REWRITE_RECIPE_ARTIFACT_COORDINATES = "io.micronaut.openrewrite:micronaut-openrewrite:0.0.2";
+    private static final String DEFAULT_REWRITE_MAVEN_PLUGIN_VERSION = "6.19.0";
 
     @Override
     public void run(List<String> recipes,
@@ -53,7 +54,8 @@ public class MavenOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner {
                                                       OpenRewriteConfiguration configuration,
                                                       Consumer<String> out,
                                                       Consumer<String> err) {
-        String goal = "rewrite:run";
+        String pluginVersion = System.getProperty("rewrite.mavenPluginVersion", DEFAULT_REWRITE_MAVEN_PLUGIN_VERSION);
+        String goal = "org.openrewrite.maven:rewrite-maven-plugin:" + pluginVersion + ":run";
         List<String> args = new ArrayList<>();
         args.add(goal);
         args.add("-D" + SYS_PROPERTY_REWRITE_RECIPE_ARTIFACT_COORDINATES + "=" + DEFAULT_MICRONAUT_REWRITE_RECIPE_ARTIFACT_COORDINATES);
