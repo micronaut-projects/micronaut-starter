@@ -10,6 +10,7 @@ pluginManagement {
 
 buildscript {
     dependencies {
+        classpath 'org.antlr:antlr4-runtime:4.8-1'
         classpath 'org.tomlj:tomlj:1.0.0!!'
     }
 }
