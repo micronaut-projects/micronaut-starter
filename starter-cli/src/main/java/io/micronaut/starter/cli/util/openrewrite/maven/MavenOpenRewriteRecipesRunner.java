@@ -35,6 +35,12 @@ public class MavenOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner {
     private static final String DEFAULT_MICRONAUT_REWRITE_RECIPE_ARTIFACT_COORDINATES = "io.micronaut.openrewrite:micronaut-openrewrite:LATEST";
     private static final String DEFAULT_REWRITE_MAVEN_PLUGIN_VERSION = "6.19.0";
 
+    private final Invoker invoker;
+
+    public MavenOpenRewriteRecipesRunner() {
+        this.invoker = new DefaultInvoker();
+    }
+
     @Override
     public void run(List<String> recipes,
                     File folder,
@@ -42,7 +48,6 @@ public class MavenOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner {
                     Consumer<String> out,
                     Consumer<String> err) {
         InvocationRequest request = createInvocationRequest(folder, configuration, out, err);
-        Invoker invoker = new DefaultInvoker();
         try {
             invoker.execute(request);
         } catch (MavenInvocationException e) {
