@@ -74,7 +74,6 @@ public class MavenOpenRewriteRecipesRunner implements OpenRewriteRecipesRunner {
         request.setBaseDirectory(folder);
         request.setPomFile(new File(folder, "pom.xml"));
         request.addArgs(args);
-        request.setDebug(true);
         request.setOutputHandler(out::accept);
         request.setErrorHandler(err::accept);
         request.setBatchMode(true);
