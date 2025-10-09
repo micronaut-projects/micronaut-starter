@@ -69,4 +69,15 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#stdio")
         readme.contains("https://modelcontextprotocol.io/docs/getting-started/intro")
     }
+
+    void "mcp-stdio configures logback.xml to STDERR"() {
+        when:
+        Map<String, String> output = generate(['mcp-stdio'])
+        String logback = output["src/main/resources/logback.xml"]
+
+        then:
+        logback
+        logback.contains('<appender name="STDERR"')
+        logback.contains('<target>System.err</target>')
+    }
 }

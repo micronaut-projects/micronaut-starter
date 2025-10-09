@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.feature.mcp.McpStdio;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -72,8 +73,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected void addConfig(GeneratorContext generatorContext, boolean useJul) {
+        boolean stderr = generatorContext.getFeatures().hasFeature(McpStdio.class);
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml",
-                logback.template(useJansi(generatorContext), DEFAULT_COLORING, useJul)));
+                logback.template(useJansi(generatorContext), DEFAULT_COLORING, useJul, stderr)));
     }
 
     protected boolean useJansi(@NonNull GeneratorContext generatorContext) {
