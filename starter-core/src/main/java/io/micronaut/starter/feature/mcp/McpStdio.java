@@ -24,13 +24,12 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.server.Netty;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.core.util.StringUtils.TRUE;
 import static io.micronaut.starter.feature.Category.MCP;
 
-@Requires(property = "micronaut.starter.feature.mcp.studio.enabled", value = TRUE, defaultValue = TRUE)
+@Requires(property = "micronaut.starter.feature.mcp.stdio.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
 public class McpStdio implements Feature {
 
