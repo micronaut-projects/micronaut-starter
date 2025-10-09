@@ -64,7 +64,7 @@ public class McpStdio implements Feature {
     @Nullable
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#standard-input%2Foutput-stdio";
+        return "https://modelcontextprotocol.io/docs/getting-started/intro";
     }
 
     @Override

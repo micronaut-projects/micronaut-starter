@@ -58,4 +58,15 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         config.contains("version: 0.0.1")
         config.contains("transport: STDIO")
     }
+
+    void 'test readme.md with feature mcp-stdio contains links to docs'() {
+        when:
+        def output = generate(['mcp-stdio'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#stdio")
+        readme.contains("https://modelcontextprotocol.io/docs/getting-started/intro")
+    }
 }
