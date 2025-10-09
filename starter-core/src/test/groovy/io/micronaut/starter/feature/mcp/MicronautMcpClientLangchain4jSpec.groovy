@@ -15,25 +15,25 @@ class MicronautMcpClientLangchain4jSpec extends ApplicationContextSpec implement
 
     @Shared
     @Subject
-    MicronautMcpClientLangchain4j micronautMcpClientLangchain4j = beanContext.getBean(MicronautMcpClientLangchain4j)
+    MicronautMcpClientLangchain4j feature = beanContext.getBean(MicronautMcpClientLangchain4j)
 
-    void "micronaut-mcp-client-langchain4j belongs to MCP category"() {
+    void "mcp-client-langchain4j belongs to MCP category"() {
         expect:
-        Category.MCP == micronautMcpClientLangchain4j.category
+        Category.MCP == feature.category
     }
 
-    void "micronaut-mcp-client-langchain4j supports application type #appType"(ApplicationType appType) {
+    void "mcp-client-langchain4j supports application type #appType"(ApplicationType appType) {
         expect:
-        micronautMcpClientLangchain4j.supports(appType)
+        feature.supports(appType)
 
         where:
         appType << ApplicationType.values()
     }
 
-    void "micronaut-mcp-client-langchain4j dependencies  #buildTool"(BuildTool buildTool) {
+    void "mcp-client-langchain4j dependencies  #buildTool"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(['micronaut-mcp-client-langchain4j'])
+                .features(['mcp-client-langchain4j'])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -44,14 +44,14 @@ class MicronautMcpClientLangchain4jSpec extends ApplicationContextSpec implement
         buildTool << BuildTool.values()
     }
 
-    void 'test readme.md with feature micronaut-mcp-client-langchain4j contains links to docs'() {
+    void 'test readme.md with feature mcp-client-langchain4j contains links to docs'() {
         when:
-        def output = generate(['micronaut-mcp-client-langchain4j'])
+        def output = generate(['mcp-client-langchain4j'])
         def readme = output["README.md"]
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide")
+        readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#clientLangchain4j")
         readme.contains("https://docs.langchain4j.dev/tutorials/mcp/#mcp-client")
     }
 }
