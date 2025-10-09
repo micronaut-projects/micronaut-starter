@@ -63,7 +63,7 @@ public class McpHttp implements Feature {
     @Nullable
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http";
+        return "https://modelcontextprotocol.io/docs/getting-started/intro";
     }
 
     @Override

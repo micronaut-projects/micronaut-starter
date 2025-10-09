@@ -56,4 +56,15 @@ class McpHttpSpec extends ApplicationContextSpec implements CommandOutputFixture
         config.contains("version: 0.0.1")
         config.contains("transport: HTTP")
     }
+
+    void 'test readme.md with feature mcp-http contains links to docs'() {
+        when:
+        def output = generate(['mcp-http'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide")
+        readme.contains("https://modelcontextprotocol.io/docs/getting-started/intro")
+    }
 }
