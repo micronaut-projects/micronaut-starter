@@ -91,6 +91,12 @@ public class Application {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 }
+@if(features.contains("mcp-stdio")) {
+        Micronaut.build(args)
+                 .banner(false)
+                 .start();
+} else {
         Micronaut.run(Application.class, args);
+}
     }
 }

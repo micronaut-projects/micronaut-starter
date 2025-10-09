@@ -17,6 +17,7 @@ import io.micronaut.context.annotation.ContextConfigurer
 @if(jul) {
 import org.slf4j.bridge.SLF4JBridgeHandler
 }
+import io.micronaut.runtime.Micronaut
 import io.micronaut.runtime.Micronaut.run
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
 @if (features.contains("dekorate-kubernetes")) {
@@ -94,6 +95,11 @@ fun main(args: Array<String>) {
     SLF4JBridgeHandler.removeHandlersForRootLogger()
     SLF4JBridgeHandler.install()
 }
+@if(features.contains("mcp-stdio")) {
+    Micronaut.build(*args)
+        .banner(false)
+        .start()
+} else {
 	run(*args)
 }
-
+}

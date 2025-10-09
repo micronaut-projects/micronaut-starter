@@ -80,4 +80,18 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         logback.contains('<appender name="STDERR"')
         logback.contains('<target>System.err</target>')
     }
+
+    void "mcp-stdio disables Micronaut banner in Application main"() {
+        when:
+        Map<String, String> output = generate(['mcp-stdio'])
+        String appJava = output.find { it.key.endsWith('/Application.java') }?.value
+        String appGroovy = output.find { it.key.endsWith('/Application.groovy') }?.value
+        String appKotlin = output.find { it.key.endsWith('/Application.kt') }?.value
+
+        then:
+        (appJava ?: appGroovy ?: appKotlin)
+        (appJava?.contains('.banner(false)') ?: false) ||
+        (appGroovy?.contains('.banner(false)') ?: false) ||
+        (appKotlin?.contains('.banner(false)') ?: false)
+    }
 }
