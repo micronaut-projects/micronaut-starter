@@ -90,5 +90,4 @@ public class McpStdio implements Feature {
         generatorContext.addDependency(MCP_STDIO_DEPENDENCY);
     }
 
-
 }
