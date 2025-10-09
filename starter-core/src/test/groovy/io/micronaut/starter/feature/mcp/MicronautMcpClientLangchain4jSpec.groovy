@@ -44,4 +44,14 @@ class MicronautMcpClientLangchain4jSpec extends ApplicationContextSpec implement
         buildTool << BuildTool.values()
     }
 
+    void 'test readme.md with feature micronaut-mcp-client-langchain4j contains links to docs'() {
+        when:
+        def output = generate(['micronaut-mcp-client-langchain4j'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide")
+        readme.contains("https://docs.langchain4j.dev/tutorials/mcp/#mcp-client")
+    }
 }
