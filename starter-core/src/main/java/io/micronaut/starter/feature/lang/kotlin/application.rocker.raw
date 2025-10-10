@@ -5,7 +5,7 @@
 @import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors
 
-@args (Project project, Features features, ApplicationRenderingContext context, boolean jul)
+@args (Project project, Features features, ApplicationRenderingContext context, boolean jul, boolean disableBanner)
 
 package @project.getPackageName()
 
@@ -95,7 +95,7 @@ fun main(args: Array<String>) {
     SLF4JBridgeHandler.removeHandlersForRootLogger()
     SLF4JBridgeHandler.install()
 }
-@if(features.contains("mcp-stdio")) {
+@if(disableBanner) {
     Micronaut.build(*args)
         .banner(false)
         .start()
