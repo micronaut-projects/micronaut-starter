@@ -30,9 +30,10 @@ bpm-assert = "7.21.0"
 bpm-micronaut = "2.19.0"
 buildless = "1.0.0-rc2"
 camunda-micronaut-client = "2.13.0"
-gradle-enterprise = "3.19.2"
+develocity = "3.19.2"
 gradle-enterprise-maven-custom-data = "2.0.1"
 gradle-enterprise-maven-extension = "1.23.3"
+develocity-maven-extension = "1.23.3"
 gradle-jrebel-plugin = "1.1.10"
 gradle-shadow-plugin = "8.3.7"
 jib-gradle-plugin = "2.8.0"
@@ -104,8 +105,9 @@ bom-opentelemetry-instrumentation = { module = "io.opentelemetry.instrumentation
 bpm-assert = { module = "org.camunda.bpm:camunda-bpm-assert", version.ref = "bpm-assert" }
 bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version.ref = "bpm-micronaut" }
 camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
-gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
+develocity-gradle-plugin = { module = "com.gradle:develocity-gradle-plugin", version.ref = "develocity" }
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
+develocity-maven = { module = "com.gradle:develocity-maven-extension", version.ref = "develocity-maven-extension" }
 gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "gradle-shadow-plugin" }

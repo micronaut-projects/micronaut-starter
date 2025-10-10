@@ -552,7 +552,7 @@ class FeatureDisabledSpec extends Specification {
         'jetty-server' | 'micronaut.starter.feature.jetty.server.enabled' | Jetty
         'maven-enforcer-plugin' | 'micronaut.starter.feature.maven.enforcer.plugin.enabled' | EnforcerPlugin
         'dynamodb' | 'micronaut.starter.feature.dynamodb.enabled' | DynamoDb
-        'gradle-enterprise' | 'micronaut.starter.feature.gradle.enterprise.enabled' | GradleEnterprise
+        'develocity' | 'micronaut.starter.feature.develocity.enabled' | GradleEnterprise
         'micrometer-jmx' | 'micronaut.starter.feature.micrometer.jmx.enabled' | io.micronaut.starter.feature.micrometer.Jmx
         'nats' | 'micronaut.starter.feature.nats.enabled' | Nats
         'amazon-api-gateway' | 'micronaut.starter.feature.amazon.api.gateway.enabled' | AmazonApiGateway
@@ -714,7 +714,7 @@ class FeatureDisabledSpec extends Specification {
         'aws-lambda-events-serde' | 'micronaut.starter.feature.aws.lambda.events.serde.enabled' | AwsLambdaEventsSerde
         'email-mailjet' | 'micronaut.starter.feature.email.mailjet.enabled' | MailjetEmailFeature
         'cassandra' | 'micronaut.starter.feature.cassandra.enabled' | Cassandra
-        'micronaut-gradle-enterprise' | 'micronaut.starter.feature.micronaut.gradle.enterprise.enabled' | MicronautGradleEnterprise
+        'micronaut-develocity' | 'micronaut.starter.feature.micronaut.develocity.enabled' | MicronautGradleEnterprise
         'ksp' | 'micronaut.starter.feature.ksp.enabled' | KotlinSymbolProcessing
         'groovy-sql' | 'micronaut.starter.feature.groovy.sql.enabled' | SqlGroovyModule
         'micrometer-dynatrace' | 'micronaut.starter.feature.micrometer.dynatrace.enabled' | Dynatrace

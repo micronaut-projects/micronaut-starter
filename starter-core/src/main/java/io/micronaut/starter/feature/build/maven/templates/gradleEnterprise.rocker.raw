@@ -1,7 +1,7 @@
 @import io.micronaut.starter.feature.build.GradleEnterpriseConfiguration
 @args (GradleEnterpriseConfiguration config)
-<gradleEnterprise xmlns="https://www.gradle.com/gradle-enterprise-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                          xsi:schemaLocation="https://www.gradle.com/gradle-enterprise-maven https://www.gradle.com/schema/gradle-enterprise-maven.xsd">
+<develocity xmlns="https://www.gradle.com/develocity-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="https://www.gradle.com/develocity-maven https://www.gradle.com/schema/develocity-maven.xsd">
 @if (config.getServer() != null) {
     <server>
         <url>@(config.getServer())</url>
@@ -23,4 +23,4 @@
     }
         <publish>ALWAYS</publish>
     </buildScan>
-</gradleEnterprise>
+</develocity>

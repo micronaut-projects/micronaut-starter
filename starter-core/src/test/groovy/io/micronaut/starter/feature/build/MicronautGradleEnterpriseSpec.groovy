@@ -34,7 +34,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
                     .language(Language.JAVA)
                     .applicationType(ApplicationType.DEFAULT)
-                    .features(["micronaut-gradle-enterprise"])
+                    .features(["micronaut-develocity"])
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
@@ -67,13 +67,13 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/extensions dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-develocity"])
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
         xml.name() == new QName('https://maven.apache.org/EXTENSIONS/1.0.0', 'extensions')
 
-        def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'gradle-enterprise-maven-extension' }
+        def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'develocity-maven-extension' }
         enterpriseExtension.groupId.text() == 'com.gradle'
         enterpriseExtension.version.text() ==~ /[\d.]+/ // numbers and fullstops
         def userDataExtension = xml.extension.find { it.artifactId.text() == 'common-custom-user-data-maven-extension' }
@@ -83,7 +83,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise-custom-user-data dot groovy file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-develocity"])
 
         then:
         output[".mvn/gradle-enterprise-custom-user-data.groovy"] == "buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null"
@@ -91,10 +91,11 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise does not create maven files for #buildTool'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["micronaut-gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["micronaut-develocity"])
 
         then:
-        output[".mvn/gradle-enterprise.xml"] == null
+        output[".mvn/develocity.xml"] == null
+        output[".mvn/develocity.xml"] == null
         output[".mvn/gradle-enterprise-custom-user-data.groovy"] == null
         output[".mvn/extensions.xml"] == null
 
@@ -104,11 +105,11 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
-        def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-develocity"])
+        def xml = new XmlParser().parseText(output[".mvn/develocity.xml"])
 
         then:
-        xml.name() == new QName('https://www.gradle.com/gradle-enterprise-maven', 'gradleEnterprise')
+        xml.name() == new QName('https://www.gradle.com/develocity-maven', 'develocity')
         xml.server.url.text() == 'https://ge.micronaut.io'
         xml.buildScan.publish.text() == 'ALWAYS'
         !xml.buildCache.remote.storeEnabled // Not set in here, this is handled in custom data
