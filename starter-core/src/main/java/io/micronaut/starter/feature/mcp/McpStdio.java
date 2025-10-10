@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.RequiresDisabledBanner;
+import io.micronaut.starter.feature.RequiresStdErr;
 import io.micronaut.starter.feature.server.Netty;
 import jakarta.inject.Singleton;
 
@@ -26,7 +27,7 @@ import static io.micronaut.core.util.StringUtils.TRUE;
 
 @Requires(property = "micronaut.starter.feature.mcp.stdio.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class McpStdio implements McpFeature, RequiresDisabledBanner {
+public class McpStdio implements McpFeature, RequiresDisabledBanner, RequiresStdErr {
     public static final String NAME = "mcp-stdio";
 
     @Override
