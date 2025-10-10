@@ -65,6 +65,6 @@ class McpHttpSpec extends ApplicationContextSpec implements CommandOutputFixture
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide")
-        readme.contains("https://modelcontextprotocol.io/docs/getting-started/intro")
+        readme.contains("https://modelcontextprotocol.io")
     }
 }

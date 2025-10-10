@@ -36,7 +36,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
 
     void "test java application"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, false), jul)
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, false), jul, false)
         .render()
         .toString()
 
@@ -57,7 +57,7 @@ public class Application {
 
     void "test java application with default environment"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", false), jul)
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", false), jul, false)
                 .render()
                 .toString()
 
@@ -89,7 +89,7 @@ public class Application {
 
     void "test java application with default environment and eagerInit"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", true), jul)
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", true), jul, false)
                 .render()
                 .toString()
 
@@ -122,7 +122,7 @@ public class Application {
 
     void "test java application with eagerInit"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, true), jul)
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, true), jul, false)
                 .render()
                 .toString()
 
@@ -154,7 +154,7 @@ public class Application {
 
     void "test java application with openapi"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), new JavaApplicationRenderingContext(null, false), jul)
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), new JavaApplicationRenderingContext(null, false), jul, false)
                 .render()
                 .toString()
 
@@ -183,7 +183,7 @@ public class Application {
 
     void "test java application with dekorate-kubernetes"() {
         boolean  jul = false
-        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), new JavaApplicationRenderingContext(null, false), jul)
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), new JavaApplicationRenderingContext(null, false), jul, false)
                 .render()
                 .toString()
 

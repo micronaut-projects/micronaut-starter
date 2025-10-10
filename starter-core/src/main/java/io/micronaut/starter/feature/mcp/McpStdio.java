@@ -16,15 +16,19 @@
 package io.micronaut.starter.feature.mcp;
 
 import io.micronaut.context.annotation.Requires;
-import jakarta.annotation.Nullable;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.RequiresDisabledBanner;
+import io.micronaut.starter.feature.RequiresStdErr;
+import io.micronaut.starter.feature.server.ServerFeature;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.core.util.StringUtils.TRUE;
 
-@Requires(property = "micronaut.starter.feature.mcp.http.enabled", value = TRUE, defaultValue = TRUE)
+@Requires(property = "micronaut.starter.feature.mcp.stdio.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class McpHttp implements McpFeature {
-    public static final String NAME = "mcp-http";
+public class McpStdio implements McpFeature, RequiresDisabledBanner, RequiresStdErr, ServerFeature {
+    public static final String NAME = "mcp-stdio";
 
     @Override
     public String getName() {
@@ -33,22 +37,32 @@ public class McpHttp implements McpFeature {
 
     @Override
     public String getTitle() {
-        return "MCP HTTP";
+        return "MCP STDIO";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the Model Context Protocol (MCP) using the http transport";
+        return "Provides integration with the Model Context Protocol (MCP) using the stdio transport (stdin/stdout)";
     }
 
     @Nullable
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#server";
+        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#stdio";
+    }
+
+    @Override
+    public String getCategory() {
+        return McpFeature.super.getCategory();
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return McpFeature.super.supports(applicationType);
     }
 
     @Override
     public String getTransport() {
-        return "HTTP";
+        return "STDIO";
     }
 }
