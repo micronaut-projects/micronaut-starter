@@ -5,17 +5,18 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import spock.lang.Shared
 import spock.lang.Subject
 
-class MicronautMcpClientLangchain4jSpec extends ApplicationContextSpec implements CommandOutputFixture{
+class McpClientLangchain4JSpec extends ApplicationContextSpec implements CommandOutputFixture{
 
     @Shared
     @Subject
-    MicronautMcpClientLangchain4j feature = beanContext.getBean(MicronautMcpClientLangchain4j)
+    McpClientLangchain4j feature = beanContext.getBean(McpClientLangchain4j)
 
     void "mcp-client-langchain4j belongs to MCP category"() {
         expect:
@@ -38,7 +39,7 @@ class MicronautMcpClientLangchain4jSpec extends ApplicationContextSpec implement
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("micronaut-mcp-client-langchain4j")
+        verifier.hasDependency("io.micronaut.mcp", "micronaut-mcp-client-langchain4j", Scope.TEST)
 
         where:
         buildTool << BuildTool.values()

@@ -29,9 +29,9 @@ import static io.micronaut.starter.feature.Category.MCP;
 
 @Requires(property = "micronaut.starter.feature.mcp.client.java.sdk.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class MicronautMcpClientJavaSdk implements Feature {
+public class McpClientJavaSdk implements Feature {
 
-    public static final String NAME = "micronaut-mcp-client-java-sdk";
+    public static final String NAME = "mcp-client-java-sdk";
     private static final String ARTIFACT_ID_MICRONAUT_MCP_CLIENT_JAVA_SDK = "micronaut-mcp-client-java-sdk";
     private static final Dependency MICRONAUT_MCP_CLIENT_JAVA_SDK_DEPENDENCY =
             MicronautDependencyUtils.mcpDependency()

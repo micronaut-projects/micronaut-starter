@@ -29,7 +29,7 @@ import static io.micronaut.starter.feature.Category.MCP;
 
 @Requires(property = "micronaut.starter.feature.mcp.client.langchain4j.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class MicronautMcpClientLangchain4j implements Feature {
+public class McpClientLangchain4j implements Feature {
 
     public static final String NAME = "mcp-client-langchain4j";
     private static final String ARTIFACT_ID_MICRONAUT_MCP_CLIENT_LANGCHAIN4J = "micronaut-mcp-client-langchain4j";
