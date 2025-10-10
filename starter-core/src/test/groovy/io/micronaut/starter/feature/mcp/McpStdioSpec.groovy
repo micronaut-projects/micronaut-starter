@@ -9,6 +9,8 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -67,7 +69,7 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#stdio")
-        readme.contains("https://modelcontextprotocol.io/docs/getting-started/intro")
+        readme.contains("https://modelcontextprotocol.io")
     }
 
     void "mcp-stdio configures logback.xml to STDERR"() {

@@ -16,17 +16,15 @@
 package io.micronaut.starter.feature.mcp;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.server.Netty;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.core.util.StringUtils.TRUE;
 
-@Requires(property = "micronaut.starter.feature.mcp.stdio.enabled", value = TRUE, defaultValue = TRUE)
+@Requires(property = "micronaut.starter.feature.mcp.http.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class McpStdio implements McpFeature {
-    public static final String NAME = "mcp-stdio";
+public class McpHttp implements McpFeature {
+    public static final String NAME = "mcp-http";
 
     @Override
     public String getName() {
@@ -35,27 +33,22 @@ public class McpStdio implements McpFeature {
 
     @Override
     public String getTitle() {
-        return "MCP STDIO";
+        return "MCP HTTP";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the Model Context Protocol (MCP) using the stdio transport (stdin/stdout)";
+        return "Provides integration with the Model Context Protocol (MCP) using the http transport";
     }
 
     @Nullable
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#stdio";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-            featureContext.exclude(Netty.class::isInstance);
+        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#server";
     }
 
     @Override
     public String getTransport() {
-        return "STDIO";
+        return "HTTP";
     }
 }
