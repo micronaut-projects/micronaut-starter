@@ -17,17 +17,17 @@ package io.micronaut.starter.feature.mcp;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.RequiresDisabledBanner;
 import io.micronaut.starter.feature.RequiresStdErr;
-import io.micronaut.starter.feature.server.Netty;
+import io.micronaut.starter.feature.server.ServerFeature;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.core.util.StringUtils.TRUE;
 
 @Requires(property = "micronaut.starter.feature.mcp.stdio.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class McpStdio implements McpFeature, RequiresDisabledBanner, RequiresStdErr {
+public class McpStdio implements McpFeature, RequiresDisabledBanner, RequiresStdErr, ServerFeature {
     public static final String NAME = "mcp-stdio";
 
     @Override
@@ -52,8 +52,13 @@ public class McpStdio implements McpFeature, RequiresDisabledBanner, RequiresStd
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-            featureContext.exclude(Netty.class::isInstance);
+    public String getCategory() {
+        return McpFeature.super.getCategory();
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return McpFeature.super.supports(applicationType);
     }
 
     @Override
