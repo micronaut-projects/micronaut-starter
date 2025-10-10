@@ -9,10 +9,13 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
+
+import static io.micronaut.starter.options.TestFramework.*
 
 class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -83,17 +86,17 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         logback.contains('<target>System.err</target>')
     }
 
-    void "mcp-stdio disables Micronaut banner in Application main"() {
+    void "mcp-stdio disables Micronaut banner in Application main for #language"(Language language) {
         when:
-        Map<String, String> output = generate(['mcp-stdio'])
-        String appJava = output.find { it.key.endsWith('/Application.java') }?.value
-        String appGroovy = output.find { it.key.endsWith('/Application.groovy') }?.value
-        String appKotlin = output.find { it.key.endsWith('/Application.kt') }?.value
+        Options options = new Options(language, DEFAULT_OPTION, BuildTool.GRADLE)
+        Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['mcp-stdio'])
+        String applicationClass = output.find { it.key.endsWith("/Application.${language.extension}") }?.value
 
         then:
-        (appJava ?: appGroovy ?: appKotlin)
-        (appJava?.contains('.banner(false)') ?: false) ||
-        (appGroovy?.contains('.banner(false)') ?: false) ||
-        (appKotlin?.contains('.banner(false)') ?: false)
+        applicationClass
+        applicationClass.contains('.banner(false)')
+
+        where:
+        language << Language.values()
     }
 }
