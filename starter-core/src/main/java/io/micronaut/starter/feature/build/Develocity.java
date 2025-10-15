@@ -25,7 +25,7 @@ import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.build.gradle.templates.gradleEnterprise;
+import io.micronaut.starter.feature.build.gradle.templates.develocity;
 import io.micronaut.starter.feature.build.maven.templates.extensions;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
@@ -33,7 +33,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.develocity.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration {
+public class Develocity implements Feature, DevelocityConfiguration {
     public static final String DEVELOCITY_PLUGIN_ID = "com.gradle.develocity";
     public static final String DEVELOCITY_GRADLE_PLUGIN_ARTIFACT_ID = "develocity-gradle-plugin";
     private static final String SLASH = "/";
@@ -71,18 +71,18 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
         }
     }
 
-    protected GradlePlugin gradlePlugin(GradleEnterpriseConfiguration configuration) {
+    protected GradlePlugin gradlePlugin(DevelocityConfiguration configuration) {
         return GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(DEVELOCITY_PLUGIN_ID)
                 .lookupArtifactId(DEVELOCITY_GRADLE_PLUGIN_ARTIFACT_ID)
-                .settingsExtension(new RockerWritable(gradleEnterprise.template(configuration)))
+                .settingsExtension(new RockerWritable(develocity.template(configuration)))
                 .build();
     }
 
-    protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
+    protected void applyMaven(GeneratorContext generatorContext, DevelocityConfiguration server) {
         addMavenTemplate(generatorContext, EXTENSIONS_XML, extensionsRockerModel(generatorContext));
-        addMavenTemplate(generatorContext, DEVELOCITY_XML, io.micronaut.starter.feature.build.maven.templates.gradleEnterprise.template(server));
+        addMavenTemplate(generatorContext, DEVELOCITY_XML, io.micronaut.starter.feature.build.maven.templates.develocity.template(server));
     }
 
     protected void addMavenTemplate(GeneratorContext generatorContext, String name, RockerModel rockerModel) {

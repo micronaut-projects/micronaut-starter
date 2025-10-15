@@ -19,14 +19,14 @@ import io.micronaut.starter.options.Options
 import jakarta.inject.Singleton
 import spock.lang.Subject
 
-class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class MicronautDevelocitySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
-    MicronautGradleEnterprise micronautGradleEnterprise = beanContext.getBean(MicronautGradleEnterprise.class)
+    MicronautDevelocity micronautDevelocity = beanContext.getBean(MicronautDevelocity.class)
 
     @Override
     Map<String, Object> getConfiguration() {
-        ["spec.name": "MicronautGradleEnterpriseSpec"]
+        ["spec.name": "MicronautDevelocitySpec"]
     }
 
     void "if you add micronaut-gradle-enterprise it is configured for #buildTool"() {
@@ -40,7 +40,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
 
         then: 'we have 3 plugin repositories as in the replacement below'
-        micronautGradleEnterprise.pluginsManagementRepositories().size() == 3
+        micronautDevelocity.pluginsManagementRepositories().size() == 3
 
         and: 'we have a single plugin management block'
         settings.count('pluginManagement {') == 1
@@ -60,9 +60,9 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         buildTool << BuildTool.valuesGradle()
     }
 
-    void "io.micronaut.starter.feature.build.MicronautGradleEnterprise is not visible"() {
+    void "io.micronaut.starter.feature.build.MicronautDevelocity is not visible"() {
         expect:
-        !beanContext.getBean(MicronautGradleEnterprise).isVisible()
+        !beanContext.getBean(MicronautDevelocity).isVisible()
     }
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/extensions dot xml file'() {
@@ -116,9 +116,9 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
     }
 
     @Singleton
-    @Replaces(MicronautGradleEnterprise.class)
-    @Requires(property = "spec.name", value = "MicronautGradleEnterpriseSpec")
-    static class MicronautGradleEnterpriseReplacement extends MicronautGradleEnterprise {
+    @Replaces(MicronautDevelocity.class)
+    @Requires(property = "spec.name", value = "MicronautDevelocitySpec")
+    static class MicronautDevelocityReplacement extends MicronautDevelocity {
         @Override
         protected List<GradleRepository> pluginsManagementRepositories() {
             super.pluginsManagementRepositories() + new GradlePluginPortal()

@@ -33,7 +33,7 @@ import java.util.List;
 @Requires(property = "micronaut.starter.feature.micronaut.develocity.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Requires(property = "micronaut.starter.feature.develocity.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class MicronautGradleEnterprise extends GradleEnterprise {
+public class MicronautDevelocity extends Develocity {
     public static final String NAME = "micronaut-develocity";
     private static final String SERVER = "https://ge.micronaut.io";
     private static final String GE_CUSTOM_USER_DATA_GROOVY = "gradle-enterprise-custom-user-data.groovy";
@@ -63,13 +63,13 @@ public class MicronautGradleEnterprise extends GradleEnterprise {
     }
 
     @Override
-    protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
+    protected void applyMaven(GeneratorContext generatorContext, DevelocityConfiguration server) {
         super.applyMaven(generatorContext, this);
         addMavenTemplate(generatorContext, GE_CUSTOM_USER_DATA_GROOVY, customData.template());
     }
 
     @Override
-    protected GradlePlugin gradlePlugin(GradleEnterpriseConfiguration configuration) {
+    protected GradlePlugin gradlePlugin(DevelocityConfiguration configuration) {
         GradlePlugin.Builder builder = GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(GRADLE_PLUGIN_ID_MICRONAUT_DEVELOCITY)
