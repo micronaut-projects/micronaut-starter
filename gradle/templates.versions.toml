@@ -9,7 +9,7 @@
 #
 
 [versions]
-agorapulse-gru = "2.1.2"
+agorapulse-gru = "2.2.2"
 agorapulse-micronaut-console = "3.0.1"
 agorapulse-micronaut-permissions = "2.0.0"
 agorapulse-micronaut-slack = "2.0.0"
