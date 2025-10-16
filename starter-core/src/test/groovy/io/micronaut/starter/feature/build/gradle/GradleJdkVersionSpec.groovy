@@ -29,7 +29,7 @@ class GradleJdkVersionSpec extends BeanContextSpec  implements CommandOutputFixt
         String wrapperProperties = output.get('gradle/wrapper/gradle-wrapper.properties')
 
         then:
-        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-8.14.2-bin.zip')
+        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-8.14.3-bin.zip')
     }
 
     void 'java 25 uses gradle 9.1.0'() {
