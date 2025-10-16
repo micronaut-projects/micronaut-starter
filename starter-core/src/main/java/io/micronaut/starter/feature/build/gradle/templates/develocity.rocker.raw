@@ -1,6 +1,6 @@
-@import io.micronaut.starter.feature.build.GradleEnterpriseConfiguration
-@args (GradleEnterpriseConfiguration config)
-gradleEnterprise {
+@import io.micronaut.starter.feature.build.DevelocityConfiguration
+@args (DevelocityConfiguration config)
+develocity {
 @if (config.getServer() != null) {
     server = "@(config.getServer())"
 }

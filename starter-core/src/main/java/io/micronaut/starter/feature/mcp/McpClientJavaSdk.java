@@ -27,15 +27,15 @@ import jakarta.inject.Singleton;
 import static io.micronaut.core.util.StringUtils.TRUE;
 import static io.micronaut.starter.feature.Category.MCP;
 
-@Requires(property = "micronaut.starter.feature.mcp.client.langchain4j.enabled", value = TRUE, defaultValue = TRUE)
+@Requires(property = "micronaut.starter.feature.mcp.client.java.sdk.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class MicronautMcpClientLangchain4j implements Feature {
+public class McpClientJavaSdk implements Feature {
 
-    public static final String NAME = "mcp-client-langchain4j";
-    private static final String ARTIFACT_ID_MICRONAUT_MCP_CLIENT_LANGCHAIN4J = "micronaut-mcp-client-langchain4j";
-    private static final Dependency MICRONAUT_MCP_CLIENT_LANGCHAIN4J_DEPENDENCY =
+    public static final String NAME = "mcp-client-java-sdk";
+    private static final String ARTIFACT_ID_MICRONAUT_MCP_CLIENT_JAVA_SDK = "micronaut-mcp-client-java-sdk";
+    private static final Dependency MICRONAUT_MCP_CLIENT_JAVA_SDK_DEPENDENCY =
             MicronautDependencyUtils.mcpDependency()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_MCP_CLIENT_LANGCHAIN4J)
+                    .artifactId(ARTIFACT_ID_MICRONAUT_MCP_CLIENT_JAVA_SDK)
                     .test()
                     .build();
 
@@ -46,24 +46,24 @@ public class MicronautMcpClientLangchain4j implements Feature {
 
     @Override
     public String getTitle() {
-        return "Micronaut MCP Client LangChain4j";
+        return "Micronaut Mcp Client Java SDK";
     }
 
     @Override
     public String getDescription() {
-        return "Use LangChain4j MCP Clients" ;
+        return "Provides integration with the Model Context Protocol (MCP) Java SDK";
     }
 
     @Nullable
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide/#clientLangchain4j";
+        return "https://micronaut-projects.github.io/micronaut-mcp/latest/guide";
     }
 
     @Nullable
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://docs.langchain4j.dev/tutorials/mcp/#mcp-client";
+        return "https://modelcontextprotocol.io/sdk/java/mcp-overview";
     }
 
     @Override
@@ -78,6 +78,6 @@ public class MicronautMcpClientLangchain4j implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MICRONAUT_MCP_CLIENT_LANGCHAIN4J_DEPENDENCY);
+        generatorContext.addDependency(MICRONAUT_MCP_CLIENT_JAVA_SDK_DEPENDENCY);
     }
 }

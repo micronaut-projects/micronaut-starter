@@ -78,7 +78,6 @@ public class Gradle implements BuildFeature {
             GRADLE_8_14_2, GRADLE + SLASH  + GRADLE + DASH + GRADLE_8_14_2 + SLASH + WRAPPER_PROPS,
             GRADLE_9_1_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_1_0 + SLASH + WRAPPER_PROPS);
 
-    protected static final String DEFAULT_VERSION = "0.1";
     private static final Property PROPERTY_GRADLE_JVMARGS = new Property() {
         @Override
         public String getKey() {
@@ -90,7 +89,7 @@ public class Gradle implements BuildFeature {
             return "-Xmx4096M";
         }
     };
-
+    protected static final String DEFAULT_VERSION = "0.1";
     protected final GradleBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 

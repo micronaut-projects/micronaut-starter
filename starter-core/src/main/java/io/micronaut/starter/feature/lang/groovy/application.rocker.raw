@@ -2,7 +2,7 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 
-@args (Project project, Features features, ApplicationRenderingContext context, boolean jul)
+@args (Project project, Features features, ApplicationRenderingContext context, boolean jul, boolean disableBanner)
 
 package @project.getPackageName()
 
@@ -40,6 +40,12 @@ class Application {
         SLF4JBridgeHandler.removeHandlersForRootLogger()
         SLF4JBridgeHandler.install()
 }
+@if(disableBanner) {
+        Micronaut.build(args)
+                 .banner(false)
+                 .start()
+} else {
         Micronaut.run(Application, args)
+}
     }
 }

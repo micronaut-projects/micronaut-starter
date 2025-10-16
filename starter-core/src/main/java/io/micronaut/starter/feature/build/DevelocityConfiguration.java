@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.Nullable;
 
-public interface GradleEnterpriseConfiguration {
+public interface DevelocityConfiguration {
     @Nullable
     default String getServer() {
         return null;
