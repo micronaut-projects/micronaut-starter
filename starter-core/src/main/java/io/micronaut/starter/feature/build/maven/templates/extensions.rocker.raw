@@ -4,7 +4,7 @@
                         xsi:schemaLocation="https://maven.apache.org/EXTENSIONS/1.0.0 https://maven.apache.org/xsd/core-extensions-1.0.0.xsd">
     <extension>
         <groupId>com.gradle</groupId>
-        <artifactId>gradle-enterprise-maven-extension</artifactId>
+        <artifactId>develocity-maven-extension</artifactId>
         <version>@geExtensionVersion</version>
     </extension>
     <extension>
