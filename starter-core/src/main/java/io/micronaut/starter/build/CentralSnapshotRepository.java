@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.build;
+package io.micronaut.starter.build;
 
-import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
 
-public interface GradleEnterpriseConfiguration {
-    @Nullable
-    default String getServer() {
-        return null;
+public class CentralSnapshotRepository implements Repository {
+
+    private static final String CENTRAL_SONATYPE_SNAPSHOT = "https://central.sonatype.com/repository/maven-snapshots/";
+
+    @Override
+    @NonNull
+    public String getUrl() {
+        return CENTRAL_SONATYPE_SNAPSHOT;
     }
 
-    @Nullable
-    default Boolean allowTrustedServer() {
-        return null;
+    @Override
+    @NonNull
+    public String getId() {
+        return "central-sonatype-snapshots";
     }
 
-    @Nullable
-    default String getTermsOfServiceUrl() {
-        return "https://gradle.com/terms-of-service";
-    }
-
-    default Boolean aggreeWithTermsOfService() {
+    @Override
+    public boolean isSnapshot() {
         return true;
     }
 }

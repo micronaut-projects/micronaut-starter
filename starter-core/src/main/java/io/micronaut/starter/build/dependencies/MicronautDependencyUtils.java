@@ -83,6 +83,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
     public static final String GROUP_ID_MICRONAUT_VIEWS = "io.micronaut.views";
+    public static final String GROUP_ID_MICRONAUT_MCP = "io.micronaut.mcp";
 
     private MicronautDependencyUtils() {
 
@@ -121,6 +122,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder azureDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AZURE);
+    }
+
+    @NonNull
+    public static Dependency.Builder mcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_MCP);
     }
 
     @NonNull

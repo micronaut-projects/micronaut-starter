@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build;
+package io.micronaut.starter.feature.build;
 
-import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 
-public class MicronautSnapshotRepository implements Repository {
-
-    private static final String SONATYPE_OSS_SNAPSHOT = "https://s01.oss.sonatype.org/content/repositories/snapshots/";
-
-    @Override
-    @NonNull
-    public String getUrl() {
-        return SONATYPE_OSS_SNAPSHOT;
+public interface DevelocityConfiguration {
+    @Nullable
+    default String getServer() {
+        return null;
     }
 
-    @Override
-    @NonNull
-    public String getId() {
-        return "sonatype-snapshots";
+    @Nullable
+    default Boolean allowTrustedServer() {
+        return null;
     }
 
-    @Override
-    public boolean isSnapshot() {
+    @Nullable
+    default String getTermsOfServiceUrl() {
+        return "https://gradle.com/terms-of-service";
+    }
+
+    default Boolean aggreeWithTermsOfService() {
         return true;
     }
 }
