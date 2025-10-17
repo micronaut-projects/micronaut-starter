@@ -96,3 +96,21 @@ sdkman {
 tasks.register('sdkRelease') {
     dependsOn((projectVersion.endsWith("-SNAPSHOT") || projectVersion.contains("-M") || projectVersion.contains("-R")) ? 'sdkMinorRelease' : 'sdkMajorRelease')
 }
+
+
+def tmpDir = System.getProperty("java.io.tmpdir")
+
+def restoreTmpDir = tasks.register("restoreTmpDir") {
+    doFirst {
+        System.setProperty("java.io.tmpdir", tmpDir)
+    }
+}
+
+tasks.named("nativeCompile") {
+    finalizedBy(restoreTmpDir)
+    doFirst {
+        def newTmpDir = temporaryDir.absolutePath
+        println("Setting temporary dir to ${newTmpDir}")
+        System.setProperty("java.io.tmpdir", newTmpDir)
+    }
+}
