@@ -30,7 +30,11 @@ graalvmNative {
         }
     }
 }
-
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
     args(
