@@ -21,7 +21,6 @@ jobs:
           java-version: '21'
           distribution: 'graalvm-community'
           native-image-musl: 'true'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image (with libc=musl)"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
