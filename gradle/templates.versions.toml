@@ -9,7 +9,7 @@
 #
 
 [versions]
-agorapulse-gru = "2.1.2"
+agorapulse-gru = "2.2.2"
 agorapulse-micronaut-console = "3.0.1"
 agorapulse-micronaut-permissions = "2.0.0"
 agorapulse-micronaut-slack = "2.0.0"
@@ -26,15 +26,16 @@ awaitility = "4.2.2"
 azure-functions-gradle-plugin = "1.15.0"
 azure-functions-maven-plugin = "1.38.0"
 bom-opentelemetry = "1.14.0-alpha"
-bpm-assert = "7.21.0"
+bpm-assert = "7.24.0"
 bpm-micronaut = "2.19.0"
 buildless = "1.0.0-rc2"
 camunda-micronaut-client = "2.13.0"
-gradle-enterprise = "3.19.2"
+develocity = "4.2.2"
 gradle-enterprise-maven-custom-data = "2.0.1"
 gradle-enterprise-maven-extension = "1.23.3"
+develocity-maven-extension = "2.2"
 gradle-jrebel-plugin = "1.1.10"
-gradle-shadow-plugin = "8.3.7"
+gradle-shadow-plugin = "8.3.9"
 jib-gradle-plugin = "2.8.0"
 jobrunr = "6.3.5"
 jruby = "9.4.13.0"
@@ -48,15 +49,15 @@ kotlin = "1.9.25"
 ksp = "1.9.25-1.0.20"
 log4j = "2.23.1"
 log4j-slf4j = "2.23.1"
-micronaut-aot = "2.8.0"
-micronaut-build-plugins = "7.5.0"
+micronaut-aot = "2.9.0"
+micronaut-build-plugins = "7.6.4"
 micronaut-gradle-plugin = "4.6.0"
 mockserver-client-java = "5.15.0"
 mockk = "1.13.17"
 protobuf-gradle-plugin = "0.9.2"
-rewrite-gradle-plugin = "6.26.0"
-rewrite-maven-plugin = "5.43.4"
-rewrite-micronaut = "2.8.4"
+rewrite-gradle-plugin = "6.29.4"
+rewrite-maven-plugin = "5.47.3"
+rewrite-micronaut = "2.29.0"
 rocker-gradle-plugin = "3.0.5"
 rocker-maven-plugin = "1.4.0"
 scram-client = "2.1"
@@ -66,11 +67,11 @@ ktor = "2.3.13"
 jakarta-validation-api = "3.1.1"
 spring-boot-gradle-plugin = "3.3.5"
 spring-dependency-management-plugin = "1.1.7"
-micronaut-starter-aws-cdk = "4.8.3"
+micronaut-starter-aws-cdk = "4.9.4"
 spring-boot-starter-parent="3.3.5"
 graaljs = "24.2.1"  # On upgrade, please check if Loom/Truffle interop is still experimental.
 frontend-maven-plugin = "1.15.1"
-liquibase-slf4j = "5.0.0"
+liquibase-slf4j = "5.1.0"
 graalpy = "24.2.1"
 commons-compress = "1.27.1"
 [libraries]
@@ -104,8 +105,9 @@ bom-opentelemetry-instrumentation = { module = "io.opentelemetry.instrumentation
 bpm-assert = { module = "org.camunda.bpm:camunda-bpm-assert", version.ref = "bpm-assert" }
 bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version.ref = "bpm-micronaut" }
 camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
-gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
+develocity-gradle-plugin = { module = "com.gradle:develocity-gradle-plugin", version.ref = "develocity" }
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
+develocity-maven = { module = "com.gradle:develocity-maven-extension", version.ref = "develocity-maven-extension" }
 gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "gradle-shadow-plugin" }

@@ -42,7 +42,7 @@ public class Category {
     public static final String LANGUAGE_MODEL            = "Language Models";
     public static final String LOGGING              = "Logging";
     public static final String MANAGEMENT           = "Management";
-
+    public static final String MCP                  = "MCP";
     public static final String MESSAGING            = "Messaging";
     public static final String METRICS           = "Metrics";
     public static final String OTHER                = "Other";
