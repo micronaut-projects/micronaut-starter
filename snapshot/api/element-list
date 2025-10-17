@@ -171,6 +171,7 @@ io.micronaut.starter.feature.langchain4j.embeddedstore
 io.micronaut.starter.feature.langchain4j.languagemodels
 io.micronaut.starter.feature.logging
 io.micronaut.starter.feature.logging.template
+io.micronaut.starter.feature.mcp
 io.micronaut.starter.feature.messaging
 io.micronaut.starter.feature.messaging.jms
 io.micronaut.starter.feature.messaging.kafka

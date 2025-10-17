@@ -135,6 +135,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="application.html" title="class in io.micronaut.starter.feature.lang.kotlin">application</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#context(io.micronaut.starter.feature.lang.ApplicationRenderingContext)" class="member-name-link">context</a><wbr>(<a href="../ApplicationRenderingContext.html" title="class in io.micronaut.starter.feature.lang">ApplicationRenderingContext</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disableBanner()" class="member-name-link">disableBanner</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="application.html" title="class in io.micronaut.starter.feature.lang.kotlin">application</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disableBanner(boolean)" class="member-name-link">disableBanner</a><wbr>(boolean&nbsp;disableBanner)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../Features.html" title="class in io.micronaut.starter.feature">Features</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#features()" class="member-name-link">features</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -169,10 +175,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#project(io.micronaut.starter.application.Project)" class="member-name-link">project</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="application.html" title="class in io.micronaut.starter.feature.lang.kotlin">application</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,io.micronaut.starter.feature.lang.ApplicationRenderingContext,boolean)" class="member-name-link">template</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,io.micronaut.starter.feature.lang.ApplicationRenderingContext,boolean,boolean)" class="member-name-link">template</a><wbr>(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
  <a href="../../Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features,
  <a href="../ApplicationRenderingContext.html" title="class in io.micronaut.starter.feature.lang">ApplicationRenderingContext</a>&nbsp;context,
- boolean&nbsp;jul)</code></div>
+ boolean&nbsp;jul,
+ boolean&nbsp;disableBanner)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -287,12 +294,25 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,io.micronaut.starter.feature.lang.ApplicationRenderingContext,boolean)">
+<section class="detail" id="disableBanner(boolean)">
+<h3>disableBanner</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="application.html" title="class in io.micronaut.starter.feature.lang.kotlin">application</a></span>&nbsp;<span class="element-name">disableBanner</span><wbr><span class="parameters">(boolean&nbsp;disableBanner)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="disableBanner()">
+<h3>disableBanner</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">disableBanner</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,io.micronaut.starter.feature.lang.ApplicationRenderingContext,boolean,boolean)">
 <h3>template</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="application.html" title="class in io.micronaut.starter.feature.lang.kotlin">application</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
  <a href="../../Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features,
  <a href="../ApplicationRenderingContext.html" title="class in io.micronaut.starter.feature.lang">ApplicationRenderingContext</a>&nbsp;context,
- boolean&nbsp;jul)</span></div>
+ boolean&nbsp;jul,
+ boolean&nbsp;disableBanner)</span></div>
 </section>
 </li>
 <li>
