@@ -25,6 +25,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.server.Netty;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
@@ -82,7 +83,9 @@ public class MicronautTestNettyLeak implements DefaultFeature {
     }
 
     protected void addDependency(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_NETTY_LEAK);
+        if (generatorContext.hasFeature(Netty.class)) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_NETTY_LEAK);
+        }
     }
 
     @Override

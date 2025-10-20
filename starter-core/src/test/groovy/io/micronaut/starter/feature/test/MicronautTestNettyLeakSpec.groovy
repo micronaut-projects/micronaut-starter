@@ -64,4 +64,44 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
                 [TestFramework.JUNIT, TestFramework.SPOCK]
         ].combinations()
     }
+
+    @Unroll
+    void 'test gradle test-netty-leak does not add feature if server is tomcat'() {
+        given:
+        List<String> features = [FEATURE,  'tomcat-server']
+        Language language = Language.JAVA
+        BuildTool buildTool = BuildTool.GRADLE_KOTLIN
+        TestFramework testFramework = TestFramework.JUNIT
+
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(features)
+                .language(language)
+                .testFramework(testFramework)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, testFramework, template)
+
+        then:
+        !verifier.hasDependency("io.micronaut.test", "micronaut-test-netty-leak", Scope.TEST_RUNTIME)
+    }
+
+    @Unroll
+    void 'test gradle test-netty-leak is not added automatically if test framework is KoTest'() {
+        given:
+        List<String> features = []
+        Language language = Language.JAVA
+        BuildTool buildTool = BuildTool.GRADLE_KOTLIN
+        TestFramework testFramework = TestFramework.KOTEST
+
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(features)
+                .language(language)
+                .testFramework(testFramework)
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, testFramework, template)
+
+        then:
+        !verifier.hasDependency("io.micronaut.test", "micronaut-test-netty-leak", Scope.TEST_RUNTIME)
+    }
 }
