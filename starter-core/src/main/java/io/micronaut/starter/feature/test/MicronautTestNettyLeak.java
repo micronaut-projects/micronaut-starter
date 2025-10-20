@@ -30,11 +30,12 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
+import java.util.Map;
 import java.util.Set;
 
 @Requires(property = "micronaut.starter.feature.micronaut-test-netty-leak.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class MicronautTestNettyLeak implements DefaultFeature {
+public class MicronautTestNettyLeak implements DefaultFeature, JunitPlatformPropertyProvider {
     private static final Dependency DEPENDENCY_MICRONAUT_TEST_NETTY_LEAK = MicronautDependencyUtils.testDependency()
             .artifactId("micronaut-test-netty-leak")
             .testRuntime()
@@ -91,5 +92,10 @@ public class MicronautTestNettyLeak implements DefaultFeature {
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return options.getTestFramework() == TestFramework.JUNIT || options.getTestFramework() == TestFramework.SPOCK;
+    }
+
+    @Override
+    public Map<String, Object> getJunitPlatformProperties() {
+        return Map.of("junit.jupiter.extensions.autodetection.enabled", true);
     }
 }

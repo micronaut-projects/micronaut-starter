@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.test;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,42 +25,52 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 
+import io.micronaut.starter.template.PropertiesTemplate;
 import jakarta.inject.Singleton;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.junit.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Junit implements TestFeature {
-    protected static final String GROUP_ID_JUNIT_PLATFORM = "org.junit.platform";
-    protected static final String ARTIFACT_ID_JUNIT_PLATFORM_LAUNCHER = "junit-platform-launcher";
-    protected static final Dependency DEPENDENCY_JUNIT_PLATFORM_LAUNCHER = Dependency.builder()
+    private static final String GROUP_ID_JUNIT_PLATFORM = "org.junit.platform";
+    private static final String ARTIFACT_ID_JUNIT_PLATFORM_LAUNCHER = "junit-platform-launcher";
+    private static final Dependency DEPENDENCY_JUNIT_PLATFORM_LAUNCHER = Dependency.builder()
             .groupId(GROUP_ID_JUNIT_PLATFORM)
             .artifactId(ARTIFACT_ID_JUNIT_PLATFORM_LAUNCHER)
             .testRuntime()
             .build();
 
-    protected static final String GROUP_ID_JUNIT_JUPITER = "org.junit.jupiter";
-    protected static final String ARTIFACT_ID_JUNIT_JUPITER_API = "junit-jupiter-api";
-    protected static final String ARTIFACT_ID_JUNIT_JUPITER_ENGINE = "junit-jupiter-engine";
+    private static final String GROUP_ID_JUNIT_JUPITER = "org.junit.jupiter";
+    private static final String ARTIFACT_ID_JUNIT_JUPITER_API = "junit-jupiter-api";
+    private static final String ARTIFACT_ID_JUNIT_JUPITER_ENGINE = "junit-jupiter-engine";
 
-    protected static final String ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5 = "micronaut-test-junit5";
+    private static final String ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5 = "micronaut-test-junit5";
 
-    protected static final Dependency DEPENDENCY_JUNIT_JUPITER_API = Dependency.builder()
+    private static final Dependency DEPENDENCY_JUNIT_JUPITER_API = Dependency.builder()
             .groupId(GROUP_ID_JUNIT_JUPITER)
             .artifactId(ARTIFACT_ID_JUNIT_JUPITER_API)
             .test()
             .build();
 
-    protected static final Dependency DEPENDENCY_JUNIT_JUPITER_ENGINE = Dependency.builder()
+    private static final Dependency DEPENDENCY_JUNIT_JUPITER_ENGINE = Dependency.builder()
             .groupId(GROUP_ID_JUNIT_JUPITER)
             .artifactId(ARTIFACT_ID_JUNIT_JUPITER_ENGINE)
             .test()
             .build();
 
-    protected static final Dependency DEPENDENCY_MICRONAUT_TEST_JUNIT5 = MicronautDependencyUtils
+    private static final Dependency DEPENDENCY_MICRONAUT_TEST_JUNIT5 = MicronautDependencyUtils
             .testDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5)
             .test()
             .build();
+    private final List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders;
+
+    public Junit(List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders) {
+        this.junitPlatformPropertyProviders = junitPlatformPropertyProviders;
+    }
 
     @Override
     @NonNull
@@ -76,6 +87,18 @@ public class Junit implements TestFeature {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_JUNIT5);
         } else {
             generatorContext.addDependency(DEPENDENCY_JUNIT_PLATFORM_LAUNCHER);
+        }
+        junitPlatformProperties(generatorContext);
+    }
+
+    private void junitPlatformProperties(GeneratorContext generatorContext) {
+        Map<String, Object> junitPlatformProperties = new HashMap<>();
+        for (JunitPlatformPropertyProvider provider : junitPlatformPropertyProviders) {
+            junitPlatformProperties.putAll(provider.getJunitPlatformProperties());
+        }
+        if (CollectionUtils.isNotEmpty(junitPlatformProperties)) {
+            generatorContext.addTemplate("junit-platform.properties",
+                    new PropertiesTemplate("src/test/resources/junit-platform.properties", junitPlatformProperties));
         }
     }
 

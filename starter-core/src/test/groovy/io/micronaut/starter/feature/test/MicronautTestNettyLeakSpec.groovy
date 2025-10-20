@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.test
 import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
@@ -10,6 +11,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
@@ -68,7 +70,7 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
     @Unroll
     void 'test gradle test-netty-leak does not add feature if server is tomcat'() {
         given:
-        List<String> features = [FEATURE,  'tomcat-server']
+        List<String> features = [FEATURE, 'tomcat-server']
         Language language = Language.JAVA
         BuildTool buildTool = BuildTool.GRADLE_KOTLIN
         TestFramework testFramework = TestFramework.JUNIT
@@ -103,5 +105,19 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
 
         then:
         !verifier.hasDependency("io.micronaut.test", "micronaut-test-netty-leak", Scope.TEST_RUNTIME)
+    }
+
+    @Unroll
+    void 'test gradle test-netty-leak adds junit.jupiter.extensions.autodetection.enabled'() {
+        given:
+        Language language = Language.JAVA
+
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language))
+        String junitPlatformProperties = output["src/test/resources/junit-platform.properties"]
+
+        then:
+        junitPlatformProperties
+        junitPlatformProperties.contains('junit.jupiter.extensions.autodetection.enabled=true')
     }
 }
