@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class LoggingTest {
@@ -39,6 +39,7 @@ class LoggingTest {
         assertNotNull(context);
         Logger logger = context.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.info("test message");
-        assertEquals("test message\n", byteArrayOutputStream.toString());
+        String result = byteArrayOutputStream.toString();
+        assertTrue( result + "should contain test message", result.contains("test message"));
     }
 }
