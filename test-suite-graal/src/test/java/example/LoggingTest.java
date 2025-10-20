@@ -10,15 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class LoggingTest {
-
-    private static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-    private static final LoggerContext context = loggerFactory instanceof LoggerContext ? ((LoggerContext) loggerFactory) : null;
-
     private final PrintStream systemOut = System.out;
 
     private ByteArrayOutputStream byteArrayOutputStream;
@@ -36,10 +32,14 @@ class LoggingTest {
 
     @Test
     void testConsoleAppender() {
+        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+        assertNotNull(loggerFactory);
+        assertInstanceOf(LoggerContext.class, loggerFactory, "LoggerFactory is not a LoggerContext it is of type " + loggerFactory.getClass().getName());
+        LoggerContext context = (LoggerContext) loggerFactory;
         assertNotNull(context);
         Logger logger = context.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.info("test message");
         String result = byteArrayOutputStream.toString();
-        assertTrue( result + "should contain test message", result.contains("test message"));
+        assertTrue(result.contains("test message"));
     }
 }
