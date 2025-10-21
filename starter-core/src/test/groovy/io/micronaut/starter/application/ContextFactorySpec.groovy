@@ -56,6 +56,10 @@ class ContextFactorySpec extends Specification {
     @Singleton
     static class JunitReplacement extends Junit {
 
+        def JunitReplacement() {
+            super()
+        }
+
         @Override
         boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
             false
