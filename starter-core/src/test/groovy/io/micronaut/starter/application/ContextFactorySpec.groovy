@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.feature.test.Junit
+import io.micronaut.starter.feature.test.JunitPlatformPropertyProvider
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
 import io.micronaut.starter.options.BuildTool
@@ -56,8 +57,8 @@ class ContextFactorySpec extends Specification {
     @Singleton
     static class JunitReplacement extends Junit {
 
-        def JunitReplacement() {
-            super()
+        JunitReplacement(List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders) {
+            super(junitPlatformPropertyProviders)
         }
 
         @Override
