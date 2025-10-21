@@ -23,19 +23,15 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.Netty;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
-import java.util.Set;
 
 @Requires(property = "micronaut.starter.feature.micronaut-test-netty-leak.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class MicronautTestNettyLeak implements DefaultFeature, JunitPlatformPropertyProvider {
+public class MicronautTestNettyLeak implements Feature, JunitPlatformPropertyProvider {
     private static final Dependency DEPENDENCY_MICRONAUT_TEST_NETTY_LEAK = MicronautDependencyUtils.testDependency()
             .artifactId("micronaut-test-netty-leak")
             .testRuntime()
@@ -87,11 +83,6 @@ public class MicronautTestNettyLeak implements DefaultFeature, JunitPlatformProp
         if (generatorContext.hasFeature(Netty.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_NETTY_LEAK);
         }
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getTestFramework() == TestFramework.JUNIT || options.getTestFramework() == TestFramework.SPOCK;
     }
 
     @Override
