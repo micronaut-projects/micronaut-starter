@@ -85,7 +85,7 @@ class CreateChatbotCommandCliOptions implements CommandSupplier {
         ret.add("%d".formatted(language.ordinal() + 1));
         ret.add("%d".formatted(testFramework.ordinal() + 1));
         ret.add("%d".formatted(buildTool.ordinal() + 1));
-        ret.add(javaVersion == JdkVersion.JDK_17 ? "1" : "2");
+        ret.add(javaVersion == JdkVersion.JDK_21 ? "1" : "2");
         return ret;
     }
 

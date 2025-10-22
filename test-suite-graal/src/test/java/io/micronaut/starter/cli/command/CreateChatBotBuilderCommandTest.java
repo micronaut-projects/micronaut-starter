@@ -46,7 +46,7 @@ class CreateChatBotBuilderCommandTest {
                                                 .flatMap(language -> Stream.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST)
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool ->
-                                                                        (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.AZURE ? Stream.of(JdkVersion.JDK_17) : Stream.of(JdkVersion.JDK_17, JdkVersion.JDK_21))
+                                                                        (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.AZURE ? Stream.of(JdkVersion.JDK_21) : Stream.of(JdkVersion.JDK_21, JdkVersion.JDK_25))
                                                                                 .map(javaVersion ->
                                                                                         new CreateChatbotCommandCliOptions(
                                                                                                 chatBotType,

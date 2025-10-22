@@ -3,8 +3,8 @@ plugins {
     id "io.micronaut.build.internal.publishing"
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
 java {
     toolchain {

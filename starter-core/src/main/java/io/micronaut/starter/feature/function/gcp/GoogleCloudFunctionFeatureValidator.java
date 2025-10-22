@@ -29,7 +29,7 @@ import java.util.Set;
 public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     private static boolean supports(JdkVersion jdkVersion) {
-        return JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion)  || JdkVersion.JDK_21.equals(jdkVersion);
+        return JdkVersion.JDK_21.equals(jdkVersion);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(GoogleCloudFunction.class::isInstance) && !supports(options.getJavaVersion())) {
             throw new IllegalArgumentException("""
-                    Google Cloud Function currently only supports JDK 11 and 17 -- \
+                    Google Cloud Function currently only supports JDK 11, 17 and 21 -- \
                     https://cloud.google.com/functions/docs/concepts/java-runtime""");
         }
     }

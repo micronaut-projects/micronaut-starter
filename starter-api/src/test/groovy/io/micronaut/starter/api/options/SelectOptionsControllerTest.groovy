@@ -18,7 +18,7 @@ class SelectOptionsControllerTest extends Specification {
     @Client("/")
     HttpClient httpClient
 
-    void "Only JDK 17, 21 and 25 are supported"() {
+    void "Only JDK 21 and 25 are supported"() {
         BlockingHttpClient client = httpClient.toBlocking()
         HttpRequest<?> request = HttpRequest.GET("/select-options")
 
@@ -27,7 +27,7 @@ class SelectOptionsControllerTest extends Specification {
 
         then:
         noExceptionThrown()
-        ['JDK_17', 'JDK_21', 'JDK_25'] == selectOptionsDTO.jdkVersion.options.name
+        ['JDK_21', 'JDK_25'] == selectOptionsDTO.jdkVersion.options.name
 
         and:
         selectOptionsDTO.jdkVersion.defaultOption.name == 'JDK_21'

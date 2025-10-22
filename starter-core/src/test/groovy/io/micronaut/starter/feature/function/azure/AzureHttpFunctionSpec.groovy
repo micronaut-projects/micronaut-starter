@@ -17,7 +17,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
 
     void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8)
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21)
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
         String readme = output["README.md"]
 
@@ -31,7 +31,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
 
     void 'test readme.md with feature azure-function contains links to docs'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21)
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
         String readme = output["README.md"]
 
@@ -73,7 +73,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['azure-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -98,7 +98,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
                 .applicationType(ApplicationType.FUNCTION)
                 .features(['azure-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

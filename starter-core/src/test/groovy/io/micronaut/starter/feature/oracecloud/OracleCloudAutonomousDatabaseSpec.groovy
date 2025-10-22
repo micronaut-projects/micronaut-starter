@@ -136,7 +136,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
         when:
         generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_17),
+                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_21),
                 ['oracle-cloud-atp'])
         then:
         noExceptionThrown()

@@ -36,14 +36,14 @@ class SpockSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
 
         then:
         template.contains('''
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
 ''')
 
@@ -52,22 +52,22 @@ java {
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
-    void 'With #language, #testFramework and JDK17 the sourceCompatibility is JDK17'() {
+    void 'With #language, #testFramework and JDK21 the sourceCompatibility is JDK21'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .testFramework(testFramework)
                 .render()
 
         then:
-        template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        template.contains('sourceCompatibility = JavaVersion.toVersion("21")')
 
         and: 'since Kotlin 1.9.20 we do not require jvmTarget anymore'
         !template.contains('''\
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
     }
 }''')
 
@@ -89,20 +89,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         then:
         template.contains('sourceCompatibility = JavaVersion.toVersion("' + jdk.majorVersion() + '")')
 
-        if (jdk.majorVersion() == 17) {
-            assert template.contains('''\
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}''')
-            assert !template.contains('''\
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}''')
-        } else if (jdk.majorVersion() == 21) {
+        if (jdk.majorVersion() == 21) {
             assert template.contains('''\
 kotlin {
     jvmToolchain {
@@ -119,9 +106,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 
         where:
         language        | testFramework        | jdk
-        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_17
+        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_25
         Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_21
-        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_17
+        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_25
         Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_21
     }
 

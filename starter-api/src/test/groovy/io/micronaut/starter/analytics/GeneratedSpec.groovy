@@ -22,7 +22,7 @@ class GeneratedSpec extends Specification {
                Language.JAVA,
                BuildTool.GRADLE_KOTLIN,
                TestFramework.JUNIT,
-               JdkVersion.JDK_17)
+               JdkVersion.JDK_21)
         when:
         String result = jsonMapper.writeValueAsString(generated)
         then:

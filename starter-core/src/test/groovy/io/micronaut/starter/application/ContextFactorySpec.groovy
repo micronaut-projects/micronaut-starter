@@ -38,7 +38,7 @@ class ContextFactorySpec extends Specification {
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 [],
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_17),
+                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_21),
                 null
         )
         then:

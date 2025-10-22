@@ -25,6 +25,6 @@ sourceSets {
 }
 
 rocker {
-    javaVersion = '17'
+    javaVersion = '21'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }

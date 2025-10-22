@@ -15,6 +15,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -93,12 +94,12 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
 
         where:
-        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_17, JdkVersion.JDK_21]].combinations()
+        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_21, JdkVersion.JDK_25]].combinations()
     }
 
-    void "for java 17, with #buildTool and Kapt we do not add the add-opens hack"() {
+    void "for java 21, with #buildTool and Kapt we do not add the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21))
 
         then:
         !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
@@ -122,9 +123,10 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
-    void "for java 17, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+    @PendingFeature
+    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21))
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'

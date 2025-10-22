@@ -170,6 +170,6 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
 
         where:
         jdkVersion        | graalVersion
-        JdkVersion.JDK_17 | JdkVersion.JDK_17
+        JdkVersion.JDK_21 | JdkVersion.JDK_21
     }
 }

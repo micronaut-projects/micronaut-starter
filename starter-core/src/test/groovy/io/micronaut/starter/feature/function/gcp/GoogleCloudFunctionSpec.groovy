@@ -31,7 +31,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -81,7 +81,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -109,7 +109,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.SPOCK)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
 
@@ -124,7 +124,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
@@ -179,7 +179,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function currently only supports JDK 11 and 17 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
+        e.message == 'Google Cloud Function currently only supports JDK 11, 17 and 21 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
 
         where:
         jdkVersion << [JdkVersion.JDK_8]
@@ -196,7 +196,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         noExceptionThrown()
 
         where:
-        jdkVersion << [JdkVersion.JDK_11, JdkVersion.JDK_17, JdkVersion.JDK_21]
+        jdkVersion << [JdkVersion.JDK_21]
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {
@@ -208,7 +208,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         )
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'Google Cloud Function is not supported for GraalVM. ' +
                 'Consider Google Cloud Run for deploying GraalVM native images as docker containers.'
     }
@@ -219,7 +219,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_21)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

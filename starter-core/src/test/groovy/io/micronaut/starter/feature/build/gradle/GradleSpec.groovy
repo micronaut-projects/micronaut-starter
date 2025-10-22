@@ -165,7 +165,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         [lang, jdk, buildTool] << [
                 Language.values(),
-                [JdkVersion.JDK_17, JdkVersion.JDK_21],
+                [JdkVersion.JDK_21, JdkVersion.JDK_25],
                 BuildTool.valuesGradle()
         ].combinations()
     }

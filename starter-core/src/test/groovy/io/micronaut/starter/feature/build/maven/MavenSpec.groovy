@@ -203,7 +203,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         // https://cloud.google.com/functions/docs/concepts/execution-environment#runtimes
         return runtime in ["azure_function",
                            "google_function"
-        ] ? JdkVersion.JDK_17 :
+        ] ? JdkVersion.JDK_21 :
                 MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
@@ -230,7 +230,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         where:
         [lang, jdk] << [
                 Language.values(),
-                [JdkVersion.JDK_17, JdkVersion.JDK_21]
+                [JdkVersion.JDK_21, JdkVersion.JDK_25]
         ].combinations()
     }
 }

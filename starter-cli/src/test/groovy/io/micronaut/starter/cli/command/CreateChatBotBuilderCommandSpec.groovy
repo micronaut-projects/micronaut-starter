@@ -74,8 +74,8 @@ Choose your preferred build tool. (enter for default)
 >
 
 Choose the target JDK. (enter for default)
-*1) 17
- 2) 21
+*1) 21
+ 2) 25
 >
      */
 
@@ -106,7 +106,7 @@ Choose the target JDK. (enter for default)
                 [Language.JAVA, Language.GROOVY, Language.KOTLIN],
                 [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST],
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN],
-                [JdkVersion.JDK_17, JdkVersion.JDK_21]
+                [JdkVersion.JDK_25, JdkVersion.JDK_21]
         ].combinations().collect { new CliOptions(*it) }
 
     }
@@ -177,7 +177,7 @@ Choose the target JDK. (enter for default)
                     "${language.ordinal() + 1}".toString(),
                     "${testFramework.ordinal() + 1}".toString(),
                     "${buildTool.ordinal() + 1}".toString(),
-                    javaVersion == JdkVersion.JDK_17 ? "1" : "2"
+                    javaVersion == JdkVersion.JDK_21 ? "1" : "2"
             ]
         }
 

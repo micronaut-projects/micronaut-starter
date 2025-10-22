@@ -38,9 +38,10 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
                 ['azure-function']
         )
+
         then:
-        def ex = thrown(IllegalArgumentException)
-        ex.message == 'Azure Function currently only supports JDK 8, 11 and 17 -- https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure'
+        IllegalArgumentException ex = thrown()
+        ex.message == 'Azure Function currently only supports JDK 8, 11, 17, and 21 -- https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions'
 
         where:
         [applicationType, jdkVersion] << [
@@ -53,7 +54,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
                 ['azure-function']
         )
         String build = output['build.gradle']
@@ -136,7 +137,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String readme = output["README.md"]
@@ -166,7 +167,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']
