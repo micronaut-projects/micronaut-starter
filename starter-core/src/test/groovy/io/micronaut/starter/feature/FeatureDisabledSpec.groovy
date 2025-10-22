@@ -170,7 +170,6 @@ import io.micronaut.starter.feature.k8s.Kubernetes
 import io.micronaut.starter.feature.k8s.KubernetesClient
 import io.micronaut.starter.feature.k8s.KubernetesInformer
 import io.micronaut.starter.feature.k8s.KubernetesReactorClient
-import io.micronaut.starter.feature.k8s.KubernetesRxJava2Client
 import io.micronaut.starter.feature.knative.Knative
 import io.micronaut.starter.feature.kotlin.KotlinExtensionFunctions
 import io.micronaut.starter.feature.kotlin.Ktor
@@ -248,9 +247,6 @@ import io.micronaut.starter.feature.micrometer.Signalfx
 import io.micronaut.starter.feature.micrometer.Stackdriver
 import io.micronaut.starter.feature.micrometer.Statsd
 import io.micronaut.starter.feature.micrometer.Wavefront
-import io.micronaut.starter.feature.microstream.MicroStream
-import io.micronaut.starter.feature.microstream.MicroStreamCache
-import io.micronaut.starter.feature.microstream.MicroStreamRest
 import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.feature.multitenancy.Multitenancy
@@ -314,10 +310,6 @@ import io.micronaut.starter.feature.reloading.Jrebel
 import io.micronaut.starter.feature.retry.Retry
 import io.micronaut.starter.feature.rss.Rss
 import io.micronaut.starter.feature.rss.RssItunes
-import io.micronaut.starter.feature.rxjava.RxJava1
-import io.micronaut.starter.feature.rxjava.RxJava2
-import io.micronaut.starter.feature.rxjava.RxJava2HttpClient
-import io.micronaut.starter.feature.rxjava.RxJava2HttpServerNetty
 import io.micronaut.starter.feature.rxjava.RxJava3
 import io.micronaut.starter.feature.rxjava.RxJava3HttpClient
 import io.micronaut.starter.feature.security.Security
@@ -429,7 +421,6 @@ class FeatureDisabledSpec extends Specification {
         'asciidoctor' | 'micronaut.starter.feature.asciidoctor.enabled' | Asciidoctor
         'undertow-server' | 'micronaut.starter.feature.undertow.server.enabled' | Undertow
         'aws-lambda-s3-event-notification' | 'micronaut.starter.feature.aws.lambda.s3.event.notification.enabled' | AwsLambdaS3EventNotification
-        'rxjava2-http-server-netty' | 'micronaut.starter.feature.rxjava2.http.server.netty.enabled' | RxJava2HttpServerNetty
         'micrometer-oracle-cloud' | 'micronaut.starter.feature.micrometer.oracle.cloud.enabled' | OracleCloud
         'agorapulse-micronaut-console' | 'micronaut.starter.feature.agorapulse.micronaut.console.enabled' | Console
         'groovy-maven-plus-plugin' | 'micronaut.starter.feature.groovy.maven.plus.plugin.enabled' | GroovyMavenPlusPlugin
@@ -450,12 +441,10 @@ class FeatureDisabledSpec extends Specification {
         'kubernetes' | 'micronaut.starter.feature.kubernetes.enabled' | Kubernetes
         'micrometer-influx' | 'micronaut.starter.feature.micrometer.influx.enabled' | Influx
         'buildless' | 'micronaut.starter.feature.buildless.enabled' | Buildless
-        'rxjava1' | 'micronaut.starter.feature.rxjava1.enabled' | RxJava1
         'tracing-opentelemetry-xray' | 'micronaut.starter.feature.tracing.opentelemetry.xray.enabled' | OpenTelemetryXray
         'views-soy' | 'micronaut.starter.feature.views.soy.enabled' | Soy
         'spring-data-jdbc' | 'micronaut.starter.feature.spring.data.jdbc.enabled' | SpringDataJdbc
         'micrometer-observation' | 'micronaut.starter.feature.micrometer.observation.enabled' | MicrometerObservation
-        'microstream-cache' | 'micronaut.starter.feature.microstream.cache.enabled' | MicroStreamCache
         'micrometer-wavefront' | 'micronaut.starter.feature.micrometer.wavefront.enabled' | Wavefront
         'control-panel' | 'micronaut.starter.feature.control.panel.enabled' | ControlPanel
         'github-workflow-google-cloud-run-graalvm' | 'micronaut.starter.feature.github.workflow.google.cloud.run.graalvm.enabled' | GoogleCloudRunGraalWorkflow
@@ -492,7 +481,6 @@ class FeatureDisabledSpec extends Specification {
         'amazon-api-gateway-http' | 'micronaut.starter.feature.amazon.api.gateway.http.enabled' | AmazonApiGatewayHttp
         'github-workflow-azure-container-instance-graalvm' | 'micronaut.starter.feature.github.workflow.azure.container.instance.graalvm.enabled' | AzureContainerInstanceGraalWorkflow
         'data-azure-cosmos' | 'micronaut.starter.feature.data.azure.cosmos.enabled' | DataAzureCosmosFeature
-        'microstream-rest' | 'micronaut.starter.feature.microstream.rest.enabled' | MicroStreamRest
         'micrometer-observation-http' | 'micronaut.starter.feature.micrometer.observation.http.enabled' | MicrometerObservationHttp
         'views-thymeleaf' | 'micronaut.starter.feature.views.thymeleaf.enabled' | Thymeleaf
         'flyway' | 'micronaut.starter.feature.flyway.enabled' | Flyway
@@ -534,7 +522,6 @@ class FeatureDisabledSpec extends Specification {
         'spring-boot-starter' | 'micronaut.starter.feature.spring.boot.starter.enabled' | SpringBootStarter
         'micrometer-azure-monitor' | 'micronaut.starter.feature.micrometer.azure.monitor.enabled' | AzureMonitor
         'email-javamail' | 'micronaut.starter.feature.email.javamail.enabled' | JavamailFeature
-        'kubernetes-rxjava2-client' | 'micronaut.starter.feature.kubernetes.rxjava2.client.enabled' | KubernetesRxJava2Client
         'jrebel' | 'micronaut.starter.feature.jrebel.enabled' | Jrebel
         'annotation-api' | 'micronaut.starter.feature.annotation.api.enabled' | AnnotationApi
         'security-annotations' | 'micronaut.starter.feature.security.annotations.enabled' | SecurityAnnotations
@@ -608,13 +595,11 @@ class FeatureDisabledSpec extends Specification {
         'micrometer-stackdriver' | 'micronaut.starter.feature.micrometer.stackdriver.enabled' | Stackdriver
         'jasync-sql' | 'micronaut.starter.feature.jasync.sql.enabled' | JAsyncSQLFeature
         'langchain4j-anthropic' | 'micronaut.starter.feature.langchain4j.anthropic.enabled' | AnthropicLangchain4jLanguageModel
-        'rxjava2-http-client' | 'micronaut.starter.feature.rxjava2.http.client.enabled' | RxJava2HttpClient
         'guice' | 'micronaut.starter.feature.guice.enabled' | MicronautGuice
         'r2dbc' | 'micronaut.starter.feature.r2dbc.enabled' | R2dbc
         'aws-parameter-store' | 'micronaut.starter.feature.aws.parameter.store.enabled' | AwsParameterStore
         'eclipsestore-rest' | 'micronaut.starter.feature.eclipsestore.rest.enabled' | EclipseStoreRest
         'views-velocity' | 'micronaut.starter.feature.views.velocity.enabled' | Velocity
-        'rxjava2' | 'micronaut.starter.feature.rxjava2.enabled' | RxJava2
         'graalvm' | 'micronaut.starter.feature.graalvm.enabled' | GraalVM
         'config-consul' | 'micronaut.starter.feature.config.consul.enabled' | DistributedConfigConsul
         'mqtt-hivemq' | 'micronaut.starter.feature.mqtt.hivemq.enabled' | MqttHiveMq
@@ -676,7 +661,6 @@ class FeatureDisabledSpec extends Specification {
         'grpc' | 'micronaut.starter.feature.grpc.enabled' | Grpc
         'neo4j-bolt' | 'micronaut.starter.feature.neo4j.bolt.enabled' | Neo4jBolt
         'chatbots-basecamp-lambda' | 'micronaut.starter.feature.chatbots.basecamp.lambda.enabled' | BasecampAwsChatBot
-        'microstream' | 'micronaut.starter.feature.microstream.enabled' | MicroStream
         'oracle-cloud-httpclient-netty' | 'micronaut.starter.feature.oracle.cloud.httpclient.netty.enabled' | OracleCloudMicronautNettyClient
         'aws-lambda' | 'micronaut.starter.feature.aws.lambda.enabled' | AwsLambda
         'security-jwt' | 'micronaut.starter.feature.security.jwt.enabled' | SecurityJWT
