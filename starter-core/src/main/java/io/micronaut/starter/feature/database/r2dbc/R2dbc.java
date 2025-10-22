@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.database.r2dbc;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -33,6 +35,7 @@ import jakarta.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Requires(property = "micronaut.starter.feature.r2dbc.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class R2dbc implements R2dbcFeature {
 

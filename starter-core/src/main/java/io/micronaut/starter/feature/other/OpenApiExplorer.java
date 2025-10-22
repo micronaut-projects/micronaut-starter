@@ -18,12 +18,15 @@ package io.micronaut.starter.feature.other;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.InterceptUrlMap;
 import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.openapi.explorer.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenApiExplorer extends OpenApiView implements ContributingStaticResources {
 

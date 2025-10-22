@@ -13,6 +13,12 @@ class JdkVersionSpec extends Specification {
     @Inject
     JsonMapper jsonMapper
 
+    void "JdkVersion::valueOf"() {
+        expect:
+        JdkVersion.JDK_11 == JdkVersion.valueOf("11")
+        JdkVersion.JDK_11 == JdkVersion.valueOf(11)
+    }
+
     void "Serialize and deserialize JdkVersion with jdk=#jdkVersion"(JdkVersion jdkVersion) {
         given:
         int jdk = jdkVersion.majorVersion()

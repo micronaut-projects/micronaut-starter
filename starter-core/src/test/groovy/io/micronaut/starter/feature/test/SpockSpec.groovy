@@ -77,7 +77,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         Language.JAVA   | TestFramework.KOTEST
     }
 
-    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'() {
+    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'(Language language, TestFramework testFramework, JdkVersion jdk) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
@@ -87,20 +87,35 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
                 .render()
 
         then:
-        template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        template.contains('sourceCompatibility = JavaVersion.toVersion("' + jdk.majorVersion() + '")')
 
-        template.contains('''\
+        if (jdk.majorVersion() == 17) {
+            assert template.contains('''\
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }''')
-        !template.contains('''\
+            assert !template.contains('''\
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }''')
+        } else if (jdk.majorVersion() == 21) {
+            assert template.contains('''\
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}''')
+            assert !template.contains('''\
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+    }
+}''')
+        }
 
         where:
         language        | testFramework        | jdk

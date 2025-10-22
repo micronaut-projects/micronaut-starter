@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.grpc;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildPlugin;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.grpc.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Grpc implements DefaultFeature {
     private static final Dependency DEPENDENCY_JAVAX_ANNOTATION_API = Dependency.builder()

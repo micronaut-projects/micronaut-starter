@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.aws;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -72,6 +74,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.aws.cdk.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
@@ -80,6 +83,21 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String ARTIFACT_ID_AWS_CDK_LIB = "aws-cdk-lib";
     private static final String GROUP_ID_SOFTWARE_AMAZON_AWSCDK = "software.amazon.awscdk";
     private static final String ARTIFACT_ID_MICRONAUT_STARTER_AWS_CDK = "micronaut-starter-aws-cdk";
+    private static final Dependency DEPENDENCY_JUNIT_JUPITER_ENGINE = Dependency.builder()
+            .groupId("org.junit.jupiter")
+            .artifactId("junit-jupiter-engine")
+            .test()
+            .build();
+    private static final Dependency DEPENDENCY_JUNIT_JUPITER_API = Dependency.builder()
+            .groupId("org.junit.jupiter")
+            .artifactId("junit-jupiter-api")
+            .test()
+            .build();
+    private static final Dependency DEPENDENCY_JUNIT_PLATFORM_LAUNCHER = Dependency.builder()
+            .groupId("org.junit.platform")
+            .artifactId("junit-platform-launcher")
+            .test()
+            .build();
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
     private final RepositoryResolver repositoryResolver;
@@ -196,14 +214,9 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                         .compile()
                         .build()));
         dependencyContext.addDependency(bomDependency().test());
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId("org.junit.jupiter")
-                .artifactId("junit-jupiter-api")
-                .test());
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId("org.junit.jupiter")
-                .artifactId("junit-jupiter-engine")
-                .test());
+        dependencyContext.addDependency(DEPENDENCY_JUNIT_JUPITER_API);
+        dependencyContext.addDependency(DEPENDENCY_JUNIT_JUPITER_ENGINE);
+        dependencyContext.addDependency(DEPENDENCY_JUNIT_PLATFORM_LAUNCHER);
         if (generatorContext.getFeatures().hasFeature(AmazonApiGatewayHttp.class)) {
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-alpha")

@@ -28,12 +28,20 @@ class ApplicationControllerSpec extends Specification {
     ApplicationTypeClient applicationTypeClient
 
     void "home txt request"() {
-        given:
-        MutableHttpRequest<?> mutableHttpRequest = HttpRequest.GET("/").accept(MediaType.TEXT_PLAIN_TYPE)
         when:
+        MutableHttpRequest<?> mutableHttpRequest = HttpRequest.GET("/").accept(MediaType.TEXT_PLAIN_TYPE)
         HttpResponse<?> response = client.toBlocking().exchange(mutableHttpRequest)
 
         then:
+        noExceptionThrown()
+        HttpStatus.OK == response.status()
+
+        when:
+        mutableHttpRequest = HttpRequest.GET("/")
+        response = client.toBlocking().exchange(mutableHttpRequest)
+
+        then:
+        noExceptionThrown()
         HttpStatus.OK == response.status()
     }
 

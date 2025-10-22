@@ -191,6 +191,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["aws-lambda", 'graalvm']       | "lambda"
         ApplicationType.DEFAULT     | ["tomcat-server"]               | "tomcat"
         ApplicationType.DEFAULT     | ["jetty-server"]                | "jetty"
+        ApplicationType.DEFAULT     | ["http-poja"]                   | "http_poja"
         ApplicationType.DEFAULT     | ["netty-server"]                | "netty"
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }

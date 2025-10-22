@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.aws;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.aws.lambda.scheduled.event.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature implements LambdaTrigger {
     public static final String NAME = "aws-lambda-scheduled-event";

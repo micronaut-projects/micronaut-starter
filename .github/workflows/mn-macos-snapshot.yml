@@ -12,15 +12,14 @@ jobs:
     runs-on: macos-13
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -41,7 +40,7 @@ jobs:
           cp ./LICENSE mn-darwin-amd64-snapshot/
           zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.0.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.10.x'
         uses: actions/upload-artifact@v4
         with:
           name: mn-darwin-amd64-snapshot
@@ -51,15 +50,14 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon

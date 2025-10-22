@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.build.maven;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.RepositoryResolver;
@@ -46,6 +48,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.maven.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Maven implements BuildFeature {
     public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";

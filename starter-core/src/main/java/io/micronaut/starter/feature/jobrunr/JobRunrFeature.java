@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.jobrunr;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.MicronautCommunityFeature;
 import io.micronaut.starter.options.MicronautVersion;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.jobrunr.jobrunr.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JobRunrFeature implements MicronautCommunityFeature {
     private static final String JOBRUNR_ARTIFACT_ID = "jobrunr-micronaut-feature";

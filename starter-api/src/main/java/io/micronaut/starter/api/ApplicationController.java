@@ -21,6 +21,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
@@ -89,14 +90,21 @@ public class ApplicationController implements ApplicationTypeOperations {
     }
 
     @Hidden
-    @Produces(MediaType.TEXT_HTML)
     @Get
+    @ApiResponse(
+            responseCode = "200",
+            description = "A textual description of the API",
+            content = @Content(mediaType = MediaType.TEXT_PLAIN)
+    )
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
     HttpResponse<?> redirectToUi(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         URI redirectURI = configuration.getRedirectUri().orElse(null);
-        if (redirectURI != null) {
+        boolean acceptsHtml = request.accept().stream()
+                .anyMatch(mediaType -> mediaType.equals(MediaType.TEXT_HTML_TYPE));
+        if (acceptsHtml && redirectURI != null) {
             return HttpResponse.permanentRedirect(redirectURI);
         }
-        return home(request, info);
+        return home(request, info).contentType(MediaType.TEXT_PLAIN_TYPE);
     }
 
     /**
@@ -104,14 +112,7 @@ public class ApplicationController implements ApplicationTypeOperations {
      * @param request The request
      * @return A description of the API.
      */
-    @Get
-    @Produces(MediaType.TEXT_PLAIN)
-    @ApiResponse(
-            responseCode = "200",
-            description = "A textual description of the API",
-            content = @Content(mediaType = MediaType.TEXT_PLAIN)
-    )
-    HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+    MutableHttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         return HttpResponse.ok(new Writable() {
             @Override
             public void writeTo(Writer out) {

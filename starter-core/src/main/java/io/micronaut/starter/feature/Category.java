@@ -35,12 +35,14 @@ public class Category {
     public static final String DI                   = "Dependency Injection";
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
+    public static final String EMBEDDED_STORE = "Embedded Store";
     public static final String GROOVY_MODULE        = "Groovy Optional Modules";
     public static final String IOT                  = "Internet of Things";
     public static final String LANGUAGES            = "Languages";
+    public static final String LANGUAGE_MODEL            = "Language Models";
     public static final String LOGGING              = "Logging";
     public static final String MANAGEMENT           = "Management";
-
+    public static final String MCP                  = "MCP";
     public static final String MESSAGING            = "Messaging";
     public static final String METRICS           = "Metrics";
     public static final String OTHER                = "Other";

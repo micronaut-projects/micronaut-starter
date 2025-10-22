@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -46,6 +48,7 @@ import java.util.Optional;
  * @author Guillermo Calvo
  * @since 3.9.0
  */
+@Requires(property = "micronaut.starter.feature.google.cloud.function.cloudevents.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
 

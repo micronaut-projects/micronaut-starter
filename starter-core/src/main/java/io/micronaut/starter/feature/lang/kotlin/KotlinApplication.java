@@ -16,15 +16,19 @@
 package io.micronaut.starter.feature.lang.kotlin;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
+import io.micronaut.starter.feature.RequiresDisabledBanner;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.logging.Slf4jJulBridge;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.spock;
@@ -35,6 +39,7 @@ import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.kotlin.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class KotlinApplication implements KotlinApplicationFeature {
 
@@ -79,7 +84,9 @@ public class KotlinApplication implements KotlinApplicationFeature {
         return application.template(
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new KotlinApplicationRenderingContext(defaultEnvironment, eagerInitSingleton)
+                new KotlinApplicationRenderingContext(defaultEnvironment, eagerInitSingleton),
+                generatorContext.hasFeature(Slf4jJulBridge.class),
+                generatorContext.hasFeature(RequiresDisabledBanner.class)
         );
     }
 

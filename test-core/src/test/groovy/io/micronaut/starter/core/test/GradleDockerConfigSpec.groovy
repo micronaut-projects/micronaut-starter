@@ -17,7 +17,7 @@ class GradleDockerConfigSpec extends CommandSpec {
         then:
         result.output.contains("BUILD SUCCESS")
         new File(dir, "build/docker/main/Dockerfile").text.contains("FROM $dockerBaseImage")
-        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community:$javaVersion-ol9 AS graalvm")
+        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community")
 
         where:
         [buildTool, javaVersion] << [

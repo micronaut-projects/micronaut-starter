@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.messaging.jms;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TESTRESOURCES;
 
+@Requires(property = "micronaut.starter.feature.jms.sqs.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SQS extends AbstractJmsFeature implements TestResourcesAdditionalModulesProvider {
 

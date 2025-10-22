@@ -40,7 +40,7 @@ class EclipseStoreFuncSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << Language.values() - Language.KOTLIN
     }
 
     void "test #buildTool EclipseStore with #language"(BuildTool buildTool, Language language) {

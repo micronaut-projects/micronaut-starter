@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
@@ -24,6 +26,7 @@ import jakarta.inject.Singleton;
  
  * @author graemerocher
  */
+@Requires(property = "micronaut.starter.feature.data.mongodb.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DataMongo extends DataMongoFeature {
 

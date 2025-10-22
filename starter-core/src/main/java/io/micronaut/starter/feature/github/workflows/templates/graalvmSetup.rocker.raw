@@ -26,5 +26,4 @@ JdkVersion jdkVersion
         uses: DeLaGuardo/setup-graalvm@@3.1
         with:
           graalvm-version: @graalVersion(jdkVersion)
-      - name: Install Native Image
-        run: gu install native-image
+

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -9,38 +12,27 @@ import spock.lang.Unroll
 class PostgreSQLSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle postgres feature for language=#language'() {
+    void 'test gradle postgres feature for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['postgres'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
+
         then:
-        template.contains('runtimeOnly("org.postgresql:postgresql")')
+        verifier.hasDependency("org.postgresql", "postgresql", Scope.RUNTIME)
+        !verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven postgres feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['postgres'])
-                .language(language)
-                .render()
+        template = new BuildBuilder(beanContext, buildTool).features(['postgres', 'testcontainers']).language(language).render()
+        verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.postgresql", "postgresql", Scope.RUNTIME)
+        verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        [buildTool, language] << [BuildTool.values().toList(), Language.values().toList()].combinations()
     }
-
 }

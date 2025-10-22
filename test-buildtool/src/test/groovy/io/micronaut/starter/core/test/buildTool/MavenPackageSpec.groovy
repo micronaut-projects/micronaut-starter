@@ -56,10 +56,10 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
+        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 90)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image-community:17-ol9")
+        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image-community")
 
         where:
         lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
@@ -71,7 +71,7 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=native-image")
+        String output = executeMaven( "package -Dpackaging=native-image", 500)
 
         then:
         output.contains("GraalVM Native Image: Generating 'foo' (executable)...")

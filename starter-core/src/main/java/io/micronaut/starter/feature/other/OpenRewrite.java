@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
@@ -36,6 +38,7 @@ import static io.micronaut.starter.feature.Category.DEV_TOOLS;
 import static io.micronaut.starter.options.BuildTool.MAVEN;
 import static io.micronaut.starter.options.Language.JAVA;
 
+@Requires(property = "micronaut.starter.feature.openrewrite.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenRewrite implements LanguageSpecificFeature {
 

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -30,6 +32,7 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 import java.util.function.Function;
 
+@Requires(property = "micronaut.starter.feature.config4k.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Config4k implements ConfigurationFeature, KotlinSpecificFeature {
 

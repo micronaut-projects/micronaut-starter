@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.management.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Management implements Feature, MicronautServerDependent {
 

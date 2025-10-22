@@ -27,6 +27,7 @@ public final class MicronautDependencyUtils {
             .compile()
             .build();
 
+    public static final String GROUP_ID_MICRONAUT_LANGCHAIN4J = "io.micronaut.langchain4j";
     public static final String GROUP_ID_MICRONAUT_GUICE = "io.micronaut.guice";
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
@@ -42,6 +43,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_JSON_SCHEMA = "io.micronaut.jsonschema";
+    public static final String GROUP_ID_MICRONAUT_GRAAL_LANGUAGES = "io.micronaut.graal-languages";    
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
@@ -75,13 +77,20 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
+    public static final String GROUP_ID_MICRONAUT_ELASTICSEARCH = "io.micronaut.elasticsearch";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
     public static final String GROUP_ID_MICRONAUT_VIEWS = "io.micronaut.views";
+    public static final String GROUP_ID_MICRONAUT_MCP = "io.micronaut.mcp";
 
     private MicronautDependencyUtils() {
 
+    }
+
+    @NonNull
+    public static Dependency.Builder langchain4j() {
+        return micronautDependency(GROUP_ID_MICRONAUT_LANGCHAIN4J);
     }
 
     @NonNull
@@ -112,6 +121,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder azureDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AZURE);
+    }
+
+    @NonNull
+    public static Dependency.Builder mcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_MCP);
     }
 
     @NonNull
@@ -223,6 +237,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder gcpDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GCP);
+    }
+
+    @NonNull
+    public static Dependency.Builder graalLanguagesDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GRAAL_LANGUAGES);
     }
 
     @NonNull
@@ -364,6 +383,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder controlPanelDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
+    }
+
+    @NonNull
+    public static Dependency.Builder elasticSearchDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ELASTICSEARCH);
     }
 
     @NonNull

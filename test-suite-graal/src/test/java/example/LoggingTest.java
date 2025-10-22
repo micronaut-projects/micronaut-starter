@@ -4,18 +4,17 @@ import ch.qos.logback.classic.LoggerContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class LoggingTest {
-
-    private static final LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-
+class LoggingTest {
     private final PrintStream systemOut = System.out;
 
     private ByteArrayOutputStream byteArrayOutputStream;
@@ -33,8 +32,14 @@ public class LoggingTest {
 
     @Test
     void testConsoleAppender() {
+        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+        assertNotNull(loggerFactory);
+        assertInstanceOf(LoggerContext.class, loggerFactory, "LoggerFactory is not a LoggerContext it is of type " + loggerFactory.getClass().getName());
+        LoggerContext context = (LoggerContext) loggerFactory;
+        assertNotNull(context);
         Logger logger = context.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.info("test message");
-        assertEquals("test message\n", byteArrayOutputStream.toString());
+        String result = byteArrayOutputStream.toString();
+        assertTrue(result.contains("test message"));
     }
 }

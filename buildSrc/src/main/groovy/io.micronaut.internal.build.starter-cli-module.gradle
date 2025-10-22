@@ -2,7 +2,7 @@ plugins {
     id "io.micronaut.internal.starter.published-module"
     id "io.micronaut.internal.starter.convention"
     id "application"
-    id "com.github.johnrengelman.shadow"
+    id "com.gradleup.shadow"
     id "io.micronaut.starter.rocker"
     id "io.sdkman.vendors"
 }

@@ -8,15 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - uses: gradle/wrapper-validation-action@v3
+      - uses: gradle/actions/wrapper-validation@v5
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Set the current release version
         id: release_version
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -97,7 +97,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -107,12 +107,11 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
           native-image-musl: 'true'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image (with libc=musl)"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
@@ -148,7 +147,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -158,11 +157,10 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -198,7 +196,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -208,11 +206,10 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -248,15 +245,14 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -297,14 +293,14 @@ jobs:
     needs: [linux, macos, macos-arm, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Set the current release version
         id: release_version
         run: |
@@ -325,14 +321,14 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Set the current release version
         id: release_version
         run: |
@@ -372,7 +368,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -398,7 +394,7 @@ jobs:
           sed -i -e "s/  sha256 arm: '.*/  sha256 arm: '${ARMSHA}',/" Casks/micronaut.rb
           sed -i -e "s/         intel: '.*/         intel: '${INTELSHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -409,7 +405,7 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.release.target_commitish }}
           token: ${{ secrets.GH_TOKEN }}
@@ -451,7 +447,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -463,23 +459,23 @@ jobs:
     needs: [chocolatey, sdkman, gcr, homebrew]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: ${{ github.event.release.target_commitish }}
-      - uses: gradle/wrapper-validation-action@v3
+      - uses: gradle/actions/wrapper-validation@v5
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Back to Micronaut Core snapshot
         continue-on-error: true
         run: ./gradlew micronautCoreNextSnapshot
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
         continue-on-error: true
         with:
           commit_message: Back Core and Platform version to snapshot

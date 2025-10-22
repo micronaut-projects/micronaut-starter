@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
 
+@Requires(property = "micronaut.starter.feature.tracing.opentelemetry.exporter.jaeger.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenTelemetryExporterJaeger extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_JAEGER = "Jaeger";

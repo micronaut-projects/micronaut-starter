@@ -24,11 +24,14 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+/**
+ * @see <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions">Azure Functions Supported Versions</a>.
+ */
 @Singleton
 public class AzureFunctionFeatureValidator implements FeatureValidator {
 
     public static boolean supports(JdkVersion jdkVersion) {
-        return JdkVersion.JDK_8.equals(jdkVersion) || JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion);
+        return JdkVersion.JDK_8.equals(jdkVersion) || JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion)  || JdkVersion.JDK_21.equals(jdkVersion);
     }
 
     @Override

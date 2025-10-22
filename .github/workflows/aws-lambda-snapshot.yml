@@ -2,19 +2,19 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - 5.0.x
+      - 4.10.x
 jobs:
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '21'
       - name: Run Tests
         run: ./gradlew starter-api:test starter-aws-lambda:test --refresh-dependencies
         env:

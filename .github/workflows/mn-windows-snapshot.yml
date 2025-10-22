@@ -12,15 +12,14 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.2.3
+        uses: graalvm/setup-graalvm@v1.4.1
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -46,7 +45,7 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.0.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/4.10.x'
         uses: actions/upload-artifact@v4
         with:
           name: mn-win-amd64-snapshot

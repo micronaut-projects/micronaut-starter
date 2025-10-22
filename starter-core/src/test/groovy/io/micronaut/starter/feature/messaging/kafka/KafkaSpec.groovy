@@ -30,6 +30,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         verifier.hasDependency("org.testcontainers","kafka", Scope.TEST)
+        verifier.hasDependency("org.apache.commons","commons-compress", Scope.TEST)
 
         where:
         buildTool << BuildTool.values()

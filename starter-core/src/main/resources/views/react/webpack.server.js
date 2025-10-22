@@ -21,6 +21,10 @@ module.exports = {
     performance: {
         hints: false,
     },
+    optimization: {
+        // Minification currently breaks Micronaut React SSR.
+        minimize: false,
+    },
     plugins: [
         new webpack.ProvidePlugin({
             // GraalJS doesn't support TextEncoder yet. It's easy to add and here's a polyfill in the meantime.

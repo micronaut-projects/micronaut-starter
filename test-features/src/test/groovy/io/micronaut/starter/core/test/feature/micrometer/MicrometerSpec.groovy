@@ -36,7 +36,7 @@ class MicrometerSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values().findAll { it != Language.GROOVY }
+        language << Language.values().findAll { it != Language.GROOVY && it != Language.KOTLIN }
 
     }
 

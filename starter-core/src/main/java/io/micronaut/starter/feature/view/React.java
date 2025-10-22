@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.*;
 import io.micronaut.starter.build.gradle.GradleFile;
@@ -31,6 +33,7 @@ import jakarta.inject.Singleton;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Requires(property = "micronaut.starter.feature.views.react.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class React implements ViewFeature, MicronautServerDependent {
     public static final String NODE_GRADLE_PLUGIN_VERSION = "7.0.2";
@@ -103,7 +106,7 @@ public class React implements ViewFeature, MicronautServerDependent {
                 generatorContext.addBuildPlugin(
                         GradlePlugin.builder()
                                 .id("org.gradle.toolchains.foojay-resolver-convention")
-                                .version("0.8.0")
+                                .version("0.10.0")
                                 .gradleFile(GradleFile.SETTINGS)
                                 .build()
                 );
@@ -144,6 +147,10 @@ public class React implements ViewFeature, MicronautServerDependent {
                 );
             }
 
+            generatorContext.getConfiguration().addNested("micronaut.views.react.server-bundle-path", "classpath:views/ssr-components.mjs");
+            generatorContext.getConfiguration().addNested("micronaut.router.static-resources.js.mapping", "/static/**");
+            generatorContext.getConfiguration().addNested("micronaut.router.static-resources.js.paths", "classpath:views/static");
+
             // Set up the frontend project. These are *not* resources under views/ because they're raw inputs that will
             // be minified and transpiled as part of the build pipeline.
             var ourResourceURL = Thread.currentThread().getContextClassLoader().getResource("views/react").toString();
@@ -158,12 +165,17 @@ public class React implements ViewFeature, MicronautServerDependent {
             if (generatorContext.getLanguage() == Language.JAVA) {
                 generatorContext.addTemplate("AppController.java",
                         new RockerTemplate(sourceFile, reactControllerJava.template(generatorContext.getProject())));
+                String unitTestSource = generatorContext.getTestSourcePath("/{packagePath}/RootView");
+                generatorContext.addTemplate(unitTestSource, new RockerTemplate(unitTestSource, reactTestJava.template(generatorContext.getProject())));
             } else if (generatorContext.getLanguage() == Language.KOTLIN) {
                 generatorContext.addTemplate("AppController.kt",
                         new RockerTemplate(sourceFile, reactControllerKotlin.template(generatorContext.getProject())));
+                String unitTestSource = generatorContext.getTestSourcePath("/{packagePath}/RootView");
+                generatorContext.addTemplate(unitTestSource, new RockerTemplate(unitTestSource, reactTestKotlin.template(generatorContext.getProject())));
             }
 
-            // This will stop being necessary in Truffle 24.1
+            // This is technically no longer necessary, but as of Truffle 24.2 still prints a scary warning about it
+            // being experimental to the console. So we disable virtual threads in Micronaut by default.
             generatorContext.getConfiguration().addNested("micronaut.executors.blocking.virtual", "false");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);   // Cannot happen.

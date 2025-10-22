@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.coherence;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -29,6 +31,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 2.4
  */
+@Requires(property = "micronaut.starter.feature.coherence.session.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class CoherenceSessionStore implements Feature {
 

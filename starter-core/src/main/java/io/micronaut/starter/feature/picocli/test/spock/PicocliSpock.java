@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.picocli.test.spock;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
@@ -25,6 +27,7 @@ import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.picocli.spock.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class PicocliSpock implements PicocliTestFeature {
 

@@ -1,11 +1,11 @@
 @import io.micronaut.starter.application.Project
-@import io.micronaut.starter.application.ApplicationType;
-@import io.micronaut.starter.options.BuildTool;
-@import io.micronaut.starter.feature.Features;
-@import io.micronaut.starter.feature.architecture.CpuArchitecture;
-@import io.micronaut.starter.feature.architecture.X86;
-@import io.micronaut.starter.feature.architecture.Arm;
-@import io.micronaut.starter.options.JdkVersion;
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.architecture.CpuArchitecture
+@import io.micronaut.starter.feature.architecture.X86
+@import io.micronaut.starter.feature.architecture.Arm
+@import io.micronaut.starter.options.JdkVersion
 @args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized, JdkVersion jdkVersion)
 
 package @project.getPackageName();
