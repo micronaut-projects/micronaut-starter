@@ -29,7 +29,6 @@ import io.micronaut.starter.template.PropertiesTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.junit.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -66,11 +65,6 @@ public class Junit implements TestFeature {
             .artifactId(ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5)
             .test()
             .build();
-    private final List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders;
-
-    public Junit(List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders) {
-        this.junitPlatformPropertyProviders = junitPlatformPropertyProviders;
-    }
 
     @Override
     @NonNull
@@ -93,7 +87,12 @@ public class Junit implements TestFeature {
 
     private void junitPlatformProperties(GeneratorContext generatorContext) {
         Map<String, Object> junitPlatformProperties = new HashMap<>();
-        for (JunitPlatformPropertyProvider provider : junitPlatformPropertyProviders) {
+        for (JunitPlatformPropertyProvider provider : generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(JunitPlatformPropertyProvider.class::isInstance)
+                .map(JunitPlatformPropertyProvider.class::cast)
+                .toList()) {
             junitPlatformProperties.putAll(provider.getJunitPlatformProperties());
         }
         if (CollectionUtils.isNotEmpty(junitPlatformProperties)) {
