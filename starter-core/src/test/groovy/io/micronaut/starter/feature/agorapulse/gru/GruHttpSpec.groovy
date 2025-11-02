@@ -5,7 +5,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
-import spock.lang.PendingFeature
 
 class GruHttpSpec extends ApplicationContextSpec {
 
@@ -40,7 +39,6 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
     }
 
-    @PendingFeature(reason = "agora community features do not support Micronaut Framework 4 yet")
     void "#buildTool with feature agorapulse-gru-http adds dependency for #buildTool"(BuildTool buildTool) {
         given:
         String groupId = 'com.agorapulse'

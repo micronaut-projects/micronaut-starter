@@ -6,10 +6,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
-import spock.lang.Ignore
 import spock.lang.Unroll
 
-@Ignore("agora community features do not support Micronaut Framework 4 yet")
 class PermissionsSpec extends CommandSpec {
 
     @Override

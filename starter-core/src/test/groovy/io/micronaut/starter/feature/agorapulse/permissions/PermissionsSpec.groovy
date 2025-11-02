@@ -6,7 +6,6 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.PendingFeature
 
 class PermissionsSpec extends ApplicationContextSpec {
 
@@ -35,7 +34,6 @@ class PermissionsSpec extends ApplicationContextSpec {
         }
     }
 
-    @PendingFeature(reason = "agora community features do not support Micronaut Framework 4 yet")
     void "#buildTool with feature micronaut-permissions adds dependency #groupId:#artifactId for #language"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-permissions']
