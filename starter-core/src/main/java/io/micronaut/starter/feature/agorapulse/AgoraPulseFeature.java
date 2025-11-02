@@ -31,7 +31,7 @@ public interface AgoraPulseFeature extends MicronautCommunityFeature {
 
     @Override
     default MicronautVersion builtWithMicronautVersion() {
-        return MicronautVersion.THREE;
+        return MicronautVersion.FOUR;
     }
 
     @Override
