@@ -59,7 +59,7 @@ public class Develocity implements Feature, DevelocityConfiguration {
     @Override
     @NonNull
     public String getDescription() {
-        return "Adds Develocity Gradle plugin which enables integration with Develocity from Gradle and scans.gradle.com";
+        return "Develocity provides comprehensive observability, build and test acceleration technologies, and rapid troubleshooting features for Apache Maven, Bazel, sbt, npm, Python, and Gradle Build Tool";
     }
 
     @Override
