@@ -26,7 +26,7 @@ import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
 import io.micronaut.starter.feature.awsparameterstore.AwsParameterStore
-import io.micronaut.starter.feature.awsecretsmanager.AwsecretsManager
+import io.micronaut.starter.feature.awssecretsmanager.AwsSecretsManager
 import io.micronaut.starter.feature.azure.AzureCosmosDbFeature
 import io.micronaut.starter.feature.azure.AzureKeyVaultFeature
 import io.micronaut.starter.feature.azure.AzureLogging
@@ -424,7 +424,7 @@ class FeatureDisabledSpec extends Specification {
         'spring' | 'micronaut.starter.feature.spring.enabled' | Spring
         'kotlin-extension-functions' | 'micronaut.starter.feature.kotlin.extension.functions.enabled' | KotlinExtensionFunctions
         'rabbitmq' | 'micronaut.starter.feature.rabbitmq.enabled' | RabbitMQ
-        'aws-secrets-manager' | 'micronaut.starter.feature.aws.secrets.manager.enabled' | AwsecretsManager
+        'aws-secrets-manager' | 'micronaut.starter.feature.aws.secrets.manager.enabled' | AwsSecretsManager
         'views-react' | 'micronaut.starter.feature.views.react.enabled' | React
         'asciidoctor' | 'micronaut.starter.feature.asciidoctor.enabled' | Asciidoctor
         'undertow-server' | 'micronaut.starter.feature.undertow.server.enabled' | Undertow

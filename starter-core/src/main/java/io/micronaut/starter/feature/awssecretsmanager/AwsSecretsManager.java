@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.awsecretsmanager;
+package io.micronaut.starter.feature.awssecretsmanager;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
@@ -32,7 +32,7 @@ import jakarta.inject.Singleton;
  */
 @Requires(property = "micronaut.starter.feature.aws.secrets.manager.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class AwsecretsManager implements DistributedConfigFeature {
+public class AwsSecretsManager implements DistributedConfigFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER = "micronaut-aws-secretsmanager";
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_AWS_SECRETSMANAGER = MicronautDependencyUtils.awsDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER)
