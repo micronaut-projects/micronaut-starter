@@ -34,9 +34,6 @@ import spock.lang.Shared
 
 import java.time.Duration
 
-// Fails in GitHub actions with
-// org.testcontainers.containers.ContainerFetchException: Can't get Docker image: RemoteDockerImage(imageName=letsencrypt/pebble:latest...
-@IgnoreIf({env["CI"]})
 abstract class CliBaseSpec extends CommandSpec implements CommandFixture {
     private static final Logger log = LoggerFactory.getLogger(CliBaseSpec.class)
 

@@ -22,11 +22,15 @@ import org.shredzone.acme4j.Account
 import org.shredzone.acme4j.AccountBuilder
 import org.shredzone.acme4j.Session
 import org.shredzone.acme4j.util.KeyPairUtils
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 
 import java.nio.file.Files
 import java.security.KeyPair
 
+// Fails in GitHub actions with
+// org.testcontainers.containers.ContainerFetchException: Can't get Docker image: RemoteDockerImage(imageName=letsencrypt/pebble:latest...
+@IgnoreIf({env["CI"]})
 class DeactivateAccountSpec extends CliBaseSpec {
 
     @Shared
