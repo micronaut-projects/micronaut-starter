@@ -18,7 +18,7 @@ jobs:
       - name: Run Tests
         run: ./gradlew starter-api:test starter-aws-lambda:test --refresh-dependencies
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
           PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
@@ -27,7 +27,7 @@ jobs:
           ./gradlew starter-aws-lambda:buildNativeLambda
           cp starter-aws-lambda/build/libs/*-lambda.zip starter-aws-lambda/build/function.zip
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: AWS Lambda Deploy

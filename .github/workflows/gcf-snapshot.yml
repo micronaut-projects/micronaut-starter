@@ -18,7 +18,7 @@ jobs:
       - name: Build the JAR
         run: ./gradlew starter-api:test starter-gcp-function:test starter-gcp-function:shadowJar
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
           PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"

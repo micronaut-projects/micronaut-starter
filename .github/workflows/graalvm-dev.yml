@@ -14,7 +14,7 @@ jobs:
       matrix:
         native_test_task: ['test-suite-graal:nativeTest']
     env:
-      DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+      DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
       DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
     steps:

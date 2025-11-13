@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.awssecretsmanager
+package io.micronaut.starter.feature.awsecretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -11,7 +11,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class AwsecretsManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
     void 'test readme.md with feature aws-secrets-manager contains links to micronaut docs'() {
         when:
         Map<String, String> output = generate(['aws-secrets-manager'])

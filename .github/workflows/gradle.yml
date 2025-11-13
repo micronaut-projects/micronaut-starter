@@ -31,7 +31,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew check --refresh-dependencies --continue -x test-aws:test -x test-buildtool:test -x test-cli:test -x test-cloud:test -x test-core:test -x test-features:test  
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
           PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
@@ -51,7 +51,7 @@ jobs:
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          DEVELOCITY_ACCESS_KEY: ${{ ssecrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew publishToSonatype docs --no-daemon
