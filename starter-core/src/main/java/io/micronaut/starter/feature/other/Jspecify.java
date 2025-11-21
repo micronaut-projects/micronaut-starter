@@ -26,7 +26,7 @@ import jakarta.inject.Singleton;
 import static io.micronaut.core.util.StringUtils.TRUE;
 import static io.micronaut.starter.feature.Category.VALIDATION;
 
-@Requires(property = "micronaut.starter.feature.mcp.http.enabled", value = TRUE, defaultValue = TRUE)
+@Requires(property = "micronaut.starter.feature.jspecify.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
 public class Jspecify implements Feature {
 
