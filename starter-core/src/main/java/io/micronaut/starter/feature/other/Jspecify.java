@@ -50,7 +50,7 @@ public class Jspecify implements Feature {
 
     @Override
     public String getDescription() {
-        return "Micronaut supports JSpecify Nullability Annotations.";
+        return "It adds the JSpecify Nullability Annotations dependency.";
     }
 
     @Nullable
