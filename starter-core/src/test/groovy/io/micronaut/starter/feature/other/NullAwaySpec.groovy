@@ -82,4 +82,16 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         maven
         maven.contains("--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
     }
+
+    void 'test nullaway maven args'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['null-away'])
+        def pom = output['pom.xml']
+
+        then:
+        pom
+        pom.contains("<arg>-XDcompilePolicy=simple</arg>")
+    }
 }
