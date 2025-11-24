@@ -343,6 +343,19 @@ sourceSets {
 // endregion
 
 }
+
+@if (features.contains("null-away")) {
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone {
+        check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)
+        option("NullAway:AnnotatedPackages", "@project.getPackageName()")
+        if (name.lowercase().contains("test")) {
+            disable("NullAway")
+        }
+    }
+}
+}
+
 @gradleBuild.renderExtensions()
 
 @gradleBuild.renderSubstitutions()

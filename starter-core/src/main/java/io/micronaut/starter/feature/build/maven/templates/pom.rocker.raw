@@ -19,6 +19,7 @@
 @import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.migration.MigrationFeature
 @import io.micronaut.starter.feature.testresources.TestResources
+@import io.micronaut.starter.feature.other.NullAway
 @import io.micronaut.starter.util.VersionInfo
 
 @args (
@@ -213,6 +214,13 @@ String jvmArguments
           <compilerArgs>
             <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
             <arg>-Amicronaut.processing.module=@project.getName()</arg>
+@if (features.isFeaturePresent(NullAway.class)) {
+            <arg>-XDcompilePolicy=simple</arg>
+            <arg>--should-stop=ifError=FLOW</arg>
+            <arg>-Xplugin:ErrorProne</arg>
+            <arg>-Xep:NullAway:ERROR</arg>
+            <arg>-XepOpt:NullAway:AnnotatedPackages=@project.getPackageName()</arg>
+}
           </compilerArgs>
         </configuration>
       </plugin>
