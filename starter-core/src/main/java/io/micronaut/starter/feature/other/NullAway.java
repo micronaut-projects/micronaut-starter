@@ -103,7 +103,6 @@ public class NullAway implements Feature {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("net.ltgt.errorprone")
                     .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
-                    .version("4.3.0")
                     .build());
             //todo add condition if Jspecify not present
             generatorContext.addDependency(Dependency.builder()
@@ -113,14 +112,12 @@ public class NullAway implements Feature {
                     .build());
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.uber.nullaway")
-                    .artifactId("nullaway")
-                    .version("0.12.12")
+                    .lookupArtifactId("nullaway")
                     .scope(ERRORPRONE)
                     .build());
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.google.errorprone")
-                    .artifactId("error_prone_core")
-                    .version("2.44.0")
+                    .lookupArtifactId("error_prone_core")
                     .scope(ERRORPRONE)
                     .build());
         }
