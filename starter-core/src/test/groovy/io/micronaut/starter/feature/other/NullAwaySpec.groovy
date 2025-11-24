@@ -1,24 +1,19 @@
 package io.micronaut.starter.feature.other
 
-import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.github.workflows.docker.DockerRegistryWorkflow
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 
-import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.MAVEN
 

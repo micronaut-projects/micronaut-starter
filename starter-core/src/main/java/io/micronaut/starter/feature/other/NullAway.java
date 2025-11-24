@@ -22,7 +22,6 @@ import static io.micronaut.starter.feature.Category.VALIDATION;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.template.StringTemplate;
@@ -39,6 +38,7 @@ import static io.micronaut.core.util.StringUtils.TRUE;
 @Singleton
 public class NullAway implements Feature {
 
+    public static final String NAME = "null-away";
     private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
             "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
             "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
@@ -52,7 +52,6 @@ public class NullAway implements Feature {
             "--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED"
     );
 
-    public static final String NAME = "null-away";
     private static final Dependency NULLAWAY_DEPENDENCY =
             Dependency.builder()
                     .groupId("com.uber.nullaway")
@@ -98,8 +97,8 @@ public class NullAway implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext){
-        if(generatorContext.getBuildTool() == BuildTool.GRADLE) {
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("net.ltgt.errorprone")
                     .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
@@ -121,7 +120,7 @@ public class NullAway implements Feature {
                     .scope(ERRORPRONE)
                     .build());
         }
-        if(generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(NULLAWAY_DEPENDENCY);
             generatorContext.addDependency(ERRORPRONE_CORE_DEPENDENCY);
             generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", String.join(System.lineSeparator(), NULLAWAY_MAVEN_JVM_FLAGS)));
