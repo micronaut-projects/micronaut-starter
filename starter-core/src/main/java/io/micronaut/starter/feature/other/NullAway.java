@@ -26,6 +26,7 @@ import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.template.StringTemplate;
+import java.util.List;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
@@ -38,17 +39,18 @@ import static io.micronaut.core.util.StringUtils.TRUE;
 @Singleton
 public class NullAway implements Feature {
 
-    private static final String NULLAWAY_MAVEN_JVM_FLAGS = """
-            --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-            --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-            --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
-            --add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED""";
+    private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
+            "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+            "--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+            "--add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+            "--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED"
+    );
 
     public static final String NAME = "null-away";
     private static final Dependency NULLAWAY_DEPENDENCY =
@@ -122,7 +124,7 @@ public class NullAway implements Feature {
         if(generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(NULLAWAY_DEPENDENCY);
             generatorContext.addDependency(ERRORPRONE_CORE_DEPENDENCY);
-            generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", NULLAWAY_MAVEN_JVM_FLAGS));
+            generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", String.join(System.lineSeparator(), NULLAWAY_MAVEN_JVM_FLAGS)));
         }
     }
 
