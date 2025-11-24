@@ -54,16 +54,14 @@ public class NullAway implements Feature {
     private static final Dependency NULLAWAY_DEPENDENCY =
             Dependency.builder()
                     .groupId("com.uber.nullaway")
-                    .artifactId("nullaway")
+                    .lookupArtifactId("nullaway")
                     .annotationProcessor()
-                    .version("${nullaway.version}")
                     .build();
     private static final Dependency ERRORPRONE_CORE_DEPENDENCY =
             Dependency.builder()
                     .groupId("com.google.errorprone")
-                    .artifactId("error_prone_core")
+                    .lookupArtifactId("error_prone_core")
                     .annotationProcessor()
-                    .version("${error-prone.version}")
                     .build();
 
     @Override
@@ -122,9 +120,6 @@ public class NullAway implements Feature {
                     .build());
         }
         if(generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            BuildProperties props = generatorContext.getBuildProperties();
-            props.put("error-prone.version", "2.29.2");
-            props.put("nullaway.version", "0.12.12");
             generatorContext.addDependency(NULLAWAY_DEPENDENCY);
             generatorContext.addDependency(ERRORPRONE_CORE_DEPENDENCY);
             generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", NULLAWAY_MAVEN_JVM_FLAGS));
