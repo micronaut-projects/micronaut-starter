@@ -98,6 +98,7 @@ public class MavenBuild {
                 Collections.emptyList());
     }
 
+    @SuppressWarnings("ParameterNumber")
     public MavenBuild(@NonNull String artifactId,
                       @NonNull List<DependencyCoordinate> annotationProcessors,
                       @NonNull List<DependencyCoordinate> testAnnotationProcessors,
