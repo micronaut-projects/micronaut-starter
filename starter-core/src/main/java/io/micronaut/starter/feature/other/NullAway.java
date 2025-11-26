@@ -136,8 +136,6 @@ public class NullAway implements CompilerArgCodeContributingFeature {
     public List<String> getCompilerArgs(@NonNull GeneratorContext generatorContext) {
         return List.of("-XDcompilePolicy=simple",
                 "--should-stop=ifError=FLOW",
-                "-Xplugin:ErrorProne",
-                "-Xep:NullAway:ERROR",
-                "-XepOpt:NullAway:AnnotatedPackages=" + generatorContext.getProject().getPackageName());
+                "-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=" + generatorContext.getProject().getPackageName());
     }
 }
