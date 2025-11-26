@@ -75,7 +75,7 @@ frontend-maven-plugin = "1.15.1"
 liquibase-slf4j = "5.1.0"
 graalpy = "24.2.2"
 commons-compress = "1.27.1"
-error-prone = "4.3.0"
+error-prone-gradle-plugin = "4.3.0"
 error-prone-core = "2.44.0"
 [libraries]
 
@@ -156,7 +156,7 @@ frontend-maven-plugin = { module = "com.github.eirslett:frontend-maven-plugin", 
 liquibase-slf4j = { module = "com.mattbertolini:liquibase-slf4j", version.ref = "liquibase-slf4j" }
 graalpy-gradle-plugin = { module = "org.graalvm.python:org.graalvm.python.gradle.plugin", version.ref = "graalpy" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
-error-prone-gradle-plugin = { module = "net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin", version.ref = "error-prone" }
+error-prone-gradle-plugin = { module = "net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin", version.ref = "error-prone-gradle-plugin" }
 error-prone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "error-prone-core" }
 [plugins]
 # This is an exception to the rule!
