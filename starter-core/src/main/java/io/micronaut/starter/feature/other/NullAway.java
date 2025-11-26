@@ -37,7 +37,6 @@ import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.other.template.nullaway;
 import static io.micronaut.core.util.StringUtils.TRUE;
 
-
 @Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
 public class NullAway implements CompilerArgCodeContributingFeature {
@@ -103,21 +102,27 @@ public class NullAway implements CompilerArgCodeContributingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id("net.ltgt.errorprone")
-                    .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
-                    .extension(new RockerWritable(nullaway.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), generatorContext.getProject())))
-                    .build());
-            generatorContext.addDependency(nullawayDependency()
-                    .scope(ERRORPRONE));
-            generatorContext.addDependency(errorProneDependency()
-                    .scope(ERRORPRONE));
+            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
+            generatorContext.addDependency(nullawayDependency().scope(ERRORPRONE));
+            generatorContext.addDependency(errorProneDependency().scope(ERRORPRONE));
         }
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(nullawayDependency().annotationProcessor());
             generatorContext.addDependency(errorProneDependency().annotationProcessor());
             generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", String.join(System.lineSeparator(), NULLAWAY_MAVEN_JVM_FLAGS)));
         }
+    }
+
+    private static GradlePlugin gradlePlugin(GeneratorContext generatorContext) {
+        GradleDsl dsl = generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY);
+        GradlePlugin.Builder builder = GradlePlugin.builder()
+                .id("net.ltgt.errorprone")
+                .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
+                .extension(new RockerWritable(nullaway.template(dsl, generatorContext.getProject())));
+        if (dsl == GradleDsl.KOTLIN) {
+            builder.buildImports("import net.ltgt.gradle.errorprone.errorprone");
+        }
+        return builder.build();
     }
 
     private static Dependency.Builder nullawayDependency() {

@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.build.gradle.GradleDsl
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.build.BuildTestUtil
@@ -62,6 +63,12 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasBuildPlugin("net.ltgt.errorprone")
 
         template.contains('check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)')
+        template.contains('options.errorprone.option("NullAway:AnnotatedPackages", "example.micronaut")')
+        if (buildTool.getGradleDsl().get() == GradleDsl.KOTLIN) {
+            assert template.contains("import net.ltgt.gradle.errorprone.errorprone")
+        } else {
+            assert !template.contains("import net.ltgt.gradle.errorprone.errorprone")
+        }
 
         where:
         buildTool << BuildTool.valuesGradle()
