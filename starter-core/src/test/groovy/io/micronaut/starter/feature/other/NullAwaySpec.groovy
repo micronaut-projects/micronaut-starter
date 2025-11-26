@@ -101,4 +101,18 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         pom
         pom.contains("<arg>-XDcompilePolicy=simple</arg>")
     }
+
+    void 'test Gradle nullaway task config'() {
+        when:
+
+        def output = generate(ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['null-away'])
+        def gradle = output['build.gradle']
+
+        then:
+
+        gradle
+        gradle.contains("check(\"NullAway\", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)")
+    }
 }
