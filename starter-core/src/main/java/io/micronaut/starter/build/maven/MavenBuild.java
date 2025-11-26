@@ -125,6 +125,7 @@ public class MavenBuild {
         this.testResourcesDependencies = testResourcesDependencies;
         this.compilerArgs = compilerArgs;
     }
+
     @NonNull
     public List<String> getCompilerArgs() {
         return compilerArgs;

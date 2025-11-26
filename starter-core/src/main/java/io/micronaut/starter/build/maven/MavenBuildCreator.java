@@ -30,7 +30,6 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
-import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
