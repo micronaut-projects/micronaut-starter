@@ -8,6 +8,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolSpec
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -17,7 +18,7 @@ import spock.lang.Subject
 import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.MAVEN
 
-class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixture{
+class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -46,9 +47,9 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         Category.VALIDATION == beanContext.getBean(NullAway).category
     }
 
-    void 'test Gradle nullaway feature dependencies'() {
+    void 'test Gradle nullaway feature dependencies'(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["null-away"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(GRADLE, template)
@@ -57,6 +58,9 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("com.uber.nullaway", "nullaway", "errorprone")
         verifier.hasDependency("com.google.errorprone", "error_prone_core", "errorprone")
         verifier.hasBuildPlugin("net.ltgt.errorprone")
+
+        where:
+        buildTool << BuildTool.valuesGradle()
     }
 
     void 'test Maven nullaway feature dependencies'() {
