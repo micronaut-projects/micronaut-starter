@@ -42,7 +42,7 @@ import static io.micronaut.core.util.StringUtils.TRUE;
 @Singleton
 public class NullAway implements CompilerArgCodeContributingFeature {
 
-    public static final String NAME = "null-away";
+    public static final String NAME = "nullaway";
     private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
             "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
             "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",

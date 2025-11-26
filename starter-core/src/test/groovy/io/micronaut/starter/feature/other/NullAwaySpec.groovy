@@ -35,7 +35,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test README.md with feature nullaway contains links to docs'() {
         when:
-        def output = generate(['null-away'])
+        def output = generate(['nullaway'])
         def readme = output["README.md"]
 
         then:
@@ -51,7 +51,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
     void 'test Gradle nullaway feature dependencies'(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(["null-away"])
+                .features(["nullaway"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(GRADLE, template)
 
@@ -70,7 +70,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
     void 'test Maven nullaway feature dependencies'() {
         when:
         String template = new BuildBuilder(beanContext, MAVEN)
-                .features(["null-away"])
+                .features(["nullaway"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(MAVEN, template)
 
@@ -84,7 +84,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN),
-                ['null-away'])
+                ['nullaway'])
         def maven = output['.mvn/jvm.config']
 
         then:
@@ -96,7 +96,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN),
-                ['null-away'])
+                ['nullaway'])
         def pom = output['pom.xml']
 
         then:
