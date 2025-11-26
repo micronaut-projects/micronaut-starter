@@ -54,6 +54,7 @@ micronaut-build-plugins = "7.6.6"
 micronaut-gradle-plugin = "4.6.1"
 mockserver-client-java = "5.15.0"
 mockk = "1.13.17"
+nullaway = "0.12.12"
 protobuf-gradle-plugin = "0.9.2"
 rewrite-gradle-plugin = "6.29.4"
 rewrite-maven-plugin = "5.47.3"
@@ -74,6 +75,8 @@ frontend-maven-plugin = "1.15.1"
 liquibase-slf4j = "5.1.0"
 graalpy = "24.2.2"
 commons-compress = "1.27.1"
+error-prone-gradle-plugin = "4.3.0"
+error-prone-core = "2.44.0"
 [libraries]
 
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
@@ -152,7 +155,9 @@ graaljs-community = { module = "org.graalvm.polyglot:js-community", version.ref 
 frontend-maven-plugin = { module = "com.github.eirslett:frontend-maven-plugin", version.ref = "frontend-maven-plugin" }
 liquibase-slf4j = { module = "com.mattbertolini:liquibase-slf4j", version.ref = "liquibase-slf4j" }
 graalpy-gradle-plugin = { module = "org.graalvm.python:org.graalvm.python.gradle.plugin", version.ref = "graalpy" }
-
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+error-prone-gradle-plugin = { module = "net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin", version.ref = "error-prone-gradle-plugin" }
+error-prone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "error-prone-core" }
 [plugins]
 # This is an exception to the rule!
 # We use the Gradle plugin both in generated projects and our own build
