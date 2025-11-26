@@ -98,7 +98,7 @@ public class NullAway implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+        if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("net.ltgt.errorprone")
                     .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
