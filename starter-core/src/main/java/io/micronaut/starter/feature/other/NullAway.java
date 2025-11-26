@@ -55,19 +55,6 @@ public class NullAway implements Feature {
             "--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED"
     );
 
-    private static final Dependency NULLAWAY_DEPENDENCY =
-            Dependency.builder()
-                    .groupId("com.uber.nullaway")
-                    .lookupArtifactId("nullaway")
-                    .annotationProcessor()
-                    .build();
-    private static final Dependency ERRORPRONE_CORE_DEPENDENCY =
-            Dependency.builder()
-                    .groupId("com.google.errorprone")
-                    .lookupArtifactId("error_prone_core")
-                    .annotationProcessor()
-                    .build();
-
     private final Jspecify jspecify;
 
     public NullAway(Jspecify jspecify) {
@@ -120,20 +107,28 @@ public class NullAway implements Feature {
                     .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
                     .extension(new RockerWritable(nullaway.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), generatorContext.getProject())))
                     .build());
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("com.uber.nullaway")
-                    .lookupArtifactId("nullaway")
+            generatorContext.addDependency(nullawayDependency()
                     .scope(ERRORPRONE));
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("com.google.errorprone")
-                    .lookupArtifactId("error_prone_core")
+            generatorContext.addDependency(errorProneDependency()
                     .scope(ERRORPRONE));
         }
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(NULLAWAY_DEPENDENCY);
-            generatorContext.addDependency(ERRORPRONE_CORE_DEPENDENCY);
+            generatorContext.addDependency(nullawayDependency().annotationProcessor());
+            generatorContext.addDependency(errorProneDependency().annotationProcessor());
             generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", String.join(System.lineSeparator(), NULLAWAY_MAVEN_JVM_FLAGS)));
         }
+    }
+
+    private static Dependency.Builder nullawayDependency() {
+        return Dependency.builder()
+                .groupId("com.uber.nullaway")
+                .lookupArtifactId("nullaway");
+    }
+
+    private static Dependency.Builder errorProneDependency() {
+        return Dependency.builder()
+                .groupId("com.google.errorprone")
+                .lookupArtifactId("error_prone_core");
     }
 
 }
