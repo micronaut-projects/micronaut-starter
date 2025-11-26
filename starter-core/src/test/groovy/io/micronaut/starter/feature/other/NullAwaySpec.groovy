@@ -61,6 +61,8 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("com.google.errorprone", "error_prone_core", "errorprone")
         verifier.hasBuildPlugin("net.ltgt.errorprone")
 
+        template.contains('check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)')
+
         where:
         buildTool << BuildTool.valuesGradle()
     }

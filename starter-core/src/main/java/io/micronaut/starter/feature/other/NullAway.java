@@ -23,15 +23,17 @@ import static io.micronaut.starter.feature.Category.VALIDATION;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.StringTemplate;
 import java.util.List;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
-
+import io.micronaut.starter.feature.other.template.nullaway;
 import static io.micronaut.core.util.StringUtils.TRUE;
 
 
@@ -116,23 +118,16 @@ public class NullAway implements Feature {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("net.ltgt.errorprone")
                     .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
-                    .build());
-            //todo add condition if Jspecify not present
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.jspecify")
-                    .artifactId("jspecify")
-                    .compile()
+                    .extension(new RockerWritable(nullaway.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), generatorContext.getProject())))
                     .build());
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.uber.nullaway")
                     .lookupArtifactId("nullaway")
-                    .scope(ERRORPRONE)
-                    .build());
+                    .scope(ERRORPRONE));
             generatorContext.addDependency(Dependency.builder()
                     .groupId("com.google.errorprone")
                     .lookupArtifactId("error_prone_core")
-                    .scope(ERRORPRONE)
-                    .build());
+                    .scope(ERRORPRONE));
         }
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(NULLAWAY_DEPENDENCY);
