@@ -20,16 +20,17 @@ import io.micronaut.context.annotation.Requires;
 import static io.micronaut.starter.build.dependencies.Scope.ERRORPRONE;
 import static io.micronaut.starter.feature.Category.VALIDATION;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.StringTemplate;
 import java.util.List;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
@@ -39,7 +40,7 @@ import static io.micronaut.core.util.StringUtils.TRUE;
 
 @Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class NullAway implements Feature {
+public class NullAway implements CompilerArgCodeContributingFeature {
 
     public static final String NAME = "null-away";
     private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
@@ -131,4 +132,12 @@ public class NullAway implements Feature {
                 .lookupArtifactId("error_prone_core");
     }
 
+    @Override
+    public List<String> getCompilerArgs(@NonNull GeneratorContext generatorContext) {
+        return List.of("-XDcompilePolicy=simple",
+                "--should-stop=ifError=FLOW",
+                "-Xplugin:ErrorProne",
+                "-Xep:NullAway:ERROR",
+                "-XepOpt:NullAway:AnnotatedPackages=" + generatorContext.getProject().getPackageName());
+    }
 }

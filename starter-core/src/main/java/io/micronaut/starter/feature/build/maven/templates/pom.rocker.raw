@@ -212,15 +212,9 @@ String jvmArguments
 }
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
-            <arg>-Amicronaut.processing.module=@project.getName()</arg>
-@if (features.isFeaturePresent(NullAway.class)) {
-            <arg>-XDcompilePolicy=simple</arg>
-            <arg>--should-stop=ifError=FLOW</arg>
-            <arg>-Xplugin:ErrorProne</arg>
-            <arg>-Xep:NullAway:ERROR</arg>
-            <arg>-XepOpt:NullAway:AnnotatedPackages=@project.getPackageName()</arg>
-}
+          @for (arg : mavenBuild.getCompilerArgs()) {
+            <arg>@arg</arg>
+          }
           </compilerArgs>
         </configuration>
       </plugin>
