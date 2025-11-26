@@ -24,6 +24,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.template.StringTemplate;
 import java.util.List;
 import io.micronaut.starter.feature.Feature;
@@ -64,6 +65,19 @@ public class NullAway implements Feature {
                     .lookupArtifactId("error_prone_core")
                     .annotationProcessor()
                     .build();
+
+    private final Jspecify jspecify;
+
+    public NullAway(Jspecify jspecify) {
+        this.jspecify = jspecify;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Jspecify.class)) {
+            featureContext.addFeature(jspecify);
+        }
+    }
 
     @Override
     public String getName() {

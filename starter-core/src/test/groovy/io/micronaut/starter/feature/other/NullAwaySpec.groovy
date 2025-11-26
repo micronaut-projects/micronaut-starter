@@ -4,6 +4,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.build.BuildTestUtil
@@ -55,6 +56,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         BuildTestVerifier verifier = BuildTestUtil.verifier(GRADLE, template)
 
         then:
+        verifier.hasDependency("org.jspecify", "jspecify", Scope.COMPILE)
         verifier.hasDependency("com.uber.nullaway", "nullaway", "errorprone")
         verifier.hasDependency("com.google.errorprone", "error_prone_core", "errorprone")
         verifier.hasBuildPlugin("net.ltgt.errorprone")
@@ -71,6 +73,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
         BuildTestVerifier verifier = BuildTestUtil.verifier(MAVEN, template)
 
         then:
+        verifier.hasDependency("org.jspecify", "jspecify", Scope.COMPILE)
         verifier.hasAnnotationProcessor("com.uber.nullaway", "nullaway")
         verifier.hasAnnotationProcessor("com.google.errorprone", "error_prone_core")
     }
