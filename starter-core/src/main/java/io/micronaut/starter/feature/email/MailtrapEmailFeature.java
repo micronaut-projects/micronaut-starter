@@ -19,6 +19,8 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.email.mailtrap.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -54,5 +56,16 @@ public class MailtrapEmailFeature extends EmailFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://mailtrap.io/";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .compile()
+                .groupId(MICRONAUT_EMAIL_GROUP_ID)
+                .artifactId("micronaut-email-mailtrap")
+                .version("2.11.0")
+                .build()
+        );
     }
 }
