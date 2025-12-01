@@ -50,7 +50,7 @@ public class MailtrapEmailFeature extends EmailFeature {
     @Override
     @Nullable
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-email/2.11.0/guide/#mailtrap";
+        return "https://micronaut-projects.github.io/micronaut-email/latest/guide/#mailtrap";
     }
 
     @Override
