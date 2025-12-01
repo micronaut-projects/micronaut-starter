@@ -64,7 +64,7 @@ public class MailtrapEmailFeature extends EmailFeature {
                 .compile()
                 .groupId(MICRONAUT_EMAIL_GROUP_ID)
                 .artifactId("micronaut-email-mailtrap")
-                .version("2.11.0")
+                .version("2.11.0")  //TODO remove version once 2.11.0 or greater is part of the BOM
                 .build()
         );
     }
