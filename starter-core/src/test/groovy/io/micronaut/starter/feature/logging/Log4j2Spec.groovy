@@ -24,7 +24,7 @@ class Log4j2Spec extends ApplicationContextSpec {
         verifier.hasBom("org.apache.logging.log4j", "log4j-bom", Scope.COMPILE)
         verifier.hasDependency("org.apache.logging.log4j", "log4j-api", Scope.COMPILE)
         verifier.hasDependency("org.apache.logging.log4j", "log4j-core", Scope.RUNTIME)
-        verifier.hasDependency("org.apache.logging.log4j", "log4j-slf4j-impl", Scope.RUNTIME)
+        verifier.hasDependency("org.apache.logging.log4j", "log4j-slf4j2-impl", Scope.RUNTIME)
 
         where:
         buildTool << BuildTool.values()
