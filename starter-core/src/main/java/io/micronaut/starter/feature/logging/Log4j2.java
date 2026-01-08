@@ -73,7 +73,7 @@ public class Log4j2 implements LoggingFeature {
                 .runtime());
         generatorContext.addDependency(Dependency.builder()
                 .groupId(GROUP_ID)
-                .artifactId("log4j-slf4j-impl")
+                .artifactId("log4j-slf4j2-impl")
                 .runtime());
     }
 
