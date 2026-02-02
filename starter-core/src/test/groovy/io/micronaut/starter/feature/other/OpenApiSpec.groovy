@@ -46,6 +46,7 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         if (buildTool == BuildTool.MAVEN) {
             // property is not defined it is inherited via the bom
             assert !parsePropertySemanticVersion(template, "micronaut.openapi.version").isPresent()
+            assert verifier.hasDependency("io.micronaut", "micronaut-core-reactive", Scope.RUNTIME)
         }
 
         where:

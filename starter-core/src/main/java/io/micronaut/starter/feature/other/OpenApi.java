@@ -70,6 +70,12 @@ public class OpenApi implements Feature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(micronautOpenApiProcessor(generatorContext));
         generatorContext.addDependency(DEPENDENCY_OPENAPI_ANNOTATIONS);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
+                    .artifactId("micronaut-core-reactive")
+                    .runtime()
+                    .build());
+        }
         if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
             generatorContext.addDependency(MicronautDependencyUtils.openapi()
                     .artifactId(ARTIFACT_ID_MICRONAUT_OPENAPI)
