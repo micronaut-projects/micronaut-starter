@@ -117,7 +117,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains($/testImplementation("org.testcontainers:$testScenario.container")/$)
 
         and: "postgres needs another dependency with vert.x"
-        template.contains('implementation("com.ongres.scram:client:') == (testScenario.db == PostgreSQL.NAME)
+        template.contains('implementation("com.ongres.scram:scram-client') == (testScenario.db == PostgreSQL.NAME)
 
         and: 'the driver and correct module are included for test-resources'
         !template.contains($/runtimeOnly("$testScenario.driver.groupId:$testScenario.driver.artifactId")/$)
@@ -158,7 +158,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains($/testImplementation("org.testcontainers:$testScenario.container")/$)
 
         and: "postgres needs another dependency with vert.x"
-        template.contains('implementation("com.ongres.scram:client:') == (testScenario.db == PostgreSQL.NAME)
+        template.contains('implementation("com.ongres.scram:scram-client') == (testScenario.db == PostgreSQL.NAME)
 
         and: 'the correct module is included for test-resources'
         !template.contains($/testResourcesService("$testScenario.driver.groupId:$testScenario.driver.artifactId")/$)
@@ -213,7 +213,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
          !containsJdbcDriver(template, testScenario.driver)
 
         and: "postgres needs another dependency with vert.x"
-        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
+        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "scram-client")
 
         and: 'test resources module is correct, and driver is added to the plugin dependencies'
         verifier.hasTestResourceDependency("micronaut-test-resources-$testScenario.testResourcesModule")
@@ -260,7 +260,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         containsJdbcDriver(template, testScenario.driver)
 
         and: "postgres needs another dependency with vert.x"
-        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
+        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "scram-client")
 
         and: 'test resources module is correct, and driver is not added to the plugin dependencies'
         verifier.hasTestResourceDependency("io.micronaut.testresources", "micronaut-test-resources-$testScenario.testResourcesModule")
