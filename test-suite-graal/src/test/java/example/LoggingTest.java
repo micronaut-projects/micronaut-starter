@@ -40,6 +40,7 @@ class LoggingTest {
         Logger logger = context.getLogger(Logger.ROOT_LOGGER_NAME);
         logger.info("test message");
         String result = byteArrayOutputStream.toString();
-        assertTrue(result.contains("test message"));
+        assertNotNull(result);
+        assertTrue(result.contains("test message"), result);
     }
 }
