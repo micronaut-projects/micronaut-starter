@@ -61,7 +61,6 @@ rewrite-maven-plugin = "5.47.3"
 rewrite-micronaut = "2.30.2"
 rocker-gradle-plugin = "3.0.5"
 rocker-maven-plugin = "1.4.0"
-scram-client = "2.1"
 slf4j-simple-logger = "2.0.0"
 zeebe-micronaut-client = "1.20.0"
 ktor = "2.3.13"
@@ -147,7 +146,6 @@ rewrite-maven-plugin = { module = "org.openrewrite.maven:rewrite-maven-plugin", 
 rewrite-micronaut = { module = "org.openrewrite.recipe:rewrite-micronaut", version.ref = "rewrite-micronaut" }
 rocker-gradle-plugin = { module = "nu.studer:gradle-rocker-plugin", version.ref = "rocker-gradle-plugin" }
 rocker-maven-plugin = { module = "com.fizzed:rocker-maven-plugin", version.ref = "rocker-maven-plugin" }
-scram-client = { module = "com.ongres.scram:client", version.ref = "scram-client" }
 slf4j-simple-logger = { module = "io.goodforgod:slf4j-simple-logger", version.ref = "slf4j-simple-logger" }
 zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature", version.ref = "zeebe-micronaut-client" }
 buildless-gradle-plugin = { module = "build.less:buildless-plugin-gradle", version.ref = "buildless" }
