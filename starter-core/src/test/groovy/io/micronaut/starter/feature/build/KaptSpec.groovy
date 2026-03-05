@@ -94,12 +94,12 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         !verifier.hasBuildPlugin("org.jetbrains.kotlin.kapt")
 
         where:
-        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_21, JdkVersion.JDK_25]].combinations()
+        [buildTool, jdk] << [BuildTool.valuesGradle(), [JdkVersion.JDK_25]].combinations()
     }
 
     void "for java 21, with #buildTool and Kapt we do not add the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_25))
 
         then:
         !output."gradle.properties".contains(KotlinSupportFeature.JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\${System.lineSeparator()}  ")))
@@ -112,7 +112,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),
+                new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_25),
                 [Kapt.NAME]
         )
 
@@ -124,9 +124,9 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     @PendingFeature
-    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+    void "for java 25, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25))
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
@@ -136,9 +136,9 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         !output.".mvn/jvm.config"
     }
 
-    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+    void "for java 25, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25))
         def pom = new XmlParser().parseText(output."pom.xml")
 
         then: 'there is a kapt execution in the kotlin plugin'
@@ -150,12 +150,12 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'Corrected jdk21 = jdk17 is specified in build = #buildTool for kapt'(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_21),['kapt'])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, buildTool, JdkVersion.JDK_25),['kapt'])
         String buildFile = buildTool == BuildTool.GRADLE ? output["build.gradle"] : output["build.gradle.kts"]
 
         then:
         buildFile
-        buildFile.contains('sourceCompatibility = JavaVersion.toVersion("21")')
+        buildFile.contains('sourceCompatibility = JavaVersion.toVersion("25")')
         !buildFile.contains('targetCompatibility = JavaVersion.toVersion("17")')
         !buildFile.contains('targetCompatibility = JavaVersion.toVersion("21")')
 
@@ -163,13 +163,19 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
-    void 'Corrected jdk21 = jdk17 is specified in Maven build for kapt'() {
+    void 'Corrected jdk25 is specified in Maven build for kapt'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_21),['kapt'])
-        def buildFile = output["pom.xml"]
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25),['kapt'])
+        String buildFile = output["pom.xml"]
 
         then:
         buildFile
-        buildFile.contains('<jdk.version>17</jdk.version>')
+        buildFile.contains('<jdk.version>') && buildFile.contains('</jdk.version>')
+        
+        when:
+        String jdkVersion = buildFile.substring(buildFile.indexOf('<jdk.version>'), buildFile.indexOf('</jdk.version>') + '</jdk.version>'.length());
+
+        then:
+        jdkVersion == '<jdk.version>25</jdk.version>'
     }
 }

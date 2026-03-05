@@ -11,27 +11,6 @@ import io.micronaut.starter.options.TestFramework
 
 class GradleJdkVersionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
-    void 'java 21 uses gradle 8'() {
-        when:
-        Options options = new Options(Language.JAVA,
-                TestFramework.JUNIT,
-                BuildTool.GRADLE_KOTLIN,
-                JdkVersion.JDK_21)
-        Map<String, String> output = generate(ApplicationType.DEFAULT, options, [])
-
-        then:
-        output.containsKey('gradlew')
-        output.containsKey('gradlew.bat')
-        output.containsKey('gradle/wrapper/gradle-wrapper.jar')
-        output.containsKey('gradle/wrapper/gradle-wrapper.properties')
-
-        when:
-        String wrapperProperties = output.get('gradle/wrapper/gradle-wrapper.properties')
-
-        then:
-        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-8.14.3-bin.zip')
-    }
-
     void 'java 25 uses gradle 9.1.0'() {
         when:
         Options options = new Options(Language.JAVA,

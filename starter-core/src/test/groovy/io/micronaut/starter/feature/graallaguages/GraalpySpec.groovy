@@ -25,7 +25,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void "readme.md with feature micronaut-graalpy contains links to docs for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, TestFramework.JUNIT, buildTool, JdkVersion.JDK_21), [Graalpy.NAME])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, TestFramework.JUNIT, buildTool, JdkVersion.JDK_25), [Graalpy.NAME])
         String readme = output["README.md"]
 
         then:

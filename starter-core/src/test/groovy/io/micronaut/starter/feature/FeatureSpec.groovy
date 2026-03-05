@@ -110,7 +110,7 @@ class FeatureSpec extends BeanContextSpec {
                            "azure-function-http",
                            "chatbots-basecamp-azure-function",
                            "chatbots-telegram-azure-function"
-        ] ? JdkVersion.JDK_21 : MicronautJdkVersionConfiguration.DEFAULT_OPTION
+        ] ? JdkVersion.JDK_25 : MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {

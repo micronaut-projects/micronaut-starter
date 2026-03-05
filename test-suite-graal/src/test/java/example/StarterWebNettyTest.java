@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @MicronautTest(application = Application.class)
 class StarterWebNettyTest {
 
-    private static final String BASE_URI = "/default/com.example.demo?lang=JAVA&build=GRADLE&test=JUNIT&javaVersion=JDK_17";
+    private static final String BASE_URI = "/default/com.example.demo?lang=JAVA&build=GRADLE&test=JUNIT&javaVersion=JDK_25";
 
     private static final String ZIP_CREATE_URI = "/create" + BASE_URI;
 

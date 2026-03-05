@@ -19,12 +19,12 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
             "aws-lambda-s3-event-notification"
     ]
 
-    void 'test AWS Lambda feature validation does not fail for Java 21 and java runtime for feature=#feature'() {
+    void 'test AWS Lambda feature validation does not fail for Java 25 and java runtime for feature=#feature'() {
         when:
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(Language.JAVA)
-                .jdkVersion(JdkVersion.JDK_21)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([feature])
                 .render()
 
@@ -35,12 +35,12 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         [buildtool, feature] << [BuildTool.values().toList(), AWS_LAMBDA_FEATURES].combinations()
     }
 
-    void 'test AWS Lambda feature validation succeeds for Java 21 for feature=#feature with graalvm'() {
+    void 'test AWS Lambda feature validation succeeds for Java 25 for feature=#feature with graalvm'() {
         when:
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(Language.JAVA)
-                .jdkVersion(JdkVersion.JDK_21)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([feature, "graalvm"])
                 .render()
 

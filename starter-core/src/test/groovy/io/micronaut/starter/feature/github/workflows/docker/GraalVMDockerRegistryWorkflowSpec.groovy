@@ -97,6 +97,6 @@ Add the following GitHub secrets:
 
         where:
         jdkVersion        | graalVersion
-        JdkVersion.JDK_21 | JdkVersion.JDK_21
+        JdkVersion.JDK_25 | JdkVersion.JDK_25
     }
 }
