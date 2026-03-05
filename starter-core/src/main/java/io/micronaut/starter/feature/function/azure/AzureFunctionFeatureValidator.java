@@ -31,7 +31,8 @@ import java.util.Set;
 public class AzureFunctionFeatureValidator implements FeatureValidator {
 
     public static boolean supports(JdkVersion jdkVersion) {
-        return JdkVersion.JDK_21.equals(jdkVersion) ||
+        return JdkVersion.JDK_25.equals(jdkVersion) ||
+                JdkVersion.JDK_21.equals(jdkVersion) ||
                 JdkVersion.JDK_17.equals(jdkVersion) ||
                 JdkVersion.JDK_11.equals(jdkVersion) ||
                 JdkVersion.JDK_8.equals(jdkVersion);
@@ -45,7 +46,7 @@ public class AzureFunctionFeatureValidator implements FeatureValidator {
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.getJavaVersion())) {
             throw new IllegalArgumentException("""
-                    Azure Function currently only supports JDK 8, 11, 17, and 21 -- \
+                    Azure Function currently only supports JDK 8, 11, 17, 21, and 25 -- \
                     https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions""");
         }
     }
