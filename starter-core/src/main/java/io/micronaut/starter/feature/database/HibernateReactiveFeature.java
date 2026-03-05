@@ -32,6 +32,10 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
     private static final String ORACLE_DIALECT = "org.hibernate.dialect.OracleDialect";
+    private static final Dependency.Builder DEPENDENCY_SCRAM_CLIENT = Dependency.builder()
+            .groupId("com.ongres.scram")
+            .artifactId("scram-client")
+            .compile();
 
     HibernateReactiveFeature(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
@@ -42,9 +46,7 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
 
         if (dbFeature instanceof PostgreSQL) {
-            generatorContext.addDependency(Dependency.builder()
-                    .lookupArtifactId("client")
-                    .compile());
+            generatorContext.addDependency(DEPENDENCY_SCRAM_CLIENT);
         }
         generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
                 generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :

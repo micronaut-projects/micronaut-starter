@@ -179,7 +179,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function currently only supports JDK 11, 17 and 21 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
+        e.message == 'Google Cloud Function currently supports JDK 11, 17, 21 and 25 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
 
         where:
         jdkVersion << [JdkVersion.JDK_8]
@@ -196,7 +196,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         noExceptionThrown()
 
         where:
-        jdkVersion << [JdkVersion.JDK_21]
+        jdkVersion << [JdkVersion.JDK_11, JdkVersion.JDK_17, JdkVersion.JDK_21, JdkVersion.JDK_25]
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {

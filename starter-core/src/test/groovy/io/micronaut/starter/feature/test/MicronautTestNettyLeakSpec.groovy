@@ -10,6 +10,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -85,6 +86,12 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
 
         then:
         !verifier.hasDependency("io.micronaut.test", "micronaut-test-netty-leak", Scope.TEST_RUNTIME)
+
+        when:
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, testFramework, buildTool))
+
+        then:
+        null == output["src/test/resources/junit-platform.properties"]
     }
 
     @Unroll
@@ -105,6 +112,7 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
 
         then:
         !verifier.hasDependency("io.micronaut.test", "micronaut-test-netty-leak", Scope.TEST_RUNTIME)
+
     }
 
     @Unroll
@@ -113,7 +121,7 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
         Language language = Language.JAVA
 
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language), [FEATURE])
         String junitPlatformProperties = output["src/test/resources/junit-platform.properties"]
 
         then:

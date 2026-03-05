@@ -19,6 +19,7 @@
 @import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.migration.MigrationFeature
 @import io.micronaut.starter.feature.testresources.TestResources
+@import io.micronaut.starter.feature.other.NullAway
 @import io.micronaut.starter.util.VersionInfo
 
 @args (
@@ -211,8 +212,9 @@ String jvmArguments
 }
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
-            <arg>-Amicronaut.processing.module=@project.getName()</arg>
+          @for (arg : mavenBuild.getCompilerArgs()) {
+            <arg>@arg</arg>
+          }
           </compilerArgs>
         </configuration>
       </plugin>

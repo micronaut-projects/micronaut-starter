@@ -30,6 +30,7 @@ class GradleConfigurationSpec extends Specification {
         'annotationProcessor'     | GradleConfiguration.ANNOTATION_PROCESSOR
         'testAnnotationProcessor' | GradleConfiguration.TEST_ANNOTATION_PROCESSOR
         'api'                     | GradleConfiguration.API
+        'errorprone'              | GradleConfiguration.ERRORPRONE
     }
 
     void "#source #phases should return #configuration"() {
@@ -38,6 +39,7 @@ class GradleConfigurationSpec extends Specification {
 
         where:
         source      | phases                                               || configuration
+        Source.MAIN | [Phase.ERRORPRONE]                                   || GradleConfiguration.ERRORPRONE
         Source.MAIN | [Phase.DEVELOPMENT]                                  || GradleConfiguration.DEVELOPMENT_ONLY
         Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION, Phase.PUBLIC_API] || GradleConfiguration.API
         Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION]                   || GradleConfiguration.IMPLEMENTATION

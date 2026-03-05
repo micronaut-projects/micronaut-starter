@@ -58,6 +58,7 @@ public class MavenBuild {
 
     private final List<DependencyCoordinate> aotDependencies;
     private final List<MavenCoordinate> testResourcesDependencies;
+    private final List<String> compilerArgs;
 
     @NonNull
     private final String artifactId;
@@ -72,6 +73,7 @@ public class MavenBuild {
                 Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
+                Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList());
@@ -92,9 +94,11 @@ public class MavenBuild {
                 MavenCombineAttribute.APPEND,
                 Collections.emptyList(),
                 Collections.emptyList(),
+                Collections.emptyList(),
                 Collections.emptyList());
     }
 
+    @SuppressWarnings("ParameterNumber")
     public MavenBuild(@NonNull String artifactId,
                       @NonNull List<DependencyCoordinate> annotationProcessors,
                       @NonNull List<DependencyCoordinate> testAnnotationProcessors,
@@ -106,7 +110,8 @@ public class MavenBuild {
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute,
                       @NonNull Collection<Profile> profiles,
                       @NonNull List<DependencyCoordinate> aotDependencies,
-                      @NonNull List<MavenCoordinate> testResourcesDependencies) {
+                      @NonNull List<MavenCoordinate> testResourcesDependencies,
+                      @NonNull List<String> compilerArgs) {
         this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
@@ -119,6 +124,12 @@ public class MavenBuild {
         this.profiles = profiles;
         this.aotDependencies = aotDependencies;
         this.testResourcesDependencies = testResourcesDependencies;
+        this.compilerArgs = compilerArgs;
+    }
+
+    @NonNull
+    public List<String> getCompilerArgs() {
+        return compilerArgs;
     }
 
     @NonNull

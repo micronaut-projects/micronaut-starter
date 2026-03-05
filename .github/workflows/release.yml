@@ -35,9 +35,9 @@ jobs:
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -45,9 +45,9 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_FILE: ${{ secrets.GPG_FILE }}
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
       - name: Upload CLI Zip
         id: upload-release-asset
@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v7.0.0
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -107,7 +107,7 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.1
+        uses: graalvm/setup-graalvm@v1.4.4
         with:
           java-version: '21'
           distribution: 'graalvm-community'
@@ -116,9 +116,9 @@ jobs:
       - name: "📸 Build the Native Image (with libc=musl)"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build"
         run: ./starter-cli/build/native/nativeCompile/mn --version
       - name: "✅ Verify Create App"
@@ -143,7 +143,7 @@ jobs:
           asset_content_type: application/zip
   macos:
     name: Release OS X Intel Native CLI
-    runs-on: macos-13
+    runs-on: macos-14
     needs: [build]
     steps:
       - name: Checkout repository
@@ -157,7 +157,7 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.1
+        uses: graalvm/setup-graalvm@v1.4.4
         with:
           java-version: '21'
           distribution: 'graalvm-community'
@@ -165,9 +165,9 @@ jobs:
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build"
         run: ./starter-cli/build/native/nativeCompile/mn --version
       - name: "✅ Verify Create App"
@@ -206,7 +206,7 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.1
+        uses: graalvm/setup-graalvm@v1.4.4
         with:
           java-version: '21'
           distribution: 'graalvm-community'
@@ -214,9 +214,9 @@ jobs:
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build"
         run: ./starter-cli/build/native/nativeCompile/mn --version
       - name: "✅ Verify Create App"
@@ -249,7 +249,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.1
+        uses: graalvm/setup-graalvm@v1.4.4
         with:
           java-version: '21'
           distribution: 'graalvm-community'
@@ -257,9 +257,9 @@ jobs:
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build (Powershell)"
         shell: powershell
         run: ./starter-cli/build/native/nativeCompile/mn.exe --version
@@ -311,9 +311,9 @@ jobs:
         env:
           GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
           GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew sdkRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
@@ -338,9 +338,9 @@ jobs:
       - name: Run Tests
         run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Build Docker image
         run: |
           ./gradlew starter-web-netty:dockerBuild -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
@@ -394,7 +394,7 @@ jobs:
           sed -i -e "s/  sha256 arm: '.*/  sha256 arm: '${ARMSHA}',/" Casks/micronaut.rb
           sed -i -e "s/         intel: '.*/         intel: '${INTELSHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v7.0.0
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -447,7 +447,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v7.0.0
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -475,7 +475,7 @@ jobs:
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-      - uses: stefanzweifel/git-auto-commit-action@v6.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v7.0.0
         continue-on-error: true
         with:
           commit_message: Back Core and Platform version to snapshot

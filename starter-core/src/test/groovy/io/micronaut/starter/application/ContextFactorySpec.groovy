@@ -56,11 +56,6 @@ class ContextFactorySpec extends Specification {
     @Replaces(Junit.class)
     @Singleton
     static class JunitReplacement extends Junit {
-
-        JunitReplacement(List<JunitPlatformPropertyProvider> junitPlatformPropertyProviders) {
-            super(junitPlatformPropertyProviders)
-        }
-
         @Override
         boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
             false
