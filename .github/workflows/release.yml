@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
@@ -109,7 +109,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.4.4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'graalvm-community'
           native-image-musl: 'true'
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -159,7 +159,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.4.4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -208,7 +208,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.4.4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -251,7 +251,7 @@ jobs:
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.4.4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -300,7 +300,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: |
@@ -328,7 +328,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: |
@@ -468,7 +468,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
       - name: Back to Micronaut Core snapshot
         continue-on-error: true
         run: ./gradlew micronautCoreNextSnapshot

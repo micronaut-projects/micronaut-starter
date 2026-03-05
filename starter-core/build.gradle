@@ -50,6 +50,6 @@ TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.registe
 sourceSets.main.resources.srcDir(micronautVersionInfo)
 
 rocker {
-    javaVersion = '21'
+    javaVersion = '25'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
