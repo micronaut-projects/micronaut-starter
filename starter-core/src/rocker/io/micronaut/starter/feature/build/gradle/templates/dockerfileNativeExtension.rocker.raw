@@ -3,9 +3,9 @@
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @args(GradleDsl dsl, Dockerfile dockerfileNative)
 @if (dsl == GradleDsl.GROOVY) {
-@raw("\ntasks.named(\"dockerfileNative\") {\n")
+@raw("tasks.named(\"dockerfileNative\") {")
 } else {
-@raw("\ntasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>(\"dockerfileNative\") {\n")
+@raw("tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>(\"dockerfileNative\") {")
 }
 @if(dockerfileNative.getBaseImage() != null) {
     baseImage = "@(dockerfileNative.getBaseImage())"
@@ -20,4 +20,4 @@
     }
     )
 }
-@raw("}\n")
+@raw("}")

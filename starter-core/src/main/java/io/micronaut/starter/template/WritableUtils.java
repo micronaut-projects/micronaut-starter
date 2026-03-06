@@ -61,6 +61,6 @@ public final class WritableUtils {
         for (String originalLine : lines) {
             indentedLines.add(newLine + originalLine);
         }
-        return String.join("\n", indentedLines) + "\n";
+        return String.join("\n", indentedLines);
     }
 }
