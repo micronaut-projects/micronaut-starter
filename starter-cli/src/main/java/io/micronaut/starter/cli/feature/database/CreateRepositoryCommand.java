@@ -38,6 +38,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import io.micronaut.starter.cli.rocker.feature.database.groovyRepository;
+import io.micronaut.starter.cli.rocker.feature.database.javaRepository;
+import io.micronaut.starter.cli.rocker.feature.database.kotlinRepository;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;

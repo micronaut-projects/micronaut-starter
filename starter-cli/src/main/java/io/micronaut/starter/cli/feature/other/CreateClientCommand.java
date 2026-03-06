@@ -32,6 +32,9 @@ import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
+import io.micronaut.starter.cli.rocker.feature.other.groovyClient;
+import io.micronaut.starter.cli.rocker.feature.other.javaClient;
+import io.micronaut.starter.cli.rocker.feature.other.kotlinClient;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
