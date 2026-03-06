@@ -10,3 +10,4 @@ build
 .settings
 /starter-cli/temp/
 buildSrc/gradle.properties
+*/src/generated
