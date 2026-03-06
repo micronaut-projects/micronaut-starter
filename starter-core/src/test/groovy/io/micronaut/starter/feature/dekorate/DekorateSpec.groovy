@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.dekorate
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -52,16 +55,12 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .features([feature.getName()])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
         !template.contains("<dekorate.version>")
         !template.contains("</dekorate.version>")
-        template.contains(String.format("""
-    <dependency>
-      <groupId>io.dekorate</groupId>
-      <artifactId>%s-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>""", service))
+        verifier.hasDependency("io.dekorate", "${service}-annotations", Scope.COMPILE)
 
         if (language == Language.KOTLIN) {
             assert template.contains(String.format("""
