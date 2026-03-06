@@ -84,9 +84,9 @@ public class Gradle implements BuildFeature {
             return "-Xmx4096M";
         }
     };
-    protected static final String DEFAULT_VERSION = "0.1";
-    protected final GradleBuildCreator dependencyResolver;
-    protected final RepositoryResolver repositoryResolver;
+    private static final String DEFAULT_VERSION = "0.1";
+    private final GradleBuildCreator dependencyResolver;
+    private final RepositoryResolver repositoryResolver;
 
     public Gradle(GradleBuildCreator dependencyResolver,
                   RepositoryResolver repositoryResolver) {
