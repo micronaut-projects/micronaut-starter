@@ -41,6 +41,7 @@ TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.registe
 
 sourceSets.main.resources.srcDir(micronautVersionInfo)
 rocker {
+    version = rockerVersion
     configurations{
         main {
             templateDir = file('src/rocker')

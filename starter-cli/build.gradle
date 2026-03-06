@@ -110,6 +110,7 @@ tasks.named("nativeCompile") {
     }
 }
 rocker {
+    version = rockerVersion
     configurations {
         main {
             templateDir = file('src/rocker')
