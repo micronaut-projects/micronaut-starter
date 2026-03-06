@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import io.micronaut.starter.build.Property
 @import java.util.List
 

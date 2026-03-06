@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import java.util.Collection
 @import io.micronaut.starter.feature.build.maven.Profile
 @import io.micronaut.starter.feature.build.maven.Property

@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import java.util.List
 @args (List<String> packages)
 <!-- tag::graalpy-maven-plugin[] -->

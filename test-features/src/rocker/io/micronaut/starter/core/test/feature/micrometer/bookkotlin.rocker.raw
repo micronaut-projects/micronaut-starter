@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 package example.micronaut
 
 import io.micrometer.core.annotation.Counted

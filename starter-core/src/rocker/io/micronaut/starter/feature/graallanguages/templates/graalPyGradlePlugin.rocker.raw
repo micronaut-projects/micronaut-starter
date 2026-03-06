@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import java.util.List
 @import io.micronaut.starter.build.gradle.GradleDsl
 @args (List<String> packages, GradleDsl dsl)

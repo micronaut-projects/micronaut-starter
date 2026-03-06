@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.options.JdkVersion
 @import static io.micronaut.starter.feature.github.workflows.WorkflowsUtils.graalVersion

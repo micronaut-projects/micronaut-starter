@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @args (boolean jansi, boolean coloring, boolean jul, boolean stderr)
 
 <configuration>

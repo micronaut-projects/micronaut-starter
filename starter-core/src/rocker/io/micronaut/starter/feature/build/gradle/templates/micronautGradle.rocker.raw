@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import java.util.List
 @import java.util.Set
 @import java.util.Map

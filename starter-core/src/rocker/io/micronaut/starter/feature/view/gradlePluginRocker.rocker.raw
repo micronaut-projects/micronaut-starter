@@ -14,7 +14,6 @@ rocker {
 rocker {
     configurations {
         create("main") {
-            optimize.set(true)
             templateDir.set(file("src/rocker"))
             outputDir.set(file("src/generated/rocker"))
         }

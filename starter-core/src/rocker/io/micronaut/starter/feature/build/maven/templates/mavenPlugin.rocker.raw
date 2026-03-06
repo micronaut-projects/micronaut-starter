@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @args(String groupId, String artifactId)
 <plugin>
   <groupId>@groupId</groupId>

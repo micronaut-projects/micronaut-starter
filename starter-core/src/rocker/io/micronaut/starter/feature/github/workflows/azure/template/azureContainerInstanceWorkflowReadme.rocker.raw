@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import static io.micronaut.starter.feature.github.workflows.azure.AbstractAzureContainerInstanceWorkflow.AZURE_DEFAULT_WORKFLOW_LOCATION

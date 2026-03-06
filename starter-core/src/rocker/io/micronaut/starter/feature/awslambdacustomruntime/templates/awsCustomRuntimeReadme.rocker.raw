@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @import io.micronaut.starter.options.BuildTool;
 @args(BuildTool buildTool)
 

@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @args(String geExtensionVersion, String customDataExtensionVersion)
 <?xml version="1.0" encoding="UTF-8"?>
 <extensions xmlns="https://maven.apache.org/EXTENSIONS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

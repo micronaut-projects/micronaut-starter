@@ -1,3 +1,4 @@
+@option discardLogicWhitespace=true
 @args(String id, String url, boolean snapshot)
 <repository>
   <id>@id</id>
