@@ -24,7 +24,6 @@ import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
 }
-
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
 @if (features.contains("dekorate-kubernetes")) {
 import io.dekorate.kubernetes.annotation.KubernetesApplication;
@@ -49,7 +48,6 @@ import io.dekorate.jaeger.annotation.EnableJaegerAgent;
 import io.dekorate.halkyon.annotation.HalkyonComponent;
 }
 
-
 @if (features.contains("openapi")) {
 @@OpenAPIDefinition(
     info = @@Info(
@@ -58,9 +56,7 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
     )
 )
 }
-
 @for(Feature feature : features.getFeatures().stream().filter(f -> f instanceof AbstractDekoratePlatformFeature).iterator()) {
-
 @if (feature.getName().equals("dekorate-kubernetes")) {
 @@KubernetesApplication(
 } else if (feature.getName().equals("dekorate-openshift")) {

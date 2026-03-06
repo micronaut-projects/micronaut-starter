@@ -220,7 +220,6 @@ public class AppStack extends Stack {
                 .defaultIntegration(integration)
                 .build();
 }
-
         CfnOutput.Builder.create(this, "MnTestApiUrl")
                 .exportName("MnTestApiUrl")
 @if (features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http")) {

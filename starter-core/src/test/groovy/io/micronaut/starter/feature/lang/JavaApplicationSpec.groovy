@@ -41,7 +41,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
         .toString()
 
         expect:
-        applicationJava.contains("""
+        applicationJava == """
 package example.micronaut;
 
 import io.micronaut.runtime.Micronaut;
@@ -52,7 +52,7 @@ public class Application {
         Micronaut.run(Application.class, args);
     }
 }
-""".trim())
+""".trim()
     }
 
     void "test java application with default environment"() {
