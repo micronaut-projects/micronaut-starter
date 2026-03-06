@@ -22,7 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
-import io.micronaut.starter.feature.ci.workflows.aws.templates.buildSpec;
+import io.micronaut.starter.rocker.feature.ci.workflows.aws.templates.buildSpec;
 
 import jakarta.inject.Singleton;
 

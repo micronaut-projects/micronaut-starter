@@ -8,7 +8,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 @if (parentPom != null) {
-@io.micronaut.starter.feature.build.maven.templates.parentPom.template(parentPom)
+@io.micronaut.starter.rocker.feature.build.maven.templates.parentPom.template(parentPom)
 }
   <artifactId>@mavenBuild.getArtifactId()</artifactId>
 @properties.template(mavenBuild.getProperties())

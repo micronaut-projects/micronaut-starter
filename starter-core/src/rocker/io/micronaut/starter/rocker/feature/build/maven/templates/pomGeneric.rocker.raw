@@ -5,7 +5,7 @@
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.rocker.feature.build.maven.templates.dependency
 @import io.micronaut.starter.util.VersionInfo
 
 @args (

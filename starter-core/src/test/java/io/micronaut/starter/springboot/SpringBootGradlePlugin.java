@@ -30,7 +30,7 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.useJunitPlatform;
 
 import java.util.Set;
 

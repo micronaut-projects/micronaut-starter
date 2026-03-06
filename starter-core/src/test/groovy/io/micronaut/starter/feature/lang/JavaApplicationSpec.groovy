@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.lang
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
-import io.micronaut.starter.feature.lang.java.application
+import io.micronaut.starter.rocker.feature.lang.java.application
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language

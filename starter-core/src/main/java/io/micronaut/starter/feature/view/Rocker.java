@@ -24,6 +24,8 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.rocker.feature.view.gradlePluginRocker;
+import io.micronaut.starter.rocker.feature.view.mvnPluginRocker;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 

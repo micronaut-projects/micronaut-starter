@@ -30,7 +30,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.build.maven.templates.aot;
+import io.micronaut.starter.rocker.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;

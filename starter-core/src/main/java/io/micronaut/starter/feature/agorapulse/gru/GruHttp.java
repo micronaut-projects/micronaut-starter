@@ -29,14 +29,14 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerKotlin;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerJava;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerGroovy;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestJava;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestGroovy;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestKotlin;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestKotest;
-import io.micronaut.starter.feature.agorapulse.gru.template.gruIndexJson;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerJava;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestJava;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestKotest;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.gruIndexJson;
 
 import java.util.Optional;
 

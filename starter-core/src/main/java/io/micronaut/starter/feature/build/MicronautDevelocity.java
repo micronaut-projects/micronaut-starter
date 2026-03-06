@@ -24,7 +24,7 @@ import io.micronaut.starter.build.gradle.GradleMavenCentral;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.gradle.GradleRepository;
-import io.micronaut.starter.feature.build.maven.templates.customData;
+import io.micronaut.starter.rocker.feature.build.maven.templates.customData;
 import jakarta.inject.Singleton;
 
 import java.util.Arrays;

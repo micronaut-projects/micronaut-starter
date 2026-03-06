@@ -1,9 +1,9 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.options.JdkVersion
-@import io.micronaut.starter.feature.github.workflows.templates.graalvmSetup
-@import io.micronaut.starter.feature.github.workflows.templates.javaSetup
-@import io.micronaut.starter.feature.github.workflows.templates.buildAndPushImage
+@import io.micronaut.starter.rocker.feature.github.workflows.templates.graalvmSetup
+@import io.micronaut.starter.rocker.feature.github.workflows.templates.javaSetup
+@import io.micronaut.starter.rocker.feature.github.workflows.templates.buildAndPushImage
 @import static io.micronaut.starter.feature.github.workflows.gcloud.AbstractCloudRunWorkflow.GCLOUD_DEFAULT_REGION
 @import static io.micronaut.starter.feature.github.workflows.gcloud.AbstractCloudRunWorkflow.GCLOUD_DEFAULT_GCR
 
