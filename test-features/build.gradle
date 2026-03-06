@@ -18,8 +18,9 @@ dependencies {
 
 rocker {
     version = rockerVersion
-    configurations{
+    configurations {
         main {
+            discardLogicWhitespace = true
             templateDir = file('src/rocker')
             outputDir = file('src/generated/rocker')
         }

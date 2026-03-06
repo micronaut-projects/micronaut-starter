@@ -1,3 +1,2 @@
-@option discardLogicWhitespace=true
 @args(String label, String href)
 - [@label](@href)
