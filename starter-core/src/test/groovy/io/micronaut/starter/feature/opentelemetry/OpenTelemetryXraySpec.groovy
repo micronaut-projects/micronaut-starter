@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -156,43 +157,14 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
                 .language(language)
                 .features(['tracing-opentelemetry-xray'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry.contrib</groupId>
-      <artifactId>opentelemetry-aws-xray</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-extension-aws</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-otlp</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry.contrib", "opentelemetry-aws-xray", Scope.COMPILE)
+        !verifier.hasDependency("io.opentelemetry", "opentelemetry-extension-aws", Scope.COMPILE)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }
@@ -204,43 +176,14 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
                 .language(language)
                 .features(['tracing-opentelemetry-xray'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry.contrib</groupId>
-      <artifactId>opentelemetry-aws-xray</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-extension-aws</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-otlp</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry.contrib", "opentelemetry-aws-xray", Scope.COMPILE)
+        !verifier.hasDependency("io.opentelemetry", "opentelemetry-extension-aws", Scope.COMPILE)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

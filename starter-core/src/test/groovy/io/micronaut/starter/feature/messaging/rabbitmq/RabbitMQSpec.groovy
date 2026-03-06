@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.messaging.rabbitmq
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -34,15 +37,10 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["rabbitmq"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.rabbitmq</groupId>
-      <artifactId>micronaut-rabbitmq</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.rabbitmq", "micronaut-rabbitmq", Scope.COMPILE)
         template.contains('''\
     <plugins>
       <plugin>

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.testresources
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
@@ -13,15 +16,10 @@ class TestResourcesSpec extends ApplicationContextSpec {
                 .features([TestResources.NAME])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.testresources</groupId>
-      <artifactId>micronaut-test-resources-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.testresources", "micronaut-test-resources-client", Scope.COMPILE_ONLY)
 
         where:
         language << Language.values().toList()

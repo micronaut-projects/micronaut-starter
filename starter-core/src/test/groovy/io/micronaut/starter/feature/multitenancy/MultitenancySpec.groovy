@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.multitenancy
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -55,15 +58,11 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
                 .features(['multi-tenancy'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.multitenancy</groupId>
-      <artifactId>micronaut-multitenancy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.multitenancy", "micronaut-multitenancy", Scope.COMPILE)
+
         where:
         language << Language.values().toList()
     }

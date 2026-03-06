@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.awsalexa
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -80,15 +83,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .features(['aws-alexa'])
                 .applicationType(ApplicationType.FUNCTION)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-alexa</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-alexa", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
@@ -116,15 +114,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .language(language)
                 .features(['aws-alexa'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-alexa-httpserver</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-alexa-httpserver", Scope.COMPILE)
 
         where:
         language << Language.values().toList().toList()

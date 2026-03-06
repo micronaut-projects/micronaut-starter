@@ -59,22 +59,11 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["graalvm"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        !template.contains("""
-    <dependency>
-      <groupId>org.graalvm.nativeimage</groupId>
-      <artifactId>svm</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
-        !template.contains("""
-    <dependency>
-      <groupId>org.graalvm.sdk</groupId>
-      <artifactId>graal-sdk</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        !verifier.hasDependency("org.graalvm.nativeimage", "svm", Scope.COMPILE_ONLY)
+        !verifier.hasDependency("org.graalvm.sdk", "graal-sdk", Scope.COMPILE_ONLY)
         !template.contains("""
             <path>
               <groupId>io.micronaut</groupId>
@@ -94,15 +83,10 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
                 .language(Language.KOTLIN)
                 .features(["graalvm"])
                 .render()
+        BuildTestVerifier verifier2 = BuildTestUtil.verifier(BuildTool.MAVEN, Language.KOTLIN, template)
 
         then:
-        !template.contains("""
-    <dependency>
-      <groupId>org.graalvm.nativeimage</groupId>
-      <artifactId>svm</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        !verifier2.hasDependency("org.graalvm.nativeimage", "svm", Scope.COMPILE_ONLY)
         template.contains('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
