@@ -110,7 +110,7 @@ tasks.named("nativeCompile") {
     }
 }
 rocker {
-    configurations{
+    configurations {
         main {
             templateDir = file('src/rocker')
             outputDir = file('src/generated/rocker')
