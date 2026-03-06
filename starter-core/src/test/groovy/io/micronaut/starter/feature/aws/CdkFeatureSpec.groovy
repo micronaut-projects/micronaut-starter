@@ -67,7 +67,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         Map<String, String> output = generate(ApplicationType.FUNCTION, options, [Cdk.NAME])
 
         then:
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(PROVIDED_AL2023)")
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains(".runtime(Runtime.PROVIDED_AL2023)")
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.architecture(Architecture.X86_64)')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 
