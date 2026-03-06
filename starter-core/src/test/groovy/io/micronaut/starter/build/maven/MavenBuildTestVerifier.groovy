@@ -14,7 +14,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     final Language language
 
     MavenBuildTestVerifier(String template, Language language) {
-        this.project = new XmlParser().parseText(template)
+        this.project = new XmlParser().parseText(template.stripLeading())
         this.language = language
     }
 
