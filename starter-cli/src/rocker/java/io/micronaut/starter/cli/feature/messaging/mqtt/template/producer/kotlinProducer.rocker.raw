@@ -1,0 +1,18 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+
+@args (
+    Project project,
+    String version
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName()
+}
+
+import io.micronaut.mqtt.@(version).annotation.MqttPublisher
+
+@@MqttPublisher
+interface @project.getClassName() {
+
+}

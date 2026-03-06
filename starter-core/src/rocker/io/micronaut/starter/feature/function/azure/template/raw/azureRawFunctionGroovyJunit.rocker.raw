@@ -1,0 +1,23 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import org.junit.jupiter.api.Test
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class FunctionTest {
+
+    @@Test
+    void testFunction() {
+        new Function().withCloseable { Function function ->
+            assert function.hello(HttpRequest.builder().build(), null).body == 'Hello World'
+        }
+    }
+}

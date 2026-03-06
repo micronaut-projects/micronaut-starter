@@ -1,0 +1,20 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+
+@args (
+        Project project
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName()
+}
+
+import jakarta.validation.constraints.NotBlank
+import jakarta.inject.Singleton
+
+@@Singleton
+open class UppercaseTransformer : NameTransformer {
+    override fun transform(@@NotBlank name: String): String {
+        return name.uppercase()
+    }
+}

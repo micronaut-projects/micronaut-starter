@@ -1,0 +1,4 @@
+@option discardLogicWhitespace=true
+@args(String groupId, String artifactId, String scope, String version, boolean pom)
+
+@(pom ? scope + " platform" : scope)("@groupId:@artifactId@(version != null ? ":" + version : "")")

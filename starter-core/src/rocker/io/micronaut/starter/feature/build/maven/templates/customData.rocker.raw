@@ -1,0 +1,2 @@
+@option discardLogicWhitespace=true
+buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null

@@ -1,0 +1,23 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+class FunctionTest : StringSpec({
+
+    "test function" {
+       Function().use { function ->
+           val response = function.hello(HttpRequest.builder().build(), null).body
+           response shouldBe "Hello World"
+        }
+    }
+})

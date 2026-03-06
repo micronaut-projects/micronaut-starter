@@ -1,0 +1,37 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import io.micronaut.http.*
+import static org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
+import io.micronaut.gcp.function.http.*
+
+class @project.getClassName()FunctionTest {
+
+    @@Test
+    void testGet() {
+        new HttpFunction().withCloseable { HttpFunction function ->
+           GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+            assertEquals(HttpStatus.OK, response.status)
+        }
+    }
+
+    @@Test
+    void testPost(){
+        new HttpFunction().withCloseable { HttpFunction function ->
+            SampleInputMessage sampleInputMessage = new SampleInputMessage()
+            sampleInputMessage.setName("Test Name")
+            HttpRequest request = HttpRequest.POST("/@project.getPropertyName()", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE)
+            GoogleHttpResponse response = function.invoke(request)
+            assertEquals(HttpStatus.OK, response.status)
+        }
+    }
+}

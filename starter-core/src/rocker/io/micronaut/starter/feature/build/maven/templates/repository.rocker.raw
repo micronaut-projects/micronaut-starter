@@ -1,0 +1,14 @@
+@option discardLogicWhitespace=true
+@args(String id, String url, boolean snapshot)
+<repository>
+  <id>@id</id>
+  <url>@url</url>
+@if(snapshot) {
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+  <releases>
+    <enabled>false</enabled>
+  </releases>
+}
+</repository>

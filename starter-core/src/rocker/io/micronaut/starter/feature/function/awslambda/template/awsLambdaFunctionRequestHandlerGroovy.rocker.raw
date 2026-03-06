@@ -1,0 +1,59 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features;
+
+@args (Features features, Project project)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.function.aws.MicronautRequestHandler
+@if (features.contains("aws-lambda-scheduled-event")) {
+import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
+} else if (features.contains("aws-lambda-s3-event-notification")) {
+import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotification;
+} else {
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import io.micronaut.json.JsonMapper;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
+}
+
+import jakarta.inject.Inject
+
+@if (features.contains("aws-lambda-scheduled-event")) {
+class FunctionRequestHandler extends MicronautRequestHandler<ScheduledEvent, Void> {
+    @@Override
+    Void execute(ScheduledEvent input) {
+        null
+    }
+}
+} else if (features.contains("aws-lambda-s3-event-notification")) {
+class FunctionRequestHandler extends MicronautRequestHandler<S3EventNotification, Void> {
+    @@Override
+    public Void execute(S3EventNotification input) {
+        return null;
+    }
+}
+} else {
+class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    @@Inject
+    JsonMapper objectMapper
+
+    @@Override
+    APIGatewayProxyResponseEvent execute(APIGatewayProxyRequestEvent input) {
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
+        try {
+            String json = new String(objectMapper.writeValueAsBytes([message: "Hello World"]))
+            response.statusCode = 200
+            response.body = json
+        } catch (IOException e) {
+            response.statusCode = 500
+        }
+        response
+    }
+}
+}

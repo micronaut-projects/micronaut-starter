@@ -1,3 +1,0 @@
-rewrite {
-    activeRecipe("org.openrewrite.java.micronaut.Micronaut3to4Migration")
-}

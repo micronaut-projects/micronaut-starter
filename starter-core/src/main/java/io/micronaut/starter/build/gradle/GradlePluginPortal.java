@@ -30,6 +30,6 @@ public class GradlePluginPortal extends GradleRepository {
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        outputStream.write("gradlePluginPortal()\n".getBytes(StandardCharsets.UTF_8));
+        outputStream.write("gradlePluginPortal()".getBytes(StandardCharsets.UTF_8));
     }
 }

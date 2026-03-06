@@ -1,0 +1,6 @@
+@option discardLogicWhitespace=true
+    jsonschema {
+        fromUrl("https://raw.githubusercontent.com/micronaut-projects/micronaut-json-schema/refs/heads/1.5.x/test-suite-generator-java/src/test/resources/animal.schema.json") {
+            outputPackageName.set("com.example.animals")
+        }
+    }

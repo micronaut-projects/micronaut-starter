@@ -1,0 +1,27 @@
+@option discardLogicWhitespace=true
+@import io.micronaut.starter.feature.build.DevelocityConfiguration
+@args (DevelocityConfiguration config)
+<develocity xmlns="https://www.gradle.com/develocity-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="https://www.gradle.com/develocity-maven https://www.gradle.com/schema/develocity-maven.xsd">
+@if (config.getServer() != null) {
+    <server>
+        <url>@(config.getServer())</url>
+        @if (config.allowTrustedServer() != null && config.allowTrustedServer()) {
+            <allowUntrusted>true</allowUntrusted>
+        }
+    </server>
+}
+    <buildScan>
+    @if (config.getServer() == null && (config.getTermsOfServiceUrl() != null || config.aggreeWithTermsOfService() != null)) {
+        <termsOfService>
+        @if (config.getTermsOfServiceUrl() != null) {
+            <url>@(config.getTermsOfServiceUrl())</url>
+        }
+        @if (config.aggreeWithTermsOfService() != null && config.aggreeWithTermsOfService()) {
+            <accept>true</accept>
+        }
+        </termsOfService>
+    }
+        <publish>ALWAYS</publish>
+    </buildScan>
+</develocity>

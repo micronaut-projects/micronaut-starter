@@ -1,0 +1,14 @@
+@option discardLogicWhitespace=true
+@args(boolean patchKaptOutputs, String path)
+
+jte {
+    sourceDirectory = file("@path").toPath()
+    generate()
+}
+
+// Gradle requires that generateJte is run before some tasks
+tasks.configureEach {
+    if (@if (patchKaptOutputs) {name == "kaptGenerateStubsKotlin" || }name == "inspectRuntimeClasspath") {
+        mustRunAfter("generateJte")
+    }
+}

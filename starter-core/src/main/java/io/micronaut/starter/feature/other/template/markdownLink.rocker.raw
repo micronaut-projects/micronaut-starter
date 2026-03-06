@@ -1,2 +1,0 @@
-@args(String label, String href)
-- [@label](@href)
