@@ -11,7 +11,7 @@ import io.micronaut.starter.options.TestFramework
 
 class GradleJdkVersionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
-    void 'java 25 uses gradle 9.1.0'() {
+    void 'java 25 uses gradle 9.4.0'() {
         when:
         Options options = new Options(Language.JAVA,
                 TestFramework.JUNIT,
@@ -29,6 +29,6 @@ class GradleJdkVersionSpec extends BeanContextSpec  implements CommandOutputFixt
         String wrapperProperties = output.get('gradle/wrapper/gradle-wrapper.properties')
 
         then:
-        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-9.1.0-bin.zip')
+        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-9.4.0-bin.zip')
     }
 }
