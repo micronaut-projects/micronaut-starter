@@ -13,6 +13,7 @@ dependencies {
 
     api(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     api("com.fizzed:rocker-runtime:$rockerVersion")
+    compileOnly("org.graalvm.sdk:graal-sdk")
     api("io.micronaut:micronaut-inject")
     api("com.fasterxml.jackson.core:jackson-annotations")
     api("io.micronaut:micronaut-http-client")
