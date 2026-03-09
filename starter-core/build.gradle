@@ -3,16 +3,8 @@ import io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask
 plugins {
     id("io.micronaut.internal.starter.published-module")
     id "io.micronaut.internal.starter.convention"
-    id "io.micronaut.starter.rocker"
+    id("nu.studer.rocker")
     id "io.micronaut.internal.starter.coordinates"
-}
-
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/java")
-        }
-    }
 }
 
 dependencies {
@@ -48,8 +40,18 @@ TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.registe
 }
 
 sourceSets.main.resources.srcDir(micronautVersionInfo)
-
 rocker {
-    javaVersion = '17'
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
+    version = rockerVersion
+    configurations{
+        main {
+            discardLogicWhitespace = true
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
+        }
+    }
+}
+spotless {
+    java {
+        targetExclude("src/**/*.rocker.raw")
+    }
 }

@@ -1,0 +1,21 @@
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args(GradleDsl dsl)
+@if (dsl == GradleDsl.GROOVY) {
+rocker {
+    configurations {
+        main {
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
+        }
+    }
+}
+} else {
+rocker {
+    configurations {
+        create("main") {
+            templateDir.set(file("src/rocker"))
+            outputDir.set(file("src/generated/rocker"))
+        }
+    }
+}
+}

@@ -1,0 +1,920 @@
+[
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.groovyBean",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.groovyBean$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.groovyBean$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.javaBean",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.javaBean$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.javaBean$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.kotlinBean",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.kotlinBean$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.bean.kotlinBean$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.groovyJob",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.groovyJob$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.groovyJob$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.javaJob",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.javaJob$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.javaJob$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.kotlinJob",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.kotlinJob$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.command.project.job.kotlinJob$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.groovyRepository",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.groovyRepository$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.groovyRepository$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.javaRepository",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.javaRepository$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.javaRepository$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.kotlinRepository",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.kotlinRepository$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.database.kotlinRepository$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.groovyService",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.groovyService$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.groovyService$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.javaService",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.javaService$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.javaService$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.kotlinService",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.kotlinService$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.grpc.template.kotlinService$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.groovyListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.groovyListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.groovyListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.javaListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.javaListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.javaListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.kotlinListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.kotlinListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.kotlinListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.groovyProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.groovyProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.groovyProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.javaProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.javaProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.javaProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.kotlinProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.kotlinProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.kotlinProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.groovyListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.groovyListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.groovyListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.javaListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.javaListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.javaListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.kotlinListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.kotlinListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.listener.kotlinListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.groovyProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.groovyProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.groovyProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.javaProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.javaProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.javaProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.kotlinProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.kotlinProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.kafka.template.producer.kotlinProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.groovyListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.groovyListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.groovyListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.javaListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.javaListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.javaListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.kotlinListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.kotlinListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.kotlinListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.groovyProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.groovyProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.groovyProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.javaProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.javaProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.javaProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.kotlinProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.kotlinProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.kotlinProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.groovyListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.groovyListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.groovyListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.javaListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.javaListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.javaListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.kotlinListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.kotlinListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.listener.kotlinListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.groovyProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.groovyProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.groovyProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.javaProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.javaProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.javaProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.kotlinProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.kotlinProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.nats.template.producer.kotlinProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.groovyListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.groovyListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.groovyListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.javaListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.javaListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.javaListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.kotlinListener",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.kotlinListener$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.listener.kotlinListener$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.groovyProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.groovyProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.groovyProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.javaProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.javaProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.javaProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.kotlinProducer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.kotlinProducer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.messaging.rabbitmq.template.producer.kotlinProducer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.groovyClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.groovyClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.groovyClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.javaClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.javaClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.javaClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.kotlinClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.kotlinClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.other.kotlinClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketServer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketServer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketServer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketServer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketServer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketServer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketClient",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketClient$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketClient$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketServer",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketServer$Template",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketServer$PlainText",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  }
+]

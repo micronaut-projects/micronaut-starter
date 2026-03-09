@@ -24,7 +24,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.build.gradle.templates.jsonschemaExtension;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.jsonschemaExtension;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.feature.validator.ValidationFeature;
 import io.micronaut.starter.template.RockerWritable;

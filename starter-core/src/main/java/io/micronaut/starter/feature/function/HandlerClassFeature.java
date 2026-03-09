@@ -24,7 +24,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
-import io.micronaut.starter.feature.function.template.handlerReadme;
+import io.micronaut.starter.rocker.feature.function.template.handlerReadme;
 import io.micronaut.starter.feature.aws.AwsFeature;
 
 /**

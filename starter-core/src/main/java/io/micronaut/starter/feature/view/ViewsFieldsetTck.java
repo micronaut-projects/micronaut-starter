@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.feature.test.JunitPlatformSuiteEngine;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.rocker.feature.view.thymeleafSuite;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 

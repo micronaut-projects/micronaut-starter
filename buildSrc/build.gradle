@@ -14,13 +14,6 @@ dependencies {
     implementation "org.asciidoctor:asciidoctor-gradle-jvm:2.4.0"
     implementation "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin:8.3.9"
     implementation "com.microsoft.azure:azure-functions-gradle-plugin:1.16.1"
-}
+    implementation("nu.studer.rocker:nu.studer.rocker.gradle.plugin:3.3")
 
-gradlePlugin {
-    plugins {
-        rockerPlugin {
-            id = "io.micronaut.starter.rocker"
-            implementationClass = "io.micronaut.starter.rocker.plugin.RockerPlugin"
-        }
-    }
 }

@@ -46,15 +46,10 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
                 .language(language)
                 .features(['elasticsearch'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.elasticsearch</groupId>
-      <artifactId>micronaut-elasticsearch</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.elasticsearch", "micronaut-elasticsearch", Scope.COMPILE)
 
         where:
         language << Language.values().toList()

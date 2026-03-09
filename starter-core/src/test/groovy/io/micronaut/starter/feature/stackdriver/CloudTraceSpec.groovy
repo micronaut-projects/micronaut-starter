@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.stackdriver
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -49,15 +52,11 @@ class CloudTraceSpec extends ApplicationContextSpec {
                 .features(['gcp-cloud-trace'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.gcp</groupId>
-      <artifactId>micronaut-gcp-tracing</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-tracing", Scope.COMPILE)
+
         where:
         language << Language.values().toList()
     }

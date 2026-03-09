@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.logging
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -41,22 +44,12 @@ class SimpleLoggingSpec extends ApplicationContextSpec  implements CommandOutput
                 .language(language)
                 .features(['slf4j-simple'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
-        !template.contains("""
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.slf4j", "slf4j-simple", Scope.RUNTIME)
+        !verifier.hasDependency("ch.qos.logback", "logback-classic", Scope.RUNTIME)
+
         where:
         language << Language.values().toList()
     }

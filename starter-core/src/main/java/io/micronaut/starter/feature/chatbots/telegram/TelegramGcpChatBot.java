@@ -23,7 +23,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.telegram.template.gcpReadme;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.gcpReadme;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;

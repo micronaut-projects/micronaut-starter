@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.feature.ci.workflows.gitlab.templates.gitlabci;
+import io.micronaut.starter.rocker.feature.ci.workflows.gitlab.templates.gitlabci;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;

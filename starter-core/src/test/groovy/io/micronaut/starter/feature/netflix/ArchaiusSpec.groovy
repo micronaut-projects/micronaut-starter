@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.netflix
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -30,15 +33,10 @@ class ArchaiusSpec extends ApplicationContextSpec {
                 .features(['netflix-archaius'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.netflix</groupId>
-      <artifactId>micronaut-netflix-archaius</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.netflix", "micronaut-netflix-archaius", Scope.COMPILE)
 
         where:
         language << Language.values().toList()

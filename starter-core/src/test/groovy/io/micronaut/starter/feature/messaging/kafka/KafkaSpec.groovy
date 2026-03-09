@@ -69,14 +69,10 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["kafka"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
+
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kafka</groupId>
-      <artifactId>micronaut-kafka</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.kafka", "micronaut-kafka", Scope.COMPILE)
         template.contains('''\
     <plugins>
       <plugin>
