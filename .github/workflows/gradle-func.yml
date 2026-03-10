@@ -13,8 +13,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-#      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+#      - uses: actions/cache@v5
 #        with:
 #          path: |
 #            ~/.gradle/caches
@@ -41,8 +41,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -68,8 +68,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -95,8 +95,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -122,8 +122,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -149,8 +149,8 @@ jobs:
       matrix:
         java: ['21']
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches

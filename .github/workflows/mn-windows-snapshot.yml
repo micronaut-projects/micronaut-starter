@@ -12,11 +12,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.4
+        uses: graalvm/setup-graalvm@v1.4.5
         with:
           java-version: '21'
           distribution: 'graalvm-community'
@@ -46,7 +46,7 @@ jobs:
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: "🆙 Upload Snapshot"
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.0.x'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip
