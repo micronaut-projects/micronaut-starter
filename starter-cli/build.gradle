@@ -65,11 +65,6 @@ application {
     mainClass = "io.micronaut.starter.cli.MicronautStarter"
 }
 
-rocker {
-    javaVersion = '17'
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-}
-
 startScripts {
     applicationName = 'mn'
 }
@@ -112,5 +107,20 @@ tasks.named("nativeCompile") {
         def newTmpDir = temporaryDir.absolutePath
         println("Setting temporary dir to ${newTmpDir}")
         System.setProperty("java.io.tmpdir", newTmpDir)
+    }
+}
+rocker {
+    version = rockerVersion
+    configurations {
+        main {
+            discardLogicWhitespace = true
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
+        }
+    }
+}
+spotless {
+    java {
+        targetExclude("src/**/*.rocker.raw")
     }
 }

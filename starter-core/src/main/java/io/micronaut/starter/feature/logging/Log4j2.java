@@ -21,7 +21,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.logging.template.log4j2;
+import io.micronaut.starter.rocker.feature.logging.template.log4j2;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;

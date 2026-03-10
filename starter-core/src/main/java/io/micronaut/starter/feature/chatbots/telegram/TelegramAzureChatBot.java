@@ -23,7 +23,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.telegram.template.azureReadme;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.azureReadme;
 import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;

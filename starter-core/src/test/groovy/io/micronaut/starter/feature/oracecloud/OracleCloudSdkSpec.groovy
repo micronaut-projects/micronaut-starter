@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.oracecloud
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -31,15 +34,11 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
                 .features(['oracle-cloud-sdk'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.oraclecloud</groupId>
-      <artifactId>micronaut-oraclecloud-sdk</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", Scope.COMPILE)
+
         where:
         language << Language.values().toList()
     }

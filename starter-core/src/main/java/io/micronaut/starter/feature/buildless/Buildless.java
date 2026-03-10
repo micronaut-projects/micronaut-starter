@@ -24,7 +24,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
 import io.micronaut.starter.feature.GradleSpecificFeature;
-import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.buildlessGradlePlugin;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 

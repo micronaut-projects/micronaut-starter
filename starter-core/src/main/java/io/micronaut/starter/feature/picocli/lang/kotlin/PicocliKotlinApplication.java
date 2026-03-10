@@ -23,6 +23,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireKaptFeature;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
+import io.micronaut.starter.rocker.feature.picocli.lang.kotlin.picocliApplication;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 

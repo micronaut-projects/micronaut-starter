@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.opentelemetry
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -91,29 +94,12 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['tracing-opentelemetry-zipkin'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-zipkin</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-zipkin", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }
@@ -125,29 +111,12 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['tracing-opentelemetry-zipkin'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-zipkin</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-zipkin", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

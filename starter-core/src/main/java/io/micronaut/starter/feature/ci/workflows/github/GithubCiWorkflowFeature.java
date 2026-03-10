@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.feature.ci.workflows.github.templates.javaAction;
+import io.micronaut.starter.rocker.feature.ci.workflows.github.templates.javaAction;
 import io.micronaut.starter.options.JdkDistribution;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;

@@ -20,9 +20,12 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.rocker.feature.view.gradlePluginRocker;
+import io.micronaut.starter.rocker.feature.view.mvnPluginRocker;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
@@ -64,8 +67,8 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
                 .compile());
         generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("nu.studer.rocker")
-                .extension(new RockerWritable(gradlePluginRocker.template(rockerSrcDir(generatorContext))))
-                .lookupArtifactId("gradle-rocker-plugin")
+                .extension(new RockerWritable(gradlePluginRocker.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.KOTLIN))))
+                .lookupArtifactId("nu.studer.rocker.gradle.plugin")
                 .build());
         String mavenPluginArtifactId = "rocker-maven-plugin";
         Coordinate coordinate = generatorContext.resolveCoordinate(mavenPluginArtifactId);

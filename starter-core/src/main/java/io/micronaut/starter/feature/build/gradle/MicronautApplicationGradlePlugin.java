@@ -21,7 +21,7 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

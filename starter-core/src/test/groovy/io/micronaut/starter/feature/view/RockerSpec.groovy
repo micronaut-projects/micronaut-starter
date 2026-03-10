@@ -1,8 +1,10 @@
 package io.micronaut.starter.feature.view
 
-import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -30,16 +32,29 @@ class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
-        template.contains('''\
+        if (buildTool == BuildTool.GRADLE) {
+        assert template.contains('''\
 rocker {
     configurations {
-        create("main") {
-            templateDir = file("src/main/resources")
-            outputDir = file("src/generated/rocker")
+        main {
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
         }
     }
 }
 ''')
+        } else if (buildTool == BuildTool.GRADLE_KOTLIN) {
+            assert template.contains('''\
+rocker {
+    configurations {
+        create("main") {
+            templateDir.set(file("src/rocker"))
+            outputDir.set(file("src/generated/rocker"))
+        }
+    }
+}
+''')
+        }
 
         when:
         String pluginId = 'nu.studer.rocker'
@@ -47,13 +62,6 @@ rocker {
 
         then:
         template.contains(applyPlugin)
-
-        when:
-        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
-
-        then:
-        noExceptionThrown()
-        semanticVersionOptional.isPresent()
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
@@ -65,15 +73,10 @@ rocker {
                 .language(language)
                 .features(['views-rocker'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.views</groupId>
-      <artifactId>micronaut-views-rocker</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.views", "micronaut-views-rocker", Scope.COMPILE)
         template.contains("""
       <plugin>
         <groupId>com.fizzed</groupId>

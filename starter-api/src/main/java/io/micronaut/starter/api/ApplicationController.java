@@ -27,7 +27,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.api.starterApi;
+import io.micronaut.starter.rocker.template.api.starterApi;
 import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

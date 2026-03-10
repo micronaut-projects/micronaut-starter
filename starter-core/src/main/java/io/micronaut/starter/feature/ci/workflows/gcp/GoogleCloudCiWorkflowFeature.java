@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.feature.ci.workflows.gcp.templates.cloudBuild;
+import io.micronaut.starter.rocker.feature.ci.workflows.gcp.templates.cloudBuild;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;

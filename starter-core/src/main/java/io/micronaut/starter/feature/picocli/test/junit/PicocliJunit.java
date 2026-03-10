@@ -25,6 +25,9 @@ import io.micronaut.starter.options.AbstractJunitRockerModelProvider;
 import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliGroovyJunitTest;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliJunitTest;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliKotlinJunitTest;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;

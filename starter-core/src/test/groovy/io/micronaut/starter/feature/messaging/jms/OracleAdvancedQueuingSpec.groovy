@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.messaging.jms
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -57,39 +60,12 @@ class OracleAdvancedQueuingSpec extends ApplicationContextSpec  implements Comma
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['jms-oracle-aq'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jms</groupId>
-      <artifactId>micronaut-jms-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>javax.transaction</groupId>
-      <artifactId>jta</artifactId>
-      <version>1.1</version>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        template.contains("""
-    <dependency>
-      <groupId>com.oracle.database.messaging</groupId>
-      <artifactId>aqapi</artifactId>
-      <version>19.3.0.0</version>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        template.contains("""
-    <dependency>
-      <groupId>com.oracle.database.jdbc</groupId>
-      <artifactId>ojdbc11</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.jms", "micronaut-jms-core", Scope.COMPILE)
+        verifier.hasDependency("javax.transaction", "jta", Scope.COMPILE)
+        verifier.hasDependency("com.oracle.database.messaging", "aqapi", Scope.COMPILE)
+        verifier.hasDependency("com.oracle.database.jdbc", "ojdbc11", Scope.RUNTIME)
     }
 }

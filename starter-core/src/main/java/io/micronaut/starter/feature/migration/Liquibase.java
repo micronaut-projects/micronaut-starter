@@ -22,8 +22,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
 import io.micronaut.starter.feature.logging.Slf4jJulBridge;
-import io.micronaut.starter.feature.migration.template.liquibaseChangelog;
-import io.micronaut.starter.feature.migration.template.liquibaseSchema;
+import io.micronaut.starter.rocker.feature.migration.template.liquibaseChangelog;
+import io.micronaut.starter.rocker.feature.migration.template.liquibaseSchema;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 

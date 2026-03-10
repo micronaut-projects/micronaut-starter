@@ -10,7 +10,7 @@
 
 [versions]
 agorapulse-gru = "2.2.2"
-agorapulse-micronaut-console = "3.0.2"
+agorapulse-micronaut-console = "3.0.4"
 agorapulse-micronaut-permissions = "2.0.0"
 agorapulse-micronaut-slack = "2.0.0"
 agorapulse-micronaut-worker = "2.8.4"
@@ -59,18 +59,18 @@ protobuf-gradle-plugin = "0.9.2"
 rewrite-gradle-plugin = "6.29.4"
 rewrite-maven-plugin = "5.47.3"
 rewrite-micronaut = "2.30.2"
-rocker-gradle-plugin = "3.0.5"
+rocker-gradle-plugin = "3.3"
 rocker-maven-plugin = "1.4.0"
 slf4j-simple-logger = "2.0.0"
 zeebe-micronaut-client = "1.20.0"
 ktor = "2.3.13"
 jakarta-validation-api = "3.1.1"
-spring-boot-gradle-plugin = "3.5.7"
+spring-boot-gradle-plugin = "3.5.11"
 spring-dependency-management-plugin = "1.1.7"
 micronaut-starter-aws-cdk = "4.10.5"
-spring-boot-starter-parent="3.5.7"
+spring-boot-starter-parent="3.5.11"
 graaljs = "24.2.2"  # On upgrade, please check if Loom/Truffle interop is still experimental.
-frontend-maven-plugin = "1.15.1"
+frontend-maven-plugin = "1.15.4"
 liquibase-slf4j = "5.1.0"
 graalpy = "24.2.2"
 commons-compress = "1.27.1"
@@ -144,7 +144,7 @@ protobuf-gradle-plugin = { module = "gradle.plugin.com.google.protobuf:protobuf-
 rewrite-gradle-plugin = { module = "org.openrewrite:plugin", version.ref = "rewrite-gradle-plugin" }
 rewrite-maven-plugin = { module = "org.openrewrite.maven:rewrite-maven-plugin", version.ref = "rewrite-maven-plugin" }
 rewrite-micronaut = { module = "org.openrewrite.recipe:rewrite-micronaut", version.ref = "rewrite-micronaut" }
-rocker-gradle-plugin = { module = "nu.studer:gradle-rocker-plugin", version.ref = "rocker-gradle-plugin" }
+rocker-gradle-plugin = { module = "nu.studer.rocker:nu.studer.rocker.gradle.plugin", version.ref = "rocker-gradle-plugin" }
 rocker-maven-plugin = { module = "com.fizzed:rocker-maven-plugin", version.ref = "rocker-maven-plugin" }
 slf4j-simple-logger = { module = "io.goodforgod:slf4j-simple-logger", version.ref = "slf4j-simple-logger" }
 zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature", version.ref = "zeebe-micronaut-client" }

@@ -11,7 +11,7 @@ import io.micronaut.starter.application.Project
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradlePluginPortal
 import io.micronaut.starter.build.gradle.GradleRepository
-import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.rocker.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
