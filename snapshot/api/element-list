@@ -194,6 +194,7 @@ io.micronaut.starter.feature.vertx
 io.micronaut.starter.feature.view
 io.micronaut.starter.feature.websocket
 io.micronaut.starter.feature.xml
+io.micronaut.starter.graalvm
 io.micronaut.starter.io
 io.micronaut.starter.netty
 io.micronaut.starter.netty.analytics
