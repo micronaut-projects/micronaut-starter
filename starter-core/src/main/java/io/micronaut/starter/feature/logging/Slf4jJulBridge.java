@@ -23,7 +23,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.logging.template.julToSlf4j;
+import io.micronaut.starter.rocker.feature.logging.template.julToSlf4j;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 

@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.internal.starter.test-module"
-    id "io.micronaut.starter.rocker"
+    id("nu.studer.rocker")
 }
 
 dependencies {
@@ -16,15 +16,18 @@ dependencies {
     testImplementation("org.apache.groovy:groovy-yaml")
 }
 
-sourceSets {
-    test {
-        rocker {
-            srcDir("src/test/groovy")
+rocker {
+    version = rockerVersion
+    configurations {
+        main {
+            discardLogicWhitespace = true
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
         }
     }
 }
-
-rocker {
-    javaVersion = '21'
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
+spotless {
+    java {
+        targetExclude("src/**/*.rocker.raw")
+    }
 }

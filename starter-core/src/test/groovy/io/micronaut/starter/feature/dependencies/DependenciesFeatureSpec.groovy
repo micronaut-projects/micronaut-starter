@@ -2,13 +2,14 @@ package io.micronaut.starter.feature.dependencies
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
-
-import java.util.regex.Pattern
 
 class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -54,91 +55,45 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     }
 
     @Unroll
-    void 'test gradle mybatis feature for language=#language'() {
+    void 'test gradle mybatis feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['mybatis'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("org.mybatis:mybatis:')
+        verifier.hasDependency("org.mybatis", "mybatis", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << Language.values()
+        buildTool << BuildTool.values()
     }
 
     @Unroll
-    void 'test maven mybatis feature for language=#language'() {
+    void 'test maven geb feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['mybatis'])
-                .render()
-
-        then:
-        Pattern.compile("""
-    <dependency>
-      <groupId>org\\.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-      <version>.*?</version>
-      <scope>compile</scope>
-    </dependency>
-""").matcher(template).find()
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven geb feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['geb'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         if (language == Language.GROOVY) {
-            assert Pattern.compile("""
-    <dependency>
-      <groupId>org\\.gebish</groupId>
-      <artifactId>geb-spock</artifactId>
-      <version>.*?</version>
-      <scope>test</scope>
-    </dependency>
-""").matcher(template).find()
+            assert verifier.hasDependency("org.gebish", "geb-spock", Scope.TEST)
         } else {
-            assert Pattern.compile("""
-    <dependency>
-      <groupId>org\\.gebish</groupId>
-      <artifactId>geb-junit5</artifactId>
-      <version>.*?</version>
-      <scope>test</scope>
-    </dependency>
-""").matcher(template).find()
+            assert verifier.hasDependency("org.gebish", "geb-junit5", Scope.TEST)
         }
 
+
         and:
-        Pattern.compile("""
-    <dependency>
-      <groupId>org\\.seleniumhq\\.selenium</groupId>
-      <artifactId>selenium-firefox-driver</artifactId>
-      <version>.*?</version>
-      <scope>test</scope>
-    </dependency>
-""").matcher(template).find()
-        and:
-        Pattern.compile("""
-    <dependency>
-      <groupId>org\\.seleniumhq\\.selenium</groupId>
-      <artifactId>selenium-support</artifactId>
-      <version>.*?</version>
-      <scope>test</scope>
-    </dependency>
-""").matcher(template).find()
+        verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST_RUNTIME)
+        verifier.hasDependency("org.seleniumhq.selenium", "selenium-support", Scope.TEST_RUNTIME)
 
         where:
-        language << Language.values().toList()
+        language << Language.values()
+        buildTool << BuildTool.values()
     }
 }

@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.lang.groovy.GroovyApplicationFeature;
+import io.micronaut.starter.rocker.feature.picocli.lang.groovy.picocliApplication;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;

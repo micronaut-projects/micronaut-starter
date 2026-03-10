@@ -25,8 +25,8 @@ import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.build.gradle.templates.develocity;
-import io.micronaut.starter.feature.build.maven.templates.extensions;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.develocity;
+import io.micronaut.starter.rocker.feature.build.maven.templates.extensions;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
@@ -82,7 +82,7 @@ public class Develocity implements Feature, DevelocityConfiguration {
 
     protected void applyMaven(GeneratorContext generatorContext, DevelocityConfiguration server) {
         addMavenTemplate(generatorContext, EXTENSIONS_XML, extensionsRockerModel(generatorContext));
-        addMavenTemplate(generatorContext, DEVELOCITY_XML, io.micronaut.starter.feature.build.maven.templates.develocity.template(server));
+        addMavenTemplate(generatorContext, DEVELOCITY_XML, io.micronaut.starter.rocker.feature.build.maven.templates.develocity.template(server));
     }
 
     protected void addMavenTemplate(GeneratorContext generatorContext, String name, RockerModel rockerModel) {

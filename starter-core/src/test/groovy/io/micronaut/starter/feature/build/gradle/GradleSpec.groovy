@@ -7,8 +7,8 @@ import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
-import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
-import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.rocker.feature.build.gradle.templates.gradleProperties
+import io.micronaut.starter.rocker.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool

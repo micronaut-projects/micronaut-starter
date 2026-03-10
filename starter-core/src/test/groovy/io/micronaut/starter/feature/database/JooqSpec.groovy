@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.database
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -44,15 +47,10 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
                 .language(language)
                 .jdkVersion(MicronautJdkVersionConfiguration.DEFAULT_OPTION)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jooq</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.sql", "micronaut-jooq", Scope.COMPILE)
 
         where:
         language << Language.values().toList()

@@ -17,9 +17,9 @@ package io.micronaut.starter.feature.github.workflows;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.Project;
-import io.micronaut.starter.feature.server.template.groovyController;
-import io.micronaut.starter.feature.server.template.javaController;
-import io.micronaut.starter.feature.server.template.kotlinController;
+import io.micronaut.starter.rocker.feature.server.template.groovyController;
+import io.micronaut.starter.rocker.feature.server.template.javaController;
+import io.micronaut.starter.rocker.feature.server.template.kotlinController;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;

@@ -456,15 +456,10 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
                 .language(language)
                 .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-api-proxy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-api-proxy", Scope.COMPILE)
 
         where:
         language << Language.values()

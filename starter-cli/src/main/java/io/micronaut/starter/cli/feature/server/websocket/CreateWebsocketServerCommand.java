@@ -36,6 +36,9 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.util.List;
 
+import io.micronaut.starter.cli.rocker.feature.server.websocket.groovyWebsocketServer;
+import io.micronaut.starter.cli.rocker.feature.server.websocket.javaWebsocketServer;
+import io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketServer;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;

@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.opentelemetry
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -63,15 +66,10 @@ class OpenTelemetrySpec extends ApplicationContextSpec implements CommandOutputF
                 .language(language)
                 .features(['tracing-opentelemetry'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

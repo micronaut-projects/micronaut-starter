@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.database.jdbc
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import spock.lang.Unroll
@@ -36,22 +39,11 @@ class JdbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([jdbcFeature])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-${jdbcFeature}</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.sql", "micronaut-${jdbcFeature}", Scope.COMPILE)
+        verifier.hasDependency("com.h2database", "h2", Scope.RUNTIME)
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name

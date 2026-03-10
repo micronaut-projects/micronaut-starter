@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -55,29 +58,12 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
                 .features(['localstack'] + (hasSqs ? ['jms-sqs'] : []))
                 .testFramework(TestFramework.JUNIT)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>localstack</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-""") == !hasSqs
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "localstack", Scope.TEST)
+        verifier.hasDependency("com.amazonaws", "aws-java-sdk-core", Scope.TEST) == !hasSqs
 
         where:
         [language, hasSqs] << [Language.values().toList(), [true, false]].combinations()

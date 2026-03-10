@@ -34,7 +34,7 @@ import java.util.List;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.other.template.nullaway;
+import io.micronaut.starter.rocker.feature.other.template.nullaway;
 import static io.micronaut.core.util.StringUtils.TRUE;
 
 @Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)

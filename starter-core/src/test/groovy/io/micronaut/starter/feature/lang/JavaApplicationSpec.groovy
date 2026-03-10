@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.lang
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
-import io.micronaut.starter.feature.lang.java.application
+import io.micronaut.starter.rocker.feature.lang.java.application
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -41,7 +41,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
         .toString()
 
         expect:
-        applicationJava.contains("""
+        applicationJava == """
 package example.micronaut;
 
 import io.micronaut.runtime.Micronaut;
@@ -52,7 +52,7 @@ public class Application {
         Micronaut.run(Application.class, args);
     }
 }
-""".trim())
+""".trim()
     }
 
     void "test java application with default environment"() {

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.view
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -42,15 +45,10 @@ class SoySpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .language(language)
                 .features(['views-soy'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.views</groupId>
-      <artifactId>micronaut-views-soy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.views", "micronaut-views-soy", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
