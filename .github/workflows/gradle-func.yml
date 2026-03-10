@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
 #      - uses: actions/cache@v5
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
@@ -120,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['21']
+        java: ['25']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
