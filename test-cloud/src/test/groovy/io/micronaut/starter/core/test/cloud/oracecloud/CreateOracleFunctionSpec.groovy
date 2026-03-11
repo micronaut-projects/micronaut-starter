@@ -14,6 +14,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.TestFrameworkCombinations
 import io.micronaut.starter.util.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
@@ -92,7 +93,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 Language.values(),
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 BuildToolCombinations.buildTools,
-                TestFramework.values()
+                TestFrameworkCombinations.values()
         ].combinations()
                 .stream()
                 .filter(it -> !(it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)))

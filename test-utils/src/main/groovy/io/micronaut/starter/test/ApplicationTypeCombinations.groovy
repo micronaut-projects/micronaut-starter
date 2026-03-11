@@ -19,7 +19,6 @@ import groovy.transform.Memoized
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
 
 import java.util.function.Function
 
@@ -30,7 +29,7 @@ class ApplicationTypeCombinations {
 
     @Memoized
     static List combinations(List<ApplicationType> applicationTypes, List<Language> languages = Language.values() as List<Language>) {
-        [applicationTypes, languages, BuildToolCombinations.buildTools, TestFramework.values()].combinations().findAll {
+        [applicationTypes, languages, BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             SKIP_KOTLIN_MAVEN.apply(it)
         }
     }
@@ -40,7 +39,7 @@ class ApplicationTypeCombinations {
             List<ApplicationType> applicationTypes,
             List<Language> languages,
             List<BuildTool> buildTools) {
-        [applicationTypes, languages, buildTools, TestFramework.values()].combinations().findAll {
+        [applicationTypes, languages, buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             SKIP_KOTLIN_MAVEN.apply(it)
         }
     }

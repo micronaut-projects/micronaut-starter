@@ -9,6 +9,7 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
 import spock.lang.Unroll
 
 class CreateAwsLambdaGraalvmSpec extends CommandSpec {
@@ -28,7 +29,7 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
 
         where:
         [applicationType, lang, build, testFramework] << [
-                [ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFramework.values()].combinations().findAll {
+                [ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             ApplicationTypeCombinations.SKIP_KOTLIN_MAVEN.apply(it)
         }
 

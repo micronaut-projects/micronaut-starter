@@ -31,8 +31,8 @@ class LanguageBuildTestFrameworkCombinations {
     @Memoized
     static List combinations(List<String> features = null) {
         (features
-                ? [Language.values(), BuildToolCombinations.buildTools, TestFramework.values(), features].combinations()
-                : [Language.values(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()).findAll {
+                ? [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values(), features].combinations()
+                : [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
             LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
         }
     }
