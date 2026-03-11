@@ -15,7 +15,7 @@ import java.io.File
 class CIAwsCredentialsProviderChainCondition : Condition {
     private val LOG : Logger = LoggerFactory.getLogger(CIAwsCredentialsProviderChainCondition::class.java)
 
-    override fun matches(context: ConditionContext<*>?): Boolean {
+    override fun matches(context: ConditionContext<*>): Boolean {
         if (System.getenv("CI") == null) {
             LOG.info("CI environment variable not present - Condition fulfilled")
             return true
