@@ -7,6 +7,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import spock.lang.PendingFeature
 
 class TelegramAzureChatBotFunctionSpec extends CommandSpec {
 
@@ -15,6 +16,7 @@ class TelegramAzureChatBotFunctionSpec extends CommandSpec {
         return "telegramAzureChatBotFunctionSpec"
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void "#testFramework test #feature feature in #language with #buildTool"(BuildTool buildTool, Language language, TestFramework testFramework) {
         when:
         generateProject(language, buildTool, [feature], ApplicationType.FUNCTION, testFramework)
