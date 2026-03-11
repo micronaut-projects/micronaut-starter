@@ -8,7 +8,7 @@ plugins {
 def openApiOutputFile = layout.buildDirectory.file('generated/openapi/openapi.properties')
 
 def openApiProperties = tasks.register("openApiProperties", WriteProperties) {
-    outputFile(openApiOutputFile.get().asFile)
+    destinationFile = openApiOutputFile
     properties(
             'swagger-ui.enabled': true,
             'redoc.enabled': true,
