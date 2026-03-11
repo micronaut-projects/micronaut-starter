@@ -12,7 +12,6 @@ import com.google.events.cloud.storage.v1.StorageObjectData
 
 import io.cloudevents.CloudEventContext
 import io.micronaut.gcp.function.cloudevents.GoogleCloudEventsFunction
-¡
 import jakarta.inject.*
 
 class Function : GoogleCloudEventsFunction<StorageObjectData>() {
