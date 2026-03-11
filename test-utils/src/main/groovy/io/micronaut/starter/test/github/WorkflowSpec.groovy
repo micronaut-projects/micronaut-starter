@@ -33,7 +33,6 @@ import java.util.stream.Collectors
  * have to be installed in the system. For more information <a href="https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets">encrypted secrets</a>
  */
 @Slf4j
-@Property
 abstract class WorkflowSpec extends CommandSpec{
 
     public static final String GH_TOKEN = "GH_TOKEN"
