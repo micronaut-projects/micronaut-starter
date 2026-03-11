@@ -4,9 +4,7 @@
 @args (
 String projectName,
 JdkVersion jdkVersion,
-BuildTool buildTool,
-String graalVmVersion
-)
+BuildTool buildTool)
 
 version: 0.1
 component: build
@@ -16,11 +14,7 @@ shell: bash
 inputArtifacts:
   - name: graalvm
     type: URL
-    @if (jdkVersion.majorVersion() == 17) {
-    url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-@graalVmVersion/graalvm-ce-java17-linux-amd64-@(graalVmVersion).tar.gz
-    } else {
-    url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-@graalVmVersion/graalvm-ce-java11-linux-amd64-@(graalVmVersion).tar.gz
-    }
+    url: https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.2/graalvm-community-jdk-25.0.2_linux-x64_bin.tar.gz
     location: /workspace/graalvm-ce.tar.gz
 
 steps:
@@ -32,11 +26,7 @@ steps:
   - type: Command
     name: "Build an application"
     command: |
-    @if (jdkVersion.majorVersion() == 17) {
-      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
-    } else {
-      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
-    }
+      JAVA_HOME=$(pwd)/graalvm-ce-java25-25.0.2
     @if (buildTool.equals(BuildTool.MAVEN)) {
       ./mvnw verify
     } else if (buildTool.isGradle()) {
@@ -45,11 +35,7 @@ steps:
   - type: Command
     name: "Build a native image"
     command: |
-    @if (jdkVersion.majorVersion() == 17) {
-      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
-    } else {
-      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
-    }
+      JAVA_HOME=$(pwd)/graalvm-ce-java25-25.0.2
     @if (buildTool.equals(BuildTool.MAVEN)) {
       ./mvnw package -Dpackaging=native-image
     } else if (buildTool.isGradle()) {
@@ -58,11 +44,7 @@ steps:
   - type: Command
     name: "Build a docker image with native image"
     command: |
-    @if (jdkVersion.majorVersion() == 17) {
-      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
-    } else {
-      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
-    }
+      JAVA_HOME=$(pwd)/graalvm-ce-java25-25.0.2
     @if (buildTool.equals(BuildTool.MAVEN)) {
       ./mvnw package -Dpackaging=docker-native
     } else if (buildTool.isGradle()) {

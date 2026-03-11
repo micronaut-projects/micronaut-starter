@@ -81,12 +81,7 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         buildFileName = buildTool.buildFileName
     }
 
-    void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
-                                                                           JdkVersion graalVersion){
-        given:
-        def graalvmVersion = "${VersionInfo.getDependencyVersion( 'graal').getValue()}" +
-                ".java${graalVersion.majorVersion()}"
-
+    void 'test github gradle workflow for #jdkVersion'(JdkVersion jdkVersion){
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
@@ -95,11 +90,9 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
 
         then:
         workflow
-        workflow.contains("graalvm-version: ${graalvmVersion}")
         workflow.contains("export DOCKER_IMAGE=`echo \"\${DOCKER_REGISTRY_URL}/\${DOCKER_REPOSITORY_PATH}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        jdkVersion | graalVersion
-        JdkVersion.JDK_21 | JdkVersion.JDK_21
+        jdkVersion << [JdkVersion.JDK_21]
     }
 }

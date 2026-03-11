@@ -22,7 +22,7 @@ JdkVersion jdkVersion
           key: ${{ runner.os }}-gradle-test-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle-test-
           }
-      - name: Setup GraalVM CE
+      - name: Setup GraalVM
         uses: graalvm/setup-graalvm@@1.4.5
         with:
           distribution: 'graalvm'
