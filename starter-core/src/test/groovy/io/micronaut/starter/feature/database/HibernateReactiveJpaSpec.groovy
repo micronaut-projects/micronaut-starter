@@ -90,7 +90,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_21)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
 

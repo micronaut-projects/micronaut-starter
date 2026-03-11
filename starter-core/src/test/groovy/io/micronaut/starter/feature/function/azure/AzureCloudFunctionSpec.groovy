@@ -54,7 +54,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['azure-function']
         )
         String build = output['build.gradle']
@@ -100,7 +100,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 .language(language)
                 .applicationType(ApplicationType.DEFAULT)
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_8)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features(['azure-function'])
                 .render()
         then:
@@ -137,7 +137,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_21),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String readme = output["README.md"]
@@ -167,7 +167,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_21),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_25),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']

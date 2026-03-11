@@ -208,7 +208,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")
                     .build());
-        } else if (generatorContext.getJdkVersion() != JdkVersion.JDK_21) {
+        } else if (generatorContext.getJdkVersion() != JdkVersion.JDK_25) {
             builder.dockerNative(Dockerfile.builder().javaVersion(generatorContext.getJdkVersion().asString()).build());
         }
         return builder;

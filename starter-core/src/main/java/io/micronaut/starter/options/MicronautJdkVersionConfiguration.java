@@ -23,9 +23,9 @@ import static io.micronaut.starter.options.JdkVersion.*;
 @Singleton
 public class MicronautJdkVersionConfiguration implements JdkVersionConfiguration {
 
-    public static final List<JdkVersion> SUPPORTED_JDKS = List.of(JDK_21, JDK_25);
+    public static final List<JdkVersion> SUPPORTED_JDKS = List.of(JDK_25);
 
-    public static final JdkVersion DEFAULT_OPTION = JDK_21;
+    public static final JdkVersion DEFAULT_OPTION = JDK_25;
 
     @Override
     public List<JdkVersion> getSupportedJdkVersions() {

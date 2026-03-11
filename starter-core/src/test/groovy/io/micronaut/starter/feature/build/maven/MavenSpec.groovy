@@ -220,17 +220,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         buildFile
-        if (lang == Language.KOTLIN) {
-            // has kapt so has to be 17
-            assert buildFile.contains("<jdk.version>17</jdk.version>")
-        } else {
-            assert buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
-        }
+        buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
 
         where:
-        [lang, jdk] << [
-                Language.values(),
-                [JdkVersion.JDK_21, JdkVersion.JDK_25]
-        ].combinations()
+        [lang, jdk] << [Language.values(), [JdkVersion.JDK_25]].combinations()
     }
 }

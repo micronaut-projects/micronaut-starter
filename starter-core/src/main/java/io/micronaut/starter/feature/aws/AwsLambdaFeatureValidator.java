@@ -57,7 +57,7 @@ public class AwsLambdaFeatureValidator implements FeatureValidator {
         return MicronautJdkVersionConfiguration.SUPPORTED_JDKS.stream()
                 .filter(AwsLambdaFeatureValidator::supports)
                 .findFirst()
-                .orElse(JdkVersion.JDK_21);
+                .orElse(JdkVersion.JDK_25);
     }
     
     public static boolean supports(JdkVersion jdkVersion) {

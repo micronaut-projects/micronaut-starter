@@ -25,7 +25,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void "readme.md with feature micronaut-graalpy contains links to docs for language=#language buildTool=#buildTool "(BuildTool buildTool, Language language) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, TestFramework.JUNIT, buildTool, JdkVersion.JDK_21), [Graalpy.NAME])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, TestFramework.JUNIT, buildTool, JdkVersion.JDK_25), [Graalpy.NAME])
         String readme = output["README.md"]
 
         then:
@@ -71,7 +71,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         [buildTool, language] << [BuildTool.values(), Language.JAVA].combinations()
     }
 
-    void "micronaut-graalpy feature requires java 21"() {
+    void "micronaut-graalpy feature requires java 25"() {
         when:
         new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .jdkVersion(JdkVersion.JDK_17)
@@ -80,7 +80,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message == "The selected feature graalpy requires at latest Java 21"
+        ex.message == "The selected feature graalpy requires at latest Java 25"
     }
 
 }

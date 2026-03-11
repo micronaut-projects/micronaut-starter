@@ -106,7 +106,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
 
         where:
         jdkVersion | graalVersion
-        JdkVersion.JDK_21 | JdkVersion.JDK_21
+        JdkVersion.JDK_25 | JdkVersion.JDK_25
     }
 
     void 'test github #buildTool with java #jdkVersion workflow'(BuildTool buildTool, JdkVersion jdkVersion) {

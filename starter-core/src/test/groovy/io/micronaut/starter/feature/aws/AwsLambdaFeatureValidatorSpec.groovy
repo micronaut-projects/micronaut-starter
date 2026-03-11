@@ -24,7 +24,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(Language.JAVA)
-                .jdkVersion(JdkVersion.JDK_21)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([feature])
                 .render()
 
@@ -40,7 +40,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         new BuildBuilder(beanContext, buildtool)
                 .applicationType(ApplicationType.FUNCTION)
                 .language(Language.JAVA)
-                .jdkVersion(JdkVersion.JDK_21)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([feature, "graalvm"])
                 .render()
 

@@ -65,7 +65,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
                 beanContext.getBean(DefaultAvailableFeatures),
                 ["assertj"],
                 ApplicationType.DEFAULT,
-                new Options(Language.JAVA, null, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_21),
+                new Options(Language.JAVA, null, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_25),
                 null
         )
 

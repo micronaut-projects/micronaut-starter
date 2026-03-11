@@ -133,6 +133,6 @@ public class Graalpy implements MinJdkFeature, Feature {
 
     @Override
     public JdkVersion minJdk() {
-        return JdkVersion.JDK_21;
+        return JdkVersion.JDK_25;
     }
 }
