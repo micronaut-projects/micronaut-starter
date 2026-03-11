@@ -15,9 +15,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import spock.lang.Requires
 
-@Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
     void "test hibernate reactive jpa requires db"() {

@@ -16,11 +16,9 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
-import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 
-@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
