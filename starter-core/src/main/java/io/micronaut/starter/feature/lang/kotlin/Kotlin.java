@@ -92,7 +92,7 @@ public class Kotlin implements LanguageFeature {
         generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME);
         generatorContext.addDependency(Dependency.builder()
-                .groupId("com.fasterxml.jackson.module")
+                .groupId("tools.jackson.module")
                 .artifactId("jackson-module-kotlin")
                 .runtime());
     }

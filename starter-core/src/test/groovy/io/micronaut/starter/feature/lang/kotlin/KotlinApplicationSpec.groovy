@@ -69,7 +69,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
 
         then:
         verifier.hasDependency("io.micronaut.kotlin", "micronaut-kotlin-runtime", Scope.COMPILE)
-        verifier.hasDependency("com.fasterxml.jackson.module", "jackson-module-kotlin", Scope.RUNTIME)
+        verifier.hasDependency("tools.jackson.module", "jackson-module-kotlin", Scope.RUNTIME)
 
         where:
         [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()
