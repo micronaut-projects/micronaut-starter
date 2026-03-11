@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import org.yaml.snakeyaml.Yaml
 import spock.lang.Ignore
@@ -37,7 +38,7 @@ class SlackSpec extends CommandSpec {
         where:
         [language, testFramework, features, applicationType] << [
                 Language.values(),
-                TestFramework.values(),
+                TestFrameworkCombinations.values(),
                 [
                         ['agorapulse-micronaut-slack'],
                         ['agorapulse-micronaut-slack', 'agorapulse-gru-http']
@@ -69,7 +70,7 @@ class SlackSpec extends CommandSpec {
         [buildTool, language, testFramework, features, applicationType] << [
                 BuildTool.valuesGradle(),
                 Language.values(),
-                TestFramework.values(),
+                TestFrameworkCombinations.values(),
                 [
                         ['agorapulse-micronaut-slack'],
                         ['agorapulse-micronaut-slack', 'agorapulse-gru-http']

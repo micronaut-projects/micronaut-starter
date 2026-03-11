@@ -12,17 +12,20 @@ import com.google.events.cloud.storage.v1.StorageObjectData
 
 import io.cloudevents.CloudEventContext
 import io.micronaut.gcp.function.cloudevents.GoogleCloudEventsFunction
-import io.micronaut.core.annotation.*
-
+¡
 import jakarta.inject.*
 
 class Function : GoogleCloudEventsFunction<StorageObjectData>() {
     @@Inject
     lateinit var storageService: StorageService
 
-    override fun accept(@@NonNull context: CloudEventContext,
-                        @@Nullable data: StorageObjectData) {
-        storageService.handleFileEvent(data)
+   override fun accept(
+        context: CloudEventContext,
+        data: StorageObjectData?
+    ) {
+        if (data != null) {
+            storageService.handleFileEvent(data)
+        }
     }
 }
 

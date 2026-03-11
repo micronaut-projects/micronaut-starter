@@ -9,6 +9,7 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
 
 class CreateAzureFunctionSpec extends CommandSpec {
 
@@ -57,7 +58,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
                 Language.values(),
                 BuildToolCombinations.buildTools,
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
-                TestFramework.values()
+                TestFrameworkCombinations.values()
         ].combinations().findAll {
             LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
         }

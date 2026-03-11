@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.IgnoreIf
@@ -30,7 +31,7 @@ class ConsoleSpec extends CommandSpec {
         where:
         [language, testFramework] << [
                 Language.values(),
-                TestFramework.values()
+                TestFrameworkCombinations.values()
         ].combinations()
     }
 
@@ -47,7 +48,7 @@ class ConsoleSpec extends CommandSpec {
         [buildTool, language, testFramework] << [
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE_KOTLIN],
                 Language.values(),
-                TestFramework.values()
+                TestFrameworkCombinations.values()
         ].combinations()
     }
 }

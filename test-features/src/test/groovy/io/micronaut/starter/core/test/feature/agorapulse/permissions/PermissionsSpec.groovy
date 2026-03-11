@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.Unroll
@@ -33,7 +34,7 @@ class PermissionsSpec extends CommandSpec {
         where:
         [language, testFramework, applicationType] << [
                 Language.values(),
-                TestFramework.values(),
+                TestFrameworkCombinations.values(),
                 ApplicationType.values(),
         ].combinations()
     }
@@ -56,7 +57,7 @@ class PermissionsSpec extends CommandSpec {
         [buildTool, language, testFramework, applicationType] << [
                 BuildTool.valuesGradle(),
                 Language.values(),
-                TestFramework.values(),
+                TestFrameworkCombinations.values(),
                 ApplicationType.values(),
         ].combinations()
     }
