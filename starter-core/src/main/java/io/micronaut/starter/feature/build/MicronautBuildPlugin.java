@@ -63,6 +63,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
     public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
     public static final String AOT_KEY_SECURITY_JWKS = "micronaut.security.jwks.enabled";
     public static final String AOT_KEY_SECURITY_OPENID = "micronaut.security.openid-configuration.enabled";
+    private static final String DOCKER_BASE_IMAGE_ECLIPSE_TEMURIN_25_JRE = "eclipse-temurin:25-jre";
 
     protected final CoordinateResolver coordinateResolver;
 
@@ -199,6 +200,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
         MicronautApplicationGradlePlugin.Builder builder = micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.APPLICATION);
+        builder.docker(Dockerfile.builder().baseImage(DOCKER_BASE_IMAGE_ECLIPSE_TEMURIN_25_JRE).build());
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
                         (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
