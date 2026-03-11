@@ -21,7 +21,7 @@ configurations.all {
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
 
-    compileOnly("org.graalvm.nativeimage:svm")
+    compileOnly("org.graalvm.sdk:nativeimage:25.0.2")
 
     api(project(":starter-core"))
     api("info.picocli:picocli:$picocliVersion")
