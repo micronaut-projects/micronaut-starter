@@ -76,7 +76,7 @@ liquibase-slf4j = "5.1.0"
 graalpy = "25.0.2"
 commons-compress = "1.28.0"
 error-prone-gradle-plugin = "4.3.0"
-error-prone-core = "2.44.0"
+error-prone-core = "2.48.0"
 [libraries]
 
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
