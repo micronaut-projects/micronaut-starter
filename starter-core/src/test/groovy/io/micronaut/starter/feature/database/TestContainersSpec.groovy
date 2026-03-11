@@ -109,7 +109,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:spock")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-spock")')
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]

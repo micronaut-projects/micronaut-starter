@@ -37,7 +37,7 @@ dependencies {
     implementation('org.jline:jline:3.27.1')
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
-    testImplementation("org.testcontainers:spock")
+    testImplementation("org.testcontainers:testcontainers-spock")
     testImplementation("org.reflections:reflections:0.10.2")
     testImplementation("org.apache.groovy:groovy-xml")
 
