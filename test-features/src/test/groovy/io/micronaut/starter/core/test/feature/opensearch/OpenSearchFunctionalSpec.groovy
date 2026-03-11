@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.opensearch.OpenSearchHttpClient5
 import io.micronaut.starter.feature.opensearch.OpenSearchRestClient
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 
 class OpenSearchFunctionalSpec extends CommandSpec {
@@ -25,7 +26,7 @@ class OpenSearchFunctionalSpec extends CommandSpec {
         [featureName, lang, buildTool] << [
                 [OpenSearchAmazon.NAME, OpenSearchHttpClient5.NAME, OpenSearchRestClient.NAME],
                 Language.values(),
-                BuildTool.values()
+                BuildToolCombinations.buildTools
         ].combinations().findAll {
             !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.GROOVY) &&
                     !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN)
