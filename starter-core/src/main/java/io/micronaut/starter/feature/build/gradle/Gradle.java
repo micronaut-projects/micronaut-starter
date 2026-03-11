@@ -51,7 +51,7 @@ import java.util.*;
 public class Gradle implements BuildFeature {
     public static final boolean DEFAULT_USER_VERSION_CATALOGUE = false;
     protected static final GradlePlugin GROOVY_GRADLE_PLUGIN = GradlePlugin.builder().id("groovy").build();
-
+    protected static final String DEFAULT_VERSION = "0.1";
     private static final String GRADLE = "gradle";
     private static final String DASH = "-";
     private static final String SLASH = "/";
@@ -84,7 +84,6 @@ public class Gradle implements BuildFeature {
             return "-Xmx4096M";
         }
     };
-    protected static final String DEFAULT_VERSION = "0.1";
     protected final GradleBuildCreator dependencyResolver;
     protected final RepositoryResolver repositoryResolver;
 
