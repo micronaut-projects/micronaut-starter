@@ -44,7 +44,7 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
 
         then:
         template.contains('testImplementation("org.testcontainers:testcontainers")')
-        template.contains('testImplementation("org.testcontainers:localstack")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-localstack")')
         template.contains('testImplementation("com.amazonaws:aws-java-sdk-core")') == !hasSqs
 
         where:
@@ -62,7 +62,7 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
 
         then:
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
-        verifier.hasDependency("org.testcontainers", "localstack", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-localstack", Scope.TEST)
         verifier.hasDependency("com.amazonaws", "aws-java-sdk-core", Scope.TEST) == !hasSqs
 
         where:

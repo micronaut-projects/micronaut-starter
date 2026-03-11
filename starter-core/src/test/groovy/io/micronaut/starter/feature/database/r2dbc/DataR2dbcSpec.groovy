@@ -133,11 +133,11 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency(jdbcDriver.groupId, jdbcDriver.artifactId, Scope.TEST_RUNTIME)
 
         and: 'has the required TestContainers dependencies'
-        verifier.hasDependency('org.testcontainers', 'r2dbc', Scope.TEST)
+        verifier.hasDependency('org.testcontainers', 'testcontainers-r2dbc', Scope.TEST)
         verifier.hasDependency('org.testcontainers', 'testcontainers', Scope.TEST)
 
         and: 'the db dependency as required by TestContainers for all but H2 obviously'
-        isH2 || verifier.hasDependency('org.testcontainers', TestContainers.artifactIdForDriverFeature(feature).get(), Scope.TEST)
+        isH2 || verifier.hasDependency('org.testcontainers', TestContainers.ARTIFACT_ID_TESTCONTAINERS_PREFIX + TestContainers.artifactIdForDriverFeature(feature).get(), Scope.TEST)
 
         where:
         db << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]

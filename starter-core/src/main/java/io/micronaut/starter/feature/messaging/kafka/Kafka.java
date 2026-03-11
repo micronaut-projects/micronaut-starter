@@ -45,7 +45,7 @@ public class Kafka extends EaseTestingFeature
             .build();
 
     public static final String NAME = "kafka";
-    private static final String TEST_CONTAINERS_ARTIFACT_ID_KAFKA = "kafka";
+    private static final String TEST_CONTAINERS_ARTIFACT_ID_KAFKA = "testcontainers-kafka";
 
     public Kafka(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);

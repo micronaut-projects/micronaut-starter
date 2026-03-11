@@ -122,6 +122,6 @@ public class Cassandra implements Feature, ContributingTestContainerDependency {
 
     @Override
     public List<Dependency> testContainersDependencies() {
-        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("cassandra"));
+        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("testcontainers-cassandra"));
     }
 }

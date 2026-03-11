@@ -38,7 +38,7 @@ public class MockServerClient implements Feature, ContributingTestContainerArtif
             .lookupArtifactId(ARTIFACT_ID_MOCKSERVER_CLIENT_JAVA)
             .test()
             .build();
-    public static final String TEST_CONTAINERS_ARTIFACT_ID_MOCKSERVER = "mockserver";
+    public static final String TEST_CONTAINERS_ARTIFACT_ID_MOCKSERVER = "testcontainers-mockserver";
 
     @Override
     @NonNull

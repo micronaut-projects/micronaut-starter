@@ -29,6 +29,8 @@ import io.micronaut.starter.feature.messaging.jms.SQS;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.database.TestContainers.ARTIFACT_ID_TESTCONTAINERS_PREFIX;
+
 /**
  * Adds support for <a href="https://localstack.cloud/">LocalStack</a>.
  *
@@ -98,6 +100,6 @@ public class LocalStack implements Feature, ContributingTestContainerArtifactId 
 
     @Override
     public String testContainersArtifactId() {
-        return ARTIFACT_ID_LOCALSTACK;
+        return ARTIFACT_ID_TESTCONTAINERS_PREFIX + ARTIFACT_ID_LOCALSTACK;
     }
 }

@@ -126,7 +126,7 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
 
         then:
-        build.contains('testImplementation("org.testcontainers:mongodb")')
+        build.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
 
         where:
         feature                 | buildTool
@@ -142,7 +142,7 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def project = new XmlParser().parseText(output['pom.xml'])
 
         then:
-        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+        with(project.dependencies.dependency.find { it.artifactId.text() == "testcontainers-mongodb" }) {
             scope.text() == 'test'
             groupId.text() == 'org.testcontainers'
         }

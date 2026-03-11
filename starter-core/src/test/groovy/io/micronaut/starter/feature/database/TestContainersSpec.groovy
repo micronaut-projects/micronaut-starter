@@ -21,7 +21,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:oracle-xe")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-oracle-xe")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -32,7 +32,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mysql")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mysql")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -43,7 +43,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:postgresql")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-postgresql")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -54,7 +54,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mariadb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mariadb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -65,7 +65,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mssqlserver")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mssqlserver")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -76,7 +76,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -87,7 +87,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -124,7 +124,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:junit-jupiter")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-junit-jupiter")')
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -138,7 +138,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "oracle-xe", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-oracle-xe", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -150,7 +150,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mysql", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-mysql", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -162,7 +162,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "postgresql", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-postgresql", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -174,7 +174,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mariadb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-mariadb", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -186,7 +186,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mssqlserver", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-mssqlserver", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -198,7 +198,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mongodb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-mongodb", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -210,7 +210,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mongodb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-mongodb", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
@@ -234,7 +234,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "spock", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-spock", Scope.TEST)
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -250,7 +250,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "junit-jupiter", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-junit-jupiter", Scope.TEST)
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -304,7 +304,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "cassandra", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-cassandra", Scope.TEST)
 
         where:
         buildTool << BuildTool.values()

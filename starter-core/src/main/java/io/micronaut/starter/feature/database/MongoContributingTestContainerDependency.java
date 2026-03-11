@@ -24,6 +24,6 @@ import java.util.List;
 public interface MongoContributingTestContainerDependency extends ContributingTestContainerDependency {
     @Override
     default List<Dependency> testContainersDependencies() {
-        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("mongodb"));
+        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("testcontainers-mongodb"));
     }
 }
