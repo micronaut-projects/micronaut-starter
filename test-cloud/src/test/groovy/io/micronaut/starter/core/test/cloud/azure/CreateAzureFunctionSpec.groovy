@@ -10,6 +10,7 @@ import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import io.micronaut.starter.test.TestFrameworkCombinations
+import spock.lang.PendingFeature
 
 class CreateAzureFunctionSpec extends CommandSpec {
 
@@ -18,6 +19,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         "test-azure-function"
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'create-#applicationType with features azure-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 Language lang,
                                                                                                                 BuildTool build,
@@ -37,6 +39,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
                 ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
             Language lang,
             String serializationFeature,
