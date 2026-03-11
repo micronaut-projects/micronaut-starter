@@ -12,9 +12,11 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 
 class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_25)
@@ -29,6 +31,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test readme.md with feature azure-function contains links to docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25)
@@ -67,6 +70,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test azure-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
@@ -92,6 +96,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test azure-function feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)

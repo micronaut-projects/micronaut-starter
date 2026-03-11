@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.function.azure.AzureFunctionFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -197,13 +198,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     private static JdkVersion javaVersionForRuntime(String runtime) {
-        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
-        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
-        // Google Cloud Function execution environment supports 21 in preview only
-        // https://cloud.google.com/functions/docs/concepts/execution-environment#runtimes
-        return runtime in ["azure_function",
-                           "google_function"
-        ] ? JdkVersion.JDK_21 :
+        return runtime in ["azure_function"] ? AzureFunctionFeatureValidator.getMaxJdkSupportedVersion() :
                 MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 

@@ -22,6 +22,7 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,12 +30,20 @@ import java.util.Set;
  */
 @Singleton
 public class AzureFunctionFeatureValidator implements FeatureValidator {
+    private static final List<JdkVersion> SUPPORTED_JDK_VERSIONS = List.of(
+            JdkVersion.JDK_21, JdkVersion.JDK_17, JdkVersion.JDK_11, JdkVersion.JDK_8
+    );
+    private static final JdkVersion MAX_JDK_SUPPORTED_VERSION = SUPPORTED_JDK_VERSIONS.stream().sorted().findFirst().orElseThrow();
 
     public static boolean supports(JdkVersion jdkVersion) {
         return JdkVersion.JDK_21.equals(jdkVersion) ||
                 JdkVersion.JDK_17.equals(jdkVersion) ||
                 JdkVersion.JDK_11.equals(jdkVersion) ||
                 JdkVersion.JDK_8.equals(jdkVersion);
+    }
+
+    public static JdkVersion getMaxJdkSupportedVersion() {
+        return MAX_JDK_SUPPORTED_VERSION;
     }
 
     @Override

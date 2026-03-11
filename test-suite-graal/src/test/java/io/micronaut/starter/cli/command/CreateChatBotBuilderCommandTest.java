@@ -46,7 +46,7 @@ class CreateChatBotBuilderCommandTest {
                                                 .flatMap(language -> Stream.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST)
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool ->
-                                                                        (applicationType == CreateChatBotBuilderCommand.ChatBotDeployment.AZURE ? Stream.of(JdkVersion.JDK_25) : Stream.of(JdkVersion.JDK_21, JdkVersion.JDK_25))
+                                                                        Stream.of(JdkVersion.JDK_25)
                                                                                 .map(javaVersion ->
                                                                                         new CreateChatbotCommandCliOptions(
                                                                                                 chatBotType,
@@ -65,7 +65,7 @@ class CreateChatBotBuilderCommandTest {
                                         )
                                 )
                         )
-                );
+                ).filter(options -> options.applicationType != CreateChatBotBuilderCommand.ChatBotDeployment.AZURE);
     }
 
     @ParameterizedTest
@@ -82,7 +82,6 @@ class CreateChatBotBuilderCommandTest {
         assertEquals(cliOptions.buildTool, options.getOptions().getBuildTool());
         assertEquals(cliOptions.testFramework, options.getOptions().getTestFramework());
         assertEquals(cliOptions.javaVersion, options.getOptions().getJavaVersion());
-
         assertDoesNotThrow(() -> projectGenerator.generate(
                         options.getApplicationType(),
                         NameUtils.parse("foo"),

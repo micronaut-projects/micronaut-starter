@@ -32,7 +32,7 @@ import java.util.TreeMap;
  * @since 1.0.0
  */
 @Serdeable
-public final class JdkVersion {
+public final class JdkVersion implements Comparable<JdkVersion> {
 
     private static final Map<Integer, JdkVersion> INSTANCES = new TreeMap<>();
 
@@ -145,5 +145,13 @@ public final class JdkVersion {
 
     public String asString() {
         return "" + majorVersion;
+    }
+
+    @Override
+    public int compareTo(JdkVersion o) {
+        if (o.majorVersion() == majorVersion()) {
+            return 0;
+        }
+        return o.majorVersion() > majorVersion() ? 1 : -1;
     }
 }
