@@ -18,6 +18,7 @@ import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
@@ -231,6 +232,11 @@ class StubbedLineReader implements LineReader {
 
     @Override
     public void editAndAddInBuffer(File file) throws Exception {
+
+    }
+
+    @Override
+    public void editAndAddInBuffer(Path path) throws Exception {
 
     }
 
