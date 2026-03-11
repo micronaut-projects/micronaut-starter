@@ -36,7 +36,7 @@ class FinalCommandHandler implements TelegramHandler<SendMessage> {
         SendMessageUtils.compose(
             spaceParser,
             input,
-            "I don't how to handle your query: ${input.message.text}"
+            "I don't how to handle your query: ${input.message?.text}"
         )
     }
 

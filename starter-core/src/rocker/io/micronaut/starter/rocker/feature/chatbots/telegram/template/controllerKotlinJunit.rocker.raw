@@ -38,7 +38,7 @@ class TelegramControllerTest {
         val messageResponse = client.toBlocking().exchange(post, SendMessage::class.java)
         assertEquals(
             "Telegram Bot developed with 💙 and [Micronaut](https://micronaut.io)",
-            messageResponse.body().text.trim()
+            messageResponse.body()!!.text.trim()
         )
     }
 

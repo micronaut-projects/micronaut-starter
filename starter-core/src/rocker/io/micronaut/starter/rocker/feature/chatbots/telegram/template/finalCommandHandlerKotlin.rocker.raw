@@ -25,7 +25,7 @@ open class FinalCommandHandler(private val spaceParser: SpaceParser<Update, Chat
         SendMessageUtils.compose(
             spaceParser,
             input,
-            "I don't how to handle your query: ${input.message.text}"
+            "I don't how to handle your query: ${input.message?.text}"
         )
 
     override fun getOrder() = Ordered.LOWEST_PRECEDENCE

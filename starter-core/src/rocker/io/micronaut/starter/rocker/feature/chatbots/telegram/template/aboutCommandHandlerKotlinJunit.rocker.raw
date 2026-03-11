@@ -38,7 +38,7 @@ class AboutCommandHandlerTest {
     @@Test
     @@Throws(Exception::class)
     fun aboutCommandHandlerExists() {
-        val send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Update::class.java)).get()
+        val send = dispatcher.dispatch(null, jsonMapper.readValue(getAboutCommandJson(), Update::class.java)!!).get()
 
         assertTrue(send is SendMessage)
         assertEquals(
