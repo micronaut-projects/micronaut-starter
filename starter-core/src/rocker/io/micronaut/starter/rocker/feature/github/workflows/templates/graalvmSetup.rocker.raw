@@ -23,7 +23,8 @@ JdkVersion jdkVersion
           restore-keys: ${{ runner.os }}-gradle-test-
           }
       - name: Setup GraalVM CE
-        uses: DeLaGuardo/setup-graalvm@@3.1
+        uses: graalvm/setup-graalvm@@1.4.5
         with:
-          graalvm-version: @graalVersion(jdkVersion)
+          distribution: 'graalvm'
+          java-version: '25'
 

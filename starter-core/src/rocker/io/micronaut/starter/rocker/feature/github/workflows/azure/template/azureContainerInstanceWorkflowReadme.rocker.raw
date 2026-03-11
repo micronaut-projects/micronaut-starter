@@ -24,7 +24,7 @@ For pushes to the `master` branch, the workflow will:
 
 ### Dependencies on other GitHub Actions
 - [Login to Docker Registry `docker/login`](https://github.com/docker/login-action)
-- [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)
+- [Setup GraalVM `graalvm/setup-graalvm`](https://github.com/graalvm/setup-graalvm)
 - [Setup Azure CLI `azure/login`](https://github.com/Azure/login)
 
 ### Setup

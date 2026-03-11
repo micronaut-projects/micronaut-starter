@@ -23,7 +23,7 @@ For pushes to the `master` branch, the workflow will:
 6. Deploy [Google Cloud Run](https://cloud.google.com/run) application.
 
 ### Dependencies on other GitHub Actions
-- [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)
+- [Setup GraalVM `graalvm/setup-graalvm`](https://github.com/graalvm/setup-graalvm)
 - [Setup Google Cloud CLI `google-github-actions/setup-gcloud`](https://github.com/google-github-actions/setup-gcloud)
 
 ### Setup

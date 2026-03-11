@@ -19,7 +19,7 @@ For pushes to the `master` branch, the workflow will:
 
 ### Dependencies on other GitHub Actions
 - [Docker login](`https://github.com/docker/login-action`)(`docker/login`)
-- [Setup GraalVM](`https://github.com/DeLaGuardo/setup-graalvm`)(`DeLaGuardo/setup-graalvm`)
+- [Setup GraalVM](`https://github.com/graalvm/setup-graalvm`)(`graalvm/setup-graalvm`)
 
 ### Setup
 Add the following GitHub secrets:
