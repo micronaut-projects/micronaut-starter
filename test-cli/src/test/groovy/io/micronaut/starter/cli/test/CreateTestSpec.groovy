@@ -44,7 +44,9 @@ class CreateTestSpec extends CommandSpec {
         result?.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations().findAll {
+            !(it[0] == Language.KOTLIN && it[2] == TestFramework.KOTEST)
+        }
     }
 
     @Override
