@@ -345,5 +345,7 @@ sourceSets {
 }
 
 @gradleBuild.renderExtensions()
-
+@io.micronaut.starter.rocker.feature.test.template.failOnNoDiscoveredTests.template(gradleBuild.getDsl())
 @gradleBuild.renderSubstitutions()
+
+
