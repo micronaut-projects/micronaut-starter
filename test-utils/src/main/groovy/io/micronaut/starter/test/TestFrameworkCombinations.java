@@ -22,7 +22,7 @@ public class TestFrameworkCombinations {
 
     public static List<TestFramework> values() {
         return List.of(
-                //TestFramework.KOTEST,
+                TestFramework.KOTEST,
                 TestFramework.JUNIT,
                 TestFramework.SPOCK
         );
