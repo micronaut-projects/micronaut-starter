@@ -9,6 +9,7 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.test.TestFrameworkCombinations
 import spock.lang.PendingFeature
 
@@ -41,8 +42,8 @@ class CreateAzureFunctionSpec extends CommandSpec {
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
-            Language lang,
             String serializationFeature,
+            Language lang,
             BuildTool build,
             TestFramework testFramework
     ) {
@@ -57,13 +58,15 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, build, serializationFeature,testFramework] << [
+        [serializationFeature, lang, build,testFramework] << [
+                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 Language.values(),
                 BuildToolCombinations.buildTools,
-                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
                 TestFrameworkCombinations.values()
         ].combinations().findAll {
             LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
         }
     }
 }

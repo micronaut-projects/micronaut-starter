@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import org.yaml.snakeyaml.Yaml
@@ -23,10 +24,10 @@ class SlackSpec extends CommandSpec {
     }
 
     void "test maven agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType"(
+            ApplicationType applicationType,
             Language language,
-            TestFramework testFramework,
             List<String> features,
-            ApplicationType applicationType
+            TestFramework testFramework
     ) {
         when:
         generateProject(language, BuildTool.MAVEN, features, applicationType, testFramework)
@@ -36,23 +37,25 @@ class SlackSpec extends CommandSpec {
         output?.contains('BUILD SUCCESS')
 
         where:
-        [language, testFramework, features, applicationType] << [
+        [applicationType, language, testFramework, features] << [
+                [ApplicationType.DEFAULT],
                 Language.values(),
-                TestFrameworkCombinations.values(),
                 [
                         ['agorapulse-micronaut-slack'],
                         ['agorapulse-micronaut-slack', 'agorapulse-gru-http']
                 ],
-                [ApplicationType.DEFAULT],
-        ].combinations()
+                TestFrameworkCombinations.values()
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 
     void "test gradle agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType using #buildTool"(
-            BuildTool buildTool,
+            ApplicationType applicationType,
             Language language,
+            BuildTool buildTool,
             TestFramework testFramework,
-            List<String> features,
-            ApplicationType applicationType
+            List<String> features
     ) {
         when:
         generateProject(language, buildTool, features, applicationType, testFramework)
@@ -67,16 +70,19 @@ class SlackSpec extends CommandSpec {
         result?.output?.contains('BUILD SUCCESS')
 
         where:
-        [buildTool, language, testFramework, features, applicationType] << [
-                BuildTool.valuesGradle(),
+        [applicationType, language, buildTool, testFramework, features] << [
+                [ApplicationType.DEFAULT],
                 Language.values(),
+                BuildTool.valuesGradle(),
                 TestFrameworkCombinations.values(),
                 [
                         ['agorapulse-micronaut-slack'],
                         ['agorapulse-micronaut-slack', 'agorapulse-gru-http']
                 ],
-                [ApplicationType.DEFAULT],
-        ].combinations()
+
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 
     void "slack manifest generated for #buildTool"(BuildTool buildTool) {

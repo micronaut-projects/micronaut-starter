@@ -35,8 +35,23 @@ class LanguageBuildTestFrameworkCombinations {
                 : [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
             LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
         }.findAll {
-            (it[0] != Language.KOTLIN && it[2] != TestFramework.KOTEST) ||
-            (it[0] == Language.KOTLIN && it[2] == TestFramework.KOTEST)
+            return filterByTestFramework(it)
         }
+    }
+
+
+    static boolean filterByTestFramework(List it) {
+        int languageIndex = 0; if (it.size() >= 4) {
+            languageIndex = 1
+        }
+        int testFrameworkIndex = 2
+        if (it.size() >= 4) {
+            testFrameworkIndex =  3
+        }
+        if (it.size() == 2) {
+            testFrameworkIndex =  1
+        }
+        return (it[languageIndex] != Language.KOTLIN && it[testFrameworkIndex] != TestFramework.KOTEST) ||
+                    (it[languageIndex] == Language.KOTLIN && it[testFrameworkIndex] == TestFramework.KOTEST)
     }
 }

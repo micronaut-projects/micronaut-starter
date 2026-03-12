@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
@@ -32,11 +33,14 @@ class GruHttpSpec extends CommandSpec {
         [language, testFramework] << [
                 Language.values(),
                 TestFrameworkCombinations.values()
-        ].combinations()
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
+
     }
 
     @Unroll
-    void "test gradle agorapulse-gru-http with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
+    void "test gradle agorapulse-gru-http with #language and #testFramework"(Language language, BuildTool buildTool, TestFramework testFramework) {
         when:
         generateProject(language, buildTool, ["agorapulse-gru-http"], ApplicationType.DEFAULT, testFramework)
         BuildResult result = executeGradle("test")
@@ -46,9 +50,11 @@ class GruHttpSpec extends CommandSpec {
 
         where:
         [buildTool, language, testFramework] << [
-                [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE_KOTLIN],
                 Language.values(),
+                [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE_KOTLIN],
                 TestFrameworkCombinations.values()
-        ].combinations()
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 }

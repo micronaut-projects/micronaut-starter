@@ -31,6 +31,8 @@ class ApplicationTypeCombinations {
     static List combinations(List<ApplicationType> applicationTypes, List<Language> languages = Language.values() as List<Language>) {
         [applicationTypes, languages, BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
         }
     }
 
@@ -41,6 +43,8 @@ class ApplicationTypeCombinations {
             List<BuildTool> buildTools) {
         [applicationTypes, languages, buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
         }
     }
 }

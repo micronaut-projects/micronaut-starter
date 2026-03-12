@@ -31,6 +31,8 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
         [applicationType, lang, build, testFramework] << [
                 [ApplicationType.DEFAULT, ApplicationType.FUNCTION], GraalVMFeatureValidator.supportedLanguages(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations().findAll {
             ApplicationTypeCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
         }
 
     }
