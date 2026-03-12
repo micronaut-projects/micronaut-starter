@@ -34,6 +34,9 @@ class LanguageBuildTestFrameworkCombinations {
                 ? [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values(), features].combinations()
                 : [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
             LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            (it[0] != Language.KOTLIN && it[2] != TestFramework.KOTEST) ||
+            (it[0] == Language.KOTLIN && it[2] == TestFramework.KOTEST)
         }
     }
 }
