@@ -26,6 +26,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.json.SerializationFeature;
 import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
 import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
 import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
@@ -89,8 +90,10 @@ public class OracleRawFunction extends OracleFunction {
             );
         }
         super.processSelectedFeatures(featureContext);
-        // Requires Jackson due to https://github.com/micronaut-projects/micronaut-oracle-cloud/issues/603
-        featureContext.addFeatureIfNotPresent(JacksonDatabindFeature.class, jacksonDatabindFeature);
+        if (featureContext.getSelectedFeatures().stream().noneMatch(feature -> feature instanceof SerializationFeature)) {
+            // Requires Jackson due to https://github.com/micronaut-projects/micronaut-oracle-cloud/issues/603
+            featureContext.addFeatureIfNotPresent(JacksonDatabindFeature.class, jacksonDatabindFeature);
+        }
     }
 
     @Override
