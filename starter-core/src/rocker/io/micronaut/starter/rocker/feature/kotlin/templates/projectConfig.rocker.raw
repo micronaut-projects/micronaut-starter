@@ -1,4 +1,5 @@
-package io.kotest.provided
+@args (String packageName)
+package @packageName
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.micronaut.test.extensions.kotest5.MicronautKotest5Extension

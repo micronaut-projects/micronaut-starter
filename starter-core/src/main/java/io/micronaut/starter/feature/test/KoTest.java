@@ -23,7 +23,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.rocker.feature.kotlin.templates.projectConfig;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.kotest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -60,10 +61,7 @@ public class KoTest implements TestFeature {
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        generatorContext.addTemplate("koTestConfig",
-                new URLTemplate("src/test/kotlin/io/kotest/provided/ProjectConfig.kt",
-                        classLoader.getResource("kotest/ProjectConfig.kt")));
+        generatorContext.addTemplate("koTestConfig", new RockerTemplate("src/test/kotlin/{packagePath}/ProjectConfig.kt", projectConfig.template(generatorContext.getProject().getPackageName())));
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_KOTEST);
