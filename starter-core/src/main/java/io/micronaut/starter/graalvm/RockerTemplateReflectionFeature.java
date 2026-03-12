@@ -48,6 +48,7 @@ import java.util.stream.Stream;
  */
 public final class RockerTemplateReflectionFeature implements Feature {
     private static final String CLASS_SUFFIX = ".class";
+    private static final boolean LOG = false;
 
     @Override
     public void beforeAnalysis(BeforeAnalysisAccess access) {
@@ -238,6 +239,8 @@ public final class RockerTemplateReflectionFeature implements Feature {
     }
 
     private static void log(String message) {
-        System.err.println("[RockerTemplateReflectionFeature] " + message);
+        if (LOG) {
+            System.out.println("[RockerTemplateReflectionFeature] " + message);
+        }
     }
 }
