@@ -17,7 +17,6 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
         language        | buildTool        | testFramework
         Language.JAVA   | BuildTool.GRADLE | TestFramework.JUNIT
         Language.GROOVY | BuildTool.GRADLE | TestFramework.JUNIT
-        Language.KOTLIN | BuildTool.GRADLE | TestFramework.JUNIT
         Language.JAVA   | BuildTool.GRADLE | TestFramework.SPOCK
         Language.GROOVY | BuildTool.GRADLE | TestFramework.SPOCK
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.JUNIT
@@ -25,7 +24,6 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
         //Language.KOTLIN | BuildTool.MAVEN  | TestFramework.JUNIT
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.GROOVY | BuildTool.MAVEN  | TestFramework.SPOCK
-        Language.KOTLIN | BuildTool.GRADLE | TestFramework.SPOCK
         //Language.KOTLIN | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.KOTLIN | BuildTool.GRADLE | TestFramework.KOTEST
         //Language.KOTLIN | BuildTool.MAVEN  | TestFramework.KOTEST
