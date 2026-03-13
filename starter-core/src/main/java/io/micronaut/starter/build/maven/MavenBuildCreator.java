@@ -31,6 +31,8 @@ import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.starter.feature.validation.ConfigurationBlockProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -42,6 +44,11 @@ import java.util.List;
 public class MavenBuildCreator {
 
     public static final String PROPERTY_MICRONAUT_CORE_VERSION = "micronaut.core.version";
+    private final ConfigurationBlockProvider configurationBlockProvider;
+
+    public MavenBuildCreator(ConfigurationBlockProvider configurationBlockProvider) {
+        this.configurationBlockProvider = configurationBlockProvider;
+    }
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
@@ -100,6 +107,7 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .toList();
 
+        ConfigurationValidationBlock configurationValidation = configurationBlockProvider.configurationValidation(generatorContext);
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
@@ -112,7 +120,8 @@ public class MavenBuildCreator {
                 generatorContext.getProfiles(),
                 generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList(),
                 testResourcesDependencies(generatorContext),
-                compilerArgs(generatorContext)
+                compilerArgs(generatorContext),
+                configurationValidation
                 );
     }
 
