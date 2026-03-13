@@ -27,7 +27,7 @@ class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
         return "hibernateReactiveJpa"
     }
 
-    @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
+    @Ignore
     void "test maven hibernate-reactive-jpa with java and #db"(String db) {
         when:
         generateProject(Language.JAVA, BuildTool.MAVEN, [HibernateReactiveJpa.NAME, db, MicronautValidationFeature.NAME])

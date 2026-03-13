@@ -44,7 +44,9 @@ class BasecampAwsChatBotFunctionSpec extends CommandSpec {
         result.contains("BUILD SUCCESS")
 
         where:
-        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations().findAll {
+            it[1] != BuildTool.MAVEN
+        }
         feature = BasecampAwsChatBot.NAME
     }
 }

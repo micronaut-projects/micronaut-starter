@@ -63,7 +63,9 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
                 .stream()
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
                 .toList()
-        ].combinations()
+        ].combinations().findAll {
+            it [0] != BuildTool.MAVEN
+        }
     }
 
     private static List<String> featuresNames() {

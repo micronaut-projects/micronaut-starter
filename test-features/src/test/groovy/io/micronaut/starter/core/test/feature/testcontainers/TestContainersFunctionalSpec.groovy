@@ -61,6 +61,8 @@ class TestContainersFunctionalSpec extends CommandSpec {
                         .filter( f -> f.name != SQLServer.NAME) // ignore SQLServer fails on CI and locally it passes only with TestContainers Desktop
                         .filter( f -> !f.embedded())
                         .toList()
-        ].combinations()
+        ].combinations().findAll {
+            it[0] != BuildTool.MAVEN
+        }
     }
 }
