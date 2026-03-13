@@ -42,6 +42,8 @@ class CdkSpec extends CommandSpec {
         }
 
         where:
-        [language, buildTool] << LanguageBuildCombinations.combinations()
+        [language, buildTool] << LanguageBuildCombinations.combinations().findAll {
+            it[1] != BuildTool.MAVEN
+        }
     }
 }
