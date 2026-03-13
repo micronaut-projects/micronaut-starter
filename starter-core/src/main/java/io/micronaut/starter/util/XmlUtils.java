@@ -59,6 +59,20 @@ public final class XmlUtils {
                 .append("</").append(tagName).append(">\n");
     }
 
+    public static void appendOpeningTag(@NonNull StringBuilder xml,
+                                 @NonNull String tagName,
+                                 int indentLevel) {
+        xml.append(indent(indentLevel))
+                .append('<').append(tagName).append(">\n");
+    }
+
+    public static void appendClosingTag(@NonNull StringBuilder xml,
+                                        @NonNull String tagName,
+                                        int indentLevel) {
+        xml.append(indent(indentLevel))
+                .append("</").append(tagName).append(">\n");
+    }
+
     public static @NonNull String indent(int level) {
         return "    ".repeat(level);
     }

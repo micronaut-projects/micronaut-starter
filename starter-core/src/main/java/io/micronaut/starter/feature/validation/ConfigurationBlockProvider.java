@@ -33,6 +33,7 @@ public class ConfigurationBlockProvider {
         if (features.stream().anyMatch(ConfigurationValidationFeature.class::isInstance)) {
             ConfigurationValidationBlock.Builder configurationValidationBuilder = ConfigurationValidationBlock.builder()
                     .enabled(true)
+                    .failOnNotPresent(true)
                     .cacheEnabled(true);
             if (features.stream().anyMatch(DependencyInjectionValidation.class::isInstance)) {
                 configurationValidationBuilder.validateDependencyInjection(true);

@@ -111,9 +111,6 @@ String jvmArguments
                || features.isFeaturePresent(R2dbc.class)))
 ) {
         <configuration>
-@if (mavenBuild.getConfigurationValidation() != null) {
-    @raw(mavenBuild.getConfigurationValidation().toXml())
-}
 @if (!mavenBuild.getAotDependencies().isEmpty()) {
 @io.micronaut.starter.rocker.feature.build.maven.templates.aotDependencies.template(mavenBuild.getAotDependencies())
 }
@@ -144,6 +141,9 @@ String jvmArguments
 }
 @if (features.contains("micronaut-aot")) {
           <configFile>aot-${packaging}.properties</configFile>
+}
+@if (mavenBuild.getConfigurationValidation() != null) {
+@raw(mavenBuild.getConfigurationValidation().toXml())
 }
         </configuration>
 }

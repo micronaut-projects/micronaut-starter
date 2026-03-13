@@ -55,7 +55,8 @@ class ConfigurationValidationBlockSpec extends Specification {
             <environment>ci</environment>
         </environments>
     </test>
-</configurationValidation>'''
+</configurationValidation>
+'''
 
         then:
         xml == expectedXml
@@ -92,6 +93,7 @@ class ConfigurationValidationBlockSpec extends Specification {
         then:
         xml == '''\
 <configurationValidation>
-</configurationValidation>'''
+</configurationValidation>
+'''
     }
 }

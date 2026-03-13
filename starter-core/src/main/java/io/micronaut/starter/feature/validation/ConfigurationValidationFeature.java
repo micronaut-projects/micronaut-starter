@@ -15,10 +15,20 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Options;
 
-public interface ConfigurationValidationFeature extends Feature {
+import java.util.Set;
+
+public interface ConfigurationValidationFeature extends DefaultFeature {
+
+    @Override
+    default boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return true;
+    }
 
     @Override
     default String getCategory() {

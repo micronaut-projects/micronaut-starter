@@ -22,7 +22,9 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
+import static io.micronaut.starter.util.XmlUtils.appendClosingTag;
 import static io.micronaut.starter.util.XmlUtils.appendList;
+import static io.micronaut.starter.util.XmlUtils.appendOpeningTag;
 import static io.micronaut.starter.util.XmlUtils.appendTag;
 import static io.micronaut.starter.util.XmlUtils.indent;
 
@@ -92,7 +94,7 @@ public record ConfigurationValidationBlock(
      */
     public @NonNull String toXml() {
         StringBuilder xml = new StringBuilder();
-        xml.append("<configurationValidation>\n");
+        appendOpeningTag(xml, "configurationValidation",  0);
 
         if (enabled != null) {
             appendTag(xml, "enabled", enabled.toString(), INDENT_LEVEL);
@@ -128,7 +130,7 @@ public record ConfigurationValidationBlock(
         appendEnvironmentSection(xml, "packageValidation", packageValidationEnvironments);
         appendEnvironmentSection(xml, "test", testEnvironments);
 
-        xml.append("</configurationValidation>");
+        appendClosingTag(xml, "configurationValidation",  0);
         return xml.toString();
     }
 
