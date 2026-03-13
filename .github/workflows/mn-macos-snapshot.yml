@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.5
+        uses: graalvm/setup-graalvm@v1.5.0
         with:
           java-version: '25'
           distribution: 'graalvm-community'
@@ -54,7 +54,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.4.5
+        uses: graalvm/setup-graalvm@v1.5.0
         with:
           java-version: '25'
           distribution: 'graalvm-community'
