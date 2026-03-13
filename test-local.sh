@@ -7,13 +7,13 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-./gradlew checkstyleMain --parallel --rerun-tasks || EXIT_STATUS=$?
+./gradlew checkstyleMain --no-build-cache --parallel --rerun-tasks || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-PREDICTIVE_TEST_SELECTION=false ./gradlew :starter-core:build --parallel --rerun-tasks || EXIT_STATUS=$?
+PREDICTIVE_TEST_SELECTION=false ./gradlew :starter-core:build --no-build-cache --parallel --rerun-tasks || EXIT_STATUS=$?
 
 if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
