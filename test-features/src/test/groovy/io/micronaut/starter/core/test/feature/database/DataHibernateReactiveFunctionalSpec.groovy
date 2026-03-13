@@ -1,6 +1,5 @@
 package io.micronaut.starter.core.test.feature.database
 
-import io.micronaut.starter.core.test.feature.database.templates.book
 import io.micronaut.starter.feature.database.DataHibernateReactive
 import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MySQL
@@ -64,7 +63,7 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
                 .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f))
                 .toList()
         ].combinations().findAll {
-            it [0] != BuildTool.MAVEN
+            it[0] != BuildTool.MAVEN
         }
     }
 
