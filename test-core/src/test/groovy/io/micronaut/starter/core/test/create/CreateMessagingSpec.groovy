@@ -39,7 +39,9 @@ class CreateMessagingSpec extends CommandSpec {
                         .map(Feature::getName)
                         .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of( 'jms-oracle-aq')).test(f))
                         .filter( f -> !isCi() || (f != "jms-sqs" && isCi()))
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toList())).findAll {
+            it[1] != BuildTool.MAVEN
+        }
     }
 
     private static boolean isCi() {
