@@ -50,8 +50,8 @@ jobs:
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: |
           echo $GPG_FILE | base64 -d > secring.gpg
-#          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
           ./gradlew docs
+          # ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: softprops/action-gh-release@v2.6.1
