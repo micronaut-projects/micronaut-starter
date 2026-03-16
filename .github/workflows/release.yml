@@ -48,7 +48,10 @@ jobs:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+        run: |
+          echo $GPG_FILE | base64 -d > secring.gpg
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+          ./gradlew docs
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
