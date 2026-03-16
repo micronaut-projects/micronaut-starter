@@ -190,16 +190,18 @@ tasks {
 @if (applicationType == ApplicationType.DEFAULT || features.contains("oracle-function")) {
 graalvmNative.toolchainDetection = false
 }
-
-@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
 graalvmNative {
-    binaries.configureEach {
-        buildArgs.addAll(
-             "-H:+StaticExecutableWithDynamicLibC",
-             "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
-        )
-    }
+    binaries {
+        all {
+            buildArgs.add("-H:+SharedArenaSupport")
+@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
+            buildArgs.addAll(
+                         "-H:+StaticExecutableWithDynamicLibC",
+                         "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+                    )
 }
+        }
+    }
 }
 
 @if (features.contains("grpc")) {
