@@ -14,4 +14,4 @@ buildSrc/gradle.properties
 */bin
 */.classpath
 */.factorypath
-/.classpath
+.classpath
