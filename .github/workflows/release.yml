@@ -48,17 +48,17 @@ jobs:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+        run: |
+          echo $GPG_FILE | base64 -d > secring.gpg
+          ./gradlew docs
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - name: Upload CLI Zip
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_content_type: application/zip
       - name: Publish to Github Pages
         if: success()
         uses: micronaut-projects/github-pages-deploy-action@master
@@ -133,14 +133,11 @@ jobs:
           zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   macos:
     name: Release OS X Intel Native CLI
     runs-on: macos-14
@@ -182,14 +179,11 @@ jobs:
           zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   macos-arm:
     name: Release OS X Arm Native CLI
     runs-on: macos-latest
@@ -231,14 +225,11 @@ jobs:
           zip -r "mn-darwin-aarch64-${VERSION}.zip" "mn-darwin-aarch64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: ./mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
@@ -279,14 +270,11 @@ jobs:
           Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          files: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   sdkman:
     name: Release to SDKMAN!
     runs-on: ubuntu-latest
