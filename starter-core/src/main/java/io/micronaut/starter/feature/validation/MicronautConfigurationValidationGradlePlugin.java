@@ -17,38 +17,23 @@ package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
-import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.rocker.feature.validation.micronautConfigurationValidationGradlePlugin;
 import java.util.Set;
-
 
 @Singleton
 class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
-    public static final boolean DEFAULT_VALIDATE_DEPENDENCY_INJECTION = true;
-    public static final boolean DEFAULT_FAIL_ON_NOT_PRESENT = true;
-    public static final String MICRONAUT_GRADLE_PLUGIN_TEST_RESOURCES_ID = "io.micronaut.configuration.validation";
+    public static final String MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID = "io.micronaut.configuration.validation";
     public static final String ARTIFACT_ID = "micronaut-configuration-validation-plugin";
+    private static final int GRADLE_PLUGIN_ORDER = 11;
 
     @Override
-    public String getName() {
-        return ARTIFACT_ID;
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micronaut Configuration Validation Plugin";
-    }
-
-    @Override
-    public String getDescription() {
-        return "The Micronaut configuration validation plugin validates your configuration files against JSON Schemas published by Micronaut modules and generated from @ConfigurationProperties.";
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return true;
     }
 
     @Override
@@ -57,36 +42,31 @@ class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            boolean validateDependencyInjection = DEFAULT_VALIDATE_DEPENDENCY_INJECTION;
-            boolean failOnNotPresent = DEFAULT_FAIL_ON_NOT_PRESENT;
-            validateDependencyInjection = true;
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id(MICRONAUT_GRADLE_PLUGIN_TEST_RESOURCES_ID)
-                    .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautConfigurationValidationGradlePlugin.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.KOTLIN), failOnNotPresent, validateDependencyInjection)))
-                    .build());
-        }
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/#configuration-validation";
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool().isGradle();
+        generatorContext.addBuildPlugin(GradlePlugin.builder()
+                .id(MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID)
+                .lookupArtifactId(ARTIFACT_ID)
+                .order(GRADLE_PLUGIN_ORDER)
+                .build());
     }
 
     @Override
     public String getCategory() {
         return Category.VALIDATION;
+    }
+
+    @Override
+    public String getName() {
+        return "micronaut-configuration-validation-gradle-plugin";
+    }
+
+    @Override
+    public String getTitle() {
+        return "Micronaut Configuration Validation Gradle Plugin";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

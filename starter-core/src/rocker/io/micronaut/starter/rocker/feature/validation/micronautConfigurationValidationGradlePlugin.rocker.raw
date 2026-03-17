@@ -1,9 +1,7 @@
-@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
+@args(ConfigurationValidationBlock configurationValidation)
 
-@args(GradleDsl dsl, boolean validateDependencyInjection, boolean failOnNotPresent)
-micronaut {
-  configurationValidation {
-     failOnNotPresent.set(@failOnNotPresent)
-     validateDependencyInjection.set(@validateDependencyInjection)
-  }
+configurationValidation {
+    failOnNotPresent.set(@configurationValidation.failOnNotPresent())
+    validateDependencyInjection.set(@configurationValidation.validateDependencyInjection())
 }
