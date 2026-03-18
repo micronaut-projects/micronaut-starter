@@ -1,0 +1,7 @@
+@import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
+@args(ConfigurationValidationBlock configurationValidation)
+
+configurationValidation {
+    failOnNotPresent.set(@configurationValidation.failOnNotPresent())
+    validateDependencyInjection.set(@configurationValidation.validateDependencyInjection())
+}

@@ -141,8 +141,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
           <appArguments>
             <arg>${function.entrypoint}</arg>
           </appArguments>
-        </configuration>
-      </plugin>
 ''')
 
         build.contains('''

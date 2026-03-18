@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.build.maven.Profile;
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,8 @@ public class MavenBuild {
     @NonNull
     private final String artifactId;
 
+    private final ConfigurationValidationBlock configurationValidation;
+
     public MavenBuild(String artifactId) {
         this(artifactId,
                 Collections.emptyList(),
@@ -76,7 +79,8 @@ public class MavenBuild {
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
-                Collections.emptyList());
+                Collections.emptyList(),
+                null);
     }
 
     public MavenBuild(@NonNull String artifactId,
@@ -95,7 +99,8 @@ public class MavenBuild {
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
-                Collections.emptyList());
+                Collections.emptyList(),
+                null);
     }
 
     @SuppressWarnings("ParameterNumber")
@@ -111,7 +116,8 @@ public class MavenBuild {
                       @NonNull Collection<Profile> profiles,
                       @NonNull List<DependencyCoordinate> aotDependencies,
                       @NonNull List<MavenCoordinate> testResourcesDependencies,
-                      @NonNull List<String> compilerArgs) {
+                      @NonNull List<String> compilerArgs,
+                      @NonNull ConfigurationValidationBlock configurationValidation) {
         this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
@@ -125,6 +131,11 @@ public class MavenBuild {
         this.aotDependencies = aotDependencies;
         this.testResourcesDependencies = testResourcesDependencies;
         this.compilerArgs = compilerArgs;
+        this.configurationValidation = configurationValidation;
+    }
+
+    public ConfigurationValidationBlock getConfigurationValidation() {
+        return configurationValidation;
     }
 
     @NonNull

@@ -280,7 +280,8 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
-                Collections.emptyList());
+                Collections.emptyList(),
+                null);
     }
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {

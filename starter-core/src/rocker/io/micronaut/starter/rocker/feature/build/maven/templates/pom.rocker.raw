@@ -142,6 +142,9 @@ String jvmArguments
 @if (features.contains("micronaut-aot")) {
           <configFile>aot-${packaging}.properties</configFile>
 }
+@if (mavenBuild.getConfigurationValidation() != null) {
+@raw(mavenBuild.getConfigurationValidation().toXml())
+}
         </configuration>
 }
       </plugin>
