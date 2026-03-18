@@ -44,7 +44,7 @@ import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
-import io.micronaut.starter.feature.validation.ConfigurationBlockProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationProvider;
 import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -67,12 +67,12 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
     public static final String AOT_KEY_SECURITY_OPENID = "micronaut.security.openid-configuration.enabled";
     private static final String DOCKER_BASE_IMAGE_ECLIPSE_TEMURIN_25_JRE = "eclipse-temurin:25-jre";
 
-    protected final ConfigurationBlockProvider configurationBlockProvider;
+    protected final ConfigurationValidationProvider configurationValidationProvider;
     protected final CoordinateResolver coordinateResolver;
 
     public MicronautBuildPlugin(CoordinateResolver coordinateResolver,
-                                ConfigurationBlockProvider configurationBlockProvider) {
-        this.configurationBlockProvider = configurationBlockProvider;
+                                ConfigurationValidationProvider configurationValidationProvider) {
+        this.configurationValidationProvider = configurationValidationProvider;
         this.coordinateResolver = coordinateResolver;
     }
 
@@ -189,7 +189,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 builder = builder.withSharedTestResources();
             }
         }
-        ConfigurationValidationBlock configurationValidation = configurationBlockProvider != null ? configurationBlockProvider.configurationValidation(generatorContext) : null;
+        ConfigurationValidationBlock configurationValidation = configurationValidationProvider != null ? configurationValidationProvider.configurationValidation(generatorContext) : null;
         if (configurationValidation != null) {
             builder = builder.configurationValidation(configurationValidation);
         }

@@ -32,7 +32,7 @@ import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
-import io.micronaut.starter.feature.validation.ConfigurationBlockProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationProvider;
 import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -46,10 +46,10 @@ public class MavenBuildCreator {
 
     public static final String PROPERTY_MICRONAUT_CORE_VERSION = "micronaut.core.version";
     @Nullable
-    private final ConfigurationBlockProvider configurationBlockProvider;
+    private final ConfigurationValidationProvider configurationValidationProvider;
 
-    public MavenBuildCreator(@Nullable ConfigurationBlockProvider configurationBlockProvider) {
-        this.configurationBlockProvider = configurationBlockProvider;
+    public MavenBuildCreator(@Nullable ConfigurationValidationProvider configurationValidationProvider) {
+        this.configurationValidationProvider = configurationValidationProvider;
     }
 
     @NonNull
@@ -109,7 +109,7 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .toList();
 
-        ConfigurationValidationBlock configurationValidation = configurationBlockProvider != null ? configurationBlockProvider.configurationValidation(generatorContext) : null;
+        ConfigurationValidationBlock configurationValidation = configurationValidationProvider != null ? configurationValidationProvider.configurationValidation(generatorContext) : null;
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
