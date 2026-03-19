@@ -46,8 +46,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
         template.contains("""
     testResources {
-        sharedServer = true
-    }""")
+        sharedServer = true""")
     }
 
     void "test resources config is not present if testContainers feature is added"() {

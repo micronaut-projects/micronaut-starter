@@ -30,8 +30,7 @@ class MySQLSpec extends ApplicationContextSpec {
         and:
         template.contains("""
     testResources {
-        additionalModules.add("jdbc-mysql")
-    }""")
+        additionalModules.add("jdbc-mysql")""")
 
         where:
         language << Language.values().toList()

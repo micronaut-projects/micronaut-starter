@@ -49,7 +49,8 @@ kotlin = "2.3.10"
 ksp = "2.3.6"
 log4j = "2.23.1"
 log4j-slf4j = "2.23.1"
-micronaut-aot = "2.9.0"
+micronaut-aot = "3.0.0-M2"
+micronaut-test-resources = "4.0.0-M1"
 micronaut-build-plugins = "8.0.0-M17"
 micronaut-gradle-plugin = "5.0.0-M1"
 mockserver-client-java = "5.15.0"
@@ -135,6 +136,8 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "k
 ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson-jvm", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 micronaut-aot = { module = "io.micronaut.aot:micronaut-aot-core", version.ref = "micronaut-aot" }
+micronaut-test-resources-core = { module = "io.micronaut.testresources:micronaut-test-resources-core", version.ref = "micronaut-test-resources" }
+
 micronaut-build-plugins = { module = "io.micronaut.build.internal:micronaut-gradle-plugins", version.ref = "micronaut-build-plugins" }
 micronaut-crac-plugin = { module = "io.micronaut.gradle:micronaut-crac-plugin", version.ref = "micronaut-gradle-plugin" }
 micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }

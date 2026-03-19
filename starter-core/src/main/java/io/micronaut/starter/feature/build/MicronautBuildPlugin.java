@@ -193,6 +193,10 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
         if (configurationValidation != null) {
             builder = builder.configurationValidation(configurationValidation);
         }
+        if (generatorContext.getFeatures().contains(TestResources.NAME)) {
+            Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-test-resources-core");
+            builder.testResources(coordinate.getVersion());
+        }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());

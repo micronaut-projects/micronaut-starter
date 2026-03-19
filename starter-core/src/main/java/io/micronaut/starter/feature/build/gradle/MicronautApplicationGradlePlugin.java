@@ -50,6 +50,7 @@ public class MicronautApplicationGradlePlugin {
 
         private String lambdaRuntimeMainClass;
         private String aotVersion;
+        private String testResourcesVersion;
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
@@ -109,6 +110,11 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
+        public Builder testResources(String testResourcesVersion) {
+            this.testResourcesVersion = testResourcesVersion;
+            return this;
+        }
+
         public Builder aot(String aotVersion) {
             this.aotVersion = aotVersion;
             return this;
@@ -165,7 +171,7 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, javaVersion, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies, configurationValidation)));
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, javaVersion, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies, configurationValidation, testResourcesVersion)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

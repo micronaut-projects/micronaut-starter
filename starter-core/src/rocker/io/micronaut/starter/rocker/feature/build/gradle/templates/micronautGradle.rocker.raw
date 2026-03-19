@@ -23,7 +23,8 @@
     Map<String, String> aotKeys,
     String lambdaRuntimeMainClass,
     Set<String> ignoredAutomaticDependencies,
-    ConfigurationValidationBlock configurationValidation
+    ConfigurationValidationBlock configurationValidation,
+    String testResourcesVersion
 )
 micronaut {
 @if(ignoredAutomaticDependencies != null) {
@@ -48,7 +49,7 @@ micronaut {
         annotations("@(packageName).*")
     }
 }
-@if (additionalTestResourceModules != null || sharedTestResources) {
+@if (testResourcesVersion != null || additionalTestResourceModules != null || sharedTestResources) {
     testResources {
         @if(additionalTestResourceModules != null) {
             @for (String module : additionalTestResourceModules) {
@@ -58,6 +59,7 @@ micronaut {
         @if(sharedTestResources) {
         sharedServer = true
         }
+        version = "@(testResourcesVersion)"
     }
 }
 @if(aotVersion != null) {
