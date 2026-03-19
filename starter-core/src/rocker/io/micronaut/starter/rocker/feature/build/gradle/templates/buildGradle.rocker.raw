@@ -252,7 +252,7 @@ java {
     // GraalJS for React server side rendering requires GraalVM.
     toolchain {
         vendor = JvmVendorSpec.GRAAL_VM
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
