@@ -42,7 +42,6 @@ public class TestContainers implements Feature {
     public static final String ARTIFACT_ID_TESTCONTAINERS = "testcontainers";
     public static final String ARTIFACT_ID_TESTCONTAINERS_PREFIX = ARTIFACT_ID_TESTCONTAINERS + "-";
 
-
     @NonNull
     @Override
     public String getName() {
