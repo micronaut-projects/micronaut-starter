@@ -70,9 +70,11 @@ loadScripts(document, 'script');</script>
 <li><a href="#getHeaderHash()" tabindex="0">getHeaderHash()</a></li>
 <li><a href="#getModifiedAt()" tabindex="0">getModifiedAt()</a></li>
 <li><a href="#getArgumentNames()" tabindex="0">getArgumentNames()</a></li>
+<li><a href="#dsl(io.micronaut.starter.build.gradle.GradleDsl)" tabindex="0">dsl(GradleDsl)</a></li>
+<li><a href="#dsl()" tabindex="0">dsl()</a></li>
 <li><a href="#configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" tabindex="0">configurationValidation(ConfigurationValidationBlock)</a></li>
 <li><a href="#configurationValidation()" tabindex="0">configurationValidation()</a></li>
-<li><a href="#template(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" tabindex="0">template(ConfigurationValidationBlock)</a></li>
+<li><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" tabindex="0">template(GradleDsl, ConfigurationValidationBlock)</a></li>
 <li><a href="#buildTemplate()" tabindex="0">buildTemplate()</a></li>
 </ol>
 </li>
@@ -149,6 +151,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" class="member-name-link">configurationValidation</a><wbr>(<a href="../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dsl()" class="member-name-link">dsl</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dsl(io.micronaut.starter.build.gradle.GradleDsl)" class="member-name-link">dsl</a><wbr>(<a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getArgumentNames()" class="member-name-link">getArgumentNames</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -168,7 +176,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getTemplatePackageName()" class="member-name-link">getTemplatePackageName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" class="member-name-link">template</a><wbr>(<a href="../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" class="member-name-link">template</a><wbr>(<a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
+ <a href="../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -255,6 +264,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="dsl(io.micronaut.starter.build.gradle.GradleDsl)">
+<h3>dsl</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></span>&nbsp;<span class="element-name">dsl</span><wbr><span class="parameters">(<a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl)</span></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dsl()">
+<h3>dsl</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a></span>&nbsp;<span class="element-name">dsl</span>()</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)">
 <h3>configurationValidation</h3>
 <div class="horizontal-scroll">
@@ -271,10 +296,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="template(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)">
+<section class="detail" id="template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.feature.validation.ConfigurationValidationBlock)">
 <h3>template</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="micronautConfigurationValidationGradlePlugin.html" title="class in io.micronaut.starter.rocker.feature.validation">micronautConfigurationValidationGradlePlugin</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
+ <a href="../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</span></div>
 </div>
 </section>
 </li>
