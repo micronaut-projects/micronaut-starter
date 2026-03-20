@@ -56,7 +56,7 @@ public class DefaultConfigurationValidationProvider implements ConfigurationVali
     }
 
     protected ConfigurationValidationBlock configurationValidation() {
-        return configurationValidation;
+        return builder().build();
     }
 
     protected ConfigurationValidationBlock.Builder builder() {
