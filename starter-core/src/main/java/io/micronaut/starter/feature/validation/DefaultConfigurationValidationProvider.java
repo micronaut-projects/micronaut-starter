@@ -16,9 +16,13 @@
 package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.database.DataJdbc;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 @Singleton
 public class DefaultConfigurationValidationProvider implements ConfigurationValidationProvider {
@@ -65,6 +69,7 @@ public class DefaultConfigurationValidationProvider implements ConfigurationVali
                 .validateDependencyInjection(validateDependencyInjection)
                 .failOnNotPresent(failOnNotPresent)
                 .cacheEnabled(cache)
+                .suppressions(List.of(JdbcFeature.PROPERTY_DATASOURCES_DEFAULT_DB_TYPE))
                 .enabled(enabled);
     }
 }
