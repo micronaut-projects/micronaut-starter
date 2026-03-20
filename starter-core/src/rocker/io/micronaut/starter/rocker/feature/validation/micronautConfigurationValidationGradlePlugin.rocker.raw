@@ -1,7 +1,15 @@
+@import io.micronaut.starter.build.gradle.GradleDsl
 @import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
-@args(ConfigurationValidationBlock configurationValidation)
+@args(GradleDsl dsl, ConfigurationValidationBlock configurationValidation)
 
 configurationValidation {
     failOnNotPresent.set(@configurationValidation.failOnNotPresent())
     validateDependencyInjection.set(@configurationValidation.validateDependencyInjection())
+    @if(configurationValidation.suppressions() != null && !configurationValidation.suppressions().isEmpty()) {
+    @if (dsl == GradleDsl.KOTLIN) {
+    suppressions.set(listOf(@for (int i = 0; i < configurationValidation.suppressions().size(); i++) {"@(configurationValidation.suppressions().get(i))"@if (i < (configurationValidation.suppressions().size() -1)) {, }}))
+    } else {
+    suppressions.set([@for (int i = 0; i < configurationValidation.suppressions().size(); i++) {"@(configurationValidation.suppressions().get(i))"@if (i < (configurationValidation.suppressions().size() -1)) {, }}])
+    }
+    }
 }

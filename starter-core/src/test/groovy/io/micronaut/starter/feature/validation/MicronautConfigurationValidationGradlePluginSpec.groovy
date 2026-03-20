@@ -31,9 +31,24 @@ class MicronautConfigurationValidationGradlePluginSpec extends ApplicationContex
         then:
         output.contains(CONFIGURATION_VALIDATION_PLUGIN)
         verifier.hasBuildPlugin(MicronautConfigurationValidationGradlePlugin.MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID)
+        output.contains("configurationValidation {")
 
         where:
         [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+    }
+
+    void 'configuration validation renders suppressions for #buildTool'(BuildTool buildTool, String expectedSuppressionLine) {
+        when:
+        String output = build(buildTool, Language.JAVA)
+
+        then:
+        output.contains('configurationValidation {')
+        output.contains(expectedSuppressionLine)
+
+        where:
+        buildTool              | expectedSuppressionLine
+        BuildTool.GRADLE       | 'suppressions.set(["datasources.default.db-type"])'
+        BuildTool.GRADLE_KOTLIN| 'suppressions.set(listOf("datasources.default.db-type"))'
     }
 
     void 'configuration validation gradle plugin order is correct for language=#language with #buildTool'(BuildTool buildTool, Language language) {

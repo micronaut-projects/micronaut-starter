@@ -66,7 +66,7 @@ micronaut {
 @io.micronaut.starter.rocker.feature.build.gradle.templates.aotExtension.template(aotKeys)
 }
 @if (configurationValidation!=null) {
-@io.micronaut.starter.rocker.feature.validation.micronautConfigurationValidationGradlePlugin.template(configurationValidation)
+@io.micronaut.starter.rocker.feature.validation.micronautConfigurationValidationGradlePlugin.template(dsl, configurationValidation)
 }
 }
 
