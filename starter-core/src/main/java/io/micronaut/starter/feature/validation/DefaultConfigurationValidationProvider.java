@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.database.DataJdbc;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
@@ -56,8 +55,7 @@ public class DefaultConfigurationValidationProvider implements ConfigurationVali
 
     @Override
     public @Nullable ConfigurationValidationBlock configurationValidation(@NonNull GeneratorContext generatorContext) {
-        //return generatorContext.getBuildTool().isGradle() ? configurationValidation : null;
-        return generatorContext.getBuildTool().isGradle() ? builder().build() : builder().enabled(false).build();
+        return generatorContext.getBuildTool().isGradle() ? configurationValidation : null;
     }
 
     protected ConfigurationValidationBlock configurationValidation() {

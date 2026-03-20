@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 import java.util.Set;
 
 @Singleton
@@ -30,6 +31,12 @@ class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
     public static final String MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID = "io.micronaut.configuration.validation";
     public static final String ARTIFACT_ID = "micronaut-configuration-validation-plugin";
     private static final int GRADLE_PLUGIN_ORDER = 11;
+
+    private final ConfigurationValidationProvider configurationValidationProvider;
+
+    MicronautConfigurationValidationGradlePlugin(ConfigurationValidationProvider configurationValidationProvider) {
+        this.configurationValidationProvider = configurationValidationProvider;
+    }
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
@@ -43,11 +50,13 @@ class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addBuildPlugin(GradlePlugin.builder()
-                .id(MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID)
-                .lookupArtifactId(ARTIFACT_ID)
-                .order(GRADLE_PLUGIN_ORDER)
-                .build());
+        if (generatorContext.getBuildTool().isGradle() && configurationValidationProvider.configurationValidation(generatorContext) != null) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id(MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID)
+                    .lookupArtifactId(ARTIFACT_ID)
+                    .order(GRADLE_PLUGIN_ORDER)
+                    .build());
+        }
     }
 
     @Override
@@ -56,6 +65,7 @@ class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "micronaut-configuration-validation-gradle-plugin";
     }

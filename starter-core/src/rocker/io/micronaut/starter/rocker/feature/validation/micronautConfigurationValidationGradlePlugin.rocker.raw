@@ -2,6 +2,7 @@
 @import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
 @args(GradleDsl dsl, ConfigurationValidationBlock configurationValidation)
     configurationValidation {
+        enabled.set(@configurationValidation.enabled())
         failOnNotPresent.set(@configurationValidation.failOnNotPresent())
         validateDependencyInjection.set(@configurationValidation.validateDependencyInjection())
 @if(configurationValidation.suppressions() != null && !configurationValidation.suppressions().isEmpty()) {
