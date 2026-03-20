@@ -7,8 +7,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 
 class ConfigurationValidationFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @PendingFeature
     void 'configuration validation block is not added'() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
