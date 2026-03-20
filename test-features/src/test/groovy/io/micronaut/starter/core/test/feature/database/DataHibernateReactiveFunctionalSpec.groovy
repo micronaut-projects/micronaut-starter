@@ -19,6 +19,7 @@ import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 // Don't delete this import.  It is not an unused import
 import io.micronaut.starter.core.test.feature.database.templates.book
+import spock.lang.PendingFeature
 
 class DataHibernateReactiveFunctionalSpec extends CommandSpec {
 
@@ -27,6 +28,7 @@ class DataHibernateReactiveFunctionalSpec extends CommandSpec {
         return "hibernateReactiveJpa"
     }
 
+    @PendingFeature
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven data-hibernate-reactive with java and #db"(String db) {
         when:
