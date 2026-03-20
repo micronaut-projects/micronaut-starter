@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.testresources.buildtools.KnownModules;
 
 public enum DbType {
@@ -61,5 +63,18 @@ public enum DbType {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Nullable
+    public static DbType of(@Nullable String name) {
+        if (StringUtils.isEmpty(name)) {
+            return null;
+        }
+        for (DbType dbType : DbType.values()) {
+            if (dbType.name.equalsIgnoreCase(name)) {
+                return dbType;
+            }
+        }
+        return null;
     }
 }
