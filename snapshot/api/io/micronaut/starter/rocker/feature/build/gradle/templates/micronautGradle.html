@@ -104,7 +104,11 @@ loadScripts(document, 'script');</script>
 <li><a href="#lambdaRuntimeMainClass()" tabindex="0">lambdaRuntimeMainClass()</a></li>
 <li><a href="#ignoredAutomaticDependencies(java.util.Set)" tabindex="0">ignoredAutomaticDependencies(Set)</a></li>
 <li><a href="#ignoredAutomaticDependencies()" tabindex="0">ignoredAutomaticDependencies()</a></li>
-<li><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set)" tabindex="0">template(GradleDsl, BuildTool, String, Dockerfile, Dockerfile, List, List, String, String, String, boolean, String, List, boolean, Map, String, Set)</a></li>
+<li><a href="#configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" tabindex="0">configurationValidation(ConfigurationValidationBlock)</a></li>
+<li><a href="#configurationValidation()" tabindex="0">configurationValidation()</a></li>
+<li><a href="#testResourcesVersion(java.lang.String)" tabindex="0">testResourcesVersion(String)</a></li>
+<li><a href="#testResourcesVersion()" tabindex="0">testResourcesVersion()</a></li>
+<li><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set,io.micronaut.starter.feature.validation.ConfigurationValidationBlock,java.lang.String)" tabindex="0">template(GradleDsl, BuildTool, String, Dockerfile, Dockerfile, List, List, String, String, String, boolean, String, List, boolean, Map, String, Set, ConfigurationValidationBlock, String)</a></li>
 <li><a href="#buildTemplate()" tabindex="0">buildTemplate()</a></li>
 </ol>
 </li>
@@ -199,6 +203,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected com.fizzed.rocker.runtime.DefaultRockerTemplate</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildTemplate()" class="member-name-link">buildTemplate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configurationValidation()" class="member-name-link">configurationValidation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)" class="member-name-link">configurationValidation</a><wbr>(<a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dockerBuilderImages()" class="member-name-link">dockerBuilderImages</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -290,7 +300,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sharedTestResources(boolean)" class="member-name-link">sharedTestResources</a><wbr>(boolean&nbsp;sharedTestResources)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set)" class="member-name-link">template</a><wbr>(<a href="../../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set,io.micronaut.starter.feature.validation.ConfigurationValidationBlock,java.lang.String)" class="member-name-link">template</a><wbr>(<a href="../../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
  <a href="../../../../../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;javaVersion,
  <a href="../../../../../feature/build/gradle/Dockerfile.html" title="class in io.micronaut.starter.feature.build.gradle">Dockerfile</a>&nbsp;dockerfile,
@@ -306,8 +316,16 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;sharedTestResources,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;aotKeys,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies,
+ <a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testResourcesVersion)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testResourcesVersion()" class="member-name-link">testResourcesVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testResourcesVersion(java.lang.String)" class="member-name-link">testResourcesVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testResourcesVersion)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testRuntime()" class="member-name-link">testRuntime</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -671,7 +689,39 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set)">
+<section class="detail" id="configurationValidation(io.micronaut.starter.feature.validation.ConfigurationValidationBlock)">
+<h3>configurationValidation</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></span>&nbsp;<span class="element-name">configurationValidation</span><wbr><span class="parameters">(<a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation)</span></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="configurationValidation()">
+<h3>configurationValidation</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a></span>&nbsp;<span class="element-name">configurationValidation</span>()</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="testResourcesVersion(java.lang.String)">
+<h3>testResourcesVersion</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></span>&nbsp;<span class="element-name">testResourcesVersion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testResourcesVersion)</span></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="testResourcesVersion()">
+<h3>testResourcesVersion</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">testResourcesVersion</span>()</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="template(io.micronaut.starter.build.gradle.GradleDsl,io.micronaut.starter.options.BuildTool,java.lang.String,io.micronaut.starter.feature.build.gradle.Dockerfile,io.micronaut.starter.feature.build.gradle.Dockerfile,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean,java.lang.String,java.util.List,boolean,java.util.Map,java.lang.String,java.util.Set,io.micronaut.starter.feature.validation.ConfigurationValidationBlock,java.lang.String)">
 <h3>template</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="micronautGradle.html" title="class in io.micronaut.starter.rocker.feature.build.gradle.templates">micronautGradle</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../../../build/gradle/GradleDsl.html" title="enum class in io.micronaut.starter.build.gradle">GradleDsl</a>&nbsp;dsl,
@@ -690,7 +740,9 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;sharedTestResources,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;aotKeys,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;lambdaRuntimeMainClass,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;ignoredAutomaticDependencies,
+ <a href="../../../../../feature/validation/ConfigurationValidationBlock.html" title="class in io.micronaut.starter.feature.validation">ConfigurationValidationBlock</a>&nbsp;configurationValidation,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;testResourcesVersion)</span></div>
 </div>
 </section>
 </li>
