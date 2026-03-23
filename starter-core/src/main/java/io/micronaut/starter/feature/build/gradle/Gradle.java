@@ -54,23 +54,23 @@ public class Gradle implements BuildFeature {
     private static final String GRADLE = "gradle";
     private static final String DASH = "-";
     private static final String SLASH = "/";
-    private static final String GRADLE_9_4_0 = "9.4.0";
+    private static final String GRADLE_9_4_1 = "9.4.1";
     private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
     private static final String GRADLEW = "gradlew";
     private static final String GRADLEW_BAT = "gradlew.bat";
 
     private static final Map<String, String> GRADLEW_MAP = Map.of(
-            GRADLE_9_4_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_0 + SLASH + GRADLEW
+            GRADLE_9_4_1, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_1 + SLASH + GRADLEW
     );
     private static final Map<String, String> GRADLEW_BAT_MAP = Map.of(
-            GRADLE_9_4_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_0 + SLASH + GRADLEW_BAT);
+            GRADLE_9_4_1, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_1 + SLASH + GRADLEW_BAT);
 
     private static final Map<String, String> WRAPPER_JAR_MAP = Map.of(
-            GRADLE_9_4_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_0 + SLASH + WRAPPER_JAR
+            GRADLE_9_4_1, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_1 + SLASH + WRAPPER_JAR
     );
     private static final Map<String, String> WRAPPER_PROPS_MAP = Map.of(
-            GRADLE_9_4_0, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_0 + SLASH + WRAPPER_PROPS);
+            GRADLE_9_4_1, GRADLE + SLASH  + GRADLE + DASH + GRADLE_9_4_1 + SLASH + WRAPPER_PROPS);
 
     private static final Property PROPERTY_GRADLE_JVMARGS = new Property() {
         @Override
@@ -130,7 +130,7 @@ public class Gradle implements BuildFeature {
 
     protected void addGradleInitFiles(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String gradleVersion = GRADLE_9_4_0;
+        String gradleVersion = GRADLE_9_4_1;
         String gradleJarPath = WRAPPER_JAR_MAP.get(gradleVersion);
         generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(gradleJarPath)));
         String gradlePropertiesPath = WRAPPER_PROPS_MAP.get(gradleVersion);
