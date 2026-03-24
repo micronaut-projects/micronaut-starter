@@ -69,6 +69,17 @@ micronaut {
 @io.micronaut.starter.rocker.feature.validation.micronautConfigurationValidationGradlePlugin.template(dsl, configurationValidation)
 }
 }
+@if (testResourcesVersion != null || additionalTestResourceModules != null || sharedTestResources) {
+@if (dsl == GradleDsl.GROOVY) {
+tasks.withType(io.micronaut.gradle.testresources.StartTestResourcesService).configureEach {
+    useClassDataSharing = false
+}
+} else {
+tasks.withType<io.micronaut.gradle.testresources.StartTestResourcesService>().configureEach {
+      useClassDataSharing.set(false)
+}
+}
+}
 
 @if(dockerfile != null) {
 @dockerfileExtension.template(dsl, dockerfile)
