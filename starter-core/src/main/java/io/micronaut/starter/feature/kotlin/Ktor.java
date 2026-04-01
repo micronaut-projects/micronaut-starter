@@ -43,6 +43,9 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+import static io.micronaut.starter.feature.lang.kotlin.Kotlin.ARTIFACT_ID_KOTLIN_REFLECT;
+import static io.micronaut.starter.feature.lang.kotlin.Kotlin.GROUP_ID_ORG_JETBRAINS_KOTLIN;
+
 @Requires(property = "micronaut.starter.feature.ktor.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, KotlinSpecificFeature {
@@ -144,6 +147,7 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
                     generatorContext.addDependency(Dependency.builder()
                             .groupId(GROUP_ID_IO_KTOR)
                             .artifactId(ARTIFACT_ID_KTOR_SERIALIZATION_JACKSON)
+                            .exclude(Dependency.builder().groupId(GROUP_ID_ORG_JETBRAINS_KOTLIN).artifactId(ARTIFACT_ID_KOTLIN_REFLECT).build())
                             .version(version)
                             .compile());
                 });

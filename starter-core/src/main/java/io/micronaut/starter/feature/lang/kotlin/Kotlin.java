@@ -38,6 +38,9 @@ import java.util.function.Predicate;
 @Requires(property = "micronaut.starter.feature.kotlin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Kotlin implements LanguageFeature {
+    public static final String ARTIFACT_ID_KOTLIN_REFLECT = "kotlin-reflect";
+    public static final String GROUP_ID_ORG_JETBRAINS_KOTLIN = "org.jetbrains.kotlin";
+
     protected static final Dependency DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME = MicronautDependencyUtils.kotlinDependency()
             .artifactId("micronaut-kotlin-runtime")
             .compile()
@@ -82,19 +85,23 @@ public class Kotlin implements LanguageFeature {
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        Dependency.Builder kotlin = Dependency.builder()
-                .groupId("org.jetbrains.kotlin")
-                .compile()
-                .version("${kotlinVersion}")
-                .template();
 
-        generatorContext.addDependency(kotlin.artifactId("kotlin-stdlib-jdk8"));
-        generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
+        generatorContext.addDependency(kotlinDependency().artifactId("kotlin-stdlib-jdk8"));
+        generatorContext.addDependency(kotlinDependency().artifactId(ARTIFACT_ID_KOTLIN_REFLECT));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("com.fasterxml.jackson.module")
                 .artifactId("jackson-module-kotlin")
+                .exclude(Dependency.builder().groupId(GROUP_ID_ORG_JETBRAINS_KOTLIN).artifactId(ARTIFACT_ID_KOTLIN_REFLECT).build())
                 .runtime());
+    }
+
+    protected static Dependency.Builder kotlinDependency() {
+        return Dependency.builder()
+                .groupId(GROUP_ID_ORG_JETBRAINS_KOTLIN)
+                .compile()
+                .version("${kotlinVersion}")
+                .template();
     }
 
     @Override
