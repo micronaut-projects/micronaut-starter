@@ -88,6 +88,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
@@ -135,6 +136,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
@@ -181,6 +183,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
@@ -227,6 +230,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
         uses: graalvm/setup-graalvm@v1.4.5
@@ -272,6 +276,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
         uses: actions/setup-java@v5
@@ -300,6 +305,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
         uses: actions/setup-java@v5
