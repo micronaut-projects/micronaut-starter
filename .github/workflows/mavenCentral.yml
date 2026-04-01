@@ -31,4 +31,4 @@ jobs:
           DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: |
           echo $GPG_FILE | base64 -d > secring.gpg
-          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+#          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
