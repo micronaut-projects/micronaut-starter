@@ -109,6 +109,7 @@ String jvmArguments
           && (!features.isFeaturePresent(Data.class)
                || features.isFeaturePresent(HibernateReactiveFeature.class)
                || features.isFeaturePresent(R2dbc.class)))
+     || mavenBuild.getConfigurationValidation() != null
 ) {
         <configuration>
 @if (!mavenBuild.getAotDependencies().isEmpty()) {
