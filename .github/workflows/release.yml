@@ -107,7 +107,7 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.0
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
           distribution: 'graalvm-community'
@@ -154,7 +154,7 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.0
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
           distribution: 'graalvm-community'
@@ -200,7 +200,7 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.0
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
           distribution: 'graalvm-community'
@@ -240,7 +240,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.0
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
           distribution: 'graalvm-community'
