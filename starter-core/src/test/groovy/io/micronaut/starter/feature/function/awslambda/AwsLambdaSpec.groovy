@@ -183,7 +183,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
       <plugin>
         <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-      </plugin>
 ''')
 
         where:
