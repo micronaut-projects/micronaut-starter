@@ -52,20 +52,6 @@ class CreateMessagingSpec extends CommandSpec {
         }
     }
 
-    /**
-     * Replace {@link DefaultConfigurationValidationProvider} to avoid errors
-     * | mqtt.client.server-uri | ERROR | Missing required property
-     */
-    @Replaces(ConfigurationValidationProvider.class)
-    @Singleton
-    static class ConfigurationValidationProviderReplacement extends DefaultConfigurationValidationProvider {
-
-        @Override
-        ConfigurationValidationBlock configurationValidation(@NotNull @NonNull GeneratorContext generatorContext) {
-            return null;
-        }
-    }
-
     private static boolean isCi() {
         StringUtils.isNotEmpty(System.getenv("CI"))
     }
