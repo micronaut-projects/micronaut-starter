@@ -20,6 +20,7 @@ rocker {
     version = rockerVersion
     configurations {
         main {
+            optimize = true
             discardLogicWhitespace = true
             templateDir = file('src/rocker')
             outputDir = file('src/generated/rocker')
