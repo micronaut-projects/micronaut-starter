@@ -187,7 +187,8 @@ class SwaggerUISpec extends CommandSpec {
                   |        mapping: /swagger/**
                   |      swagger-ui:
                   |        paths: classpath:META-INF/swagger/views/swagger-ui
-                  |        mapping: /swagger-ui/**""".stripMargin())
+                  |        mapping: /swagger-ui/**
+                  |  propagation: thread-local""".stripMargin())
         def actual = yaml.parse(Files.newInputStream(applicationYAMLPath))
         assert actual == expected
     }
@@ -211,7 +212,8 @@ class SwaggerUISpec extends CommandSpec {
                   |    - access: isAnonymous()
                   |      pattern: /swagger/**
                   |    - access: isAnonymous()
-                  |      pattern: /swagger-ui/**""".stripMargin())
+                  |      pattern: /swagger-ui/**
+                  |  propagation: thread-local""".stripMargin())
 
         def actual = yaml.parse(Files.newInputStream(applicationYAMLPath))
         assert actual == expected
