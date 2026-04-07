@@ -17,7 +17,6 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.PredicateUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
-import spock.lang.IgnoreIf
 // Don't delete this import.  It is not an unused import
 import io.micronaut.starter.core.test.feature.database.templates.book
 
@@ -65,11 +64,11 @@ class HibernateReactiveJpaFunctionalSpec extends CommandSpec {
 
     private static List<String> featuresNames() {
         [
-                //MySQL.NAME,
+                MySQL.NAME,
                 MariaDB.NAME,
                 PostgreSQL.NAME,
                 Oracle.NAME,
-                //SQLServer.NAME
+                SQLServer.NAME
         ].stream()
                 .filter(n -> n != Oracle.NAME || Oracle.COMPATIBLE_WITH_HIBERNATE_REACTIVE)
                 .toList()
