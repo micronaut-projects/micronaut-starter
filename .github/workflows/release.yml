@@ -54,7 +54,7 @@ jobs:
           ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - name: Upload CLI Zip
         id: upload-release-asset
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2.6.2
         with:
           files: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
         env:
@@ -133,7 +133,7 @@ jobs:
           zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2.6.2
         with:
           files: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
         env:
@@ -179,7 +179,7 @@ jobs:
           zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2.6.2
         with:
           files: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
         env:
@@ -225,7 +225,7 @@ jobs:
           zip -r "mn-darwin-aarch64-${VERSION}.zip" "mn-darwin-aarch64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2.6.2
         with:
           files: ./mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
         env:
@@ -270,7 +270,7 @@ jobs:
           Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2.6.2
         with:
           files: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
         env:
