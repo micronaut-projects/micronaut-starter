@@ -28,7 +28,7 @@ class HtmxSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['htmx'])
+                .features(["htmx", "views-thymeleaf"])
                 .render()
 
         then:

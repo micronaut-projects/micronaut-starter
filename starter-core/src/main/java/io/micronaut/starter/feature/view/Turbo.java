@@ -17,14 +17,17 @@ package io.micronaut.starter.feature.view;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.views.turbo.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Turbo implements ViewFeature, MicronautServerDependent {
+public class Turbo implements Feature, MicronautServerDependent {
 
     public static final String ARTIFACT_ID_MICRONAUT_VIEWS_TURBO = "micronaut-views-turbo";
 
@@ -58,5 +61,15 @@ public class Turbo implements ViewFeature, MicronautServerDependent {
         generatorContext.addDependency(MicronautDependencyUtils.viewsDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_VIEWS_TURBO)
                 .compile());
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.VIEW;
     }
 }

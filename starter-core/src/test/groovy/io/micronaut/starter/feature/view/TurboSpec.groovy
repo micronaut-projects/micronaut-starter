@@ -24,11 +24,11 @@ class TurboSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test gradle turbo feature for language=#language'() {
+    void 'test gradle turbo feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['turbo'])
+                .features(['turbo', "views-thymeleaf"])
                 .render()
 
         then:
