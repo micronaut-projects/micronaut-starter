@@ -35,8 +35,7 @@ import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Objects;
 
 @Requires(property = "micronaut.starter.feature.views.react.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
@@ -85,8 +84,7 @@ public class React implements ViewFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        try {
-            generatorContext.addDependency(MicronautDependencyUtils.viewsDependency().artifactId(ARTIFACT_ID).compile());
+        generatorContext.addDependency(MicronautDependencyUtils.viewsDependency().artifactId(ARTIFACT_ID).compile());
 
             if (generatorContext.getBuildTool().isGradle()) {
                 generatorContext.addDependency(Dependency.builder()
@@ -158,11 +156,16 @@ public class React implements ViewFeature, MicronautServerDependent {
 
             // Set up the frontend project. These are *not* resources under views/ because they're raw inputs that will
             // be minified and transpiled as part of the build pipeline.
-            var ourResourceURL = Thread.currentThread().getContextClassLoader().getResource("views/react").toString();
+            var classLoader = Thread.currentThread().getContextClassLoader();
             for (var fileName : FRONTEND_FILES) {
+                var resourceName = "views/react/" + fileName;
+                var resourceUrl = Objects.requireNonNull(
+                        classLoader.getResource(resourceName),
+                        () -> "Missing bundled resource " + resourceName
+                );
                 generatorContext.addTemplate(
                         fileName,
-                        new URLTemplate("src/main/js/" + fileName, new URL(ourResourceURL + "/" + fileName))
+                        new URLTemplate("src/main/js/" + fileName, resourceUrl)
                 );
             }
             var sourceFile = generatorContext.getSourcePath("/{packagePath}/AppController");
@@ -179,11 +182,8 @@ public class React implements ViewFeature, MicronautServerDependent {
                 generatorContext.addTemplate(unitTestSource, new RockerTemplate(unitTestSource, reactTestKotlin.template(generatorContext.getProject())));
             }
 
-            // This is technically no longer necessary, but as of Truffle 24.2 still prints a scary warning about it
-            // being experimental to the console. So we disable virtual threads in Micronaut by default.
-            generatorContext.getConfiguration().addNested("micronaut.executors.blocking.virtual", "false");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);   // Cannot happen.
-        }
+        // This is technically no longer necessary, but as of Truffle 24.2 still prints a scary warning about it
+        // being experimental to the console. So we disable virtual threads in Micronaut by default.
+        generatorContext.getConfiguration().addNested("micronaut.executors.blocking.virtual", "false");
     }
 }
