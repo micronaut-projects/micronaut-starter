@@ -14,7 +14,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class SwaggerUISpec extends CommandSpec {
+class SwaggerUIFunctionalSpec extends CommandSpec {
 
     Path applicationYAMLPath
     Path openAPIPropertiesPath
