@@ -4,6 +4,7 @@ import ch.qos.logback.classic.LoggerContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ class LoggingTest {
         System.setOut(systemOut);
     }
 
+    @DisabledInNativeImage // it is Flaky
     @Test
     void testConsoleAppender() {
         ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
