@@ -61,18 +61,18 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
         GeneratorContext commandContext = buildGeneratorContext(['security-session'])
 
         then:
-        commandContext.configuration.get('micronaut.security.authentication') == 'session'
+        commandContext.configuration.get('micronaut.security.authentication') == 'SESSION'
 
         when:
         commandContext = buildGeneratorContext(['security-session', 'security-jwt'])
 
         then:
-        commandContext.configuration.get('micronaut.security.authentication') == 'session'
+        commandContext.configuration.get('micronaut.security.authentication') == 'SESSION'
 
         when:
         commandContext = buildGeneratorContext(['security-session', 'security-jwt', 'security-oauth2'])
 
         then:
-        commandContext.configuration.get('micronaut.security.authentication') == 'session'
+        commandContext.configuration.get('micronaut.security.authentication') == 'SESSION'
     }
 }
