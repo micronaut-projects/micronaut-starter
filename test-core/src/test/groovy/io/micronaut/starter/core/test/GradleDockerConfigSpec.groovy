@@ -7,7 +7,7 @@ import io.micronaut.starter.test.CommandSpec
 
 class GradleDockerConfigSpec extends CommandSpec {
 
-    void "basic dockerfile creation"(BuildTool buildTool, Integer javaVersion) {
+    void "basic dockerfile creation as expected for #buildTool and Java #javaVersion"(BuildTool buildTool, Integer javaVersion) {
         when:
         generateProjectForVersion(Language.JAVA, JdkVersion.valueOf(javaVersion), buildTool)
 
@@ -17,19 +17,19 @@ class GradleDockerConfigSpec extends CommandSpec {
         then:
         result.output.contains("BUILD SUCCESS")
         new File(dir, "build/docker/main/Dockerfile").text.contains("FROM $dockerBaseImage")
-        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community:$javaVersion-ol9 AS graalvm")
+        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community")
 
         where:
         [buildTool, javaVersion] << [
                 BuildTool.valuesGradle(),
-                [17, 21]
+                [25]
         ].combinations()
-        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre-focal" : "eclipse-temurin:21-jre-jammy"
+        dockerBaseImage = "eclipse-temurin:25-jre"
     }
 
-    void "test dockerfiles can be built"(BuildTool buildTool, String command) {
+    void "test #command works for #buildTool under java #javaVersion"(BuildTool buildTool, String command, Integer javaVersion) {
         when:
-        generateProject(Language.JAVA, buildTool)
+        generateProjectForVersion(Language.JAVA, JdkVersion.valueOf(javaVersion), buildTool)
 
         def result = executeGradle(command)
 
@@ -37,9 +37,10 @@ class GradleDockerConfigSpec extends CommandSpec {
         result.output.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, command] << [
+        [buildTool, command, javaVersion] << [
                 BuildTool.valuesGradle(),
-                ['dockerBuild', 'dockerBuildNative']
+                ['dockerBuild', 'dockerBuildNative'],
+                [25]
         ].combinations()
     }
 

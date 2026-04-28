@@ -9,3 +9,9 @@ build
 .project
 .settings
 /starter-cli/temp/
+buildSrc/gradle.properties
+*/src/generated
+*/bin
+*/.classpath
+*/.factorypath
+.classpath

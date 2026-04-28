@@ -20,7 +20,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
-import io.micronaut.starter.feature.build.MicronautGradleEnterprise
+import io.micronaut.starter.feature.build.MicronautDevelocity
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
@@ -129,9 +129,9 @@ abstract class CommandSpec extends Specification {
                          boolean addMicronautGradleEnterpriseFeature = true,
                          JdkVersion maxJdkVersion = MicronautJdkVersionConfiguration.DEFAULT_OPTION) {
         if (addMicronautGradleEnterpriseFeature) {
-            features += [MicronautGradleEnterprise.NAME]
+        //    features += [MicronautDevelocity.NAME]
         }
-        JdkVersion jdkVersion = VersionInfo.getJavaVersion();
+        JdkVersion jdkVersion = VersionInfo.getJavaVersion()
         if (jdkVersion.greaterThanEqual(maxJdkVersion)) {
             jdkVersion = maxJdkVersion
         }
@@ -155,7 +155,7 @@ abstract class CommandSpec extends Specification {
             boolean addMicronautGradleEnterpriseFeature = true
     ) {
         if (addMicronautGradleEnterpriseFeature) {
-            features += [MicronautGradleEnterprise.NAME]
+        //    features += [MicronautDevelocity.NAME]
         }
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),

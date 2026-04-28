@@ -24,7 +24,7 @@ import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.cli;
+import io.micronaut.starter.rocker.feature.cli;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Options;

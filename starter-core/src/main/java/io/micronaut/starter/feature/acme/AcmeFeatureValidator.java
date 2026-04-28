@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.acme;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.Netty;
@@ -24,6 +25,7 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.Set;
 
+@Requires(beans = Acme.class)
 @Singleton
 public class AcmeFeatureValidator implements FeatureValidator {
     @Override

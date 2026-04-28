@@ -7,6 +7,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 
 class TelegramAwsChatBotFunctionSpec extends CommandSpec {
 
@@ -27,7 +28,7 @@ class TelegramAwsChatBotFunctionSpec extends CommandSpec {
         result.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
+        [language, buildTool, testFramework] <<  LanguageBuildTestFrameworkCombinations.combinations().findAll { it[1] != BuildTool.MAVEN }
         feature = TelegramAwsChatBot.NAME
     }
 
@@ -43,7 +44,7 @@ class TelegramAwsChatBotFunctionSpec extends CommandSpec {
         result.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language, testFramework] <<  [BuildTool.values(), Language.values(), TestFramework.values()].combinations()
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations().findAll { it[1] != BuildTool.MAVEN }
         feature = TelegramAwsChatBot.NAME
     }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.testresources;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -31,6 +32,7 @@ import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.test.resources.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TestResources implements Feature {
 

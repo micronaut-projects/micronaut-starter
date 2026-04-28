@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.picocli.test.junit;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
@@ -23,10 +25,14 @@ import io.micronaut.starter.options.AbstractJunitRockerModelProvider;
 import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliGroovyJunitTest;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliJunitTest;
+import io.micronaut.starter.rocker.feature.picocli.test.junit.picocliKotlinJunitTest;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.picocli.junit.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class PicocliJunit implements PicocliTestFeature {
 

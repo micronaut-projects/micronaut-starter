@@ -19,9 +19,10 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class MicronautApplicationGradlePlugin {
 
         private String lambdaRuntimeMainClass;
         private String aotVersion;
+        private String testResourcesVersion;
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
@@ -59,11 +61,17 @@ public class MicronautApplicationGradlePlugin {
         private boolean incremental;
         private  String packageName;
         private boolean sharedTestResources;
+        private ConfigurationValidationBlock configurationValidation;
 
         private Set<String> ignoredAutomaticDependencies;
 
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
+            return this;
+        }
+
+        public Builder configurationValidation(ConfigurationValidationBlock configurationValidation) {
+            this.configurationValidation = configurationValidation;
             return this;
         }
 
@@ -99,6 +107,11 @@ public class MicronautApplicationGradlePlugin {
 
         public Builder testRuntime(String testRuntime) {
             this.testRuntime = testRuntime;
+            return this;
+        }
+
+        public Builder testResources(String testResourcesVersion) {
+            this.testResourcesVersion = testResourcesVersion;
             return this;
         }
 
@@ -158,7 +171,7 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, javaVersion, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies)));
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, javaVersion, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources, aotKeys, lambdaRuntimeMainClass, ignoredAutomaticDependencies, configurationValidation, testResourcesVersion)));
         }
 
         public Builder dsl(GradleDsl gradleDsl) {

@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
@@ -29,7 +30,10 @@ import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -41,6 +45,12 @@ import java.util.List;
 public class MavenBuildCreator {
 
     public static final String PROPERTY_MICRONAUT_CORE_VERSION = "micronaut.core.version";
+    @Nullable
+    private final ConfigurationValidationProvider configurationValidationProvider;
+
+    public MavenBuildCreator(@Nullable ConfigurationValidationProvider configurationValidationProvider) {
+        this.configurationValidationProvider = configurationValidationProvider;
+    }
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
@@ -99,6 +109,7 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .toList();
 
+        ConfigurationValidationBlock configurationValidation = configurationValidationProvider != null ? configurationValidationProvider.configurationValidation(generatorContext) : null;
         return new MavenBuild(generatorContext.getProject().getName(),
                 annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
@@ -110,7 +121,20 @@ public class MavenBuildCreator {
                 testCombineAttribute,
                 generatorContext.getProfiles(),
                 generatorContext.getDependencies().stream().filter(dep -> dep.getScope() == Scope.AOT_PLUGIN).map(DependencyCoordinate::new).toList(),
-                testResourcesDependencies(generatorContext));
+                testResourcesDependencies(generatorContext),
+                compilerArgs(generatorContext),
+                configurationValidation
+                );
+    }
+
+    @NonNull
+    private static List<String> compilerArgs(@NonNull GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().getFeatures().stream()
+                .filter(CompilerArgCodeContributingFeature.class::isInstance)
+                .map(CompilerArgCodeContributingFeature.class::cast)
+                .flatMap(f -> f.getCompilerArgs(generatorContext).stream())
+                .distinct()
+                .toList();
     }
 
     @NonNull

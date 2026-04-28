@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.messaging.pubsub
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -24,15 +27,10 @@ class PubSubSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([PubSub.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.gcp</groupId>
-      <artifactId>micronaut-gcp-pubsub</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-pubsub", Scope.COMPILE)
     }
 
     @Unroll
@@ -57,15 +55,10 @@ class PubSubSpec extends ApplicationContextSpec {
                 .language(language)
                 .features([PubSub.NAME, GraalVM.FEATURE_NAME_GRAALVM])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.count('''
-    <dependency>
-      <groupId>io.micronaut.gcp</groupId>
-      <artifactId>micronaut-gcp-pubsub</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
+        verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-pubsub", Scope.COMPILE)
 
         where:
         language << [Language.JAVA, Language.KOTLIN]

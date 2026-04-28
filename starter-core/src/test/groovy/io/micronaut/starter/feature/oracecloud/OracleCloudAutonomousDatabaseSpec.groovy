@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.oracecloud
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -39,15 +42,10 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
                 .features(['oracle-cloud-atp'])
                 .language(language)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.oraclecloud</groupId>
-      <artifactId>micronaut-oraclecloud-atp</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-atp", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }
@@ -136,7 +134,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
         when:
         generate(ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_17),
+                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_25),
                 ['oracle-cloud-atp'])
         then:
         noExceptionThrown()

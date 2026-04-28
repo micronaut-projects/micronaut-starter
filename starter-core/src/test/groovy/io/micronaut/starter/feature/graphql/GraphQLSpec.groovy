@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.graphql
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -53,15 +56,10 @@ class GraphQLSpec extends ApplicationContextSpec  implements CommandOutputFixtur
                 .language(language)
                 .features(['graphql'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.graphql</groupId>
-      <artifactId>micronaut-graphql</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.graphql", "micronaut-graphql", Scope.COMPILE)
 
         where:
         language << Language.values().toList()

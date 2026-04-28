@@ -14,8 +14,16 @@ import spock.lang.Unroll
 
 class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture {
 
+    void "test oracle-cloud-devops-build-ci is a not a preview feature"() {
+        given:
+        OCICiWorkflowFeature feature = beanContext.getBean(OCICiWorkflowFeature)
+
+        expect:
+        !feature.isPreview()
+    }
+
     @Unroll
-    void 'test oci-devops-build-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
+    void 'test oracle-cloud-devops-build-ci is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
@@ -54,7 +62,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
     }
 
     @Unroll
-    void 'test oci-devops-build-ci and graalvm is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
+    void 'test oracle-cloud-devops-build-ci and graalvm is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion.majorVersion())),
@@ -81,11 +89,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
             assert workflow.contains("location: target/foo-0.1.jar")
             assert workflow.contains("location: target/foo")
         }
-        if (jdkVersion.majorVersion() == 17) {
-            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java17-")
-        } else {
-            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java11-")
-        }
+        workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java25-")
         workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce")
         workflow.contains("location: foo")
 

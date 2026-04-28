@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.github.workflows.docker;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
-import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
+import io.micronaut.starter.rocker.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
+import io.micronaut.starter.rocker.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
@@ -30,6 +32,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 2.2
  */
+@Requires(property = "micronaut.starter.feature.github.workflow.docker.registry.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class DockerRegistryWorkflow extends AbstractDockerRegistryWorkflow {
 

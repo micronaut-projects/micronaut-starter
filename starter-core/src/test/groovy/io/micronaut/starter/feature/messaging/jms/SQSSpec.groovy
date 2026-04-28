@@ -19,8 +19,7 @@ class SQSSpec  extends ApplicationContextSpec {
         then:
         template.contains("""
     testResources {
-        additionalModules.add("localstack-sqs")
-    }""")
+        additionalModules.add("localstack-sqs")""")
 
         where:
         language << Language.values().toList()

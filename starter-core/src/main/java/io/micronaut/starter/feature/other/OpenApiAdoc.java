@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -25,6 +27,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.openapi.adoc.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenApiAdoc implements Feature, MicronautServerDependent {
 
@@ -49,12 +52,12 @@ public class OpenApiAdoc implements Feature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "OpenAPI Conversion to Asciidoc";
+        return "OpenAPI Conversion to AsciiDoc";
     }
 
     @Override
     public String getDescription() {
-        return "Adds and enables document conversion to asciidoc";
+        return "Adds and enables document conversion to AsciiDoc";
     }
 
     @Override

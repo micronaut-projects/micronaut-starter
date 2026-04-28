@@ -1,0 +1,46 @@
+@args(String groupID, String artifactID, String version)
+<plugin>
+    <groupId>@groupID</groupId>
+    <artifactId>@artifactID</artifactId>
+    <version>@version</version>
+
+    <executions>
+        <execution>
+            <id>install node and npm</id>
+            <goals><goal>install-node-and-npm</goal></goals>
+        </execution>
+
+        <execution>
+            <id>npm install</id>
+            <goals><goal>npm</goal></goals>
+        </execution>
+
+        <execution>
+            <id>webpack build server</id>
+            <goals><goal>webpack</goal></goals>
+            <configuration>
+                <arguments>--mode production --config webpack.server.js</arguments>
+                <environmentVariables>
+                    <BUILD_DIR>${project.build.outputDirectory}/views</BUILD_DIR>
+                </environmentVariables>
+            </configuration>
+        </execution>
+
+        <execution>
+            <id>webpack build client</id>
+            <goals><goal>webpack</goal></goals>
+            <configuration>
+                <arguments>--mode production --config webpack.client.js</arguments>
+                <environmentVariables>
+                    <BUILD_DIR>${project.build.outputDirectory}/views/static</BUILD_DIR>
+                </environmentVariables>
+            </configuration>
+        </execution>
+    </executions>
+
+    <configuration>
+        <nodeVersion>v21.7.2</nodeVersion>
+        <workingDirectory>src/main/js</workingDirectory>
+        <installDirectory>target</installDirectory>
+    </configuration>
+</plugin>

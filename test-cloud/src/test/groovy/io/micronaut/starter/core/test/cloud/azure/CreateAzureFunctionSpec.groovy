@@ -8,6 +8,10 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
+import spock.lang.PendingFeature
 
 class CreateAzureFunctionSpec extends CommandSpec {
 
@@ -16,6 +20,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         "test-azure-function"
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'create-#applicationType with features azure-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 Language lang,
                                                                                                                 BuildTool build,
@@ -31,12 +36,14 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
+        [applicationType, lang, build, testFramework] <<
+                ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, BuildToolCombinations.buildTools)
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
-            Language lang,
             String serializationFeature,
+            Language lang,
             BuildTool build,
             TestFramework testFramework
     ) {
@@ -51,11 +58,15 @@ class CreateAzureFunctionSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, serializationFeature, build, testFramework] << [
-                Language.values(),
+        [serializationFeature, lang, build,testFramework] << [
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
+                Language.values(),
                 BuildToolCombinations.buildTools,
-                TestFramework.values()
-        ].combinations()
+                TestFrameworkCombinations.values()
+        ].combinations().findAll {
+            LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+        }.findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 }

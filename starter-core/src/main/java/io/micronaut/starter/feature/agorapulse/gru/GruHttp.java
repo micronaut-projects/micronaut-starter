@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.agorapulse.gru;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -27,18 +29,18 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerKotlin;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerJava;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerGroovy;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestJava;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestGroovy;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestKotlin;
-import io.micronaut.starter.feature.agorapulse.gru.template.helloWorldGruControllerTestKotest;
-import io.micronaut.starter.feature.agorapulse.gru.template.gruIndexJson;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerJava;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestJava;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.helloWorldGruControllerTestKotest;
+import io.micronaut.starter.rocker.feature.agorapulse.gru.template.gruIndexJson;
 
 import java.util.Optional;
 
-
+@Requires(property = "micronaut.starter.feature.agorapulse.gru.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GruHttp implements AgoraPulseFeature {
 

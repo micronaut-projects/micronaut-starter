@@ -15,16 +15,18 @@
  */
 package io.micronaut.starter.feature.chatbots.basecamp;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.basecamp.template.controllerGroovySpock;
-import io.micronaut.starter.feature.chatbots.basecamp.template.controllerJavaJunit;
-import io.micronaut.starter.feature.chatbots.basecamp.template.controllerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.basecamp.template.controllerReadme;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.controllerGroovyJunit;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.controllerGroovySpock;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.controllerJavaJunit;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.controllerKotlinJunit;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.basecamp.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class BasecampHttpChatBot extends ChatBotsBasecamp {
 

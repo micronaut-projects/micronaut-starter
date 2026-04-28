@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.messaging.jms
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -44,15 +47,11 @@ class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['jms-' + name])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.jms</groupId>
-      <artifactId>micronaut-jms-$name</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.jms", "micronaut-jms-$name", Scope.COMPILE)
+
         where:
         name << ['activemq-artemis', 'activemq-classic', 'sqs', 'core']
     }

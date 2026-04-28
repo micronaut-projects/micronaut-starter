@@ -15,16 +15,18 @@
  */
 package io.micronaut.starter.feature.chatbots.telegram;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovyJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerGroovySpock;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerJavaJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerKotlinJunit;
-import io.micronaut.starter.feature.chatbots.telegram.template.controllerReadme;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.controllerGroovyJunit;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.controllerGroovySpock;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.controllerJavaJunit;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.controllerKotlinJunit;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.controllerReadme;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.telegram.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TelegramHttpChatBot extends ChatBotsTelegram {
 

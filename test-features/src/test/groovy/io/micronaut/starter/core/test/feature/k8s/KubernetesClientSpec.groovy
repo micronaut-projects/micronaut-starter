@@ -25,7 +25,7 @@ class KubernetesClientSpec extends CommandSpec {
 
         where:
         [feature, language] << [
-                ["kubernetes-client", "kubernetes-reactor-client", "kubernetes-rxjava2-client"],
+                ["kubernetes-client", "kubernetes-reactor-client"],
                 Language.values()
         ].combinations()
     }
@@ -41,7 +41,7 @@ class KubernetesClientSpec extends CommandSpec {
         where:
         [buildTool, feature, language] << [
                 BuildTool.valuesGradle(),
-                ["kubernetes-client", "kubernetes-reactor-client", "kubernetes-rxjava2-client"],
+                ["kubernetes-client", "kubernetes-reactor-client"],
                 Language.values()
         ].combinations()
     }

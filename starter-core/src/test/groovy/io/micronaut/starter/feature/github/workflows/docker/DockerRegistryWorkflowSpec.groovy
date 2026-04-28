@@ -74,7 +74,7 @@ Add the following GitHub secrets:
         } else {
             assert gradle.contains('''
     dockerBuild {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
     }''')
         }
 

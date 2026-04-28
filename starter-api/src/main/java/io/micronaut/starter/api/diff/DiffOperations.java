@@ -24,8 +24,6 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.Parameter;
-import org.reactivestreams.Publisher;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
@@ -49,7 +47,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Publisher<String> diffFeature(
+    String diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,
@@ -70,7 +68,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Publisher<String> diffApp(
+    String diffApp(
             ApplicationType type,
             String name,
             @Nullable List<String> features,

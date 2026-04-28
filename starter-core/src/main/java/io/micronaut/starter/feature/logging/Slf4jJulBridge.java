@@ -15,18 +15,27 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.logging.template.julToSlf4j;
+import io.micronaut.starter.rocker.feature.logging.template.julToSlf4j;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.jul.to.slf4j.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Slf4jJulBridge implements Feature {
+    private static final String ARTIFACT_ID_JUL_TO_SLF_4_J = "jul-to-slf4j";
+    private static final Dependency JUL_TO_SLF4J = Slf4j.slf4jDependency()
+            .artifactId(ARTIFACT_ID_JUL_TO_SLF_4_J)
+            .compile()
+            .build();
+
     @Override
     public String getCategory() {
         return Category.LOGGING;
@@ -57,7 +66,7 @@ public class Slf4jJulBridge implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addLoggingProperties(generatorContext);
-        generatorContext.addDependency(Dependency.builder().lookupArtifactId("jul-to-slf4j").runtime());
+        generatorContext.addDependency(JUL_TO_SLF4J);
     }
 
     protected void addLoggingProperties(GeneratorContext generatorContext) {

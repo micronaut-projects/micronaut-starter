@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -31,6 +33,7 @@ import java.util.Set;
 /**
  * Adds a shaded JAR feature.
  */
+@Requires(property = "micronaut.starter.feature.shade.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
 
@@ -77,10 +80,10 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addHelpLink("Shadow Gradle Plugin", "https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow");
+            generatorContext.addHelpLink("Shadow Gradle Plugin", "https://gradleup.com/shadow/");
             GradlePlugin.Builder builder = GradlePlugin.builder()
-                    .id("com.github.johnrengelman.shadow")
-                    .lookupArtifactId("shadow");
+                    .id("com.gradleup.shadow")
+                    .lookupArtifactId("com.gradleup.shadow.gradle.plugin");
 
             generatorContext.addBuildPlugin(builder.build());
         }

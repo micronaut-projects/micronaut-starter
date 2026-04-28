@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.lang.kotlin;
 import com.fizzed.rocker.RockerOutput;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.lang.ApplicationRenderingContext;
+import io.micronaut.starter.rocker.feature.lang.kotlin.contextConfigurer;
 
 public class KotlinApplicationRenderingContext extends ApplicationRenderingContext {
 

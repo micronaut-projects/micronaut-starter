@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.function.azure;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -24,9 +26,9 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionResponseBuilderJava;
+import io.micronaut.starter.rocker.feature.function.azure.template.azureFunctionReadme;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionResponseBuilderJava;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
@@ -37,6 +39,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.azure.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AzureRawFunction extends AbstractAzureFunction {
     private static final Dependency MICRONAUT_AZURE_FUNCTION = MicronautDependencyUtils

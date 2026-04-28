@@ -1,6 +1,6 @@
 package io.micronaut.starter.api
 
-import io.micronaut.starter.feature.build.MicronautGradleEnterprise
+import io.micronaut.starter.feature.build.MicronautDevelocity
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
@@ -17,6 +17,6 @@ class FeatureOperationsSpec extends Specification {
 
         then:
         features
-        features.stream().noneMatch(feature -> feature.name == MicronautGradleEnterprise.NAME )
+        features.stream().noneMatch(feature -> feature.name == MicronautDevelocity.NAME )
     }
 }

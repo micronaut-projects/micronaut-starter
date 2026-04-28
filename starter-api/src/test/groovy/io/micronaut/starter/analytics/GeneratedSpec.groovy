@@ -22,7 +22,7 @@ class GeneratedSpec extends Specification {
                Language.JAVA,
                BuildTool.GRADLE_KOTLIN,
                TestFramework.JUNIT,
-               JdkVersion.JDK_17)
+               JdkVersion.JDK_25)
         when:
         String result = jsonMapper.writeValueAsString(generated)
         then:
@@ -30,7 +30,7 @@ class GeneratedSpec extends Specification {
         result.contains('"language":"JAVA"')
         result.contains('"buildTool":"GRADLE_KOTLIN"')
         result.contains('"testFramework":"JUNIT"')
-        result.contains('"jdkVersion":"JDK_17"')
+        result.contains('"jdkVersion":"JDK_25"')
         result.contains('"micronautVersion"')
     }
 }

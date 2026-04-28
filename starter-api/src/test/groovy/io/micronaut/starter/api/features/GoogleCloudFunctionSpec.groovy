@@ -8,13 +8,11 @@ import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import spock.lang.Requires
 import spock.lang.Specification
 
 import jakarta.inject.Inject
 
 @MicronautTest
-@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudFunctionSpec extends Specification {
 
     @Inject PreviewController controller
@@ -28,7 +26,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 null,
-                JdkVersion.JDK_17,
+                JdkVersion.JDK_25,
                 new RequestInfo("http://localhost", "", null, Locale.ENGLISH, "")
         )
 

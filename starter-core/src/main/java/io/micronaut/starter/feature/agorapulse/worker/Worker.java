@@ -16,34 +16,36 @@
 package io.micronaut.starter.feature.agorapulse.worker;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobKotlin;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobSpecGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotest;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotlin;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceKotlin;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobKotlin;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobSpecGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotest;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotlin;
-import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceGroovy;
-import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobSpecGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobTestJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotest;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestServiceGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestServiceJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestServiceKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobSpecGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobTestJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotest;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.fallbackEmailDigestServiceGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.fallbackEmailDigestServiceJava;
+import io.micronaut.starter.rocker.feature.agorapulse.worker.template.fallbackEmailDigestServiceKotlin;
 import io.micronaut.starter.feature.test.Awaitility;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.Language;
@@ -57,7 +59,7 @@ import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTest;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.mainModel;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.testModel;
 
-
+@Requires(property = "micronaut.starter.feature.agorapulse.micronaut.worker.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Worker implements AgoraPulseFeature {
 

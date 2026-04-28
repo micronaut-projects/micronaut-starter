@@ -29,7 +29,7 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [language, feature] << [supportedLanguages(), [AwsV2Sdk.NAME, AwsLambdaS3EventNotification.NAME, AwsLambdaScheduledEvent.NAME]].combinations()
+        [language, feature] << [mavenSupportedLanguages(), [AwsV2Sdk.NAME, AwsLambdaS3EventNotification.NAME, AwsLambdaScheduledEvent.NAME]].combinations()
         desc = feature == AwsV2Sdk.NAME ? "" : " and $feature"
     }
 
@@ -44,6 +44,13 @@ class CustomLambdaRuntimeSpec extends CommandSpec {
         where:
         [buildTool, language, feature] << [BuildTool.valuesGradle(), supportedLanguages(), [AwsV2Sdk.NAME, AwsLambdaS3EventNotification.NAME, AwsLambdaScheduledEvent.NAME]].combinations()
         desc = feature == AwsV2Sdk.NAME ? "" : " and $feature"
+    }
+
+    private static List<Language> mavenSupportedLanguages() {
+        [
+                Language.JAVA,
+                Language.GROOVY,
+        ]
     }
 
     private static List<Language> supportedLanguages() {

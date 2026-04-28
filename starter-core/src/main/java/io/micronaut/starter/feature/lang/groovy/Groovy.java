@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -34,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+@Requires(property = "micronaut.starter.feature.groovy.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Groovy implements LanguageFeature {
     public static final String GROUP_ID_GROOVY = "org.apache.groovy";

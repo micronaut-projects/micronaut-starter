@@ -1,18 +1,10 @@
 import io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask
 
 plugins {
-    id "io.micronaut.internal.starter.published-module"
+    id("io.micronaut.internal.starter.published-module")
     id "io.micronaut.internal.starter.convention"
-    id "io.micronaut.starter.rocker"
+    id("nu.studer.rocker")
     id "io.micronaut.internal.starter.coordinates"
-}
-
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/java")
-        }
-    }
 }
 
 dependencies {
@@ -21,17 +13,18 @@ dependencies {
 
     api(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
     api("com.fizzed:rocker-runtime:$rockerVersion")
+    compileOnly("org.graalvm.sdk:nativeimage:25.0.3")
     api("io.micronaut:micronaut-inject")
     api("com.fasterxml.jackson.core:jackson-annotations")
     api("io.micronaut:micronaut-http-client")
-    api("io.github.java-diff-utils:java-diff-utils:4.12")
-    api("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
+    api("io.github.java-diff-utils:java-diff-utils:4.15")
+    api("org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r")
     api("org.yaml:snakeyaml")
     api("io.micronaut.serde:micronaut-serde-jackson")
 
-    implementation("com.typesafe:config:1.4.3")
+    implementation("com.typesafe:config:1.4.6")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
-    implementation("org.apache.commons:commons-compress:1.25.0")
+    implementation("org.apache.commons:commons-compress:1.27.1")
 
     testImplementation("org.apache.groovy:groovy-xml")
 }
@@ -48,8 +41,19 @@ TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.registe
 }
 
 sourceSets.main.resources.srcDir(micronautVersionInfo)
-
 rocker {
-    javaVersion = '17'
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
+    version = rockerVersion
+    configurations{
+        main {
+            optimize = true
+            discardLogicWhitespace = true
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
+        }
+    }
+}
+spotless {
+    java {
+        targetExclude("src/**/*.rocker.raw")
+    }
 }

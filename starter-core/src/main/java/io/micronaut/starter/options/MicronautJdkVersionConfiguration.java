@@ -18,15 +18,14 @@ package io.micronaut.starter.options;
 import jakarta.inject.Singleton;
 import java.util.List;
 
-import static io.micronaut.starter.options.JdkVersion.JDK_17;
-import static io.micronaut.starter.options.JdkVersion.JDK_21;
+import static io.micronaut.starter.options.JdkVersion.*;
 
 @Singleton
 public class MicronautJdkVersionConfiguration implements JdkVersionConfiguration {
 
-    public static final List<JdkVersion> SUPPORTED_JDKS = List.of(JDK_17, JDK_21);
+    public static final List<JdkVersion> SUPPORTED_JDKS = List.of(JDK_25);
 
-    public static final JdkVersion DEFAULT_OPTION = JDK_21;
+    public static final JdkVersion DEFAULT_OPTION = JDK_25;
 
     @Override
     public List<JdkVersion> getSupportedJdkVersions() {

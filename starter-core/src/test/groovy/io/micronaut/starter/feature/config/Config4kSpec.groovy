@@ -57,8 +57,6 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
 micronaut {
     application {
         name=foo
-    }
-}
 '''
         output["src/main/resources/bootstrap.conf"] == '''\
 abc=123

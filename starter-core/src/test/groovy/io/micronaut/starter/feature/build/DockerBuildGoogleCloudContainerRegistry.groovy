@@ -13,7 +13,7 @@ import jakarta.inject.Singleton
 class DockerBuildGoogleCloudContainerRegistry extends MicronautBuildPlugin {
 
     DockerBuildGoogleCloudContainerRegistry(CoordinateResolver coordinateResolver) {
-        super(coordinateResolver)
+        super(coordinateResolver, null)
     }
 
     @Override

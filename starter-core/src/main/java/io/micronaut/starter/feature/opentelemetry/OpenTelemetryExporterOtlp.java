@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.tracing.opentelemetry.exporter.otlp.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenTelemetryExporterOtlp extends OpenTelemetryExporterFeature {
-    private static final String EXPORTER_OTLP = "OTLP";
+    public static final String EXPORTER_OTLP = "OTLP";
 
     @NonNull
     public String exporterName() {

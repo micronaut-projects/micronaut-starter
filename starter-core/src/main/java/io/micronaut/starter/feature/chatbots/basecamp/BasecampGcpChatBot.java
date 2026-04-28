@@ -15,13 +15,15 @@
  */
 package io.micronaut.starter.feature.chatbots.basecamp;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.basecamp.template.gcpReadme;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.gcpReadme;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.basecamp.gcp.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class BasecampGcpChatBot extends ChatBotsBasecamp implements GcpCloudFeature, GcpMicronautRuntimeFeature {
 

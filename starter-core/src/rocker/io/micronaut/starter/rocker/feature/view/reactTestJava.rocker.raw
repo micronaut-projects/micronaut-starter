@@ -1,0 +1,28 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+
+}
+
+import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.annotation.Client;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@@MicronautTest
+public class RootViewTest {
+    @@Inject @@Client("/")
+    HttpClient client;
+
+    @@Test
+    void rootViewRendersServerSide() {
+        var html = client.toBlocking().exchange("/", String.class).body();
+        assertTrue(html.contains("<title>Hello World!</title>"), html);
+        assertTrue(html.contains("""
+                "rootProps":{"name":"'your name goes here'","url":"/"}"""), html);
+    }
+}

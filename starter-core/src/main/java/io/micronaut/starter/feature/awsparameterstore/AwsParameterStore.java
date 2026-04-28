@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.awsparameterstore;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 import java.util.Map;
 
+@Requires(property = "micronaut.starter.feature.aws.parameter.store.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsParameterStore implements DistributedConfigFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AWS_PARAMETER_STORE = "micronaut-aws-parameter-store";

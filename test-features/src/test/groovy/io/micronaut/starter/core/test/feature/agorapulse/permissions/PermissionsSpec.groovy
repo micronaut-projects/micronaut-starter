@@ -5,6 +5,8 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.Unroll
@@ -20,8 +22,8 @@ class PermissionsSpec extends CommandSpec {
     @Unroll
     void "test maven agorapulse-micronaut-permissions with #language, #testFramework and #applicationType"(
             Language language,
-            TestFramework testFramework,
-            ApplicationType applicationType
+            ApplicationType applicationType,
+            TestFramework testFramework
     ) {
         when:
         generateProject(language, BuildTool.MAVEN, ['agorapulse-micronaut-permissions'], applicationType, testFramework)
@@ -31,19 +33,21 @@ class PermissionsSpec extends CommandSpec {
         output?.contains('BUILD SUCCESS')
 
         where:
-        [language, testFramework, applicationType] << [
+        [language, applicationType, testFramework] << [
                 Language.values(),
-                TestFramework.values(),
                 ApplicationType.values(),
-        ].combinations()
+                TestFrameworkCombinations.values(),
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 
     @Unroll
     void "test gradle agorapulse-micronaut-permissions with #language, #testFramework and #applicationType using #buildTool"(
-            BuildTool buildTool,
+            ApplicationType applicationType,
             Language language,
-            TestFramework testFramework,
-            ApplicationType applicationType
+            BuildTool buildTool,
+            TestFramework testFramework
     ) {
         when:
         generateProject(language, buildTool, ['agorapulse-micronaut-permissions'], applicationType, testFramework)
@@ -53,11 +57,13 @@ class PermissionsSpec extends CommandSpec {
         result?.output?.contains('BUILD SUCCESS')
 
         where:
-        [buildTool, language, testFramework, applicationType] << [
-                BuildTool.valuesGradle(),
-                Language.values(),
-                TestFramework.values(),
+        [applicationType, language, buildTool, testFramework] << [
                 ApplicationType.values(),
-        ].combinations()
+                Language.values(),
+                BuildTool.valuesGradle(),
+                TestFrameworkCombinations.values(),
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 }

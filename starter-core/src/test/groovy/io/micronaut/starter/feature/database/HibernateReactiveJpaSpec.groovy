@@ -15,9 +15,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
-import spock.lang.Requires
 
-@Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
     void "test hibernate reactive jpa requires db"() {
@@ -90,7 +88,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
 
@@ -117,7 +115,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains($/testImplementation("org.testcontainers:$testScenario.container")/$)
 
         and: "postgres needs another dependency with vert.x"
-        template.contains('implementation("com.ongres.scram:client:') == (testScenario.db == PostgreSQL.NAME)
+        template.contains('implementation("com.ongres.scram:scram-client') == (testScenario.db == PostgreSQL.NAME)
 
         and: 'the driver and correct module are included for test-resources'
         !template.contains($/runtimeOnly("$testScenario.driver.groupId:$testScenario.driver.artifactId")/$)
@@ -133,7 +131,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 new TestScenario(MySQL.NAME , MySQLCompatibleFeature.VERTX_MYSQL_CLIENT , 'mysql', null, DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT , 'mariadb', null, DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME , PostgreSQL.VERTX_PG_CLIENT, 'postgresql' , null, DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName , PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe', null, DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe', null, DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT, 'mssqlserver' , null, DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName, SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
         ])
     }
@@ -158,7 +156,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains($/testImplementation("org.testcontainers:$testScenario.container")/$)
 
         and: "postgres needs another dependency with vert.x"
-        template.contains('implementation("com.ongres.scram:client:') == (testScenario.db == PostgreSQL.NAME)
+        template.contains('implementation("com.ongres.scram:scram-client') == (testScenario.db == PostgreSQL.NAME)
 
         and: 'the correct module is included for test-resources'
         !template.contains($/testResourcesService("$testScenario.driver.groupId:$testScenario.driver.artifactId")/$)
@@ -173,12 +171,12 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 new TestScenario(MySQL.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT, 'mysql', Liquibase.NAME , DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT, 'mariadb', Liquibase.NAME , DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME, PostgreSQL.VERTX_PG_CLIENT, 'postgresql'  , Liquibase.NAME , DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName, PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe'   , Liquibase.NAME , DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe'   , Liquibase.NAME , DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT, 'mssqlserver' , Liquibase.NAME , DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName, SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
                 new TestScenario(MySQL.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT, 'mysql', Flyway.NAME, DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT, 'mariadb', Flyway.NAME, DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME, PostgreSQL.VERTX_PG_CLIENT, 'postgresql', Flyway.NAME, DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName, PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe', Flyway.NAME, DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, 'oracle-xe', Flyway.NAME, DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT, 'mssqlserver' , Flyway.NAME, DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  , SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
         ])
     }
@@ -213,7 +211,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
          !containsJdbcDriver(template, testScenario.driver)
 
         and: "postgres needs another dependency with vert.x"
-        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
+        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "scram-client")
 
         and: 'test resources module is correct, and driver is added to the plugin dependencies'
         verifier.hasTestResourceDependency("micronaut-test-resources-$testScenario.testResourcesModule")
@@ -235,7 +233,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 new TestScenario(MySQL.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT, null, null, DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT , null, null, DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME, PostgreSQL.VERTX_PG_CLIENT, null, null, DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName, PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, null, null, DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, null, null, DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT, null, null, DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName, SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
         ])
     }
@@ -260,7 +258,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         containsJdbcDriver(template, testScenario.driver)
 
         and: "postgres needs another dependency with vert.x"
-        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
+        testScenario.db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "scram-client")
 
         and: 'test resources module is correct, and driver is not added to the plugin dependencies'
         verifier.hasTestResourceDependency("io.micronaut.testresources", "micronaut-test-resources-$testScenario.testResourcesModule")
@@ -282,12 +280,12 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 new TestScenario(MySQL.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT,null, Liquibase.NAME , DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT ,null, Liquibase.NAME , DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME, PostgreSQL.VERTX_PG_CLIENT,null, Liquibase.NAME , DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName, PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT,null, Liquibase.NAME , DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT,null, Liquibase.NAME , DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT,null, Liquibase.NAME , DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName, SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
                 new TestScenario(MySQL.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT , null, Flyway.NAME    , DbType.MYSQL.hibernateReactiveTestResourcesModuleName, MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()),
                 new TestScenario(MariaDB.NAME, MySQLCompatibleFeature.VERTX_MYSQL_CLIENT , null, Flyway.NAME    , DbType.MARIADB.hibernateReactiveTestResourcesModuleName, MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()),
                 new TestScenario(PostgreSQL.NAME, PostgreSQL.VERTX_PG_CLIENT, null, Flyway.NAME    , DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName, PostgreSQL.DEPENDENCY_POSTGRESQL.build()),
-                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, null, Flyway.NAME    , DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
+                new TestScenario(Oracle.NAME, Oracle.VERTX_ORACLE_CLIENT, null, Flyway.NAME    , DbType.ORACLEFREE.hibernateReactiveTestResourcesModuleName, Oracle.DEPENDENCY_OJDBC11.build()),
                 new TestScenario(SQLServer.NAME, SQLServer.VERTX_MSSQL_CLIENT, null, Flyway.NAME    , DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName, SQLServer.DEPENDENCY_MSSQL_JDBC.build()),
         ])
     }

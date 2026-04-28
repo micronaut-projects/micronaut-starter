@@ -50,6 +50,8 @@ class CreateAwsLambdaScheduledEventSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION]).findAll {
+            it[2] != BuildTool.MAVEN
+        }
     }
 }

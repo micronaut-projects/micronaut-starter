@@ -1,0 +1,110 @@
+@import java.util.List
+@import java.util.Set
+@import java.util.Map
+@import io.micronaut.starter.feature.build.gradle.Dockerfile
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
+@args(
+    GradleDsl dsl,
+    BuildTool build,
+    String javaVersion,
+    Dockerfile dockerfile,
+    Dockerfile dockerfileNative,
+    List<String> dockerBuilderImages,
+    List<String> dockerBuilderNativeImages,
+    String runtime,
+    String testRuntime,
+    String aotVersion,
+    boolean incremental,
+    String packageName,
+    List<String> additionalTestResourceModules,
+    boolean sharedTestResources,
+    Map<String, String> aotKeys,
+    String lambdaRuntimeMainClass,
+    Set<String> ignoredAutomaticDependencies,
+    ConfigurationValidationBlock configurationValidation,
+    String testResourcesVersion
+)
+micronaut {
+@if(ignoredAutomaticDependencies != null) {
+@for (String ignoredAutomaticDependency : ignoredAutomaticDependencies) {
+    ignoredAutomaticDependencies.add("@(ignoredAutomaticDependency)")
+}
+}
+@if(runtime != null) {
+    runtime("@(runtime)")
+}
+@if(testRuntime != null) {
+    testRuntime("@(testRuntime)")
+}
+@if(lambdaRuntimeMainClass != null) {
+    nativeLambda {
+        lambdaRuntimeClassName = "@(lambdaRuntimeMainClass)"
+    }
+}
+@if(incremental) {
+    processing {
+        incremental(true)
+        annotations("@(packageName).*")
+    }
+}
+@if (testResourcesVersion != null || additionalTestResourceModules != null || sharedTestResources) {
+    testResources {
+        @if(additionalTestResourceModules != null) {
+            @for (String module : additionalTestResourceModules) {
+        additionalModules.add("@module")
+            }
+        }
+        @if(sharedTestResources) {
+        sharedServer = true
+        }
+        version = "@(testResourcesVersion)"
+    }
+}
+@if(aotVersion != null) {
+@io.micronaut.starter.rocker.feature.build.gradle.templates.aotExtension.template(aotKeys)
+}
+@if (configurationValidation!=null) {
+@io.micronaut.starter.rocker.feature.validation.micronautConfigurationValidationGradlePlugin.template(dsl, configurationValidation)
+}
+}
+@if (testResourcesVersion != null || additionalTestResourceModules != null || sharedTestResources) {
+@if (dsl == GradleDsl.GROOVY) {
+tasks.withType(io.micronaut.gradle.testresources.StartTestResourcesService).configureEach {
+    useClassDataSharing = false
+}
+} else {
+tasks.withType<io.micronaut.gradle.testresources.StartTestResourcesService>().configureEach {
+      useClassDataSharing.set(false)
+}
+}
+}
+
+@if(dockerfile != null) {
+@dockerfileExtension.template(dsl, dockerfile)
+}
+
+@if(dockerfileNative != null) {
+@dockerfileNativeExtension.template(dsl, dockerfileNative)
+}
+
+@if(dockerBuilderNativeImages != null) {
+dockerBuildNative {
+    images = [
+    @for (int i = 0; i < dockerBuilderNativeImages.size(); i++) {
+        "@(dockerBuilderNativeImages.get(i))"@if (i < (dockerBuilderNativeImages.size() -1)) {,}
+    }
+    ]
+}
+}
+
+@if(dockerBuilderImages != null) {
+dockerBuild {
+    images = [
+    @for (int i = 0; i < dockerBuilderImages.size(); i++) {
+        "@(dockerBuilderImages.get(i))"@if (i < (dockerBuilderImages.size() -1)) {,}
+    }
+    ]
+}
+}

@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.testresources.buildtools.KnownModules;
 
 public enum DbType {
@@ -24,7 +26,12 @@ public enum DbType {
     MYSQL("mysql", KnownModules.JDBC_MYSQL, KnownModules.R2DBC_MYSQL, KnownModules.HIBERNATE_REACTIVE_MYSQL),
     POSTGRESQL("postgres", KnownModules.JDBC_POSTGRESQL, KnownModules.R2DBC_POSTGRESQL, KnownModules.HIBERNATE_REACTIVE_POSTGRESQL),
     SQLSERVER("mssql", KnownModules.JDBC_MSSQL, KnownModules.R2DBC_MSSQL, KnownModules.HIBERNATE_REACTIVE_MSSQL),
-    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE, KnownModules.HIBERNATE_REACTIVE_ORACLE_XE);
+    /**
+     * @deprecated Use {@link #ORACLEFREE} instead.
+     */
+    @Deprecated(forRemoval = true, since = "4.4.0")
+    ORACLEXE("oracle-xe", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE, KnownModules.HIBERNATE_REACTIVE_ORACLE_XE),
+    ORACLEFREE("oracle", KnownModules.JDBC_ORACLE_FREE, KnownModules.R2DBC_ORACLE_FREE, KnownModules.HIBERNATE_REACTIVE_ORACLE_FREE);
 
     private final String name;
     private final String jdbcTestResourcesModuleName;
@@ -56,5 +63,18 @@ public enum DbType {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Nullable
+    public static DbType of(@Nullable String name) {
+        if (StringUtils.isEmpty(name)) {
+            return null;
+        }
+        for (DbType dbType : DbType.values()) {
+            if (dbType.name.equalsIgnoreCase(name)) {
+                return dbType;
+            }
+        }
+        return null;
     }
 }

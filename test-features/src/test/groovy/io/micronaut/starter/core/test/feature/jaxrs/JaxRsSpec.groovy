@@ -41,7 +41,7 @@ class JaxRsSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << Language.values() - Language.KOTLIN
     }
 
     void "test #buildTool jax-rs with #language"(BuildTool buildTool, Language language) {

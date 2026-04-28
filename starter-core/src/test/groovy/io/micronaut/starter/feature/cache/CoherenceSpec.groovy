@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.cache
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -43,29 +46,12 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
                 .language(language)
                 .features([Coherence.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.coherence</groupId>
-      <artifactId>micronaut-coherence</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>com.oracle.coherence.ce</groupId>
-      <artifactId>coherence</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.coherence</groupId>
-      <artifactId>micronaut-coherence-cache</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence", Scope.COMPILE)
+        verifier.hasDependency("com.oracle.coherence.ce", "coherence", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence-cache", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

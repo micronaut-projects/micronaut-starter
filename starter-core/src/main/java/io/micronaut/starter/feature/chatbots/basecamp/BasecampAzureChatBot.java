@@ -15,13 +15,15 @@
  */
 package io.micronaut.starter.feature.chatbots.basecamp;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.basecamp.template.azureReadme;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.azureReadme;
 import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import io.micronaut.starter.feature.function.azure.AzureMicronautRuntimeFeature;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.basecamp.azure.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class BasecampAzureChatBot extends ChatBotsBasecamp implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 

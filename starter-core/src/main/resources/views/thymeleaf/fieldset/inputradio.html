@@ -1,1 +1,1 @@
-<input th:fragment="inputradio(el,radio)" xmlns:th="http://www.thymeleaf.org" type="radio" th:name="${el.name()}" th:value="${radio.value()}" th:id="${radio.id()}" class="form-check-input" th:required="${el.required()}" th:checked="${radio.checked()}"/>
+<input th:fragment="inputradio(el,radio)" xmlns:th="http://www.thymeleaf.org" type="radio" th:name="${el.name()}" th:value="${radio.value()}" th:id="${radio.id()}" class="form-check-input" th:required="${el.required()}" th:disabled="${radio.disabled()}" th:checked="${radio.checked()}"/>

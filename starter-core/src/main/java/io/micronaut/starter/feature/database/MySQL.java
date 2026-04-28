@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.DbType;
@@ -24,19 +26,20 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.mysql.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MySQL extends MySQLCompatibleFeature {
 
     public static final String NAME = "mysql";
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_MYSQL = Dependency.builder()
-            .groupId("dev.miku")
+            .groupId("io.asyncer")
                     .artifactId("r2dbc-mysql")
                     .runtime();
 
-    public static final Dependency.Builder DEPENDENCY_MYSQL_CONNECTOR_JAVA = Dependency.builder()
-            .groupId(NAME)
-            .artifactId("mysql-connector-java")
+    private static final Dependency.Builder DEPENDENCY_MYSQL_CONNECTOR_JAVA = Dependency.builder()
+            .groupId("com.mysql")
+            .artifactId("mysql-connector-j")
             .runtime()
             .template();
 

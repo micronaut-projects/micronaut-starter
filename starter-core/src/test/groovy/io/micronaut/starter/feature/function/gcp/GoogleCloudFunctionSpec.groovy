@@ -16,11 +16,9 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
-import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 
-@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
@@ -31,7 +29,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -81,7 +79,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_17),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['google-cloud-function']
         )
         String readme = output["README.md"]
@@ -109,7 +107,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.SPOCK)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
 
@@ -124,7 +122,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         String build = new BuildBuilder(beanContext, buildTool)
                 .features(['google-cloud-function'])
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
 
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, build)
@@ -179,10 +177,24 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function currently only supports JDK 11 and 17 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
+        e.message == 'Google Cloud Function currently supports JDK 11, 17, 21 and 25 -- https://cloud.google.com/functions/docs/concepts/java-runtime'
 
         where:
-        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_21]
+        jdkVersion << [JdkVersion.JDK_8]
+    }
+    void 'test Google Cloud JDK supports Java #jdkVersion'() {
+        when:
+        generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                ['google-cloud-function']
+        )
+
+        then:
+        noExceptionThrown()
+
+        where:
+        jdkVersion << [JdkVersion.JDK_11, JdkVersion.JDK_17, JdkVersion.JDK_21, JdkVersion.JDK_25]
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {
@@ -194,7 +206,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         )
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'Google Cloud Function is not supported for GraalVM. ' +
                 'Consider Google Cloud Run for deploying GraalVM native images as docker containers.'
     }
@@ -205,7 +217,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['google-cloud-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

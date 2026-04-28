@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.objectstorage;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
@@ -27,6 +29,7 @@ import jakarta.inject.Singleton;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
+@Requires(property = "micronaut.starter.feature.object.storage.oracle.cloud.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ObjectStorageOracleCloud implements CloudObjectStorageFeature, OracleCloudFeature {
 

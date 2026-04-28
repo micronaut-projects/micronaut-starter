@@ -46,8 +46,8 @@ public class GraalVMFeatureValidator implements FeatureValidator {
                 throw new IllegalArgumentException("GraalVM is not supported in " + StringUtils.capitalize(options.getLanguage().getName()) + " applications");
             }
 
-            if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_21.majorVersion()) {
-                throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 21");
+            if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_25.majorVersion()) {
+                throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 25");
             }
 
             // See https://github.com/micronaut-projects/micronaut-maven-plugin/issues/373

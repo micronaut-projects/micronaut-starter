@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.springboot;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -25,6 +27,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.spring.dependency.management.gradle.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SpringDependencyManagementGradlePlugin implements GradleSpecificFeature, SpringDefaultFeature {
     private static final String ARTIFACT_ID = "dependency-management-plugin";

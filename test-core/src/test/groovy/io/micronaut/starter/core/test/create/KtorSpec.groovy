@@ -20,7 +20,7 @@ class KtorSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, buildTool] << [[Language.KOTLIN], BuildToolCombinations.buildTools].combinations()
+        [lang, buildTool] << [[Language.KOTLIN], BuildTool.valuesGradle()].combinations()
     }
 
     @Override

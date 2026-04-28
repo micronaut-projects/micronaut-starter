@@ -6,12 +6,12 @@ class JdkVersionSpec extends Specification {
 
     void 'test valueOf(Integer) with a supported JDK version'() {
         expect:
-        JdkVersion.JDK_17 == JdkVersion.valueOf(17)
+        JdkVersion.JDK_21 == JdkVersion.valueOf(21)
     }
 
     void 'test valueOf(String) with a supported JDK version'() {
         expect:
-        JdkVersion.JDK_17 == JdkVersion.valueOf("JDK_17")
+        JdkVersion.JDK_21 == JdkVersion.valueOf("JDK_21")
     }
 
     void 'test valueOf when the JDK version does not exist'() {

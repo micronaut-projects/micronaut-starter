@@ -28,7 +28,7 @@ import io.micronaut.starter.options.Language;
 /**
  * Base class for our data-mongo features.
  */
-public abstract class DataMongoFeature extends EaseTestingFeature implements DataDocumentFeature {
+public abstract class DataMongoFeature extends EaseTestingFeature implements DataDocumentFeature, MongoContributingTestContainerDependency {
 
     private static final String MONGODB_GROUP = "org.mongodb";
 

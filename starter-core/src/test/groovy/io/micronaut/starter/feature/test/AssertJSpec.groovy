@@ -5,6 +5,9 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.ContextFactory
 import io.micronaut.starter.application.DefaultAvailableFeatures
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -62,7 +65,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
                 beanContext.getBean(DefaultAvailableFeatures),
                 ["assertj"],
                 ApplicationType.DEFAULT,
-                new Options(Language.JAVA, null, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17),
+                new Options(Language.JAVA, null, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_25),
                 null
         )
 
@@ -107,15 +110,10 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
                 .language(language)
                 .testFramework(TestFramework.JUNIT)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.assertj", "assertj-core", Scope.TEST)
 
         where:
         language << Language.values().toList()

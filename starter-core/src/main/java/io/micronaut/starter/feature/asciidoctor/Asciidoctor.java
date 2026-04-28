@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.asciidoctor;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
@@ -23,15 +25,16 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
-import io.micronaut.starter.feature.asciidoctor.template.asciidocMavenPlugin;
-import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
+import io.micronaut.starter.rocker.feature.asciidoctor.template.asciidocGradle;
+import io.micronaut.starter.rocker.feature.asciidoctor.template.asciidocMavenPlugin;
+import io.micronaut.starter.rocker.feature.asciidoctor.template.indexAdoc;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.asciidoctor.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Asciidoctor implements Feature {
 

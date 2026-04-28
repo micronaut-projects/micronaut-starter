@@ -16,22 +16,25 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJava;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJavaJunit;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlin;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
+import io.micronaut.starter.feature.json.SerializationFeature;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionJava;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionJavaJunit;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlin;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.options.BuildTool;
@@ -39,6 +42,8 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.oracle.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.oracle.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OracleRawFunction extends OracleFunction {
     public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
@@ -85,8 +90,10 @@ public class OracleRawFunction extends OracleFunction {
             );
         }
         super.processSelectedFeatures(featureContext);
-        // Requires Jackson due to https://github.com/micronaut-projects/micronaut-oracle-cloud/issues/603
-        featureContext.addFeatureIfNotPresent(JacksonDatabindFeature.class, jacksonDatabindFeature);
+        if (featureContext.getSelectedFeatures().stream().noneMatch(feature -> feature instanceof SerializationFeature)) {
+            // Requires Jackson due to https://github.com/micronaut-projects/micronaut-oracle-cloud/issues/603
+            featureContext.addFeatureIfNotPresent(JacksonDatabindFeature.class, jacksonDatabindFeature);
+        }
     }
 
     @Override
