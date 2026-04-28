@@ -1,31 +1,3 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "addLabels": ["type: dependency-upgrade"],
-  "schedule": [
-    "every weekend"
-  ],
-  "prHourlyLimit": 1,
-  "prConcurrentLimit": 20,
-  "timezone": "Europe/Prague",
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["actions.*"],
-      "dependencyDashboardApproval": true,
-      "matchUpdateTypes": ["patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true
-    },
-    {
-      "matchUpdateTypes": ["patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true
-    },
-    {
-      "matchDatasources": ["github-runner"],
-      "matchPackageNames": ["macos"],
-      "enabled": false
-    }
-  ]
+  "enabled": false
 }
