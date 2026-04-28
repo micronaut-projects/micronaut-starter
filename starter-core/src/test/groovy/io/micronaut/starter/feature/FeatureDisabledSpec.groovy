@@ -313,11 +313,11 @@ import io.micronaut.starter.feature.rss.RssItunes
 import io.micronaut.starter.feature.rxjava.RxJava3
 import io.micronaut.starter.feature.rxjava.RxJava3HttpClient
 import io.micronaut.starter.feature.security.Security
-import io.micronaut.starter.feature.security.SecurityAnnotations
 import io.micronaut.starter.feature.security.SecurityCsrf
 import io.micronaut.starter.feature.security.SecurityJWT
 import io.micronaut.starter.feature.security.SecurityLdap
 import io.micronaut.starter.feature.security.SecurityOAuth2
+import io.micronaut.starter.feature.security.SecurityProcessor
 import io.micronaut.starter.feature.security.SecuritySession
 import io.micronaut.starter.feature.server.HttpPoja
 import io.micronaut.starter.feature.server.Jetty
@@ -524,7 +524,7 @@ class FeatureDisabledSpec extends Specification {
         'email-javamail' | 'micronaut.starter.feature.email.javamail.enabled' | JavamailFeature
         'jrebel' | 'micronaut.starter.feature.jrebel.enabled' | Jrebel
         'annotation-api' | 'micronaut.starter.feature.annotation.api.enabled' | AnnotationApi
-        'security-annotations' | 'micronaut.starter.feature.security.annotations.enabled' | SecurityAnnotations
+        'security-annotations' | 'micronaut.starter.feature.security.processor.enabled' | SecurityProcessor
         'opensearch-restclient' | 'micronaut.starter.feature.opensearch.restclient.enabled' | OpenSearchRestClient
         'aws-v2-sdk' | 'micronaut.starter.feature.aws.v2.sdk.enabled' | AwsV2Sdk
         'aws-lambda-scheduled-event' | 'micronaut.starter.feature.aws.lambda.scheduled.event.enabled' | AwsLambdaScheduledEvent
