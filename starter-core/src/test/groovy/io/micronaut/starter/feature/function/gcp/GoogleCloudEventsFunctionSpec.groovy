@@ -5,13 +5,10 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
-import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
-import spock.lang.Requires
 import spock.lang.Subject
 
-@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Subject

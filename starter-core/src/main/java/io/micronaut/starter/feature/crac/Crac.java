@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.crac;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -26,6 +28,7 @@ import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.jdbc.Hikari;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.crac.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Crac implements RequireEagerSingletonInitializationFeature {
 
@@ -46,12 +49,7 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
     public String getTitle() {
         return "Support for CRaC (Coordinated Restore at Checkpoint)";
     }
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
-
+    
     @Override
     @NonNull
     public String getDescription() {

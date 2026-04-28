@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.tracing
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -14,7 +17,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test readme.md with feature tracing-jaeger contains links to micronaut docs'() {
         when:
-        Map output = generate(['tracing-jaeger'])
+        Map output = generate([Jaeger.NAME])
         String readme = output['README.md']
 
         then:
@@ -28,7 +31,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         when:
         String template = new BuildBuilder(beanContext, GRADLE)
                 .language(language)
-                .features(['tracing-jaeger'])
+                .features([Jaeger.NAME])
                 .render()
 
         then:
@@ -43,17 +46,12 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         when:
         String template = new BuildBuilder(beanContext, MAVEN)
                 .language(language)
-                .features(['tracing-jaeger'])
+                .features([Jaeger.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(MAVEN, language, template)
 
         then:
-        template.contains '''
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-jaeger</artifactId>
-      <scope>compile</scope>
-    </dependency>
-'''
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-jaeger", Scope.COMPILE)
 
         where:
         language << Language.values().toList()
@@ -61,7 +59,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
     void 'test tracing-jaeger configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['tracing-jaeger'])
+        GeneratorContext commandContext = buildGeneratorContext([Jaeger.NAME])
 
         then:
         commandContext.configuration.get('tracing.jaeger.enabled') == true

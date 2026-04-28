@@ -15,13 +15,16 @@
  */
 package io.micronaut.starter.feature.messaging.pubsub;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.gcp.pubsub.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class PubSub implements MessagingFeature {
 

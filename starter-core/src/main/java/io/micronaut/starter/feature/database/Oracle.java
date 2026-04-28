@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.DbType;
@@ -26,6 +28,7 @@ import java.util.Optional;
 
 import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP;
 
+@Requires(property = "micronaut.starter.feature.oracle.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Oracle extends DatabaseDriverFeature {
 
@@ -99,7 +102,7 @@ public class Oracle extends DatabaseDriverFeature {
     @NonNull
     @Override
     public Optional<DbType> getDbType() {
-        return Optional.of(DbType.ORACLEXE);
+        return Optional.of(DbType.ORACLEFREE);
     }
 
     @Override

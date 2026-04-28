@@ -23,7 +23,7 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 /**
- * Type converter required to convert strings such as "JDK_21" to JdkVersion objects for api REST calls.
+ * Type converter required to convert strings such as "JDK_25" to JdkVersion objects for api REST calls.
  */
 @Singleton
 public class JdkVersionTypeConverter implements TypeConverter<String, JdkVersion> {

@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.springboot;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
@@ -24,6 +26,7 @@ import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.MavenSpecificFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.spring.boot.maven.plugin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SpringBootMavenPlugin implements MavenSpecificFeature, ParentPomFeature, SpringDefaultFeature {
 

@@ -1,0 +1,34 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.build.gradle.GradleDependency
+@args (Project project, GradleBuild gradleBuild, String mainClassName, String version, String groupId)
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
+
+@if (version != null) {
+version = "@(version)"
+}
+@if (groupId != null) {
+group = "@(groupId)"
+}
+
+repositories {
+@gradleBuild.renderRepositories()
+}
+
+dependencies {
+@for (GradleDependency dependency : gradleBuild.getDependencies()) {
+    @dependency.toSnippet()
+}
+}
+@if (mainClassName != null) {
+application {
+    mainClass = "@(project.getPackageName()).@mainClassName"
+}
+}
+
+@gradleBuild.renderExtensions()

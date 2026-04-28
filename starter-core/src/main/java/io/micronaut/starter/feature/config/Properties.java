@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.PropertiesTemplate;
@@ -23,6 +25,7 @@ import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 import java.util.function.Function;
 
+@Requires(property = "micronaut.starter.feature.properties.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Properties implements DefaultConfigurationFeature {
 

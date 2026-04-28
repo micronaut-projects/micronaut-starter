@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -37,6 +39,7 @@ import java.util.Set;
 import static io.micronaut.starter.feature.httpclient.HttpClientJdk.ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK;
 import static io.micronaut.starter.feature.other.HttpClient.ARTIFACT_ID_MICRONAUT_HTTP_CLIENT;
 
+@Requires(property = "micronaut.starter.feature.http.client.test.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class HttpClientTest implements DefaultFeature {
 

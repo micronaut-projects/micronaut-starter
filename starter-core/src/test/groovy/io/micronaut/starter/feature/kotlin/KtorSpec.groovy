@@ -125,7 +125,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains("mainClass.set(\"example.micronaut.Application\")")
+        template.contains('mainClass = "example.micronaut.Application"')
 
         where:
         language << supportedLanguages()

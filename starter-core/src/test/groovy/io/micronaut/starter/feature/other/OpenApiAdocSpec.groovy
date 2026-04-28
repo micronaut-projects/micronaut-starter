@@ -12,7 +12,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class OpenApiAdocSpec extends ApplicationContextSpec  implements CommandOutputFixture {
+class OpenApiAdocSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "openapi-adoc feature includes openapi feature"() {
         when:

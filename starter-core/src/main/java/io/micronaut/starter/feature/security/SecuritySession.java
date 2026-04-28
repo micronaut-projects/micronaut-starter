@@ -15,13 +15,16 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpSession;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.security.session.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SecuritySession extends SecurityFeature implements SecurityAuthenticationModeProvider {
 

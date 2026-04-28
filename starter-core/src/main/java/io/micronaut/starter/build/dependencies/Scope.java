@@ -41,6 +41,7 @@ public class Scope implements Ordered {
     public static final Scope TEST_RUNTIME = new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME), 12);
 
     public static final Scope TEST_RESOURCES_SERVICE = new Scope(Source.MAIN, Collections.singletonList(Phase.TEST_RESOURCES_SERVICE), 13);
+    public static final Scope ERRORPRONE = new Scope(Source.MAIN, Collections.singletonList(Phase.ERRORPRONE), 14);
 
     @NonNull
     private Source source;

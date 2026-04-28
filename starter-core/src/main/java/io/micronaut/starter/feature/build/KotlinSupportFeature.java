@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  */
 public interface KotlinSupportFeature extends OneOfFeature {
 
-    String JDK_21_KAPT_MODULES = """
+    String JDK_25_KAPT_MODULES = """
             --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
             --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
             --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
@@ -75,11 +75,11 @@ public interface KotlinSupportFeature extends OneOfFeature {
                 generatorContext.addBuildPlugin(GradlePlugin.of("org.jetbrains.kotlin.plugin.jpa", "kotlin-noarg"));
             }
         }
-        if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_21) && generatorContext.hasFeature(Kapt.class)) {
+        if (generatorContext.getJdkVersion().greaterThanEqual(JdkVersion.JDK_25) && generatorContext.hasFeature(Kapt.class)) {
             if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                generatorContext.addTemplate("opens-for-kapt-and-java-21", new StringTemplate(".mvn/jvm.config", JDK_21_KAPT_MODULES));
+                generatorContext.addTemplate("opens-for-kapt-and-java-25", new StringTemplate(".mvn/jvm.config", JDK_25_KAPT_MODULES));
             } else {
-                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_21_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
+                generatorContext.getBuildProperties().put("kotlin.daemon.jvmargs", JDK_25_KAPT_MODULES.lines().collect(Collectors.joining(" \\" + System.lineSeparator() + "  ")));
             }
         }
     }

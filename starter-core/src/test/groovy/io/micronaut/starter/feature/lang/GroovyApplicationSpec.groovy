@@ -25,7 +25,7 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def buildGradle = output['build.gradle']
 
         then:
-        buildGradle.contains('mainClass.set("example.micronaut.Application")')
+        buildGradle.contains('mainClass = "example.micronaut.Application"')
     }
 
     @Unroll

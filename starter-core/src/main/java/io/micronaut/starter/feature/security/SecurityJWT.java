@@ -15,13 +15,16 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.security.jwt.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SecurityJWT extends SecurityFeature implements SecurityAuthenticationModeProvider {
 

@@ -15,15 +15,18 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.jetty.server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Jetty extends AbstractMicronautServerFeature {
+public class Jetty extends AbstractServletFeature {
 
     @Override
     public String getName() {
@@ -42,7 +45,7 @@ public class Jetty extends AbstractMicronautServerFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#jetty";
+        return "https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#jetty";
     }
 
     @Override

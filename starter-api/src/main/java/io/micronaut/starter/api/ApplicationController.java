@@ -21,13 +21,15 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.api.starterApi;
+import io.micronaut.starter.rocker.template.api.starterApi;
 import io.micronaut.starter.util.VersionInfo;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -40,13 +42,12 @@ import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Main interface on the the starter API.
+ * Main interface on the starter API.
  *
  * @author graemerocher
  * @since 1.0.0
@@ -85,7 +86,25 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Get("/versions")
     VersionDTO getInfo(@Parameter(hidden = true) RequestInfo info) {
         return new VersionDTO()
-                 .addLink(Relationship.SELF, info.self());
+                .addLink(Relationship.SELF, info.self());
+    }
+
+    @Hidden
+    @Get
+    @ApiResponse(
+            responseCode = "200",
+            description = "A textual description of the API",
+            content = @Content(mediaType = MediaType.TEXT_PLAIN)
+    )
+    @Produces({ MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
+    HttpResponse<?> redirectToUi(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+        URI redirectURI = configuration.getRedirectUri().orElse(null);
+        boolean acceptsHtml = request.accept().stream()
+                .anyMatch(mediaType -> mediaType.equals(MediaType.TEXT_HTML_TYPE));
+        if (acceptsHtml && redirectURI != null) {
+            return HttpResponse.permanentRedirect(redirectURI);
+        }
+        return home(request, info).contentType(MediaType.TEXT_PLAIN_TYPE);
     }
 
     /**
@@ -93,35 +112,20 @@ public class ApplicationController implements ApplicationTypeOperations {
      * @param request The request
      * @return A description of the API.
      */
-    @Get("/")
-    @Produces(MediaType.TEXT_PLAIN)
-    @ApiResponse(
-            responseCode = "200",
-            description = "A textual description of the API",
-            content = @Content(mediaType = MediaType.TEXT_PLAIN)
-    )
-    HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        Collection<MediaType> accept = request.accept();
-        URI redirectURI = configuration.getRedirectUri().orElse(null);
-        if (accept.contains(MediaType.TEXT_HTML_TYPE) && redirectURI != null) {
-            return HttpResponse.permanentRedirect(redirectURI);
-        } else {
-            return HttpResponse.ok(new Writable() {
-
-                @Override
-                public void writeTo(Writer out) {
-                    // no-op
-                }
-
-                @Override
-                public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
-                    new RockerWritable(new starterApi()
-                            .serverURL(info.getServerURL())
-                            .micronautVersion(VersionInfo.getMicronautVersion()))
-                            .write(outputStream);
-                }
-            });
-        }
+    MutableHttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+        return HttpResponse.ok(new Writable() {
+            @Override
+            public void writeTo(Writer out) {
+                // no-op
+            }
+            @Override
+            public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
+                new RockerWritable(new starterApi()
+                        .serverURL(info.getServerURL())
+                        .micronautVersion(VersionInfo.getMicronautVersion()))
+                        .write(outputStream);
+            }
+        });
     }
 
     /**

@@ -15,17 +15,26 @@
  */
 package io.micronaut.starter.feature.elasticsearch;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 
+import io.micronaut.starter.feature.logging.Slf4j;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.elasticsearch.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Elasticsearch implements Feature {
+    private static final Dependency LOG4J_OVER_SLF4J = Slf4j.slf4jDependency()
+            .artifactId("log4j-over-slf4j")
+            .runtime()
+            .build();
 
     @Override
     public String getName() {
@@ -45,15 +54,11 @@ public class Elasticsearch implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("elasticsearch.httpHosts", "http://localhost:9200,http://127.0.0.2:9200");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.elasticsearch")
+        generatorContext.addDependency(MicronautDependencyUtils.elasticSearchDependency()
                 .artifactId("micronaut-elasticsearch")
                 .compile());
         if (generatorContext.isFeaturePresent(GraalVM.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.slf4j")
-                    .lookupArtifactId("log4j-over-slf4j")
-                    .runtime());
+            generatorContext.addDependency(LOG4J_OVER_SLF4J);
             generatorContext.addDependency(Dependency.builder()
                     .groupId("org.apache.logging.log4j")
                     .lookupArtifactId("log4j-api")

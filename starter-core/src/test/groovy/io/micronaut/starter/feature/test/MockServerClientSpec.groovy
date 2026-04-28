@@ -46,7 +46,7 @@ class MockServerClientSpec extends ApplicationContextSpec implements CommandOutp
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "mockserver", Scope.TEST) == hasTC
+        verifier.hasDependency("org.testcontainers", "testcontainers-mockserver", Scope.TEST) == hasTC
         verifier.hasDependency("org.mock-server", "mockserver-client-java", Scope.TEST)
 
         where:

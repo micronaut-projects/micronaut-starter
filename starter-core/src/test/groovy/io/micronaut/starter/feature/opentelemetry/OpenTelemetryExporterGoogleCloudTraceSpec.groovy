@@ -4,6 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -72,15 +75,10 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
                 .language(language)
                 .features(['tracing-opentelemetry-exporter-gcp'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>com.google.cloud.opentelemetry</groupId>
-      <artifactId>exporter-auto</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("com.google.cloud.opentelemetry", "exporter-auto", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

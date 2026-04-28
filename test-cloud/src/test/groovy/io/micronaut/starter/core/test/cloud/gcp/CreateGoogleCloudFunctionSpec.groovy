@@ -6,11 +6,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.Requires
 import spock.lang.Unroll
-import spock.util.environment.Jvm
 
-@Requires({Jvm.current.isJava11Compatible()})
 class CreateGoogleCloudFunctionSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {

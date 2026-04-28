@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.jaxrs;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -23,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.jax.rs.security.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JaxRsSecurity implements Feature, MicronautServerDependent {
     private static final String ARTIFACT_ID_MICRONAUT_JAXRS_SERVER_SECURITY = "micronaut-jaxrs-server-security";

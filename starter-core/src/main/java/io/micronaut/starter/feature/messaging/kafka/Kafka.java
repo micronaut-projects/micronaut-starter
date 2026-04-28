@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.messaging.kafka;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
+import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
@@ -31,9 +34,10 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.kafka.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Kafka extends EaseTestingFeature implements DefaultFeature, MessagingFeature, SharedTestResourceFeature {
-
+public class Kafka extends EaseTestingFeature
+        implements DefaultFeature, MessagingFeature, SharedTestResourceFeature, ContributingTestContainerArtifactId {
     public static final Dependency MICRONAUT_KAFKA = MicronautDependencyUtils
             .kafkaDependency()
             .artifactId("micronaut-kafka")
@@ -41,6 +45,7 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
             .build();
 
     public static final String NAME = "kafka";
+    private static final String TEST_CONTAINERS_ARTIFACT_ID_KAFKA = "testcontainers-kafka";
 
     public Kafka(TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
@@ -75,5 +80,10 @@ public class Kafka extends EaseTestingFeature implements DefaultFeature, Messagi
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html";
+    }
+
+    @Override
+    public String testContainersArtifactId() {
+        return TEST_CONTAINERS_ARTIFACT_ID_KAFKA;
     }
 }

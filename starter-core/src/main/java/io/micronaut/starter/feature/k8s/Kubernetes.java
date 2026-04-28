@@ -15,14 +15,16 @@
  */
 package io.micronaut.starter.feature.k8s;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.distributedconfig.template.k8sYaml;
+import io.micronaut.starter.rocker.feature.distributedconfig.template.k8sYaml;
 import io.micronaut.starter.feature.jib.Jib;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
@@ -35,6 +37,7 @@ import jakarta.inject.Singleton;
  * @author graemerocher
  * @since 2.0.1
  */
+@Requires(property = "micronaut.starter.feature.kubernetes.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Kubernetes implements Feature {
 

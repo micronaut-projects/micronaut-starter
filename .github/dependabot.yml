@@ -8,19 +8,23 @@ registries:
 updates:
   - package-ecosystem: "gradle-plugins"
     directory: "/"
+    open-pull-requests-limit: 0
     registries:
       - gradle-plugin-portal
     schedule:
       interval: "daily"
   - package-ecosystem: "gradle"
     directory: "/"
+    open-pull-requests-limit: 0
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
     directory: "/"
+    open-pull-requests-limit: 0
     schedule:
       interval: "weekly"
   - package-ecosystem: "maven"
     directory: "starter-core/src/main/resources"
+    open-pull-requests-limit: 0
     schedule:
       interval: "weekly"

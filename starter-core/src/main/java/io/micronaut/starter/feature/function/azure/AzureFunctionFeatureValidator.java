@@ -22,13 +22,28 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Set;
 
+/**
+ * @see <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions">Azure Functions Supported Versions</a>.
+ */
 @Singleton
 public class AzureFunctionFeatureValidator implements FeatureValidator {
+    private static final List<JdkVersion> SUPPORTED_JDK_VERSIONS = List.of(
+            JdkVersion.JDK_21, JdkVersion.JDK_17, JdkVersion.JDK_11, JdkVersion.JDK_8
+    );
+    private static final JdkVersion MAX_JDK_SUPPORTED_VERSION = SUPPORTED_JDK_VERSIONS.stream().sorted().findFirst().orElseThrow();
 
     public static boolean supports(JdkVersion jdkVersion) {
-        return JdkVersion.JDK_8.equals(jdkVersion) || JdkVersion.JDK_11.equals(jdkVersion) || JdkVersion.JDK_17.equals(jdkVersion);
+        return JdkVersion.JDK_21.equals(jdkVersion) ||
+                JdkVersion.JDK_17.equals(jdkVersion) ||
+                JdkVersion.JDK_11.equals(jdkVersion) ||
+                JdkVersion.JDK_8.equals(jdkVersion);
+    }
+
+    public static JdkVersion getMaxJdkSupportedVersion() {
+        return MAX_JDK_SUPPORTED_VERSION;
     }
 
     @Override
@@ -39,8 +54,8 @@ public class AzureFunctionFeatureValidator implements FeatureValidator {
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(AbstractAzureFunction.class::isInstance) && !supports(options.getJavaVersion())) {
             throw new IllegalArgumentException("""
-                    Azure Function currently only supports JDK 8, 11 and 17 -- \
-                    https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure""");
+                    Azure Function currently only supports JDK 8, 11, 17, and 21 -- \
+                    https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions""");
         }
     }
 }

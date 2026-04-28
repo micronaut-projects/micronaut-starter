@@ -1,0 +1,12 @@
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args (GradleDsl dsl)
+// https://docs.gradle.org/current/userguide/upgrading_major_version_9.html#test_task_fails_when_no_tests_are_discovered
+@if(dsl == GradleDsl.KOTLIN) {
+tasks.withType<AbstractTestTask>().configureEach {
+    failOnNoDiscoveredTests = false
+}
+} else {
+tasks.withType(AbstractTestTask).configureEach {
+    failOnNoDiscoveredTests = false
+}
+}

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.chatbots.basecamp;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -25,8 +27,8 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.aws.Cdk;
-import io.micronaut.starter.feature.chatbots.basecamp.template.awsCdkReadme;
-import io.micronaut.starter.feature.chatbots.basecamp.template.awsReadme;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.awsCdkReadme;
+import io.micronaut.starter.rocker.feature.chatbots.basecamp.template.awsReadme;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.validator.MicronautValidationFeature;
@@ -40,6 +42,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.basecamp.lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class BasecampAwsChatBot extends ChatBotsBasecamp implements AwsFeature, AwsMicronautRuntimeFeature, HandlerClassFeature {
 

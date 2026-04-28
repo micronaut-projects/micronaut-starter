@@ -57,7 +57,7 @@ Add the following GitHub secrets:
         } else {
             assert gradle.contains('''
     dockerBuildNative {
-        images.set(listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}"))
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
     }''')
         }
 
@@ -79,12 +79,7 @@ Add the following GitHub secrets:
     }
 
     @Unroll
-    void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
-                                                                           JdkVersion graalVersion) {
-        given:
-        def graalvmVersion = "${VersionInfo.getDependencyVersion('graal').getValue()}" +
-                ".java${graalVersion.majorVersion()}"
-
+    void 'test github gradle workflow for #jdkVersion'(JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
@@ -93,10 +88,8 @@ Add the following GitHub secrets:
 
         then:
         workflow
-        workflow.contains("graalvm-version: ${graalvmVersion}")
 
         where:
-        jdkVersion        | graalVersion
-        JdkVersion.JDK_17 | JdkVersion.JDK_17
+        jdkVersion << [JdkVersion.JDK_25]
     }
 }

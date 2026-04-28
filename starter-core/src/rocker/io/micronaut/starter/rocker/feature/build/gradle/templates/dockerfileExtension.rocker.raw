@@ -1,0 +1,19 @@
+@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.feature.build.gradle.Dockerfile
+@args(GradleDsl dsl, Dockerfile dockerfile)
+@if (dsl == GradleDsl.GROOVY) {
+@raw("tasks.named(\"dockerfile\") {\n")
+} else {
+@raw("tasks.named<io.micronaut.gradle.docker.MicronautDockerfile>(\"dockerfile\") {\n")
+}
+@if(dockerfile.getBaseImage() != null) {
+    baseImage = "@(dockerfile.getBaseImage())"
+}
+@if (dockerfile.getArgs() != null) {
+    args(
+    @for (int i = 0; i < dockerfile.getArgs().size(); i++) {
+        "@(dockerfile.getArgs().get(i))"@if (i < (dockerfile.getArgs().size() -1)) {,}
+    }
+    )
+}
+@raw("}\n")

@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.objectstorage;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import jakarta.inject.Singleton;
 
@@ -25,6 +27,7 @@ import jakarta.inject.Singleton;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
+@Requires(property = "micronaut.starter.feature.object.storage.gcp.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ObjectStorageGcp implements CloudObjectStorageFeature, GcpCloudFeature {
 

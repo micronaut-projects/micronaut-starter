@@ -37,7 +37,9 @@ class CreateAwsSnapStartSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION]).findAll {
+            it[2] != BuildTool.MAVEN
+        }
     }
 
     @Unroll

@@ -20,7 +20,7 @@ class ReactiveFeatureSpec extends ApplicationContextSpec implements CommandOutpu
         e.message.startsWith("There can only be one of the following features selected:")
 
         where:
-        featureNames << ['rxjava1','reactor','rxjava3']
+        featureNames << ['reactor','rxjava3']
                 .permutations()
                 .collect { it.collate(2, false).flatten() }
         description = featureNames.join(',') + " not allowed together"

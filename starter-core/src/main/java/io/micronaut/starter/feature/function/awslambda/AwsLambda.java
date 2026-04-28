@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.function.awslambda;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -43,22 +45,22 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovy;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovyJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJava;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJavaJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKoTest;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlin;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerSpock;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovy;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovyJunit;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerJava;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerJavaJunit;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerKoTest;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlin;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovy;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJava;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJavaJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKoTest;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlin;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerSpock;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerGroovy;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerJava;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerJavaJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerKoTest;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerKotlin;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
@@ -81,6 +83,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 
+@Requires(property = "micronaut.starter.feature.aws.lambda.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, AwsMicronautRuntimeFeature {
 

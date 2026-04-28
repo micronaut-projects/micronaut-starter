@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.azure;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author radovanradic
  * @since 3.8.0
  */
+@Requires(property = "micronaut.starter.feature.azure.cosmos.db.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AzureCosmosDbFeature implements OneOfFeature {
 

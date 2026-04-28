@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
@@ -29,7 +30,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.build.maven.templates.aot;
+import io.micronaut.starter.rocker.feature.build.maven.templates.aot;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.micronaut.aot.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MicronautAot implements DefaultFeature {
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
@@ -143,17 +145,17 @@ public class MicronautAot implements DefaultFeature {
         final List<MicronautAotOptimization> optimizations = new ArrayList<>();
         optimizations.add(new MicronautAotOptimization("cached.environment.enabled", true, "Caches environment property values: environment properties will be deemed immutable after application startup."));
         optimizations.add(new MicronautAotOptimization("precompute.environment.properties.enabled", true, "Precomputes Micronaut configuration property keys from the current environment variables"));
+        optimizations.add(new MicronautAotOptimization("logback.xml.to.java.enabled", true, "Replaces logback.xml with a pure Java configuration"));
+        optimizations.add(new MicronautAotOptimization("property-source-loader.generate.enabled", !graalvm, "Converts configuration files from YAML and properties to Java configuration"));
         if (graalvm) {
-            optimizations.add(new MicronautAotOptimization("yaml.to.java.config.enabled", false, "Converts YAML configuration files to Java configuration"));
             optimizations.add(new MicronautAotOptimization("graalvm.config.enabled", true, "Generates GraalVM configuration files required to load the AOT optimizations"));
             optimizations.add(new MicronautAotOptimization("serviceloading.native.enabled", false, "Scans for service types ahead-of-time, avoiding classpath scanning at startup"));
         } else {
-            optimizations.add(new MicronautAotOptimization("yaml.to.java.config.enabled", true, "Converts YAML configuration files to Java configuration"));
             optimizations.add(new MicronautAotOptimization("serviceloading.jit.enabled", true, "Scans for service types ahead-of-time, avoiding classpath scanning at startup"));
         }
         optimizations.add(new MicronautAotOptimization("scan.reactive.types.enabled", true, "Scans reactive types at build time instead of runtime"));
         optimizations.add(new MicronautAotOptimization("deduce.environment.enabled", true, "Deduces the environment at build time instead of runtime"));
-        optimizations.add(new MicronautAotOptimization("known.missing.types.enabled", true, "Checks of existence of some types at build time instead of runtime"));
+        optimizations.add(new MicronautAotOptimization("known.missing.types.enabled", true, "Checks for the existence of some types at build time instead of runtime"));
         optimizations.add(new MicronautAotOptimization("sealed.property.source.enabled", true, "Precomputes property sources at build time"));
 
         optimizations.add(new MicronautAotOptimization(

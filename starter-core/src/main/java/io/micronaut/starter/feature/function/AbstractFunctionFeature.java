@@ -22,9 +22,9 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature;
-import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
-import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
-import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
+import io.micronaut.starter.rocker.feature.function.template.http.httpFunctionGroovyController;
+import io.micronaut.starter.rocker.feature.function.template.http.httpFunctionJavaController;
+import io.micronaut.starter.rocker.feature.function.template.http.httpFunctionKotlinController;
 import io.micronaut.starter.feature.json.SerializationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
@@ -71,7 +71,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
 
         if (type == ApplicationType.DEFAULT) {
 
-            final String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
+            final String className = StringUtils.capitalize(generatorContext.getProject().getClassName());
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();

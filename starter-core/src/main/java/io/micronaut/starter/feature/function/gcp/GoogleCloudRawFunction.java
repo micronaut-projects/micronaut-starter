@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -24,15 +26,15 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionKotlin;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionJavaJunit;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKoTest;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionReadme;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawBackgroundFunctionKotlin;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawFunctionGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawFunctionJavaJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawFunctionKoTest;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.raw.gcpRawFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -40,6 +42,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.google.cloud.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public static final String NAME = "google-cloud-function";

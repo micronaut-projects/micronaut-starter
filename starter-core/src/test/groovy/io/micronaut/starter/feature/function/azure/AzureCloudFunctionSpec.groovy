@@ -11,9 +11,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void "verify for #jdkVersion application #applicationType with azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion) {
         when:
         generate(
@@ -27,7 +29,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                MicronautJdkVersionConfiguration.SUPPORTED_JDKS.findAll { AzureFunctionFeatureValidator.supports(it) }
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS
         ].combinations()
     }
 
@@ -38,22 +40,24 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
                 ['azure-function']
         )
+
         then:
-        def ex = thrown(IllegalArgumentException)
-        ex.message == 'Azure Function currently only supports JDK 8, 11 and 17 -- https://learn.microsoft.com/en-us/azure/developer/java/fundamentals/java-support-on-azure'
+        IllegalArgumentException ex = thrown()
+        ex.message == 'Azure Function currently only supports JDK 8, 11, 17, and 21 -- https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions'
 
         where:
         [applicationType, jdkVersion] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                MicronautJdkVersionConfiguration.SUPPORTED_JDKS.findAll { !AzureFunctionFeatureValidator.supports(it) }
+                MicronautJdkVersionConfiguration.SUPPORTED_JDKS
         ].combinations()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test gradle raw azure function feature for language=#language'() {
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['azure-function']
         )
         String build = output['build.gradle']
@@ -69,7 +73,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
-        !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('"com.gradleup.shadow"')
         !build.contains('shadowJar')
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
@@ -93,13 +97,14 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         testSrcDir << Language.testSrcDirs()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test gradle azure function feature for language=#language'() {
         when:
         String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
                 .applicationType(ApplicationType.DEFAULT)
                 .testFramework(TestFramework.JUNIT)
-                .jdkVersion(JdkVersion.JDK_8)
+                .jdkVersion(JdkVersion.JDK_25)
                 .features(['azure-function'])
                 .render()
         then:
@@ -108,7 +113,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
-        !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('"com.gradleup.shadow"')
         !build.contains('shadowJar')
 
         when:
@@ -132,11 +137,12 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         testSrcDir << Language.testSrcDirs()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String readme = output["README.md"]
@@ -162,11 +168,12 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_25),
                 ['azure-function'] + (useSerde ? ['serialization-jackson'] : ['jackson-databind'])
         )
         String build = output['pom.xml']

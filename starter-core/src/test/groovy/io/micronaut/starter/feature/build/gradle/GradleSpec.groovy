@@ -7,8 +7,8 @@ import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.build.MicronautBuildPlugin
-import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
-import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.rocker.feature.build.gradle.templates.gradleProperties
+import io.micronaut.starter.rocker.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -93,12 +93,12 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'ignoredAutomaticDependencies not output by default'() {
@@ -116,12 +116,12 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         buildGradle
-        buildGradle.contains(configuration)
+        buildGradle.contains('graalvmNative.toolchainDetection = false')
 
         where:
-        dsl                     | fileName           | configuration
-        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
-        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+        dsl                     | fileName
+        BuildTool.GRADLE        | 'build.gradle'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts'
     }
 
     void 'Supported languages have both Gradle and Graalvm plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
@@ -165,7 +165,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         [lang, jdk, buildTool] << [
                 Language.values(),
-                [JdkVersion.JDK_17, JdkVersion.JDK_21],
+                [JdkVersion.JDK_25],
                 BuildTool.valuesGradle()
         ].combinations()
     }

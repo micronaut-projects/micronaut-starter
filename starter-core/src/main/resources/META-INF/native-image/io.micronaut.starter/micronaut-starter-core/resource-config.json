@@ -7,6 +7,8 @@
     {"pattern":".gitkeep"},
     {"pattern":"springloaded/.*$"},
     {"pattern":"\\Qmicronaut-versions.properties\\E"},
-    {"pattern":"pom.xml"}
+    {"pattern":"pom.xml"},
+    {"pattern":"io/micronaut/starter/rocker/.*\\.class"},
+    {"pattern":"io/micronaut/starter/cli/rocker/.*\\.class"}
   ]
 }

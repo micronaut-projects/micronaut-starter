@@ -17,8 +17,10 @@ package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -26,19 +28,20 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
+import io.micronaut.starter.rocker.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.feature.server.ServerFeature;
-import io.micronaut.starter.feature.server.template.groovyJunit;
-import io.micronaut.starter.feature.server.template.javaJunit;
-import io.micronaut.starter.feature.server.template.koTest;
-import io.micronaut.starter.feature.server.template.kotlinJunit;
-import io.micronaut.starter.feature.server.template.spock;
+import io.micronaut.starter.rocker.feature.server.template.groovyJunit;
+import io.micronaut.starter.rocker.feature.server.template.javaJunit;
+import io.micronaut.starter.rocker.feature.server.template.koTest;
+import io.micronaut.starter.rocker.feature.server.template.kotlinJunit;
+import io.micronaut.starter.rocker.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.oracle.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 @Primary
 public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {

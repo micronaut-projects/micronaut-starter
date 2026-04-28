@@ -16,16 +16,18 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionJavaJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionKoTest;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author graemerocher
  * @since 2.0.0
  */
+@Requires(property = "micronaut.starter.feature.google.cloud.function.http.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
 

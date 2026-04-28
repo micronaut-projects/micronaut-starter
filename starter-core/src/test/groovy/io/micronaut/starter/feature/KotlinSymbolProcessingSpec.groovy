@@ -77,7 +77,7 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
 
     void "org.gradle.jvmargs is only added for KSP"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_25))
 
         then:
         output."gradle.properties" =~ /(?m)^micronautVersion=.+/
@@ -89,7 +89,7 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
 
     void "org.gradle.jvmargs is added for KSP"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_17))
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.GRADLE_KOTLIN, JdkVersion.JDK_25))
 
         then:
         output."gradle.properties" =~ /(?m)^micronautVersion=.+/

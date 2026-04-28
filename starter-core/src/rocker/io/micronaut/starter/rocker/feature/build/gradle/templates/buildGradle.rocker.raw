@@ -1,0 +1,353 @@
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.util.VersionInfo
+
+@args (
+ApplicationType applicationType,
+Project project,
+Features features,
+GradleBuild gradleBuild
+)
+
+@for (String importLine : gradleBuild.getPluginsImports()) {
+@(importLine)
+}
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
+
+version = "0.1"
+group = "@project.getPackageName()"
+
+@if (features.contains("asciidoctor")) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+apply(from="gradle/asciidoc.gradle")
+} else {
+apply from: "gradle/asciidoc.gradle"
+}
+}
+
+@if(features.language().isKotlin() && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+val kotlinVersion=project.properties.get("kotlinVersion")
+}
+
+repositories {
+@gradleBuild.renderRepositories()
+}
+
+@dependencies.template(applicationType, project, features, gradleBuild)
+
+
+@if (features.mainClass().isPresent()) {
+application {
+    mainClass = "@features.mainClass().get()"
+}
+} else if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
+application {
+    mainClass = "com.fnproject.fn.runtime.EntryPoint"
+}
+}
+
+java {
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
+    sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+} else {
+    sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+}
+@if (!features.language().isKotlin()) {
+    targetCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
+}
+}
+
+@if (features.contains("kapt") && (features.language().isKotlin() || features.testFramework().isKotlinTestFramework())) {
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(@features.getTargetJdk()))
+    }
+}
+}
+
+
+@if (features.contains("jrebel") ||
+    features.contains("azure-function") ||
+    features.contains("oracle-function") ||
+    features.contains("jib") ||
+    features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+tasks {
+@if (features.contains("jrebel")) {
+    run {
+        dependsOn(generateRebel)
+    }
+}
+
+@if (features.contains("jrebel")) {
+    run {
+        if (project.hasProperty("rebelAgent")) {
+            jvmArgs(rebelAgent)
+        }
+    }
+}
+
+@if (features.contains("oracle-function")) {
+@if (features.contains("oracle-function-http")) {
+    dockerfileNative {
+      args("-XX:MaximumHeapSizePercent=80")
+    }
+} else {
+    dockerfileNative {
+        args("-XX:MaximumHeapSizePercent=80")
+        buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+        defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+    }
+
+    dockerfile {
+        buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+        defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+    }
+}
+
+
+    // Update these to match your region, tenancy and repo
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    val region = "region-key"
+    val tenancy = "tenancy"
+    val repo = "my-app"
+} else {
+    String region = "region-key"
+    String tenancy = "tenancy"
+    String repo = "my-app"
+}
+
+
+    dockerBuild {
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
+            } else {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
+        } else {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
+            } else {
+        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+            }
+        }
+    }
+
+    dockerBuildNative {
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
+            } else {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
+        } else {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}")
+            } else {
+        images = ["${region}.ocir.io/${tenancy}/${repo}/${project.name}:${project.version}"]
+            }
+        }
+    }
+} else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+    dockerBuild {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
+            } else {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
+    }
+
+    dockerBuildNative {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images = listOf("${System.getenv("DOCKER_IMAGE") ?: project.name}:${project.version}")
+            } else {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+            }
+    }
+}
+
+@if (features.contains("jib")) {
+    jib {
+        to {
+            image = "gcr.io/myapp/jib-image"
+        }
+    }
+}
+
+}
+}
+
+@if (applicationType == ApplicationType.DEFAULT || features.contains("oracle-function")) {
+graalvmNative.toolchainDetection = false
+}
+graalvmNative {
+    binaries {
+        all {
+            buildArgs.add("-H:+SharedArenaSupport")
+@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
+            buildArgs.addAll(
+                         "-H:+StaticExecutableWithDynamicLibC",
+                         "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+                    )
+}
+        }
+    }
+}
+
+@if (features.contains("grpc")) {
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/grpc")
+            srcDirs("build/generated/source/proto/main/java")
+        }
+    }
+}
+
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")"
+    }
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                // Apply the "grpc" plugin whose spec is defined above, without options.
+                id("grpc")
+            }
+        }
+    }
+}
+} else {
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
+}
+}
+
+
+@if (features.contains("views-react")) {
+java {
+    // GraalJS for React server side rendering requires GraalVM.
+    toolchain {
+        vendor = JvmVendorSpec.GRAAL_VM
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+// region JavaScript compilation
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+node {
+    download = true
+    version = "21.7.2"
+    nodeProjectDir = layout.projectDirectory.dir("src/main/js")
+}
+
+val builtJSDir = layout.buildDirectory.dir("js")
+
+val buildClientJS = tasks.register<NpxTask>("buildClientJS") {
+    dependsOn("npmInstall")
+    command = "webpack"
+    args = listOf("--mode", "production", "--config", "webpack.client.js")
+    inputs.dir(fileTree("src/main/js/").exclude(".cache"))
+
+    val outPath = builtJSDir.get().file("views/static/client.js")
+    environment = mapOf("BUILD_DIR" to outPath.asFile.absoluteFile.parent)
+    outputs.file(outPath)
+}
+
+val buildServerJS = tasks.register<NpxTask>("buildServerJS") {
+    dependsOn("npmInstall")
+    command = "webpack"
+    args = listOf("--mode", "production", "--config", "webpack.server.js")
+    inputs.dir(fileTree("src/main/js/").exclude(".cache"))
+
+    val outPath = builtJSDir.get().file("views/ssr-components.mjs")
+    environment = mapOf("BUILD_DIR" to outPath.asFile.absoluteFile.parent)
+    outputs.file(outPath)
+}
+
+val buildJS = tasks.register("buildJS") {
+    dependsOn(buildClientJS, buildServerJS)
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir(files(builtJSDir).builtBy(buildJS))
+        }
+    }
+}
+} else {
+node {
+    download = true
+    version = "21.7.2"
+    nodeProjectDir = layout.projectDirectory.dir("src/main/js")
+}
+
+def builtJSDir = layout.buildDirectory.dir('js')
+
+def buildClientJS = tasks.register('buildClientJS', NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ['--mode', 'production', '--config', 'webpack.client.js']
+    inputs.dir(fileTree('src/main/js/').exclude('.cache'))
+
+    def outPath = builtJSDir.get().file('views/static/client.js')
+    environment = ['BUILD_DIR': outPath.asFile.absoluteFile.parent]
+    outputs.file(outPath)
+}
+
+def buildServerJS = tasks.register('buildServerJS', NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ['--mode', 'production', '--config', 'webpack.server.js']
+    inputs.dir(fileTree('src/main/js/').exclude('.cache'))
+
+    def outPath = builtJSDir.get().file('views/ssr-components.mjs')
+    environment = ['BUILD_DIR': outPath.asFile.absoluteFile.parent]
+    outputs.file(outPath)
+}
+
+def buildJS = tasks.register('buildJS') {
+    it.dependsOn(buildClientJS, buildServerJS)
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir(files(builtJSDir).builtBy(buildJS))
+        }
+    }
+}
+}
+// endregion
+
+}
+
+@gradleBuild.renderExtensions()
+@io.micronaut.starter.rocker.feature.test.template.failOnNoDiscoveredTests.template(gradleBuild.getDsl())
+@gradleBuild.renderSubstitutions()
+
+

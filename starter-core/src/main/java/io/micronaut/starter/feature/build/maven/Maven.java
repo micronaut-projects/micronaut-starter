@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.build.maven;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.RepositoryResolver;
@@ -29,10 +31,10 @@ import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.feature.build.gitignore;
-import io.micronaut.starter.feature.build.maven.templates.genericPom;
-import io.micronaut.starter.feature.build.maven.templates.multimodule;
-import io.micronaut.starter.feature.build.maven.templates.pom;
+import io.micronaut.starter.rocker.feature.build.gitignore;
+import io.micronaut.starter.rocker.feature.build.maven.templates.genericPom;
+import io.micronaut.starter.rocker.feature.build.maven.templates.multimodule;
+import io.micronaut.starter.rocker.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
@@ -46,6 +48,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.maven.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Maven implements BuildFeature {
     public static final String MICRONAUT_MAVEN_DOCS_URL = "https://micronaut-projects.github.io/micronaut-maven-plugin/latest/";
@@ -126,7 +129,7 @@ public class Maven implements BuildFeature {
 
     @SuppressWarnings("java:S1172") // Unused parameter for extension
     protected RockerModel gitIgnore(GeneratorContext generatorContext) {
-        return gitignore.template();
+        return gitignore.template(generatorContext.getFeatures());
     }
 
     @Override

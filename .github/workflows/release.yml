@@ -8,15 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - uses: gradle/wrapper-validation-action@v2
+      - uses: gradle/actions/wrapper-validation@v6
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
@@ -35,9 +35,9 @@ jobs:
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -45,20 +45,20 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_FILE: ${{ secrets.GPG_FILE }}
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+        run: |
+          echo $GPG_FILE | base64 -d > secring.gpg
+          ./gradlew docs
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
       - name: Upload CLI Zip
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.2
+        with:
+          files: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_content_type: application/zip
       - name: Publish to Github Pages
         if: success()
         uses: micronaut-projects/github-pages-deploy-action@master
@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -97,7 +97,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -107,19 +107,18 @@ jobs:
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.7
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
-          version: '22.3.2'
-          java-version: '17'
+          java-version: '25'
+          distribution: 'graalvm-community'
           native-image-musl: 'true'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image (with libc=musl)"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon -Pmusl
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build"
         run: ./starter-cli/build/native/nativeCompile/mn --version
       - name: "✅ Verify Create App"
@@ -134,21 +133,18 @@ jobs:
           zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.2
+        with:
+          files: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   macos:
-    name: Release OS X Native CLI
-    runs-on: macos-latest
+    name: Release OS X Intel Native CLI
+    runs-on: macos-15-intel
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -158,18 +154,17 @@ jobs:
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.7
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
-          version: '22.3.2'
-          java-version: '17'
-          components: 'native-image'
+          java-version: '25'
+          distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build"
         run: ./starter-cli/build/native/nativeCompile/mn --version
       - name: "✅ Verify Create App"
@@ -184,36 +179,78 @@ jobs:
           zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.2
+        with:
+          files: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  macos-arm:
+    name: Release OS X Arm Native CLI
+    runs-on: macos-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Set the current release version
+        id: release_version
+        run: |
+          release_version=${GITHUB_REF:11}
+          sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
+      - name: "☕️ Setup GraalVM CE"
+        uses: graalvm/setup-graalvm@v1.5.2
+        with:
+          java-version: '25'
+          distribution: 'graalvm-community'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "📸 Build the Native Image"
+        run: ./gradlew micronaut-cli:nativeCompile --no-daemon
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: "✅ Verify Build"
+        run: ./starter-cli/build/native/nativeCompile/mn --version
+      - name: "✅ Verify Create App"
+        run: ./starter-cli/build/native/nativeCompile/mn create-app test
+      - name: Package Build
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          mkdir -p "mn-darwin-aarch64-${VERSION}/bin"
+          mv ./starter-cli/build/native/nativeCompile/mn "mn-darwin-aarch64-${VERSION}/bin"
+          cp ./LICENSE "mn-darwin-aarch64-${VERSION}/"
+          zip -r "mn-darwin-aarch64-${VERSION}.zip" "mn-darwin-aarch64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: softprops/action-gh-release@v2.6.2
+        with:
+          files: ./mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.7
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
-          version: '22.3.2'
-          java-version: '17'
-          components: 'native-image'
+          java-version: '25'
+          distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build (Powershell)"
         shell: powershell
         run: ./starter-cli/build/native/nativeCompile/mn.exe --version
@@ -233,28 +270,25 @@ jobs:
           Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v2.6.2
+        with:
+          files: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
   sdkman:
     name: Release to SDKMAN!
     runs-on: ubuntu-latest
-    needs: [linux, macos, windows]
+    needs: [linux, macos, macos-arm, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: |
@@ -265,9 +299,9 @@ jobs:
         env:
           GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
           GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew sdkRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
@@ -275,14 +309,14 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '25'
       - name: Set the current release version
         id: release_version
         run: |
@@ -292,9 +326,9 @@ jobs:
       - name: Run Tests
         run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Build Docker image
         run: |
           ./gradlew starter-web-netty:dockerBuild -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
@@ -318,30 +352,37 @@ jobs:
           gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
   homebrew:
     name: Update Homebrew cask
-    needs: [macos]
+    needs: [macos, macos-arm]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
-      - name: Download ZIP
-        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
+      - name: Download Intel ZIP
+        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O intel.zip
+      - name: Download Arm ZIP
+        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-aarch64-${{ github.event.release.tag_name }}.zip -O arm.zip
       - name: Calculate SHA256
         id: sha
         run: |
-          s=$(sha256sum mn.zip | awk  '{ print $1 }')
-          echo "SHA256 is: $s"
-          echo "sha=${s}" >> $GITHUB_OUTPUT
+          s=$(sha256sum intel.zip | awk  '{ print $1 }')
+          echo "INTEL SHA256 is: $s"
+          echo "intelsha=${s}" >> $GITHUB_OUTPUT
+          s=$(sha256sum arm.zip | awk  '{ print $1 }')
+          echo "ARM SHA256 is: $s"
+          echo "armsha=${s}" >> $GITHUB_OUTPUT
       - name: Update Cask file
         env:
-          SHA: ${{ steps.sha.outputs.sha }}
+          INTELSHA: ${{ steps.sha.outputs.intelsha }}
+          ARMSHA: ${{ steps.sha.outputs.armsha }}
         run: |
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
-          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+          sed -i -e "s/  sha256 arm: '.*/  sha256 arm: '${ARMSHA}',/" Casks/micronaut.rb
+          sed -i -e "s/         intel: '.*/         intel: '${INTELSHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -352,7 +393,7 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.release.target_commitish }}
           token: ${{ secrets.GH_TOKEN }}
@@ -394,7 +435,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -406,23 +447,23 @@ jobs:
     needs: [chocolatey, sdkman, gcr, homebrew]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: ${{ github.event.release.target_commitish }}
-      - uses: gradle/wrapper-validation-action@v2
+      - uses: gradle/actions/wrapper-validation@v6
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '25'
       - name: Back to Micronaut Core snapshot
         continue-on-error: true
         run: ./gradlew micronautCoreNextSnapshot
       - name: Back to Micronaut Platform snapshot
         continue-on-error: true
         run: ./gradlew micronautPlatformNextSnapshot
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v7.1.0
         continue-on-error: true
         with:
           commit_message: Back Core and Platform version to snapshot

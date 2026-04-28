@@ -210,6 +210,20 @@ public final class Dependency implements Coordinate {
         return annotationProcessorPriority;
     }
 
+    public static Dependency of(Dependency dep, Scope scope) {
+        return new Dependency(scope,
+                dep.getGroupId(),
+                dep.getArtifactId(),
+                dep.getVersion(),
+                dep.getVersionProperty(),
+                dep.requiresLookup(),
+                dep.isAnnotationProcessorPriority(),
+                dep.getOrder(),
+                dep.isPom(),
+                dep.getExclusions(),
+                dep.getSubstitutions());
+    }
+
     public static class Builder {
 
         private Scope scope;

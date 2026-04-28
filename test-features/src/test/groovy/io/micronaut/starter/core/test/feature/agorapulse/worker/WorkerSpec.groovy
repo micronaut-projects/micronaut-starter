@@ -5,6 +5,8 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.IgnoreIf
@@ -30,12 +32,14 @@ class WorkerSpec extends CommandSpec {
         where:
         [language, testFramework] << [
                 Language.values(),
-                TestFramework.values()
-        ].combinations()
+                TestFrameworkCombinations.values()
+        ].combinations().findAll {
+            return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+        }
     }
 
     @Unroll
-    void "test gradle agorapulse-micronaut-worker with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
+    void "test gradle agorapulse-micronaut-worker with #language and #testFramework"(Language language, BuildTool buildTool, TestFramework testFramework) {
         when:
         generateProject(language, buildTool, ["agorapulse-micronaut-worker"], ApplicationType.DEFAULT, testFramework)
         BuildResult result = executeGradle("test")
@@ -44,10 +48,12 @@ class WorkerSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language, testFramework] << [
-                BuildTool.valuesGradle(),
+        [language, buildTool, testFramework] << [
                 Language.values(),
-                TestFramework.values()
-        ].combinations()
+                BuildTool.valuesGradle(),
+                TestFrameworkCombinations.values()
+        ].combinations().findAll {
+                    return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+                }
     }
 }

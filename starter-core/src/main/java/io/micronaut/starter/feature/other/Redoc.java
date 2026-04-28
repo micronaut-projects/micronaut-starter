@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.InterceptUrlMap;
 import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;
@@ -23,6 +25,7 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+@Requires(property = "micronaut.starter.feature.redoc.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Redoc extends OpenApiView implements ContributingStaticResources {
     public static final String NAME = "redoc";
@@ -43,7 +46,7 @@ public class Redoc extends OpenApiView implements ContributingStaticResources {
 
     @Override
     public String getDescription() {
-        return "Adds and enables Redoc view for OpenApi";
+        return "Adds and enables Redoc view for OpenAPI";
     }
 
     @Override

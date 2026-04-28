@@ -16,16 +16,18 @@
 package io.micronaut.starter.feature.agorapulse.console;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
-import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyDsl;
-import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyHttp;
-import io.micronaut.starter.feature.agorapulse.console.template.consoleKotlinHttp;
+import io.micronaut.starter.rocker.feature.agorapulse.console.template.consoleGroovyDsl;
+import io.micronaut.starter.rocker.feature.agorapulse.console.template.consoleGroovyHttp;
+import io.micronaut.starter.rocker.feature.agorapulse.console.template.consoleKotlinHttp;
 import io.micronaut.starter.feature.agorapulse.worker.Worker;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -40,6 +42,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+@Requires(property = "micronaut.starter.feature.agorapulse.micronaut.console.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Console implements AgoraPulseFeature {
 

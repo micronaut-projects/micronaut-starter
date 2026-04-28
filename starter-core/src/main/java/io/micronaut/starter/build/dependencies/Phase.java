@@ -25,5 +25,6 @@ public enum Phase {
     DEVELOPMENT,
     RUNTIME,
     OPENREWRITE,
+    ERRORPRONE,
     TEST_RESOURCES_SERVICE,
 }

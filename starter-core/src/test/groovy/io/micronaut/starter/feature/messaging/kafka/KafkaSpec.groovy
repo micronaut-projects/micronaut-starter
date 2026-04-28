@@ -29,7 +29,8 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("org.testcontainers","kafka", Scope.TEST)
+        verifier.hasDependency("org.testcontainers","testcontainers-kafka", Scope.TEST)
+        verifier.hasDependency("org.apache.commons","commons-compress", Scope.TEST)
 
         where:
         buildTool << BuildTool.values()
@@ -45,8 +46,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
         template.contains("""
     testResources {
-        sharedServer = true
-    }""")
+        sharedServer = true""")
     }
 
     void "test resources config is not present if testContainers feature is added"() {
@@ -68,14 +68,10 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["kafka"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
+
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kafka</groupId>
-      <artifactId>micronaut-kafka</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.kafka", "micronaut-kafka", Scope.COMPILE)
         template.contains('''\
     <plugins>
       <plugin>

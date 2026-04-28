@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    picocliVersion = '4.7.5'
+    picocliVersion = '4.7.7'
 }
 
 configurations {
@@ -21,23 +21,23 @@ configurations.all {
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
 
-    compileOnly("org.graalvm.nativeimage:svm")
+    compileOnly("org.graalvm.sdk:nativeimage:25.0.3")
 
     api(project(":starter-core"))
     api("info.picocli:picocli:$picocliVersion")
     api("info.picocli:picocli-shell-jline3:$picocliVersion")
     api("com.fizzed:rocker-runtime:$rockerVersion")
 
-    implementation("org.slf4j:slf4j-nop:2.0.12")
+    implementation("org.slf4j:slf4j-nop:2.0.17")
     implementation("org.fusesource.jansi:jansi:1.18")
     implementation("org.yaml:snakeyaml")
     implementation("javax.inject:javax.inject:1")
     implementation("org.shredzone.acme4j:acme4j-client")
     implementation("org.shredzone.acme4j:acme4j-utils:2.16")
-    implementation("org.jline:jline:3.19.0")
+    implementation('org.jline:jline:3.27.1')
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
-    testImplementation("org.testcontainers:spock")
+    testImplementation("org.testcontainers:testcontainers-spock")
     testImplementation("org.reflections:reflections:0.10.2")
     testImplementation("org.apache.groovy:groovy-xml")
 
@@ -65,11 +65,6 @@ application {
     mainClass = "io.micronaut.starter.cli.MicronautStarter"
 }
 
-rocker {
-    javaVersion = '17'
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-}
-
 startScripts {
     applicationName = 'mn'
 }
@@ -86,8 +81,7 @@ sdkman {
     version = project.version
     hashtag = "#micronautfw"
     platforms = [
-            // TODO:  Once graal native-image works for arm OSX, we should switch to building and publishing a non-rosetta release (https://github.com/oracle/graal/issues/2666)
-            "MAC_ARM64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
+            "MAC_ARM64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-aarch64-v${project.version}.zip",
             "MAC_OSX":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
             "WINDOWS_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-win-amd64-v${project.version}.zip",
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
@@ -96,4 +90,38 @@ sdkman {
 
 tasks.register('sdkRelease') {
     dependsOn((projectVersion.endsWith("-SNAPSHOT") || projectVersion.contains("-M") || projectVersion.contains("-R")) ? 'sdkMinorRelease' : 'sdkMajorRelease')
+}
+
+
+def tmpDir = System.getProperty("java.io.tmpdir")
+
+def restoreTmpDir = tasks.register("restoreTmpDir") {
+    doFirst {
+        System.setProperty("java.io.tmpdir", tmpDir)
+    }
+}
+
+tasks.named("nativeCompile") {
+    finalizedBy(restoreTmpDir)
+    doFirst {
+        def newTmpDir = temporaryDir.absolutePath
+        println("Setting temporary dir to ${newTmpDir}")
+        System.setProperty("java.io.tmpdir", newTmpDir)
+    }
+}
+rocker {
+    version = rockerVersion
+    configurations {
+        main {
+            optimize = true
+            discardLogicWhitespace = true
+            templateDir = file('src/rocker')
+            outputDir = file('src/generated/rocker')
+        }
+    }
+}
+spotless {
+    java {
+        targetExclude("src/**/*.rocker.raw")
+    }
 }

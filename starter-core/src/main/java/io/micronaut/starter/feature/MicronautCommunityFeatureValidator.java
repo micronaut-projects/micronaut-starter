@@ -17,6 +17,7 @@ package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.MicronautVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
@@ -33,7 +34,7 @@ public class MicronautCommunityFeatureValidator implements FeatureValidator {
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         for (Feature feature : features) {
             if (feature instanceof MicronautCommunityFeature f && !f.supportsCurrentMicronautVersion()) {
-                throw new IllegalArgumentException("Community feature " + f.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(4));
+                throw new IllegalArgumentException("Community feature " + f.getName() + " does not support Micronaut Framework " + VersionInfo.getMicronautMajorVersion().orElse(MicronautVersion.FIVE.getMajor()));
             }
         }
     }

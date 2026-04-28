@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 import java.util.Map;
 
+@Requires(property = "micronaut.starter.feature.jasync.sql.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JAsyncSQLFeature implements Feature {
 
