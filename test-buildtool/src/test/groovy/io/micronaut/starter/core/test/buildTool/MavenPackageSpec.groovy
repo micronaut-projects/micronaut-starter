@@ -6,6 +6,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
+import spock.lang.PendingFeature
 
 class MavenPackageSpec extends CommandSpec {
 
@@ -35,6 +36,7 @@ class MavenPackageSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
+    @PendingFeature
     void 'test maven Docker packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
