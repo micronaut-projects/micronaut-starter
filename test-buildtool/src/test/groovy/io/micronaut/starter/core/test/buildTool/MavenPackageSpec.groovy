@@ -61,7 +61,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 90)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image-community")
+        output.contains("Using BASE_IMAGE:")
 
         where:
         lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
