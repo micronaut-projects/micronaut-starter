@@ -20,7 +20,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
@@ -29,12 +28,6 @@ import jakarta.inject.Singleton;
 @Requires(property = "micronaut.starter.feature.neo4j.bolt.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Neo4jBolt implements Feature {
-    private static final Dependency DEPENDENCY_NEO4J_HARNESS = Dependency.builder()
-            .groupId("org.neo4j.test")
-            .artifactId("neo4j-harness")
-            .testRuntime()
-            .build();
-
     @Override
     @NonNull
     public String getName() {
@@ -58,7 +51,6 @@ public class Neo4jBolt implements Feature {
         generatorContext.addDependency(MicronautDependencyUtils.neo4j()
                 .artifactId("micronaut-neo4j-bolt")
                 .compile());
-        generatorContext.addDependency(DEPENDENCY_NEO4J_HARNESS);
     }
 
     @Override
