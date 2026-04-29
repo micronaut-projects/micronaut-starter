@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.buildless;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleFile;
@@ -22,10 +24,11 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.CommunityFeature;
 import io.micronaut.starter.feature.GradleSpecificFeature;
-import io.micronaut.starter.feature.build.gradle.templates.buildlessGradlePlugin;
+import io.micronaut.starter.rocker.feature.build.gradle.templates.buildlessGradlePlugin;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.buildless.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Buildless implements CommunityFeature, GradleSpecificFeature {
     public static final String NAME = "buildless";

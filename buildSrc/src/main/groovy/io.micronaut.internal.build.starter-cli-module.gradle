@@ -2,17 +2,9 @@ plugins {
     id "io.micronaut.internal.starter.published-module"
     id "io.micronaut.internal.starter.convention"
     id "application"
-    id "com.github.johnrengelman.shadow"
-    id "io.micronaut.starter.rocker"
+    id "com.gradleup.shadow"
+    id("nu.studer.rocker")
     id "io.sdkman.vendors"
-}
-
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/java")
-        }
-    }
 }
 
 def generateManpageAsciiDoc = tasks.register("generateManpageAsciiDoc", io.micronaut.internal.starter.tasks.GenerateManpageAsciidoc) {

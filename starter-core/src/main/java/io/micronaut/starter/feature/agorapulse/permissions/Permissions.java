@@ -16,27 +16,29 @@
 package io.micronaut.starter.feature.agorapulse.permissions;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageGroovy;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageJava;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageKotlin;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messagePermissionAdvisorGroovy;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messagePermissionAdvisorJava;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messagePermissionAdvisorKotlin;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceGroovy;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceJava;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceKotlin;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceSpecGroovy;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestKotest;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestKotlin;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestJava;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageJava;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messagePermissionAdvisorGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messagePermissionAdvisorJava;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messagePermissionAdvisorKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceJava;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceSpecGroovy;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceTestKotest;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceTestKotlin;
+import io.micronaut.starter.rocker.feature.agorapulse.permissions.template.messageServiceTestJava;
 import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
@@ -50,6 +52,7 @@ import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.mainMode
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.testModel;
 
 
+@Requires(property = "micronaut.starter.feature.agorapulse.micronaut.permissions.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Permissions implements AgoraPulseFeature {
 

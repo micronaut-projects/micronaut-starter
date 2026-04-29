@@ -14,9 +14,12 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
+import io.micronaut.starter.test.TestFrameworkCombinations
 import io.micronaut.starter.util.NameUtils
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
+import spock.lang.Unroll
 
 @Retry // can fail on CI due to port binding race condition, so retry
 class CreateOracleFunctionSpec extends CommandSpec{
@@ -25,10 +28,12 @@ class CreateOracleFunctionSpec extends CommandSpec{
         "test-oraclefunction"
     }
 
-    void 'create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                           Language lang,
-                                                                                                                           BuildTool build,
-                                                                                                                           TestFramework testFramework) {
+    @Unroll('create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework')
+    void 'create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework'(
+            ApplicationType applicationType,
+            Language lang,
+            BuildTool build,
+            TestFramework testFramework) {
         given:
         List<String> features = ['oracle-function']
         generateProject(lang, build, features, applicationType, testFramework)
@@ -40,11 +45,15 @@ class CreateOracleFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
+        [applicationType, lang, build, testFramework] <<
+                ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
-    void 'create-#applicationType with features oracle-function and "-" in the app name #lang and #build and test framework: #testFramework'(ApplicationType applicationType, Language lang, BuildTool build,
-                                                                                                                     TestFramework testFramework) {
+    @Unroll('create-#applicationType with features oracle-function and "-" in the app name #lang and #build and test framework: #testFramework')
+    void 'create-#applicationType with features oracle-function and "-" in the app name #lang and #build and test framework: #testFramework'(
+            ApplicationType applicationType,
+            Language lang, BuildTool build,
+            TestFramework testFramework) {
         given:
         List<String> features = ['oracle-function']
         JdkVersion jdkVersion = VersionInfo.getJavaVersion()
@@ -70,10 +79,10 @@ class CreateOracleFunctionSpec extends CommandSpec{
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], Language.values() as List<Language>, BuildTool.valuesGradle())
     }
 
-
+    @Unroll('default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework')
     void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
-            Language lang,
             String serializationFeature,
+            Language lang,
             BuildTool build,
             TestFramework testFramework
     ) {
@@ -88,15 +97,18 @@ class CreateOracleFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [lang, serializationFeature, build, testFramework] << [
-                Language.values(),
+        [serializationFeature, lang, build, testFramework] << [
                 ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
+                Language.values(),
                 BuildToolCombinations.buildTools,
-                TestFramework.values()
+                TestFrameworkCombinations.values()
         ].combinations()
                 .stream()
-                .filter(it -> !(
-                it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)
-                ))
+                .filter(it -> !(it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)))
+                .filter(it -> !(it[0] == Language.KOTLIN && it[2] == BuildTool.MAVEN))
+                .findAll {
+                    return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
+                }
+
     }
 }

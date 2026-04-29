@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.ContributingInterceptUrlMapFeature;
@@ -26,13 +28,14 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Map;
 
+@Requires(property = "micronaut.starter.feature.security.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Security extends SecurityFeature {
 
     public static final String NAME = "security";
 
-    public Security(SecurityAnnotations securityAnnotations) {
-        super(securityAnnotations);
+    public Security(SecurityProcessor securityProcessor) {
+        super(securityProcessor);
     }
 
     @Override

@@ -12,22 +12,21 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.1.9
+        uses: graalvm/setup-graalvm@v1.5.2
         with:
-          version: '22.3.2'
-          java-version: '17'
-          components: 'native-image'
+          java-version: '25'
+          distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
-          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: "✅ Verify Build (Powershell)"
         shell: powershell
         run: ./starter-cli/build/native/nativeCompile/mn.exe --version
@@ -47,7 +46,7 @@ jobs:
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: "🆙 Upload Snapshot"
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.0.x'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip

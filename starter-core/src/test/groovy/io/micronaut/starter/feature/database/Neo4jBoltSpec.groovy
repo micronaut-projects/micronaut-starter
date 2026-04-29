@@ -47,8 +47,9 @@ class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixt
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("io.micronaut.neo4j","micronaut-neo4j-bolt")
         !verifier.hasDependency("org.testcontainers","neo4j", Scope.TEST)
+        verifier.hasDependency("io.micronaut.neo4j", "micronaut-neo4j-bolt", Scope.COMPILE)
+        !verifier.hasDependency("org.neo4j.test", "neo4j-harness", Scope.TEST_RUNTIME)
 
         where:
         buildTool << BuildTool.values()

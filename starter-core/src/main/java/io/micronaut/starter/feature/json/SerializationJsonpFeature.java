@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
@@ -23,6 +25,7 @@ import jakarta.inject.Singleton;
 
 import java.util.List;
 
+@Requires(property = "micronaut.starter.feature.serialization.jsonp.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SerializationJsonpFeature implements SerializationFeature {
     private static final String ARTIFACT_ID_MICRONAUT_SERDE_JSONP = "micronaut-serde-jsonp";

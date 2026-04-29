@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -27,12 +29,15 @@ import io.micronaut.starter.feature.messaging.jms.SQS;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.database.TestContainers.ARTIFACT_ID_TESTCONTAINERS_PREFIX;
+
 /**
  * Adds support for <a href="https://localstack.cloud/">LocalStack</a>.
  *
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.1
  */
+@Requires(property = "micronaut.starter.feature.localstack.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class LocalStack implements Feature, ContributingTestContainerArtifactId {
 
@@ -95,6 +100,6 @@ public class LocalStack implements Feature, ContributingTestContainerArtifactId 
 
     @Override
     public String testContainersArtifactId() {
-        return ARTIFACT_ID_LOCALSTACK;
+        return ARTIFACT_ID_TESTCONTAINERS_PREFIX + ARTIFACT_ID_LOCALSTACK;
     }
 }

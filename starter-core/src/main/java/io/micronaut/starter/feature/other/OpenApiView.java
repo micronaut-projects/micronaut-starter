@@ -19,7 +19,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.*;
 import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
-import io.micronaut.starter.feature.other.template.openApiProperties;
+import io.micronaut.starter.rocker.feature.other.template.openApiProperties;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.feature.staticResources.ContributingStaticResources;
 import io.micronaut.starter.feature.staticResources.StaticResource;

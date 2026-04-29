@@ -4,6 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -64,22 +67,11 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["kafka-streams"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kafka</groupId>
-      <artifactId>micronaut-kafka</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kafka</groupId>
-      <artifactId>micronaut-kafka-streams</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.kafka", "micronaut-kafka", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.kafka", "micronaut-kafka-streams", Scope.COMPILE)
         template.contains('''\
     <plugins>
       <plugin>

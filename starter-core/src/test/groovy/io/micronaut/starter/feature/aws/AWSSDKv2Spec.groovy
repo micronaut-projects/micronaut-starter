@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.aws
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -31,15 +34,10 @@ class AWSSDKv2Spec extends ApplicationContextSpec  implements CommandOutputFixtu
                 .language(language)
                 .features(['aws-v2-sdk'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-sdk-v2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

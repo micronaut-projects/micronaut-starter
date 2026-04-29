@@ -76,7 +76,6 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
             verifier.hasTestResourceDependency("micronaut-test-resources-opensearch") :
             verifier.hasBuildPlugin("io.micronaut.test-resources") &&
                     template.contains('''testResources {
-                                    |        additionalModules.add("opensearch")
-                                    |    }'''.stripMargin())
+                                    |        additionalModules.add("opensearch")'''.stripMargin())
     }
 }

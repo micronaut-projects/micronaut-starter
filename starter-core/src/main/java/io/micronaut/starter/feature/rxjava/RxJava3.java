@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.rxjava;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -24,6 +26,7 @@ import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.feature.reactive.ReactiveFeature;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.rxjava3.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class RxJava3 implements ReactiveFeature {
 

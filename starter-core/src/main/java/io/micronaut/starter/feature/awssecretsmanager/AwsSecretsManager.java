@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.awssecretsmanager;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -28,6 +30,7 @@ import jakarta.inject.Singleton;
  * @author Sergio del Amo
  * @since 3.0.0
  */
+@Requires(property = "micronaut.starter.feature.aws.secrets.manager.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsSecretsManager implements DistributedConfigFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER = "micronaut-aws-secretsmanager";

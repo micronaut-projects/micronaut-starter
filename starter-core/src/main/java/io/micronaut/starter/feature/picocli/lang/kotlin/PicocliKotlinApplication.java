@@ -15,15 +15,19 @@
  */
 package io.micronaut.starter.feature.picocli.lang.kotlin;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.RequireKaptFeature;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
+import io.micronaut.starter.rocker.feature.picocli.lang.kotlin.picocliApplication;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.picocli.kotlin.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class PicocliKotlinApplication implements RequireKaptFeature, KotlinApplicationFeature {
 

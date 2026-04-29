@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
-import io.micronaut.starter.feature.build.maven.templates.mavenPlugin;
+import io.micronaut.starter.rocker.feature.build.maven.templates.mavenPlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;

@@ -36,14 +36,14 @@ class SpockSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
 
         then:
         template.contains('''
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("25")
+    targetCompatibility = JavaVersion.toVersion("25")
 }
 ''')
 
@@ -52,22 +52,22 @@ java {
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
-    void 'With #language, #testFramework and JDK17 the sourceCompatibility is JDK17'() {
+    void 'With #language, #testFramework and JDK25 the sourceCompatibility is JDK25'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .testFramework(testFramework)
                 .render()
 
         then:
-        template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        template.contains('sourceCompatibility = JavaVersion.toVersion("25")')
 
-        and: 'since Kotlin 1.9.20 we do not require jvmTarget anymore'
+        and: 'since Kotlin 2.3.10 we do not require jvmTarget anymore'
         !template.contains('''\
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25
     }
 }''')
 
@@ -77,7 +77,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         Language.JAVA   | TestFramework.KOTEST
     }
 
-    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'() {
+    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'(Language language, TestFramework testFramework, JdkVersion jdk) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
@@ -87,27 +87,27 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
                 .render()
 
         then:
-        template.contains('sourceCompatibility = JavaVersion.toVersion("17")')
+        template.contains('sourceCompatibility = JavaVersion.toVersion("' + jdk.majorVersion() + '")')
 
-        template.contains('''\
+        if (jdk.majorVersion() == 25) {
+            assert template.contains('''\
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }''')
-        !template.contains('''\
+            assert !template.contains('''\
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25
     }
 }''')
+        }
 
         where:
         language        | testFramework        | jdk
-        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_17
-        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_21
-        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_17
-        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_21
+        Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_25
+        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_25
     }
 
     void 'test spock with Maven applies gmavenplus plugin'() {

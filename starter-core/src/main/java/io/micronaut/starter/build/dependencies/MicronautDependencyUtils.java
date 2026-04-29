@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,12 @@ public final class MicronautDependencyUtils {
             .compile()
             .build();
 
+    public static final String GROUP_ID_MICRONAUT_LANGCHAIN4J = "io.micronaut.langchain4j";
+    public static final String GROUP_ID_MICRONAUT_GUICE = "io.micronaut.guice";
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_TESTRESOURCES = "io.micronaut.testresources";
     public static final String  GROUP_ID_MICRONAUT_JAXRS = "io.micronaut.jaxrs";
+    public static final String ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR = "micronaut-core-processor";
     public static final String ARTIFACT_ID_MICRONAUT_INJECT_JAVA = "micronaut-inject-java";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_AZURE = "io.micronaut.azure";
@@ -39,6 +42,8 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_ECLIPSESTORE = "io.micronaut.eclipsestore";
     public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
+    public static final String GROUP_ID_MICRONAUT_JSON_SCHEMA = "io.micronaut.jsonschema";
+    public static final String GROUP_ID_MICRONAUT_GRAAL_LANGUAGES = "io.micronaut.graal-languages";    
     public static final String GROUP_ID_MICRONAUT_KAFKA = "io.micronaut.kafka";
     public static final String GROUP_ID_MICRONAUT_OCI = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_MICRONAUT_OPENSEARCH = "io.micronaut.opensearch";
@@ -47,6 +52,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_SESSION = "io.micronaut.session";
     public static final String GROUP_ID_MICRONAUT_SERVLET = "io.micronaut.servlet";
+    public static final String GROUP_ID_MICRONAUT_SOURCEGEN = "io.micronaut.sourcegen";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
@@ -61,6 +67,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
     public static final String GROUP_ID_IO_MICRONAUT_NEO4J = "io.micronaut.neo4j";
     public static final String GROUP_ID_IO_MICRONAUT_OPENAPI = "io.micronaut.openapi";
+    public static final String GROUP_ID_IO_MICRONAUT_SERVLET = "io.micronaut.servlet";
     public static final String GROUP_ID_IO_MICRONAUT_VALIDATION = "io.micronaut.validation";
 
     public static final String GROUP_ID_MICRONAUT_PLATFORM = "io.micronaut.platform";
@@ -70,13 +77,25 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
     public static final String GROUP_ID_IO_MICRONAUT_PICOCLI = "io.micronaut.picocli";
     public static final String GROUP_ID_IO_MICRONAUT_DISCOVERY = "io.micronaut.discovery";
+    public static final String GROUP_ID_MICRONAUT_ELASTICSEARCH = "io.micronaut.elasticsearch";
     public static final String GROUP_ID_IO_MICRONAUT_CONTROLPANEL = "io.micronaut.controlpanel";
     public static final String GROUP_ID_MICRONAUT_FLYWAY = "io.micronaut.flyway";
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
     public static final String GROUP_ID_MICRONAUT_VIEWS = "io.micronaut.views";
+    public static final String GROUP_ID_MICRONAUT_MCP = "io.micronaut.mcp";
 
     private MicronautDependencyUtils() {
 
+    }
+
+    @NonNull
+    public static Dependency.Builder langchain4j() {
+        return micronautDependency(GROUP_ID_MICRONAUT_LANGCHAIN4J);
+    }
+
+    @NonNull
+    public static Dependency.Builder guiceDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GUICE);
     }
 
     @NonNull
@@ -105,6 +124,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder mcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_MCP);
+    }
+
+    @NonNull
     public static Dependency.Builder reactorDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_REACTOR);
     }
@@ -124,8 +148,14 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
     }
 
+    @NonNull
     public static Dependency.Builder servletDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
+    }
+
+    @NonNull
+    public static Dependency.Builder sourcegenDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SOURCEGEN);
     }
 
     @NonNull
@@ -210,6 +240,16 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder graalLanguagesDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GRAAL_LANGUAGES);
+    }
+
+    @NonNull
+    public static Dependency.Builder jsonSchemaDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_JSON_SCHEMA);
+    }
+
+    @NonNull
     public static Dependency.Builder kafkaDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KAFKA);
     }
@@ -239,6 +279,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
     }
 
+    @NonNull
     public static Dependency.Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
     }
@@ -259,6 +300,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder coreProcessor() {
+        return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR);
+    }
+
+    @NonNull
     public static Dependency.Builder picocliDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
     }
@@ -267,7 +313,8 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder discovery() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
     }
-    
+
+    @NonNull
     public static Dependency.Builder flywayDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_FLYWAY);
     }
@@ -339,6 +386,11 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder elasticSearchDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_ELASTICSEARCH);
+    }
+
+    @NonNull
     public static Dependency.Builder oracleCloudDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD);
     }
@@ -347,6 +399,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
     }
 
+    @NonNull
     public static Dependency.Builder viewsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
     }

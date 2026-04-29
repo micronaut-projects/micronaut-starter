@@ -1,6 +1,5 @@
 package io.micronaut.starter.feature.micrometer
 
-import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -57,60 +56,55 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         buildTool << BuildTool.values()
     }
 
-    void "test gradle micrometer multiple features"() {
+    void "test #buildTool micrometer multiple features"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["micrometer-atlas", "micrometer-influx"])
                 .render()
 
         then:
-        template.contains("""
-    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-atlas")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-influx")
-""")
-        template.count("io.micronaut.micrometer:micronaut-micrometer-core") == 1
-    }
-
-    void "test maven micrometer multiple features"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(["micrometer-atlas", "micrometer-influx"])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.micrometer</groupId>
-      <artifactId>micronaut-micrometer-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.micrometer</groupId>
-      <artifactId>micronaut-micrometer-registry-atlas</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.micrometer</groupId>
-      <artifactId>micronaut-micrometer-registry-influx</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", Scope.COMPILE)
         template.count("micronaut-micrometer-core") == 1
+
+        where:
+        buildTool << BuildTool.values()
     }
 
-    @Unroll
-    void 'test micrometer configuration for feature=#micrometerFeature'() {
+    @Unroll('test micrometer configuration for feature=#featureName #configKey')
+    void 'test micrometer configuration'(String featureName, String configKey) {
         when:
-        GeneratorContext commandContext = buildGeneratorContext([micrometerFeature])
+        GeneratorContext commandContext = buildGeneratorContext([featureName])
 
         then: 'the micrometer configuration is enabled for the feature'
         commandContext.configuration.get("micronaut.metrics.export.${configKey}.enabled".toString()) == true
         commandContext.configuration.get('micronaut.metrics.enabled') == true
 
         where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerRegistryFeature)*.name.iterator()
-        configKey = "${micrometerFeature - 'micrometer-'}".replace('-', '')
+        featureName | configKey
+        'micrometer-azure-monitor' |  'azuremonitor'
+        'micrometer-new-relic' |  'newrelic'
+        'micrometer-appoptics' | 'appoptics'
+        'micrometer-signalfx' | 'signalfx'
+        'micrometer-dynatrace' | 'dynatrace'
+        'micrometer-prometheus-pushgateway' | 'prometheus.pushgateway'
+        'micrometer-influx' | 'influx'
+        'micrometer-oracle-cloud' | 'oraclecloud'
+        'micrometer-graphite' | 'graphite'
+        'micrometer-kairos' | 'kairos'
+        'micrometer-stackdriver' | 'stackdriver'
+        'micrometer-ganglia' | 'ganglia'
+        'micrometer-elastic' | 'elastic'
+        'micrometer-prometheus' | 'prometheus'
+        'micrometer-statsd' | 'statsd'
+        'micrometer-atlas' | 'atlas'
+        'micrometer-jmx' | 'jmx'
+        'micrometer-cloudwatch' | 'cloudwatch'
+        'micrometer-datadog' | 'datadog'
+        'micrometer-wavefront' | 'wavefront'
+        'micrometer-humio' | 'humio'
     }
 
     void 'test mandatory dependencies for micrometer features are added'() {

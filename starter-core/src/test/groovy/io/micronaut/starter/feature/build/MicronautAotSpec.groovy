@@ -167,7 +167,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
 
         expect:
         output.containsKey('aot-jar.properties')
-        output["aot-jar.properties"].trim() == expected.trim()
+
+        def aotconfig = output["aot-jar.properties"]
+        aotconfig.trim() == expected.trim()
         !output.containsKey('aot-native-image.properties')
     }
 

@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.version.SemanticVersion;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -42,6 +44,8 @@ import io.micronaut.starter.feature.security.SecurityJWT;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationProvider;
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -54,16 +58,21 @@ import java.util.stream.Collectors;
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.ARTIFACT_ID_MICRONAUT_DATA_PROCESSOR_ARTIFACT;
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
+@Requires(property = "micronaut.starter.feature.micronaut.build.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature {
     public static final String MICRONAUT_GRADLE_DOCS_URL = "https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/";
     public static final String GRAALVM_GRADLE_DOCS_URL = "https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html";
     public static final String AOT_KEY_SECURITY_JWKS = "micronaut.security.jwks.enabled";
     public static final String AOT_KEY_SECURITY_OPENID = "micronaut.security.openid-configuration.enabled";
+    private static final String DOCKER_BASE_IMAGE_ECLIPSE_TEMURIN_25_JRE = "eclipse-temurin:25-jre";
 
+    protected final ConfigurationValidationProvider configurationValidationProvider;
     protected final CoordinateResolver coordinateResolver;
 
-    public MicronautBuildPlugin(CoordinateResolver coordinateResolver) {
+    public MicronautBuildPlugin(CoordinateResolver coordinateResolver,
+                                ConfigurationValidationProvider configurationValidationProvider) {
+        this.configurationValidationProvider = configurationValidationProvider;
         this.coordinateResolver = coordinateResolver;
     }
 
@@ -180,7 +189,14 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
                 builder = builder.withSharedTestResources();
             }
         }
-
+        ConfigurationValidationBlock configurationValidation = configurationValidationProvider != null ? configurationValidationProvider.configurationValidation(generatorContext) : null;
+        if (configurationValidation != null) {
+            builder = builder.configurationValidation(configurationValidation);
+        }
+        if (generatorContext.getFeatures().contains(TestResources.NAME)) {
+            Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-test-resources-core");
+            builder.testResources(coordinate.getVersion());
+        }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
@@ -196,17 +212,17 @@ public class MicronautBuildPlugin implements BuildPluginFeature, DefaultFeature 
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
         MicronautApplicationGradlePlugin.Builder builder = micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.APPLICATION);
+        builder.docker(Dockerfile.builder().baseImage(DOCKER_BASE_IMAGE_ECLIPSE_TEMURIN_25_JRE).build());
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
                         (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
             builder.dockerNative(Dockerfile.builder()
-                    .baseImage("amazonlinux:2023")
                     .javaVersion(generatorContext.getJdkVersion().asString())
                     .arg("-XX:MaximumHeapSizePercent=80")
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")
                     .build());
-        } else if (generatorContext.getJdkVersion() != JdkVersion.JDK_17) {
+        } else if (generatorContext.getJdkVersion() != JdkVersion.JDK_25) {
             builder.dockerNative(Dockerfile.builder().javaVersion(generatorContext.getJdkVersion().asString()).build());
         }
         return builder;

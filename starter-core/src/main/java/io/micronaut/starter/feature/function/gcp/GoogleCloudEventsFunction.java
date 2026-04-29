@@ -16,21 +16,23 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovy;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJava;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJavaJunit;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKoTest;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlin;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionSpock;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovy;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJava;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionJavaJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKoTest;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlin;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.gcp.template.cloudevents.gcpCloudEventsFunctionSpock;
+import io.micronaut.starter.rocker.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -46,6 +48,7 @@ import java.util.Optional;
  * @author Guillermo Calvo
  * @since 3.9.0
  */
+@Requires(property = "micronaut.starter.feature.google.cloud.function.cloudevents.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
 

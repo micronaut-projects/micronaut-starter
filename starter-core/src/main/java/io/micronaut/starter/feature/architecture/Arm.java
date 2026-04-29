@@ -15,11 +15,14 @@
  */
 package io.micronaut.starter.feature.architecture;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.arm.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Arm implements CpuArchitecture {
     public static final String NAME = "arm";

@@ -30,7 +30,7 @@ import io.micronaut.starter.feature.build.maven.Profile;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
-import io.micronaut.starter.feature.other.template.markdownLink;
+import io.micronaut.starter.rocker.feature.other.template.markdownLink;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;

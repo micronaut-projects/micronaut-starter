@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -29,10 +31,10 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
+import io.micronaut.starter.rocker.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
+import io.micronaut.starter.rocker.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
+import io.micronaut.starter.rocker.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
+import io.micronaut.starter.rocker.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -43,6 +45,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.aws.lambda.custom.runtime.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, AwsCloudFeature {
     public static final Dependency DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME = MicronautDependencyUtils.awsDependency()

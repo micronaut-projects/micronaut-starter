@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.view;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -26,9 +28,11 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.feature.test.JunitPlatformSuiteEngine;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.rocker.feature.view.thymeleafSuite;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.views.fieldset.tck.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class ViewsFieldsetTck implements Feature {
 

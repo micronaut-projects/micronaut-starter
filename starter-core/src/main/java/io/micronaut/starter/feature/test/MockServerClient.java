@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -25,6 +27,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.testcontainers.ContributingTestContainerArtifactId;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.mockserver.client.java.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class MockServerClient implements Feature, ContributingTestContainerArtifactId {
 
@@ -35,7 +38,7 @@ public class MockServerClient implements Feature, ContributingTestContainerArtif
             .lookupArtifactId(ARTIFACT_ID_MOCKSERVER_CLIENT_JAVA)
             .test()
             .build();
-    public static final String TEST_CONTAINERS_ARTIFACT_ID_MOCKSERVER = "mockserver";
+    public static final String TEST_CONTAINERS_ARTIFACT_ID_MOCKSERVER = "testcontainers-mockserver";
 
     @Override
     @NonNull

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -59,15 +62,10 @@ class MicronautRestAssuredSpec extends ApplicationContextSpec implements Command
                 .language(language)
                 .testFramework(TestFramework.JUNIT)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-rest-assured</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.test", "micronaut-test-rest-assured", Scope.TEST)
 
         where:
         language << Language.values().toList()

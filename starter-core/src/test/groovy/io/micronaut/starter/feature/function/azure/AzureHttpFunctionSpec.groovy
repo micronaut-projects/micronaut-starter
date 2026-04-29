@@ -7,13 +7,19 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 
 class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8)
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_25)
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
         String readme = output["README.md"]
 
@@ -25,9 +31,10 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test readme.md with feature azure-function contains links to docs'() {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_25)
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
         String readme = output["README.md"]
 
@@ -63,13 +70,14 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test azure-function-http feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .features(['azure-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
@@ -77,25 +85,25 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         if (buildTool.isGradle()) {
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert !verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
-
         } else if (buildTool == BuildTool.MAVEN) {
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http", Scope.COMPILE)
             assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function-http-test", Scope.TEST)
-            assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.DEVELOPMENT_ONLY)
         }
+
+        assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     void 'test azure-function feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.FUNCTION)
                 .features(['azure-function'])
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_17)
+                .jdkVersion(JdkVersion.JDK_25)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 

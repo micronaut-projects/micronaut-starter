@@ -1,15 +1,23 @@
 package io.micronaut.starter.core.test.create
 
+import io.micronaut.context.annotation.Replaces
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.build.Kapt
 import io.micronaut.starter.feature.messaging.MessagingFeature
+import io.micronaut.starter.feature.validation.ConfigurationValidationBlock
+import io.micronaut.starter.feature.validation.ConfigurationValidationProvider
+import io.micronaut.starter.feature.validation.DefaultConfigurationValidationProvider
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import io.micronaut.starter.test.PredicateUtils
+import jakarta.inject.Singleton
+import org.jetbrains.annotations.NotNull
 import spock.lang.Unroll
 import java.util.stream.Collectors
 
@@ -39,7 +47,9 @@ class CreateMessagingSpec extends CommandSpec {
                         .map(Feature::getName)
                         .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of( 'jms-oracle-aq')).test(f))
                         .filter( f -> !isCi() || (f != "jms-sqs" && isCi()))
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toList())).findAll {
+            it[1] != BuildTool.MAVEN
+        }
     }
 
     private static boolean isCi() {

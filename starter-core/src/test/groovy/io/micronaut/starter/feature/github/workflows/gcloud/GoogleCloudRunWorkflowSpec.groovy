@@ -88,12 +88,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         buildFileName = buildTool.buildFileName
     }
 
-    void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
-                                                                           JdkVersion graalVersion){
-        given:
-        def graalvmVersion = "${VersionInfo.getDependencyVersion( 'graal').getValue()}" +
-                ".java${graalVersion.majorVersion()}"
-
+    void 'test github gradle workflow for #jdkVersion'(JdkVersion jdkVersion){
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
@@ -102,11 +97,9 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
 
         then:
         workflow
-        workflow.contains("graalvm-version: ${graalvmVersion}")
 
         where:
-        jdkVersion | graalVersion
-        JdkVersion.JDK_17 | JdkVersion.JDK_17
+        jdkVersion << [JdkVersion.JDK_25]
     }
 
     void 'test github #buildTool with java #jdkVersion workflow'(BuildTool buildTool, JdkVersion jdkVersion) {

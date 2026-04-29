@@ -9,7 +9,7 @@ import io.micronaut.starter.application.Project
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.rocker.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -23,20 +23,20 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
         BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
             .language(Language.JAVA)
             .applicationType(ApplicationType.DEFAULT)
-            .features(["gradle-enterprise"])
+            .features(["develocity"])
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
         String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
-        String expectedVersion = builder.beanContext.getBean(CoordinateResolver).resolve(GradleEnterprise.GRADLE_ENTERPRISE_ARTIFACT_ID).get().version
+        String expectedVersion = builder.beanContext.getBean(CoordinateResolver).resolve(Develocity.DEVELOCITY_GRADLE_PLUGIN_ARTIFACT_ID).get().version
 
         then:
         !settings.contains("allowUntrustedServer = true")
         !settings.contains("server =")
-        settings.contains('gradleEnterprise {')
+        settings.contains('develocity {')
         settings.contains('buildScan {')
         settings.contains('termsOfServiceUrl = "https://gradle.com/terms-of-service"')
         settings.contains('termsOfServiceAgree = "yes"')
-        settings.contains($/id("com.gradle.enterprise") version("$expectedVersion")/$)
+        settings.contains($/id("com.gradle.develocity") version("$expectedVersion")/$)
 
         where:
         buildTool << BuildTool.valuesGradle()
@@ -44,13 +44,13 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise creates a .mvn/extensions dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["develocity"])
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
         xml.name() == new QName('https://maven.apache.org/EXTENSIONS/1.0.0', 'extensions')
 
-        def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'gradle-enterprise-maven-extension' }
+        def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'develocity-maven-extension' }
         enterpriseExtension.groupId.text() == 'com.gradle'
         enterpriseExtension.version.text() ==~ /[\d.]+/ // numbers and fullstops
         def userDataExtension = xml.extension.find { it.artifactId.text() == 'common-custom-user-data-maven-extension' }
@@ -60,10 +60,10 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise does not create maven files for #buildTool'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["gradle-enterprise"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["develocity"])
 
         then:
-        output[".mvn/gradle-enterprise.xml"] == null
+        output[".mvn/develocity.xml"] == null
         output[".mvn/extensions.xml"] == null
 
         where:
@@ -72,11 +72,11 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
 
     void 'feature gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["gradle-enterprise"])
-        def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["develocity"])
+        def xml = new XmlParser().parseText(output[".mvn/develocity.xml"])
 
         then:
-        xml.name() == new QName('https://www.gradle.com/gradle-enterprise-maven', 'gradleEnterprise')
+        xml.name() == new QName('https://www.gradle.com/develocity-maven', 'develocity')
         !xml.server
         xml.buildScan.termsOfService.url.text() == 'https://gradle.com/terms-of-service'
         xml.buildScan.termsOfService.accept.text() == 'true'

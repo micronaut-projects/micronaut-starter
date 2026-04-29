@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -29,6 +31,7 @@ import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_OPENAPI;
 
+@Requires(property = "micronaut.starter.feature.openapi.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenApi implements Feature, MicronautServerDependent {
 

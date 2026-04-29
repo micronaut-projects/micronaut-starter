@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.feature.test.Junit
+import io.micronaut.starter.feature.test.JunitPlatformPropertyProvider
 import io.micronaut.starter.feature.test.KoTest
 import io.micronaut.starter.feature.test.Mockk
 import io.micronaut.starter.options.BuildTool
@@ -37,7 +38,7 @@ class ContextFactorySpec extends Specification {
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 [],
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_17),
+                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_25),
                 null
         )
         then:
@@ -55,7 +56,6 @@ class ContextFactorySpec extends Specification {
     @Replaces(Junit.class)
     @Singleton
     static class JunitReplacement extends Junit {
-
         @Override
         boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
             false

@@ -89,11 +89,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
             assert workflow.contains("location: target/foo-0.1.jar")
             assert workflow.contains("location: target/foo")
         }
-        if (jdkVersion.majorVersion() == 17) {
-            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java17-")
-        } else {
-            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java11-")
-        }
+        workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java25-")
         workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce")
         workflow.contains("location: foo")
 

@@ -9,6 +9,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.config.Yaml
+import io.micronaut.starter.feature.testresources.DbType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -82,8 +83,9 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
     }
 
     void "test config for #buildTool for features #features"(BuildTool buildTool,
-                                      String dialect,
-                                      List<String> features) {
+                                                             String dialect,
+                                                             List<String> features,
+                                                             DbType dbType) {
         given:
         Options options = new Options(null, null, buildTool)
 
@@ -95,27 +97,31 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
             assert ctx.configuration.containsKey("datasources.default.url")
         }
         ctx.configuration.get("datasources.default.dialect") == dialect
+        if (dialect != 'H2') {
+            assert ctx.configuration.containsKey("datasources.default.db-type")
+            assert DbType.of(ctx.configuration["datasources.default.db-type"]) == dbType
+        }
 
         where:
-        buildTool               | dialect       | features
-        BuildTool.GRADLE        | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
-        BuildTool.GRADLE_KOTLIN | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
-        BuildTool.MAVEN         | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
-        BuildTool.GRADLE        | 'ORACLE'      | ['data-jdbc', 'oracle']
-        BuildTool.GRADLE_KOTLIN | 'ORACLE'      | ['data-jdbc', 'oracle']
-        BuildTool.MAVEN         | 'ORACLE'      | ['data-jdbc', 'oracle']
-        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mariadb']
-        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mariadb']
-        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mariadb']
-        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mysql']
-        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mysql']
-        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mysql']
-        BuildTool.GRADLE        | 'POSTGRES'    | ['data-jdbc', 'postgres']
-        BuildTool.GRADLE_KOTLIN | 'POSTGRES'    | ['data-jdbc', 'postgres']
-        BuildTool.MAVEN         | 'POSTGRES'    | ['data-jdbc', 'postgres']
-        BuildTool.GRADLE        | 'H2'          | ['data-jdbc']
-        BuildTool.GRADLE_KOTLIN | 'H2'          | ['data-jdbc']
-        BuildTool.MAVEN         | 'H2'          | ['data-jdbc']
+        buildTool               | dialect       | features                      | dbType
+        BuildTool.GRADLE        | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']    | DbType.SQLSERVER
+        BuildTool.GRADLE_KOTLIN | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']    | DbType.SQLSERVER
+        BuildTool.MAVEN         | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']    | DbType.SQLSERVER
+        BuildTool.GRADLE        | 'ORACLE'      | ['data-jdbc', 'oracle']       | DbType.ORACLEFREE
+        BuildTool.GRADLE_KOTLIN | 'ORACLE'      | ['data-jdbc', 'oracle']       | DbType.ORACLEFREE
+        BuildTool.MAVEN         | 'ORACLE'      | ['data-jdbc', 'oracle']       | DbType.ORACLEFREE
+        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mariadb']      | DbType.MARIADB
+        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mariadb']      | DbType.MARIADB
+        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mariadb']      | DbType.MARIADB
+        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mysql']        | DbType.MYSQL
+        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mysql']        | DbType.MYSQL
+        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mysql']        | DbType.MYSQL
+        BuildTool.GRADLE        | 'POSTGRES'    | ['data-jdbc', 'postgres']     | DbType.POSTGRESQL
+        BuildTool.GRADLE_KOTLIN | 'POSTGRES'    | ['data-jdbc', 'postgres']     | DbType.POSTGRESQL
+        BuildTool.MAVEN         | 'POSTGRES'    | ['data-jdbc', 'postgres']     | DbType.POSTGRESQL
+        BuildTool.GRADLE        | 'H2'          | ['data-jdbc']                 | null
+        BuildTool.GRADLE_KOTLIN | 'H2'          | ['data-jdbc']                 | null
+        BuildTool.MAVEN         | 'H2'          | ['data-jdbc']                 | null
     }
 
     void "test render config"() {

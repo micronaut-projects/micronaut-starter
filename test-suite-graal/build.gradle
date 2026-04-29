@@ -5,17 +5,29 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+    maven {
+        url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    maven {
+        url = "https://central.sonatype.com/repository/maven-snapshots/"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 dependencies {
     implementation(project(":starter-api"))
     implementation(project(":micronaut-cli"))
     implementation(project(":starter-web-netty"))
-
+    implementation("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("ch.qos.logback:logback-classic")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 configurations.all {
@@ -30,5 +42,14 @@ graalvmNative {
         all {
             buildArgs.add("--report-unsupported-elements-at-runtime")
         }
+    }
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("25")
+    targetCompatibility = JavaVersion.toVersion("25")
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }

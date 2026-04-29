@@ -22,7 +22,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.feature.grpc.template.proto;
+import io.micronaut.starter.rocker.feature.grpc.template.proto;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RenderResult;

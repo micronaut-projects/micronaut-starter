@@ -15,13 +15,15 @@
  */
 package io.micronaut.starter.feature.chatbots.telegram;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.chatbots.telegram.template.gcpReadme;
+import io.micronaut.starter.rocker.feature.chatbots.telegram.template.gcpReadme;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils;
 import io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature;
@@ -37,6 +39,7 @@ import jakarta.inject.Singleton;
  * @author Tim Yates
  * @since 4.3.0
  */
+@Requires(property = "micronaut.starter.feature.chatbots.telegram.gcp.function.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TelegramGcpChatBot extends ChatBotsTelegram implements GcpCloudFeature, GcpMicronautRuntimeFeature {
     public static final String NAME = "chatbots-telegram-gcp-function";

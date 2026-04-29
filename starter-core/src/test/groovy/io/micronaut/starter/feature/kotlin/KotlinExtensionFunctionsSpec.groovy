@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.kotlin
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.BuildTool
@@ -56,15 +59,11 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['kotlin-extension-functions'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kotlin</groupId>
-      <artifactId>micronaut-kotlin-extension-functions</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", Scope.COMPILE)
+
         where:
         language << [Language.KOTLIN]
     }

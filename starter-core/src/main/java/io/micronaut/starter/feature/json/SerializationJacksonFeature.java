@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -25,6 +27,7 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.serialization.jackson.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SerializationJacksonFeature implements SerializationFeature, DefaultFeature {
     private static final String ARTIFACT_ID_MICRONAUT_SERDE_JACKSON = "micronaut-serde-jackson";

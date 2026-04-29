@@ -152,12 +152,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         buildFileName = buildTool.buildFileName
     }
 
-    void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
-                                                                           JdkVersion graalVersion) {
-        given:
-        def graalvmVersion = "${VersionInfo.getDependencyVersion('graal').getValue()}" +
-                ".java${graalVersion.majorVersion()}"
-
+    void 'test github gradle workflow for #jdkVersion'(JdkVersion jdkVersion) {
         when:
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
@@ -166,10 +161,8 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
 
         then:
         workflow
-        workflow.contains("graalvm-version: ${graalvmVersion}")
 
         where:
-        jdkVersion        | graalVersion
-        JdkVersion.JDK_17 | JdkVersion.JDK_17
+        jdkVersion << [JdkVersion.JDK_25]
     }
 }

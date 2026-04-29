@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.micrometer.cloudwatch.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class CloudWatch extends MicrometerFeature implements MicrometerRegistryFeature {
 

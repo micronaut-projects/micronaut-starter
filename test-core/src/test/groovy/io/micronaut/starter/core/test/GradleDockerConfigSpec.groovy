@@ -17,14 +17,14 @@ class GradleDockerConfigSpec extends CommandSpec {
         then:
         result.output.contains("BUILD SUCCESS")
         new File(dir, "build/docker/main/Dockerfile").text.contains("FROM $dockerBaseImage")
-        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community:$javaVersion-ol9 AS graalvm")
+        new File(dir, "build/docker/native-main/DockerfileNative").text.contains("FROM ghcr.io/graalvm/native-image-community")
 
         where:
         [buildTool, javaVersion] << [
                 BuildTool.valuesGradle(),
-                [17, 21]
+                [25]
         ].combinations()
-        dockerBaseImage = javaVersion == 17 ? "eclipse-temurin:17-jre" : "eclipse-temurin:21-jre"
+        dockerBaseImage = "eclipse-temurin:25-jre"
     }
 
     void "test #command works for #buildTool under java #javaVersion"(BuildTool buildTool, String command, Integer javaVersion) {
@@ -40,7 +40,7 @@ class GradleDockerConfigSpec extends CommandSpec {
         [buildTool, command, javaVersion] << [
                 BuildTool.valuesGradle(),
                 ['dockerBuild', 'dockerBuildNative'],
-                [17] + (Runtime.version().feature() >= 21 ? [21] : [])
+                [25]
         ].combinations()
     }
 

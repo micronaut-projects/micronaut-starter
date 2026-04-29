@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.staticResources;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -27,6 +29,7 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Set;
 
+@Requires(property = "micronaut.starter.feature.static.resources.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class StaticResourceFeature implements DefaultFeature {
     @Override

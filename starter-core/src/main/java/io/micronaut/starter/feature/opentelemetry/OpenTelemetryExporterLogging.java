@@ -15,9 +15,12 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.tracing.opentelemetry.exporter.logging.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OpenTelemetryExporterLogging extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_LOGGING = "Logging";

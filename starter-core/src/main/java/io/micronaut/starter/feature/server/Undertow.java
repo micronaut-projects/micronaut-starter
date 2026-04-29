@@ -15,15 +15,18 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.undertow.server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Undertow extends AbstractMicronautServerFeature {
+public class Undertow extends AbstractServletFeature {
 
     @Override
     public String getName() {
@@ -42,7 +45,7 @@ public class Undertow extends AbstractMicronautServerFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#undertow";
+        return "https://micronaut-projects.github.io/micronaut-servlet/latest/guide/index.html#undertow";
     }
 
     @Override

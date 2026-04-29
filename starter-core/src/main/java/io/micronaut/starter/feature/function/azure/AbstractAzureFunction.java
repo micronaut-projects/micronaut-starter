@@ -28,16 +28,16 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
-import io.micronaut.starter.feature.function.azure.template.azurefunctions;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKoTest;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionSpock;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerGroovy;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
-import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
+import io.micronaut.starter.rocker.feature.function.azure.template.azureFunctionMavenPlugin;
+import io.micronaut.starter.rocker.feature.function.azure.template.azurefunctions;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionKoTest;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionKotlinJunit;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionSpock;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionTriggerGroovy;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
+import io.micronaut.starter.rocker.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.template.RockerWritable;
@@ -55,6 +55,13 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     public static final String GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS = "com.microsoft.azure.functions";
     public static final String ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY = "azure-functions-java-library";
+    public static final String AZURE_FUNCTIONS_EXTENSION_VERSION = "~4";
+
+    public static final Dependency DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY = Dependency.builder()
+            .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
+            .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY)
+            .compile()
+            .build();
 
     public static final String NAME = "azure-function";
     private final CoordinateResolver coordinateResolver;
@@ -103,7 +110,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
             generatorContext.addBuildPlugin(MavenPlugin.builder()
                     .artifactId(mavenPluginArtifactId)
-                    .extension(new RockerWritable(azureFunctionMavenPlugin.template()))
+                    .extension(new RockerWritable(azureFunctionMavenPlugin.template(AZURE_FUNCTIONS_EXTENSION_VERSION)))
                     .build());
             BuildProperties props = generatorContext.getBuildProperties();
             coordinateResolver.resolve(mavenPluginArtifactId)
@@ -112,6 +119,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("functionResourceGroup", "java-functions-group");
             props.put("functionAppRegion", "westus");
             props.put("functionRuntimeOs", "windows");
+            props.put("functionAppServicePlanName", "java-functions-app-service-plan");
             javaVersionValue(generatorContext).ifPresent(value -> props.put("functionRuntimeJavaVersion", value));
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
@@ -122,15 +130,8 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
-                return Optional.of("Java 17");
-            } else {
-                return Optional.empty();
-            }
-        }
-        if (JdkVersion.JDK_17.equals(generatorContext.getJdkVersion())) {
-            return Optional.of("17");
+        if (JdkVersion.JDK_21.equals(generatorContext.getJdkVersion())) {
+            return Optional.of("Java 21");
         } else {
             return Optional.empty();
         }
@@ -187,17 +188,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        addAzureFunctionsJavaLibraryDependency(generatorContext);
-    }
-
-    protected void addAzureFunctionsJavaLibraryDependency(GeneratorContext generatorContext) {
-        Dependency.Builder builder = Dependency.builder()
-                .groupId(GROUP_ID_COM_MICROSOFT_AZURE_FUNCTIONS)
-                .artifactId(ARTIFACT_ID_AZURE_FUNCTIONS_JAVA_LIBRARY);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(builder.developmentOnly());
-        } else if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addDependency(builder.compile());
-        }
+        generatorContext.addDependency(DEPENDENCY_AZURE_FUNCTIONS_JAVA_LIBRARY);
     }
 }

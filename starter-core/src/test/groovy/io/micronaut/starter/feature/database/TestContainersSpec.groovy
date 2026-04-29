@@ -21,7 +21,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:oracle-xe")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-oracle-xe")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -32,7 +32,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mysql")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mysql")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -43,7 +43,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:postgresql")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-postgresql")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -54,7 +54,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mariadb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mariadb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -65,7 +65,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mssqlserver")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mssqlserver")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -76,7 +76,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -87,7 +87,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -120,7 +120,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:spock")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-spock")')
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -135,7 +135,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:junit-jupiter")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-junit-jupiter")')
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -146,22 +146,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'oracle'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>oracle-xe</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-oracle-xe", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test mysql dependency is present for maven"() {
@@ -169,22 +158,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'mysql'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-mysql", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test postgres dependency is present for maven"() {
@@ -192,22 +170,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'postgres'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-postgresql", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test mariadb dependency is present for maven"() {
@@ -215,22 +182,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'mariadb'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mariadb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-mariadb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test sqlserver dependency is present for maven"() {
@@ -238,22 +194,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'sqlserver'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mssqlserver</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-mssqlserver", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test mongo-reactive dependency is present for maven"() {
@@ -261,22 +206,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'mongo-reactive'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mongodb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-mongodb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test mongo-sync dependency is present for maven"() {
@@ -284,22 +218,11 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME, 'mongo-sync'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mongodb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-mongodb", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "test testcontainers dependency is present and no testcontainer modules are present for maven"() {
@@ -307,15 +230,10 @@ class TestContainersSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([TestContainers.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 
     void "testframework dependency is present for maven for feature #feature and spock framework"() {
@@ -324,15 +242,10 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.SPOCK)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>spock</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-spock", Scope.TEST)
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -345,15 +258,10 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.JUNIT)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.testcontainers", "testcontainers-junit-jupiter", Scope.TEST)
 
         where:
         feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
@@ -407,7 +315,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "cassandra", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-cassandra", Scope.TEST)
 
         where:
         buildTool << BuildTool.values()

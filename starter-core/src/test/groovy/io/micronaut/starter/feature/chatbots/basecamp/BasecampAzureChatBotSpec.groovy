@@ -7,7 +7,10 @@ import io.micronaut.starter.feature.function.azure.AzureBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import spock.lang.Ignore
+import spock.lang.PendingFeature
 
+@Ignore("azure functions do not support 25 yet")
 class BasecampAzureChatBotSpec extends BaseBasecampChatBotSpec {
 
     @Override

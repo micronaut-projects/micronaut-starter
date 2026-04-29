@@ -3,7 +3,7 @@ package io.micronaut.starter.feature.lang
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
-import io.micronaut.starter.feature.lang.java.application
+import io.micronaut.starter.rocker.feature.lang.java.application
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -35,12 +35,13 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
     }
 
     void "test java application"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, false))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, false), jul, false)
         .render()
         .toString()
 
         expect:
-        applicationJava.contains("""
+        applicationJava == """
 package example.micronaut;
 
 import io.micronaut.runtime.Micronaut;
@@ -51,11 +52,12 @@ public class Application {
         Micronaut.run(Application.class, args);
     }
 }
-""".trim())
+""".trim()
     }
 
     void "test java application with default environment"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", false))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", false), jul, false)
                 .render()
                 .toString()
 
@@ -86,7 +88,8 @@ public class Application {
     }
 
     void "test java application with default environment and eagerInit"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", true))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", true), jul, false)
                 .render()
                 .toString()
 
@@ -118,7 +121,8 @@ public class Application {
     }
 
     void "test java application with eagerInit"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, true))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, true), jul, false)
                 .render()
                 .toString()
 
@@ -149,7 +153,8 @@ public class Application {
     }
 
     void "test java application with openapi"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), new JavaApplicationRenderingContext(null, false))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), new JavaApplicationRenderingContext(null, false), jul, false)
                 .render()
                 .toString()
 
@@ -177,7 +182,8 @@ public class Application {
     }
 
     void "test java application with dekorate-kubernetes"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), new JavaApplicationRenderingContext(null, false))
+        boolean  jul = false
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), new JavaApplicationRenderingContext(null, false), jul, false)
                 .render()
                 .toString()
 

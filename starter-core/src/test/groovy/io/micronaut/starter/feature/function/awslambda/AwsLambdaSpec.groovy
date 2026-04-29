@@ -183,7 +183,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
       <plugin>
         <groupId>io.micronaut.maven</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-      </plugin>
 ''')
 
         where:
@@ -272,11 +271,11 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(ApplicationType applicationType, Language language, BuildTool buildTool) {
         given:
         String extension = language.extension
-
+        Options options = createOptions(language, buildTool)
         when:
         Map<String, String> output = generate(
                 applicationType,
-                createOptions(language, buildTool),
+                options,
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, 'graalvm']
         )
 
@@ -288,7 +287,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         when:
         String fileName = buildTool.getBuildFileName()
         String buildGradle = output[fileName]
-        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
+        String javaVersion = options.javaVersion.majorVersion()
 
         then:
         !buildGradle.contains('id "application"')
@@ -298,27 +297,27 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildGradle.contains('id("io.micronaut.application")')
 
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert buildGradle.contains("""\
+            String expected = '''
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage = "amazonlinux:2023"
-    jdkVersion = "${javaVersion}"
+    jdkVersion = "''' + javaVersion +'''"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}""")
+}'''
+            assert buildGradle.contains(expected)
         } else if (buildTool == BuildTool.GRADLE) {
-            assert buildGradle.contains("""\
+            String expected = '''
 tasks.named("dockerfileNative") {
-    baseImage = "amazonlinux:2023"
-    jdkVersion = "${javaVersion}"
+    jdkVersion = "''' + javaVersion + '''"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}""")
+}'''
+            assert buildGradle.contains(expected)
         }
 
         where:
@@ -348,9 +347,10 @@ tasks.named("dockerfileNative") {
         given:
         BuildTool buildTool = BuildTool.GRADLE_KOTLIN
         when:
+        Options options = createOptions(language, buildTool)
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                createOptions(language, buildTool),
+                options,
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA]
         )
 
@@ -359,22 +359,21 @@ tasks.named("dockerfileNative") {
 
         when:
         String buildGradle = output[buildTool.buildFileName]
-        String javaVersion = VersionInfo.toJdkVersion(VersionInfo.getJavaVersion().majorVersion())
+        String javaVersion = options.javaVersion.majorVersion()
 
         then:
         !buildGradle.contains('id "application"')
         buildGradle.contains('mainClass = ')
         buildGradle.contains('id("io.micronaut.application")')
-        buildGradle.contains("""\
+        buildGradle.contains('''
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    baseImage = "amazonlinux:2023"
-    jdkVersion = "${javaVersion}"
+    jdkVersion = "''' + javaVersion + '''"
     args(
         "-XX:MaximumHeapSizePercent=80",
         "-Dio.netty.allocator.numDirectArenas=0",
         "-Dio.netty.noPreferDirect=true"
     )
-}""")
+}''')
         where:
         language << Language.values().toList()
         extension << Language.extensions()
@@ -456,15 +455,10 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
                 .language(language)
                 .features([AwsLambda.FEATURE_NAME_AWS_LAMBDA])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-api-proxy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-api-proxy", Scope.COMPILE)
 
         where:
         language << Language.values()

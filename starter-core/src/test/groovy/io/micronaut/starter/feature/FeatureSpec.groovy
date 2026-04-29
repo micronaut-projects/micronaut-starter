@@ -10,6 +10,9 @@ import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.database.HibernateReactiveFeature
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
+import io.micronaut.starter.feature.function.azure.AzureFunctionFeatureValidator
+import io.micronaut.starter.feature.json.JsonSchemaFeature
+import io.micronaut.starter.feature.json.JsonSchemaValidationFeature
 import io.micronaut.starter.feature.lang.groovy.module.GroovyModuleFeature
 import io.micronaut.starter.options.*
 import spock.lang.Unroll
@@ -51,7 +54,11 @@ class FeatureSpec extends BeanContextSpec {
             // because it's valid when using Spock framework too
             language = Language.GROOVY
         }
-        Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
+        def buildTool = BuildTool.GRADLE
+        if (feature instanceof MavenSpecificFeature) {
+            buildTool = BuildTool.MAVEN
+        }
+        Options options = new Options(language, TestFramework.JUNIT, buildTool, javaVersion)
         List<String> features = [feature.getName()]
 
         if (feature instanceof JAsyncSQLFeature) {
@@ -64,6 +71,9 @@ class FeatureSpec extends BeanContextSpec {
         } else if (feature instanceof Cdk || feature instanceof AwsLambdaEventFunctionFeature) {
             // Cdk fails unless it is combined with Lambda
             features << AwsLambda.FEATURE_NAME_AWS_LAMBDA
+        } else if (feature instanceof JsonSchemaValidationFeature) {
+            // fails unless it is combined with JsonSchemaFeature
+            features << JsonSchemaFeature.NAME
         }
         ApplicationType applicationType = applicationTypeForFeature(feature)
         def commandCtx = new GeneratorContext(buildProject(),
@@ -95,13 +105,11 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     private static JdkVersion javaVersionForFeature(String feature) {
-        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
-        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
         return feature in ["azure-function",
                            "azure-function-http",
                            "chatbots-basecamp-azure-function",
                            "chatbots-telegram-azure-function"
-        ] ? JdkVersion.JDK_17 : MicronautJdkVersionConfiguration.DEFAULT_OPTION
+        ] ? AzureFunctionFeatureValidator.getMaxJdkSupportedVersion() : MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {

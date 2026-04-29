@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.function.azure
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.PendingFeature
 import spock.lang.Unroll
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
@@ -13,6 +14,7 @@ class AzureFunctionSpec extends CommandSpec {
         return "azureFunctionSpec"
     }
 
+    @PendingFeature(reason = "azure functions do not support 25 yet")
     @Unroll
     void "test azure-function feature with #buildTool"(BuildTool buildTool) {
         when:

@@ -45,7 +45,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
-        !template.contains('testImplementation("org.testcontainers:mongodb")')
+        !template.contains('testImplementation("org.testcontainers:testcontainers-mongodb")')
     }
 
     void "test mongo sync dependencies are present for maven"() {
@@ -77,7 +77,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         verifier.hasDependency('io.micronaut.mongodb', "micronaut-mongo-reactive", Scope.COMPILE)
-        !verifier.hasDependency('org.testcontainers', "mongodb")
+        !verifier.hasDependency('org.testcontainers', "testcontainers-mongodb")
 
         where:
         buildTool << BuildTool.values()

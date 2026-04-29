@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
@@ -26,6 +28,7 @@ import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.security.oauth2.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
@@ -34,14 +37,9 @@ public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthentic
 
     private final HttpClient httpClient;
 
-    @Deprecated
-    public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
-        this(securityAnnotations, new HttpClient());
-    }
-
     @Inject
-    public SecurityOAuth2(SecurityAnnotations securityAnnotations, HttpClient httpClient) {
-        super(securityAnnotations);
+    public SecurityOAuth2(SecurityProcessor securityProcessor, HttpClient httpClient) {
+        super(securityProcessor);
         this.httpClient = httpClient;
     }
 

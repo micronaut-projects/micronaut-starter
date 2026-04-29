@@ -44,7 +44,7 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
 
         then:
         workflow
-        workflow.contains("uses: gradle/wrapper-validation-action@v1.0.4")
+        workflow.contains("uses: gradle/actions/wrapper-validation@v4")
         workflow.contains("gradle/gradle-build-action@v2.2.0")
         workflow.contains("actions/upload-artifact@v3.1.0")
 

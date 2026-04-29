@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -28,10 +30,14 @@ import io.micronaut.starter.feature.build.Kapt;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.rocker.feature.view.exampleJTE;
+import io.micronaut.starter.rocker.feature.view.gradlePluginJTE;
+import io.micronaut.starter.rocker.feature.view.mvnPluginJTE;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.views.jte.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class JTE implements ViewFeature, MicronautServerDependent {
 

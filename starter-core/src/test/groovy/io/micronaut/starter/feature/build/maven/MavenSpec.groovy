@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
+import io.micronaut.starter.feature.function.azure.AzureFunctionFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -191,18 +192,13 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | ["aws-lambda", 'graalvm']       | "lambda"
         ApplicationType.DEFAULT     | ["tomcat-server"]               | "tomcat"
         ApplicationType.DEFAULT     | ["jetty-server"]                | "jetty"
+        ApplicationType.DEFAULT     | ["http-poja"]                   | "http_poja"
         ApplicationType.DEFAULT     | ["netty-server"]                | "netty"
         ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
     private static JdkVersion javaVersionForRuntime(String runtime) {
-        // Azure functions support 21 as a preview for functions version 4.x in Linux. Java 21 is not supported in Windows yet
-        // https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-java?tabs=bash%2Cconsumption#supported-versions
-        // Google Cloud Function execution environment supports 21 in preview only
-        // https://cloud.google.com/functions/docs/concepts/execution-environment#runtimes
-        return runtime in ["azure_function",
-                           "google_function"
-        ] ? JdkVersion.JDK_17 :
+        return runtime in ["azure_function"] ? AzureFunctionFeatureValidator.getMaxJdkSupportedVersion() :
                 MicronautJdkVersionConfiguration.DEFAULT_OPTION
     }
 
@@ -219,17 +215,9 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         buildFile
-        if (lang == Language.KOTLIN) {
-            // has kapt so has to be 17
-            assert buildFile.contains("<jdk.version>17</jdk.version>")
-        } else {
-            assert buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
-        }
+        buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
 
         where:
-        [lang, jdk] << [
-                Language.values(),
-                [JdkVersion.JDK_17, JdkVersion.JDK_21]
-        ].combinations()
+        [lang, jdk] << [Language.values(), [JdkVersion.JDK_25]].combinations()
     }
 }

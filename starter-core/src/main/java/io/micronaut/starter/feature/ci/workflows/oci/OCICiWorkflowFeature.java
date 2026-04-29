@@ -15,17 +15,19 @@
  */
 package io.micronaut.starter.feature.ci.workflows.oci;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpec;
-import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpecGraal;
+import io.micronaut.starter.rocker.feature.ci.workflows.oci.templates.buildSpec;
+import io.micronaut.starter.rocker.feature.ci.workflows.oci.templates.buildSpecGraal;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
-import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.oracle.cloud.devops.build.ci.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class OCICiWorkflowFeature extends CIWorkflowFeature {
 
@@ -73,8 +75,7 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
             return new RockerTemplate(getWorkflowFileName(generatorContext), buildSpecGraal.template(
                     generatorContext.getProject().getName(),
                     generatorContext.getJdkVersion(),
-                    generatorContext.getBuildTool(),
-                    VersionInfo.getDependencyVersion("graal").getValue()
+                    generatorContext.getBuildTool()
             ));
         }
     }

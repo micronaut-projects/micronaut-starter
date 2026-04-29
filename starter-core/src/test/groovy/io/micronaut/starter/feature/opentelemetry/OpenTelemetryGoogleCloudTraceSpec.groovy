@@ -4,6 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -125,29 +128,12 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['tracing-opentelemetry-gcp'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>com.google.cloud.opentelemetry</groupId>
-      <artifactId>exporter-auto</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("com.google.cloud.opentelemetry", "exporter-auto", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }
@@ -158,36 +144,13 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>com.google.cloud.opentelemetry</groupId>
-      <artifactId>exporter-auto</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-logging</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("com.google.cloud.opentelemetry", "exporter-auto", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
+        verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-logging", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }
@@ -201,29 +164,12 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
                 .language(language)
                 .features(['tracing-opentelemetry-gcp'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>com.google.cloud.opentelemetry</groupId>
-      <artifactId>exporter-auto</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
+        verifier.hasDependency("com.google.cloud.opentelemetry", "exporter-auto", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
+        !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

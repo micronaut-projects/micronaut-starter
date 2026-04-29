@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -32,10 +35,12 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
+@Requires(property = "micronaut.starter.feature.testcontainers.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class TestContainers implements Feature {
     public static final String NAME = "testcontainers";
-    private static final String ARTIFACT_ID_TESTCONTAINERS = "testcontainers";
+    public static final String ARTIFACT_ID_TESTCONTAINERS = "testcontainers";
+    public static final String ARTIFACT_ID_TESTCONTAINERS_PREFIX = ARTIFACT_ID_TESTCONTAINERS + "-";
 
     @NonNull
     @Override
@@ -70,11 +75,11 @@ public class TestContainers implements Feature {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                 });
-                generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency("r2dbc"));
+                generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency("testcontainers-r2dbc"));
                 // TestContainers requires the database module, a jdbc driver AND the r2dbc module: see https://www.testcontainers.org/modules/databases/r2dbc/
                 driverFeature.getJavaClientDependency().ifPresent(d -> generatorContext.addDependency(d.testRuntime()));
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
-                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
+                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(ARTIFACT_ID_TESTCONTAINERS_PREFIX + dependencyArtifactId)));
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
                 String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
@@ -87,7 +92,7 @@ public class TestContainers implements Feature {
                     testConfig.put(driverConfiguration.getDriverKey(), driver);
                 });
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
-                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
+                        generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(ARTIFACT_ID_TESTCONTAINERS_PREFIX + dependencyArtifactId)));
             });
             generatorContext.getFeature(HibernateReactiveFeature.class).ifPresent(hibernateReactiveFeature -> {
                 urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
@@ -95,12 +100,19 @@ public class TestContainers implements Feature {
                     testConfig.put(hibernateReactiveFeature.getUrlKey(), url);
                 });
                 artifactIdForDriverFeature(driverFeature)
-                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(dependencyArtifactId)));
+                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(ARTIFACT_ID_TESTCONTAINERS_PREFIX + dependencyArtifactId)));
             });
+
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
-            generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(testArtifactId));
+            generatorContext.addDependency(ContributingTestContainerDependency.testContainerDependency(ARTIFACT_ID_TESTCONTAINERS_PREFIX + testArtifactId));
         });
+        // see:
+        // https://github.com/testcontainers/testcontainers-java/issues/8798
+        // https://github.com/testcontainers/testcontainers-java/issues/8338#issuecomment-1992649517
+        if (generatorContext.hasFeature(TestContainers.class)) {
+            generatorContext.addDependency(Dependency.builder().lookupArtifactId("commons-compress").test());
+        }
     }
 
     @NonNull

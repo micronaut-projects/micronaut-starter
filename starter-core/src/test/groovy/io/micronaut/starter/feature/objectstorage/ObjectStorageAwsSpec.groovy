@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.objectstorage
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -47,22 +50,11 @@ class ObjectStorageAwsSpec extends ApplicationContextSpec implements CommandOutp
                 .language(language)
                 .features(["object-storage-aws"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-aws-sdk-v2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.objectstorage</groupId>
-      <artifactId>micronaut-object-storage-aws</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-aws", Scope.COMPILE)
         where:
         language << Language.values().toList()
     }

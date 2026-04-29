@@ -15,15 +15,18 @@
  */
 package io.micronaut.starter.feature.ci.workflows.aws;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
-import io.micronaut.starter.feature.ci.workflows.aws.templates.buildSpec;
+import io.micronaut.starter.rocker.feature.ci.workflows.aws.templates.buildSpec;
 
 import jakarta.inject.Singleton;
 
+@Requires(property = "micronaut.starter.feature.aws.codebuild.workflow.ci.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AWSCiWorkflowFeature extends CIWorkflowFeature {
     public static final String NAME = "aws-codebuild-workflow-ci";

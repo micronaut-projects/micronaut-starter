@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.acme
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -41,15 +44,10 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .language(language)
                 .features(['acme'])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, language, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.acme</groupId>
-      <artifactId>micronaut-acme</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        verifier.hasDependency("io.micronaut.acme", "micronaut-acme", Scope.COMPILE)
 
         where:
         language << Language.values().toList()

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -9,39 +12,26 @@ import spock.lang.Unroll
 class MariaDBSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle mariadb feature for language=#language'() {
+    void 'test #buildTool mariadb feature for language=#language'(BuildTool buildTool, Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['mariadb'])
-                .language(language)
-                .render()
+        String template = new BuildBuilder(beanContext, buildTool).features(['mariadb']).language(language).render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client")')
+        verifier.hasDependency("org.mariadb.jdbc", "mariadb-java-client", Scope.RUNTIME)
+        !verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven mariadb feature for language=#language'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['mariadb'])
-                .language(language)
-                .render()
+        template = new BuildBuilder(beanContext, buildTool).features(['mariadb', 'testcontainers']).language(language).render()
+        verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-""")
+        verifier.hasDependency("org.mariadb.jdbc", "mariadb-java-client", Scope.RUNTIME)
+        verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        [buildTool, language] << [BuildTool.values().toList(), Language.values().toList()].combinations()
     }
+
 
 }

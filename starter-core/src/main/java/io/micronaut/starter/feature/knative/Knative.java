@@ -15,15 +15,17 @@
  */
 package io.micronaut.starter.feature.knative;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.jib.Jib;
-import io.micronaut.starter.feature.knative.template.knativeYaml;
+import io.micronaut.starter.rocker.feature.knative.template.knativeYaml;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -35,6 +37,7 @@ import jakarta.inject.Singleton;
  * @author Pavol Gressa
  * @since 2.1
  */
+@Requires(property = "micronaut.starter.feature.knative.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Knative implements Feature {
 

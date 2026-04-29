@@ -15,13 +15,14 @@
  */
 package io.micronaut.starter.feature.azure;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryClient;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
-import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -30,6 +31,7 @@ import jakarta.inject.Singleton;
  * @author sbodvanski
  * @since 3.8.0
  */
+@Requires(property = "micronaut.starter.feature.azure.key.vault.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class AzureKeyVaultFeature implements DistributedConfigFeature {
     private static final String ARTIFACT_ID_MICRONAUT_AZURE_SECRET_MANAGER = "micronaut-azure-secret-manager";

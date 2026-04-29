@@ -98,6 +98,7 @@ public abstract class CoordinatesSourceGenerator extends DefaultTask {
         getFileOperations().delete(outputDirectory);
         Files.createDirectories(packageDirectory);
         try (PrintWriter writer = new PrintWriter(new FileWriter(new File(packageDirectory.toFile(), "StarterCoordinates.java")))) {
+            writer.println("// WARNING: Generated from gradle/templates.versions.toml - DO NOT EDIT.");
             writer.println("package " + packageName + ";");
             writer.println();
             writer.println("import java.util.HashMap;");

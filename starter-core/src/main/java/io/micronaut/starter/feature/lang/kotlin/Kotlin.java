@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+@Requires(property = "micronaut.starter.feature.kotlin.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Kotlin implements LanguageFeature {
     protected static final Dependency DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME = MicronautDependencyUtils.kotlinDependency()
@@ -89,7 +92,7 @@ public class Kotlin implements LanguageFeature {
         generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME);
         generatorContext.addDependency(Dependency.builder()
-                .groupId("com.fasterxml.jackson.module")
+                .groupId("tools.jackson.module")
                 .artifactId("jackson-module-kotlin")
                 .runtime());
     }

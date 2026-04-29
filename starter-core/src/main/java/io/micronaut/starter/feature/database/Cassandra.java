@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -31,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@Requires(property = "micronaut.starter.feature.cassandra.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Cassandra implements Feature, ContributingTestContainerDependency {
 
@@ -119,6 +122,6 @@ public class Cassandra implements Feature, ContributingTestContainerDependency {
 
     @Override
     public List<Dependency> testContainersDependencies() {
-        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("cassandra"));
+        return Collections.singletonList(ContributingTestContainerDependency.testContainerDependency("testcontainers-cassandra"));
     }
 }
