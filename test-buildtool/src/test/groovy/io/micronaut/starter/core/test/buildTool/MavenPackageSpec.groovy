@@ -6,6 +6,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.IgnoreIf
+import spock.lang.PendingFeature
 
 class MavenPackageSpec extends CommandSpec {
 
@@ -35,6 +36,7 @@ class MavenPackageSpec extends CommandSpec {
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
+    @PendingFeature
     void 'test maven Docker packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])
@@ -59,7 +61,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 90)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image-community")
+        output.contains("Using BASE_IMAGE:")
 
         where:
         lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }

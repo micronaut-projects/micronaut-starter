@@ -29,7 +29,7 @@ class SecurityCsrfSpec extends ApplicationContextSpec implements CommandOutputFi
 
         then:
         verifier.hasDependency("io.micronaut.security", "micronaut-security-csrf", Scope.COMPILE)
-        verifier.hasDependency("io.micronaut.security", "micronaut-security-annotations", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
+        verifier.hasDependency("io.micronaut.security", "micronaut-security-processor", Scope.ANNOTATION_PROCESSOR, 'micronaut.security.version', true)
 
         where:
         buildTool << BuildTool.values()

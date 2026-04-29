@@ -10,6 +10,8 @@ package @project.getPackageName()
 }
 
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
@@ -43,7 +45,9 @@ class @project.getClassName()Controller {
 } else {
 @@Introspected
 }
-data class SampleInputMessage(val name: String)
+data class SampleInputMessage @@JsonCreator constructor(
+    @@param:JsonProperty("name") val name: String
+)
 
 @if (useSerde) {
 @@Serdeable

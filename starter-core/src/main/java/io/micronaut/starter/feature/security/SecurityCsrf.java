@@ -32,8 +32,8 @@ public class SecurityCsrf extends SecurityFeature {
             .compile()
             .build();
 
-    public SecurityCsrf(SecurityAnnotations securityAnnotations) {
-        super(securityAnnotations);
+    public SecurityCsrf(SecurityProcessor securityProcessor) {
+        super(securityProcessor);
     }
 
     @NonNull
