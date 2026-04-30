@@ -139,7 +139,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
 
     @Ignore("kotlin and maven are no longer supported")
-    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
+    void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack config file"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25))
         def pom = new XmlParser().parseText(output."pom.xml")
