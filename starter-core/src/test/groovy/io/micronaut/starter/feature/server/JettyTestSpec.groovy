@@ -37,6 +37,6 @@ class JettyTestSpec extends BeanContextSpec  implements CommandOutputFixture {
         verifier.hasAnnotationProcessor("io.micronaut.servlet", "micronaut-servlet-processor")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

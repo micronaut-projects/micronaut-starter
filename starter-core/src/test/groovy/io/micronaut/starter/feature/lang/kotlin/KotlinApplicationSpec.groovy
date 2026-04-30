@@ -12,6 +12,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -71,7 +72,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         verifier.hasDependency("tools.jackson.module", "jackson-module-kotlin", Scope.RUNTIME)
 
         where:
-        [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()
+        [buildTool, testFramework] << [BuildTool.valuesGradle(), [TestFramework.KOTEST]].combinations()
     }
 
     void "kotlin-application does not support #description"(ApplicationType applicationType, String description) {
@@ -98,6 +99,7 @@ class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOut
         description = applicationType.name
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     void "test kotlin app with maven defines kotlinVersion build property"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

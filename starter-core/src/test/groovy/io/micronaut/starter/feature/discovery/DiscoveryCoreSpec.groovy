@@ -22,8 +22,7 @@ class DiscoveryCoreSpec extends ApplicationContextSpec implements CommandOutputF
         verifier.hasDependency('io.micronaut', 'micronaut-discovery-core')
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
 }

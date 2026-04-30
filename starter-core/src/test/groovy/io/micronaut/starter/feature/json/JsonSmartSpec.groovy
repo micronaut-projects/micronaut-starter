@@ -52,6 +52,6 @@ class JsonSmartSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("net.minidev", "json-smart", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

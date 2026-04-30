@@ -5,6 +5,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.IgnoreIf
 import spock.lang.PendingFeature
 
@@ -32,7 +33,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << LanguageUtils.supportedLanguages(BuildTool.MAVEN)
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -49,7 +50,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << LanguageUtils.supportedLanguages(BuildTool.MAVEN)
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
@@ -64,7 +65,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("Using BASE_IMAGE:")
 
         where:
-        lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
+        lang << LanguageUtils.supportedLanguages(BuildTool.MAVEN).findAll { GraalVMFeatureValidator.supports(it) }
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN || !IS_GRAAL })
@@ -80,7 +81,7 @@ class MavenPackageSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values().findAll { GraalVMFeatureValidator.supports(it) }
+        lang << LanguageUtils.supportedLanguages(BuildTool.MAVEN).findAll { GraalVMFeatureValidator.supports(it) }
     }
 
 }

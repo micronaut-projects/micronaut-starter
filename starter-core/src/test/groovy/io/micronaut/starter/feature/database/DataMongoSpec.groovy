@@ -85,10 +85,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         where:
         feature                 | driver                           | language
         'data-mongodb'          | 'mongodb-driver-sync'            | Language.JAVA
-        'data-mongodb'          | 'mongodb-driver-sync'            | Language.KOTLIN
         'data-mongodb'          | 'mongodb-driver-sync'            | Language.GROOVY
         'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.JAVA
-        'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.KOTLIN
         'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.GROOVY
     }
 

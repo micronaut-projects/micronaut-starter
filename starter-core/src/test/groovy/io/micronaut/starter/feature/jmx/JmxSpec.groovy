@@ -51,7 +51,7 @@ class JmxSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut.jmx", "micronaut-jmx", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

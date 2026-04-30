@@ -79,6 +79,6 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
         }
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

@@ -39,7 +39,7 @@ class AWSSDKv2Spec extends ApplicationContextSpec  implements CommandOutputFixtu
         then:
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

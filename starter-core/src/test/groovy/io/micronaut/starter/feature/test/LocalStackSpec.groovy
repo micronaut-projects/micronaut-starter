@@ -66,7 +66,7 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
         verifier.hasDependency("com.amazonaws", "aws-java-sdk-core", Scope.TEST) == !hasSqs
 
         where:
-        [language, hasSqs] << [Language.values().toList(), [true, false]].combinations()
+        [language, hasSqs] << [supportedLanguages(BuildTool.MAVEN), [true, false]].combinations()
     }
 
 }

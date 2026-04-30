@@ -40,7 +40,7 @@ class RedisLettuceSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.redis", "micronaut-redis-lettuce", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test redis-lettuce configuration'() {

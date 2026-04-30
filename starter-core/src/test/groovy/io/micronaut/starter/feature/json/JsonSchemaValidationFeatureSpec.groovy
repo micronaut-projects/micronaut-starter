@@ -56,7 +56,7 @@ class JsonSchemaValidationFeatureSpec extends ApplicationContextSpec implements 
         verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-validation", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 
     void 'test json-schema-validation feature adds jason-schema feature'() {

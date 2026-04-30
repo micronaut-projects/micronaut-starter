@@ -13,6 +13,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 import spock.lang.Unroll
 
 class PicocliSpec extends ApplicationContextSpec {
@@ -40,7 +41,7 @@ class PicocliSpec extends ApplicationContextSpec {
         }
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {
@@ -66,6 +67,7 @@ class PicocliSpec extends ApplicationContextSpec {
         !parsePropertySemanticVersion(template, "picocli.version").isPresent()
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     void 'test maven cli app Kotlin contains picocli-gen as annotation processor'() {
         when:
         Language language = Language.KOTLIN

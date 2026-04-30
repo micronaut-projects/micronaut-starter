@@ -45,7 +45,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
                         [HttpClient.NAME],
                         [] // http-client is a default feature
                 ]
-        ].combinations()
+        ].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
         desc = features ? "explicit" : "implicit"
     }
 

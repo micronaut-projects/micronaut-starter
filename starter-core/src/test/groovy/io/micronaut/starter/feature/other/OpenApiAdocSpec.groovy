@@ -40,6 +40,6 @@ class OpenApiAdocSpec extends ApplicationContextSpec implements CommandOutputFix
         verifier.hasAnnotationProcessor('io.micronaut.openapi', 'micronaut-openapi-adoc')
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

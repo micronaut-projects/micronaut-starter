@@ -52,7 +52,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
         verifier.hasDependency("io.micronaut.elasticsearch", "micronaut-elasticsearch", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test elasticsearch configuration'() {
@@ -106,6 +106,6 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
       <version>''')
 
         where:
-        language << GraalVMFeatureValidator.supportedLanguages()
+        language << [Language.JAVA]
     }
 }

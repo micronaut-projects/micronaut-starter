@@ -35,7 +35,7 @@ class MicronautGuiceSpec  extends ApplicationContextSpec implements CommandOutpu
         verifier.hasAnnotationProcessor("io.micronaut.guice", "micronaut-guice-processor")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "guice feature is in the dependency injection category"() {

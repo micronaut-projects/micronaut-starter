@@ -54,6 +54,6 @@ class ObjectStorageGcpSpec extends ApplicationContextSpec implements CommandOutp
         then:
         verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-gcp", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

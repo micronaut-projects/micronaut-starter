@@ -52,7 +52,7 @@ class EHCacheSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("io.micronaut.cache", "micronaut-cache-ehcache", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test cache-ehcache configuration'() {

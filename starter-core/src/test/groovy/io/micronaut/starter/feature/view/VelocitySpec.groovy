@@ -36,6 +36,6 @@ class VelocitySpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.views", "micronaut-views-velocity", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

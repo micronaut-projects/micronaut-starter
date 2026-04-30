@@ -39,7 +39,7 @@ class EurekaSpec extends ApplicationContextSpec implements CommandOutputFixture 
         !verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test discovery-eureka configuration'() {

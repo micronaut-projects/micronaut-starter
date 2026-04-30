@@ -157,7 +157,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('<configFile>aot-${packaging}.properties</configFile>')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'aot properties file is generated when aot feature is selected'() {

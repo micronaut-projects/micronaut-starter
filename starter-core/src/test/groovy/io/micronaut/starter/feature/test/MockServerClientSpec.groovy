@@ -50,6 +50,6 @@ class MockServerClientSpec extends ApplicationContextSpec implements CommandOutp
         verifier.hasDependency("org.mock-server", "mockserver-client-java", Scope.TEST)
 
         where:
-        [language, hasTC, buildTool] << [Language.values().toList(), [true, false], BuildTool.values().toList()].combinations()
+        [language, hasTC, buildTool] << [Language.values().toList(), [true, false], BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[0]) }
     }
 }

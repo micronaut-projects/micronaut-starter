@@ -42,7 +42,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasAnnotationProcessor("io.micronaut.validation", "micronaut-validation-processor")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
     
     void 'test #buildTool dynamodb feature for language=#language with GraalVM'(Language language, BuildTool buildTool) {
@@ -83,7 +83,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasExclusion("software.amazon.awssdk", "dynamodb", "software.amazon.awssdk", "netty-nio-client")
 
         where:
-        language << GraalVMFeatureValidator.supportedLanguages()
+        language << [Language.JAVA]
     }
 
     void "dynamodb feature is in the DATABASE category"() {

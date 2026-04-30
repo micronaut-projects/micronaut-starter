@@ -121,10 +121,8 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         language        | applicationType
         Language.JAVA   | ApplicationType.FUNCTION
         Language.GROOVY | ApplicationType.FUNCTION
-        Language.KOTLIN | ApplicationType.FUNCTION
         Language.JAVA   | ApplicationType.DEFAULT
         Language.GROOVY | ApplicationType.DEFAULT
-        Language.KOTLIN | ApplicationType.DEFAULT
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/721")
@@ -144,9 +142,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         language        | applicationType
         Language.JAVA   | ApplicationType.FUNCTION
         Language.GROOVY | ApplicationType.FUNCTION
-        Language.KOTLIN | ApplicationType.FUNCTION
         Language.JAVA   | ApplicationType.DEFAULT
         Language.GROOVY | ApplicationType.DEFAULT
-        Language.KOTLIN | ApplicationType.DEFAULT
     }
 }

@@ -38,6 +38,6 @@ class OpenTelemetryGrpcSpec extends ApplicationContextSpec {
         then:
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-grpc", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

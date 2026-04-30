@@ -46,6 +46,6 @@ class RxJava3HttpClientSpec extends BeanContextSpec implements CommandOutputFixt
         verifier.hasDependency("io.micronaut.rxjava3", "micronaut-rxjava3-http-client", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

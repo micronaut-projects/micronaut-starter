@@ -39,7 +39,7 @@ class ArchaiusSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.netflix", "micronaut-netflix-archaius", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

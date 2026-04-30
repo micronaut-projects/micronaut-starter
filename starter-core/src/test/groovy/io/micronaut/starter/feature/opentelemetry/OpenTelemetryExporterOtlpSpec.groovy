@@ -80,6 +80,6 @@ class OpenTelemetryExporterOtlpSpec extends ApplicationContextSpec implements Co
         then:
         verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-otlp", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

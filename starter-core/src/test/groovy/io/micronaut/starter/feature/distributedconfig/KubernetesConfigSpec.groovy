@@ -67,7 +67,7 @@ class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOut
         verifier.hasDependency("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test kubernetes configuration'() {

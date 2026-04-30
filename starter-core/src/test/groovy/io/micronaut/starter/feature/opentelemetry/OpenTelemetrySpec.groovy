@@ -71,6 +71,6 @@ class OpenTelemetrySpec extends ApplicationContextSpec implements CommandOutputF
         then:
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

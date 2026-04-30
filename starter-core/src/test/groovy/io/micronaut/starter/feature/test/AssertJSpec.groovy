@@ -116,6 +116,6 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("org.assertj", "assertj-core", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

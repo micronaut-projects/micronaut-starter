@@ -51,7 +51,7 @@ class HystrixSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("io.micronaut.netflix", "micronaut-netflix-hystrix", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << [Language.GROOVY, Language.JAVA]
     }
 
     void 'test netflix-hystrix configuration'() {

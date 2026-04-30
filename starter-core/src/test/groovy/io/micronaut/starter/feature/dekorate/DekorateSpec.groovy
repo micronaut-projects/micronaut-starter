@@ -88,7 +88,7 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(AbstractDekorateFeature),
-                [Language.JAVA, Language.KOTLIN],
+                [Language.JAVA],
         ].combinations()
 
         service = feature.getName().replaceFirst("dekorate-", "")

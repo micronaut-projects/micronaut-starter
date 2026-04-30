@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -77,9 +78,12 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
             <arg>-Amicronaut.processing.module=foo</arg>
           </compilerArgs>
 """)
+    }
 
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+    @Ignore("kotlin and maven are no longer supported")
+    void "test kotlin and maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
+            when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.KOTLIN)
                 .features(["graalvm"])
                 .render()

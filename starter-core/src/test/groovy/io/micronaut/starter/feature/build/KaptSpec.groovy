@@ -15,6 +15,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
@@ -123,7 +124,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
-    @PendingFeature
+    @Ignore("maven and kotlin are no longer supported")
     void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25))
@@ -136,6 +137,8 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         !output.".mvn/jvm.config"
     }
 
+
+    @Ignore("kotlin and maven are no longer supported")
     void "for java 21, maven defaults to kapt in a kotlin build and adds the add-opens hack"() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25))
@@ -163,6 +166,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildTool << BuildTool.valuesGradle()
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     void 'Corrected jdk21 = jdk17 is specified in Maven build for kapt'() {
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.DEFAULT_OPTION, BuildTool.MAVEN, JdkVersion.JDK_25),['kapt'])

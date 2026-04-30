@@ -17,12 +17,17 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 import java.util.function.Consumer
 
 trait ContextFixture {
 
     abstract BeanContext getBeanContext()
+
+    List<Language> supportedLanguages(BuildTool buildTool) {
+        LanguageUtils.supportedLanguages(buildTool)
+    }
 
     String getGradleAnnotationProcessorScope(Language language, Source source = Source.MAIN) {
         if (language == Language.JAVA) {

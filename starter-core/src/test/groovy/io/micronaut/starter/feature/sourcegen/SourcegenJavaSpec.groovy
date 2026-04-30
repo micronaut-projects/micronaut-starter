@@ -70,6 +70,6 @@ class SourcegenJavaSpec extends ApplicationContextSpec  implements CommandOutput
         }
 
         where:
-        [buildTool, language] << [BuildTool.values(), [Language.JAVA, Language.KOTLIN]].combinations()
+        [buildTool, language] << [BuildTool.values(), [Language.JAVA, Language.KOTLIN]].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

@@ -65,7 +65,7 @@ class HttpSessionSpec extends ApplicationContextSpec implements CommandOutputFix
         verifier.hasDependency("io.micronaut.session", "micronaut-session", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
 
     }
 }

@@ -36,6 +36,6 @@ class KotlinSupportFeatureSpec extends BeanContextSpec implements CommandOutputF
         }
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.valuesGradle()
     }
 }

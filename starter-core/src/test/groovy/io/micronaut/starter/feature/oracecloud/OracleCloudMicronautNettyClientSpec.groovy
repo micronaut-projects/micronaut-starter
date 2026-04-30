@@ -42,7 +42,7 @@ class OracleCloudMicronautNettyClientSpec extends ApplicationContextSpec impleme
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-httpclient-netty", Scope.COMPILE)
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

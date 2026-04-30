@@ -15,7 +15,8 @@ class GradleSpecificFeatureValidatorSpec extends ApplicationContextSpec implemen
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message.contains("Feature only supported by Gradle")
+        ex.message.contains("Feature only supported by Gradle") ||
+                ex.message.contains("Kotlin and Maven are not supported. Use Kotlin and Gradle")
 
         when:
         getFeatures([featureName], Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)

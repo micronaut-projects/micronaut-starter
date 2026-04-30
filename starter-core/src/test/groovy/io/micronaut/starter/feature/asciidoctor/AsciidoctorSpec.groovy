@@ -67,7 +67,7 @@ class AsciidoctorSpec extends ApplicationContextSpec {
         parsePropertySemanticVersion(template, "asciidoctor.maven.plugin.version").isPresent()
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

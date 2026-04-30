@@ -98,7 +98,7 @@ rocker {
 """)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }
 

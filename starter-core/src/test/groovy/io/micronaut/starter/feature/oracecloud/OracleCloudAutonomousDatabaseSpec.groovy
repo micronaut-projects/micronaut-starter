@@ -47,7 +47,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         then:
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-atp", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test ATP config file'() {

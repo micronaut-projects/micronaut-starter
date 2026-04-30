@@ -64,7 +64,7 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
                     "io.micronaut", "micronaut-inject", Scope.ANNOTATION_PROCESSOR)
         }
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

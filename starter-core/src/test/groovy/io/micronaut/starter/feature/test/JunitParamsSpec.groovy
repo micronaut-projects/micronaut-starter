@@ -87,6 +87,6 @@ class JunitParamsSpec extends ApplicationContextSpec implements CommandOutputFix
         verifier.hasDependency("org.junit.jupiter", "junit-jupiter-params")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

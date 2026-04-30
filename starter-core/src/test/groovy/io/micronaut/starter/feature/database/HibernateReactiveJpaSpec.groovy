@@ -15,6 +15,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
+import spock.lang.Ignore
 
 class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
@@ -290,6 +291,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         ])
     }
 
+    @Ignore("Kotlin and Maven not supported")
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

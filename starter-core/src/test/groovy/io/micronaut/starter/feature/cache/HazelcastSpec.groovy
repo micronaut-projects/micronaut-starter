@@ -53,7 +53,7 @@ class HazelcastSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.cache", "micronaut-cache-hazelcast", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test cache-hazelcast configuration'() {

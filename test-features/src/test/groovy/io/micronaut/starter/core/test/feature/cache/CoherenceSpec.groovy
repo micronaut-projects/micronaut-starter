@@ -6,6 +6,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -26,7 +27,7 @@ class CoherenceSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << LanguageUtils.supportedLanguages(BuildTool.MAVEN)
     }
 
     void "test #buildTool coherence-cache with #language"(BuildTool buildTool, Language language) {

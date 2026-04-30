@@ -114,8 +114,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency('com.amazonaws', 'aws-lambda-java-events')
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda dependencies for aws-lambda function and #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -127,8 +126,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda adds micronaut-aws-lambda-events-serde since serde-jackson is the default json feature for #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -139,8 +137,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda does not add micronaut-aws-lambda-events-serde when jackson-databind feature is added for #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -151,8 +148,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     private BuildTestVerifier verifier(BuildTool buildTool,
@@ -186,7 +182,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 ''')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'function with gradle and feature aws-lambda for language=#language'() {
@@ -209,7 +205,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
 
         where:
-        [language, buildTool] << [GraalVMFeatureValidator.supportedLanguages(), BuildTool.values()].combinations()
+        [language, buildTool] << [GraalVMFeatureValidator.supportedLanguages(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'function with gradle, with features aws-lambda and graalvm for language=#language'() {
@@ -243,7 +239,8 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         testSrcDir << Language.testSrcDirs()
     }
 
-    void 'function with maven and feature aws-lambda for language=#language'() {
+    void 'function with maven and feature aws-lambda for language=#language'(
+            Language language, String extension, String srcDir, String testSrcDir) {
         when:
         Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
@@ -262,10 +259,9 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/FunctionRequestHandler", language))
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, extension, srcDir, testSrcDir] << supportedLanguages(BuildTool.MAVEN).collect {
+            [it, it.extension, it.srcDir, it.testSrcDir]
+        }
     }
 
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(ApplicationType applicationType, Language language, BuildTool buildTool) {
@@ -461,7 +457,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-api-proxy", Scope.COMPILE)
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void '#applicationType app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'(
@@ -514,7 +510,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'app with maven and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
@@ -538,7 +534,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         verifier.hasDependency("io.micronaut", "micronaut-http-client-jdk")
 
         where:
-        language << GraalVMFeatureValidator.supportedLanguages()
+        language << [Language.JAVA]
     }
 
     void 'app with gradle and feature aws-lambda for language=#language'() {
@@ -581,10 +577,9 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, extension, srcDir, testSrcDir] << supportedLanguages(BuildTool.MAVEN).collect {
+            [it, it.extension, it.srcDir, it.testSrcDir]
+        }
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {

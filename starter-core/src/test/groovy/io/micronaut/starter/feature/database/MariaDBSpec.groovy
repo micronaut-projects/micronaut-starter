@@ -12,7 +12,7 @@ import spock.lang.Unroll
 class MariaDBSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test #buildTool mariadb feature for language=#language'(BuildTool buildTool, Language language) {
+    void 'test #buildTool mariadb feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool).features(['mariadb']).language(language).render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
@@ -30,7 +30,7 @@ class MariaDBSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values().toList(), Language.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
 

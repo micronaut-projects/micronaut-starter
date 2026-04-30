@@ -51,7 +51,7 @@ class JdbiFeatureSpec extends ApplicationContextSpec  implements CommandOutputFi
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbi", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

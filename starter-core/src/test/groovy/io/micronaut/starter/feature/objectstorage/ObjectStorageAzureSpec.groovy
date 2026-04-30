@@ -54,6 +54,6 @@ class ObjectStorageAzureSpec extends ApplicationContextSpec implements CommandOu
         then:
         verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-azure", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

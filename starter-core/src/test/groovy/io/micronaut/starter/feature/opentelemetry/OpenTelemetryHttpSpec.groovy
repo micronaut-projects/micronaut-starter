@@ -72,7 +72,7 @@ class OpenTelemetryHttpSpec extends ApplicationContextSpec implements CommandOut
         then:
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test otel.exclusions configuration'() {

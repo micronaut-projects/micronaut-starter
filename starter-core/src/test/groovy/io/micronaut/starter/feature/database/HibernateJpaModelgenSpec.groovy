@@ -52,6 +52,6 @@ class HibernateJpaModelgenSpec extends ApplicationContextSpec implements Command
         verifier.hasAnnotationProcessor("org.hibernate.orm", "hibernate-jpamodelgen")
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

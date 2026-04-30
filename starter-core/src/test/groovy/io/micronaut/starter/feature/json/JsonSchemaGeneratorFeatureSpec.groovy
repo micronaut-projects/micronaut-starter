@@ -85,7 +85,7 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
         output.contains(expected)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(MAVEN)
     }
 
     void 'test json-schema-generator feature does NOT add jason-schema feature'() {

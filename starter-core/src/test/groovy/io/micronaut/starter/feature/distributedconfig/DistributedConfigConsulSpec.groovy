@@ -77,7 +77,7 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test maven config-consul multiple features'() {

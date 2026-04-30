@@ -51,7 +51,7 @@ class SimpleLoggingSpec extends ApplicationContextSpec  implements CommandOutput
         !verifier.hasDependency("ch.qos.logback", "logback-classic", Scope.RUNTIME)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

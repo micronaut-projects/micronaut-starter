@@ -46,7 +46,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         e.message == 'Feature only supported by Gradle'
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void "buildless configured correctly for #buildTool"() {

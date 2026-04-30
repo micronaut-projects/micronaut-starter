@@ -97,7 +97,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [supportedLanguages(), BuildTool.values()].combinations()
+        [language, buildTool] << [supportedLanguages(), BuildTool.valuesGradle()].combinations()
     }
 
     @Unroll
@@ -152,7 +152,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, BuildTool.MAVEN),
+                new Options(language, BuildTool.GRADLE),
                 [Ktor.NAME]
         )
 

@@ -53,7 +53,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut.sql", "micronaut-jooq", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void "test jooq cannot be applied for #language with Java 8"() {

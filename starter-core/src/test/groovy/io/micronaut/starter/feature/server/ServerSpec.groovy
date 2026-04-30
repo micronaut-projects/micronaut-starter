@@ -35,22 +35,13 @@ class ServerSpec extends ApplicationContextSpec {
     void 'test maven server feature #serverFeature'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.JAVA)
                 .features([serverFeature])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
         verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
-
-        when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(Language.KOTLIN)
-                .features([serverFeature])
-                .render()
-        BuildTestVerifier verifierKotlin = BuildTestUtil.verifier(BuildTool.MAVEN, Language.KOTLIN, template)
-
-        then:
-        verifierKotlin.hasDependency(groupId, artifactId, Scope.COMPILE)
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)

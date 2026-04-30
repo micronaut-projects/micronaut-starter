@@ -27,7 +27,7 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.cassandra","micronaut-cassandra", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test cassandra micrometer feature=#feature for language=#language and buildTool=#buildTool'(
@@ -43,7 +43,7 @@ class CassandraSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("com.datastax.oss","java-driver-metrics-micrometer", Scope.COMPILE)
 
         where:
-        [language, buildTool, feature] << [Language.values(), BuildTool.values(), beanContext.getBeansOfType(MicrometerFeature)*.name].combinations()
+        [language, buildTool, feature] << [Language.values(), BuildTool.values(), beanContext.getBeansOfType(MicrometerFeature)*.name].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test cassandra configuration'() {
