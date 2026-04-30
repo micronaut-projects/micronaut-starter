@@ -111,7 +111,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('<micronaut.runtime>')
     }
 
-    @Ignore("kotlin and maven are nto supported")
+    @Ignore("kotlin and maven are not supported")
     void 'test annotation processor dependencies for kotlin'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN).render()
