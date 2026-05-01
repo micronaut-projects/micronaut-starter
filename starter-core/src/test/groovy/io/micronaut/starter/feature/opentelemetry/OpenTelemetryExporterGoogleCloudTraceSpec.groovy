@@ -80,6 +80,6 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
         then:
         verifier.hasDependency("com.google.cloud.opentelemetry", "exporter-auto", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

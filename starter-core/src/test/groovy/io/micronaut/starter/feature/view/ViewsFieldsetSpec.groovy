@@ -56,6 +56,6 @@ class ViewsFieldsetSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

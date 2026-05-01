@@ -56,6 +56,6 @@ class ObjectStorageAwsSpec extends ApplicationContextSpec implements CommandOutp
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-sdk-v2", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-aws", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

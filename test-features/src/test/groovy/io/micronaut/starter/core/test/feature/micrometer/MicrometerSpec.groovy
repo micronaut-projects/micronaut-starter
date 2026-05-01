@@ -11,6 +11,7 @@ import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -36,7 +37,7 @@ class MicrometerSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values().findAll { it != Language.GROOVY && it != Language.KOTLIN }
+        language << LanguageUtils.supportedLanguages(BuildTool.MAVEN).findAll { it != Language.GROOVY && it != Language.KOTLIN }
 
     }
 

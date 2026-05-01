@@ -73,6 +73,6 @@ micronaut:
         verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence-data", Scope.COMPILE)
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

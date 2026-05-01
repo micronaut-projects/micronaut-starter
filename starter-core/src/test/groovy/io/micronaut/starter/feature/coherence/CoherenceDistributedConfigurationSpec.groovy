@@ -72,6 +72,6 @@ coherence:
         verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence-distributed-configuration", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

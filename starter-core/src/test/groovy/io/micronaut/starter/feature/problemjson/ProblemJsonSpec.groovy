@@ -34,7 +34,7 @@ class ProblemJsonSpec extends ApplicationContextSpec implements CommandOutputFix
         verifier.hasDependency("io.micronaut.problem", "micronaut-problem-json", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

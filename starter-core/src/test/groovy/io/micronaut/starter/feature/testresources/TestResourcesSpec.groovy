@@ -22,6 +22,6 @@ class TestResourcesSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.testresources", "micronaut-test-resources-client", Scope.COMPILE_ONLY)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

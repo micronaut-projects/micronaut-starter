@@ -62,7 +62,7 @@ class GraphQLSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.graphql", "micronaut-graphql", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

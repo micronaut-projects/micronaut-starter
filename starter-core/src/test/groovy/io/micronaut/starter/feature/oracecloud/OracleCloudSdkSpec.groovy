@@ -40,7 +40,7 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test Oracle Cloud SDK config file'() {

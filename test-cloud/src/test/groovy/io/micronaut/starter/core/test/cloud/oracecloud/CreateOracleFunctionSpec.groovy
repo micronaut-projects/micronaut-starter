@@ -104,8 +104,8 @@ class CreateOracleFunctionSpec extends CommandSpec{
                 TestFrameworkCombinations.values()
         ].combinations()
                 .stream()
-                .filter(it -> !(it[1] == 'serialization-jsonp' || (it[1] == 'serialization-bson' && it[0] == Language.KOTLIN)))
-                .filter(it -> !(it[0] == Language.KOTLIN && it[2] == BuildTool.MAVEN))
+                .filter(it -> !(it[0] == 'serialization-jsonp' || (it[0] == 'serialization-bson' && it[1] == Language.KOTLIN)))
+                .filter(it -> !(it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN))
                 .findAll {
                     return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
                 }

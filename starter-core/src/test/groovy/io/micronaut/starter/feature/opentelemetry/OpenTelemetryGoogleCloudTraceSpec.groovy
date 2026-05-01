@@ -135,7 +135,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test maven tracing-opentelemetry-gcp and tracing-opentelemetry-exporter-logging feature for language=#language'(Language language) {
@@ -152,7 +152,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-logging", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 
@@ -171,6 +171,6 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

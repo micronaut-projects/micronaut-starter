@@ -14,6 +14,7 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Unroll
 
@@ -38,7 +39,7 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains(Maven.MICRONAUT_MAVEN_DOCS_URL)
 
         where:
-        [lang, apptype] << [ Language.values().toList(), ApplicationType.values()].combinations()
+        [lang, apptype] << [ supportedLanguages(BuildTool.MAVEN), ApplicationType.values()].combinations()
     }
 
     void "multi-module-pom isn't created for single-module builds"() {
@@ -110,7 +111,8 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('<micronaut.runtime>')
     }
 
-    void 'test annotation processor dependencies'() {
+    @Ignore("kotlin and maven are not supported")
+    void 'test annotation processor dependencies for kotlin'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN).render()
 
@@ -139,9 +141,11 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
                </annotationProcessorPath>
               </annotationProcessorPaths>
 ''')
+    }
 
+    void 'test annotation processor dependencies'() {
         when:
-        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.GROOVY)
                 .render()
 
@@ -218,6 +222,6 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         buildFile.contains("<jdk.version>$jdk.majorVersion</jdk.version>")
 
         where:
-        [lang, jdk] << [Language.values(), [JdkVersion.JDK_25]].combinations()
+        [lang, jdk] << [supportedLanguages(BuildTool.MAVEN), [JdkVersion.JDK_25]].combinations()
     }
 }

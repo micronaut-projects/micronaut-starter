@@ -40,7 +40,7 @@ class VertxClientSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.sql", "micronaut-vertx-mysql-client", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test vertx-mysql-client configuration'() {

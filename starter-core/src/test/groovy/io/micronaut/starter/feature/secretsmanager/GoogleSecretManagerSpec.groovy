@@ -85,7 +85,7 @@ micronaut:
 ''') == 1
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
@@ -106,6 +106,6 @@ micronaut:
 ''') == 1
 
         where:
-        language << [Language.JAVA, Language.KOTLIN]
+        language << [Language.JAVA]
     }
 }

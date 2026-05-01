@@ -24,6 +24,6 @@ class OracleSpec extends ApplicationContextSpec implements CommandOutputFixture 
         verifier.hasDependency("com.oracle.database.jdbc", "ojdbc11", Scope.RUNTIME)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

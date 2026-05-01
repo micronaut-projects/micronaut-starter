@@ -9,6 +9,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.LanguageUtils;
 import io.micronaut.starter.util.NameUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,7 +66,8 @@ class CreateChatBotBuilderCommandTest {
                                         )
                                 )
                         )
-                ).filter(options -> options.applicationType != CreateChatBotBuilderCommand.ChatBotDeployment.AZURE);
+                ).filter(options -> LanguageUtils.supportedLanguages(options.buildTool).contains(options.language))
+                .filter(options -> options.applicationType != CreateChatBotBuilderCommand.ChatBotDeployment.AZURE);
     }
 
     @ParameterizedTest

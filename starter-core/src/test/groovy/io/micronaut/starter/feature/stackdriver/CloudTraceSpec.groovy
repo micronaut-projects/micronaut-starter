@@ -58,7 +58,7 @@ class CloudTraceSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-tracing", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
@@ -109,6 +109,6 @@ class CloudTraceSpec extends ApplicationContextSpec {
 ''') == 1
 
         where:
-        language << [Language.JAVA, Language.KOTLIN]
+        language << [Language.JAVA]
     }
 }

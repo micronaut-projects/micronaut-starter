@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 
 class KoTestSpec extends ApplicationContextSpec {
 
@@ -36,6 +37,7 @@ class KoTestSpec extends ApplicationContextSpec {
 ''')
 
     }
+    @Ignore("maven and kotlin are no longer supported")
     void 'test maven configure unit tests for Kotest5'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

@@ -60,7 +60,7 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
         }
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'ThymeleafSuite test is generated views-fieldset-tck'() {

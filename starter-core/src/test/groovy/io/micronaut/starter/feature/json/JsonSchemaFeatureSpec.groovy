@@ -67,6 +67,6 @@ class JsonSchemaFeatureSpec extends ApplicationContextSpec implements CommandOut
         verifier.hasDependency("io.micronaut.jsonschema", "micronaut-json-schema-annotations")
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

@@ -77,6 +77,6 @@ class MySQLSpec extends ApplicationContextSpec {
         verifier.hasTestResourceDependency("micronaut-test-resources-jdbc-mysql")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

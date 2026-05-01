@@ -61,6 +61,6 @@ class PubSubSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-pubsub", Scope.COMPILE)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN]
+        language << [Language.JAVA]
     }
 }

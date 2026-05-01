@@ -89,7 +89,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.aws", "micronaut-function-aws-alexa", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
@@ -120,7 +120,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-alexa-httpserver", Scope.COMPILE)
 
         where:
-        language << Language.values().toList().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
@@ -148,30 +148,35 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with maven for language=#language'() {
+    void 'book pojos and request handler are not generated for function, even if aws-lambda is the default feature, if you apply feature aws-alexa with maven for language=#language'(
+            Language language,
+            String extension,
+            String srcDir,
+            String testSrcDir) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
                 createOptions(language, BuildTool.MAVEN),
                 ['aws-alexa']
         )
-
+        Set<String> keys = output.keySet()
         then:
-        !output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        !output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
-        !output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/CancelIntentHandler.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/FallbackIntentHandler.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/HelpIntentHandler.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/LaunchRequestIntentHandler.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/SessionEndedRequestIntentHandler.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
+
+        !keys.contains("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
+        !keys.contains("$srcDir/example/micronaut/Book.$extension".toString())
+        !keys.contains("$srcDir/example/micronaut/BookSaved.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/CancelIntentHandler.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/FallbackIntentHandler.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/HelpIntentHandler.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/LaunchRequestIntentHandler.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/SessionEndedRequestIntentHandler.$extension".toString())
+        keys.contains("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.MAVEN)
+        extension << supportedLanguages(BuildTool.MAVEN)*.extension
+        srcDir << supportedLanguages(BuildTool.MAVEN)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.MAVEN)*.testSrcDir
     }
 
     @Unroll
@@ -202,7 +207,11 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'app with maven and feature aws-alexa for language=#language'() {
+    void 'app with maven and feature aws-alexa for language=#language'(
+            Language language,
+            String extension,
+            String srcDir,
+            String testSrcDir) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -219,10 +228,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.MAVEN)
+        extension << supportedLanguages(BuildTool.MAVEN)*.extension
+        srcDir << supportedLanguages(BuildTool.MAVEN)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.MAVEN)*.testSrcDir
     }
 
     private static Options createOptions(Language language, BuildTool buildTool = BuildTool.DEFAULT_OPTION) {

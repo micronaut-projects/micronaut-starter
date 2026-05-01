@@ -56,6 +56,6 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
         !verifier.hasDependency("io.micronaut.aws", ":aws-sdk-v2", Scope.COMPILE)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values().toList()].combinations()
+        [buildTool, language] << [BuildTool.values(), Language.values().toList()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

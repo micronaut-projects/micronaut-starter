@@ -70,6 +70,6 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence-session", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

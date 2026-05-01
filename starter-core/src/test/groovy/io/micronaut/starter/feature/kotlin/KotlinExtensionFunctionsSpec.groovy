@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -52,6 +53,7 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
         applicationType << ApplicationType.values().toList()
     }
 
+    @Ignore("kotlin and maven are no longer supported")
     @Unroll
     void 'dependency is included with maven and feature kotlin-extension-functions for language=#language'(Language language) {
         when:

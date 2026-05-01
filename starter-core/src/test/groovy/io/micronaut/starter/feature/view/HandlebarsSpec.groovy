@@ -51,7 +51,7 @@ class HandlebarsSpec extends ApplicationContextSpec  implements CommandOutputFix
         verifier.hasDependency("io.micronaut.views", "micronaut-views-handlebars", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

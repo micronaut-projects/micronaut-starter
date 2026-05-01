@@ -47,7 +47,7 @@ class EclipseStoreSpec extends BeanContextSpec implements CommandOutputFixture {
         assertEclipseStoreDependencies(verifier, buildTool, language)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "test dependencies added for eclipsestore-rest feature for #language and build #buildTool"(Language language, BuildTool buildTool) {

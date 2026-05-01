@@ -51,7 +51,7 @@ class PebbleSpec extends ApplicationContextSpec  implements CommandOutputFixture
         verifier.hasDependency("io.micronaut.views", "micronaut-views-pebble", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

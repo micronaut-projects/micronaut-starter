@@ -36,6 +36,6 @@ class HttpServerJdkSpec extends BeanContextSpec implements CommandOutputFixture 
                 || verifier.hasDependency("io.micronaut.servlet", "micronaut-http-server-jdk")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

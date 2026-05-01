@@ -50,7 +50,7 @@ class CaffeineSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("io.micronaut.cache", "micronaut-cache-caffeine", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

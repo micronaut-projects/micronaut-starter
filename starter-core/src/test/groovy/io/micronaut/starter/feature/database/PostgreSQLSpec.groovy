@@ -12,7 +12,7 @@ import spock.lang.Unroll
 class PostgreSQLSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle postgres feature for language=#language'(BuildTool buildTool, Language language) {
+    void 'test gradle postgres feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(['postgres'])
@@ -33,6 +33,6 @@ class PostgreSQLSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.apache.commons", "commons-compress", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values().toList(), Language.values().toList()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

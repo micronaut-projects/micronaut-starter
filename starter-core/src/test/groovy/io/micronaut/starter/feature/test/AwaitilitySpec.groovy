@@ -63,7 +63,6 @@ class AwaitilitySpec extends ApplicationContextSpec {
         Language.GROOVY | BuildTool.MAVEN           | 'org.awaitility'          | 'awaitility-groovy'
         Language.KOTLIN | BuildTool.GRADLE          | 'org.awaitility'          | 'awaitility-kotlin'
         Language.KOTLIN | BuildTool.GRADLE_KOTLIN   | 'org.awaitility'          | 'awaitility-kotlin'
-        Language.KOTLIN | BuildTool.MAVEN           | 'org.awaitility'          | 'awaitility-kotlin'
     }
 
 }

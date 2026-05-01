@@ -25,9 +25,9 @@ class DekorateFeatureValidatorSpec extends ApplicationContextSpec implements Com
                 [BuildTool.MAVEN, BuildTool.GRADLE]].combinations()
     }
 
-    void 'test feature #feature.name is supported for Kotlin and Maven'(Feature feature){
+    void 'test feature #feature.name is supported for Kotlin and Gradle'(Feature feature){
         when:
-        getFeatures([feature.getName()], Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN)
+        getFeatures([feature.getName()], Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
 
         then:
         noExceptionThrown()
@@ -50,6 +50,6 @@ class DekorateFeatureValidatorSpec extends ApplicationContextSpec implements Com
 
         where:
         [feature, language] << [beanContext.getBeansOfType(AbstractDekorateServiceFeature),
-                                [Language.JAVA, Language.KOTLIN]].combinations()
+                                [Language.JAVA]].combinations()
     }
 }

@@ -50,7 +50,7 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut.acme", "micronaut-acme", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test acme configuration'() {

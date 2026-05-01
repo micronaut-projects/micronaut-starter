@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.feature.micrometer.MicrometerFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -67,8 +68,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.mybatis", "mybatis", Scope.COMPILE)
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     @Unroll
@@ -93,7 +93,6 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.seleniumhq.selenium", "selenium-support", Scope.TEST_RUNTIME)
 
         where:
-        language << Language.values()
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

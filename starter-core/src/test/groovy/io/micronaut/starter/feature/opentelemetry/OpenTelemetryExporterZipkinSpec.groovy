@@ -80,6 +80,6 @@ class OpenTelemetryExporterZipkinSpec extends ApplicationContextSpec implements 
         then:
         verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-zipkin", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

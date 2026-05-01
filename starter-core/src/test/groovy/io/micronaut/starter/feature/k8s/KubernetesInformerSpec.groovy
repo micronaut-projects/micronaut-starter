@@ -65,7 +65,7 @@ class KubernetesInformerSpec extends ApplicationContextSpec  implements CommandO
         verifier.hasDependency("io.micronaut.kubernetes", "micronaut-kubernetes-informer", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

@@ -66,10 +66,8 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
         where:
         language        | testfw
         Language.JAVA   | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.SPOCK
         Language.GROOVY | TestFramework.SPOCK
         Language.JAVA   | TestFramework.KOTEST
-        Language.KOTLIN | TestFramework.KOTEST
         Language.GROOVY | TestFramework.KOTEST
     }
 
@@ -89,10 +87,8 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
         where:
         language        | testfw
         Language.JAVA   | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.SPOCK
         Language.GROOVY | TestFramework.SPOCK
         Language.JAVA   | TestFramework.KOTEST
-        Language.KOTLIN | TestFramework.KOTEST
         Language.GROOVY | TestFramework.KOTEST
     }
 
@@ -110,6 +106,6 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("org.hamcrest", "hamcrest", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

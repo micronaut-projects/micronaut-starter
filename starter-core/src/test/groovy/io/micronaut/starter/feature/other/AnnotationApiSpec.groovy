@@ -36,6 +36,6 @@ class AnnotationApiSpec extends ApplicationContextSpec implements CommandOutputF
         verifier.hasDependency("jakarta.annotation", "jakarta.annotation-api", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

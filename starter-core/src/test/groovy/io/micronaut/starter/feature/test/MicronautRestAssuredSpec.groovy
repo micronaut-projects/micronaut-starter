@@ -68,6 +68,6 @@ class MicronautRestAssuredSpec extends ApplicationContextSpec implements Command
         verifier.hasDependency("io.micronaut.test", "micronaut-test-rest-assured", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

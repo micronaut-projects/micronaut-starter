@@ -51,7 +51,7 @@ class RibbonSpec extends ApplicationContextSpec implements CommandOutputFixture 
         verifier.hasDependency("io.micronaut.netflix", "micronaut-netflix-ribbon", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test netflix-ribbon configuration'() {

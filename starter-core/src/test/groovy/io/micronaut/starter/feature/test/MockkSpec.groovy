@@ -16,6 +16,7 @@ import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -27,7 +28,7 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mockk contains links to 3rd party docs'() {
         when:
-        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION, Collections.emptyMap())
+        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE, MicronautJdkVersionConfiguration.DEFAULT_OPTION, Collections.emptyMap())
         Map<String, String> output = generate(ApplicationType.DEFAULT, options, ['mockk'])
         String readme = output["README.md"]
 
@@ -52,6 +53,7 @@ class MockkSpec extends ApplicationContextSpec implements CommandOutputFixture {
         language << Language.values() - Language.KOTLIN
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     @Unroll
     void 'test mockk feature is added automatically for Maven and Kotest for language=#language'(Language language) {
         when:

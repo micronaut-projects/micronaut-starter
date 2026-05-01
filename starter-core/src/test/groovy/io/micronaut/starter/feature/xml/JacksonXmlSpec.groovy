@@ -51,7 +51,7 @@ class JacksonXmlSpec extends ApplicationContextSpec  implements CommandOutputFix
         verifier.hasDependency("io.micronaut.xml", "micronaut-jackson-xml", Scope.COMPILE)
 
         where:
-        language << Language.values().toList().toList()
+        language << supportedLanguages(BuildTool.MAVEN).toList()
     }
 
 }

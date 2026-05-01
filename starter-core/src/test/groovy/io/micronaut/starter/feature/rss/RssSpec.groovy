@@ -50,7 +50,7 @@ class RssSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut.rss", "micronaut-rss", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

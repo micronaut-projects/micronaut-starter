@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
@@ -54,7 +55,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-jaeger", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test tracing-jaeger configuration'() {

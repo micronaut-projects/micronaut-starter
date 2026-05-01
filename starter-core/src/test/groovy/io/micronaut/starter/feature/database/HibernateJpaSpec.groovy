@@ -12,6 +12,7 @@ import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Ignore
 
 class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -80,6 +81,7 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
 
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

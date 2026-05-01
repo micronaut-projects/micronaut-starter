@@ -52,7 +52,7 @@ class InfinispanSpec extends ApplicationContextSpec  implements CommandOutputFix
         verifier.hasDependency("io.micronaut.cache", "micronaut-cache-infinispan", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test cache-infinispan configuration'() {

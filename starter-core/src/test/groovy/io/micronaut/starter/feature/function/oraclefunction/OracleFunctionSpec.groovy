@@ -109,7 +109,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
                 .contains("class FooControllerTest")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.MAVEN), [true, false]].combinations()
     }
 
     void 'test maven oracle cloud function app for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
@@ -155,7 +155,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         </configuration>''')
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.MAVEN), [true, false]].combinations()
     }
 
     void 'test oracle cloud function image config for #buildTool'(BuildTool buildTool) {
@@ -212,7 +212,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
 
     }
 
@@ -243,6 +243,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

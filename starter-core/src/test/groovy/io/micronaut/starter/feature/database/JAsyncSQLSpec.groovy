@@ -103,6 +103,6 @@ jasync:
         verifier.hasDependency("io.micronaut.sql", "micronaut-jasync-sql", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

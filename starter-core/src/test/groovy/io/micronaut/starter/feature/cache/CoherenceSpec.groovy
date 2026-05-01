@@ -53,6 +53,6 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
         verifier.hasDependency("com.oracle.coherence.ce", "coherence", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.coherence", "micronaut-coherence-cache", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

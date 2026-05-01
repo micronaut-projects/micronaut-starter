@@ -64,7 +64,7 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.multitenancy", "micronaut-multitenancy", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

@@ -101,7 +101,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'for function test maven tracing-opentelemetry-zipkin feature for language=#language'(Language language) {
@@ -118,6 +118,6 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry", Scope.COMPILE)
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

@@ -103,7 +103,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'for function test maven tracing-opentelemetry-jaeger feature for language=#language'(Language language) {
@@ -123,6 +123,6 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         !verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-http")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

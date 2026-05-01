@@ -9,7 +9,9 @@ import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.LanguageUtils;
 import io.micronaut.starter.util.NameUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -74,7 +76,7 @@ class CreateLambdaCommandTest {
                                         )
                                 )
                         )
-                );
+                ).filter(options -> LanguageUtils.supportedLanguages(options.buildTool).contains(options.language));
     }
 
     /**

@@ -51,6 +51,6 @@ class HtmxSpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasDependency('io.micronaut.views', 'micronaut-views-htmx', Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

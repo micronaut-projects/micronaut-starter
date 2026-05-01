@@ -5,6 +5,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 import spock.lang.Unroll
@@ -27,7 +28,7 @@ class JTESpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        language << LanguageUtils.supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

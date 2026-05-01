@@ -7,6 +7,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.test.TestFrameworkCombinations
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Ignore
 import spock.lang.IgnoreIf
@@ -31,7 +32,7 @@ class ConsoleSpec extends CommandSpec {
 
         where:
         [language, testFramework] << [
-                Language.values(),
+                LanguageUtils.supportedLanguages(BuildTool.MAVEN),
                 TestFrameworkCombinations.values()
         ].combinations().findAll {
             return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)

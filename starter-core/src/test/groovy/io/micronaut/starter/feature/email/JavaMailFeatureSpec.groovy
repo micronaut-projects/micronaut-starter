@@ -28,7 +28,7 @@ class JavaMailFeatureSpec extends ApplicationContextSpec  implements CommandOutp
         verifier.hasDependency("org.eclipse.angus", "angus-mail", Scope.RUNTIME)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'README.md contains third party docs link'() {

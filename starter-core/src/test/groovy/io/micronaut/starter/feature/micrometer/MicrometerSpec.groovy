@@ -141,7 +141,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-annotation", Scope.ANNOTATION_PROCESSOR, "micronaut.micrometer.version", true)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test mandatory dependencies and configurations are added with micrometer-annotation'() {
@@ -216,7 +216,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
                 BuildTool.values(),
                 [R2dbc.NAME, DataR2dbc.NAME],
                 beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
-        ].combinations()
+        ].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/1535")
@@ -239,6 +239,6 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
                 Language.values(),
                 BuildTool.values(),
                 beanContext.getBeansOfType(MicrometerFeature)*.name.toList()
-        ].combinations()
+        ].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

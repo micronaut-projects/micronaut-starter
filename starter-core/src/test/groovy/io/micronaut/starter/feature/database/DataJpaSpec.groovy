@@ -14,6 +14,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 import spock.lang.Issue
 
 import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA
@@ -74,6 +75,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
         DataJdbcSpec.assertTemplateDoesNotContainMicronautDataVersionProperty(template)
     }
 
+    @Ignore("maven and kotlin are no longer supported")
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

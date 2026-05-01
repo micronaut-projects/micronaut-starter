@@ -56,6 +56,6 @@ class ObjectStorageOracleCloudSpec extends ApplicationContextSpec implements Com
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-oracle-cloud", Scope.COMPILE)
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

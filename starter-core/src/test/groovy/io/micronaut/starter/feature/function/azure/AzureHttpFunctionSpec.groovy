@@ -93,7 +93,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         assert verifier.hasDependency("com.microsoft.azure.functions", "azure-functions-java-library", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -114,6 +114,6 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         assert verifier.hasDependency("io.micronaut.azure", "micronaut-azure-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

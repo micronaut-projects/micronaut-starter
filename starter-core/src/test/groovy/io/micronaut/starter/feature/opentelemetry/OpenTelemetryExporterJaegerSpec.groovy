@@ -69,6 +69,6 @@ class OpenTelemetryExporterJaegerSpec extends ApplicationContextSpec implements 
         !verifier.hasDependency("io.opentelemetry", "opentelemetry-exporter-jaeger")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

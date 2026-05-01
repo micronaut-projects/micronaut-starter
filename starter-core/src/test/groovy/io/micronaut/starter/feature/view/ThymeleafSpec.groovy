@@ -40,7 +40,8 @@ class ThymeleafSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.views", "micronaut-views-fieldset", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+
     }
 
 
@@ -52,6 +53,6 @@ class ThymeleafSpec extends ApplicationContextSpec implements CommandOutputFixtu
         output.keySet().findAll { it.startsWith("src/main/resources/views/fieldset") }
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

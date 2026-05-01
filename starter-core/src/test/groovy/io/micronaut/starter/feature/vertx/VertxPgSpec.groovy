@@ -40,7 +40,7 @@ class VertxPgSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.sql", "micronaut-vertx-pg-client", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     void 'test vertx-pg-client configuration'() {

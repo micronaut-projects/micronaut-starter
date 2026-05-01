@@ -66,7 +66,7 @@ class KubernetesReactorClientSpec extends ApplicationContextSpec  implements Com
         verifier.hasDependency("io.projectreactor", "reactor-core", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll

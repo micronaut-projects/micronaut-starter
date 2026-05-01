@@ -87,6 +87,6 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("org.mockito", "mockito-core", Scope.TEST)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

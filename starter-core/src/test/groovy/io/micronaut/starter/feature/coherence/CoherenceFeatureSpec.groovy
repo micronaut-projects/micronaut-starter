@@ -52,6 +52,6 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
         verifier.hasDependency("com.oracle.coherence.ce", "coherence", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 }

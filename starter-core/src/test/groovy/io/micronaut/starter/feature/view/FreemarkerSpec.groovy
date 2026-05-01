@@ -51,7 +51,7 @@ class FreemarkerSpec extends ApplicationContextSpec implements CommandOutputFixt
         verifier.hasDependency("io.micronaut.views", "micronaut-views-freemarker", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
 }

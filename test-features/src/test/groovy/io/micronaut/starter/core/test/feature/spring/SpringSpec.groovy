@@ -10,6 +10,7 @@ import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.IgnoreIf
 
@@ -40,7 +41,7 @@ class SpringSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values() - Language.GROOVY  - Language.KOTLIN
+        language << LanguageUtils.supportedLanguages(BuildTool.MAVEN) - Language.GROOVY - Language.KOTLIN
     }
 
     void "test #buildTool jax-rs with #language"(BuildTool buildTool, Language language) {
