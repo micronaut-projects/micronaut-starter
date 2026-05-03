@@ -16,7 +16,7 @@ jobs:
       - uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
       - name: Echo native Image versions
         run: |
           echo "GRAALVM_HOME: $GRAALVM_HOME"

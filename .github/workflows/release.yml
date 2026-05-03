@@ -110,7 +110,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
           native-image-musl: 'true'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image (with libc=musl)"
@@ -157,7 +157,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -203,7 +203,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
@@ -243,7 +243,7 @@ jobs:
         uses: graalvm/setup-graalvm@v1.5.2
         with:
           java-version: '25'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
