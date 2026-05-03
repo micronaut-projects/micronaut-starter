@@ -30,6 +30,8 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         then:
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-atp")')
 
+        and:
+        template.contains("additionalModules.add(\"jdbc-oracle-free\")")
         where:
         language << Language.values().toList()
     }

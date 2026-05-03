@@ -31,7 +31,9 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.oracle.cloud.atp.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -144,6 +146,13 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
         config.put("datasources.default.ocid", "");
         config.put("datasources.default.walletPassword", "");
         return config;
+    }
+
+    @Override
+    public List<String> getTestResourcesAdditionalModules(GeneratorContext generatorContext) {
+        List<String> modules = new ArrayList<>(super.getTestResourcesAdditionalModules(generatorContext));
+        modules.add("jdbc-oracle-free");
+        return modules;
     }
 
     @Override
