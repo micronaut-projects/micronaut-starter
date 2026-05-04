@@ -31,10 +31,6 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
         softVersion
     }
 
-    boolean isSnapshot() {
-        snapshot != null
-    }
-
     @Override
     int compareTo(SoftwareVersion o) {
         int majorCompare = this.major <=> o.major
@@ -52,11 +48,13 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
             return patchCompare
         }
 
-        if (this.isSnapshot() && !o.isSnapshot()) {
+        boolean isSnapshot = this.snapshot != null;
+        boolean oIsSnapshot = o.snapshot != null;
+        if (isSnapshot && !oIsSnapshot()) {
             return -1
-        } else if (!this.isSnapshot() && o.isSnapshot()) {
+        } else if (!isSnapshot && oIsSnapshot) {
             return 1
-        } else if (this.isSnapshot() && o.isSnapshot()) {
+        } else if (isSnapshot && oIsSnapshot) {
             return this.getSnapshot() <=> o.getSnapshot()
         } else {
             return 0

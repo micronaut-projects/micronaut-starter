@@ -29,7 +29,7 @@ abstract class PropertiesNotSnapshot extends DefaultTask {
         String key = propertyName.get()
         String version = properties.get(key)
         SoftwareVersion softwareVersion = SoftwareVersion.build(version)
-        if (softwareVersion.isSnapshot()) {
+        if (softwareVersion.snapshot.isBuildSnapshot()) {
             throw new GradleException("Property $key is a snapshot version: $version")
         }
     }
