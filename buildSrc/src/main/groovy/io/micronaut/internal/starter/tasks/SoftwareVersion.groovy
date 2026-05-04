@@ -50,7 +50,7 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
 
         boolean isSnapshot = this.snapshot != null;
         boolean oIsSnapshot = o.snapshot != null;
-        if (isSnapshot && !oIsSnapshot()) {
+        if (isSnapshot && !oIsSnapshot) {
             return -1
         } else if (!isSnapshot && oIsSnapshot) {
             return 1
