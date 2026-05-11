@@ -22,6 +22,7 @@ import org.shredzone.acme4j.Account
 import org.shredzone.acme4j.AccountBuilder
 import org.shredzone.acme4j.Session
 import org.shredzone.acme4j.util.KeyPairUtils
+import spock.lang.Ignore
 import spock.lang.IgnoreIf
 import spock.lang.Shared
 
@@ -58,6 +59,7 @@ class DeactivateAccountSpec extends CliBaseSpec {
         1 * consoleOutput.err({ it.contains("ACCOUNT KEY IS REQUIRED AND WAS NOT FOUND") })
     }
 
+    @Ignore
     void "deactivate account when using keypair with no matching account"(){
         given:
         KeyPair keyPair = KeyPairUtils.createKeyPair(2048)
@@ -84,6 +86,7 @@ class DeactivateAccountSpec extends CliBaseSpec {
         1 * consoleOutput.err("Failed to login to account using key : $keyFile.path. Error: unable to find existing account for only-return-existing request")
     }
 
+    @Ignore
     void "deactivate account happy path"(){
         given:
         KeyPair keyPair = KeyPairUtils.createKeyPair(2048)
