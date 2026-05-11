@@ -22,7 +22,7 @@ dependencies {
     api("org.yaml:snakeyaml")
     api("io.micronaut.serde:micronaut-serde-jackson")
 
-    implementation("com.typesafe:config:1.4.6")
+    implementation("com.typesafe:config:1.4.8")
     implementation("io.micronaut.testresources:micronaut-test-resources-build-tools")
     implementation("org.apache.commons:commons-compress:1.27.1")
 
