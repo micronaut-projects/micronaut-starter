@@ -89,7 +89,7 @@ class SoftwareVersion implements Comparable<SoftwareVersion> {
      * @return true if the software version was upgraded to the next patch
      */
     boolean nextSnapshot() {
-        if (!isSnapshot()) {
+        if (snapshot == null) {
             patch++
             snapshot = Snapshot.snapshot()
         }
