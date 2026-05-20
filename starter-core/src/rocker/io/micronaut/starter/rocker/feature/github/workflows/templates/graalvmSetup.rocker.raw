@@ -26,5 +26,5 @@ JdkVersion jdkVersion
         uses: graalvm/setup-graalvm@@1.4.5
         with:
           distribution: 'graalvm'
-          java-version: '25'
+          java-version: '25.0.3'
 

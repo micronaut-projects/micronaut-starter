@@ -18,7 +18,7 @@ jobs:
       - name: "☕️ Setup GraalVM"
         uses: graalvm/setup-graalvm@v1.5.3
         with:
-          java-version: '25'
+          java-version: '25.0.3'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
@@ -56,7 +56,7 @@ jobs:
       - name: "☕️ Setup GraalVM"
         uses: graalvm/setup-graalvm@v1.5.3
         with:
-          java-version: '25'
+          java-version: '25.0.3'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "📸 Build the Native Image"
