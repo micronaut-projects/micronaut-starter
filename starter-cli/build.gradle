@@ -47,6 +47,16 @@ dependencies {
 graalvmNative {
     toolchainDetection = false
 
+    metadataRepository {
+        // Latest MacOS GraalVM JDK is 25.0.1
+        // However, with that version when you use the metadata repository you get the following error
+        // The configured GraalVM reachability metadata repository at ...
+        // provides a reachability-metadata schema, but your GraalVM installation at $HOME/.sdkman/candidates/java/25.0.1-graal does not.
+        // Please update your GraalVM installation to a newer version. Update to the latest available release in your line.
+        // For example: Update your GraalVM version from 25.0.0 to the latest 25 release.
+        enabled = !System.getProperty("os.arch").contains("x86")
+    }
+
     binaries {
         main {
             // Main options
