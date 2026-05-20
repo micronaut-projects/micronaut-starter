@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.2
+      - name: "☕️ Setup GraalVM"
+        uses: graalvm/setup-graalvm@v1.5.3
         with:
           java-version: '25'
           distribution: 'graalvm'

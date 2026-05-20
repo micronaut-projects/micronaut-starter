@@ -107,8 +107,8 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-      - name: "☕️ Setup GraalVM CE"
-        uses: graalvm/setup-graalvm@v1.5.2
+      - name: "☕️ Setup GraalVM"
+        uses: graalvm/setup-graalvm@v1.5.3
         with:
           java-version: '25'
           distribution: 'graalvm'
