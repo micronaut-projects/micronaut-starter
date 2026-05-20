@@ -23,7 +23,7 @@ JdkVersion jdkVersion
           restore-keys: ${{ runner.os }}-gradle-test-
           }
       - name: Setup GraalVM
-        uses: graalvm/setup-graalvm@@1.4.5
+        uses: graalvm/setup-graalvm@@1.5.3
         with:
           distribution: 'graalvm'
           java-version: '25.0.3'
