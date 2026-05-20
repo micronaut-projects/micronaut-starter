@@ -89,7 +89,7 @@ sdkman {
 }
 
 tasks.register('sdkRelease') {
-    dependsOn((projectVersion.endsWith("-SNAPSHOT") || projectVersion.contains("-M") || projectVersion.contains("-R")) ? 'sdkMinorRelease' : 'sdkMajorRelease')
+    dependsOn('sdkMinorRelease')
 }
 
 
