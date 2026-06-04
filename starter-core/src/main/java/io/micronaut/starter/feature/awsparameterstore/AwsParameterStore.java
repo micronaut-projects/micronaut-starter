@@ -33,14 +33,10 @@ public class AwsParameterStore implements DistributedConfigFeature {
     private static final Dependency.Builder DEPENDNCY_MICRONAUT_AWS_PARAMETER_STORE = MicronautDependencyUtils.awsDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_AWS_PARAMETER_STORE)
             .compile();
-    private static final String PROPERTY_AWS_CLIENT_SYSTEM_MANAGER_PARAMETERSTORE_ENABLED = "aws.client.system-manager.parameterstore.enabled";
-    private static final String PROPERTY_AWS_DISTRIBUTED_CONFIGURATION_SEARCH_ACTIVE_ENVIRONMENTS = "aws.distributed-configuration.search-active-environments";
-    private static final String PROPERTY_AWS_DISTRIBUTED_CONFIGURATION_SEARCH_COMMON_APPLICATION = "aws.distributed-configuration.search-common-application";
+    private static final String PROPERTY_MICRONAUT_CONFIG_IMPORT = "micronaut.config.import";
 
     public static final Map<String, Object> PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION = Map.of(
-            PROPERTY_AWS_CLIENT_SYSTEM_MANAGER_PARAMETERSTORE_ENABLED, true,
-        PROPERTY_AWS_DISTRIBUTED_CONFIGURATION_SEARCH_ACTIVE_ENVIRONMENTS, false,
-        PROPERTY_AWS_DISTRIBUTED_CONFIGURATION_SEARCH_COMMON_APPLICATION, false);
+            PROPERTY_MICRONAUT_CONFIG_IMPORT, "optional:parameterstore:///config/" + "${micronaut.application.name}");
 
     @Override
     public String getTitle() {
@@ -60,7 +56,7 @@ public class AwsParameterStore implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addDependencies(generatorContext);
-        addBootstrapProperties(generatorContext);
+        addConfigurationProperties(generatorContext);
     }
 
     @Override
@@ -73,8 +69,8 @@ public class AwsParameterStore implements DistributedConfigFeature {
         return "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html";
     }
 
-    protected void addBootstrapProperties(@NonNull GeneratorContext generatorContext) {
-        populateBootstrapForDistributedConfiguration(generatorContext).putAll(PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION);
+    protected void addConfigurationProperties(@NonNull GeneratorContext generatorContext) {
+        populateConfigurationForDistributedConfiguration(generatorContext).putAll(PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION);
     }
 
     protected void addDependencies(@NonNull GeneratorContext generatorContext) {
