@@ -50,8 +50,8 @@ public class DiscoveryKubernetes implements DiscoveryFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
-        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
+        generatorContext.getConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
+        generatorContext.getConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DISCOVERY_K8S);
     }
 
