@@ -47,8 +47,8 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
         GeneratorContext commandContext = buildGeneratorContext(['discovery-kubernetes'])
 
         then:
-        commandContext.bootstrapConfiguration.get('kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled'.toString()) == true
-        commandContext.bootstrapConfiguration.get('kubernetes.client.discovery.mode') == 'endpoint'
+        commandContext.configuration.get('kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled'.toString()) == true
+        commandContext.configuration.get('kubernetes.client.discovery.mode') == 'endpoint'
     }
 
 }
