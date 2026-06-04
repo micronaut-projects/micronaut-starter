@@ -29,6 +29,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
                 .render()
         then:
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-atp")')
+        template.contains('implementation("io.micronaut.serde:micronaut-serde-oracle-jdbc-json")')
 
         and:
         template.contains("additionalModules.add(\"jdbc-oracle-free\")")
@@ -48,6 +49,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
         then:
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-atp", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.serde", "micronaut-serde-oracle-jdbc-json", Scope.COMPILE)
         where:
         language << supportedLanguages(BuildTool.MAVEN)
     }
@@ -89,9 +91,12 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
         String config = output["src/main/resources/application.yml"]
+        String pom = output["pom.xml"]
 
         then:
         !config.contains('dialect: H2')
+        pom.contains('<artifactId>micronaut-serde-oracle-jdbc-json</artifactId>')
+        !pom.contains('<artifactId>micronaut-serde-oracle-jdbc-json</artifactId>\n      <version>')
     }
 
     void 'test config with a driver config feature'() {
@@ -100,8 +105,11 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, MicronautJdkVersionConfiguration.DEFAULT_OPTION),
                 [Yaml.NAME, 'oracle-cloud-atp', "data-jdbc"])
         String config = output["src/main/resources/application.yml"]
+        String pom = output["pom.xml"]
 
         then:
+        pom.contains('<artifactId>micronaut-serde-oracle-jdbc-json</artifactId>')
+        !pom.contains('<artifactId>micronaut-serde-oracle-jdbc-json</artifactId>\n      <version>')
         config.contains("""
     ocid: ''
     walletPassword: ''
