@@ -24,40 +24,25 @@ class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutp
         readme.contains("https://docs.oracle.com/en-us/iaas/Content/KeyManagement/home.htm")
     }
 
-    void 'test src/main/resources/boostrap.yml with feature oracle-cloud-vault contains config'() {
+    void 'test src/main/resources/application.yml with feature oracle-cloud-vault contains config import'() {
         when:
         Map<String, String> output = generate([Yaml.NAME, 'oracle-cloud-vault'])
-        String bootstrap = output["src/main/resources/bootstrap.yml"]
+        String application = output["src/main/resources/application.yml"]
 
         then:
-        bootstrap
-        bootstrap.contains('''\
-micronaut:
-  application:
-    name: foo
-  config-client:
-    enabled: true
-''')
-        bootstrap.contains('''\
-oci:
-  vault:
-    config:
-      enabled: true
-    vaults:
-    - compartment-ocid: ''
-      ocid: ''
-''')
+        application
+        !output.containsKey("src/main/resources/bootstrap.yml")
 
         when: 'verify YAML types are correct'
 
-        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
+        Map<String, Object> applicationYml = new org.yaml.snakeyaml.Yaml().load(application)
 
         then:
-        bootstrapYml.oci.vault.config.enabled
-        bootstrapYml.oci.vault.vaults instanceof List
-        bootstrapYml.oci.vault.vaults.size() == 1
-        bootstrapYml.oci.vault.vaults[0].'compartment-ocid' == ''
-        bootstrapYml.oci.vault.vaults[0].ocid == ''
+        applicationYml.micronaut.config.import.provider == 'oraclecloud-vault'
+        applicationYml.micronaut.config.import.'config-profile' == 'DEFAULT'
+        applicationYml.micronaut.config.import.ocid == ''
+        applicationYml.micronaut.config.import.'compartment-id' == ''
+        applicationYml.'oci.config.profile' == 'DEFAULT'
     }
 
     @Unroll

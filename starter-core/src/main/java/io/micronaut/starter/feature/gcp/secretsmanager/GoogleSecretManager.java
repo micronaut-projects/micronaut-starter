@@ -47,7 +47,8 @@ public class GoogleSecretManager implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(gcpSecretManagerDependency());
-        populateBootstrapForDistributedConfiguration(generatorContext);
+        populateConfigurationForDistributedConfiguration(generatorContext)
+                .put("micronaut.config.import", "gcp-secret-manager://application");
     }
 
     @NonNull

@@ -21,19 +21,20 @@ class GoogleSecretManagerSpec extends ApplicationContextSpec implements CommandO
         readme.contains('https://cloud.google.com/secret-manager')
     }
 
-    void 'test src/main/resources/boostrap.yml with feature gcp-secrets-manager contains config'() {
+    void 'test src/main/resources/application.yml with feature gcp-secrets-manager contains config import'() {
         when:
         Map<String, String> output = generate([Yaml.NAME, 'gcp-secrets-manager'])
-        String bootstrap = output["src/main/resources/bootstrap.yml"]
+        String application = output["src/main/resources/application.yml"]
 
         then:
-        bootstrap
-        bootstrap.contains('''\
+        application
+        !output.containsKey("src/main/resources/bootstrap.yml")
+        application.contains('''\
 micronaut:
   application:
     name: foo
-  config-client:
-    enabled: true
+  config:
+    import: gcp-secret-manager://application
 ''')
     }
 

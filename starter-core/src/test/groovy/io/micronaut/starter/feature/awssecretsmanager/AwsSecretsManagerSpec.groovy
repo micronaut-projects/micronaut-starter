@@ -23,22 +23,21 @@ class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOut
         readme.contains('https://aws.amazon.com/secrets-manager/')
     }
 
-    void 'test src/main/resources/boostrap.yml with feature aws-secrets-manager contains config'() {
+    void 'test src/main/resources/application.yml with feature aws-secrets-manager contains config import'() {
         when:
         Map<String, String> output = generate([Yaml.NAME, 'aws-secrets-manager'])
-        String bootstrap = output["src/main/resources/bootstrap.yml"]
+        String application = output["src/main/resources/application.yml"]
 
         then:
-        bootstrap
+        application
+        !output.containsKey("src/main/resources/bootstrap.yml")
+
         when:
-        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
+        Map<String, Object> applicationYml = new org.yaml.snakeyaml.Yaml().load(application)
 
         then:
-        'foo' == bootstrapYml['micronaut']['application']['name']
-        true == bootstrapYml['micronaut']['config-client']['enabled']
-        true == bootstrapYml['aws']['client']['system-manager']['parameterstore']['enabled']
-        false == bootstrapYml['aws']['distributed-configuration']['search-active-environments']
-        false == bootstrapYml['aws']['distributed-configuration']['search-common-application']
+        'foo' == applicationYml['micronaut']['application']['name']
+        'optional:aws-secretsmanager:///config/${micronaut.application.name}' == applicationYml['micronaut']['config']['import']
     }
 
     @Unroll
