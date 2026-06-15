@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM"
-        uses: graalvm/setup-graalvm@v1.5.3
+        uses: graalvm/setup-graalvm@v1.5.5
         with:
           java-version: '25.0.3'
           distribution: 'graalvm'
