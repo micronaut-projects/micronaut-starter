@@ -16,49 +16,50 @@
 package io.micronaut.starter.feature.security;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-@Requires(property = "micronaut.starter.feature.security.csrf.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.security.html-sanitizer.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class SecurityCsrf extends SecurityFeature {
-    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_CSRF = "micronaut-security-csrf";
-    private static final Dependency DEPENDENCY_MICRONAUT_SECURITY_CSRF = MicronautDependencyUtils.securityDependency()
-            .artifactId(ARTIFACT_ID_MICRONAUT_SECURITY_CSRF)
+public class SecurityHtmlSanitizer extends SecurityFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_HTML_SANITIZER = "micronaut-security-html-sanitizer";
+    private static final Dependency DEPENDENCY_MICRONAUT_SECURITY_HTML_SANITIZER = MicronautDependencyUtils.securityDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_SECURITY_HTML_SANITIZER)
             .compile()
             .build();
 
-    public SecurityCsrf(SecurityProcessor securityProcessor) {
+    public SecurityHtmlSanitizer(SecurityProcessor securityProcessor) {
         super(securityProcessor);
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "security-csrf";
+        return "security-html-sanitizer";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Security CSRF";
+        return "Micronaut Security HTML Sanitizer";
     }
 
     @Override
-    public String getDescription() {
-        return "Adds Cross Site Request Forgery (CSRF) mitigation APIs";
+    public @Nullable String getDescription() {
+        return "HTML sanitizer backed by the OWASP Java HTML Sanitizer";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_SECURITY_CSRF);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_SECURITY_HTML_SANITIZER);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#csrf";
+        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#htmlSanitizer";
     }
 }
