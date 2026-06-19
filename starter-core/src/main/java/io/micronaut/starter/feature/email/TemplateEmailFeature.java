@@ -42,7 +42,7 @@ public class TemplateEmailFeature implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.MESSAGING;
+        return Category.EMAIL;
     }
 
     @Override

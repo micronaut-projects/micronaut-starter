@@ -36,6 +36,7 @@ public class Category {
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
     public static final String EMBEDDED_STORE = "Embedded Store";
+    public static final String EMAIL            = "Email";
     public static final String GROOVY_MODULE        = "Groovy Optional Modules";
     public static final String IOT                  = "Internet of Things";
     public static final String LANGUAGES            = "Languages";

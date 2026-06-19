@@ -16,55 +16,50 @@
 package io.micronaut.starter.feature.email;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.build.dependencies.Scope;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
-@Requires(property = "micronaut.starter.feature.email.mailtrap.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.email.mailpit-http-client.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class MailtrapEmailFeature extends EmailFeature {
+public class MailpitHttpClientEmailFeature extends EmailFeature {
 
-    public MailtrapEmailFeature(TemplateEmailFeature templateEmailFeature) {
+    public MailpitHttpClientEmailFeature(TemplateEmailFeature templateEmailFeature) {
         super(templateEmailFeature);
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Integration with Mailtrap to send transactional emails";
+        return "Mailpit HTTP Client";
     }
 
     @Override
     public String getTitle() {
-        return "Mailtrap Email";
+        return "Mailpit HTTP Client";
     }
 
     @Override
     public String getModule() {
-        return "mailtrap";
+        return "mailpit-http-client";
     }
 
     @Override
     @Nullable
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-email/latest/guide/#mailtrap";
+        return "https://micronaut-projects.github.io/micronaut-email/latest/guide/index.html#mailpit";
     }
 
     @Override
+    @Nullable
     public String getThirdPartyDocumentation() {
-        return "https://mailtrap.io/";
+        return "https://mailpit.axllent.org";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(MICRONAUT_EMAIL_GROUP_ID)
-                .artifactId("micronaut-email-mailtrap")
-                .build()
-        );
+    protected @NonNull Scope dependencyScope() {
+        return Scope.TEST;
     }
 }

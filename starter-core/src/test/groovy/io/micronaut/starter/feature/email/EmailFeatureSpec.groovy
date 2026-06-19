@@ -2,8 +2,12 @@ package io.micronaut.starter.feature.email
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Unroll
 
@@ -12,14 +16,14 @@ class EmailFeatureSpec extends ApplicationContextSpec {
     @Shared
     List<Feature> emailFeatures = beanContext.getBeansOfType(EmailFeature)
 
-    @Unroll("#feature category is MESSAGING")
-    void "Email Features are in the MESSAGING category"(String feature) {
+    @Unroll("#feature category is Email")
+    void "Email Features are in the EMAIL category"(String feature) {
         when:
         Optional<Feature> featureOptional = findFeatureByName(feature)
 
         then:
         featureOptional.isPresent()
-        featureOptional.get().getCategory() == "Messaging"
+        featureOptional.get().getCategory() == "Email"
 
         where:
         feature << emailFeatures*.name + ['email-template']
@@ -52,7 +56,8 @@ class EmailFeatureSpec extends ApplicationContextSpec {
     }
 
     @Unroll("#buildTool with feature #features adds #coordinate dependency")
-    void "verify email features add dependencies"(BuildTool buildTool,
+    void "verify email features add dependencies"(Scope scope,
+                                                  BuildTool buildTool,
                                                   String groupId,
                                                   String artifactId,
                                                   List<String> features,
@@ -61,60 +66,55 @@ class EmailFeatureSpec extends ApplicationContextSpec {
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(features)
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, Language.DEFAULT_OPTION, template)
 
         then:
-        if (buildTool.isGradle()) {
-            assert template.contains("implementation(\"$coordinate")
-        } else if (buildTool == BuildTool.MAVEN) {
-            assert template.contains("<artifactId>$artifactId</artifactId>")
-            assert template.contains("<groupId>$groupId</groupId>")
-        }
+        verifier.hasDependency(groupId, artifactId, scope)
         if (features.any {it.contains('views-')}) {
-            if (buildTool.isGradle()) {
-                assert template.contains("implementation(\"${groupId}:micronaut-email-template\")")
-            } else if (buildTool == BuildTool.MAVEN) {
-                assert template.contains("<artifactId>micronaut-email-template</artifactId>")
-            }
+            assert verifier.hasDependency(groupId, "micronaut-email-template", scope)
         }
 
         where:
-        buildTool               | groupId              | artifactId                 | features
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailtrap'  | ['email-mailtrap']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
-        BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
-        BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
-        BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
+        scope         | buildTool               | groupId              | artifactId                 | features
+        Scope.TEST    | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailpit-http-client' | ['email-mailpit-http-client']
+        Scope.TEST    | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailpit-http-client' | ['email-mailpit-http-client']
+        Scope.TEST    | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailpit-http-client' | ['email-mailpit-http-client']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailtrap'  | ['email-mailtrap']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE        | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.GRADLE_KOTLIN | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-sendgrid' | ['email-sendgrid', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-amazon-ses' | ['email-amazon-ses', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-postmark' | ['email-postmark', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailjet'  | ['email-mailjet', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-javamail' | ['email-javamail', 'views-thymeleaf']
+        Scope.COMPILE | BuildTool.MAVEN         | 'io.micronaut.email' | 'micronaut-email-mailtrap' | ['email-mailtrap', 'views-thymeleaf']
         coordinate = "${groupId}:${artifactId}"
     }
 }

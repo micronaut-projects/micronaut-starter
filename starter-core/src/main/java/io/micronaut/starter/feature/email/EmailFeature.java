@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.email;
 
+import io.micronaut.starter.build.dependencies.Scope;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -36,7 +37,7 @@ abstract class EmailFeature implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.MESSAGING;
+        return Category.EMAIL;
     }
 
     @Override
@@ -54,12 +55,19 @@ abstract class EmailFeature implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
+        Dependency.Builder builder = Dependency.builder()
                 .groupId(MICRONAUT_EMAIL_GROUP_ID)
-                .artifactId("micronaut-email-" + getModule())
-                .build()
-        );
+                .artifactId("micronaut-email-" + getModule());
+        if (dependencyScope() == Scope.COMPILE) {
+            builder.compile();
+        } else if (dependencyScope() == Scope.TEST) {
+            builder.test();
+        }
+        generatorContext.addDependency(builder.build());
+    }
+
+    protected @NonNull Scope dependencyScope() {
+        return Scope.COMPILE;
     }
 
     @Override
