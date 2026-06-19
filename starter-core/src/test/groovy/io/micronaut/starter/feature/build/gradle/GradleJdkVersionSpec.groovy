@@ -29,7 +29,6 @@ class GradleJdkVersionSpec extends BeanContextSpec  implements CommandOutputFixt
         String wrapperProperties = output.get('gradle/wrapper/gradle-wrapper.properties')
 
         then:
-        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-9.6.0eibccbjgtnkjvufcdcglcdtjiggvctiletgeudbjjtrg' +
-                '-bin.zip')
+        wrapperProperties.contains('distributionUrl=https\\://services.gradle.org/distributions/gradle-9.6.0-bin.zip')
     }
 }
