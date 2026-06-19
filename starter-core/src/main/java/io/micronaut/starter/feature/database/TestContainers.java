@@ -136,7 +136,7 @@ public class TestContainers implements Feature {
         } else if (driverFeature instanceof SQLServer) {
             return Optional.of("mssqlserver");
         } else if (driverFeature instanceof Oracle) {
-            return Optional.of("oracle-xe");
+            return Optional.of("oracle-free");
         }
         return Optional.empty();
     }

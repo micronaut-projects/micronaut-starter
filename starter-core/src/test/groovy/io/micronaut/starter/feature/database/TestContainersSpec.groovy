@@ -21,7 +21,7 @@ class TestContainersSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('testImplementation("org.testcontainers:testcontainers-oracle-xe")')
+        template.contains('testImplementation("org.testcontainers:testcontainers-oracle-free")')
         template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
@@ -149,7 +149,7 @@ class TestContainersSpec extends ApplicationContextSpec {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
-        verifier.hasDependency("org.testcontainers", "testcontainers-oracle-xe", Scope.TEST)
+        verifier.hasDependency("org.testcontainers", "testcontainers-oracle-free", Scope.TEST)
         verifier.hasDependency("org.testcontainers", "testcontainers", Scope.TEST)
     }
 

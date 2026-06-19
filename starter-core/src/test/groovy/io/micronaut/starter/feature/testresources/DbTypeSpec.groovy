@@ -32,8 +32,6 @@ class DbTypeSpec extends Specification {
         'mssql'      | DbType.SQLSERVER
         'oracle'     | DbType.ORACLEFREE
         'ORACLE'     | DbType.ORACLEFREE
-        'oracle-xe'  | DbType.ORACLEXE
-        'ORACLE-XE'  | DbType.ORACLEXE
     }
 
     void "of returns null for null/empty inputs"() {
