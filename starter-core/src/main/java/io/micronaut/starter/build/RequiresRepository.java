@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.feature.Feature;
 
 import java.util.List;

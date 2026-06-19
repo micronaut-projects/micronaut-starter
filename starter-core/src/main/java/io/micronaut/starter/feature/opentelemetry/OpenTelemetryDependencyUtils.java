@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 
 public final class OpenTelemetryDependencyUtils {
@@ -26,18 +26,15 @@ public final class OpenTelemetryDependencyUtils {
 
     }
 
-    @NonNull
-    public static Dependency.Builder openTelemetryDependency() {
+    public static Dependency.@NonNull Builder openTelemetryDependency() {
         return dependency(GROUP_ID_OPENTELEMETRY);
     }
 
-    @NonNull
-    public static Dependency.Builder openTelemetryInstrumentationDependency() {
+    public static Dependency.@NonNull Builder openTelemetryInstrumentationDependency() {
         return dependency(GROUP_ID_OPENTELEMETRY_INSTRUMENTATION);
     }
 
-    @NonNull
-    private static Dependency.Builder dependency(@NonNull String groupId) {
+    private static Dependency.@NonNull Builder dependency(@NonNull String groupId) {
         return Dependency.builder()
                 .groupId(groupId);
     }

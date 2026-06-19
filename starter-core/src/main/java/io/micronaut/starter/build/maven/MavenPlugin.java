@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.build.maven;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.rocker.feature.build.maven.templates.mavenPlugin;
@@ -100,26 +100,22 @@ public class MavenPlugin implements BuildPlugin {
         private Builder() {
         }
 
-        @NonNull
-        public MavenPlugin.Builder extension(@Nullable Writable extension) {
+        public MavenPlugin.@NonNull Builder extension(@Nullable Writable extension) {
             this.extension = extension;
             return this;
         }
 
-        @NonNull
-        public MavenPlugin.Builder order(int order) {
+        public MavenPlugin.@NonNull Builder order(int order) {
             this.order = order;
             return this;
         }
 
-        @NonNull
-        public MavenPlugin.Builder artifactId(String artifactId) {
+        public MavenPlugin.@NonNull Builder artifactId(String artifactId) {
             this.artifactId = artifactId;
             return this;
         }
 
-        @NonNull
-        public MavenPlugin.Builder groupId(String groupId) {
+        public MavenPlugin.@NonNull Builder groupId(String groupId) {
             this.groupId = groupId;
             return this;
         }

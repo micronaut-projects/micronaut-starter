@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import java.util.Map;
 
 public interface PomDependencyVersionResolver extends CoordinateResolver {

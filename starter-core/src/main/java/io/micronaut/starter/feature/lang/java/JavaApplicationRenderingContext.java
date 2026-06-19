@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.lang.java;
 
 import com.fizzed.rocker.RockerOutput;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.feature.lang.ApplicationRenderingContext;
 import io.micronaut.starter.rocker.feature.lang.java.contextConfigurer;
 

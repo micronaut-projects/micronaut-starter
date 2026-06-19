@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.testcontainers;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 
 import java.util.List;

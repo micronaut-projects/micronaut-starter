@@ -17,7 +17,7 @@ import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotificatio
 import io.micronaut.function.aws.runtime.AbstractMicronautLambdaRuntime
 import java.net.MalformedURLException;
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import io.micronaut.core.annotation.Nullable
+import org.jspecify.annotations.Nullable
 
 @if (features.contains("aws-lambda-scheduled-event")) {
 class FunctionLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent, ScheduledEvent, Void>

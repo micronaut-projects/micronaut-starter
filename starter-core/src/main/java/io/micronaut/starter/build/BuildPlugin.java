@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.build;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.options.BuildTool;

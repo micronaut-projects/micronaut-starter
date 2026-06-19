@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;

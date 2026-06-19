@@ -13,53 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.security;
 
 import io.micronaut.context.annotation.Requires;
-import org.jspecify.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.httpclient.HttpClientFeature;
 import jakarta.inject.Singleton;
 
-import java.util.Collections;
-import java.util.List;
-
-@Requires(property = "micronaut.starter.feature.http.client.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
+@Requires(property = "micronaut.starter.feature.security.csrf.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class HttpClient implements HttpClientFeature {
-    public static final String NAME = "http-client";
-    public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT = "micronaut-http-client";
-    public static final Dependency DEPENDENCY_MICRONAUT_HTTP_CLIENT = MicronautDependencyUtils.coreDependency()
-            .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_CLIENT)
+public class SecurityCsrf extends SecurityFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SECURITY_CSRF = "micronaut-security-csrf";
+    private static final Dependency DEPENDENCY_MICRONAUT_SECURITY_CSRF = MicronautDependencyUtils.securityDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_SECURITY_CSRF)
             .compile()
             .build();
 
+    public SecurityCsrf(SecurityProcessor securityProcessor) {
+        super(securityProcessor);
+    }
+
+    @NonNull
     @Override
     public String getName() {
-        return NAME;
+        return "security-csrf";
     }
 
     @Override
     public String getTitle() {
-        return "HTTP Client";
+        return "Micronaut Security CSRF";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Micronaut HTTP client";
+        return "Adds Cross Site Request Forgery (CSRF) mitigation APIs";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_SECURITY_CSRF);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#nettyHttpClient";
-    }
-
-    @Override
-    @NonNull
-    public List<Dependency> getDependencies(@NonNull GeneratorContext generatorContext) {
-        return Collections.singletonList(DEPENDENCY_MICRONAUT_HTTP_CLIENT);
+        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#csrf";
     }
 }

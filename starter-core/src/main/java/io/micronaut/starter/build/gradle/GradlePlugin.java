@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Coordinate;
@@ -210,32 +210,27 @@ public class GradlePlugin implements BuildPlugin {
 
         private Builder() { }
 
-        @NonNull
-        public GradlePlugin.Builder gradleFile(@NonNull GradleFile file) {
+        public GradlePlugin.@NonNull Builder gradleFile(@NonNull GradleFile file) {
             this.gradleFile = file;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder id(@NonNull String id) {
+        public GradlePlugin.@NonNull Builder id(@NonNull String id) {
             this.id = id;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder buildImports(String... imports) {
+        public GradlePlugin.@NonNull Builder buildImports(String... imports) {
             this.buildImports.addAll(Arrays.asList(imports));
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder settingsImports(String... imports) {
+        public GradlePlugin.@NonNull Builder settingsImports(String... imports) {
             this.settingsImports.addAll(Arrays.asList(imports));
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder lookupArtifactId(@NonNull String artifactId) {
+        public GradlePlugin.@NonNull Builder lookupArtifactId(@NonNull String artifactId) {
             this.artifactId = artifactId;
             this.requiresLookup = true;
             return this;
@@ -246,38 +241,32 @@ public class GradlePlugin implements BuildPlugin {
             return Optional.ofNullable(artifactId);
         }
 
-        @NonNull
-        public GradlePlugin.Builder version(@Nullable String version) {
+        public GradlePlugin.@NonNull Builder version(@Nullable String version) {
             this.version = version;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder extension(@Nullable Writable extension) {
+        public GradlePlugin.@NonNull Builder extension(@Nullable Writable extension) {
             this.extension = extension;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder extension(@Nullable String extension) {
+        public GradlePlugin.@NonNull Builder extension(@Nullable String extension) {
             this.extension = new StringWritable(extension);
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder settingsExtension(@Nullable Writable settingsExtension) {
+        public GradlePlugin.@NonNull Builder settingsExtension(@Nullable Writable settingsExtension) {
             this.settingsExtension = settingsExtension;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder order(int order) {
+        public GradlePlugin.@NonNull Builder order(int order) {
             this.order = order;
             return this;
         }
 
-        @NonNull
-        public GradlePlugin.Builder pluginsManagementRepository(GradleRepository repo) {
+        public GradlePlugin.@NonNull Builder pluginsManagementRepository(GradleRepository repo) {
             if (this.pluginsManagementRepositories == null) {
                 this.pluginsManagementRepositories = new ArrayList<>();
             }

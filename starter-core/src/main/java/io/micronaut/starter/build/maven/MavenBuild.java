@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.maven;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
 

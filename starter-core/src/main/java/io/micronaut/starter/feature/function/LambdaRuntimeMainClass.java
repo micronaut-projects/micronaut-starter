@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.function;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 @FunctionalInterface
 public interface LambdaRuntimeMainClass {

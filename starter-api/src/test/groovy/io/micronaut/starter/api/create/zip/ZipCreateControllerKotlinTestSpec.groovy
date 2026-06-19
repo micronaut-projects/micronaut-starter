@@ -3,8 +3,8 @@ package io.micronaut.starter.api.create.zip
 import io.micronaut.context.annotation.Primary
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.event.ApplicationEventPublisher
-import io.micronaut.core.annotation.NonNull
-import io.micronaut.core.annotation.Nullable
+import org.jspecify.annotations.NonNull
+import org.jspecify.annotations.Nullable
 import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
 import io.micronaut.starter.application.ApplicationType

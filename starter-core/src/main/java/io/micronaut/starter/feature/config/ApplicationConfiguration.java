@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.config;
 
 import io.micronaut.context.env.Environment;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public class ApplicationConfiguration extends Configuration {
 

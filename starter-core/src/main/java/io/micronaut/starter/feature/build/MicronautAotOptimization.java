@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.feature.build;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public record MicronautAotOptimization(@NonNull String key, Object value, @Nullable String comment) {
 }

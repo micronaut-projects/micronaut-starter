@@ -16,8 +16,8 @@
 package io.micronaut.starter.api.create.zip;
 
 import io.micronaut.context.event.ApplicationEventPublisher;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;

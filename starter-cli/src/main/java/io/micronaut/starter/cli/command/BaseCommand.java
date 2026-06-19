@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.cli.CommonOptionsMixin;

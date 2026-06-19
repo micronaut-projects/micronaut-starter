@@ -18,7 +18,7 @@ package io.micronaut.starter.cli.feature.grpc;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;

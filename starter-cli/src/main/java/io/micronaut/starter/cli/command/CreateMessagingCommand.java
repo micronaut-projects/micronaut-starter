@@ -16,7 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.MessagingAvailableFeatures;

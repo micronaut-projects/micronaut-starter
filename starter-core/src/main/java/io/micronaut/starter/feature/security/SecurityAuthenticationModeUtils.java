@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.security;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 

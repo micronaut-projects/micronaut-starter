@@ -1,7 +1,7 @@
 package io.micronaut.starter
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.ContextFixture

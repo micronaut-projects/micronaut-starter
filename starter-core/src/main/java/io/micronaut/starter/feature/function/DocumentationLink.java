@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.function;
 
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Encapsulates a link to Website.

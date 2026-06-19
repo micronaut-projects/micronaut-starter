@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 

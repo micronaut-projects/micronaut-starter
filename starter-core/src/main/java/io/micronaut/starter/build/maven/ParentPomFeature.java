@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.maven;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;

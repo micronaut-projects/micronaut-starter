@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface DevelocityConfiguration {
     @Nullable

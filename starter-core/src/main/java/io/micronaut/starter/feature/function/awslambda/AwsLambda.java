@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.starter.application.ApplicationType;

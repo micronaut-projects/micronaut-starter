@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public interface CommunityFeature extends Feature {
     @NonNull

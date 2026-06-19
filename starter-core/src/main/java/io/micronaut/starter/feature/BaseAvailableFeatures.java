@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 
 import java.util.Iterator;

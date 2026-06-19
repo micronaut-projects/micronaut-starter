@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver;
 import io.micronaut.starter.feature.AvailableFeatures;

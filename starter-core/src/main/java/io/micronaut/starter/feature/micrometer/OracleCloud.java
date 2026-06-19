@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -62,8 +62,7 @@ public class OracleCloud extends MicrometerFeature implements OracleCloudFeature
     }
 
     @Override
-    @NonNull
-    public Dependency.Builder micrometerDependency() {
+    public Dependency.@NonNull Builder micrometerDependency() {
         return MicronautDependencyUtils.oracleCloudDependency().artifactId(ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER).compile();
     }
 

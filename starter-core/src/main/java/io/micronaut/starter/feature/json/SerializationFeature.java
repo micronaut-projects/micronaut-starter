@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.json;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -62,15 +62,13 @@ public interface SerializationFeature extends JsonFeature {
         return dependencyList;
     }
 
-    @NonNull
-    default Dependency.Builder serdeModule(@NonNull GeneratorContext generatorContext) {
+    default Dependency.@NonNull Builder serdeModule(@NonNull GeneratorContext generatorContext) {
         return MicronautDependencyUtils.serdeDependency()
                 .compile()
                 .artifactId("micronaut-serde-" + getModule());
     }
 
-    @NonNull
-    default Dependency.Builder serdeProcessor(BuildTool buildTool) {
+    default Dependency.@NonNull Builder serdeProcessor(BuildTool buildTool) {
         return MicronautDependencyUtils.annotationProcessor(buildTool,
                 GROUP_ID_MICRONAUT_SERDE, ARTIFACT_ID_MICRONAUT_SERDE_PROCESSOR, "micronaut.serialization.version");
     }

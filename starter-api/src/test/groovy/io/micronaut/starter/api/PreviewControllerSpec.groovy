@@ -1,7 +1,7 @@
 package io.micronaut.starter.api
 
 import io.micronaut.context.annotation.Property
-import io.micronaut.core.annotation.Nullable
+import org.jspecify.annotations.Nullable
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get

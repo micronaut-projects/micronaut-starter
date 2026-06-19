@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import jakarta.inject.Singleton;

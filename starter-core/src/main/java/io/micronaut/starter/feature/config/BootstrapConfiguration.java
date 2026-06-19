@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public class BootstrapConfiguration extends Configuration {
 

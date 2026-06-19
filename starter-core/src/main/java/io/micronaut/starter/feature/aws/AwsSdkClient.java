@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -38,14 +38,13 @@ public enum AwsSdkClient {
         this.dependency = dependency;
     }
 
-    @NonNull
-    public Dependency.Builder getDependency() {
+    public Dependency.@NonNull Builder getDependency() {
         return dependency;
     }
 
     @NonNull
     public static List<Dependency> dependencies(@NonNull GeneratorContext generatorContext,
-                                                @NonNull Dependency.Builder awsSdkDependency,
+                                                Dependency.@NonNull Builder awsSdkDependency,
                                                 @NonNull AwsSdkClient clientIfGraalVM) {
         List<Dependency> result = new ArrayList<>();
         if (generatorContext.isFeaturePresent(GraalVM.class)) {

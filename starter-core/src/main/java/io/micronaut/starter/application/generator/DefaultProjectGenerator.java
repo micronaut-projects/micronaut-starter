@@ -16,7 +16,7 @@
 package io.micronaut.starter.application.generator;
 
 import io.micronaut.context.BeanContext;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -51,8 +51,7 @@ public interface MicrometerRegistryFeature extends Feature {
 
     void addConfiguration(@NonNull GeneratorContext generatorContext);
 
-    @NonNull
-    default Dependency.Builder micrometerDependency() {
+    default Dependency.@NonNull Builder micrometerDependency() {
         return MicronautDependencyUtils.micrometerRegistryDependency(getImplementationName())
                 .compile();
     }

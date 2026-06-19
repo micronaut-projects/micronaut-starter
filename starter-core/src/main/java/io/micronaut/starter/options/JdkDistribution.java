@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.options;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * @see <a href="https://github.com/actions/setup-java#supported-distributions">Github Supported Distributions</a>

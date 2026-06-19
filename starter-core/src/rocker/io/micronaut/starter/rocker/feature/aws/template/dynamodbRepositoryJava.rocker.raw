@@ -4,7 +4,7 @@
 package @project.getPackageName();
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import jakarta.inject.Singleton;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 

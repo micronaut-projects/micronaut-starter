@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.dekorate;
 
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;

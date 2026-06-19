@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.agorapulse;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.MicronautCommunityFeature;
 import io.micronaut.starter.options.Language;

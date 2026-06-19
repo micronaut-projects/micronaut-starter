@@ -20,7 +20,7 @@ import io.micronaut.context.annotation.Requires;
 import static io.micronaut.starter.build.dependencies.Scope.ERRORPRONE;
 import static io.micronaut.starter.feature.Category.VALIDATION;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;

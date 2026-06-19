@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 
 public abstract class DefaultTemplate implements Template {

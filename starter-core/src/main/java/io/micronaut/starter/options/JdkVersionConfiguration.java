@@ -16,7 +16,7 @@
 package io.micronaut.starter.options;
 
 import io.micronaut.context.annotation.DefaultImplementation;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 

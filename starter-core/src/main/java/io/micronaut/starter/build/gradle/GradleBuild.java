@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Substitution;

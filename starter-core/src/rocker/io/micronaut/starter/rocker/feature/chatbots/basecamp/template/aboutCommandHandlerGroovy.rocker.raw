@@ -9,8 +9,8 @@ import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
 import io.micronaut.chatbots.basecamp.core.BasecampHandler
 import io.micronaut.chatbots.core.CommandResponse
 import io.micronaut.chatbots.core.TextResourceLoader
-import io.micronaut.core.annotation.NonNull
-import io.micronaut.core.annotation.Nullable
+import org.jspecify.annotations.NonNull
+import org.jspecify.annotations.Nullable
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull
 

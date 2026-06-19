@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.function;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;

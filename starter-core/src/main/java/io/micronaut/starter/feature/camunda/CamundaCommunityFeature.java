@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.camunda;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.feature.MicronautCommunityFeature;
 import io.micronaut.starter.options.MicronautVersion;
 

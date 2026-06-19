@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

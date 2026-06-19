@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.util;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.options.JdkVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,7 +126,7 @@ public class VersionInfo {
      * @param id The ID
      * @return The dependency version
      */
-    public static @NonNull Map.Entry<String, String> getDependencyVersion(String id) {
+    public static Map.@NonNull Entry<String, String> getDependencyVersion(String id) {
         String key = id + ".version";
         Object version = VERSIONS.get(key);
         if (version != null) {

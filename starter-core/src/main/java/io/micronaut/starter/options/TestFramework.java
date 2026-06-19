@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.options;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Arrays;
 import java.util.Collections;

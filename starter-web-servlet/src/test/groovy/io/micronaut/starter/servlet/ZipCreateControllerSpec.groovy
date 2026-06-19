@@ -1,6 +1,6 @@
 package io.micronaut.starter.servlet
 
-import io.micronaut.core.annotation.Nullable
+import org.jspecify.annotations.Nullable
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.options.BuildTool

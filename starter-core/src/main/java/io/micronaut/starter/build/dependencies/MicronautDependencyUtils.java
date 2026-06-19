@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.options.BuildTool;
 
 public final class MicronautDependencyUtils {
@@ -88,247 +88,199 @@ public final class MicronautDependencyUtils {
 
     }
 
-    @NonNull
-    public static Dependency.Builder langchain4j() {
+    public static Dependency.@NonNull Builder langchain4j() {
         return micronautDependency(GROUP_ID_MICRONAUT_LANGCHAIN4J);
     }
 
-    @NonNull
-    public static Dependency.Builder guiceDependency() {
+    public static Dependency.@NonNull Builder guiceDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GUICE);
     }
 
-    @NonNull
-    public static Dependency.Builder coreDependency() {
+    public static Dependency.@NonNull Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
     }
 
-    @NonNull
-    public static Dependency.Builder jaxrsDependency() {
+    public static Dependency.@NonNull Builder jaxrsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_JAXRS);
     }
 
-    @NonNull
-    public static Dependency.Builder awsDependency() {
+    public static Dependency.@NonNull Builder awsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AWS);
     }
 
-    @NonNull
-    public static Dependency.Builder starterDependency() {
+    public static Dependency.@NonNull Builder starterDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_STARTER);
     }
 
-    @NonNull
-    public static Dependency.Builder azureDependency() {
+    public static Dependency.@NonNull Builder azureDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AZURE);
     }
 
-    @NonNull
-    public static Dependency.Builder mcpDependency() {
+    public static Dependency.@NonNull Builder mcpDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MCP);
     }
 
-    @NonNull
-    public static Dependency.Builder reactorDependency() {
+    public static Dependency.@NonNull Builder reactorDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_REACTOR);
     }
 
-    @NonNull
-    public static Dependency.Builder serdeDependency() {
+    public static Dependency.@NonNull Builder serdeDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERDE);
     }
 
-    @NonNull
-    public static Dependency.Builder securityDependency() {
+    public static Dependency.@NonNull Builder securityDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SECURITY);
     }
 
-    @NonNull
-    public static Dependency.Builder sessionDependency() {
+    public static Dependency.@NonNull Builder sessionDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SESSION);
     }
 
-    @NonNull
-    public static Dependency.Builder servletDependency() {
+    public static Dependency.@NonNull Builder servletDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SERVLET);
     }
 
-    @NonNull
-    public static Dependency.Builder sourcegenDependency() {
+    public static Dependency.@NonNull Builder sourcegenDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SOURCEGEN);
     }
 
-    @NonNull
-    public static Dependency.Builder testDependency() {
+    public static Dependency.@NonNull Builder testDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_TEST);
     }
 
-    @NonNull
-    public static Dependency.Builder r2dbcDependency() {
+    public static Dependency.@NonNull Builder r2dbcDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_R2DBC);
     }
 
-    @NonNull
-    public static Dependency.Builder tracingDependency() {
+    public static Dependency.@NonNull Builder tracingDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_TRACING);
     }
 
-    @NonNull
-    public static Dependency.Builder dataDependency() {
+    public static Dependency.@NonNull Builder dataDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_DATA);
     }
 
-    @NonNull
-    public static Dependency.Builder sqlDependency() {
+    public static Dependency.@NonNull Builder sqlDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_SQL);
     }
 
-    @NonNull
-    public static Dependency.Builder kotlinDependency() {
+    public static Dependency.@NonNull Builder kotlinDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KOTLIN);
     }
 
-    @NonNull
-    public static Dependency.Builder micrometerDependency() {
+    public static Dependency.@NonNull Builder micrometerDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_MICROMETER);
     }
 
-    @NonNull
-    public static Dependency.Builder eclipsestoreDependency() {
+    public static Dependency.@NonNull Builder eclipsestoreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_ECLIPSESTORE);
     }
 
-    @NonNull
-    public static Dependency.Builder micrometerRegistryDependency(@NonNull String implementationName) {
+    public static Dependency.@NonNull Builder micrometerRegistryDependency(@NonNull String implementationName) {
         return micrometerDependency().artifactId("micronaut-micrometer-registry-" + implementationName);
     }
 
-    @NonNull
-    public static Dependency.Builder groovyDependency() {
+    public static Dependency.@NonNull Builder groovyDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GROOVY);
     }
 
-    @NonNull
-    private static Dependency.Builder micronautDependency(@NonNull String groupId) {
+    private static Dependency.@NonNull Builder micronautDependency(@NonNull String groupId) {
         return Dependency.builder()
                 .groupId(groupId);
     }
 
-    @NonNull
-    public static Dependency.Builder cracDependency() {
+    public static Dependency.@NonNull Builder cracDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
     }
 
-    @NonNull
-    public static Dependency.Builder cassandraDependency() {
+    public static Dependency.@NonNull Builder cassandraDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CASSANDRA);
     }
 
-    @NonNull
-    public static Dependency.Builder chatBotsDependency() {
+    public static Dependency.@NonNull Builder chatBotsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CHATBOTS);
     }
 
-    @NonNull
-    public static Dependency.Builder coherenceDependency() {
+    public static Dependency.@NonNull Builder coherenceDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_COHERENCE);
     }
 
-    @NonNull
-    public static Dependency.Builder gcpDependency() {
+    public static Dependency.@NonNull Builder gcpDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GCP);
     }
 
-    @NonNull
-    public static Dependency.Builder graalLanguagesDependency() {
+    public static Dependency.@NonNull Builder graalLanguagesDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GRAAL_LANGUAGES);
     }
 
-    @NonNull
-    public static Dependency.Builder jsonSchemaDependency() {
+    public static Dependency.@NonNull Builder jsonSchemaDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_JSON_SCHEMA);
     }
 
-    @NonNull
-    public static Dependency.Builder kafkaDependency() {
+    public static Dependency.@NonNull Builder kafkaDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KAFKA);
     }
 
-    @NonNull
-    public static Dependency.Builder ociDependency() {
+    public static Dependency.@NonNull Builder ociDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_OCI);
     }
 
-    @NonNull
-    public static Dependency.Builder opensearchDependency() {
+    public static Dependency.@NonNull Builder opensearchDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_OPENSEARCH);
     }
 
-    @NonNull
-    public static Dependency.Builder platformDependency() {
+    public static Dependency.@NonNull Builder platformDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_PLATFORM);
     }
 
-    @NonNull
-    public static Dependency.Builder grpcDependency() {
+    public static Dependency.@NonNull Builder grpcDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GRPC);
     }
 
-    @NonNull
-    public static Dependency.Builder jmsDependency() {
+    public static Dependency.@NonNull Builder jmsDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_JMS);
     }
 
-    @NonNull
-    public static Dependency.Builder neo4j() {
+    public static Dependency.@NonNull Builder neo4j() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_NEO4J);
     }
 
-    @NonNull
-    public static Dependency.Builder openapi() {
+    public static Dependency.@NonNull Builder openapi() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_OPENAPI);
     }
 
-    @NonNull
-    public static Dependency.Builder validationDependency() {
+    public static Dependency.@NonNull Builder validationDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_VALIDATION);
     }
 
-    @NonNull
-    public static Dependency.Builder injectJava() {
+    public static Dependency.@NonNull Builder injectJava() {
         return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_INJECT_JAVA);
     }
 
-    @NonNull
-    public static Dependency.Builder coreProcessor() {
+    public static Dependency.@NonNull Builder coreProcessor() {
         return coreDependency().artifactId(ARTIFACT_ID_MICRONAUT_CORE_PROCESSOR);
     }
 
-    @NonNull
-    public static Dependency.Builder picocliDependency() {
+    public static Dependency.@NonNull Builder picocliDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_PICOCLI);
     }
 
-    @NonNull
-    public static Dependency.Builder discovery() {
+    public static Dependency.@NonNull Builder discovery() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_DISCOVERY);
     }
 
-    @NonNull
-    public static Dependency.Builder flywayDependency() {
+    public static Dependency.@NonNull Builder flywayDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_FLYWAY);
     }
 
-    @NonNull
-    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+    public static Dependency.@NonNull Builder annotationProcessor(@NonNull BuildTool buildTool,
                                                          @NonNull String groupId,
                                                          @NonNull String artifactId,
                                                          @NonNull String propertyName) {
         return annotationProcessor(buildTool, groupId, artifactId, propertyName, false);
     }
 
-    @NonNull
-    public static Dependency.Builder annotationProcessor(@NonNull BuildTool buildTool,
+    public static Dependency.@NonNull Builder annotationProcessor(@NonNull BuildTool buildTool,
                                                          @NonNull String groupId,
                                                          @NonNull String artifactId,
                                                          @NonNull String propertyName,
@@ -342,16 +294,14 @@ public final class MicronautDependencyUtils {
         };
     }
 
-    @NonNull
-    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+    public static Dependency.@NonNull Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
                                                              @NonNull String groupId,
                                                              @NonNull String artifactId,
                                                              @NonNull String propertyName) {
         return testAnnotationProcessor(buildTool, groupId, artifactId, propertyName, false);
     }
 
-    @NonNull
-    public static Dependency.Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
+    public static Dependency.@NonNull Builder testAnnotationProcessor(@NonNull BuildTool buildTool,
                                                          @NonNull String groupId,
                                                          @NonNull String artifactId,
                                                          @NonNull String propertyName,
@@ -365,8 +315,7 @@ public final class MicronautDependencyUtils {
         };
     }
 
-    @NonNull
-    public static Dependency.Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
+    public static Dependency.@NonNull Builder moduleMavenAnnotationProcessor(@NonNull String groupId,
                                                                     @NonNull String artifactId,
                                                                     @NonNull String propertyName,
                                                                     boolean isTestScope,
@@ -380,18 +329,15 @@ public final class MicronautDependencyUtils {
         return isTestScope ? dependency.testAnnotationProcessor(requiresPriority) : dependency.annotationProcessor(requiresPriority);
     }
 
-    @NonNull
-    public static Dependency.Builder controlPanelDependency() {
+    public static Dependency.@NonNull Builder controlPanelDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_CONTROLPANEL).developmentOnly();
     }
 
-    @NonNull
-    public static Dependency.Builder elasticSearchDependency() {
+    public static Dependency.@NonNull Builder elasticSearchDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_ELASTICSEARCH);
     }
 
-    @NonNull
-    public static Dependency.Builder oracleCloudDependency() {
+    public static Dependency.@NonNull Builder oracleCloudDependency() {
         return micronautDependency(GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD);
     }
 
@@ -399,8 +345,7 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
     }
 
-    @NonNull
-    public static Dependency.Builder viewsDependency() {
+    public static Dependency.@NonNull Builder viewsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
     }
 }

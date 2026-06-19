@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
@@ -36,7 +36,7 @@ public interface DependencyContext {
 
     void addDependency(@NonNull Dependency dependency);
 
-    default void addDependency(@NonNull Dependency.Builder dependency) {
+    default void addDependency(Dependency.@NonNull Builder dependency) {
         addDependency(dependency.build());
     }
 

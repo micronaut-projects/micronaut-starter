@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.ApplicationType;

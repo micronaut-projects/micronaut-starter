@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.options;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.defaults.IncludesDefaults;
 import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.feature.Feature;

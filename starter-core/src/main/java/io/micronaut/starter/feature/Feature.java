@@ -16,13 +16,13 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Indexed;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A feature is a class that affects the outcome of a generated
@@ -65,6 +65,7 @@ public interface Feature extends Named, Ordered, Described {
     }
 
     @Override
+    @Nullable
     default String getDescription() {
         return null;
     }
