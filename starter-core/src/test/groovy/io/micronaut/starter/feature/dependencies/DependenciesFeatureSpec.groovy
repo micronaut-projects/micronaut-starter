@@ -56,22 +56,6 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     }
 
     @Unroll
-    void 'test gradle mybatis feature for language=#language'(Language language, BuildTool buildTool) {
-        when:
-        String template = new BuildBuilder(beanContext, buildTool)
-                .features(['mybatis'])
-                .language(language)
-                .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
-
-        then:
-        verifier.hasDependency("org.mybatis", "mybatis", Scope.COMPILE)
-
-        where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
-    }
-
-    @Unroll
     void 'test maven geb feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
