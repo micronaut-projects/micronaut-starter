@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Builds Windows Native CLI
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: "⬇ Checkout the repository"
         uses: actions/checkout@v6
@@ -21,6 +21,10 @@ jobs:
           java-version: '21'
           distribution: 'graalvm-community'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "🧰 Setup MSVC"
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
