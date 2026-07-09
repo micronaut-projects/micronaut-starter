@@ -232,12 +232,13 @@ jobs:
         with:
           ref: ${{ github.sha }}
           token: ${{ secrets.GH_TOKEN }}
-      - name: "☕️ Setup GraalVM CE"
+      - name: "☕️ Setup GraalVM"
         uses: graalvm/setup-graalvm@v1.4.5
         with:
           java-version: '21'
-          distribution: 'graalvm-community'
+          distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
       - name: "🧰 Setup MSVC"
         uses: ilammy/msvc-dev-cmd@v1
         with:
