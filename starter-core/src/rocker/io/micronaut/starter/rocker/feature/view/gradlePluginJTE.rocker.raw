@@ -1,4 +1,4 @@
-@args(boolean patchKaptOutputs, String path)
+@args(boolean patchKaptOutputs, boolean patchKspOutputs, String path)
 
 jte {
     sourceDirectory = file("@path").toPath()
@@ -7,7 +7,7 @@ jte {
 
 // Gradle requires that generateJte is run before some tasks
 tasks.configureEach {
-    if (@if (patchKaptOutputs) {name == "kaptGenerateStubsKotlin" || }name == "inspectRuntimeClasspath") {
-        mustRunAfter("generateJte")
+    if (@if (patchKaptOutputs) {name == "kaptGenerateStubsKotlin" || }@if (patchKspOutputs) {name == "kspKotlin" || }name == "inspectRuntimeClasspath") {
+        dependsOn("generateJte")
     }
 }

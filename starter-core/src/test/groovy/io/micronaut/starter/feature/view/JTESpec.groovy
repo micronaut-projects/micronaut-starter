@@ -58,6 +58,23 @@ jte {
         language << Language.values().toList()
     }
 
+    void 'test gradle views-jte feature with ksp adds generateJte dependency for kspKotlin'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(Language.KOTLIN)
+                .features(['views-jte', 'ksp'])
+                .render()
+
+        then:
+        template.contains('''\
+// Gradle requires that generateJte is run before some tasks
+tasks.configureEach {
+    if (name == "kspKotlin" || name == "inspectRuntimeClasspath") {
+        dependsOn("generateJte")
+    }
+}''')
+    }
+
     @Unroll
     void 'test maven views-jte feature for language=#language'() {
         when:

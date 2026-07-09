@@ -26,6 +26,7 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import java.util.Optional;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.feature.KotlinSymbolProcessing;
 import io.micronaut.starter.feature.build.Kapt;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -92,10 +93,13 @@ public class JTE implements ViewFeature, MicronautServerDependent {
         boolean patchKapt = generatorContext.getBuildTool().isGradle()
                 && generatorContext.getLanguage() == Language.KOTLIN
                 && generatorContext.hasFeature(Kapt.class);
+        boolean patchKsp = generatorContext.getBuildTool().isGradle()
+                && generatorContext.getLanguage() == Language.KOTLIN
+                && generatorContext.hasFeature(KotlinSymbolProcessing.class);
 
         GradlePlugin.Builder builder = GradlePlugin.builder()
                 .id("gg.jte.gradle")
-                .extension(new RockerWritable(gradlePluginJTE.template(patchKapt, JTE_SRC_DIR)))
+                .extension(new RockerWritable(gradlePluginJTE.template(patchKapt, patchKsp, JTE_SRC_DIR)))
                 .lookupArtifactId("jte-gradle-plugin");
         return builder.build();
     }
