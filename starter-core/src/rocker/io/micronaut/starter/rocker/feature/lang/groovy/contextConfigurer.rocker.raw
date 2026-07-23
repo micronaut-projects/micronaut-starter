@@ -3,7 +3,7 @@
     @@ContextConfigurer
     static class Configurer implements ApplicationContextConfigurer {
         @@Override
-        public void configure(@@NonNull ApplicationContextBuilder builder) {
+        public void configure(ApplicationContextBuilder builder) {
 @if (defaultEnvironment != null) {
             builder.defaultEnvironments("@(defaultEnvironment)")
 }

@@ -17,7 +17,6 @@ import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotificatio
 import io.micronaut.function.aws.runtime.AbstractMicronautLambdaRuntime;
 import java.net.MalformedURLException;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import org.jspecify.annotations.Nullable;
 @if (features.contains("aws-lambda-scheduled-event")) {
 public class FunctionLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent, ScheduledEvent, Void>
 } else if (features.contains("aws-lambda-s3-event-notification")) {
@@ -37,19 +36,16 @@ public class FunctionLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGat
 
 @if (features.contains("aws-lambda-scheduled-event")) {
     @@Override
-    @@Nullable
     protected RequestHandler<ScheduledEvent, Void> createRequestHandler(String... args) {
         return new FunctionRequestHandler();
     }
 } else if (features.contains("aws-lambda-s3-event-notification")) {
     @@Override
-    @@Nullable
     protected RequestHandler<S3EventNotification, Void> createRequestHandler(String... args) {
         return new FunctionRequestHandler();
     }
 } else {
     @@Override
-    @@Nullable
     protected RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> createRequestHandler(String... args) {
         return new FunctionRequestHandler();
     }
