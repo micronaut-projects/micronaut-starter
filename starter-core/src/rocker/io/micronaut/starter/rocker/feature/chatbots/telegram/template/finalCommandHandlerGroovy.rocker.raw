@@ -12,7 +12,6 @@ import io.micronaut.chatbots.telegram.api.send.SendMessage
 import io.micronaut.chatbots.telegram.core.SendMessageUtils
 import io.micronaut.chatbots.telegram.core.TelegramBotConfiguration
 import io.micronaut.chatbots.telegram.core.TelegramHandler
-import org.jspecify.annotations.Nullable
 import io.micronaut.core.order.Ordered
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull
@@ -27,12 +26,12 @@ class FinalCommandHandler implements TelegramHandler<SendMessage> {
     }
 
     @@Override
-    boolean canHandle(@@Nullable TelegramBotConfiguration bot, @@NotNull Update input) {
+    boolean canHandle(TelegramBotConfiguration bot, @@NotNull Update input) {
         true
     }
 
     @@Override
-    Optional<SendMessage> handle(@@Nullable TelegramBotConfiguration bot, @@NotNull Update input) {
+    Optional<SendMessage> handle(TelegramBotConfiguration bot, @@NotNull Update input) {
         SendMessageUtils.compose(
             spaceParser,
             input,

@@ -1,6 +1,5 @@
 package example.micronaut
 
-import org.jspecify.annotations.NonNull
 import io.micronaut.serde.annotation.Serdeable
 
 import jakarta.validation.constraints.NotBlank
@@ -8,15 +7,13 @@ import jakarta.validation.constraints.NotBlank
 @@Serdeable
 class Book {
 
-    @@NonNull
     @@NotBlank
     private final String name
 
-    Book(@@NonNull String name) {
+    Book(String name) {
         this.name = name
     }
 
-    @@NonNull
     String getName() {
         name
     }

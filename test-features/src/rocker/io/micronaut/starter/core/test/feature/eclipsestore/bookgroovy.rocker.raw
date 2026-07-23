@@ -1,6 +1,5 @@
 package example.micronaut
 
-import org.jspecify.annotations.NonNull
 import io.micronaut.eclipsestore.annotations.StoreReturn;
 import io.micronaut.serde.annotation.Serdeable
 
@@ -10,15 +9,13 @@ import jakarta.validation.constraints.NotBlank
 @@Serdeable
 class Book {
 
-    @@NonNull
     @@NotBlank
     private final String name
 
-    Book(@@NonNull String name) {
+    Book(String name) {
         this.name = name
     }
 
-    @@NonNull
     String getName() {
         name
     }
@@ -28,7 +25,7 @@ class Book {
 class BookRepository {
 
     @@StoreReturn
-    Book performUpdate(@@NonNull Book book) {
+    Book performUpdate(Book book) {
         return book;
     }
 }

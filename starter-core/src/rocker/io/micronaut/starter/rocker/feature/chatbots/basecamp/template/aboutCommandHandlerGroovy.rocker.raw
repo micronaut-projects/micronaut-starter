@@ -9,8 +9,6 @@ import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
 import io.micronaut.chatbots.basecamp.core.BasecampHandler
 import io.micronaut.chatbots.core.CommandResponse
 import io.micronaut.chatbots.core.TextResourceLoader
-import org.jspecify.annotations.NonNull
-import org.jspecify.annotations.Nullable
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull
 
@@ -27,12 +25,12 @@ class BasecampAboutCommandHandler implements BasecampHandler {
     }
 
     @@Override
-    public boolean canHandle(@@Nullable BasecampBotConfiguration bot, @@NonNull @@NotNull Query input) {
+    public boolean canHandle(BasecampBotConfiguration bot, @@NotNull Query input) {
         return input.command.equalsIgnoreCase("/" + ABOUT)
     }
 
     @@Override
-    public @@NonNull Optional<String> handle(@@Nullable BasecampBotConfiguration bot, @@NonNull @@NotNull Query input) {
+    public Optional<String> handle(BasecampBotConfiguration bot, @@NotNull Query input) {
         return textResourceLoader.composeCommandResponse(ABOUT).map { it.text }
     }
 }

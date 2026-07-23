@@ -7,8 +7,6 @@ package @project.getPackageName()
 import io.micronaut.chatbots.basecamp.api.Query
 import io.micronaut.chatbots.basecamp.core.BasecampBotConfiguration
 import io.micronaut.chatbots.basecamp.core.BasecampHandler
-import org.jspecify.annotations.NonNull
-import org.jspecify.annotations.Nullable
 import io.micronaut.core.order.Ordered
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotNull
@@ -18,16 +16,16 @@ class BasecampFinalCommandHandler implements BasecampHandler {
 
     @@Override
     boolean canHandle(
-        @@Nullable BasecampBotConfiguration bot,
-        @@NonNull @@NotNull Query query
+        BasecampBotConfiguration bot,
+        @@NotNull Query query
     ) {
         true
     }
 
     @@Override
     Optional<String> handle(
-        @@Nullable BasecampBotConfiguration bot,
-        @@NonNull @@NotNull Query query
+        BasecampBotConfiguration bot,
+        @@NotNull Query query
     ) {
         Optional.of("I don't how to handle your query: ${query.command}".toString())
     }
