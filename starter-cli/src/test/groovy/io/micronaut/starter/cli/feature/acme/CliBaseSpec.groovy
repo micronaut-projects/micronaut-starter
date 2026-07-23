@@ -77,9 +77,9 @@ abstract class CliBaseSpec extends CommandSpec implements CommandFixture {
         log.info("Expected micronaut ports - http : {}, secure : {} ", expectedHttpPort, expectedSecurePort)
         log.info("Expected pebble config : {}", file.text)
 
-        certServerContainer = new GenericContainer("letsencrypt/pebble:latest")
+        certServerContainer = new GenericContainer("ghcr.io/letsencrypt/pebble:2.10.1")
                 .withCopyFileToContainer(MountableFile.forHostPath(file.toPath()), "/test/config/pebble-config.json")
-                .withCommand("/usr/bin/pebble", "-strict", "false")
+                .withCommand("-config", "/test/config/pebble-config.json", "-strict=false")
                 .withEnv(getPebbleEnv())
                 .withExposedPorts(expectedPebbleServerPort)
                 .waitingFor(new WaitAllStrategy().withStrategy(new LogMessageWaitStrategy().withRegEx(".*ACME directory available.*\n"))
