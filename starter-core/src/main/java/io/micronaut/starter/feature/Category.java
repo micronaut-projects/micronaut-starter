@@ -22,6 +22,7 @@ package io.micronaut.starter.feature;
  * @since 2.0.0
  */
 public class Category {
+    public static final String AI                  = "AI";
     public static final String API                  = "API";
     public static final String BPM                  = "BPM";
     public static final String CACHE                = "Cache";
