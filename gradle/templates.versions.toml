@@ -78,8 +78,13 @@ graalpy = "25.0.2"
 commons-compress = "1.28.0"
 error-prone-gradle-plugin = "4.3.0"
 error-prone-core = "2.48.0"
-[libraries]
+odi = "1.0.0"
+jakarta-enterprise-cdi-api = "4.1.0"
 
+[libraries]
+micronaut-odi-processor-cdi = { module = "org.eclipse.odi:micronaut-odi-processor-cdi", version.ref = "odi" }
+odi-cdi = { module = "org.eclipse.odi:micronaut-odi-cdi", version.ref = "odi" }
+jakarta-enterprise-cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "jakarta-enterprise-cdi-api" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 spring-boot-starter-parent = { module = "org.springframework.boot:spring-boot-starter-parent", version.ref = "spring-boot-starter-parent" }
 spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
