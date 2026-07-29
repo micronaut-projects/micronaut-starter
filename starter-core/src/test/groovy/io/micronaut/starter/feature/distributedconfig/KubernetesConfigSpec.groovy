@@ -75,8 +75,9 @@ class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOut
         GeneratorContext commandContext = buildGeneratorContext(['config-kubernetes'])
 
         then:
-        commandContext.bootstrapConfiguration.get('micronaut.application.name'.toString()) == 'foo'
-        commandContext.bootstrapConfiguration.get('micronaut.config-client.enabled'.toString()) == true
+        commandContext.configuration.get('micronaut.application.name'.toString()) == 'foo'
+        commandContext.configuration.get('micronaut.config.import'.toString()) == 'optional:kubernetes://configmap'
+        commandContext.bootstrapConfiguration.get('micronaut.config-client.enabled'.toString()) == null
         commandContext.templates.get('k8sYaml')
     }
 

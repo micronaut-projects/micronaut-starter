@@ -23,23 +23,21 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
         readme.contains('https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html')
     }
 
-    void 'test src/main/resources/boostrap.yml with feature aws-parameter-store contains config'() {
+    void 'test src/main/resources/application.yml with feature aws-parameter-store contains config import'() {
         when:
         Map<String, String> output = generate([Yaml.NAME, 'aws-parameter-store'])
-        String bootstrap = output["src/main/resources/bootstrap.yml"]
+        String application = output["src/main/resources/application.yml"]
 
         then:
-        bootstrap
+        application
+        !output.containsKey("src/main/resources/bootstrap.yml")
 
         when:
-        Map<String, Object> bootstrapYml = new org.yaml.snakeyaml.Yaml().load(bootstrap)
+        Map<String, Object> applicationYml = new org.yaml.snakeyaml.Yaml().load(application)
 
         then:
-        'foo' == bootstrapYml['micronaut']['application']['name']
-        true == bootstrapYml['micronaut']['config-client']['enabled']
-        true == bootstrapYml['aws']['client']['system-manager']['parameterstore']['enabled']
-        false == bootstrapYml['aws']['distributed-configuration']['search-active-environments']
-        false == bootstrapYml['aws']['distributed-configuration']['search-common-application']
+        'foo' == applicationYml['micronaut']['application']['name']
+        'optional:parameterstore:///config/${micronaut.application.name}' == applicationYml['micronaut']['config']['import']
     }
 
     @Unroll

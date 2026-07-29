@@ -36,10 +36,15 @@ public interface DistributedConfigFeature extends Feature {
     }
 
     @NonNull
-    default Map<String, Object> populateBootstrapForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
-        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
+    default Map<String, Object> populateConfigurationForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
+        Map<String, Object> config = generatorContext.getConfiguration();
         config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
-        config.put("micronaut.config-client.enabled", true);
         return config;
+    }
+
+    @NonNull
+    @Deprecated(forRemoval = true)
+    default Map<String, Object> populateBootstrapForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
+        return populateConfigurationForDistributedConfiguration(generatorContext);
     }
 }

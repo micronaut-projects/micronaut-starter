@@ -44,6 +44,10 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
             .artifactId("micronaut-oraclecloud-atp")
             .compile();
 
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_SERDE_ORACLE_JDBC_JSON = MicronautDependencyUtils.serdeDependency()
+            .artifactId("micronaut-serde-oracle-jdbc-json")
+            .compile();
+
     private final OracleCloudSdk oracleCloudSdkFeature;
 
     public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature,
@@ -158,5 +162,6 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_ORACLECLOUD_ATP);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_SERDE_ORACLE_JDBC_JSON);
     }
 }

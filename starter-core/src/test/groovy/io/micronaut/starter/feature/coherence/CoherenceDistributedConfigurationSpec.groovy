@@ -30,14 +30,13 @@ class CoherenceDistributedConfigurationSpec extends BeanContextSpec implements C
         String configuration = output['src/main/resources/bootstrap.yml']
 
         then:
-        configuration
-        configuration.contains("""
+        configuration.trim() == """
 coherence:
   client:
     enabled: true
     host: \${COHERENCE_HOST:localhost}
     port: \${COHERENCE_PORT:1408}
-""")
+""".trim()
     }
 
     @Unroll
