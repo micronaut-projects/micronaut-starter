@@ -41,7 +41,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
         GeneratorContext commandContext = buildGeneratorContext(['security-jwt'])
 
         then:
-        commandContext.configuration.get('micronaut.security.authentication') == 'bearer'
+        commandContext.configuration.get('micronaut.security.authentication') == 'BEARER'
         commandContext.configuration.get('micronaut.security.token.jwt.signatures.secret.generator.secret'.toString()) == '${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}'
     }
 }

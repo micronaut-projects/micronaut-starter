@@ -34,7 +34,7 @@ public enum SecurityAuthenticationMode implements Ordered {
 
     @Override
     public String toString() {
-        return value;
+        return this.name();
     }
 
     @Override

@@ -18,7 +18,7 @@ class AmazonCognitoSpec extends ApplicationContextSpec {
 
         then:
         commandContext.configuration.containsKey("micronaut.security.authentication")
-        commandContext.configuration.get("micronaut.security.authentication") == 'idtoken'
+        commandContext.configuration.get("micronaut.security.authentication") == 'IDTOKEN'
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")

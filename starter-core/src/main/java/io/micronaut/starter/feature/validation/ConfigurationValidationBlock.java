@@ -166,78 +166,78 @@ public record ConfigurationValidationBlock(
         private Boolean cacheEnabled;
         private List<String> testEnvironments;
 
-        public @Nullable Builder enabled(@Nullable Boolean enabled) {
+        public @NonNull Builder enabled(@Nullable Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
 
-        public @Nullable Builder suppressions(@Nullable List<@NonNull String> suppressions) {
+        public @NonNull Builder suppressions(@Nullable List<@NonNull String> suppressions) {
             this.suppressions = suppressions;
             return this;
         }
 
-        public @Nullable Builder suppressInjectErrors(@Nullable List<@NonNull String> suppressInjectErrors) {
+        public @NonNull Builder suppressInjectErrors(@Nullable List<@NonNull String> suppressInjectErrors) {
             this.suppressInjectErrors = suppressInjectErrors;
             return this;
         }
 
-        public @Nullable Builder failOnNotPresent(@Nullable Boolean failOnNotPresent) {
+        public @NonNull Builder failOnNotPresent(@Nullable Boolean failOnNotPresent) {
             this.failOnNotPresent = failOnNotPresent;
             return this;
         }
 
-        public @Nullable Builder failOnNotPresent() {
+        public @NonNull Builder failOnNotPresent() {
             return failOnNotPresent(true);
         }
 
-        public @Nullable Builder deduceEnvironments(@Nullable Boolean deduceEnvironments) {
+        public @NonNull Builder deduceEnvironments(@Nullable Boolean deduceEnvironments) {
             this.deduceEnvironments = deduceEnvironments;
             return this;
         }
 
-        public @Nullable Builder deduceEnvironments() {
+        public @NonNull Builder deduceEnvironments() {
             return deduceEnvironments(true);
         }
 
-        public @Nullable Builder validateDependencyInjection(@Nullable Boolean validateDependencyInjection) {
+        public @NonNull Builder validateDependencyInjection(@Nullable Boolean validateDependencyInjection) {
             this.validateDependencyInjection = validateDependencyInjection;
             return this;
         }
 
-        public @Nullable Builder validateDependencyInjection() {
+        public @NonNull Builder validateDependencyInjection() {
             return validateDependencyInjection(true);
         }
 
-        public @Nullable Builder format(@Nullable String format) {
+        public @NonNull Builder format(@Nullable String format) {
             this.format = format;
             return this;
         }
 
-        public @Nullable Builder outputDirectory(@Nullable String outputDirectory) {
+        public @NonNull Builder outputDirectory(@Nullable String outputDirectory) {
             this.outputDirectory = outputDirectory;
             return this;
         }
 
-        public @Nullable Builder devEnvironments(@Nullable List<@NonNull String> devEnvironments) {
+        public @NonNull Builder devEnvironments(@Nullable List<@NonNull String> devEnvironments) {
             this.devEnvironments = devEnvironments;
             return this;
         }
 
-        public @Nullable Builder packageValidationEnvironments(@Nullable List<@NonNull String> packageValidationEnvironments) {
+        public @NonNull Builder packageValidationEnvironments(@Nullable List<@NonNull String> packageValidationEnvironments) {
             this.packageValidationEnvironments = packageValidationEnvironments;
             return this;
         }
 
-        public @Nullable Builder cacheEnabled(@Nullable Boolean cacheEnabled) {
+        public @NonNull Builder cacheEnabled(@Nullable Boolean cacheEnabled) {
             this.cacheEnabled = cacheEnabled;
             return this;
         }
 
-        public @Nullable Builder cacheEnabled() {
+        public @NonNull Builder cacheEnabled() {
             return cacheEnabled(true);
         }
 
-        public @Nullable Builder testEnvironments(@Nullable List<@NonNull String> testEnvironments) {
+        public @NonNull Builder testEnvironments(@Nullable List<@NonNull String> testEnvironments) {
             this.testEnvironments = testEnvironments;
             return this;
         }

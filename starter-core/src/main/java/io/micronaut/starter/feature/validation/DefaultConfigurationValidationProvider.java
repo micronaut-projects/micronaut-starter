@@ -55,7 +55,7 @@ public class DefaultConfigurationValidationProvider implements ConfigurationVali
 
     @Override
     public @Nullable ConfigurationValidationBlock configurationValidation(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getBuildTool().isGradle() ? null : builder().enabled(false).build();
+        return configurationValidation;
     }
 
     protected ConfigurationValidationBlock configurationValidation() {

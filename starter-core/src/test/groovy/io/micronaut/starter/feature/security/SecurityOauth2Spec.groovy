@@ -57,7 +57,7 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
         GeneratorContext commandContext = buildGeneratorContext(['security-oauth2'])
 
         then:
-        commandContext.configuration.get("micronaut.security.authentication") == "cookie"
+        commandContext.configuration.get("micronaut.security.authentication") == "COOKIE"
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
         !commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
@@ -66,7 +66,7 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
         commandContext = buildGeneratorContext(['security-oauth2', 'security-jwt'])
 
         then:
-        commandContext.configuration.get("micronaut.security.authentication") == "cookie"
+        commandContext.configuration.get("micronaut.security.authentication") == "COOKIE"
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
         commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
