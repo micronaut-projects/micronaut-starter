@@ -45,7 +45,7 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: "🆙 Upload Snapshot"
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.1.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/5.2.x'
         uses: actions/upload-artifact@v7
         with:
           name: mn-win-amd64-snapshot
