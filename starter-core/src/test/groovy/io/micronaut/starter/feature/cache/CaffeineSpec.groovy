@@ -35,7 +35,7 @@ class CaffeineSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.cache:micronaut-cache-caffeine")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -43,6 +43,6 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
         semanticVersionOptional.isPresent()
         
         where:
-        [language, applicationType] << [Language.values(), [ApplicationType.FUNCTION, ApplicationType.DEFAULT]].combinations()
+        [language, applicationType] << [supportedLanguages(BuildTool.GRADLE), [ApplicationType.FUNCTION, ApplicationType.DEFAULT]].combinations()
     }
 }

@@ -23,7 +23,7 @@ class ArchaiusSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-archaius")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

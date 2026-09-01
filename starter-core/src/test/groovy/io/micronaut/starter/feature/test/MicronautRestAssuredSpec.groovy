@@ -51,7 +51,7 @@ class MicronautRestAssuredSpec extends ApplicationContextSpec implements Command
         template.contains('testImplementation("io.micronaut.test:micronaut-test-rest-assured")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

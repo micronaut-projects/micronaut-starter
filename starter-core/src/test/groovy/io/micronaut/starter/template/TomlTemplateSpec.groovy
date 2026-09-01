@@ -28,4 +28,16 @@ foo = 123
 bar = [1, 2, {name = 'fox'}]
 '''
     }
+
+    def 'single nested value uses table'() {
+        given:
+        def config = new Configuration('', '', '')
+        config.put('micronaut.application.name', 'demo')
+
+        expect:
+        toml(config) == '''\
+[micronaut.application]
+name = 'demo'
+'''
+    }
 }

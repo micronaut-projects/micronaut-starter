@@ -26,7 +26,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         !hasSnapStart(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << jvmBuilds()
     }
 
     void 'Function AppStack imports included for SnapStart #buildTool'(BuildTool buildTool) {
@@ -70,7 +70,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << jvmBuilds()
     }
 
     void 'SnapStart is enabled by default even without a API Gateway #buildTool'(BuildTool buildTool) {
@@ -84,7 +84,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         !usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << jvmBuilds()
     }
 
     private static boolean hasSnapStart(String text) {
@@ -96,7 +96,11 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
     }
 
     private static List<BuildTool> graalVmAndCdkSupportedBuilds() {
-        BuildTool.values() - BuildTool.MAVEN
+        jvmBuilds() - BuildTool.MAVEN
+    }
+
+    private static List<BuildTool> jvmBuilds() {
+        BuildTool.values() - BuildTool.PYRONAUT
     }
 
     private static Options createOptions(BuildTool buildTool) {

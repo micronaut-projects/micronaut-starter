@@ -35,6 +35,7 @@ class AsciidoctorSpec extends ApplicationContextSpec {
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test maven asciidoctor feature for language=#language'() {

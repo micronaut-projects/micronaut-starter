@@ -36,7 +36,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         workflow.contains("export DOCKER_IMAGE=`echo \"\${GCLOUD_GCR}/\${GCLOUD_PROJECT_ID}/\${GCLOUD_IMAGE_REPOSITORY}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
@@ -52,7 +52,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         workflow.contains("export DOCKER_IMAGE=`echo \"\${GCLOUD_GCR}/\${GCLOUD_PROJECT_ID}/\${GCLOUD_IMAGE_REPOSITORY}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {

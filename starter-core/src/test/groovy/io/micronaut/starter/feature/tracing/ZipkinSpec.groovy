@@ -39,7 +39,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-brave-http", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test tracing-zipkin configuration'() {

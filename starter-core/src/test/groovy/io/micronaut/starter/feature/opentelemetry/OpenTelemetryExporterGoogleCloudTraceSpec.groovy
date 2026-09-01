@@ -66,7 +66,7 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
         template.contains('implementation("com.google.cloud.opentelemetry:exporter-auto")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test maven tracing-opentelemetry-exporter-gcp feature for language=#language'(Language language) {

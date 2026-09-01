@@ -67,6 +67,6 @@ class SpringBootSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.spring", "micronaut-spring-boot", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

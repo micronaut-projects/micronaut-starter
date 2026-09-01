@@ -25,7 +25,7 @@ class OracleCloudMicronautNettyClientSpec extends ApplicationContextSpec impleme
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-httpclient-netty")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

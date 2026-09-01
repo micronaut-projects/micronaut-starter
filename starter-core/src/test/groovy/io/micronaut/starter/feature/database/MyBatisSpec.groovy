@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -57,6 +58,18 @@ class MyBatisSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_MYBATIS_ARTIFACT, Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+    }
+
+    void 'pyronaut rejects mybatis feature'() {
+        when:
+        new BuildBuilder(beanContext, BuildTool.PYRONAUT)
+                .features([NAME])
+                .language(Language.PYTHON)
+                .render()
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'Feature mybatis is not supported for Python because it requires Java reflection'
     }
 }

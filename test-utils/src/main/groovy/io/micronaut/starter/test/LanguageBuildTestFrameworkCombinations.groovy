@@ -51,7 +51,18 @@ class LanguageBuildTestFrameworkCombinations {
         if (it.size() == 2) {
             testFrameworkIndex =  1
         }
+        // Keep this matrix JVM-only; use pythonCombinations() for supported Python features.
+        if (it[languageIndex] == Language.PYTHON ||
+                (it.size() >= 3 && it[it.size() >= 4 ? 2 : 1] == BuildTool.PYRONAUT)) {
+            return false
+        }
         return (it[languageIndex] != Language.KOTLIN && it[testFrameworkIndex] != TestFramework.KOTEST) ||
                     (it[languageIndex] == Language.KOTLIN && it[testFrameworkIndex] == TestFramework.KOTEST)
+    }
+
+    static List<List> pythonCombinations(List<String> features = null) {
+        features
+                ? [Language.PYTHON, BuildTool.PYRONAUT, TestFramework.PYTEST, features].combinations()
+                : [[Language.PYTHON, BuildTool.PYRONAUT, TestFramework.PYTEST]]
     }
 }

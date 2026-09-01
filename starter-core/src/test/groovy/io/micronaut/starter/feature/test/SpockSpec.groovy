@@ -48,7 +48,7 @@ java {
 ''')
 
         where:
-        [language, testFramework] << [(Language.values() - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST)].combinations()
+        [language, testFramework] << [(supportedLanguages(BuildTool.GRADLE) - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST - TestFramework.PYTEST)].combinations()
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")

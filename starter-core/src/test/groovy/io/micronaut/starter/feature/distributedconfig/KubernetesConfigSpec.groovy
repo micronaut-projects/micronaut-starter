@@ -51,7 +51,7 @@ class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOut
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

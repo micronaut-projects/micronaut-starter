@@ -47,7 +47,7 @@ class JunitParamsSpec extends ApplicationContextSpec implements CommandOutputFix
         template.contains('testImplementation("org.junit.jupiter:junit-jupiter-params')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

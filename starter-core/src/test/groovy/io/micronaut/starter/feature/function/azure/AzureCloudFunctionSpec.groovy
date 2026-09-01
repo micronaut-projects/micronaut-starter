@@ -91,10 +91,10 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 .contains("function.hello")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension << supportedLanguages(BuildTool.GRADLE)*.extension
+        srcDir << supportedLanguages(BuildTool.GRADLE)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.GRADLE)*.testSrcDir
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -131,10 +131,10 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension << supportedLanguages(BuildTool.GRADLE)*.extension
+        srcDir << supportedLanguages(BuildTool.GRADLE)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.GRADLE)*.testSrcDir
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -165,7 +165,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 .contains("response = function.request")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.GRADLE), [true, false]].combinations()
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -199,6 +199,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
               .contains("response = function.request")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.MAVEN), [true, false]].combinations()
     }
 }

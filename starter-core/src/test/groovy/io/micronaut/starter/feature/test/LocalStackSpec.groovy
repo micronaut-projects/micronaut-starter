@@ -48,7 +48,7 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
         template.contains('testImplementation("com.amazonaws:aws-java-sdk-core")') == !hasSqs
 
         where:
-        [language, hasSqs] << [Language.values().toList(), [true, false]].combinations()
+        [language, hasSqs] << [supportedLanguages(BuildTool.GRADLE), [true, false]].combinations()
     }
 
     void 'test maven localstack feature for language=#language'() {

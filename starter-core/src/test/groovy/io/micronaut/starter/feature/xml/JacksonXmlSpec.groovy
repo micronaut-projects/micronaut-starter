@@ -35,7 +35,7 @@ class JacksonXmlSpec extends ApplicationContextSpec  implements CommandOutputFix
         template.contains('implementation("io.micronaut.xml:micronaut-jackson-xml")')
 
         where:
-        language << Language.values().toList().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -45,7 +45,9 @@ class TestRockerModelProviderSpec extends Specification {
         noExceptionThrown()
 
         where:
-        [language, testFramework] << [Language.values(), TestFramework.values()].combinations()
+        [language, testFramework] << [
+                [Language.JAVA, Language.GROOVY, Language.KOTLIN],
+                [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST]
+        ].combinations()
     }
 }
-

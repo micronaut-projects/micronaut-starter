@@ -33,7 +33,7 @@ class MicrometerObservationSpec extends ApplicationContextSpec implements Comman
         verifier.hasDependency("io.micronaut", "micronaut-management", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 
     void "micrometer-observation belongs to Metrics category"() {

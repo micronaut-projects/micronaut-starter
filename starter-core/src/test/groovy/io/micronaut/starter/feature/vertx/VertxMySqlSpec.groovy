@@ -24,7 +24,7 @@ class VertxClientSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-mysql-client")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

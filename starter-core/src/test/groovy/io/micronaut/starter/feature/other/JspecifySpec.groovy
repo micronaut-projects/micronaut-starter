@@ -35,7 +35,7 @@ class JspecifySpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("jspecify")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 
     void 'test README.md with feature jspecify contains links to docs'() {

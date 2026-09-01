@@ -40,7 +40,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         application.contains(".eagerInitSingletons(true)")
 
         where:
-        language << Language.values()
+        language << Language.values() - Language.PYTHON
     }
 
     void "feature crac #desc for #applicationType"(ApplicationType applicationType) {
@@ -72,7 +72,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasBuildPlugin("io.micronaut.application")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [Language.values().toList() - Language.PYTHON, BuildTool.valuesGradle()].combinations()
     }
 
     void "test maven crac feature adds dependency"() {

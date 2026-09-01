@@ -45,7 +45,7 @@ class JibSpec extends ApplicationContextSpec implements CommandOutputFixture {
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
 }

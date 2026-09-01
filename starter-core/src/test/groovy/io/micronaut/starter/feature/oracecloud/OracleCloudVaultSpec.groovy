@@ -72,7 +72,7 @@ oci:
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-vault")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -87,7 +87,7 @@ jasync:
         template.contains('implementation("io.micronaut.sql:micronaut-jasync-sql")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -34,7 +34,7 @@ class RssItunesSpec extends ApplicationContextSpec implements CommandOutputFixtu
         template.contains('implementation("io.micronaut.rss:micronaut-itunespodcast")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

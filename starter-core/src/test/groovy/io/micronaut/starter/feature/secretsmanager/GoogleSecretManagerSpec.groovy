@@ -49,7 +49,7 @@ micronaut:
         template.count('implementation("io.micronaut.gcp:micronaut-gcp-secret-manager")') == 1
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

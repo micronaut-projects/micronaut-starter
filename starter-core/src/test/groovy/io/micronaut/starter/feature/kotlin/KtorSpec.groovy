@@ -113,7 +113,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         e.message.contains("The selected features are incompatible")
 
         where:
-        language << (Language.values().toList() - supportedLanguages())
+        language << (supportedLanguages(BuildTool.MAVEN) - supportedLanguages())
     }
 
     @Unroll
@@ -144,7 +144,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         e.message.contains("The selected features are incompatible")
 
         where:
-        language << (Language.values().toList() - supportedLanguages())
+        language << (supportedLanguages(BuildTool.GRADLE) - supportedLanguages())
     }
 
     @Unroll

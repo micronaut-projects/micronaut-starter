@@ -54,7 +54,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         }
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {
@@ -94,10 +94,40 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension = language.extension
+        srcDir = language.srcDir
+        testSrcDir = language.testSrcDir
+    }
+
+    void 'test pyronaut google cloud function feature for python'() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT, JdkVersion.JDK_25),
+                ['google-cloud-function']
+        )
+        String pyproject = output['pyproject.toml']
+        String controller = output['src/example/micronaut/foo_controller.py']
+        String readme = output['README.md']
+
+        then:
+        output.containsKey('src/main.py')
+        controller
+        controller.contains('from micronaut.serde.annotation import Serdeable')
+        controller.contains('@Serdeable')
+        controller.contains('@Get(value="/foo", produces=MediaType.TEXT_PLAIN)')
+        controller.contains('class SampleInputMessage')
+        controller.contains('class SampleReturnMessage')
+        pyproject.contains('"io.micronaut.gcp:micronaut-gcp-function-http"')
+        pyproject.contains('"com.google.cloud.functions:functions-framework-api"')
+        readme.contains('pyronaut run')
+        readme.contains('current Pyronaut build output is a Python wheel')
+        !readme.contains('./gradlew runFunction')
+        !readme.contains('./mvnw function:run')
+        !pyproject.contains('micronaut-jackson-databind')
+        !output.containsKey('build.gradle')
+        !output.containsKey('pom.xml')
     }
 
     @Issue("https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32/files")
@@ -161,10 +191,10 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension = language.extension
+        srcDir = language.srcDir
+        testSrcDir = language.testSrcDir
     }
 
     void 'test Google Cloud JDK support fails with #jdkVersion'() {
@@ -234,7 +264,9 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
     }
 
     void 'test gcp-function feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
@@ -258,6 +290,8 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
     }
 }

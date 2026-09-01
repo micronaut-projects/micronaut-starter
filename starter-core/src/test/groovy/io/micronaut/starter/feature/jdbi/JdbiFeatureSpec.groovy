@@ -66,6 +66,6 @@ class JdbiFeatureSpec extends ApplicationContextSpec  implements CommandOutputFi
         template.contains('implementation("io.micronaut.sql:micronaut-jdbi")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

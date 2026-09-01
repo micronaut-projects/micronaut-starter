@@ -49,7 +49,7 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
         !verifier.hasDependency("org.yaml", "snakeyaml", Scope.TEST_RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().findAll { it != BuildTool.PYRONAUT }
     }
 
     void "test configuration files generated for yaml feature"() {

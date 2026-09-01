@@ -51,7 +51,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-ui", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 
     void 'test dependency added for control-panel and management feature'(BuildTool buildTool) {
@@ -66,7 +66,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-management", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 
     void 'test control-panel with management configuration'() {

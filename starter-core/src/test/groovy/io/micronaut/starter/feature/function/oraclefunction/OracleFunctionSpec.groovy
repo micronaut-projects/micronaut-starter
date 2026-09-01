@@ -64,7 +64,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
                 .contains("class FooControllerTest")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.GRADLE), [true, false]].combinations()
     }
 
     void "runtime for gradle and oracle-function"() {
@@ -79,7 +79,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         build.contains('runtime("oracle_function")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test maven oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
@@ -212,7 +212,9 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
 
     }
 
@@ -243,6 +245,8 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
     }
 }

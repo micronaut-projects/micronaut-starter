@@ -49,6 +49,6 @@ class ProblemJsonSpec extends ApplicationContextSpec implements CommandOutputFix
         template.contains('implementation("io.micronaut.problem:micronaut-problem-json")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

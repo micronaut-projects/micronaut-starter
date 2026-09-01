@@ -37,7 +37,7 @@ class HazelcastSpec extends ApplicationContextSpec implements CommandOutputFixtu
         template.contains('implementation("io.micronaut.cache:micronaut-cache-hazelcast")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

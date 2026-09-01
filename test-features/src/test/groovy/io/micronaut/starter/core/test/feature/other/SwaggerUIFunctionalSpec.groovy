@@ -81,9 +81,10 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                BuildTool.valuesGradle(),
+                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
+                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
                 [SwaggerUI.NAME],
-                Language.values()
+                Language.values().findAll { it != Language.PYTHON }
         ].combinations()
     }
 
@@ -134,9 +135,10 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language, securityFeature] << [
-                BuildTool.valuesGradle(),
+                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
+                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
                 [SwaggerUI.NAME],
-                Language.values(),
+                Language.values().findAll { it != Language.PYTHON },
                 [Security.NAME]
         ].combinations()
     }

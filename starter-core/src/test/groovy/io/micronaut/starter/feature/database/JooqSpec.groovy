@@ -37,7 +37,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.sql:micronaut-jooq")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test maven jooq feature for language=#language'() {
@@ -69,6 +69,6 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         ex.message == "The selected feature jooq requires at latest Java 11"
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

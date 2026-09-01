@@ -41,7 +41,7 @@ class PicocliSpec extends ApplicationContextSpec {
         }
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {
@@ -150,7 +150,7 @@ class PicocliSpec extends ApplicationContextSpec {
         !generatorContext.getTemplates().containsKey("testDir")
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void "test that picocli with kotlin language requires kapt with buildTool=#buildTool"() {

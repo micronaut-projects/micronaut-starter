@@ -23,6 +23,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.groovyProducer;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.javaProducer;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.producer.kotlinProducer;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-mqtt-publisher", description = "Creates a publisher class for MQTT")
 @Prototype
@@ -88,8 +90,12 @@ public class CreateMqttPublisher extends CodeGenCommand {
             rockerModel = groovyProducer.template(project, version);
         } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinProducer.template(project, version);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.mqttPublisher(project, version), overwrite);
         }
-        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        if (config.getSourceLanguage() != PYTHON) {
+            renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        }
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {

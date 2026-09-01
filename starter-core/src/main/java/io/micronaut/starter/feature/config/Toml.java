@@ -20,6 +20,10 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -27,17 +31,21 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TomlTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
 import java.util.function.Function;
 
 @Requires(property = "micronaut.starter.feature.toml.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Toml implements ConfigurationFeature {
+public class Toml implements ConfigurationFeature, DefaultFeature {
 
     public static final String NAME = "toml";
     private static final String EXTENSION = "toml";
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getLanguage() == Language.PYTHON) {
+            return;
+        }
         // as a config feature, we're processed last, after the build tools. We need to add the dependency to
         // micronaut-toml before that.
         featureContext.addFeature(new Feature() {
@@ -87,7 +95,30 @@ public class Toml implements ConfigurationFeature {
     }
 
     @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.PYTHON && selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getLanguage() == Language.PYTHON && generatorContext.getBuildTool() == BuildTool.PYRONAUT) {
+            generatorContext.getAllConfigurations()
+                    .stream()
+                    .filter(config -> !config.isEmpty())
+                    .forEach(config -> generatorContext.addTemplate(config.getTemplateKey(), new TomlTemplate(pyronautPath(config), config)));
+        } else {
+            ConfigurationFeature.super.apply(generatorContext);
+        }
+    }
+
+    @Override
     public Function<Configuration, Template> createTemplate() {
         return cfg -> new TomlTemplate(cfg.getFullPath(EXTENSION), cfg);
+    }
+
+    private static String pyronautPath(Configuration config) {
+        String path = config.getPath();
+        String prefix = path.startsWith("src/test/resources/") ? "tests-config/" : "config/";
+        return prefix + config.getFileName() + "." + EXTENSION;
     }
 }

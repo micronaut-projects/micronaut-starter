@@ -38,7 +38,7 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         factory.contains("builder.stream(\"streams-plaintext-input\")")
 
         where:
-        language << Language.values().toList()
+        language << Language.values().toList() - Language.PYTHON
     }
 
     void "test kafka-streams features"() {

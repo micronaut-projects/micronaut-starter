@@ -37,7 +37,7 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
     @Unroll
     void 'test maven cache-coherence feature for language=#language'(Language language) {

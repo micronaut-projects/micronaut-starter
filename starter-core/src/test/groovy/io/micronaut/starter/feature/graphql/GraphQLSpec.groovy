@@ -46,7 +46,7 @@ class GraphQLSpec extends ApplicationContextSpec  implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.graphql:micronaut-graphql")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

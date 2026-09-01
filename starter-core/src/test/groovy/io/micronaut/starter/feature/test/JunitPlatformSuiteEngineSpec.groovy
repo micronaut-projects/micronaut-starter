@@ -48,7 +48,6 @@ class JunitPlatformSuiteEngineSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.junit.platform", "junit-platform-suite-engine", Scope.TEST)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }
-

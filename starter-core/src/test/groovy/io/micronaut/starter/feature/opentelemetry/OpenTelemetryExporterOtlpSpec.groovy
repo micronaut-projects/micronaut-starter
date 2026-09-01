@@ -66,7 +66,7 @@ class OpenTelemetryExporterOtlpSpec extends ApplicationContextSpec implements Co
         template.contains('implementation("io.opentelemetry:opentelemetry-exporter-otlp")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test maven tracing-opentelemetry-exporter-otlp feature for language=#language'(Language language) {

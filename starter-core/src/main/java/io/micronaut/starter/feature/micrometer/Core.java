@@ -24,6 +24,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Feature;
 
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.micrometer.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -37,6 +38,12 @@ public class Core implements Feature {
     private static final Dependency R2DBC_POOL = Dependency.builder()
             .groupId("io.r2dbc")
             .artifactId("r2dbc-pool")
+            .runtime()
+            .build();
+
+    private static final Dependency MICROMETER_CORE = Dependency.builder()
+            .groupId("io.micrometer")
+            .artifactId("micrometer-core")
             .runtime()
             .build();
 
@@ -64,6 +71,9 @@ public class Core implements Feature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.metrics.enabled", true);
         generatorContext.addDependency(MICRONAUT_MICROMETER_CORE);
+        if (generatorContext.getBuildTool() == BuildTool.PYRONAUT) {
+            generatorContext.addDependency(MICROMETER_CORE);
+        }
         if (generatorContext.hasFeature(R2dbcFeature.class)) {
             generatorContext.addDependency(R2DBC_POOL);
         }

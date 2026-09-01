@@ -52,6 +52,6 @@ class JsonPathSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("com.jayway.jsonpath", "json-path", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
+        [buildTool, language] << [BuildTool.values(), Language.values() - Language.PYTHON].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

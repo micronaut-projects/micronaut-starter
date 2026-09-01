@@ -30,7 +30,7 @@ class GoogleLoggingFunctionalSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        buildTool << BuildTool.values()
+        // This test generates JVM projects; add a Python/Pyronaut fixture and build verification before including Pyronaut.
+        buildTool << BuildTool.values().findAll { it != BuildTool.PYRONAUT }
     }
 }
-

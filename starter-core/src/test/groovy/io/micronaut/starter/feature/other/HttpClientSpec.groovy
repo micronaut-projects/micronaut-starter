@@ -25,7 +25,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
     void "dependency added for #desc http-client feature in the main classpath for #language and #buildTool"(BuildTool buildTool, Language language, List<String> features) {
         when:
         String template = new BuildBuilder(beanContext, buildTool).language(language).features(features).render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         if (features.isEmpty()) { // default feature
@@ -62,7 +62,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 
     private static List combinations() {

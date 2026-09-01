@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -37,17 +38,19 @@ class AOPSpec extends BeanContextSpec implements CommandOutputFixture {
         Category.API == micronautAOP.category
     }
 
-    void "test dependency added for AOP feature"(BuildTool buildTool) {
+    void "test dependency added for AOP feature"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features([AOP.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut", "micronaut-aop", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

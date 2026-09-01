@@ -34,7 +34,7 @@ class SimpleLoggingSpec extends ApplicationContextSpec  implements CommandOutput
         !template.contains('runtimeOnly("ch.qos.logback:logback-classic")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

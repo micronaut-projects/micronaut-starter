@@ -72,7 +72,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-alexa")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -104,7 +104,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -141,10 +141,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension << supportedLanguages(BuildTool.GRADLE)*.extension
+        srcDir << supportedLanguages(BuildTool.GRADLE)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.GRADLE)*.testSrcDir
     }
 
     @Unroll
@@ -200,10 +200,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension << supportedLanguages(BuildTool.GRADLE)*.extension
+        srcDir << supportedLanguages(BuildTool.GRADLE)*.srcDir
+        testSrcDir << supportedLanguages(BuildTool.GRADLE)*.testSrcDir
     }
 
     @Unroll

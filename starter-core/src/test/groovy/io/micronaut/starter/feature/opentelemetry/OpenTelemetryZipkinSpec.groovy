@@ -42,7 +42,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for default application type test gradle tracing-opentelemetry-zipkin feature for language=#language'(Language language, BuildTool buildTool) {
@@ -61,7 +61,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for #applicationType test gradle tracing-opentelemetry-zipkin feature for language=#language'(Language language,
@@ -82,7 +82,7 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
 
         where:
         [language, buildTool, applicationType] << [
-                Language.values().toList(),
+                supportedLanguages(BuildTool.GRADLE),
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
                 (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
         ].combinations()

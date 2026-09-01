@@ -70,6 +70,6 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
         verifier.hasDependency("io.micronaut.spring", "micronaut-spring-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.spring.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

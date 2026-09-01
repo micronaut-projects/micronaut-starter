@@ -80,6 +80,6 @@ class KubernetesClientSpec extends ApplicationContextSpec  implements CommandOut
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-client")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

@@ -1,0 +1,60 @@
+name: Python CI
+on:
+  push:
+    branches:
+      - '[1-9]+.[0-9]+.x'
+  pull_request:
+    branches:
+      - '[1-9]+.[0-9]+.x'
+jobs:
+  project-generation-unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['25']
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-python-unit-test-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-python-unit-test-
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java }}
+      # Do not run the functional test modules until the Pyronaut CLI is released.
+      - name: Run core and API project generation unit tests
+        run: >-
+          ./gradlew
+          starter-core:test
+          starter-api:test
+          --refresh-dependencies
+          --continue
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
+      - name: Run CLI Python template unit tests
+        run: >-
+          ./gradlew micronaut-cli:test
+          --tests '*CreateAppCommandSpec'
+          --tests '*CreateRepositorySpec'
+          --tests '*CreateJmsConsumerSpec'
+          --tests '*CreateJmsProducerSpec'
+          --tests '*CreateMqttPublisherSpec'
+          --tests '*CreateMqttSubscriberSpec'
+          --tests '*CreateWebsocketClientSpec'
+          --tests '*CreateWebsocketServerSpec'
+          --tests '*CreateClientSpec'
+          --refresh-dependencies
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          DEVELOCITY_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME  }}
+          DEVELOCITY_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+          PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"

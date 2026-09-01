@@ -34,7 +34,7 @@ dockerBuildNative {
     ]
 }''')
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
+        language << supportedLanguages(BuildTool.GRADLE)
+        extension << supportedLanguages(BuildTool.GRADLE)*.extension
     }
 }

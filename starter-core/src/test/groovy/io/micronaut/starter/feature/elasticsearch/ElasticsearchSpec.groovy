@@ -36,7 +36,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
         template.contains('implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

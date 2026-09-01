@@ -58,7 +58,7 @@ class OpenTelemetryHttpSpec extends ApplicationContextSpec implements CommandOut
         template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test maven tracing-opentelemetry-http feature for language=#language'(Language language) {

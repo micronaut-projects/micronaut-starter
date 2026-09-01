@@ -35,7 +35,7 @@ class RibbonSpec extends ApplicationContextSpec implements CommandOutputFixture 
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-ribbon")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

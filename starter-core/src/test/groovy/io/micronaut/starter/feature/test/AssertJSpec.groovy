@@ -53,7 +53,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('testImplementation("org.assertj:assertj-core")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test gradle assertj succeeds for defaults as JUnit is automatically selected'() {

@@ -66,7 +66,7 @@ class OpenTelemetryExporterZipkinSpec extends ApplicationContextSpec implements 
         template.contains('implementation("io.opentelemetry:opentelemetry-exporter-zipkin")')
      
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
     
     void 'test maven tracing-opentelemetry-exporter-zipkin feature for language=#language'(Language language) {

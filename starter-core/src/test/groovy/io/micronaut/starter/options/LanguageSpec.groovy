@@ -17,6 +17,7 @@ class LanguageSpec extends Specification {
         Language.JAVA   || "src/main/java/{packagePath}/{className}.java"
         Language.GROOVY || "src/main/groovy/{packagePath}/{className}.groovy"
         Language.KOTLIN || "src/main/kotlin/{packagePath}/{className}.kt"
+        Language.PYTHON || "src/{packagePath}/{className}.py"
         path = '/{packagePath}/{className}'
     }
 }

@@ -53,7 +53,7 @@ class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixtu
         template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
     @Unroll
     void 'test maven coherence-session feature for language=#language'(Language language) {

@@ -7,14 +7,16 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.httpclient.HttpClientJdk
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
 class DiscoveryClientSpec extends BeanContextSpec {
-    void "dependencies for discovery client feature"(BuildTool buildTool) {
+    void "dependencies for discovery client feature"(BuildTool buildTool, Language language) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features([DiscoveryClient.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client", Scope.COMPILE)
@@ -22,15 +24,16 @@ class DiscoveryClientSpec extends BeanContextSpec {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { supportedLanguages(it[0]).contains(it[1]) }
     }
 
-    void "dependencies for discovery client and http-client-jdk"(BuildTool buildTool) {
+    void "dependencies for discovery client and http-client-jdk"(BuildTool buildTool, Language language) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features([DiscoveryClient.NAME, HttpClientJdk.NAME])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client", Scope.COMPILE)
@@ -39,6 +42,6 @@ class DiscoveryClientSpec extends BeanContextSpec {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        [buildTool, language] << [BuildTool.values(), Language.values() - Language.PYTHON].combinations().findAll { supportedLanguages(it[0]).contains(it[1]) }
     }
 }

@@ -24,7 +24,7 @@ class VertxPgSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-pg-client")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

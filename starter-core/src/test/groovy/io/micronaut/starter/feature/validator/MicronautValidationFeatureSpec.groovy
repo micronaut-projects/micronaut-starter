@@ -78,7 +78,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
     void 'test Micronaut Validation feature for language=#language and buildTool=#buildTool'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .applicationType(ApplicationType.FUNCTION)
+                .applicationType(language == Language.PYTHON ? ApplicationType.DEFAULT : ApplicationType.FUNCTION)
                 .language(language)
                 .features(['validation'])
                 .render()
@@ -92,6 +92,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         verifier.hasDependency("jakarta.validation", "jakarta.validation-api", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << ([Language.values() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+                + [[Language.PYTHON, BuildTool.PYRONAUT]])
     }
 }

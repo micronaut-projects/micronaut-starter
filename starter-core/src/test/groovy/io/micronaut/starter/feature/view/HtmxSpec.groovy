@@ -35,7 +35,7 @@ class HtmxSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.views:micronaut-views-htmx")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

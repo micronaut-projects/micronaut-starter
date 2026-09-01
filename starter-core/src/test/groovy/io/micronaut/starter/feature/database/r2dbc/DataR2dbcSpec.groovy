@@ -197,7 +197,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbc-hikari", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void "test migration dependencies are present for gradle and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -244,7 +244,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void "test dependencies are present for maven and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -356,7 +356,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        [buildTool, featureClass] << [BuildTool.values(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildTool.values() - BuildTool.PYRONAUT, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         driver = featureClass.simpleName
         isH2 = featureClass == H2
     }

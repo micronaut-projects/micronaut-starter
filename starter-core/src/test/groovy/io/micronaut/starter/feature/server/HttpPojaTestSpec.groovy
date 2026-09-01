@@ -36,6 +36,6 @@ class HttpPojaTestSpec extends BeanContextSpec implements CommandOutputFixture {
                 || template.contains("micronaut-http-poja-apache") && template.contains("micronaut-http-poja-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

@@ -35,7 +35,7 @@ class PebbleSpec extends ApplicationContextSpec  implements CommandOutputFixture
         template.contains('implementation("io.micronaut.views:micronaut-views-pebble")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

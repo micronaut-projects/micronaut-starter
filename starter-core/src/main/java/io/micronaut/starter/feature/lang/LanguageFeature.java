@@ -43,6 +43,10 @@ public interface LanguageFeature extends DefaultFeature {
         return false;
     }
 
+    default boolean isPython() {
+        return false;
+    }
+
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;

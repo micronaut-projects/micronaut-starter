@@ -40,7 +40,7 @@ Add the following GitHub secrets:
         workflow
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {

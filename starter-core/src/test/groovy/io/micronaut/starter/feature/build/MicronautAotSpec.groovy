@@ -47,7 +47,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('"micronaut.security.openid-configuration.enabled","false"')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE)
     }
 
     void 'application with aot and oauth adds platform dependency for the aot scope -- language=#language (#tool)'(Language language, BuildTool tool) {
@@ -66,7 +66,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         template.contains("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion")
 
         where:
-        [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+        [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations().findAll { it ->
+            supportedLanguages(it[1]).contains(it[0])
+        }
     }
 
     void 'application with aot and jwt adds security jwks aot key language=#language'(Language language) {
@@ -78,7 +80,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains("\"micronaut.security.jwks.enabled\",\"false\"")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE)
     }
 
     void 'application with #buildTool and feature micronaut-aot for language=#language'(BuildTool buildTool, Language language) {
@@ -98,7 +100,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('replaceLogbackXml = true')
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations().findAll { it ->
+            supportedLanguages(it[0]).contains(it[1])
+        }
     }
 
     @Unroll
@@ -122,7 +126,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.indexOf(APP_PLUGIN) < output.indexOf(AOT_PLUGIN)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE)
     }
 
     @Unroll
@@ -136,7 +140,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.indexOf(APP_PLUGIN) < output.indexOf(AOT_PLUGIN)
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE_KOTLIN)
     }
 
     @Unroll

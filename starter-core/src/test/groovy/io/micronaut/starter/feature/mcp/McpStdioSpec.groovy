@@ -45,11 +45,15 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("micronaut-mcp-server-java-sdk")
-        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
+        if (buildTool == BuildTool.PYRONAUT) {
+            assert verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
+        } else {
+            assert !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
+        }
         (buildTool.isGradle() ? !template.contains('runtime(') : true)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 
     void "mcp-stdio renders MCP configuration"() {
@@ -62,6 +66,29 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         config.contains("name: mcpdemo")
         config.contains("version: 0.0.1")
         config.contains("transport: STDIO")
+    }
+
+    void "mcp-stdio supports Python Pyronaut projects"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT),
+                ['mcp-stdio']
+        )
+        String pyproject = output["pyproject.toml"]
+        String config = output["config/application.toml"]
+
+        then:
+        pyproject.contains('"io.micronaut.mcp:micronaut-mcp-server-java-sdk"')
+        pyproject.contains('"io.micronaut:micronaut-http-server-netty"')
+        pyproject.contains('"io.micronaut.pyronaut:micronaut-pyronaut-logback"')
+        !pyproject.contains("[tool.pyronaut.run]")
+        !pyproject.contains("banner-enabled")
+
+        and:
+        config.contains("mcp.server.transport = 'STDIO'")
+        !config.contains("micronaut.banner")
+        !output.containsKey("src/main/resources/logback.xml")
     }
 
     void 'test readme.md with feature mcp-stdio contains links to docs'() {
@@ -97,6 +124,6 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         applicationClass.contains('.banner(false)')
 
         where:
-        language << Language.values()
+        language << Language.values().toList() - Language.PYTHON
     }
 }

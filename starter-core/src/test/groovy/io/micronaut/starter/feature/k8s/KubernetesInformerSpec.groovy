@@ -80,6 +80,6 @@ class KubernetesInformerSpec extends ApplicationContextSpec  implements CommandO
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-informer")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

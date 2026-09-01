@@ -34,7 +34,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:3.141.59")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -52,7 +52,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -77,6 +77,8 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.seleniumhq.selenium", "selenium-support", Scope.TEST_RUNTIME)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
     }
 }

@@ -69,6 +69,6 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.springframework", "spring-orm", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

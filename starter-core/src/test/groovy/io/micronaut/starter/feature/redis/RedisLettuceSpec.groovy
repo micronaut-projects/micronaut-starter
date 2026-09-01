@@ -24,7 +24,7 @@ class RedisLettuceSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.redis:micronaut-redis-lettuce")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

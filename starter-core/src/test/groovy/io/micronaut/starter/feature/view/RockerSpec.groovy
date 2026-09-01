@@ -64,7 +64,7 @@ rocker {
         template.contains(applyPlugin)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven views-rocker feature for language=#language'() {
@@ -101,4 +101,3 @@ rocker {
         language << supportedLanguages(BuildTool.MAVEN)
     }
 }
-

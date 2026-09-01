@@ -25,7 +25,7 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.apache.groovy", moduleFeature, Scope.COMPILE)
 
         where:
-        [moduleFeature, buildTool] << [beanContext.getBeansOfType(GroovyModuleFeature)*.name, BuildTool.values()].combinations()
+        [moduleFeature, buildTool] << [beanContext.getBeansOfType(GroovyModuleFeature)*.name, jvmBuildTools()].combinations()
     }
 
     void "test feature #moduleFeature with build tool #buildTool and Spock Framework"(String moduleFeature, BuildTool buildTool) {
@@ -41,7 +41,7 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.apache.groovy", moduleFeature, Scope.TEST)
 
         where:
-        [moduleFeature, buildTool] << [beanContext.getBeansOfType(GroovyModuleFeature)*.name, BuildTool.values()].combinations()
+        [moduleFeature, buildTool] << [beanContext.getBeansOfType(GroovyModuleFeature)*.name, jvmBuildTools()].combinations()
     }
 
     void "test groovy feature #moduleFeature with language #language and test framework #testFramework fails"(
@@ -58,12 +58,17 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
         e.message == "$moduleFeature requires Groovy language or Spock test framework."
 
         where:
-        [moduleFeature, buildTool, language, testFramework] << [
-                beanContext.getBeansOfType(GroovyModuleFeature)*.name,
-                BuildTool.values(),
-                Language.values() - Language.GROOVY,
-                TestFramework.values() - TestFramework.SPOCK
-        ].combinations()
+        [moduleFeature, buildTool, language, testFramework] << beanContext.getBeansOfType(GroovyModuleFeature)*.name.collectMany { featureName ->
+            jvmBuildTools().collectMany { tool ->
+                supportedLanguages(tool)
+                        .findAll { it != Language.GROOVY }
+                        .collectMany { supportedLanguage ->
+                            (TestFramework.values().toList() - TestFramework.SPOCK)
+                                    .findAll { it.getSupportedLanguages().contains(supportedLanguage) }
+                                    .collect { framework -> [featureName, tool, supportedLanguage, framework] }
+                        }
+            }
+        }
     }
 
     void "test groovy feature #moduleFeature.name properties"(GroovyModuleFeature moduleFeature) {
@@ -75,5 +80,9 @@ class GroovyModuleFeatureSpec extends ApplicationContextSpec implements CommandO
 
         where:
         moduleFeature << beanContext.getBeansOfType(GroovyModuleFeature)
+    }
+
+    private static List<BuildTool> jvmBuildTools() {
+        BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 }

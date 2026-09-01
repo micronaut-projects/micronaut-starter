@@ -55,7 +55,7 @@ jte {
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -94,4 +94,3 @@ jte {
         language << supportedLanguages(BuildTool.MAVEN)
     }
 }
-

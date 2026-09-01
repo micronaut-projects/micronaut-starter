@@ -33,6 +33,21 @@ class PreviewControllerSpec extends Specification {
 
     }
 
+    void "test preview python defaults to pyronaut and pytest"() {
+        when:
+        def map = client.previewApp(ApplicationType.DEFAULT, "test", Collections.emptyList(), null, null, Language.PYTHON, null)
+
+        then:
+        map.contents.containsKey("pyproject.toml")
+        map.contents.containsKey("config/application.toml")
+        map.contents.containsKey("tests/test_application.py")
+        !map.contents.containsKey("build.gradle.kts")
+        !map.contents.containsKey("pom.xml")
+        map.contents["micronaut-cli.yml"].contains("sourceLanguage: python")
+        map.contents["micronaut-cli.yml"].contains("testFramework: pytest")
+        map.contents["micronaut-cli.yml"].contains("buildTool: pyronaut")
+    }
+
     void "test preview - bad feature"() {
         when:
         def map = client.previewApp(ApplicationType.DEFAULT, "test", ['juikkkk'], null, null, null, null)

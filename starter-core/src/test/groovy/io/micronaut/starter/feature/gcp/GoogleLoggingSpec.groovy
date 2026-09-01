@@ -48,6 +48,6 @@ class GoogleLoggingSpec extends ApplicationContextSpec implements CommandOutputF
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

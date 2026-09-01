@@ -47,7 +47,7 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('testImplementation("org.mockito:mockito-core")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

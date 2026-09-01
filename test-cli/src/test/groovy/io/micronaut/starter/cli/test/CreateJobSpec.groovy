@@ -27,7 +27,7 @@ class CreateJobSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered job") })
 
         where:
-        language << Language.values()
+        language << Language.values().findAll { it != Language.PYTHON }
     }
 
     @Override

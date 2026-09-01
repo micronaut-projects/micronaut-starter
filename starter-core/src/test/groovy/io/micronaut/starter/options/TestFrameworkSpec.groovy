@@ -24,6 +24,7 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.KOTLIN | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.GROOVY | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
+        Language.PYTHON | TestFramework.PYTEST  || "tests/{packagePath}/{className}.py"
         path = '/{packagePath}/{className}'
     }
 
@@ -37,6 +38,7 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.JUNIT
         Language.GROOVY | TestFramework.SPOCK
         Language.KOTLIN | TestFramework.KOTEST
+        Language.PYTHON | TestFramework.PYTEST
     }
 
     @Unroll("getSupportedLanguages for test framework: #testFramework return #expected")
@@ -51,5 +53,6 @@ class TestFrameworkSpec extends Specification {
         [Language.JAVA, Language.GROOVY, Language.KOTLIN] | TestFramework.JUNIT
         [Language.GROOVY]                                 | TestFramework.SPOCK
         [Language.KOTLIN]                                 | TestFramework.KOTEST
+        [Language.PYTHON]                                 | TestFramework.PYTEST
     }
 }

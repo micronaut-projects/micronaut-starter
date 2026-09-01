@@ -35,7 +35,7 @@ class SoySpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.views:micronaut-views-soy")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

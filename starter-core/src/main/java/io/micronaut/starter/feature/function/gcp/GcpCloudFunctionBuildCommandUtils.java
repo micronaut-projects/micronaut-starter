@@ -30,6 +30,8 @@ public final class GcpCloudFunctionBuildCommandUtils {
     public static String getBuildCommand(@NonNull BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return MAVEN_PACKAGE_COMMAND;
+        } else if (buildTool == BuildTool.PYRONAUT) {
+            return "pyronaut build";
         } else {
             return GRADLE_PACKAGE_COMMAND;
         }
@@ -39,6 +41,8 @@ public final class GcpCloudFunctionBuildCommandUtils {
     public static String getRunCommand(@NonNull BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw function:run";
+        } else if (buildTool == BuildTool.PYRONAUT) {
+            return "pyronaut run";
         } else {
             return "gradlew runFunction";
         }

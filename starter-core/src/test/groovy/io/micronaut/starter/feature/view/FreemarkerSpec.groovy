@@ -35,7 +35,7 @@ class FreemarkerSpec extends ApplicationContextSpec implements CommandOutputFixt
         template.contains('implementation("io.micronaut.views:micronaut-views-freemarker")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

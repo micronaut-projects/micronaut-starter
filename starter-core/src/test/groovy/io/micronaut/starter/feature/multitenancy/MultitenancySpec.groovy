@@ -79,6 +79,6 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
         template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

@@ -67,7 +67,9 @@ class JsonSchemaGeneratorFeatureSpec extends ApplicationContextSpec implements C
         verifier.hasBuildPlugin("io.micronaut.jsonschema")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations().findAll {
+            supportedLanguages(it[0]).contains(it[1])
+        }
     }
 
     @Unroll

@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildPluginFeature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -43,7 +44,7 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
             Options options,
             Set<Feature> selectedFeatures) {
         // maybe should not apply if JIB is selected
-        return true;
+        return options.getBuildTool() == BuildTool.GRADLE || options.getBuildTool() == BuildTool.GRADLE_KOTLIN;
     }
 
     @NonNull

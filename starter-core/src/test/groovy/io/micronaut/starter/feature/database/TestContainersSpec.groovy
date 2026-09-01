@@ -318,6 +318,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.testcontainers", "testcontainers-cassandra", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

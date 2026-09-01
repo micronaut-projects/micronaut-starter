@@ -73,7 +73,7 @@ class CloudTraceSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-tracing")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

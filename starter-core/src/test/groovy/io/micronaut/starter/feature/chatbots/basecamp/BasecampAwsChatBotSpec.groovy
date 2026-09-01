@@ -46,7 +46,7 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
         readme.contains("- [Micronaut Basecamp ChatBot as AWS Lambda function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void 'test README contains docs for #buildTool with CDK'(BuildTool buildTool) {
@@ -66,7 +66,7 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
         readme.contains("- [https://docs.aws.amazon.com/cdk/v2/guide/home.html](https://docs.aws.amazon.com/cdk/v2/guide/home.html)")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void 'Handler is is set to io.micronaut.chatbots.basecamp.lambda.Handler in CDK when features chatbots-basecamp-lambda and aws-cdk'() {
@@ -78,6 +78,6 @@ class BasecampAwsChatBotSpec extends BaseBasecampChatBotSpec {
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('io.micronaut.chatbots.basecamp.lambda.Handler')
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

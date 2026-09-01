@@ -22,7 +22,7 @@ class SQSSpec  extends ApplicationContextSpec {
         additionalModules.add("localstack-sqs")""")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test localstack-sqs test-resources module is added for Maven'() {
@@ -40,4 +40,3 @@ class SQSSpec  extends ApplicationContextSpec {
         verifier.hasTestResourceDependency("micronaut-test-resources-localstack-sqs")
     }
 }
-

@@ -67,6 +67,6 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.springframework", "spring-jdbc", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 }

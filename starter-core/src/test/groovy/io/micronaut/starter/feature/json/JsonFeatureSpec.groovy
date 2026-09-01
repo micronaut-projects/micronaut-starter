@@ -41,7 +41,7 @@ class JsonFeatureSpec extends ApplicationContextSpec implements CommandOutputFix
         !verifier.hasDependency("micronaut-runtime")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 
     @Unroll

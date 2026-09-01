@@ -35,7 +35,7 @@ class JmxSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.jmx:micronaut-jmx")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

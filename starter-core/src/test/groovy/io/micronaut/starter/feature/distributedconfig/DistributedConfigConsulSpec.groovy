@@ -36,7 +36,7 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
         template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -51,7 +51,7 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
         template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'test gradle config-consul multiple features'() {

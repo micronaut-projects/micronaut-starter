@@ -24,7 +24,7 @@ class AWSSDKv2Spec extends ApplicationContextSpec  implements CommandOutputFixtu
         template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

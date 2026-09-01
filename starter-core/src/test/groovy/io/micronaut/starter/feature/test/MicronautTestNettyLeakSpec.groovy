@@ -62,7 +62,7 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
         where:
         [featureName, language, buildTool, testFramework] << [
                 [FEATURE],
-                Language.values().toList(),
+                Language.values().toList() - Language.PYTHON,
                 BuildTool.values().toList(),
                 [TestFramework.JUNIT, TestFramework.SPOCK]
         ].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[1]) }

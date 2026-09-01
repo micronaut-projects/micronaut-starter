@@ -64,7 +64,7 @@ class DataSpringJdbcSpec extends ApplicationContextSpec  implements CommandOutpu
         verifier.hasDependency("io.micronaut.data", "micronaut-data-spring-jdbc", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void "test render config"() {

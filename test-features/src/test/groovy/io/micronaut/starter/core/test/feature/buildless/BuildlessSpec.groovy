@@ -24,6 +24,10 @@ class BuildlessSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
+        [buildTool, language] << [
+                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
+                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
+                Language.values().findAll { it != Language.PYTHON }
+        ].combinations()
     }
 }

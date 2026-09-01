@@ -33,7 +33,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         and:
         template.contains("additionalModules.add(\"jdbc-oracle-free\")")
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

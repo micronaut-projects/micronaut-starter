@@ -39,7 +39,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         template.contains 'implementation("io.micronaut.tracing:micronaut-tracing-jaeger")'
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

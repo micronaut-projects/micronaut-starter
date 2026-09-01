@@ -82,7 +82,7 @@ class KubernetesReactorClientSpec extends ApplicationContextSpec  implements Com
         template.contains('implementation("io.projectreactor:reactor-core")')
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     void 'reactor core dependency is not present if reactor feature is present'(){

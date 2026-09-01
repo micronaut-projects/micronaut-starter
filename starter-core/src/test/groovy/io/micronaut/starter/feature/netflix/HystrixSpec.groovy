@@ -35,7 +35,7 @@ class HystrixSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-hystrix")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -56,7 +56,7 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbc-hikari", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values() - BuildTool.PYRONAUT
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
@@ -108,4 +108,3 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
         ctx.configuration.containsKey('jpa.default.properties.hibernate.hbm2ddl.auto')
     }
 }
-

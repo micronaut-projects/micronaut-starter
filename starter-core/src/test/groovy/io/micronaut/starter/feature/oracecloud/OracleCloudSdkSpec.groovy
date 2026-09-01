@@ -24,7 +24,7 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-sdk")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

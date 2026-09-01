@@ -33,7 +33,7 @@ class MySQLSpec extends ApplicationContextSpec {
         additionalModules.add("jdbc-mysql")""")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE)
     }
 
     void 'testresources not configured for Gradle with testContainers feature and language=#language'() {
@@ -57,7 +57,7 @@ class MySQLSpec extends ApplicationContextSpec {
     }""")
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(GRADLE)
     }
 
     void 'test maven mysql feature for language=#language'() {

@@ -47,7 +47,7 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
         template.contains('testImplementation("org.hamcrest:hamcrest")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

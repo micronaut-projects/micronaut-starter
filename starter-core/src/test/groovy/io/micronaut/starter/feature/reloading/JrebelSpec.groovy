@@ -59,6 +59,6 @@ class JrebelSpec extends ApplicationContextSpec  implements CommandOutputFixture
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 }

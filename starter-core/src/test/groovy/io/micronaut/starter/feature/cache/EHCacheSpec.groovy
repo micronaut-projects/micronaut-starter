@@ -36,7 +36,7 @@ class EHCacheSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('implementation("io.micronaut.cache:micronaut-cache-ehcache")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

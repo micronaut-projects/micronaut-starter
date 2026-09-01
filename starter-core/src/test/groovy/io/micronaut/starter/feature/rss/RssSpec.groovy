@@ -34,7 +34,7 @@ class RssSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.rss:micronaut-rss")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

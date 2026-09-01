@@ -36,7 +36,7 @@ class InfinispanSpec extends ApplicationContextSpec  implements CommandOutputFix
         template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

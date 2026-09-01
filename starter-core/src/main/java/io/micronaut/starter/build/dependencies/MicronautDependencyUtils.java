@@ -290,6 +290,10 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .annotationProcessor();
+            case PYRONAUT -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .annotationProcessor(requiresPriority);
             case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false, requiresPriority);
         };
     }
@@ -311,6 +315,10 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .testAnnotationProcessor();
+            case PYRONAUT -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .testAnnotationProcessor(requiresPriority);
             case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, true, requiresPriority);
         };
     }

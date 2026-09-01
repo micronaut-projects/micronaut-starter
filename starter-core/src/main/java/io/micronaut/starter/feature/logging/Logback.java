@@ -26,6 +26,8 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.RequiresStdErr;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.rocker.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
@@ -41,6 +43,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
             .artifactId("logback-classic")
+            .runtime()
+            .build();
+    private static final Dependency PYRONAUT_LOGBACK = Dependency.builder()
+            .groupId("io.micronaut.pyronaut")
+            .artifactId("micronaut-pyronaut-logback")
             .runtime()
             .build();
 
@@ -68,7 +75,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        if (!isPyronaut(generatorContext)) {
+            addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        }
         addDependency(generatorContext);
     }
 
@@ -89,11 +98,15 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected void addDependency(GeneratorContext generatorContext) {
-        generatorContext.addDependency(LOGBACK_CLASSIC);
+        generatorContext.addDependency(isPyronaut(generatorContext) ? PYRONAUT_LOGBACK : LOGBACK_CLASSIC);
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    private static boolean isPyronaut(GeneratorContext generatorContext) {
+        return generatorContext.getLanguage() == Language.PYTHON && generatorContext.getBuildTool() == BuildTool.PYRONAUT;
     }
 }

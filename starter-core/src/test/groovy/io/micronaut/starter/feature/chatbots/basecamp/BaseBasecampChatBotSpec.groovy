@@ -42,6 +42,6 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
         output.containsKey("src/test/resources/mockBasecampAboutCommand.json")
 
         where:
-        [language, applicationType] << [Language.values(), supportedApplicationTypes].combinations()
+        [language, applicationType] << [Language.values() - Language.PYTHON, supportedApplicationTypes].combinations()
     }
 }

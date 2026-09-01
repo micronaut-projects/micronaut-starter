@@ -83,7 +83,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll
@@ -99,7 +99,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

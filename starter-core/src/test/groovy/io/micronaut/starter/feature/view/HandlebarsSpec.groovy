@@ -35,7 +35,7 @@ class HandlebarsSpec extends ApplicationContextSpec  implements CommandOutputFix
         template.contains('implementation("io.micronaut.views:micronaut-views-handlebars")')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages(BuildTool.GRADLE)
     }
 
     @Unroll

@@ -23,6 +23,8 @@ import io.micronaut.starter.rocker.feature.server.template.kotlinController;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.StringTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
 
 /**
@@ -44,7 +46,17 @@ public class WorkflowsUtils {
                 javaVersion.majorVersion());
     }
 
-    public static RockerTemplate createExampleController(Project project, Language language) {
+    public static Template createExampleController(Project project, Language language) {
+        if (language == Language.PYTHON) {
+            return new StringTemplate("src/{packagePath}/default_controller.py", """
+                from micronaut.http.annotation import Get
+
+
+                @Get(value="/default", produces="text/plain")
+                def default_index() -> str:
+                    return "Example Response"
+                """);
+        }
         RockerModel model = null;
         switch (language) {
             case KOTLIN:
