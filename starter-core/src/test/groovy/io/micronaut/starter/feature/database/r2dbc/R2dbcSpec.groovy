@@ -19,6 +19,7 @@ import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
@@ -143,7 +144,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         }
 
         where:
-        [buildTool, featureClass] << [BuildTool.values() - BuildTool.PYRONAUT, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildToolUtils.jvmBuildTools(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         driver = featureClass.simpleName
         isH2 = featureClass == H2
     }
@@ -159,7 +160,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         isH2 || ctx.configuration.get("r2dbc.datasources.default.dialect") == feature.dataDialect
 
         where:
-        [buildTool, featureClass] << [BuildTool.values() - BuildTool.PYRONAUT, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildToolUtils.jvmBuildTools(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         isH2 = featureClass == H2
     }
 }

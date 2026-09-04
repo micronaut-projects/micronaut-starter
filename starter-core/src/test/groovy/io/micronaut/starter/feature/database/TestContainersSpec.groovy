@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.TestFramework
 
@@ -318,6 +319,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.testcontainers", "testcontainers-cassandra", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.chatbots.basecamp
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 
@@ -35,6 +36,6 @@ class BasecampHttpChatBotSpec extends BaseBasecampChatBotSpec {
         readme.contains("- [Micronaut Basecamp ChatBot as a controller documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

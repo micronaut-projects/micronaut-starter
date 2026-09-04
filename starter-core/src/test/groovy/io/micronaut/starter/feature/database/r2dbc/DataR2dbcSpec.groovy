@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
 
@@ -197,7 +198,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbc-hikari", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test migration dependencies are present for gradle and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -244,7 +245,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test dependencies are present for maven and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -356,7 +357,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        [buildTool, featureClass] << [BuildTool.values() - BuildTool.PYRONAUT, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildToolUtils.jvmBuildTools(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         driver = featureClass.simpleName
         isH2 = featureClass == H2
     }

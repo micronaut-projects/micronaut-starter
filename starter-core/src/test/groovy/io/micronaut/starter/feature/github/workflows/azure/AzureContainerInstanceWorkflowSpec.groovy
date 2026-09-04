@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -45,7 +46,7 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         workflow.contains("export DOCKER_IMAGE=`echo \"\${DOCKER_REGISTRY_URL}/\${DOCKER_REPOSITORY_PATH}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test docker image is configured in #buildFileName for #feature'(BuildTool buildTool, String feature) {

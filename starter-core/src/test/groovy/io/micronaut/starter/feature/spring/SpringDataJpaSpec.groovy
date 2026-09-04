@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
@@ -69,6 +70,6 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.springframework", "spring-orm", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

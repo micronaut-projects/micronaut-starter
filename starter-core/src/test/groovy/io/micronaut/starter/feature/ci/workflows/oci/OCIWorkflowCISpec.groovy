@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -58,7 +59,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildTool.values() - BuildTool.PYRONAUT, MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
+        [buildTool, jdkVersion] << [BuildToolUtils.jvmBuildTools(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 
     @Unroll
@@ -94,6 +95,6 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildTool.values() - BuildTool.PYRONAUT, MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
+        [buildTool, jdkVersion] << [BuildToolUtils.jvmBuildTools(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 }

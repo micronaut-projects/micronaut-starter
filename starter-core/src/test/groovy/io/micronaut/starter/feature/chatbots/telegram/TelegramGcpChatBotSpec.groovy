@@ -4,6 +4,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
@@ -46,7 +47,7 @@ class TelegramGcpChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("- [Micronaut Telegram ChatBot as a Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
         command = buildTool.isGradle() ? GcpCloudFunctionBuildCommandUtils.GRADLE_PACKAGE_COMMAND : GcpCloudFunctionBuildCommandUtils.MAVEN_PACKAGE_COMMAND
     }
 }

@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -64,7 +65,7 @@ class DataSpringJdbcSpec extends ApplicationContextSpec  implements CommandOutpu
         verifier.hasDependency("io.micronaut.data", "micronaut-data-spring-jdbc", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test render config"() {

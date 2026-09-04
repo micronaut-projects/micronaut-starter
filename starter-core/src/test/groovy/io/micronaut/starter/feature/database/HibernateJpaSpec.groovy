@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.aop.AOP
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import spock.lang.Ignore
 
@@ -56,7 +57,7 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbc-hikari", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
