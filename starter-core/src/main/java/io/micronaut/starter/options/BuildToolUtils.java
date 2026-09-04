@@ -13,26 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.util;
+package io.micronaut.starter.options;
 
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public final class LanguageUtils {
-    public static final List<Language> JVM_LANGUAGES = List.of(Language.JAVA, Language.GROOVY, Language.KOTLIN);
-    private LanguageUtils() {
-
+public final class BuildToolUtils {
+    private BuildToolUtils() {
     }
 
-    public static List<Language> supportedLanguages(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return List.of(Language.JAVA, Language.GROOVY);
-        }
-        if (buildTool == BuildTool.PYRONAUT) {
-            return List.of(Language.PYTHON);
-        }
-        return JVM_LANGUAGES;
+    public static List<BuildTool> jvmBuildTools() {
+        List<BuildTool> buildTools = new ArrayList<>(BuildTool.valuesGradle());
+        buildTools.add(BuildTool.MAVEN);
+        return buildTools;
     }
+
 }

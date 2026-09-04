@@ -12,6 +12,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject;
 
@@ -51,7 +52,7 @@ class AmazonCloudWatchLoggingSpec extends ApplicationContextSpec implements Comm
 
         where:
         [language, buildTool] << [
-                [Language.JAVA, Language.GROOVY, Language.KOTLIN],
+                LanguageUtils.JVM_LANGUAGES,
                 BuildTool.values()
         ].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }

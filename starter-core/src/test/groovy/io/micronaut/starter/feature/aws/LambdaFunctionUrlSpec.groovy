@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -47,7 +48,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
 
         where:
-        buildTool << jvmBuilds()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'lambda runtime main class configuration is present for #buildTool'(BuildTool buildTool) {
@@ -65,9 +66,5 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
 
     private static Options createOptions(BuildTool buildTool) {
         new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
-    }
-
-    private static List<BuildTool> jvmBuilds() {
-        BuildTool.values() - BuildTool.PYRONAUT
     }
 }

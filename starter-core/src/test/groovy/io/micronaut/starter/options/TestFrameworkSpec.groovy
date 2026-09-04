@@ -1,5 +1,6 @@
 package io.micronaut.starter.options
 
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -50,7 +51,7 @@ class TestFrameworkSpec extends Specification {
 
         where:
         expected                                          | testFramework
-        [Language.JAVA, Language.GROOVY, Language.KOTLIN] | TestFramework.JUNIT
+        LanguageUtils.JVM_LANGUAGES                       | TestFramework.JUNIT
         [Language.GROOVY]                                 | TestFramework.SPOCK
         [Language.KOTLIN]                                 | TestFramework.KOTEST
         [Language.PYTHON]                                 | TestFramework.PYTEST

@@ -5,6 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 
@@ -32,7 +33,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         noExceptionThrown()
 
         where:
-        [buildtool, feature] << [jvmBuilds(), AWS_LAMBDA_FEATURES].combinations()
+        [buildtool, feature] << [BuildToolUtils.jvmBuildTools(), AWS_LAMBDA_FEATURES].combinations()
     }
 
     void 'test AWS Lambda feature validation succeeds for Java 21 for feature=#feature with graalvm'() {
@@ -48,7 +49,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         noExceptionThrown()
 
         where:
-        [buildtool, feature] << [jvmBuilds(), AWS_LAMBDA_FEATURES].combinations()
+        [buildtool, feature] << [BuildToolUtils.jvmBuildTools(), AWS_LAMBDA_FEATURES].combinations()
     }
 
     void 'test AWS Lambda feature validation succeeds for jdk=#jdk and buildtool=#buildtool for feature=#feature'() {
@@ -65,13 +66,9 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
 
         where:
         [buildtool, feature, jdk] << [
-                jvmBuilds(),
+                BuildToolUtils.jvmBuildTools(),
                 AWS_LAMBDA_FEATURES,
                 AwsLambdaFeatureValidator.supportedJdks()
             ].combinations()
-    }
-
-    private static List<BuildTool> jvmBuilds() {
-        BuildTool.values().toList() - BuildTool.PYRONAUT
     }
 }
