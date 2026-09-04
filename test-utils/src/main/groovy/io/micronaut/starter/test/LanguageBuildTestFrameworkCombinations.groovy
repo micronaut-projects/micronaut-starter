@@ -33,7 +33,7 @@ class LanguageBuildTestFrameworkCombinations {
         (features
                 ? [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values(), features].combinations()
                 : [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
-            LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+            !LanguageBuildCombinations.IS_KOTLIN_MAVEN.apply(it)
         }.findAll {
             return filterByTestFramework(it)
         }

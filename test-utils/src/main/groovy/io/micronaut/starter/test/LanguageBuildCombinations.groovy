@@ -24,8 +24,12 @@ import java.util.function.Function
 
 @AutoFinal
 class LanguageBuildCombinations {
-    static final Function<List, Boolean> SKIP_KOTLIN_MAVEN = l -> {
-        !(l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN)
+    static final Function<List, Boolean> IS_KOTLIN_MAVEN = l -> {
+        l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN
+    }
+
+    static final Function<List, Boolean> IS_PYRONAUT = l -> {
+        l[0] == Language.PYTHON && l[1] == BuildTool.PYRONAUT
     }
 
     /**
@@ -37,8 +41,7 @@ class LanguageBuildCombinations {
         (features
                 ? [Language.values(), BuildToolCombinations.buildTools, features].combinations()
                 : [Language.values(), BuildToolCombinations.buildTools].combinations()).findAll {
-            // Keep this matrix JVM-only; use pythonCombinations() for supported Python features.
-            SKIP_KOTLIN_MAVEN.apply(it) && it[0] != Language.PYTHON && it[1] != BuildTool.PYRONAUT
+            !IS_KOTLIN_MAVEN.apply(it) && !IS_PYRONAUT.apply(it)
         }
     }
 
@@ -51,8 +54,7 @@ class LanguageBuildCombinations {
     @Memoized
     static List<List> gradleCombinations(List<String> features = null) {
         (features ? [Language.values(), BuildTool.valuesGradle(), features].combinations() : [Language.values(), BuildTool.valuesGradle()].combinations()).findAll {
-            // Keep this matrix JVM-only; use pythonCombinations() for supported Python features.
-            it[0] != Language.PYTHON && it[1] != BuildTool.PYRONAUT
+            !IS_PYRONAUT.apply(it)
         }
     }
 }
