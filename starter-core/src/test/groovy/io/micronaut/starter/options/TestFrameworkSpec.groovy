@@ -46,7 +46,7 @@ class TestFrameworkSpec extends Specification {
     void "verify the list of supported languages for a test framework"(List<Language> expected, TestFramework testFramework) {
         given:
         expect:
-        expected.sort { a, b -> a.name <=> b.name } ==
+        new ArrayList<>(expected).sort { a, b -> a.name <=> b.name } ==
                 testFramework.supportedLanguages.sort { a, b -> a.name <=> b.name }
 
         where:
