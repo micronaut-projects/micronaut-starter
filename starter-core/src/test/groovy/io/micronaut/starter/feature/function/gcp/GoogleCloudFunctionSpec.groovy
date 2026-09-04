@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.json.JacksonDatabindFeature
 import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -265,8 +266,8 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
-            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
         }
     }
 
@@ -291,8 +292,8 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
-            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
         }
     }
 }

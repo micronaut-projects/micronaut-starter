@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -213,8 +214,8 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
-            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
         }
 
     }

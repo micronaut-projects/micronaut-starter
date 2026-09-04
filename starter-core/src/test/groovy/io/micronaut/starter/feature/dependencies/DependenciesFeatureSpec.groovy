@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.micrometer.MicrometerFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.LanguageUtils
@@ -78,8 +79,8 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.seleniumhq.selenium", "selenium-support", Scope.TEST_RUNTIME)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll {
-            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
         }
     }
 }
