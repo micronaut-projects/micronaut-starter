@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.options.BuildToolUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -44,7 +45,7 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
             Options options,
             Set<Feature> selectedFeatures) {
         // maybe should not apply if JIB is selected
-        return options.getBuildTool() == BuildTool.GRADLE || options.getBuildTool() == BuildTool.GRADLE_KOTLIN;
+        return BuildToolUtils.isGradle(options);
     }
 
     @NonNull

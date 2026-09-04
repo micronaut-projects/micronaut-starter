@@ -28,4 +28,7 @@ public final class BuildToolUtils {
         return buildTools;
     }
 
+    public static boolean isGradle(Options options) {
+        return BuildTool.valuesGradle().contains(options.getBuildTool());
+    }
 }
