@@ -83,7 +83,7 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
         e.message.contains("The selected features are incompatible")
 
         where:
-        language << (supportedLanguages(BuildTool.MAVEN) - Language.KOTLIN)
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
