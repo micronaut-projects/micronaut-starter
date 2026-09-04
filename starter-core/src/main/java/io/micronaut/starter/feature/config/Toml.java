@@ -23,7 +23,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.build.pyronaut.PyronautUtils;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -36,7 +35,7 @@ import java.util.function.Function;
 
 @Requires(property = "micronaut.starter.feature.toml.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Toml implements ConfigurationFeature, DefaultFeature {
+public class Toml implements DefaultConfigurationFeature {
 
     public static final String NAME = "toml";
     private static final String EXTENSION = "toml";
@@ -96,7 +95,7 @@ public class Toml implements ConfigurationFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.PYTHON && selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
+        return options.getLanguage() != Language.PYTHON && DefaultConfigurationFeature.super.shouldApply(applicationType, options, selectedFeatures);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class Toml implements ConfigurationFeature, DefaultFeature {
                     .filter(config -> !config.isEmpty())
                     .forEach(config -> generatorContext.addTemplate(config.getTemplateKey(), new TomlTemplate(pyronautPath(config), config)));
         } else {
-            ConfigurationFeature.super.apply(generatorContext);
+            DefaultConfigurationFeature.super.apply(generatorContext);
         }
     }
 
