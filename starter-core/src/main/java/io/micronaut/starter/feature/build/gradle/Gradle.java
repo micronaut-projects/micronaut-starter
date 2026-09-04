@@ -101,7 +101,6 @@ public class Gradle implements BuildFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addGradleInitFiles(generatorContext);
-        addGitignore(generatorContext);
         if (generatorContext.isMicronautFramework()) {
             extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
             GradleBuild build = createBuild(generatorContext);
@@ -161,15 +160,6 @@ public class Gradle implements BuildFeature {
                 generatorContext.getFeatures(),
                 build
         );
-    }
-
-    protected void addGitignore(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore(generatorContext)));
-    }
-
-    @SuppressWarnings("java:S1172") // Unused parameter for extensibility
-    protected RockerModel gitignore(GeneratorContext generatorContext) {
-        return gitignore.template(generatorContext.getFeatures());
     }
 
     protected void addGradleProperties(GeneratorContext generatorContext) {
