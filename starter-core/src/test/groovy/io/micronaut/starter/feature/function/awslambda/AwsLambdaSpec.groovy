@@ -373,8 +373,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
     )
 }''')
         where:
-        language << supportedLanguages(BuildTool.GRADLE_KOTLIN)
-        extension << supportedLanguages(BuildTool.GRADLE_KOTLIN)*.extension
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
     }
 
     void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
@@ -557,10 +557,10 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE_KOTLIN)
-        extension << supportedLanguages(BuildTool.GRADLE_KOTLIN)*.extension
-        srcDir << supportedLanguages(BuildTool.GRADLE_KOTLIN)*.srcDir
-        testSrcDir << supportedLanguages(BuildTool.GRADLE_KOTLIN)*.testSrcDir
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
+        srcDir << LanguageUtils.JVM_LANGUAGES*.srcDir
+        testSrcDir << LanguageUtils.JVM_LANGUAGES*.testSrcDir
     }
 
     void 'app with maven and feature aws-lambda for language=#language'() {
