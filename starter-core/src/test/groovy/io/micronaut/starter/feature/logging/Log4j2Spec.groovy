@@ -6,6 +6,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Unroll
 
 import java.util.regex.Pattern
@@ -27,7 +28,7 @@ class Log4j2Spec extends ApplicationContextSpec {
         verifier.hasDependency("org.apache.logging.log4j", "log4j-slf4j2-impl", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
 
     }
 }

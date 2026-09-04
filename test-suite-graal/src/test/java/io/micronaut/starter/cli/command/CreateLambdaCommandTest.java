@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestFrameworkUtils;
 import io.micronaut.starter.util.LanguageUtils;
 import io.micronaut.starter.util.NameUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -50,7 +51,7 @@ class CreateLambdaCommandTest {
                         .flatMap(lambdaDeployment -> Stream.of(applicationContext.getBean(Arm.class), applicationContext.getBean(X86.class))
                                 .flatMap(cpuArchitecture -> Stream.of(false, true)
                                         .flatMap(cdk -> Stream.of(CreateLambdaBuilderCommand.languagesForDeployment(lambdaDeployment))
-                                                .flatMap(language -> Stream.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST)
+                                                .flatMap(language -> TestFrameworkUtils.jvmTestFrameworks().stream()
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool -> getAllApiFeatures(codingStyle).stream()
                                                                         .flatMap(feature -> command.getJdkVersionCandidates().stream()

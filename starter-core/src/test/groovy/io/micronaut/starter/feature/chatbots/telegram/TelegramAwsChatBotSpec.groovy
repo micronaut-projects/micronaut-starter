@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -47,7 +48,7 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("- [Micronaut Telegram ChatBot as AWS Lambda function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test README contains docs for #buildTool with CDK'(BuildTool buildTool) {
@@ -67,7 +68,7 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         readme.contains("- [https://docs.aws.amazon.com/cdk/v2/guide/home.html](https://docs.aws.amazon.com/cdk/v2/guide/home.html)")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'Handler is is set to io.micronaut.chatbots.telegram.lambda.Handler in CDK when features chatbots-telegram-lambda and aws-cdk'() {
@@ -79,6 +80,6 @@ class TelegramAwsChatBotSpec extends BaseTelegramChatBotSpec {
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('io.micronaut.chatbots.telegram.lambda.Handler')
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

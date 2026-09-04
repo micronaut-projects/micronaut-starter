@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 
 class JsonPathSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -52,6 +53,6 @@ class JsonPathSpec extends ApplicationContextSpec implements CommandOutputFixtur
         verifier.hasDependency("com.jayway.jsonpath", "json-path", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
+        [buildTool, language] << [BuildTool.values(), LanguageUtils.JVM_LANGUAGES].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
     }
 }

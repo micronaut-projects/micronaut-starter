@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Unroll
@@ -39,6 +40,7 @@ class ConfigurationFeatureSpec extends BeanContextSpec implements CommandOutputF
         !output['src/main/resources/application.yml']
 
         where:
-        buildTool << BuildTool.values()
+        // Pyronaut uses config/application.toml instead of the JVM resource layout asserted here.
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

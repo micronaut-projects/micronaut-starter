@@ -35,6 +35,7 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     @Unroll

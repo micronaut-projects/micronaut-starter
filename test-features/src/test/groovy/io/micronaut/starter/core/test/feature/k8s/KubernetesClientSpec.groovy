@@ -41,9 +41,10 @@ class KubernetesClientSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                BuildTool.valuesGradle(),
+                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
+                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
                 ["kubernetes-client", "kubernetes-reactor-client"],
-                Language.values()
+                Language.values().findAll { it != Language.PYTHON }
         ].combinations()
     }
 }

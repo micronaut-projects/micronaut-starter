@@ -10,6 +10,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
@@ -49,7 +50,7 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
         !verifier.hasDependency("org.yaml", "snakeyaml", Scope.TEST_RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test configuration files generated for yaml feature"() {

@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -58,7 +59,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.tracing(Tracing.ACTIVE)')
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'architecture defaults to X86 for  #buildTool'(BuildTool buildTool) {
@@ -72,7 +73,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
 
@@ -108,7 +109,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 """)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "dependencies are added for cdk to infra project for maven"() {

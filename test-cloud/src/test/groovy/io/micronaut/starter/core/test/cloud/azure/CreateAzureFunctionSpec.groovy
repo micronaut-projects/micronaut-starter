@@ -64,7 +64,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
                 BuildToolCombinations.buildTools,
                 TestFrameworkCombinations.values()
         ].combinations().findAll {
-            LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+            LanguageBuildCombinations.IS_KOTLIN_MAVEN.apply(it)
         }.findAll {
             return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)
         }

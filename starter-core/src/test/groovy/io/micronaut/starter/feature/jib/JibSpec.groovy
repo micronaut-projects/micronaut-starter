@@ -6,6 +6,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class JibSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -45,7 +46,7 @@ class JibSpec extends ApplicationContextSpec implements CommandOutputFixture {
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
 }

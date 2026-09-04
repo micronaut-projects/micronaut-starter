@@ -62,7 +62,8 @@ class TestContainersFunctionalSpec extends CommandSpec {
                         .filter( f -> !f.embedded())
                         .toList()
         ].combinations().findAll {
-            it[0] != BuildTool.MAVEN
+            // This spec always generates Java; add a Python/Pyronaut fixture before including Pyronaut.
+            it[0] != BuildTool.MAVEN && it[0] != BuildTool.PYRONAUT
         }
     }
 }

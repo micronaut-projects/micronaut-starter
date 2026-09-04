@@ -20,12 +20,16 @@ class FeatureWithDuplicatesSpec extends BeanContextSpec implements CommandOutput
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then: 'for a dependency in compile, runtime, compileOnly, testRuntimeOnly, testCompileOnly and test, only compile should be added'
-        !verifier.hasDependency("org.gebish", "geb-core", Scope.RUNTIME)
-        !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST)
-        !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST_COMPILE_ONLY)
-        !verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE_ONLY)
-        !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST_RUNTIME)
-        verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE)
+        if (buildTool == BuildTool.PYRONAUT) {
+            assert verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE)
+        } else {
+            assert !verifier.hasDependency("org.gebish", "geb-core", Scope.RUNTIME)
+            assert !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST)
+            assert !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST_COMPILE_ONLY)
+            assert !verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE_ONLY)
+            assert !verifier.hasDependency("org.gebish", "geb-core", Scope.TEST_RUNTIME)
+            assert verifier.hasDependency("org.gebish", "geb-core", Scope.COMPILE)
+        }
 
         and: 'for a dependency in runtime and test, both runtime and test should be added'
         if (buildTool.isGradle()) {
@@ -33,6 +37,9 @@ class FeatureWithDuplicatesSpec extends BeanContextSpec implements CommandOutput
             assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST)
         } else if(buildTool == BuildTool.MAVEN) {
             assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
+        } else if (buildTool == BuildTool.PYRONAUT) {
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.RUNTIME)
+            assert verifier.hasDependency("org.seleniumhq.selenium", "selenium-firefox-driver", Scope.TEST)
         }
 
         where:

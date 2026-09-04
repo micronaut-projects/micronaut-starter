@@ -5,6 +5,7 @@ import io.micronaut.starter.feature.chatbots.ChatBotsFeature
 import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.feature.function.gcp.GcpCloudFunctionBuildCommandUtils
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 
@@ -42,7 +43,7 @@ class BasecampGcpChatBotSpec extends BaseBasecampChatBotSpec {
         readme.contains("- [Micronaut Basecamp ChatBot as a Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
         command = buildTool.isGradle() ? GcpCloudFunctionBuildCommandUtils.GRADLE_PACKAGE_COMMAND : GcpCloudFunctionBuildCommandUtils.MAVEN_PACKAGE_COMMAND
     }
 }

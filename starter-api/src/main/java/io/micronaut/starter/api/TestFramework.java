@@ -23,7 +23,8 @@ public enum TestFramework {
     JUNIT,
     SPOCK,
     KOTLINTEST,
-    KOTEST;
+    KOTEST,
+    PYTEST;
 
     @Override
     public String toString() {
@@ -42,6 +43,8 @@ public enum TestFramework {
             case KOTLINTEST:
             case KOTEST:
                 return io.micronaut.starter.options.TestFramework.KOTEST;
+            case PYTEST:
+                return io.micronaut.starter.options.TestFramework.PYTEST;
             case JUNIT:
             default:
                 return io.micronaut.starter.options.TestFramework.JUNIT;

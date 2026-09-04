@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -42,7 +43,7 @@ class McpHttpSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("micronaut-mcp-server-java-sdk")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "mcp-http renders MCP configuration"() {

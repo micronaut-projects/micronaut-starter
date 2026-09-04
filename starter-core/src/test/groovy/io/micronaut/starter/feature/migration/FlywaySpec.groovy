@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -46,7 +47,7 @@ flyway:
         verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     private BuildTestVerifier verifier(BuildTool buildTool, List<String> features) {
@@ -65,7 +66,7 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-mysql", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test the flyway-mysql dependency is added to the gradle build when mariadb is selected"(BuildTool buildTool) {
@@ -77,7 +78,7 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-mysql", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test the flyway-sqlserver dependency is added to the gradle build when sqlserver is selected"(BuildTool buildTool) {
@@ -89,7 +90,7 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-sqlserver", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test the flyway-database-oracle dependency is added to the gradle build when oracle-cloud-atp is selected"(BuildTool buildTool) {
@@ -101,7 +102,7 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-database-oracle", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test the flyway-database-oracle dependency is added to the gradle build when oracle is selected"(BuildTool buildTool) {
@@ -113,7 +114,7 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-database-oracle", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test the flyway-database-postgresql dependency is added to the gradle build when postgres is selected"(BuildTool buildTool) {
@@ -125,6 +126,6 @@ flyway:
         verifier.hasDependency("org.flywaydb", "flyway-database-postgresql", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

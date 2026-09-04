@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.PendingFeature
 import spock.lang.Unroll
 
@@ -55,7 +56,7 @@ micronaut:
         template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

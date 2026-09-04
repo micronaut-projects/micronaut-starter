@@ -6,6 +6,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -32,7 +33,7 @@ class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements Command
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "test azure-key-vault feature configuration"() {

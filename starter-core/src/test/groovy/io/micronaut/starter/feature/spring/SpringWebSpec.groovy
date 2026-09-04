@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -78,6 +79,6 @@ class SpringWebSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.spring", "micronaut-spring-web-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.spring.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -56,6 +57,8 @@ class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOut
         !verifier.hasDependency("io.micronaut.aws", ":aws-sdk-v2", Scope.COMPILE)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values().toList()].combinations().findAll { it -> supportedLanguages(it[0]).contains(it[1]) }
+        [buildTool, language] << [BuildTool.values(), LanguageUtils.JVM_LANGUAGES].combinations().findAll { it ->
+            supportedLanguages(it[0]).contains(it[1])
+        }
     }
 }

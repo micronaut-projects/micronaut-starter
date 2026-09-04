@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -26,7 +27,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         !hasSnapStart(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'Function AppStack imports included for SnapStart #buildTool'(BuildTool buildTool) {
@@ -70,7 +71,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'SnapStart is enabled by default even without a API Gateway #buildTool'(BuildTool buildTool) {
@@ -84,7 +85,7 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
         !usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     private static boolean hasSnapStart(String text) {
@@ -96,9 +97,9 @@ class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandO
     }
 
     private static List<BuildTool> graalVmAndCdkSupportedBuilds() {
-        BuildTool.values() - BuildTool.MAVEN
+        BuildToolUtils.jvmBuildTools() - BuildTool.MAVEN
     }
-
+    
     private static Options createOptions(BuildTool buildTool) {
         new Options(Language.JAVA, TestFramework.JUNIT, buildTool, AwsLambdaFeatureValidator.firstSupportedJdk())
     }

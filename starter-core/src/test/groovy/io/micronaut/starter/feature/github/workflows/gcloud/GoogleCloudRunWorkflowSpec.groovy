@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -36,7 +37,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         workflow.contains("export DOCKER_IMAGE=`echo \"\${GCLOUD_GCR}/\${GCLOUD_PROJECT_ID}/\${GCLOUD_IMAGE_REPOSITORY}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test github workflow is created for #buildTool'(BuildTool buildTool) {
@@ -52,7 +53,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         workflow.contains("export DOCKER_IMAGE=`echo \"\${GCLOUD_GCR}/\${GCLOUD_PROJECT_ID}/\${GCLOUD_IMAGE_REPOSITORY}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {

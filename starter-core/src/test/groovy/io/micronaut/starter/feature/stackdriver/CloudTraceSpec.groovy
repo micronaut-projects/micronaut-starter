@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -73,7 +74,7 @@ class CloudTraceSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-tracing")')
 
         where:
-        language << Language.values()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

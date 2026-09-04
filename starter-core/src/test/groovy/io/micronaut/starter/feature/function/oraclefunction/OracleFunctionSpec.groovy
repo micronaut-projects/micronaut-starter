@@ -8,11 +8,13 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -64,7 +66,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
                 .contains("class FooControllerTest")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [LanguageUtils.JVM_LANGUAGES, [true, false]].combinations()
     }
 
     void "runtime for gradle and oracle-function"() {
@@ -79,7 +81,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         build.contains('runtime("oracle_function")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test maven oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
@@ -212,7 +214,9 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
+        }
 
     }
 
@@ -243,6 +247,8 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll {
+            it[0] != Language.PYTHON && supportedLanguages(it[1]).contains(it[0])
+        }
     }
 }

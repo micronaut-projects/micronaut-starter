@@ -55,7 +55,8 @@ public class Application {
         output?.contains("BUILD SUCCESS")
 
         where:
-        build << BuildToolCombinations.buildTools
+        // This test generates JVM projects; add a Python/Pyronaut fixture and build verification before including Pyronaut.
+        build << BuildToolCombinations.buildTools.findAll { it != BuildTool.PYRONAUT }
     }
 
     @Unroll
@@ -101,7 +102,8 @@ class Application {
         output?.contains("BUILD SUCCESS")
 
         where:
-        build << BuildToolCombinations.buildTools
+        // This test generates JVM projects; add a Python/Pyronaut fixture and build verification before including Pyronaut.
+        build << BuildToolCombinations.buildTools.findAll { it != BuildTool.PYRONAUT }
     }
 
     @Unroll

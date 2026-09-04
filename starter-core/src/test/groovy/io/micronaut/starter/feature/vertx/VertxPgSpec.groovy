@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class VertxPgSpec extends ApplicationContextSpec {
@@ -24,7 +25,7 @@ class VertxPgSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-pg-client")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
@@ -68,7 +69,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         workflow.contains("OCI_REGION: ${OracleFunctionsGraalWorkflow.WORKFLOW_DEFAULT_REGION}")
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test http function pom.xml configuration for #feature'(String feature) {

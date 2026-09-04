@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 import static io.micronaut.starter.options.BuildTool.GRADLE
 
@@ -33,7 +34,7 @@ class MySQLSpec extends ApplicationContextSpec {
         additionalModules.add("jdbc-mysql")""")
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'testresources not configured for Gradle with testContainers feature and language=#language'() {
@@ -57,7 +58,7 @@ class MySQLSpec extends ApplicationContextSpec {
     }""")
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test maven mysql feature for language=#language'() {

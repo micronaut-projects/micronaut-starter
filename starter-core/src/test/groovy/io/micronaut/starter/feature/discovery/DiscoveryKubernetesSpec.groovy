@@ -8,7 +8,9 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -39,7 +41,9 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
         !verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+            supportedLanguages(it[1]).contains(it[0])
+        }
     }
 
     void 'test discovery-kubernetes configuration'() {

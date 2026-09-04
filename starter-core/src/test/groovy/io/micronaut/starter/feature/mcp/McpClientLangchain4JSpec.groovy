@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -42,7 +43,7 @@ class McpClientLangchain4JSpec extends ApplicationContextSpec implements Command
         verifier.hasDependency("io.micronaut.mcp", "micronaut-mcp-client-langchain4j", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test readme.md with feature mcp-client-langchain4j contains links to docs'() {

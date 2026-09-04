@@ -29,7 +29,9 @@ class OpenSearchFunctionalSpec extends CommandSpec {
                 BuildToolCombinations.buildTools
         ].combinations().findAll {
             !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.GROOVY) &&
-                    !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN)
+                    !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN) &&
+                    // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
+                    it[1] != Language.PYTHON && it[2] != BuildTool.PYRONAUT
         }.findAll {
             it[2] != BuildTool.MAVEN
         }

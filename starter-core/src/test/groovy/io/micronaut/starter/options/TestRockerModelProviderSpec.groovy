@@ -1,6 +1,7 @@
 package io.micronaut.starter.options
 
 import com.fizzed.rocker.RockerModel
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -45,7 +46,9 @@ class TestRockerModelProviderSpec extends Specification {
         noExceptionThrown()
 
         where:
-        [language, testFramework] << [Language.values(), TestFramework.values()].combinations()
+        [language, testFramework] << [
+                LanguageUtils.JVM_LANGUAGES,
+                TestFrameworkUtils.jvmTestFrameworks()
+        ].combinations()
     }
 }
-

@@ -33,6 +33,8 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+import static io.micronaut.starter.feature.build.pyronaut.PyronautUtils.isPyronaut;
+
 @Requires(property = "micronaut.starter.feature.logback.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
@@ -41,6 +43,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
             .artifactId("logback-classic")
+            .runtime()
+            .build();
+    private static final Dependency PYRONAUT_LOGBACK = Dependency.builder()
+            .groupId("io.micronaut.pyronaut")
+            .artifactId("micronaut-pyronaut-logback")
             .runtime()
             .build();
 
@@ -68,7 +75,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        if (!isPyronaut(generatorContext)) {
+            addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        }
         addDependency(generatorContext);
     }
 
@@ -89,7 +98,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected void addDependency(GeneratorContext generatorContext) {
-        generatorContext.addDependency(LOGBACK_CLASSIC);
+        generatorContext.addDependency(isPyronaut(generatorContext) ? PYRONAUT_LOGBACK : LOGBACK_CLASSIC);
     }
 
     @Override

@@ -118,6 +118,7 @@ public class ApplicationController implements ApplicationTypeOperations {
             public void writeTo(Writer out) {
                 // no-op
             }
+
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
                 new RockerWritable(new starterApi()

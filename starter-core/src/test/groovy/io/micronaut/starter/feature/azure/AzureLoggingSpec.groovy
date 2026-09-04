@@ -11,9 +11,11 @@ import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.function.azure.AzureCloudFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -52,6 +54,7 @@ class AzureLoggingSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.azure", "micronaut-azure-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

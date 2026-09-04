@@ -28,7 +28,8 @@ import java.util.Set;
 public enum Language implements IncludesDefaults<LanguageDefaults> {
     JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN)),
     GROOVY("groovy", new LanguageDefaults(TestFramework.SPOCK, BuildTool.GRADLE_KOTLIN)),
-    KOTLIN("kt", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN));
+    KOTLIN("kt", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN)),
+    PYTHON("py", new LanguageDefaults(TestFramework.PYTEST, BuildTool.PYRONAUT));
 
     public static final Language DEFAULT_OPTION = JAVA;
 
@@ -60,10 +61,16 @@ public enum Language implements IncludesDefaults<LanguageDefaults> {
     }
 
     public String getSrcDir() {
+        if (this == PYTHON) {
+            return "src";
+        }
         return "src/main/" + getName();
     }
 
     public String getTestSrcDir() {
+        if (this == PYTHON) {
+            return "tests";
+        }
         return "src/test/" + getName();
     }
 

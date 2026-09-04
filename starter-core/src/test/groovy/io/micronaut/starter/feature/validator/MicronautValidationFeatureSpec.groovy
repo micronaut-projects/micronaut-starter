@@ -9,8 +9,10 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
@@ -92,6 +94,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         verifier.hasDependency("jakarta.validation", "jakarta.validation-api", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

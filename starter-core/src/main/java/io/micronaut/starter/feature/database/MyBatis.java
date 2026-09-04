@@ -22,7 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -30,7 +30,7 @@ import org.jspecify.annotations.Nullable;
 @Requires(property = "micronaut.starter.feature.jdbc.mybatis.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 @Primary
-public class MyBatis implements Feature {
+public class MyBatis implements RequiresJavaReflection {
     public static final String NAME = "mybatis";
     public static final String MICRONAUT_MYBATIS_ARTIFACT = "micronaut-mybatis";
 

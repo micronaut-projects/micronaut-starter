@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.graallanguages.Graalpy
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -34,7 +35,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         readme.contains("https://graalvm.org/python");
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.JAVA].combinations()
+        [buildTool, language] << [BuildToolUtils.jvmBuildTools(), Language.JAVA].combinations()
     }
 
     void "micronaut-graalpy belongs to LANGUAGES category"() {
@@ -68,7 +69,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         }
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.JAVA].combinations()
+        [buildTool, language] << [BuildToolUtils.jvmBuildTools(), Language.JAVA].combinations()
     }
 
     void "micronaut-graalpy feature requires java 25"() {

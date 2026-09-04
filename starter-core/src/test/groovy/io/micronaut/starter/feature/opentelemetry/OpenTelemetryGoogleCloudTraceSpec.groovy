@@ -10,6 +10,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 
 class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
@@ -43,7 +44,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for default application type test gradle tracing-opentelemetry-gcp feature for language=#language'(Language language, BuildTool buildTool) {
@@ -62,7 +63,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for #applicationType test gradle tracing-opentelemetry-gcp and tracing-opentelemetry-exporter-logging features for language=#language'(Language language,
@@ -84,7 +85,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
 
         where:
         [language, buildTool, applicationType] << [
-                Language.values().toList(),
+                LanguageUtils.JVM_LANGUAGES,
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
                 (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
         ].combinations()
@@ -116,7 +117,7 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
 
         where:
         [language, buildTool, applicationType] << [
-                Language.values().toList(),
+                LanguageUtils.JVM_LANGUAGES,
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
                 (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
         ].combinations()

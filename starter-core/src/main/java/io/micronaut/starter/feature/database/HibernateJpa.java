@@ -22,6 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import io.micronaut.starter.feature.migration.MigrationFeature;
@@ -29,7 +30,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.hibernate.jpa.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class HibernateJpa implements JpaFeature {
+public class HibernateJpa implements JpaFeature, RequiresJavaReflection {
 
     private static final String ARTIFACT_ID_MICRONAUT_HIBERNATE_JPA = "micronaut-hibernate-jpa";
     private final JdbcFeature jdbcFeature;

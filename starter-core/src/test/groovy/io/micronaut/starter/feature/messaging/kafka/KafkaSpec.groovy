@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
 class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -21,19 +22,22 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html")
     }
 
-    void "testcontainers kafka dependency is present for build tool #buildTool"(BuildTool buildTool) {
+    void "testcontainers kafka dependency is present for build tool #buildTool"(BuildTool buildTool, Language language) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(['kafka','testcontainers'])
+                .language(language)
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("org.testcontainers","testcontainers-kafka", Scope.TEST)
         verifier.hasDependency("org.apache.commons","commons-compress", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values()
+        [buildTool, language] << BuildTool.values().collectMany { tool ->
+            supportedLanguages(tool).collect { supportedLanguage -> [tool, supportedLanguage] }
+        }
     }
 
     void "test dependencies are present for gradle"() {

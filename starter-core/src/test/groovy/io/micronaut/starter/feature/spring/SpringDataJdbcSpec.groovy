@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -67,6 +68,6 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.springframework", "spring-jdbc", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

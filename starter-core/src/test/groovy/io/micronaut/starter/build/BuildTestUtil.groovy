@@ -3,6 +3,7 @@ package io.micronaut.starter.build
 import groovy.transform.CompileStatic
 import io.micronaut.starter.build.gradle.GradleBuildTestVerifier
 import io.micronaut.starter.build.maven.MavenBuildTestVerifier
+import io.micronaut.starter.build.pyronaut.PyronautBuildTestVerifier
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -14,7 +15,13 @@ class BuildTestUtil {
                                       Language language,
                                       TestFramework testFramework,
                                       String template) {
-        buildTool.isGradle() ? new GradleBuildTestVerifier(buildTool, template, language, testFramework) : new MavenBuildTestVerifier(template, language)
+        if (buildTool.isGradle()) {
+            return new GradleBuildTestVerifier(buildTool, template, language, testFramework)
+        }
+        if (buildTool == BuildTool.PYRONAUT) {
+            return new PyronautBuildTestVerifier(template)
+        }
+        new MavenBuildTestVerifier(template, language)
     }
 
     static BuildTestVerifier verifier(BuildTool buildTool,
