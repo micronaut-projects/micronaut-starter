@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.build.pyronaut.PyronautUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -98,15 +99,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected void addDependency(GeneratorContext generatorContext) {
-        generatorContext.addDependency(isPyronaut(generatorContext) ? PYRONAUT_LOGBACK : LOGBACK_CLASSIC);
+        generatorContext.addDependency(PyronautUtils.isPyronaut(generatorContext) ? PYRONAUT_LOGBACK : LOGBACK_CLASSIC);
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    private static boolean isPyronaut(GeneratorContext generatorContext) {
-        return generatorContext.getLanguage() == Language.PYTHON && generatorContext.getBuildTool() == BuildTool.PYRONAUT;
     }
 }

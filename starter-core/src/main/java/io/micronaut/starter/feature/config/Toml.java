@@ -20,6 +20,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.build.pyronaut.PyronautUtils;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -101,7 +102,7 @@ public class Toml implements ConfigurationFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getLanguage() == Language.PYTHON && generatorContext.getBuildTool() == BuildTool.PYRONAUT) {
+        if (PyronautUtils.isPyronaut(generatorContext)) {
             generatorContext.getAllConfigurations()
                     .stream()
                     .filter(config -> !config.isEmpty())
