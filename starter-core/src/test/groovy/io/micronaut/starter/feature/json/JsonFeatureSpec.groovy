@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
@@ -41,7 +42,7 @@ class JsonFeatureSpec extends ApplicationContextSpec implements CommandOutputFix
         !verifier.hasDependency("micronaut-runtime")
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     @Unroll

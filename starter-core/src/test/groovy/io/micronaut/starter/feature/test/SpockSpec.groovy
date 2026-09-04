@@ -6,6 +6,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.TestFrameworkUtils
 import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 
@@ -49,7 +50,7 @@ java {
 ''')
 
         where:
-        [language, testFramework] << [(LanguageUtils.JVM_LANGUAGES - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST - TestFramework.PYTEST)].combinations()
+        [language, testFramework] << [(LanguageUtils.JVM_LANGUAGES - Language.KOTLIN), (TestFrameworkUtils.jvmTestFrameworks() - TestFramework.KOTEST )].combinations()
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")

@@ -11,6 +11,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.validator.MicronautHttpValidation
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import spock.lang.Subject
 
@@ -51,7 +52,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-ui", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test dependency added for control-panel and management feature'(BuildTool buildTool) {
@@ -66,7 +67,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-management", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void 'test control-panel with management configuration'() {

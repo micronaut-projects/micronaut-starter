@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.aws.AwsLambdaFeatureValidator
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
@@ -115,7 +116,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency('com.amazonaws', 'aws-lambda-java-events')
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values().toList() - BuildTool.PYRONAUT].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values(), BuildToolUtils.jvmBuildTools()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda dependencies for aws-lambda function and #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -127,7 +128,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values().toList() - BuildTool.PYRONAUT].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values(), BuildToolUtils.jvmBuildTools()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda adds micronaut-aws-lambda-events-serde since serde-jackson is the default json feature for #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -138,7 +139,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values().toList() - BuildTool.PYRONAUT].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values(), BuildToolUtils.jvmBuildTools()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void "aws-lambda does not add micronaut-aws-lambda-events-serde when jackson-databind feature is added for #language and #buildTool"(Language language, BuildTool buildTool) {
@@ -149,7 +150,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !verifier.hasDependency("io.micronaut.aws", "micronaut-aws-lambda-events-serde", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values().toList() - BuildTool.PYRONAUT].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [Language.values(), BuildToolUtils.jvmBuildTools()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     private BuildTestVerifier verifier(BuildTool buildTool,

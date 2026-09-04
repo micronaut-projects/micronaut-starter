@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -50,6 +51,6 @@ class LiquibaseSlf4jSpec extends ApplicationContextSpec implements CommandOutput
         !verifier.hasDependency("org.slf4j", "jul-to-slf4j")
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

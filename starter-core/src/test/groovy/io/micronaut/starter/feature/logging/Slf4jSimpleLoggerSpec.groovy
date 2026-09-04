@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -48,6 +49,6 @@ class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOut
         verifier.hasDependency("io.goodforgod", "slf4j-simple-logger", Scope.RUNTIME)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

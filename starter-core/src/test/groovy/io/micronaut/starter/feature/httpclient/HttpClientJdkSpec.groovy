@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import spock.lang.Subject
 
 class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture {
@@ -38,7 +39,7 @@ class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     void "http-client-jdk supports #applicationType application type"(ApplicationType applicationType) {

@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class Slf4jJulBridgeSpec  extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -47,6 +48,6 @@ class Slf4jJulBridgeSpec  extends ApplicationContextSpec  implements CommandOutp
         verifier.hasDependency("org.slf4j", "jul-to-slf4j", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 }

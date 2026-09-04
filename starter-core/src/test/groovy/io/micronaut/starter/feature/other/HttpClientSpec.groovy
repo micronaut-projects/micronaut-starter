@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 
 class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
@@ -62,7 +63,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildTool.values().toList() - BuildTool.PYRONAUT
+        buildTool << BuildToolUtils.jvmBuildTools()
     }
 
     private static List combinations() {
