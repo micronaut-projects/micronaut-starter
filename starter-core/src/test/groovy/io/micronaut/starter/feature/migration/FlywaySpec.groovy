@@ -50,6 +50,14 @@ flyway:
         buildTool << BuildToolUtils.jvmBuildTools()
     }
 
+    void "test Pyronaut uses the native-compatible Flyway version"() {
+        when:
+        BuildTestVerifier verifier = verifier(BuildTool.PYRONAUT, ['flyway'])
+
+        then:
+        verifier.hasDependency("io.micronaut.flyway", "micronaut-flyway", Scope.COMPILE, "8.1.1", false)
+    }
+
     private BuildTestVerifier verifier(BuildTool buildTool, List<String> features) {
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(features)
