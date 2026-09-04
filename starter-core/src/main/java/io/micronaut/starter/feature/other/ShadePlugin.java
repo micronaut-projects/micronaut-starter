@@ -26,7 +26,6 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildPluginFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 

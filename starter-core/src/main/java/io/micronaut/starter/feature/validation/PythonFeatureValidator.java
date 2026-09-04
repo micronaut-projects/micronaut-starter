@@ -25,22 +25,19 @@ import io.micronaut.starter.feature.GradleSpecificFeature;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.feature.MavenSpecificFeature;
 import io.micronaut.starter.feature.RequireKaptFeature;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import io.micronaut.starter.feature.build.MicronautAot;
 import io.micronaut.starter.feature.config.ConfigurationFeature;
 import io.micronaut.starter.feature.config.Toml;
-import io.micronaut.starter.feature.database.HibernateJpa;
-import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.discovery.DiscoveryKubernetes;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.httpclient.HttpClientJdk;
 import io.micronaut.starter.feature.jmx.Jmx;
-import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.lang.python.PythonApplication;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.LoggingFeature;
 import io.micronaut.starter.feature.mcp.McpStdio;
-import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.feature.server.Netty;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.feature.sourcegen.SourcegenJava;
@@ -65,7 +62,7 @@ public class PythonFeatureValidator implements FeatureValidator {
         validateOptions(options);
         if (options.getLanguage() == Language.PYTHON) {
             features.stream()
-                    .filter(PythonFeatureValidator::requiresJavaReflection)
+                    .filter(RequiresJavaReflection.class::isInstance)
                     .findFirst()
                     .ifPresent(PythonFeatureValidator::rejectRequiresJavaReflection);
         }
@@ -125,7 +122,7 @@ public class PythonFeatureValidator implements FeatureValidator {
         if (feature instanceof TestFeature && !(feature instanceof Pytest)) {
             unsupported(feature);
         }
-        if (requiresJavaReflection(feature)) {
+        if (feature instanceof RequiresJavaReflection) {
             rejectRequiresJavaReflection(feature);
         }
         if (usesBootstrapConfiguration(feature)) {
@@ -160,13 +157,5 @@ public class PythonFeatureValidator implements FeatureValidator {
     private static boolean usesBootstrapConfiguration(Feature feature) {
         return feature instanceof DistributedConfigFeature
                 || feature instanceof DiscoveryKubernetes;
-    }
-
-    private static boolean requiresJavaReflection(Feature feature) {
-        return feature instanceof HibernateJpa
-                || feature instanceof HibernateReactiveFeature
-                || feature instanceof HibernateValidator
-                || feature instanceof JacksonDatabindFeature
-                || FEATURE_MYBATIS.equals(feature.getName());
     }
 }
