@@ -22,6 +22,7 @@ import java.util.List;
 
 public final class LanguageUtils {
     public static final List<Language> JVM_LANGUAGES = List.of(Language.JAVA, Language.GROOVY, Language.KOTLIN);
+
     private LanguageUtils() {
 
     }
