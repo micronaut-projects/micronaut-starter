@@ -10,6 +10,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -34,7 +35,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:3.141.59")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -52,7 +53,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

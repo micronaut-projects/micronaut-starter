@@ -13,6 +13,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Ignore
 import spock.lang.Unroll
 
@@ -150,7 +151,7 @@ class PicocliSpec extends ApplicationContextSpec {
         !generatorContext.getTemplates().containsKey("testDir")
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void "test that picocli with kotlin language requires kapt with buildTool=#buildTool"() {

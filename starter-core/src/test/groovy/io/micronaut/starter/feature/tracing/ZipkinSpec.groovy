@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -39,7 +40,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-brave-http", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle()].combinations()
     }
 
     void 'test tracing-zipkin configuration'() {

@@ -14,6 +14,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 import spock.lang.Unroll
 
@@ -33,7 +34,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         and:
         template.contains("additionalModules.add(\"jdbc-oracle-free\")")
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

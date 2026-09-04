@@ -8,6 +8,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 
 class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
@@ -41,7 +42,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
-        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for default application type test gradle tracing-opentelemetry-jaeger feature for language=#language'(Language language, BuildTool buildTool) {
@@ -60,7 +61,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
 
         where:
-        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for #applicationType test gradle tracing-opentelemetry-jaeger feature for language=#language'(Language language,
@@ -81,7 +82,7 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
         where:
         [language, buildTool, applicationType] << [
-                supportedLanguages(BuildTool.GRADLE),
+                LanguageUtils.JVM_LANGUAGES,
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
                 (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
         ].combinations()

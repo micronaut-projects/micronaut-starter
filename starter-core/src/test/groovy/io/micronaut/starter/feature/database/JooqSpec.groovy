@@ -12,6 +12,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.util.LanguageUtils
 
 class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -37,7 +38,7 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.sql:micronaut-jooq")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test maven jooq feature for language=#language'() {
@@ -69,6 +70,6 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         ex.message == "The selected feature jooq requires at latest Java 11"
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 }

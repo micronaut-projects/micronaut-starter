@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
@@ -83,7 +84,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -99,7 +100,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

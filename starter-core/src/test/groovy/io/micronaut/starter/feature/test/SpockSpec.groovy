@@ -6,6 +6,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 
 class SpockSpec extends ApplicationContextSpec {
@@ -48,7 +49,7 @@ java {
 ''')
 
         where:
-        [language, testFramework] << [(supportedLanguages(BuildTool.GRADLE) - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST - TestFramework.PYTEST)].combinations()
+        [language, testFramework] << [(LanguageUtils.JVM_LANGUAGES - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST - TestFramework.PYTEST)].combinations()
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")

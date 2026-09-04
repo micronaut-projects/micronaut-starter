@@ -6,6 +6,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class MicronautBuildPluginDockerBuildNativeSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -34,7 +35,7 @@ dockerBuildNative {
     ]
 }''')
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
-        extension << supportedLanguages(BuildTool.GRADLE)*.extension
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
     }
 }

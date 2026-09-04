@@ -13,6 +13,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -144,7 +145,7 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
         e.message.contains("The selected features are incompatible")
 
         where:
-        language << (supportedLanguages(BuildTool.GRADLE) - supportedLanguages())
+        language << (LanguageUtils.JVM_LANGUAGES - supportedLanguages())
     }
 
     @Unroll

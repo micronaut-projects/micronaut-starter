@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -67,7 +68,7 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
         template.contains('implementation("io.opentelemetry:opentelemetry-exporter-logging")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test maven tracing-opentelemetry-exporter-logging feature for language=#language'(Language language) {

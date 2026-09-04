@@ -10,6 +10,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -47,7 +48,7 @@ class JunitParamsSpec extends ApplicationContextSpec implements CommandOutputFix
         template.contains('testImplementation("org.junit.jupiter:junit-jupiter-params')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class HtmxSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -35,7 +36,7 @@ class HtmxSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.views:micronaut-views-htmx")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

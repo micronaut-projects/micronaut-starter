@@ -15,6 +15,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
@@ -54,7 +55,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         }
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {
@@ -94,7 +95,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
         extension = language.extension
         srcDir = language.srcDir
         testSrcDir = language.testSrcDir
@@ -191,7 +192,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
         extension = language.extension
         srcDir = language.srcDir
         testSrcDir = language.testSrcDir

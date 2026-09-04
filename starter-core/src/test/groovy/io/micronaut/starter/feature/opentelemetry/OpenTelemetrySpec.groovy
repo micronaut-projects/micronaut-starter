@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 import spock.lang.Unroll
 
@@ -57,7 +58,7 @@ class OpenTelemetrySpec extends ApplicationContextSpec implements CommandOutputF
         template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test maven tracing-opentelemetry feature for language=#language'(Language language) {

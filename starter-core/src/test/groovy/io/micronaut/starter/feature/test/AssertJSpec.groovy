@@ -17,6 +17,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -53,7 +54,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('testImplementation("org.assertj:assertj-core")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test gradle assertj succeeds for defaults as JUnit is automatically selected'() {

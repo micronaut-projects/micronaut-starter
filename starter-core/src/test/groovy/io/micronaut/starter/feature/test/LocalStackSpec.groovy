@@ -10,6 +10,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -48,7 +49,7 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
         template.contains('testImplementation("com.amazonaws:aws-java-sdk-core")') == !hasSqs
 
         where:
-        [language, hasSqs] << [supportedLanguages(BuildTool.GRADLE), [true, false]].combinations()
+        [language, hasSqs] << [LanguageUtils.JVM_LANGUAGES, [true, false]].combinations()
     }
 
     void 'test maven localstack feature for language=#language'() {

@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class JacksonXmlSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -35,7 +36,7 @@ class JacksonXmlSpec extends ApplicationContextSpec  implements CommandOutputFix
         template.contains('implementation("io.micronaut.xml:micronaut-jackson-xml")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

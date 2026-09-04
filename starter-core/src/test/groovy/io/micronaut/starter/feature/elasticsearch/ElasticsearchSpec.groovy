@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -36,7 +37,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
         template.contains('implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

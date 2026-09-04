@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
@@ -113,6 +114,6 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
         e.message.contains("The selected features are incompatible")
 
         where:
-        language << (supportedLanguages(BuildTool.GRADLE) - Language.KOTLIN)
+        language << (LanguageUtils.JVM_LANGUAGES - Language.KOTLIN)
     }
 }

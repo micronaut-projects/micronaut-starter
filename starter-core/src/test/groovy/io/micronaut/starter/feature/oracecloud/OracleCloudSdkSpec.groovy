@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -24,7 +25,7 @@ class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutput
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-sdk")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

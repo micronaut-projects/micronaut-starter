@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.See
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -64,7 +65,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         !template.contains('implementation("io.opentelemetry:opentelemetry-extension-aws")')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @See("https://aws-otel.github.io/docs/getting-started/java-sdk/trace-manual-instr#instrumenting-the-aws-sdk")
@@ -86,7 +87,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         !verifier.hasDependency('io.opentelemetry:opentelemetry-extension-aws')
 
         where:
-        language << supportedLanguages(BuildTool.GRADLE)
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'for grpc application type test gradle tracing-opentelemetry-xray feature for language=#language'(Language language, BuildTool buildTool) {
@@ -105,7 +106,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
-        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for default application type test gradle tracing-opentelemetry-xray feature for language=#language'(Language language, BuildTool buildTool) {
@@ -124,7 +125,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
         !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-grpc")')
 
         where:
-        [language, buildTool] << [supportedLanguages(BuildTool.GRADLE), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
     void 'for #applicationType test gradle tracing-opentelemetry-xray feature for language=#language'(Language language,
@@ -145,7 +146,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
 
         where:
         [language, buildTool, applicationType] << [
-                supportedLanguages(BuildTool.GRADLE),
+                LanguageUtils.JVM_LANGUAGES,
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
                 (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
         ].combinations()
