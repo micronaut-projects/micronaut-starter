@@ -57,7 +57,7 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (!generatorContext.getBuildTool().isGradle()) {
             generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
                     .artifactId("micronaut-http-server-netty")
                     .compile());
