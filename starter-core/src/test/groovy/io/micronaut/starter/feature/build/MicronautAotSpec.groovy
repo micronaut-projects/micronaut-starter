@@ -115,6 +115,11 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('aot {')
     }
 
+    void 'AOT is not applied to Python applications'() {
+        expect:
+        !feature.shouldApply(DEFAULT, new Options(Language.PYTHON), [] as Set)
+    }
+
     @Unroll
     void 'order is correct in application with gradle and feature micronaut-aot for language=#language'() {
         when:
