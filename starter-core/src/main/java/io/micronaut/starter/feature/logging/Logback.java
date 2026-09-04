@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -45,8 +46,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
             .artifactId("logback-classic")
             .runtime()
             .build();
-    private static final Dependency PYRONAUT_LOGBACK = Dependency.builder()
-            .groupId("io.micronaut.pyronaut")
+    private static final Dependency PYRONAUT_LOGBACK = MicronautDependencyUtils.pyronautDependency()
             .artifactId("micronaut-pyronaut-logback")
             .runtime()
             .build();
