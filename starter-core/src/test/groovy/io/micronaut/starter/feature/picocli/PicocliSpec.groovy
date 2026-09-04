@@ -42,7 +42,7 @@ class PicocliSpec extends ApplicationContextSpec {
         }
 
         where:
-        [language, buildTool] << [Language.values() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test maven cli app JAVA contains picocli-gen as annotation processor'() {

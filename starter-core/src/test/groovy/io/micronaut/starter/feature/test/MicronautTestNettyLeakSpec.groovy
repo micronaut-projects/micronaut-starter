@@ -14,6 +14,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -62,7 +63,7 @@ class MicronautTestNettyLeakSpec extends ApplicationContextSpec implements Comma
         where:
         [featureName, language, buildTool, testFramework] << [
                 [FEATURE],
-                Language.values().toList() - Language.PYTHON,
+                LanguageUtils.JVM_LANGUAGES,
                 BuildTool.values().toList(),
                 [TestFramework.JUNIT, TestFramework.SPOCK]
         ].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[1]) }

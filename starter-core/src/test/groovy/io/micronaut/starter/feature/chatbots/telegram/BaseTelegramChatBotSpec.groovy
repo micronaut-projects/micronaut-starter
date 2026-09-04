@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.chatbots.BaseChatBotSpec
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
 
@@ -45,6 +46,6 @@ abstract class BaseTelegramChatBotSpec extends BaseChatBotSpec {
         output.containsKey("src/test/resources/mockAboutCommand.json")
 
         where:
-        [language, applicationType] << [Language.values() - Language.PYTHON, supportedApplicationTypes].combinations()
+        [language, applicationType] << [LanguageUtils.JVM_LANGUAGES, supportedApplicationTypes].combinations()
     }
 }

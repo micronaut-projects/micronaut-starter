@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.httpclient.HttpClientJdk
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 class DiscoveryClientSpec extends BeanContextSpec {
     void "dependencies for discovery client feature"(BuildTool buildTool, Language language) {
@@ -42,6 +43,6 @@ class DiscoveryClientSpec extends BeanContextSpec {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        [buildTool, language] << [BuildTool.values(), Language.values() - Language.PYTHON].combinations().findAll { supportedLanguages(it[0]).contains(it[1]) }
+        [buildTool, language] << [BuildTool.values(), LanguageUtils.JVM_LANGUAGES].combinations().findAll { supportedLanguages(it[0]).contains(it[1]) }
     }
 }

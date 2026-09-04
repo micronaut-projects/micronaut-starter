@@ -11,6 +11,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -50,6 +51,6 @@ class MockServerClientSpec extends ApplicationContextSpec implements CommandOutp
         verifier.hasDependency("org.mock-server", "mockserver-client-java", Scope.TEST)
 
         where:
-        [language, hasTC, buildTool] << [Language.values().toList() - Language.PYTHON, [true, false], BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[0]) }
+        [language, hasTC, buildTool] << [LanguageUtils.JVM_LANGUAGES, [true, false], BuildTool.values().toList()].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[0]) }
     }
 }

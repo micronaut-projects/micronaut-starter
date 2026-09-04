@@ -5,6 +5,7 @@ import io.micronaut.starter.feature.chatbots.BaseChatBotSpec
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
@@ -42,6 +43,6 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
         output.containsKey("src/test/resources/mockBasecampAboutCommand.json")
 
         where:
-        [language, applicationType] << [Language.values() - Language.PYTHON, supportedApplicationTypes].combinations()
+        [language, applicationType] << [LanguageUtils.JVM_LANGUAGES, supportedApplicationTypes].combinations()
     }
 }

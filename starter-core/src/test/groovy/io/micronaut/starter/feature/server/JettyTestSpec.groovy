@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.aws.DynamoDb
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 class JettyTestSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -37,6 +38,6 @@ class JettyTestSpec extends BeanContextSpec  implements CommandOutputFixture {
         verifier.hasAnnotationProcessor("io.micronaut.servlet", "micronaut-servlet-processor")
 
         where:
-        [language, buildTool] << [Language.values().toList() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

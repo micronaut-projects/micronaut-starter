@@ -12,6 +12,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -124,6 +125,6 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
         applicationClass.contains('.banner(false)')
 
         where:
-        language << Language.values().toList() - Language.PYTHON
+        language << LanguageUtils.JVM_LANGUAGES
     }
 }

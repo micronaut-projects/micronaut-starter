@@ -12,6 +12,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.util.LanguageUtils
 
 class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -38,7 +39,7 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         factory.contains("builder.stream(\"streams-plaintext-input\")")
 
         where:
-        language << Language.values().toList() - Language.PYTHON
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void "test kafka-streams features"() {

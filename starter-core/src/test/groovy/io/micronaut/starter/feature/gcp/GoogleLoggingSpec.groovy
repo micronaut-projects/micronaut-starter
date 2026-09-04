@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.function.gcp.GcpCloudFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 
 class GoogleLoggingSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -48,6 +49,6 @@ class GoogleLoggingSpec extends ApplicationContextSpec implements CommandOutputF
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList() - Language.PYTHON, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }
