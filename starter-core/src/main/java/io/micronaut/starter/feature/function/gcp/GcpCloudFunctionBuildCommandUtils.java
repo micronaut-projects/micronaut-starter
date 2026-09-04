@@ -19,9 +19,10 @@ import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.options.BuildTool;
 
 public final class GcpCloudFunctionBuildCommandUtils {
-
     public static final String MAVEN_PACKAGE_COMMAND = "mvnw clean package";
     public static final String GRADLE_PACKAGE_COMMAND = "gradlew shadowJar";
+    public static final String PYRONAUT_PACKAGE_COMMAND = "pyronaut build";
+    public static final String PYRONAUT_RUN_COMMAND = "pyronaut run";
 
     private GcpCloudFunctionBuildCommandUtils() {
     }
@@ -31,7 +32,7 @@ public final class GcpCloudFunctionBuildCommandUtils {
         if (buildTool == BuildTool.MAVEN) {
             return MAVEN_PACKAGE_COMMAND;
         } else if (buildTool == BuildTool.PYRONAUT) {
-            return "pyronaut build";
+            return PYRONAUT_PACKAGE_COMMAND;
         } else {
             return GRADLE_PACKAGE_COMMAND;
         }
@@ -42,7 +43,7 @@ public final class GcpCloudFunctionBuildCommandUtils {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw function:run";
         } else if (buildTool == BuildTool.PYRONAUT) {
-            return "pyronaut run";
+            return PYRONAUT_RUN_COMMAND;
         } else {
             return "gradlew runFunction";
         }
