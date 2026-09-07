@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmPackagingFeature;
 import io.micronaut.starter.options.BuildToolUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
@@ -36,7 +37,7 @@ import java.util.Set;
  */
 @Requires(property = "micronaut.starter.feature.shade.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
+public class ShadePlugin implements DefaultFeature, BuildPluginFeature, JvmPackagingFeature {
 
     @Override
     public boolean shouldApply(
@@ -71,11 +72,6 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
     @Override
     public String getDescription() {
         return "Adds the ability to build a Fat/Shaded JAR";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.PACKAGING;
     }
 
     @Override

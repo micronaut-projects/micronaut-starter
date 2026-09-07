@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.test;
 
-/**
- * Marker to indicate a Feature requires Java Reflection
- */
-public interface RequiresJavaReflection extends JvmFeature {
+import io.micronaut.starter.feature.JvmFeature;
+
+public interface JvmTestFeature extends JvmFeature, TestFeature {
 }

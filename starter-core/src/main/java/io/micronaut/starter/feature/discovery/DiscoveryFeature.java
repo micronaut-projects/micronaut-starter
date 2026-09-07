@@ -17,9 +17,10 @@ package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.JvmOneOfFeature;
 import io.micronaut.starter.feature.OneOfFeature;
 
-public interface DiscoveryFeature extends OneOfFeature {
+public interface DiscoveryFeature extends JvmOneOfFeature {
 
     @Override
     default Class<?> getFeatureClass() {

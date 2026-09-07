@@ -22,11 +22,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.JvmFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jmx.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Jmx implements Feature {
+public class Jmx implements JvmFeature {
 
     @Override
     public String getName() {

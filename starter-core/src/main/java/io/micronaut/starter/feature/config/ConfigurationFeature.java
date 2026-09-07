@@ -17,12 +17,12 @@ package io.micronaut.starter.feature.config;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.JvmOneOfFeature;
 import io.micronaut.starter.template.Template;
 
 import java.util.function.Function;
 
-public interface ConfigurationFeature extends OneOfFeature {
+public interface ConfigurationFeature extends JvmOneOfFeature {
 
     @Override
     default Class<?> getFeatureClass() {

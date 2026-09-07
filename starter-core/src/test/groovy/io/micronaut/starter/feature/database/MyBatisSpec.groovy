@@ -70,7 +70,7 @@ class MyBatisSpec extends ApplicationContextSpec implements CommandOutputFixture
                 .render()
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'Feature mybatis is not supported for Python because it requires Java reflection'
     }
 }

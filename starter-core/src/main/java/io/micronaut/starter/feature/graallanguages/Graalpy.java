@@ -41,7 +41,7 @@ import java.util.List;
 
 @Requires(property = "micronaut.starter.feature.graalpy.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Graalpy implements MinJdkFeature, Feature {
+public class Graalpy implements MinJdkFeature {
     public static final String NAME = "graalpy";
 
     private static final String GROUP_ID_GRAALVM_PYTHON = "org.graalvm.python";

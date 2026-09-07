@@ -23,12 +23,14 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.PythonSpecificFeature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.StringTemplate;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.python.application.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class PythonApplication implements ApplicationFeature, CodeContributingFeature {
+public class PythonApplication implements ApplicationFeature, CodeContributingFeature, PythonSpecificFeature {
 
     @Override
     public String getName() {
@@ -102,5 +104,10 @@ public class PythonApplication implements ApplicationFeature, CodeContributingFe
             def test_context(my_context):
                 assert my_context.isRunning()
             """;
+    }
+
+    @Override
+    public boolean supports(Language language) {
+        return PythonSpecificFeature.super.supports(language);
     }
 }

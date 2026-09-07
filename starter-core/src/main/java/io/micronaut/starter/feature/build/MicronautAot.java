@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.build;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmPackagingFeature;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.util.StringUtils;
@@ -27,7 +28,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Scope;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.rocker.feature.build.maven.templates.aot;
@@ -46,17 +46,12 @@ import java.util.Set;
 
 @Requires(property = "micronaut.starter.feature.micronaut.aot.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class MicronautAot implements DefaultFeature {
+public class MicronautAot implements DefaultFeature, JvmPackagingFeature {
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
 
     private static final String GRADLE_PLUGIN_ID = "io.micronaut.aot";
     private static final String GRADLE_PLUGIN_ARTIFACT_ID = "micronaut-gradle-plugin";
     private static final int GRADLE_PLUGIN_ORDER = 10;
-
-    @Override
-    public String getCategory() {
-        return Category.PACKAGING;
-    }
 
     @Override
     @NonNull

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.crac;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmPackagingFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -30,7 +31,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.crac.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Crac implements RequireEagerSingletonInitializationFeature {
+public class Crac implements RequireEagerSingletonInitializationFeature, JvmPackagingFeature {
 
     public static final String NAME = "crac";
 
@@ -69,11 +70,6 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.CLI;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.PACKAGING;
     }
 
     @Override

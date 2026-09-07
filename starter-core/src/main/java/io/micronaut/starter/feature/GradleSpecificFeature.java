@@ -15,11 +15,17 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.BuildTool;
+
 /**
  * A feature that only works with {@link io.micronaut.starter.options.BuildTool#isGradle()}.
  *
  * @author Sergio del Amo
  * @since 4.0.0
  */
-public interface GradleSpecificFeature extends Feature {
+public interface GradleSpecificFeature extends JvmFeature {
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        return buildTool.isGradle();
+    }
 }

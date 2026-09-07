@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.starter.feature.JvmOneOfFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -60,6 +61,11 @@ public interface KotlinSupportFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    default boolean supports(Language language) {
+        return Language.KOTLIN == language;
     }
 
     @Override

@@ -21,6 +21,8 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -124,6 +126,24 @@ public interface Feature extends Named, Ordered, Described {
      * @return True if the feature can be selected by the user
      */
     boolean supports(ApplicationType applicationType);
+
+    /**
+     *
+     * @param buildTool The Build Tool
+     * @return Whether the feature supports the build tool
+     */
+    default boolean supports(BuildTool buildTool) {
+        return true;
+    }
+
+    /**
+     *
+     * @param language Language
+     * @return Whether the feature supports the programming language
+     */
+    default boolean supports(Language language) {
+        return true;
+    }
 
     /**
      * Some features should not be visible to the user because they are a common parent of other

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.junit.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Junit implements TestFeature {
+public class Junit implements JvmTestFeature {
     private static final String GROUP_ID_JUNIT_PLATFORM = "org.junit.platform";
     private static final String ARTIFACT_ID_JUNIT_PLATFORM_LAUNCHER = "junit-platform-launcher";
     private static final Dependency DEPENDENCY_JUNIT_PLATFORM_LAUNCHER = Dependency.builder()

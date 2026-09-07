@@ -88,4 +88,8 @@ public class Config4k implements ConfigurationFeature, KotlinSpecificFeature {
         return config -> new Config4kTemplate(config.getFullPath(EXTENSION), config);
     }
 
+    @Override
+    public boolean supports(Language language) {
+        return KotlinSpecificFeature.super.supports(language);
+    }
 }

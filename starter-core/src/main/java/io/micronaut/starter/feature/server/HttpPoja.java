@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.server;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -25,7 +27,10 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.http.poja.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class HttpPoja extends AbstractMicronautServerFeature {
+public class HttpPoja extends AbstractMicronautServerFeature implements JvmFeature {
+
+    private static final String ARTIFACT_ID_MICRONAUT_HTTP_POJA_APACHE = "micronaut-http-poja-apache";
+    private static final String ARTIFACT_ID_MICRONAUT_HTTP_POJA_TEST = "micronaut-http-poja-test";
 
     @Override
     public String getName() {
@@ -50,13 +55,11 @@ public class HttpPoja extends AbstractMicronautServerFeature {
     @Override
     public void doApply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut.servlet")
-                    .artifactId("micronaut-http-poja-apache")
+            generatorContext.addDependency(MicronautDependencyUtils.servletDependency()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_POJA_APACHE)
                     .compile());
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut.servlet")
-                    .artifactId("micronaut-http-poja-test")
+            generatorContext.addDependency(MicronautDependencyUtils.servletDependency()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_POJA_TEST)
                     .test());
         }
     }

@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.logging;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.util.LanguageUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -103,6 +105,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    public boolean supports(Language language) {
         return true;
     }
 }

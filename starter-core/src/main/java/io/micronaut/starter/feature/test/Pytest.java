@@ -20,12 +20,13 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.PythonSpecificFeature;
 import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.pytest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Pytest implements TestFeature {
+public class Pytest implements TestFeature, PythonSpecificFeature {
 
     private static final Dependency PYRONAUT_PYTEST = Dependency.builder()
             .groupId("io.micronaut.pyronaut")

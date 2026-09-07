@@ -46,11 +46,7 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         verifier.hasDependency("micronaut-mcp-server-java-sdk")
-        if (buildTool == BuildTool.PYRONAUT) {
-            assert verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
-        } else {
-            assert !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
-        }
+        !verifier.hasDependency("io.micronaut", "micronaut-http-server-netty")
         (buildTool.isGradle() ? !template.contains('runtime(') : true)
 
         where:

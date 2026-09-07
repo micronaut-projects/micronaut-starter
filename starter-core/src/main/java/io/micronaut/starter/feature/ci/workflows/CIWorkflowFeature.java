@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.feature.ci.workflows;
 
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
-public abstract class CIWorkflowFeature  implements Feature {
+public abstract class CIWorkflowFeature implements JvmFeature {
 
     @Override
     public boolean isPreview() {

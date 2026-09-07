@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -29,7 +30,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.kotest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class KoTest implements TestFeature {
+public class KoTest implements JvmTestFeature {
     protected static final String ARTIFACT_ID_MICRONAUT_KOTEST5 = "micronaut-test-kotest5";
 
     protected static final Dependency DEPENDENCY_MICRONAUT_TEST_KOTEST = MicronautDependencyUtils

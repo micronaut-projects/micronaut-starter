@@ -115,6 +115,11 @@ public class Toml implements DefaultConfigurationFeature {
         return cfg -> new TomlTemplate(cfg.getFullPath(EXTENSION), cfg);
     }
 
+    @Override
+    public boolean supports(Language language) {
+        return true;
+    }
+
     private static String pyronautPath(Configuration config) {
         String path = config.getPath();
         String prefix = path.startsWith("src/test/resources/") ? "tests-config/" : "config/";

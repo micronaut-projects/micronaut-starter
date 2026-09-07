@@ -17,9 +17,10 @@ package io.micronaut.starter.feature.picocli.test;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.test.JvmTestFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 
-public interface PicocliTestFeature extends TestFeature {
+public interface PicocliTestFeature extends JvmTestFeature {
 
     String PATH = "/{packagePath}/{className}Command";
 

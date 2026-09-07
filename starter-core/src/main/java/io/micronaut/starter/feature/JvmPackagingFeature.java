@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.logging;
+package io.micronaut.starter.feature;
 
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.JvmOneOfFeature;
-import io.micronaut.starter.feature.OneOfFeature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.LanguageUtils;
-
-public interface LoggingFeature extends JvmOneOfFeature {
-    @Override
-    default Class<?> getFeatureClass() {
-        return LoggingFeature.class;
-    }
+public interface JvmPackagingFeature extends JvmFeature {
 
     @Override
     default String getCategory() {
-        return Category.LOGGING;
+        return Category.PACKAGING;
     }
 }

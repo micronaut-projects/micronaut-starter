@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.github.workflows;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.JvmFeature;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,12 +29,7 @@ import java.util.List;
  * @author Pavol Gressa
  * @since 2.2
  */
-public abstract class GitHubWorkflowFeature implements Feature {
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
+public abstract class GitHubWorkflowFeature implements JvmFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
