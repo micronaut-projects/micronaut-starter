@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.create
 
 import io.micronaut.context.annotation.Replaces
+import io.micronaut.starter.feature.crac.Crac
 import org.jspecify.annotations.NonNull
 import io.micronaut.core.util.StringUtils
 import io.micronaut.starter.application.ApplicationType
@@ -32,8 +33,9 @@ class CreateMessagingSpec extends CommandSpec {
                                                                                  BuildTool buildTool,
                                                                                  String feature) {
         given:
+        List<String> features = lang == Language.KOTLIN ? [feature, 'kapt'] : [feature]
         ApplicationType applicationType = ApplicationType.MESSAGING
-        generateProject(lang, buildTool, [feature, Kapt.NAME], applicationType)
+        generateProject(lang, buildTool, features, applicationType)
 
         when:
         String output = executeBuild(buildTool, "test")

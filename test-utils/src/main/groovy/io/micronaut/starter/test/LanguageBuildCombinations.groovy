@@ -19,6 +19,7 @@ import groovy.transform.AutoFinal
 import groovy.transform.Memoized
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 import java.util.function.Function
 
@@ -39,8 +40,8 @@ class LanguageBuildCombinations {
     @Memoized
     static List<List> combinations(List<String> features = null) {
         (features
-                ? [Language.values(), BuildToolCombinations.buildTools, features].combinations()
-                : [Language.values(), BuildToolCombinations.buildTools].combinations()).findAll {
+                ? [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools, features].combinations()
+                : [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools].combinations()).findAll {
             !IS_KOTLIN_MAVEN.apply(it) && !IS_PYRONAUT.apply(it)
         }
     }
