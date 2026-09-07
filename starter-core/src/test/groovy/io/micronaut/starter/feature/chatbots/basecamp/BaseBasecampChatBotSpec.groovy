@@ -21,10 +21,11 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
     void 'configuration is generated for #applicationType apps'() {
         when:
-        def output = generate(applicationType, [featureName])
-        def cfg = output["src/main/resources/application.properties"]
+        Map<String, String> output = generate(applicationType, [featureName])
+        String cfg = output["src/main/resources/application.properties"]
 
         then:
+        cfg
         cfg.contains("micronaut.chatbots.folder=botcommands")
 
         where:

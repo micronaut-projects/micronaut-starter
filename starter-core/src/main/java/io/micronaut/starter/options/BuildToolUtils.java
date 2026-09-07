@@ -15,17 +15,12 @@
  */
 package io.micronaut.starter.options;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class BuildToolUtils {
-    private BuildToolUtils() {
-    }
+    public static final List<BuildTool> JVM_BUILD_TOOLS = List.of(BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE, BuildTool.MAVEN);
 
-    public static List<BuildTool> jvmBuildTools() {
-        List<BuildTool> buildTools = new ArrayList<>(BuildTool.valuesGradle());
-        buildTools.add(BuildTool.MAVEN);
-        return buildTools;
+    private BuildToolUtils() {
     }
 
     public static boolean isGradle(Options options) {

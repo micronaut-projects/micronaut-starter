@@ -41,7 +41,7 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
         !verifier.hasDependency("io.micronaut", "micronaut-discovery-core", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
     }

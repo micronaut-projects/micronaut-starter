@@ -28,7 +28,7 @@ class Log4j2Spec extends ApplicationContextSpec {
         verifier.hasDependency("org.apache.logging.log4j", "log4j-slf4j2-impl", Scope.RUNTIME)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
 
     }
 }

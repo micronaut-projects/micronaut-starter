@@ -79,6 +79,6 @@ class SpringWebSpec extends ApplicationContextSpec {
         verifier.hasDependency("io.micronaut.spring", "micronaut-spring-web-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.spring.version', true)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

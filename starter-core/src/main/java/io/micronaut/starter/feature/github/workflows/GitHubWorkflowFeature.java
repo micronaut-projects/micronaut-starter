@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.github.workflows;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.JvmFeature;
 
 import java.util.Collections;

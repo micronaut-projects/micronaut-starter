@@ -15,49 +15,19 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.context.annotation.Requires;
-
-import static io.micronaut.starter.build.dependencies.Scope.ERRORPRONE;
 import static io.micronaut.starter.feature.Category.VALIDATION;
-
-import org.jspecify.annotations.NonNull;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.gradle.GradleDsl;
-import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.StringTemplate;
-import java.util.List;
-import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
-import jakarta.inject.Singleton;
-import io.micronaut.starter.rocker.feature.other.template.nullaway;
-import static io.micronaut.core.util.StringUtils.TRUE;
 
-@Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)
-@Singleton
-public class NullAway implements CompilerArgCodeContributingFeature {
+public abstract class NullAway implements Feature {
 
     public static final String NAME = "nullaway";
-    private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
-            "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
-            "--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
-            "--add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
-            "--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED"
-    );
-
     private final Jspecify jspecify;
 
-    public NullAway(Jspecify jspecify) {
+    protected NullAway(Jspecify jspecify) {
         this.jspecify = jspecify;
     }
 
@@ -99,48 +69,15 @@ public class NullAway implements CompilerArgCodeContributingFeature {
         return VALIDATION;
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
-            generatorContext.addDependency(nullawayDependency().scope(ERRORPRONE));
-            generatorContext.addDependency(errorProneDependency().scope(ERRORPRONE));
-        }
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(nullawayDependency().annotationProcessor());
-            generatorContext.addDependency(errorProneDependency().annotationProcessor());
-            generatorContext.addTemplate("nullaway-maven-jvm-config", new StringTemplate(".mvn/jvm.config", String.join(System.lineSeparator(), NULLAWAY_MAVEN_JVM_FLAGS)));
-        }
-    }
-
-    private static GradlePlugin gradlePlugin(GeneratorContext generatorContext) {
-        GradleDsl dsl = generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY);
-        GradlePlugin.Builder builder = GradlePlugin.builder()
-                .id("net.ltgt.errorprone")
-                .lookupArtifactId("net.ltgt.errorprone.gradle.plugin")
-                .extension(new RockerWritable(nullaway.template(dsl, generatorContext.getProject())));
-        if (dsl == GradleDsl.KOTLIN) {
-            builder.buildImports("import net.ltgt.gradle.errorprone.errorprone");
-        }
-        return builder.build();
-    }
-
-    private static Dependency.Builder nullawayDependency() {
+    public static Dependency.Builder nullawayDependency() {
         return Dependency.builder()
                 .groupId("com.uber.nullaway")
                 .lookupArtifactId("nullaway");
     }
 
-    private static Dependency.Builder errorProneDependency() {
+    public static Dependency.Builder errorProneDependency() {
         return Dependency.builder()
                 .groupId("com.google.errorprone")
                 .lookupArtifactId("error_prone_core");
-    }
-
-    @Override
-    public List<String> getCompilerArgs(@NonNull GeneratorContext generatorContext) {
-        return List.of("-XDcompilePolicy=simple",
-                "--should-stop=ifError=FLOW",
-                "-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=" + generatorContext.getProject().getPackageName());
     }
 }

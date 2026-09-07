@@ -9,14 +9,16 @@ import io.micronaut.starter.options.TestFramework
 class GradleSpecificFeatureValidatorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test feature ksp is only supported for Kotlin and Gradle'() {
+        given:
         String featureName = 'ksp'
+        BuildTool buildTool = BuildTool.MAVEN
+
         when:
-        getFeatures([featureName], Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN)
+        getFeatures([featureName], Language.KOTLIN, TestFramework.JUNIT, buildTool)
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message.contains("Feature only supported by Gradle") ||
-                ex.message.contains("Kotlin and Maven are not supported. Use Kotlin and Gradle")
+        ex.message.contains("Feature ${featureName} does not support build tool ${buildTool}. ")
 
         when:
         getFeatures([featureName], Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)

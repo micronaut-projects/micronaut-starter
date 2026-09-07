@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;

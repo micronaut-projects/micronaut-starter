@@ -27,7 +27,6 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MinJdkFeature;
 import io.micronaut.starter.rocker.feature.graallanguages.templates.graalPyMavenPlugin;
 import io.micronaut.starter.rocker.feature.graallanguages.templates.graalPyGradlePlugin;

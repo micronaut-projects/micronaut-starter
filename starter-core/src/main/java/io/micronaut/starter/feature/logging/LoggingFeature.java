@@ -17,9 +17,6 @@ package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.JvmOneOfFeature;
-import io.micronaut.starter.feature.OneOfFeature;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.LanguageUtils;
 
 public interface LoggingFeature extends JvmOneOfFeature {
     @Override

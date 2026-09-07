@@ -48,6 +48,6 @@ class Slf4jJulBridgeSpec  extends ApplicationContextSpec  implements CommandOutp
         verifier.hasDependency("org.slf4j", "jul-to-slf4j", Scope.COMPILE)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

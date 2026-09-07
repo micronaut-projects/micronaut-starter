@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -33,10 +34,7 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values().toList()].combinations().findAll {
-            // OpenSearch Rest Client requires Jackson Databind, which is not supported for Python because it uses Java reflection.
-            !(it[0] instanceof OpenSearchRestClient && it[1] == BuildTool.PYRONAUT)
-        }
+        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations()
     }
 
     void 'test opensearch feature #opensearchFeature.name contributes testcontainers dependencies for #buildTool'(OpenSearchFeature opensearchFeature, BuildTool buildTool) {
@@ -55,7 +53,7 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         !isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values().toList()].combinations().findAll {
+        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             // OpenSearch Rest Client requires Jackson Databind, which is not supported for Python because it uses Java reflection.
             !(it[0] instanceof OpenSearchRestClient && it[1] == BuildTool.PYRONAUT)
         }
@@ -78,14 +76,14 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
     }
 
     boolean isConfiguredForTestResources(BuildTool buildTool, BuildTestVerifier verifier, String template) {
-        if (buildTool == BuildTool.PYRONAUT) {
+
+        if (buildTool == BuildTool.MAVEN) {
+            return verifier.hasTestResourceDependency("micronaut-test-resources-opensearch");
+        } else if (buildTool.isGradle()) {
             return verifier.hasBuildPlugin("io.micronaut.test-resources") &&
-                    template.contains('additional-modules = ["opensearch"]')
-        }
-        buildTool == BuildTool.MAVEN ?
-            verifier.hasTestResourceDependency("micronaut-test-resources-opensearch") :
-            verifier.hasBuildPlugin("io.micronaut.test-resources") &&
-                    template.contains('''testResources {
+                template.contains('''testResources {
                                     |        additionalModules.add("opensearch")'''.stripMargin())
+        }
+        return false;
     }
 }

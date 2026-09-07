@@ -266,7 +266,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         assert !verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function")
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
     }
@@ -292,7 +292,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.gcp", "micronaut-gcp-function", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
     }

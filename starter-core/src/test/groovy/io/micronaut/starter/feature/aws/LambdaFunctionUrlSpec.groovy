@@ -48,7 +48,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'lambda runtime main class configuration is present for #buildTool'(BuildTool buildTool) {

@@ -63,7 +63,7 @@ class HttpClientSpec extends BeanContextSpec  implements CommandOutputFixture {
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     private static List combinations() {

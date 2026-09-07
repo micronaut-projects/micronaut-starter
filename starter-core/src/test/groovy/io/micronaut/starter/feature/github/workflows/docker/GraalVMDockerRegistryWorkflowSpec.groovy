@@ -40,7 +40,7 @@ Add the following GitHub secrets:
         workflow
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test docker image is configured in #buildFileName'(BuildTool buildTool) {

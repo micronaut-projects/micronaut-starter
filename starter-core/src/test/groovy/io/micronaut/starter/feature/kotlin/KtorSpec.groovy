@@ -103,15 +103,18 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'exception for maven and feature ktor for language=#language'(Language language) {
+        given:
+        String featureName = Ktor.NAME
+        BuildTool buildTool = BuildTool.MAVEN
         when:
         new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features([Ktor.NAME])
+                .features([featureName])
                 .render()
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature ${featureName} does not support language ${language}. Feature ${featureName} does not support build tool ${buildTool}. ")
 
         where:
         language << (supportedLanguages(BuildTool.MAVEN) - supportedLanguages())
@@ -134,15 +137,17 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
+        given:
+        String featureName = Ktor.NAME
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([Ktor.NAME])
+                .features([featureName])
                 .language(language)
                 .render()
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature ${featureName} does not support language ${language}. ")
 
         where:
         language << (LanguageUtils.JVM_LANGUAGES - supportedLanguages())

@@ -54,7 +54,7 @@ class AzureLoggingSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.azure", "micronaut-azure-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations()
                 .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

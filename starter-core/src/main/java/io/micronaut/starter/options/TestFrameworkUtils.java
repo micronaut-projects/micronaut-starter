@@ -18,12 +18,8 @@ package io.micronaut.starter.options;
 import java.util.List;
 
 public final class TestFrameworkUtils {
+    public static final List<TestFramework> JVM_TEST_FRAMEWORKS = List.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST);
 
     private TestFrameworkUtils() {
-
-    }
-
-    public static List<TestFramework> jvmTestFrameworks() {
-        return List.of(TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST);
     }
 }

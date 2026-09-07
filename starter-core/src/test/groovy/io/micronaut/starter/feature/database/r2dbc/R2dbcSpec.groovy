@@ -144,7 +144,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         }
 
         where:
-        [buildTool, featureClass] << [BuildToolUtils.jvmBuildTools(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildToolUtils.JVM_BUILD_TOOLS, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         driver = featureClass.simpleName
         isH2 = featureClass == H2
     }
@@ -160,7 +160,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         isH2 || ctx.configuration.get("r2dbc.datasources.default.dialect") == feature.dataDialect
 
         where:
-        [buildTool, featureClass] << [BuildToolUtils.jvmBuildTools(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        [buildTool, featureClass] << [BuildToolUtils.JVM_BUILD_TOOLS, [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
         isH2 = featureClass == H2
     }
 }

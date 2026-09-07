@@ -43,7 +43,7 @@ class McpHttpSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency("micronaut-mcp-server-java-sdk")
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void "mcp-http renders MCP configuration"() {

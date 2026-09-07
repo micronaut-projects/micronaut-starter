@@ -94,7 +94,7 @@ class MicronautValidationFeatureSpec extends ApplicationContextSpec implements C
         verifier.hasDependency("jakarta.validation", "jakarta.validation-api", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations()
                 .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

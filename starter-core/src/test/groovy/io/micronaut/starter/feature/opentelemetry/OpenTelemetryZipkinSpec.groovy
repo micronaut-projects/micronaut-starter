@@ -29,10 +29,11 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
 
     void 'for grpc application type test gradle tracing-opentelemetry-zipkin feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-zipkin', 'kapt'] : ['tracing-opentelemetry-zipkin']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -48,10 +49,11 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
 
     void 'for default application type test gradle tracing-opentelemetry-zipkin feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-zipkin', 'kapt'] : ['tracing-opentelemetry-zipkin']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -69,10 +71,11 @@ class OpenTelemetryZipkinSpec extends ApplicationContextSpec {
                                                                                                         BuildTool buildTool,
                                                                                                         ApplicationType applicationType) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-zipkin', 'kapt'] : ['tracing-opentelemetry-zipkin']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-zipkin', 'kapt'])
+                .features(features)
                 .render()
 
         then:

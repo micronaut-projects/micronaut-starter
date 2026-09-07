@@ -33,7 +33,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         noExceptionThrown()
 
         where:
-        [buildtool, feature] << [BuildToolUtils.jvmBuildTools(), AWS_LAMBDA_FEATURES].combinations()
+        [buildtool, feature] << [BuildToolUtils.JVM_BUILD_TOOLS, AWS_LAMBDA_FEATURES].combinations()
     }
 
     void 'test AWS Lambda feature validation succeeds for Java 21 for feature=#feature with graalvm'() {
@@ -49,7 +49,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
         noExceptionThrown()
 
         where:
-        [buildtool, feature] << [BuildToolUtils.jvmBuildTools(), AWS_LAMBDA_FEATURES].combinations()
+        [buildtool, feature] << [BuildToolUtils.JVM_BUILD_TOOLS, AWS_LAMBDA_FEATURES].combinations()
     }
 
     void 'test AWS Lambda feature validation succeeds for jdk=#jdk and buildtool=#buildtool for feature=#feature'() {
@@ -66,7 +66,7 @@ class AwsLambdaFeatureValidatorSpec extends ApplicationContextSpec  implements C
 
         where:
         [buildtool, feature, jdk] << [
-                BuildToolUtils.jvmBuildTools(),
+                BuildToolUtils.JVM_BUILD_TOOLS,
                 AWS_LAMBDA_FEATURES,
                 AwsLambdaFeatureValidator.supportedJdks()
             ].combinations()

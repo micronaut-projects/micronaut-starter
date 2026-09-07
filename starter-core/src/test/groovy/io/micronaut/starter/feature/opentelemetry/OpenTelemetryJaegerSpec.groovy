@@ -28,10 +28,13 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
     void 'for grpc application type test gradle tracing-opentelemetry-jaeger feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['tracing-opentelemetry-jaeger', 'kapt']
+                : ['tracing-opentelemetry-jaeger']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -47,10 +50,13 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
 
     void 'for default application type test gradle tracing-opentelemetry-jaeger feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['tracing-opentelemetry-jaeger', 'kapt']
+                : ['tracing-opentelemetry-jaeger']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -68,10 +74,13 @@ class OpenTelemetryJaegerSpec extends ApplicationContextSpec {
                                                                                                      BuildTool buildTool,
                                                                                                      ApplicationType applicationType) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['tracing-opentelemetry-jaeger', 'kapt']
+                : ['tracing-opentelemetry-jaeger']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-jaeger', 'kapt'])
+                .features(features)
                 .render()
 
         then:

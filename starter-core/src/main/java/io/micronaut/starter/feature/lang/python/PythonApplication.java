@@ -18,13 +18,11 @@ package io.micronaut.starter.feature.lang.python;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.CodeContributingFeature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.PythonSpecificFeature;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.StringTemplate;
 import jakarta.inject.Singleton;
 
@@ -35,11 +33,6 @@ public class PythonApplication implements ApplicationFeature, CodeContributingFe
     @Override
     public String getName() {
         return "python-application";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.GRPC;
     }
 
     @Override
@@ -106,8 +99,4 @@ public class PythonApplication implements ApplicationFeature, CodeContributingFe
             """;
     }
 
-    @Override
-    public boolean supports(Language language) {
-        return PythonSpecificFeature.super.supports(language);
-    }
 }

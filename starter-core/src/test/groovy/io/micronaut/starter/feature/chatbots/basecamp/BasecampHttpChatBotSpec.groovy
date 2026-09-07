@@ -36,6 +36,6 @@ class BasecampHttpChatBotSpec extends BaseBasecampChatBotSpec {
         readme.contains("- [Micronaut Basecamp ChatBot as a controller documentation](https://micronaut-projects.github.io/micronaut-chatbots/latest/guide/)")
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

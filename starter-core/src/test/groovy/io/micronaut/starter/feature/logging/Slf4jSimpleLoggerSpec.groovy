@@ -49,6 +49,6 @@ class Slf4jSimpleLoggerSpec extends ApplicationContextSpec implements CommandOut
         verifier.hasDependency("io.goodforgod", "slf4j-simple-logger", Scope.RUNTIME)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

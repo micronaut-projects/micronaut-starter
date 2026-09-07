@@ -30,7 +30,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.KotlinSymbolProcessing;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.rocker.feature.build.gitignore;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.gradleProperties;

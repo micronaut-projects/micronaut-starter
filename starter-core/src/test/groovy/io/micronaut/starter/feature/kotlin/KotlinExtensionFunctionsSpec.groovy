@@ -80,7 +80,7 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
                 .render()
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature kotlin-extension-functions does not support language ${language}. Feature kotlin-extension-functions does not support build tool maven. ")
 
         where:
         language << supportedLanguages(BuildTool.MAVEN)
@@ -111,7 +111,7 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature kotlin-extension-functions does not support language ${language}. ")
 
         where:
         language << (LanguageUtils.JVM_LANGUAGES - Language.KOTLIN)

@@ -33,7 +33,7 @@ class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements Command
         verifier.hasDependency("io.micronaut.discovery", "micronaut-discovery-client")
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void "test azure-key-vault feature configuration"() {

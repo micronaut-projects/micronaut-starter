@@ -92,10 +92,11 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
 
     void 'for grpc application type test gradle tracing-opentelemetry-xray feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-xray', 'kapt'] : ['tracing-opentelemetry-xray']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-xray', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -111,10 +112,11 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
 
     void 'for default application type test gradle tracing-opentelemetry-xray feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-xray', 'kapt'] : ['tracing-opentelemetry-xray']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-xray', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -132,10 +134,11 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
                                                                                                         BuildTool buildTool,
                                                                                                         ApplicationType applicationType) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-xray', 'kapt'] : ['tracing-opentelemetry-xray']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-xray', 'kapt'])
+                .features(features)
                 .render()
 
         then:

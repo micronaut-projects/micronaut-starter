@@ -18,36 +18,21 @@ package io.micronaut.starter.feature.build.pyronaut;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
+import io.micronaut.starter.feature.PythonSpecificFeature;
 import io.micronaut.starter.template.StringTemplate;
 import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 
-import java.util.Set;
-
 @Requires(property = "micronaut.starter.feature.pyronaut.agent.skills.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class PyronautAgentSkills implements DefaultFeature {
+public class PyronautAgentSkills implements DefaultFeature, PythonSpecificFeature {
 
     @Override
     @NonNull
     public String getName() {
         return "pyronaut-agent-skills";
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.PYRONAUT;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 
     @Override

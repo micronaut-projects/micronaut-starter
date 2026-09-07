@@ -19,4 +19,5 @@ package io.micronaut.starter.feature;
  * Marker to indicate a Feature requires Java Reflection
  */
 public interface RequiresJavaReflection extends JvmFeature {
+
 }

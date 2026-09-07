@@ -23,10 +23,11 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
     }
 
     @Unroll
-    void 'test jax-rs with Gradle for language=#language'() {
+    void 'test jax-rs with Gradle for language=#language'(Language language, String scope) {
         when:
+        List<String> features = language == Language.KOTLIN ? [JaxRs.NAME, 'kapt'] : [JaxRs.NAME]
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([JaxRs.NAME, 'kapt'])
+                .features(features)
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, language, template)

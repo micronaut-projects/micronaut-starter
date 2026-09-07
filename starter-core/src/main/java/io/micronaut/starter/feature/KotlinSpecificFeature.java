@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
 /**
@@ -23,10 +24,23 @@ import io.micronaut.starter.options.Language;
  * @author Sergio
  * @since 3.7.0
  */
-public interface KotlinSpecificFeature extends LanguageSpecificFeature {
+public interface KotlinSpecificFeature extends LanguageSpecificFeature, JvmFeature {
 
     @Override
     default Language getRequiredLanguage() {
         return Language.KOTLIN;
+    }
+
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        if (buildTool == null) {
+            return true;
+        }
+        return buildTool.isGradle();
+    }
+
+    @Override
+    default boolean supports(Language language) {
+        return LanguageSpecificFeature.super.supports(language);
     }
 }

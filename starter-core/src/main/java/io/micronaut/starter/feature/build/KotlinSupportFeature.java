@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
-import io.micronaut.starter.feature.JvmOneOfFeature;
+import io.micronaut.starter.feature.KotlinSpecificFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @author Sergio del Amo
  * @since 4.0.0
  */
-public interface KotlinSupportFeature extends OneOfFeature {
+public interface KotlinSupportFeature extends OneOfFeature, KotlinSpecificFeature {
 
     String JDK_25_KAPT_MODULES = """
             --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
@@ -62,12 +62,7 @@ public interface KotlinSupportFeature extends OneOfFeature {
     default boolean supports(ApplicationType applicationType) {
         return true;
     }
-
-    @Override
-    default boolean supports(Language language) {
-        return Language.KOTLIN == language;
-    }
-
+    
     @Override
     default String getCategory() {
         return Category.LANGUAGES;

@@ -48,7 +48,7 @@ class TestRockerModelProviderSpec extends Specification {
         where:
         [language, testFramework] << [
                 LanguageUtils.JVM_LANGUAGES,
-                TestFrameworkUtils.jvmTestFrameworks()
+                TestFrameworkUtils.JVM_TEST_FRAMEWORKS
         ].combinations()
     }
 }

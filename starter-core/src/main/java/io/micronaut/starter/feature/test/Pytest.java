@@ -20,13 +20,13 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.PythonSpecificFeature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.pytest.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Pytest implements TestFeature, PythonSpecificFeature {
+public class Pytest implements TestFeature {
 
     private static final Dependency PYRONAUT_PYTEST = Dependency.builder()
             .groupId("io.micronaut.pyronaut")
@@ -43,6 +43,11 @@ public class Pytest implements TestFeature, PythonSpecificFeature {
     @Override
     public void doApply(GeneratorContext generatorContext) {
         generatorContext.addDependency(PYRONAUT_PYTEST);
+    }
+
+    @Override
+    public boolean supports(Language language) {
+        return language == Language.PYTHON;
     }
 
     @Override

@@ -319,6 +319,6 @@ class TestContainersSpec extends ApplicationContextSpec {
         verifier.hasDependency("org.testcontainers", "testcontainers-cassandra", Scope.TEST)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

@@ -52,7 +52,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-ui", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test dependency added for control-panel and management feature'(BuildTool buildTool) {
@@ -67,7 +67,7 @@ class ControlPanelSpec extends ApplicationContextSpec implements CommandOutputFi
         verifier.hasDependency("io.micronaut.controlpanel", "micronaut-control-panel-management", Scope.DEVELOPMENT_ONLY)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test control-panel with management configuration'() {

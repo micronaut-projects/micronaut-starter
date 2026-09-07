@@ -139,7 +139,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 [true, false], // cdk
                 CreateLambdaBuilderCommand.languagesForDeployment(deployment),
                 [CreateLambdaBuilderCommand.languagesForDeployment(deployment)],
-                TestFrameworkUtils.jvmTestFrameworks(),
+                TestFrameworkUtils.JVM_TEST_FRAMEWORKS,
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN],
                 command.jdkVersionCandidates,
                 [command.jdkVersionCandidates]

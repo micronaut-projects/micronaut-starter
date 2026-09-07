@@ -15,13 +15,35 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.BuildToolUtils;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestFrameworkUtils;
 import io.micronaut.starter.util.LanguageUtils;
 
 public interface JvmFeature extends Feature {
-
     @Override
     default boolean supports(Language language) {
+        if (language == null) {
+            return true;
+        }
         return LanguageUtils.JVM_LANGUAGES.contains(language);
+    }
+
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        if (buildTool == null) {
+            return true;
+        }
+        return BuildToolUtils.JVM_BUILD_TOOLS.contains(buildTool);
+    }
+
+    @Override
+    default boolean supports(TestFramework testFramework) {
+        if (testFramework == null) {
+            return true;
+        }
+        return TestFrameworkUtils.JVM_TEST_FRAMEWORKS.contains(testFramework);
     }
 }

@@ -30,10 +30,11 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
 
     void 'for grpc application type test gradle tracing-opentelemetry-gcp feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-gcp', 'kapt'] : ['tracing-opentelemetry-gcp']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.GRPC)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -49,10 +50,11 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
 
     void 'for default application type test gradle tracing-opentelemetry-gcp feature for language=#language'(Language language, BuildTool buildTool) {
         when:
+        List<String> features = language == Language.KOTLIN ? ['tracing-opentelemetry-gcp', 'kapt'] : ['tracing-opentelemetry-gcp']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(ApplicationType.DEFAULT)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -70,10 +72,13 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
                                                                                                      BuildTool buildTool,
                                                                                                      ApplicationType applicationType) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging', 'kapt']
+                : ['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging', 'kapt'])
+                .features(features)
                 .render()
 
         then:
@@ -103,10 +108,13 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
                                                                                                      BuildTool buildTool,
                                                                                                      ApplicationType applicationType) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['tracing-opentelemetry-gcp', 'kapt']
+                : ['tracing-opentelemetry-gcp']
         String template = new BuildBuilder(beanContext, buildTool)
                 .applicationType(applicationType)
                 .language(language)
-                .features(['tracing-opentelemetry-gcp', 'kapt'])
+                .features(features)
                 .render()
 
         then:

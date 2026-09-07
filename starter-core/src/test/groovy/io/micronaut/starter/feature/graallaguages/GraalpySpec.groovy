@@ -35,7 +35,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         readme.contains("https://graalvm.org/python");
 
         where:
-        [buildTool, language] << [BuildToolUtils.jvmBuildTools(), Language.JAVA].combinations()
+        [buildTool, language] << [BuildToolUtils.JVM_BUILD_TOOLS, Language.JAVA].combinations()
     }
 
     void "micronaut-graalpy belongs to LANGUAGES category"() {
@@ -69,7 +69,7 @@ class GraalpySpec extends ApplicationContextSpec implements CommandOutputFixture
         }
 
         where:
-        [buildTool, language] << [BuildToolUtils.jvmBuildTools(), Language.JAVA].combinations()
+        [buildTool, language] << [BuildToolUtils.JVM_BUILD_TOOLS, Language.JAVA].combinations()
     }
 
     void "micronaut-graalpy feature requires java 25"() {

@@ -214,7 +214,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test")
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
 
@@ -247,7 +247,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         !verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-function")
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
     }

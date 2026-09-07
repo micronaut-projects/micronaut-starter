@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.jaxrs.JaxRs
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
@@ -50,7 +51,7 @@ java {
 ''')
 
         where:
-        [language, testFramework] << [(LanguageUtils.JVM_LANGUAGES - Language.KOTLIN), (TestFrameworkUtils.jvmTestFrameworks() - TestFramework.KOTEST )].combinations()
+        [language, testFramework] << [(LanguageUtils.JVM_LANGUAGES - Language.KOTLIN), (TestFrameworkUtils.JVM_TEST_FRAMEWORKS - TestFramework.KOTEST )].combinations()
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
@@ -79,11 +80,14 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         Language.JAVA   | TestFramework.KOTEST
     }
 
-    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK17'(Language language, TestFramework testFramework, JdkVersion jdk) {
+    void 'With #language, #testFramework and #jdk and kapt we use the kotlin toolchain for JDK25'(Language language, TestFramework testFramework, JdkVersion jdk) {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['kapt']
+                : []
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['kapt'])
+                .features(features)
                 .jdkVersion(jdk)
                 .testFramework(testFramework)
                 .render()
@@ -109,7 +113,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         where:
         language        | testFramework        | jdk
         Language.KOTLIN | TestFramework.JUNIT  | JdkVersion.JDK_25
-        Language.JAVA   | TestFramework.KOTEST | JdkVersion.JDK_25
     }
 
     void 'test spock with Maven applies gmavenplus plugin'() {

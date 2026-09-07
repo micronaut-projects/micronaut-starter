@@ -32,6 +32,6 @@ class GoogleLoggingFunctionalSpec extends CommandSpec {
 
         where:
         // This test generates JVM projects; add a Python/Pyronaut fixture and build verification before including Pyronaut.
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

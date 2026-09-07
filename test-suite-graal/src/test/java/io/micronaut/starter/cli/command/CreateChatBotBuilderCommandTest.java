@@ -45,7 +45,7 @@ class CreateChatBotBuilderCommandTest {
                         .flatMap(applicationType -> Stream.of(applicationContext.getBean(Arm.class), applicationContext.getBean(X86.class))
                                 .flatMap(cpuArchitecture -> Stream.of(false, true)
                                         .flatMap(cdk -> LanguageUtils.JVM_LANGUAGES.stream()
-                                                .flatMap(language -> TestFrameworkUtils.jvmTestFrameworks().stream()
+                                                .flatMap(language -> TestFrameworkUtils.JVM_TEST_FRAMEWORKS.stream()
                                                         .flatMap(testFramework -> Stream.of(BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN)
                                                                 .flatMap(buildTool ->
                                                                         Stream.of(JdkVersion.JDK_25)

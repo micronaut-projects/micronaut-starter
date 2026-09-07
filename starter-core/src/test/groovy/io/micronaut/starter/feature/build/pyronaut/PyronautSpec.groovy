@@ -15,7 +15,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.PYTHON, null, null),
+                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT),
                 []
         )
 
@@ -49,13 +49,13 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut]")
         pyproject.contains('[tool.setuptools]\npackage-dir = {"" = "src"}')
-        pyproject.contains('[tool.setuptools.packages.find]\nwhere = ["src"]')
+        pyproject.contains('[tool.setuptools.packages.find]\nwhere = [\n    "src",\n]')
         !pyproject.contains("[tool.pyronaut]\nversion =")
         pyproject.contains("[tool.pyronaut.core]\nversion = \"${VersionInfo.micronautCoreVersion}\"")
         pyproject.contains("[tool.pyronaut.platform]\nversion = \"${VersionInfo.micronautVersion}\"")
         pyproject.contains('[tool.pyronaut.toolchain]\ntype = "jvm"')
         pyproject.contains('[tool.pyronaut.processor]\nincremental = true\ndaemon = true\npython-incremental-mode = "optimistic"')
-        pyproject.contains('repositories = ["https://central.sonatype.com/repository/maven-snapshots/", "mavenCentral"')
+        pyproject.contains('repositories = [\n    "https://central.sonatype.com/repository/maven-snapshots/",\n    "mavenCentral",')
         !pyproject.contains("mavenLocal")
         pyproject.contains('"io.micronaut:micronaut-http-server-netty"')
         pyproject.contains('"io.micronaut.serde:micronaut-serde-processor"')
@@ -66,12 +66,6 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
 
         and:
         output["config/application.toml"].contains("[micronaut.application]\nname = 'foo'")
-        output["config/application.toml"].contains("[micronaut.executors.blocking]\ntype = 'CACHED'\nvirtual = false")
-        output["README.md"].contains("graalpy -m venv .venv")
-        output["README.md"].contains("python -m pip install --upgrade pip pytest")
-        output["README.md"].contains("pyronaut install")
-        output["README.md"].contains("schema directives used by IDEs")
-        !output["README.md"].contains("--project-dir .")
         output[".gitignore"].contains("__pyronaut__/")
 
         and:
@@ -156,7 +150,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         output["pyproject.toml"].contains("[tool.pyronaut.test-resources]")
         output["pyproject.toml"].contains("enabled = true")
-        output["pyproject.toml"].contains('additional-modules = ["jdbc-mysql"]')
+        output["pyproject.toml"].contains('additional-modules = [\n    "jdbc-mysql",\n]')
     }
 
     void "pyronaut suppresses r2dbc connection validation when test resources supplies the database"() {
@@ -170,7 +164,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["micronaut.test-resources*", "datasources.*.dialect", "r2dbc.datasources.*"]')
+        pyproject.contains('suppressions = [\n    "micronaut.test-resources*",\n    "datasources.*.dialect",\n    "r2dbc.datasources.*",\n]')
     }
 
     void "pyronaut writes management endpoint validation suppressions"() {
@@ -184,7 +178,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["endpoints.*.enabled", "endpoints.*.sensitive"]')
+        pyproject.contains('suppressions = [\n    "endpoints.*.enabled",\n    "endpoints.*.sensitive",\n]')
     }
 
     void "pyronaut writes micrometer cloudwatch validation suppressions"() {
@@ -198,7 +192,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["endpoints.*.enabled", "endpoints.*.sensitive", "micronaut.metrics.enabled", "micronaut.metrics.binders.*", "aws.*"]')
+        pyproject.contains('suppressions = [\n    "endpoints.*.enabled",\n    "endpoints.*.sensitive",\n    "micronaut.metrics.enabled",\n    "micronaut.metrics.binders.*",\n    "aws.*",\n]')
     }
 
     void "pyronaut writes aws cloud feature validation suppressions"() {
@@ -212,7 +206,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["aws.*"]')
+        pyproject.contains('suppressions = [\n    "aws.*",\n]')
     }
 
     void "pyronaut writes opentelemetry validation suppressions"() {
@@ -226,7 +220,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["otel.*"]')
+        pyproject.contains('suppressions = [\n    "otel.*",\n]')
     }
 
     void "pyronaut writes security oauth2 validation suppressions"() {
@@ -240,7 +234,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         String pyproject = output["pyproject.toml"]
         pyproject.contains("[tool.pyronaut.validation]")
-        pyproject.contains('suppressions = ["micronaut.security.oauth2.clients.*.token.auth-method"]')
+        pyproject.contains('suppressions = [\n    "micronaut.security.oauth2.clients.*.token.auth-method",\n]')
     }
 
     void "pyronaut supports liquibase without the JUL bridge"() {

@@ -39,7 +39,7 @@ class HttpClientJdkSpec extends BeanContextSpec  implements CommandOutputFixture
         !verifier.hasDependency("io.micronaut", "micronaut-http-client", Scope.TEST)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void "http-client-jdk supports #applicationType application type"(ApplicationType applicationType) {

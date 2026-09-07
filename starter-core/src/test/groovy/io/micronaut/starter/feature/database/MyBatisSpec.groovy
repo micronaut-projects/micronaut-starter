@@ -59,7 +59,7 @@ class MyBatisSpec extends ApplicationContextSpec implements CommandOutputFixture
         verifier.hasDependency(GROUP_ID_MICRONAUT_SQL, MICRONAUT_MYBATIS_ARTIFACT, Scope.COMPILE)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'pyronaut rejects mybatis feature'() {
@@ -71,6 +71,6 @@ class MyBatisSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         then:
         IllegalArgumentException e = thrown()
-        e.message == 'Feature mybatis is not supported for Python because it requires Java reflection'
+        e.message.contains('Feature mybatis does not support language python. Feature mybatis does not support build tool pyronaut.')
     }
 }

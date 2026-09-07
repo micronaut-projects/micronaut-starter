@@ -77,7 +77,7 @@ class McpStdioSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         pyproject.contains('"io.micronaut.mcp:micronaut-mcp-server-java-sdk"')
-        pyproject.contains('"io.micronaut:micronaut-http-server-netty"')
+        !pyproject.contains('"io.micronaut:micronaut-http-server-netty"')
         pyproject.contains('"io.micronaut.pyronaut:micronaut-pyronaut-logback"')
         !pyproject.contains("[tool.pyronaut.run]")
         !pyproject.contains("banner-enabled")

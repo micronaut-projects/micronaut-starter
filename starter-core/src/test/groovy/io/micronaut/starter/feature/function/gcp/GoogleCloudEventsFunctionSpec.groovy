@@ -42,7 +42,7 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
         }
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test readme.md and function for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
@@ -70,6 +70,6 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
         !readme.contains('## Feature google-cloud-function-cloudevents documentation')
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

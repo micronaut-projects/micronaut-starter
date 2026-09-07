@@ -41,6 +41,6 @@ class ConfigurationFeatureSpec extends BeanContextSpec implements CommandOutputF
 
         where:
         // Pyronaut uses config/application.toml instead of the JVM resource layout asserted here.
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

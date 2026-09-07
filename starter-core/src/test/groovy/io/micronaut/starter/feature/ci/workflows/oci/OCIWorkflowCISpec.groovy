@@ -59,7 +59,7 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildToolUtils.jvmBuildTools(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
+        [buildTool, jdkVersion] << [BuildToolUtils.JVM_BUILD_TOOLS, MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 
     @Unroll
@@ -95,6 +95,6 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         workflow.contains("location: foo")
 
         where:
-        [buildTool, jdkVersion] << [BuildToolUtils.jvmBuildTools(), MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
+        [buildTool, jdkVersion] << [BuildToolUtils.JVM_BUILD_TOOLS, MicronautJdkVersionConfiguration.SUPPORTED_JDKS].combinations()
     }
 }

@@ -57,7 +57,7 @@ class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputF
         verifier.hasDependency("io.micronaut.sql", "micronaut-jdbc-hikari", Scope.COMPILE)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {

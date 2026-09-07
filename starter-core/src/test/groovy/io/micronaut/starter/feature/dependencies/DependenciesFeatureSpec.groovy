@@ -79,7 +79,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
         verifier.hasDependency("org.seleniumhq.selenium", "selenium-support", Scope.TEST_RUNTIME)
 
         where:
-        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.jvmBuildTools()].combinations().findAll {
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
             supportedLanguages(it[1]).contains(it[0])
         }
     }

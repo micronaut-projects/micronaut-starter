@@ -26,7 +26,7 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "feature buildless properties validation"() {
         given:
-        def feature = beanContext.getBean(Buildless)
+        Buildless feature = beanContext.getBean(Buildless)
 
         expect:
         for (applicationType in ApplicationType.values()) {
@@ -42,8 +42,8 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
         generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [Buildless.NAME])
 
         then:
-        def e = thrown(IllegalArgumentException)
-        e.message == 'Feature only supported by Gradle'
+        IllegalArgumentException e = thrown()
+        e.message == 'Feature buildless does not support build tool maven. '
 
         where:
         language << supportedLanguages(BuildTool.MAVEN)
@@ -51,10 +51,10 @@ class BuildlessSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "buildless configured correctly for #buildTool"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
-        def version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
-        def settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
-        def expectedPlugin = """id("build.less") version("$version\""""
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Buildless.NAME])
+        String version = beanContext.getBean(CoordinateResolver).resolve(Buildless.BUILDLESS_PLUGIN_ARTIFACT).get().version
+        String settings = buildTool == BuildTool.GRADLE ? output['settings.gradle'] : output['settings.gradle.kts']
+        String expectedPlugin = """id("build.less") version("$version\""""
 
         then: 'we have the plugin in the settings file'
         settings.contains("    $expectedPlugin")

@@ -43,7 +43,7 @@ class McpClientLangchain4JSpec extends ApplicationContextSpec implements Command
         verifier.hasDependency("io.micronaut.mcp", "micronaut-mcp-client-langchain4j", Scope.TEST)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test readme.md with feature mcp-client-langchain4j contains links to docs'() {

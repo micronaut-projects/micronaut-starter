@@ -106,7 +106,7 @@ Choose the target JDK. (enter for default)
                 [applicationContext.getBean(Arm), applicationContext.getBean(X86)],
                 [true, false], // cdk
                 LanguageUtils.JVM_LANGUAGES,
-                TestFrameworkUtils.jvmTestFrameworks(),
+                TestFrameworkUtils.JVM_TEST_FRAMEWORKS,
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN],
                 [JdkVersion.JDK_25]
         ].combinations().collect { new CliOptions(*it) }

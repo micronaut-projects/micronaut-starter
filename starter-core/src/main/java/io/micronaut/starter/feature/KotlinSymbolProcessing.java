@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
@@ -88,5 +89,10 @@ public class KotlinSymbolProcessing implements KotlinSupportFeature, DefaultFeat
     @Override
     public boolean supports(Language language) {
         return KotlinSupportFeature.super.supports(language);
+    }
+
+    @Override
+    public boolean supports(BuildTool buildTool) {
+        return GradleSpecificFeature.super.supports(buildTool);
     }
 }

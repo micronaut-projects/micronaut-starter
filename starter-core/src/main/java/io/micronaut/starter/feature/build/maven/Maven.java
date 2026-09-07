@@ -31,7 +31,6 @@ import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.rocker.feature.build.gitignore;
 import io.micronaut.starter.rocker.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.rocker.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.rocker.feature.build.maven.templates.pom;

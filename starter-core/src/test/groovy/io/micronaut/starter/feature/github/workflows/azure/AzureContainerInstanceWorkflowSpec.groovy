@@ -46,7 +46,7 @@ class AzureContainerInstanceWorkflowSpec extends BeanContextSpec implements Comm
         workflow.contains("export DOCKER_IMAGE=`echo \"\${DOCKER_REGISTRY_URL}/\${DOCKER_REPOSITORY_PATH}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'test docker image is configured in #buildFileName for #feature'(BuildTool buildTool, String feature) {

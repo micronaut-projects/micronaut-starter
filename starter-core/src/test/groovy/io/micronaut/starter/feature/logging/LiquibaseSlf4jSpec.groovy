@@ -51,6 +51,6 @@ class LiquibaseSlf4jSpec extends ApplicationContextSpec implements CommandOutput
         !verifier.hasDependency("org.slf4j", "jul-to-slf4j")
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

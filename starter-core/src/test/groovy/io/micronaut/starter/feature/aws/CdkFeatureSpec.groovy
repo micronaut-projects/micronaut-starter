@@ -59,7 +59,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.tracing(Tracing.ACTIVE)')
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void 'architecture defaults to X86 for  #buildTool'(BuildTool buildTool) {
@@ -73,7 +73,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
 
@@ -109,7 +109,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 """)
 
         where:
-        buildTool << BuildToolUtils.jvmBuildTools()
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     void "dependencies are added for cdk to infra project for maven"() {
