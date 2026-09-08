@@ -42,7 +42,7 @@ class KubernetesClientSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                BuildToolUtils.JVM_BUILD_TOOLS,
+                BuildTool.valuesGradle().toList(),
                 ["kubernetes-client", "kubernetes-reactor-client"],
                 LanguageUtils.JVM_LANGUAGES
         ].combinations()
