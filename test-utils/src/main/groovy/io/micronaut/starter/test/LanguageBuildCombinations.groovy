@@ -54,8 +54,8 @@ class LanguageBuildCombinations {
 
     @Memoized
     static List<List> gradleCombinations(List<String> features = null) {
-        (features ? [Language.values(), BuildTool.valuesGradle(), features].combinations() : [Language.values(), BuildTool.valuesGradle()].combinations()).findAll {
-            !IS_PYRONAUT.apply(it)
-        }
+        (features
+                ? [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle(), features].combinations()
+                : [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle()].combinations())
     }
 }

@@ -1,8 +1,10 @@
 package io.micronaut.starter.core.test.feature.liquibase
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Unroll
 
@@ -23,9 +25,8 @@ class LiquibaseFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, language] << [
-                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
-                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
-                Language.values().findAll { it != Language.PYTHON }
+                BuildToolUtils.JVM_BUILD_TOOLS,
+                LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
 }

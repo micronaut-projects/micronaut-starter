@@ -5,9 +5,11 @@ import io.micronaut.starter.feature.opensearch.OpenSearchFeature
 import io.micronaut.starter.feature.opensearch.OpenSearchHttpClient5
 import io.micronaut.starter.feature.opensearch.OpenSearchRestClient
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 
 class OpenSearchFunctionalSpec extends CommandSpec {
 
@@ -25,13 +27,11 @@ class OpenSearchFunctionalSpec extends CommandSpec {
         where:
         [featureName, lang, buildTool] << [
                 [OpenSearchAmazon.NAME, OpenSearchHttpClient5.NAME, OpenSearchRestClient.NAME],
-                Language.values(),
-                BuildToolCombinations.buildTools
+                LanguageUtils.JVM_LANGUAGES,
+                BuildToolUtils.JVM_BUILD_TOOLS
         ].combinations().findAll {
             !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.GROOVY) &&
-                    !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN) &&
-                    // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
-                    it[1] != Language.PYTHON && it[2] != BuildTool.PYRONAUT
+                    !(it[0] == OpenSearchHttpClient5.NAME && it[1] == Language.KOTLIN && it[2] == BuildTool.MAVEN)
         }.findAll {
             it[2] != BuildTool.MAVEN
         }

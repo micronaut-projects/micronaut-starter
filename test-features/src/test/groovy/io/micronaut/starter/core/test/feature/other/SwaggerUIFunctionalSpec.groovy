@@ -5,9 +5,11 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.IgnoreIf
 
 import java.nio.file.Files
@@ -81,10 +83,9 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
-                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
+                BuildToolUtils.JVM_BUILD_TOOLS,
                 [SwaggerUI.NAME],
-                Language.values().findAll { it != Language.PYTHON }
+                LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
 
@@ -135,10 +136,9 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language, securityFeature] << [
-                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
-                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
+                BuildToolUtils.JVM_BUILD_TOOLS,
                 [SwaggerUI.NAME],
-                Language.values().findAll { it != Language.PYTHON },
+                LanguageUtils.JVM_LANGUAGES,
                 [Security.NAME]
         ].combinations()
     }

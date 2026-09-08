@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.feature.k8s
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
@@ -41,10 +42,9 @@ class KubernetesClientSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                // This matrix generates JVM projects; add Python/Pyronaut generation and verification before including Pyronaut.
-                BuildTool.valuesGradle().findAll { it != BuildTool.PYRONAUT },
+                BuildToolUtils.JVM_BUILD_TOOLS,
                 ["kubernetes-client", "kubernetes-reactor-client"],
-                Language.values().findAll { it != Language.PYTHON }
+                LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
 }
