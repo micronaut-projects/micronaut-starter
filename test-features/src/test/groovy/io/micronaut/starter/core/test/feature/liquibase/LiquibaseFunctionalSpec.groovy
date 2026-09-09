@@ -1,8 +1,10 @@
 package io.micronaut.starter.core.test.feature.liquibase
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.Unroll
 
@@ -22,6 +24,9 @@ class LiquibaseFunctionalSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
+        [buildTool, language] << [
+                BuildTool.valuesGradle().toList(),
+                LanguageUtils.JVM_LANGUAGES
+        ].combinations()
     }
 }

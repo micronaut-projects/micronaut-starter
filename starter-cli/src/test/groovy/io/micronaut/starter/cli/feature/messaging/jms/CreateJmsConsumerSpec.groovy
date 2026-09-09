@@ -34,9 +34,14 @@ class CreateJmsConsumerSpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains("import io.micronaut.jms.annotations.JMSListener")
-        output.text.contains("import static io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-        output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        if (language == Language.PYTHON) {
+            output.text.contains("from micronaut.jms.annotations import JMSListener")
+            output.text.contains("@JMSListener(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+        } else {
+            output.text.contains("import io.micronaut.jms.annotations.JMSListener")
+            output.text.contains("import static io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        }
         1 * consoleOutput.out({ it.contains("Rendered JMS consumer") })
 
         where:
@@ -58,9 +63,14 @@ class CreateJmsConsumerSpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains("import io.micronaut.jms.annotations.JMSListener")
-        output.text.contains("import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-        output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        if (language == Language.PYTHON) {
+            output.text.contains("from micronaut.jms.annotations import JMSListener")
+            output.text.contains("@JMSListener(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+        } else {
+            output.text.contains("import io.micronaut.jms.annotations.JMSListener")
+            output.text.contains("import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        }
         1 * consoleOutput.out({ it.contains("Rendered JMS consumer") })
 
         where:
@@ -82,9 +92,14 @@ class CreateJmsConsumerSpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains("import io.micronaut.jms.annotations.JMSListener")
-        output.text.contains("import static io.micronaut.jms.sqs.configuration.SqsConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-        output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        if (language == Language.PYTHON) {
+            output.text.contains("from micronaut.jms.annotations import JMSListener")
+            output.text.contains("@JMSListener(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+        } else {
+            output.text.contains("import io.micronaut.jms.annotations.JMSListener")
+            output.text.contains("import static io.micronaut.jms.sqs.configuration.SqsConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            output.text.contains("@JMSListener(CONNECTION_FACTORY_BEAN_NAME)")
+        }
         1 * consoleOutput.out({ it.contains("Rendered JMS consumer") })
 
         where:

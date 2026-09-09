@@ -31,10 +31,12 @@ class ObjectStorageLocalSpec extends ApplicationContextSpec implements CommandOu
 
     void "test dependency added for object-storage-local feature"(BuildTool buildTool) {
         when:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(["object-storage-local"])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.objectstorage", "micronaut-object-storage-local", Scope.COMPILE)

@@ -8,5 +8,6 @@ class BuildToolSpec extends Specification {
         expect:
         BuildTool.valuesGradle().stream().allMatch { it.isGradle() }
         [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN] =~ BuildTool.valuesGradle()
+        !BuildTool.PYRONAUT.isGradle()
     }
 }

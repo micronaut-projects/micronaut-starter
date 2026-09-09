@@ -92,12 +92,13 @@ public class PreviewController extends AbstractCreateController implements Previ
         try {
             Project project = NameUtils.parse(name);
             MapOutputHandler outputHandler = new MapOutputHandler();
+            Language language = lang != null ? lang : Language.DEFAULT_OPTION;
             projectGenerator.generate(type,
                     project,
                     new Options(
-                            lang,
-                            test != null ? test.toTestFramework() : null,
-                            build == null ? BuildTool.DEFAULT_OPTION : build,
+                            language,
+                            test != null ? test.toTestFramework() : language.getDefaults().getTest(),
+                            build == null ? language.getDefaults().getBuild() : build,
                             javaVersion == null ? MicronautJdkVersionConfiguration.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,

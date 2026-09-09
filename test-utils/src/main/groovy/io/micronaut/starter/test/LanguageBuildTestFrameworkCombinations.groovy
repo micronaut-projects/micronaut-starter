@@ -20,6 +20,7 @@ import groovy.transform.Memoized
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 @AutoFinal
 class LanguageBuildTestFrameworkCombinations {
@@ -31,9 +32,9 @@ class LanguageBuildTestFrameworkCombinations {
     @Memoized
     static List combinations(List<String> features = null) {
         (features
-                ? [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values(), features].combinations()
-                : [Language.values(), BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
-            LanguageBuildCombinations.SKIP_KOTLIN_MAVEN.apply(it)
+                ? [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools, TestFrameworkCombinations.values(), features].combinations()
+                : [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools, TestFrameworkCombinations.values()].combinations()).findAll {
+            !LanguageBuildCombinations.IS_KOTLIN_MAVEN.apply(it)
         }.findAll {
             return filterByTestFramework(it)
         }
@@ -51,7 +52,18 @@ class LanguageBuildTestFrameworkCombinations {
         if (it.size() == 2) {
             testFrameworkIndex =  1
         }
+        // Keep this matrix JVM-only; use pythonCombinations() for supported Python features.
+        if (it[languageIndex] == Language.PYTHON ||
+                (it.size() >= 3 && it[it.size() >= 4 ? 2 : 1] == BuildTool.PYRONAUT)) {
+            return false
+        }
         return (it[languageIndex] != Language.KOTLIN && it[testFrameworkIndex] != TestFramework.KOTEST) ||
                     (it[languageIndex] == Language.KOTLIN && it[testFrameworkIndex] == TestFramework.KOTEST)
+    }
+
+    static List<List> pythonCombinations(List<String> features = null) {
+        features
+                ? [Language.PYTHON, BuildTool.PYRONAUT, TestFramework.PYTEST, features].combinations()
+                : [[Language.PYTHON, BuildTool.PYRONAUT, TestFramework.PYTEST]]
     }
 }

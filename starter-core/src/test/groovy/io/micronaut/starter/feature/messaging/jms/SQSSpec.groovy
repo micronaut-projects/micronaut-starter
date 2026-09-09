@@ -6,6 +6,7 @@ import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 class SQSSpec  extends ApplicationContextSpec {
 
@@ -22,7 +23,7 @@ class SQSSpec  extends ApplicationContextSpec {
         additionalModules.add("localstack-sqs")""")
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test localstack-sqs test-resources module is added for Maven'() {
@@ -40,4 +41,3 @@ class SQSSpec  extends ApplicationContextSpec {
         verifier.hasTestResourceDependency("micronaut-test-resources-localstack-sqs")
     }
 }
-

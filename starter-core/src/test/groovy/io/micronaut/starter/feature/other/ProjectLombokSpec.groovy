@@ -48,7 +48,7 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
     }
 
     @Unroll
-    void 'test lombok with Gradle for only Java'() {
+    void 'test lombok with Gradle for only Java'(Language language) {
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['lombok'])
@@ -56,8 +56,8 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
                 .render()
 
         then:
-        def e = thrown(IllegalArgumentException)
-        e.message.startsWith("The selected features are incompatible.")
+        IllegalArgumentException e = thrown()
+        e.message.startsWith("Feature lombok does not support language ${language}")
 
         where:
         language << [Language.KOTLIN , Language.GROOVY]

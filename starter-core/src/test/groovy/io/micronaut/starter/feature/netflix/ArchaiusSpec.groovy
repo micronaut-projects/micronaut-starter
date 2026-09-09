@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class ArchaiusSpec extends ApplicationContextSpec {
@@ -23,7 +24,7 @@ class ArchaiusSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-archaius")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

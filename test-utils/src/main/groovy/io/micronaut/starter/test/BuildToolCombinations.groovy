@@ -16,10 +16,11 @@
 package io.micronaut.starter.test
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class BuildToolCombinations {
 
-    static List<BuildTool> buildTools = BuildTool.values().findAll { b ->
+    static List<BuildTool> buildTools = BuildToolUtils.JVM_BUILD_TOOLS.findAll { b ->
         if (b == BuildTool.MAVEN) {
             return !BuildToolTest.IGNORE_MAVEN
         }

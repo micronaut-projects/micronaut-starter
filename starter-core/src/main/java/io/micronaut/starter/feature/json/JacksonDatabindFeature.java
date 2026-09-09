@@ -20,11 +20,12 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jackson.databind.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class JacksonDatabindFeature implements JsonFeature {
+public class JacksonDatabindFeature implements JsonFeature, RequiresJavaReflection {
     @Override
     public String getName() {
         return "jackson-databind";

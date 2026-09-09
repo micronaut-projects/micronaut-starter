@@ -11,6 +11,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.MicronautJdkVersionConfiguration
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.PendingFeature
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -91,10 +92,10 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 .contains("function.hello")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
+        srcDir << LanguageUtils.JVM_LANGUAGES*.srcDir
+        testSrcDir << LanguageUtils.JVM_LANGUAGES*.testSrcDir
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -131,10 +132,10 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         semanticVersionOptional.isPresent()
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
+        srcDir << LanguageUtils.JVM_LANGUAGES*.srcDir
+        testSrcDir << LanguageUtils.JVM_LANGUAGES*.testSrcDir
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -165,7 +166,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 .contains("response = function.request")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [LanguageUtils.JVM_LANGUAGES, [true, false]].combinations()
     }
 
     @PendingFeature(reason = "azure functions do not support 25 yet")
@@ -199,6 +200,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
               .contains("response = function.request")
 
         where:
-        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
+        [language, useSerde] << [supportedLanguages(BuildTool.MAVEN), [true, false]].combinations()
     }
 }

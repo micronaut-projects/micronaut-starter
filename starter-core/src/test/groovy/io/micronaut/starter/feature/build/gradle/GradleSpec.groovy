@@ -167,7 +167,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
                 Language.values(),
                 [JdkVersion.JDK_25],
                 BuildTool.valuesGradle()
-        ].combinations()
+        ].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[0]) }
     }
 
     void 'Unsupported languages have Gradle but omit GraalVM plugin docs (lang = #lang, buildTool = #buildTool, apptype = #apptype)'(
@@ -188,6 +188,6 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
                 AwsLambdaFeatureValidator.supportedJdks(),
                 BuildTool.valuesGradle(),
                 ApplicationType.values().toList()
-        ].combinations()
+        ].combinations().findAll { it -> supportedLanguages(it[2]).contains(it[0]) }
     }
 }

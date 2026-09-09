@@ -13,6 +13,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -102,18 +103,21 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'exception for maven and feature ktor for language=#language'(Language language) {
+        given:
+        String featureName = Ktor.NAME
+        BuildTool buildTool = BuildTool.MAVEN
         when:
         new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features([Ktor.NAME])
+                .features([featureName])
                 .render()
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature ${featureName} does not support language ${language}. Feature ${featureName} does not support build tool ${buildTool}. ")
 
         where:
-        language << (Language.values().toList() - supportedLanguages())
+        language << (supportedLanguages(BuildTool.MAVEN) - supportedLanguages())
     }
 
     @Unroll
@@ -133,18 +137,20 @@ class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
+        given:
+        String featureName = Ktor.NAME
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([Ktor.NAME])
+                .features([featureName])
                 .language(language)
                 .render()
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature ${featureName} does not support language ${language}. ")
 
         where:
-        language << (Language.values().toList() - supportedLanguages())
+        language << (LanguageUtils.JVM_LANGUAGES - supportedLanguages())
     }
 
     @Unroll

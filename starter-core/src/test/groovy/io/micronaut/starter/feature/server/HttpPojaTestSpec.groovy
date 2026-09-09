@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 class HttpPojaTestSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -36,6 +37,6 @@ class HttpPojaTestSpec extends BeanContextSpec implements CommandOutputFixture {
                 || template.contains("micronaut-http-poja-apache") && template.contains("micronaut-http-poja-test")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

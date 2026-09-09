@@ -1,5 +1,6 @@
 package io.micronaut.starter.options
 
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -24,6 +25,7 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.KOTLIN | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.GROOVY | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
+        Language.PYTHON | TestFramework.PYTEST  || "tests/{packagePath}/{className}.py"
         path = '/{packagePath}/{className}'
     }
 
@@ -37,19 +39,21 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.JUNIT
         Language.GROOVY | TestFramework.SPOCK
         Language.KOTLIN | TestFramework.KOTEST
+        Language.PYTHON | TestFramework.PYTEST
     }
 
     @Unroll("getSupportedLanguages for test framework: #testFramework return #expected")
     void "verify the list of supported languages for a test framework"(List<Language> expected, TestFramework testFramework) {
         given:
         expect:
-        expected.sort { a, b -> a.name <=> b.name } ==
+        new ArrayList<>(expected).sort { a, b -> a.name <=> b.name } ==
                 testFramework.supportedLanguages.sort { a, b -> a.name <=> b.name }
 
         where:
         expected                                          | testFramework
-        [Language.JAVA, Language.GROOVY, Language.KOTLIN] | TestFramework.JUNIT
+        LanguageUtils.JVM_LANGUAGES                       | TestFramework.JUNIT
         [Language.GROOVY]                                 | TestFramework.SPOCK
         [Language.KOTLIN]                                 | TestFramework.KOTEST
+        [Language.PYTHON]                                 | TestFramework.PYTEST
     }
 }

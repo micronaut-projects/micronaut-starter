@@ -23,6 +23,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.groovyProducer;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.javaProducer;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.producer.kotlinProducer;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-jms-producer", description = "Creates a producer class for JMS")
 @Prototype
@@ -76,7 +78,7 @@ public class CreateJmsProducer extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
-        RenderResult renderResult;
+        RenderResult renderResult = null;
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
@@ -96,8 +98,12 @@ public class CreateJmsProducer extends CodeGenCommand {
             rockerModel = groovyProducer.template(project, configClass);
         } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinProducer.template(project, configClass);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.jmsProducer(project, configClass), overwrite);
         }
-        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        if (config.getSourceLanguage() != PYTHON) {
+            renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        }
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {

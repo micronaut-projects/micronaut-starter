@@ -18,11 +18,12 @@ package io.micronaut.starter.feature.server;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.JvmFeature;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MicronautHttpServerJdk extends AbstractMicronautServerFeature {
+public class MicronautHttpServerJdk extends AbstractMicronautServerFeature implements JvmFeature {
     private static final String ARTIFACT_ID_MICRONAUT_HTTP_SERVER_JDK = "micronaut-http-server-jdk";
     private static final Dependency DEPENDENCY_MICRONAUT_HTTP_SERVER_JDK = MicronautDependencyUtils.servletDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_SERVER_JDK)

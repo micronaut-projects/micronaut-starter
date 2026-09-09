@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.logging.LiquibaseSlf4j;
 import io.micronaut.starter.feature.logging.Slf4jJulBridge;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.rocker.feature.migration.template.liquibaseChangelog;
 import io.micronaut.starter.rocker.feature.migration.template.liquibaseSchema;
 import io.micronaut.starter.template.RockerTemplate;
@@ -32,6 +33,7 @@ import jakarta.inject.Singleton;
 public class Liquibase implements MigrationFeature {
 
     public static final String NAME = "liquibase";
+    private static final String ARTIFACT_ID_LIQUIBASE_SLF_4_J = "liquibase-slf4j";
 
     private final Slf4jJulBridge slf4jJulBridge;
 
@@ -41,6 +43,9 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getLanguage() == Language.PYTHON) {
+            return;
+        }
         featureContext.addFeatureIfNotPresent(LiquibaseSlf4j.class, slf4jJulBridge);
     }
 
@@ -70,14 +75,20 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate("src/main/resources/db/liquibase-changelog.xml",
+        String resourcesPath = generatorContext.getLanguage() == Language.PYTHON ? "config" : "src/main/resources";
+        generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate(resourcesPath + "/db/liquibase-changelog.xml",
                         liquibaseChangelog.template()));
-        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
+        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate(resourcesPath + "/db/changelog/01-schema.xml",
                         liquibaseSchema.template()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.liquibase")
                 .artifactId("micronaut-liquibase")
                 .compile());
+        if (generatorContext.getLanguage() == Language.PYTHON) {
+            generatorContext.addDependency(Dependency.builder()
+                    .lookupArtifactId(ARTIFACT_ID_LIQUIBASE_SLF_4_J)
+                    .runtime());
+        }
         generatorContext.getConfiguration().addNested(
                 "liquibase.datasources.default.change-log", "classpath:db/liquibase-changelog.xml");
     }

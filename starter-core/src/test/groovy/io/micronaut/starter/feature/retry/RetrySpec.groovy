@@ -50,6 +50,6 @@ class RetrySpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut", "micronaut-retry", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 }

@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class JAsyncSQLSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -87,7 +88,7 @@ jasync:
         template.contains('implementation("io.micronaut.sql:micronaut-jasync-sql")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

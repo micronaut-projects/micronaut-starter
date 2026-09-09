@@ -32,7 +32,7 @@ import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.spock.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Spock implements TestFeature {
+public class Spock implements JvmTestFeature {
     protected static final String GROUP_ID_SPOCKFRAMEWORK = "org.spockframework";
     protected static final String ARTIFACT_ID_SPOCK_CORE = "spock-core";
     protected static final String ARTIFACT_ID_GROOVY_ALL = "groovy-all";

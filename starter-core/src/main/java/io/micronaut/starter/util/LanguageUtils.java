@@ -21,6 +21,8 @@ import io.micronaut.starter.options.Language;
 import java.util.List;
 
 public final class LanguageUtils {
+    public static final List<Language> JVM_LANGUAGES = List.of(Language.JAVA, Language.GROOVY, Language.KOTLIN);
+
     private LanguageUtils() {
 
     }
@@ -29,6 +31,9 @@ public final class LanguageUtils {
         if (buildTool == BuildTool.MAVEN) {
             return List.of(Language.JAVA, Language.GROOVY);
         }
-        return List.of(Language.JAVA, Language.GROOVY, Language.KOTLIN);
+        if (buildTool == BuildTool.PYRONAUT) {
+            return List.of(Language.PYTHON);
+        }
+        return JVM_LANGUAGES;
     }
 }

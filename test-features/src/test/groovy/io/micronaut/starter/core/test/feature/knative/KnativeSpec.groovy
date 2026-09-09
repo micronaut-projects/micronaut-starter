@@ -33,6 +33,7 @@ class KnativeSpec extends CommandSpec {
         Files.exists(Paths.get(dir.getPath(), "knativeYaml.yml"))
 
         where:
-        buildTool << BuildToolCombinations.buildTools
+        // This spec always generates Java; add a Python/Pyronaut fixture before including Pyronaut.
+        buildTool << BuildToolCombinations.buildTools.findAll { it != BuildTool.PYRONAUT }
     }
 }

@@ -79,9 +79,16 @@ public class TomlTemplate extends DefaultTemplate {
     @Override
     public void write(OutputStream outputStream) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+        boolean wroteContent = false;
         for (Map.Entry<DottedKey, Map<DottedKey, Object>> table : tables.entrySet()) {
+            if (table.getValue().isEmpty()) {
+                continue;
+            }
             if (!table.getKey().equals(DottedKey.EMPTY)) {
-                writer.append("\n[");
+                if (wroteContent) {
+                    writer.append('\n');
+                }
+                writer.append('[');
                 emitKey(writer, table.getKey());
                 writer.append("]\n");
             }
@@ -91,6 +98,7 @@ public class TomlTemplate extends DefaultTemplate {
                 emitValue(writer, entry.getValue());
                 writer.write('\n');
             }
+            wroteContent = true;
         }
         writer.flush();
     }
@@ -112,9 +120,16 @@ public class TomlTemplate extends DefaultTemplate {
     }
 
     private static Collection<DottedKey> suggestTables(Collection<DottedKey> keys) {
-        // we suggest any tables that will have at least two child keys.
-
         Set<DottedKey> tables = new HashSet<>();
+
+        // Use tables for simple nested values, e.g. micronaut.application.name becomes [micronaut.application].
+        for (DottedKey key : keys) {
+            if (key.parts.size() == 3) {
+                tables.add(key.parent());
+            }
+        }
+
+        // We also suggest any tables that will have at least two child keys.
         SortedSet<DottedKey> remainingKeys = new TreeSet<>(keys);
         for (int prefixLength = keys.stream().mapToInt(k -> k.parts.size()).max().orElse(0); prefixLength > 0; ) {
             boolean createdTable = false;

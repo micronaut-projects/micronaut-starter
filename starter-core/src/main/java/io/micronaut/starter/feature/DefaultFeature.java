@@ -48,9 +48,11 @@ public interface DefaultFeature extends Feature {
      * @param selectedFeatures The features manually selected by the user
      * @return True if the feature should apply
      */
-    boolean shouldApply(ApplicationType applicationType,
+    default boolean shouldApply(ApplicationType applicationType,
                         Options options,
-                        Set<Feature> selectedFeatures);
+                        Set<Feature> selectedFeatures) {
+        return supports(applicationType, options);
+    }
 
     default String getTargetFramework() {
         return Options.FRAMEWORK_MICRONAUT;
@@ -60,9 +62,10 @@ public interface DefaultFeature extends Feature {
         featureStream
                     .filter(DefaultFeature.class::isInstance)
                     .sorted(OrderUtil.COMPARATOR.reversed())
-                    .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, options, features) && (
-                            ((DefaultFeature) f).getTargetFramework().equals(options.getFramework()) || f instanceof BuildFeature
-                    ))
-                    .forEach(featureConsumer);
+                    .filter(f ->
+                            ((DefaultFeature) f).shouldApply(applicationType, options, features) &&
+                            (((DefaultFeature) f).getTargetFramework().equals(options.getFramework()) || f instanceof BuildFeature) &&
+                            f.supports(applicationType, options)
+                    ).forEach(featureConsumer);
     }
 }

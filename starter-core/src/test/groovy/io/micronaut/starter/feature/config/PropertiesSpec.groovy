@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
@@ -29,6 +30,11 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         applicationType << ApplicationType.values()
         description = applicationType.name
+    }
+
+    void "properties configuration is not applied to Python applications"() {
+        expect:
+        !props.shouldApply(ApplicationType.DEFAULT, new Options(Language.PYTHON), [] as Set)
     }
 
     void "test configuration files generated for default properties feature"() {

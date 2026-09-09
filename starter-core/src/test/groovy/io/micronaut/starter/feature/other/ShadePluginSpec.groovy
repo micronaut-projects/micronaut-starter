@@ -7,6 +7,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -43,6 +44,6 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
         semanticVersionOptional.isPresent()
         
         where:
-        [language, applicationType] << [Language.values(), [ApplicationType.FUNCTION, ApplicationType.DEFAULT]].combinations()
+        [language, applicationType] << [LanguageUtils.JVM_LANGUAGES, [ApplicationType.FUNCTION, ApplicationType.DEFAULT]].combinations()
     }
 }

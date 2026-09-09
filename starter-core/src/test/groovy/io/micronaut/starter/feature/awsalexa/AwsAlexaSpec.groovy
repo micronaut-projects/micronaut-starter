@@ -13,6 +13,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -72,7 +73,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-alexa")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -104,7 +105,7 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
 
         where:
-        language << Language.values()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -141,10 +142,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
+        srcDir << LanguageUtils.JVM_LANGUAGES*.srcDir
+        testSrcDir << LanguageUtils.JVM_LANGUAGES*.testSrcDir
     }
 
     @Unroll
@@ -200,10 +201,10 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         output.containsKey("$srcDir/example/micronaut/StopIntentHandler.$extension".toString())
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << LanguageUtils.JVM_LANGUAGES
+        extension << LanguageUtils.JVM_LANGUAGES*.extension
+        srcDir << LanguageUtils.JVM_LANGUAGES*.srcDir
+        testSrcDir << LanguageUtils.JVM_LANGUAGES*.testSrcDir
     }
 
     @Unroll

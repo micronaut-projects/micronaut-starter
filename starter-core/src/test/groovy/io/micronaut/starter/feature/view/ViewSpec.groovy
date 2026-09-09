@@ -6,7 +6,7 @@ class ViewSpec extends BeanContextSpec {
 
     void 'test there can only be one view feature'() {
         when:
-        getFeatures(["views-thymeleaf", "views-handlebars", "views-velocity", "views-freemarker", "views-rocker", "views-soy"])
+        getFeatures(["views-thymeleaf", "views-handlebars", "views-velocity", "views-freemarker", "views-rocker", "views-soy", "views-jinjava"])
 
         then:
         def ex = thrown(IllegalArgumentException)

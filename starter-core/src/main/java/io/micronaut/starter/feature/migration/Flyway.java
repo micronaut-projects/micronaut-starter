@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.database.Oracle;
 import io.micronaut.starter.feature.database.PostgreSQL;
 import io.micronaut.starter.feature.database.SQLServer;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudAutonomousDatabase;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -62,6 +63,7 @@ public class Flyway implements MigrationFeature {
             .groupId(GROUP_ID_FLYWAYDB)
             .artifactId(ARTIFACT_ID_FLYWAY_SQLSERVER)
             .runtime();
+    private static final String PYRONAUT_MICRONAUT_FLYWAY_VERSION = "8.1.1";
 
     @Override
     public String getName() {
@@ -95,9 +97,13 @@ public class Flyway implements MigrationFeature {
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.flywayDependency()
+        Dependency.Builder flyway = MicronautDependencyUtils.flywayDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_FLYWAY)
-                .compile());
+                .compile();
+        if (generatorContext.getBuildTool() == BuildTool.PYRONAUT) {
+            flyway.version(PYRONAUT_MICRONAUT_FLYWAY_VERSION);
+        }
+        generatorContext.addDependency(flyway);
         if (generatorContext.isFeaturePresent(MySQL.class) || generatorContext.isFeaturePresent(MariaDB.class)) {
             generatorContext.addDependency(DEPENDENCY_FLYWAY_MYSQL);
         }
@@ -116,4 +122,3 @@ public class Flyway implements MigrationFeature {
         }
     }
 }
-

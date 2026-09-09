@@ -5,6 +5,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 
 class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -66,6 +70,18 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
         output.containsKey("src/main/java/example/micronaut/FooController.java")
         output.containsKey("src/test/java/example/micronaut/FooTest.java")
 
+    }
+
+    void "test python example controller uses python source"() {
+        when:
+        GeneratorContext ctx = buildGeneratorContext(['swagger-ui'], new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT))
+        def output = generate(ApplicationType.DEFAULT, ctx)
+
+        then:
+        output.containsKey("src/example/micronaut/default_controller.py")
+        !output.containsKey("src/example/micronaut/DefaultController.py")
+        output["src/example/micronaut/default_controller.py"].contains("@Get(value=\"/default\", produces=\"text/plain\")")
+        !output["src/example/micronaut/default_controller.py"].contains("package example.micronaut;")
     }
 
 }

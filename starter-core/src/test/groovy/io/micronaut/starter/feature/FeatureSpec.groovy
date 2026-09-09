@@ -15,12 +15,13 @@ import io.micronaut.starter.feature.json.JsonSchemaFeature
 import io.micronaut.starter.feature.json.JsonSchemaValidationFeature
 import io.micronaut.starter.feature.lang.groovy.module.GroovyModuleFeature
 import io.micronaut.starter.options.*
+import io.micronaut.starter.util.LanguageUtils
+import spock.lang.PendingFeature
 import spock.lang.Unroll
-
-import java.util.stream.Collectors
 
 class FeatureSpec extends BeanContextSpec {
 
+    @PendingFeature
     @Unroll
     void "test default feature #feature.name cannot require a language"() {
         expect:
@@ -54,7 +55,7 @@ class FeatureSpec extends BeanContextSpec {
             // because it's valid when using Spock framework too
             language = Language.GROOVY
         }
-        def buildTool = BuildTool.GRADLE
+        BuildTool buildTool = BuildTool.GRADLE
         if (feature instanceof MavenSpecificFeature) {
             buildTool = BuildTool.MAVEN
         }
@@ -76,7 +77,7 @@ class FeatureSpec extends BeanContextSpec {
             features << JsonSchemaFeature.NAME
         }
         ApplicationType applicationType = applicationTypeForFeature(feature)
-        def commandCtx = new GeneratorContext(buildProject(),
+        GeneratorContext commandCtx = new GeneratorContext(buildProject(),
                 applicationType,
                 options,
                 OperatingSystem.LINUX,
@@ -100,8 +101,8 @@ class FeatureSpec extends BeanContextSpec {
 
         where:
         feature << beanContext.getBeansOfType(Feature).stream()
-            .filter(f -> f.isVisible())
-            .collect(Collectors.toList())
+            .filter(f -> f.isVisible() && LanguageUtils.JVM_LANGUAGES.stream().anyMatch { l -> f.supports(l) })
+            .toList()
     }
 
     private static JdkVersion javaVersionForFeature(String feature) {

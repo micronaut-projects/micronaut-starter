@@ -44,7 +44,7 @@ class SelectOptionsControllerTest extends Specification {
         noExceptionThrown()
 
         and: "order is as expected"
-        selectOptionsDTO.build.options.value == [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN]
+        selectOptionsDTO.build.options.value == [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN, BuildTool.PYRONAUT]
 
         and: "the default is Gradle Kotlin"
         selectOptionsDTO.build.defaultOption.value == BuildTool.GRADLE_KOTLIN

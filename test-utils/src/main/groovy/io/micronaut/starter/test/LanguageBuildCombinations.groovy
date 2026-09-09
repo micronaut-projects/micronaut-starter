@@ -19,13 +19,18 @@ import groovy.transform.AutoFinal
 import groovy.transform.Memoized
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 import java.util.function.Function
 
 @AutoFinal
 class LanguageBuildCombinations {
-    static final Function<List, Boolean> SKIP_KOTLIN_MAVEN = l -> {
-        !(l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN)
+    static final Function<List, Boolean> IS_KOTLIN_MAVEN = l -> {
+        l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN
+    }
+
+    static final Function<List, Boolean> IS_PYRONAUT = l -> {
+        l[0] == Language.PYTHON && l[1] == BuildTool.PYRONAUT
     }
 
     /**
@@ -35,14 +40,22 @@ class LanguageBuildCombinations {
     @Memoized
     static List<List> combinations(List<String> features = null) {
         (features
-                ? [Language.values(), BuildToolCombinations.buildTools, features].combinations()
-                : [Language.values(), BuildToolCombinations.buildTools].combinations()).findAll {
-            SKIP_KOTLIN_MAVEN.apply(it)
+                ? [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools, features].combinations()
+                : [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools].combinations()).findAll {
+            !IS_KOTLIN_MAVEN.apply(it) && !IS_PYRONAUT.apply(it)
         }
+    }
+
+    static List<List> pythonCombinations(List<String> features = null) {
+        features
+                ? [Language.PYTHON, BuildTool.PYRONAUT, features].combinations()
+                : [[Language.PYTHON, BuildTool.PYRONAUT]]
     }
 
     @Memoized
     static List<List> gradleCombinations(List<String> features = null) {
-        features ? [Language.values(), BuildTool.valuesGradle(), features].combinations() : [Language.values(), BuildTool.valuesGradle()].combinations()
+        (features
+                ? [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle(), features].combinations()
+                : [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle()].combinations())
     }
 }

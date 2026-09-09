@@ -16,6 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.context.MessageSource;
+import io.micronaut.starter.options.Language;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
@@ -118,6 +119,7 @@ public class ApplicationController implements ApplicationTypeOperations {
             public void writeTo(Writer out) {
                 // no-op
             }
+
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
                 new RockerWritable(new starterApi()
@@ -169,6 +171,23 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Get("/application-types/{type}/features")
     public FeatureList features(ApplicationType type, RequestInfo requestInfo) {
         FeatureList featureList = new FeatureList(featureOperations.getFeatures(requestInfo.getLocale(), type));
+        featureList.addLink(
+                Relationship.SELF,
+                requestInfo.self()
+        );
+        return featureList;
+    }
+
+    /**
+     * List the type features.
+     * @param type The features
+     * @param requestInfo The request info
+     * @return The features
+     */
+    @Override
+    @Get("/application-types/{type}/features/{lang}")
+    public FeatureList featuresByLanguage(ApplicationType type, Language lang, RequestInfo requestInfo) {
+        FeatureList featureList = new FeatureList(featureOperations.getFeatures(requestInfo.getLocale(), type, lang));
         featureList.addLink(
                 Relationship.SELF,
                 requestInfo.self()

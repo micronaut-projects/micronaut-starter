@@ -25,7 +25,8 @@ import java.util.Locale;
 public enum TestFramework {
     JUNIT("JUnit"),
     SPOCK("Spock"),
-    KOTEST("Kotest");
+    KOTEST("Kotest"),
+    PYTEST("Pytest");
 
     public static final TestFramework DEFAULT_OPTION = JUNIT;
 
@@ -55,6 +56,8 @@ public enum TestFramework {
 
     public String getSourcePath(String path, Language language) {
         switch (this) {
+            case PYTEST:
+                return Language.PYTHON.getTestSrcDir() + path + "." + Language.PYTHON.getExtension();
             case SPOCK:
                 return Language.GROOVY.getTestSrcDir() + path + getTestFrameworkSuffix() + Language.GROOVY.getExtension();
             case KOTEST:
@@ -94,6 +97,8 @@ public enum TestFramework {
                 return Collections.singletonList(Language.GROOVY);
             case KOTEST:
                 return Collections.singletonList(Language.KOTLIN);
+            case PYTEST:
+                return Collections.singletonList(Language.PYTHON);
             case JUNIT:
                 return Arrays.asList(Language.JAVA, Language.KOTLIN, Language.GROOVY);
             default:
@@ -111,6 +116,8 @@ public enum TestFramework {
                 return Language.GROOVY;
             case KOTEST:
                 return Language.KOTLIN;
+            case PYTEST:
+                return Language.PYTHON;
             case JUNIT:
                 return Language.JAVA;
             default:

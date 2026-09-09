@@ -30,7 +30,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.KotlinSymbolProcessing;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.rocker.feature.build.gitignore;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.rocker.feature.build.gradle.templates.gradleProperties;
@@ -101,7 +100,6 @@ public class Gradle implements BuildFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addGradleInitFiles(generatorContext);
-        addGitignore(generatorContext);
         if (generatorContext.isMicronautFramework()) {
             extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
             GradleBuild build = createBuild(generatorContext);
@@ -161,15 +159,6 @@ public class Gradle implements BuildFeature {
                 generatorContext.getFeatures(),
                 build
         );
-    }
-
-    protected void addGitignore(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore(generatorContext)));
-    }
-
-    @SuppressWarnings("java:S1172") // Unused parameter for extensibility
-    protected RockerModel gitignore(GeneratorContext generatorContext) {
-        return gitignore.template(generatorContext.getFeatures());
     }
 
     protected void addGradleProperties(GeneratorContext generatorContext) {

@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -82,7 +83,7 @@ class KubernetesReactorClientSpec extends ApplicationContextSpec  implements Com
         template.contains('implementation("io.projectreactor:reactor-core")')
 
         where:
-        language << Language.values()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'reactor core dependency is not present if reactor feature is present'(){

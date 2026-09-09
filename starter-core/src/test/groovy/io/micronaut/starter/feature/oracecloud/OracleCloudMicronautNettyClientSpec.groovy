@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import org.apache.commons.codec.language.bm.Lang
 import spock.lang.Unroll
 
@@ -25,7 +26,7 @@ class OracleCloudMicronautNettyClientSpec extends ApplicationContextSpec impleme
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-httpclient-netty")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

@@ -21,13 +21,14 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.GradleSpecificFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import java.util.Set;
 
 @Singleton
-class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
+class MicronautConfigurationValidationGradlePlugin implements DefaultFeature, GradleSpecificFeature {
     public static final String MICRONAUT_GRADLE_PLUGIN_CONFIGURATION_VALIDATION_ID = "io.micronaut.configuration.validation";
     public static final String ARTIFACT_ID = "micronaut-configuration-validation-plugin";
     private static final int GRADLE_PLUGIN_ORDER = 11;
@@ -40,7 +41,7 @@ class MicronautConfigurationValidationGradlePlugin implements DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return true;
+        return options.getBuildTool().isGradle();
     }
 
     @Override

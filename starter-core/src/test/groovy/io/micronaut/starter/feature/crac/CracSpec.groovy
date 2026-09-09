@@ -14,6 +14,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 
 class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -40,7 +41,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         application.contains(".eagerInitSingletons(true)")
 
         where:
-        language << Language.values()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void "feature crac #desc for #applicationType"(ApplicationType applicationType) {
@@ -72,7 +73,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasBuildPlugin("io.micronaut.application")
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle()].combinations()
     }
 
     void "test maven crac feature adds dependency"() {

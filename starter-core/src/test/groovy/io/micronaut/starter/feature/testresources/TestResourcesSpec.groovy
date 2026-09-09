@@ -7,6 +7,7 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 
 class TestResourcesSpec extends ApplicationContextSpec {
 
@@ -23,5 +24,20 @@ class TestResourcesSpec extends ApplicationContextSpec {
 
         where:
         language << supportedLanguages(BuildTool.MAVEN)
+    }
+
+    void 'test pyronaut testresources generates dependency'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.PYRONAUT)
+                .language(Language.PYTHON)
+                .testFramework(TestFramework.PYTEST)
+                .features([TestResources.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.PYRONAUT, Language.PYTHON, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.testresources", "micronaut-test-resources-client")
+        template.contains("[tool.pyronaut.test-resources]")
+        template.contains("enabled = true")
     }
 }

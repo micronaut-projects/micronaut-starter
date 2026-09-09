@@ -23,6 +23,9 @@ trait CommandFixture {
                          BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT) {
+        if (lang == Language.PYTHON) {
+            buildTool = BuildTool.PYRONAUT
+        }
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),

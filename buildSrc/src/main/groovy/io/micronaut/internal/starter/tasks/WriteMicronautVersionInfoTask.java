@@ -46,6 +46,9 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
     @Input
     public abstract Property<String> getVersion();
 
+    @Input
+    public abstract Property<String> getCoreVersion();
+
     @Input abstract ListProperty<String> getExtraBomProperties();
 
     @OutputDirectory
@@ -72,6 +75,7 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
         props.put("micronaut.version", getVersion().get());
 
         props.putAll(bomProperties("io.micronaut.platform", "micronaut-platform", getVersion().get()));
+        props.put("micronaut.core.version", getCoreVersion().get());
 
         for (String extraBomProperty : getExtraBomProperties().get()) {
             String[] groupAndArtifact = extraBomProperty.split(":", 2);

@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -79,6 +80,6 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
         template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
 
         where:
-        language << Language.values()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 }

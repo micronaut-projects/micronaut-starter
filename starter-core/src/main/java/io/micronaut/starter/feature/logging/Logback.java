@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.options.Language;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -33,6 +35,8 @@ import jakarta.inject.Singleton;
 
 import java.util.Set;
 
+import static io.micronaut.starter.feature.build.pyronaut.PyronautUtils.isPyronaut;
+
 @Requires(property = "micronaut.starter.feature.logback.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
@@ -41,6 +45,10 @@ public class Logback implements LoggingFeature, DefaultFeature {
     private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
             .groupId("ch.qos.logback")
             .artifactId("logback-classic")
+            .runtime()
+            .build();
+    private static final Dependency PYRONAUT_LOGBACK = MicronautDependencyUtils.pyronautDependency()
+            .artifactId("micronaut-pyronaut-logback")
             .runtime()
             .build();
 
@@ -68,7 +76,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        if (!isPyronaut(generatorContext)) {
+            addConfig(generatorContext, generatorContext.hasFeature(Slf4jJulBridge.class));
+        }
         addDependency(generatorContext);
     }
 
@@ -89,11 +99,16 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     protected void addDependency(GeneratorContext generatorContext) {
-        generatorContext.addDependency(LOGBACK_CLASSIC);
+        generatorContext.addDependency(isPyronaut(generatorContext) ? PYRONAUT_LOGBACK : LOGBACK_CLASSIC);
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    public boolean supports(Language language) {
         return true;
     }
 }

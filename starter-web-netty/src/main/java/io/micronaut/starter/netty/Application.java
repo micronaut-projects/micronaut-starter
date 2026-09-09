@@ -15,11 +15,22 @@
  */
 package io.micronaut.starter.netty;
 
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.context.env.Environment;
 import io.micronaut.runtime.Micronaut;
+import org.jspecify.annotations.NonNull;
 
 public class Application {
-
-    public static void main(String... args) {
-        Micronaut.run(args);
+    @ContextConfigurer
+    public static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
+        @Override
+        public void configure(@NonNull ApplicationContextBuilder builder) {
+            builder.defaultEnvironments(Environment.DEVELOPMENT);
+        }
+    }
+    public static void main(String[] args) {
+        Micronaut.run(Application.class, args);
     }
 }

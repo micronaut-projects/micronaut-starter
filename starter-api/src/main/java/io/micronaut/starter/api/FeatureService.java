@@ -22,11 +22,15 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Implements the {@link FeatureOperations} interface.
@@ -64,11 +68,27 @@ public class FeatureService implements FeatureOperations {
 
     @Override
     public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type) {
+        return getFeatures(locale, type, _ -> true);
+    }
+
+    @Override
+    public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language, BuildTool buildTool) {
+        return getFeatures(locale, type, f -> f.supports(language) && f.supports(buildTool) && f.supports(type));
+    }
+
+    @Override
+    public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language) {
+        return getFeatures(locale, type, f -> f.supports(language) && f.supports(type));
+    }
+
+    private List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Predicate<? super Feature> filterPredicate) {
         MessageSource.MessageContext context = MessageSource.MessageContext.of(locale);
         return beanLocator.getBean(AvailableFeatures.class, Qualifiers.byName(type.getName()))
                 .getFeatures()
+                .filter(filterPredicate)
                 .map(feature -> new FeatureDTO(feature, messageSource, context))
                 .sorted(Comparator.comparing(FeatureDTO::getName))
-                .collect(Collectors.toList());
+                .toList();
     }
+
 }

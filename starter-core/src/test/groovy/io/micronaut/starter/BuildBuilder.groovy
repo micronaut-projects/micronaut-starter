@@ -83,7 +83,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
      */
     Object build(boolean render = true) {
         List<String> featureNames = this.features ?: []
-        Language language = this.language ?: Language.DEFAULT_OPTION
+        Language language = this.language ?: (buildTool == BuildTool.PYRONAUT ? Language.PYTHON : Language.DEFAULT_OPTION)
         TestFramework testFramework = this.testFramework ?: language.defaults.test
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
         Project project = getProject()
@@ -103,6 +103,14 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
                 return pom.template(type, project, features, build, JvmArgumentsFeature.getJvmArguments(features.getFeatures())).render().toString()
             }
             return build
+        } else if (buildTool == BuildTool.PYRONAUT) {
+            GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
+            if (render) {
+                ByteArrayOutputStream output = new ByteArrayOutputStream()
+                ctx.templates.values().find { it.path == buildTool.buildFileName }.write(output)
+                return output.toString("UTF-8")
+            }
+            return ctx
         }
         null
     }

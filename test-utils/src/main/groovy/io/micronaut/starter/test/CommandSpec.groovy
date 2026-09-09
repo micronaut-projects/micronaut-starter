@@ -41,9 +41,12 @@ import spock.util.environment.OperatingSystem
 
 import java.nio.file.Files
 import java.time.Duration
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 abstract class CommandSpec extends Specification {
     private static final String ENV_JAVA_HOME = "JAVA_HOME"
+    private static final String ENV_PYRONAUT_COMMAND = "PYRONAUT_COMMAND"
 
     @Shared
     @AutoCleanup
@@ -78,8 +81,37 @@ abstract class CommandSpec extends Specification {
             output = executeGradle(command, '--build-cache').getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven(command)
+        } else if (buildTool == BuildTool.PYRONAUT) {
+            executePyronaut("install")
+            output = executePyronaut(command)
         }
         return output
+    }
+
+    boolean buildSucceeded(BuildTool buildTool, String output) {
+        buildTool == BuildTool.PYRONAUT
+                ? output.contains("Processing completed") || output.toLowerCase(Locale.ROOT).contains("passed")
+                : output.contains("BUILD SUCCESS")
+    }
+
+    String executePyronaut(String command, int timeoutSeconds = 180) {
+        String executable = System.getenv(ENV_PYRONAUT_COMMAND) ?: "pyronaut"
+        String[] args = [executable] + command.tokenize(" ")
+        Process process = new ProcessBuilder(args)
+                .directory(dir)
+                .redirectErrorStream(true)
+                .start()
+        StringBuilder output = new StringBuilder()
+        def thread = process.consumeProcessOutputStream(output)
+        if (!process.waitFor(timeoutSeconds, TimeUnit.SECONDS)) {
+            process.destroyForcibly()
+            throw new IllegalStateException("Pyronaut command timed out: ${command}")
+        }
+        thread.join(Duration.ofSeconds(5).toMillis())
+        if (process.exitValue() != 0) {
+            throw new IllegalStateException("Pyronaut command failed with exit code ${process.exitValue()}:\n${output}")
+        }
+        output.toString()
     }
 
     BuildResult executeGradle(String... arguments) {

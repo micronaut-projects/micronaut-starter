@@ -32,7 +32,7 @@ class CreateMqttPublisherSpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains("import io.micronaut.mqtt.${version}.annotation.MqttPublisher".toString())
+        language == Language.PYTHON ? output.text.contains("from micronaut.mqtt.annotation.${version} import MqttPublisher".toString()) : output.text.contains("import io.micronaut.mqtt.${version}.annotation.MqttPublisher".toString())
         1 * consoleOutput.out({ it.contains("Rendered MQTT publisher") })
 
         where:

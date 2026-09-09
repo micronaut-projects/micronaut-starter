@@ -57,7 +57,9 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
         CreateSpecAppCommand command = new CreateSpecAppCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
         Integer exitCode = command.call()
-        File testOutput = new File(dir, language.defaults.test.getSourcePath("/example/micronaut/Foo", language))
+        File testOutput = language == Language.PYTHON
+                ? new File(dir, language.getTestSourcePath("/test_application"))
+                : new File(dir, language.defaults.test.getSourcePath("/example/micronaut/Foo", language))
         File settings = new File(dir, language.defaults.build.buildFileName)
 
         then:

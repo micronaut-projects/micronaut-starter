@@ -41,7 +41,9 @@ class MicronautConfigurationValidationGradlePluginSpec extends ApplicationContex
         output.contains("configurationValidation {")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << BuildTool.valuesGradle().collectMany { tool ->
+            supportedLanguages(tool).collect { lang -> [tool, lang] }
+        }
     }
 
     @PendingFeature
@@ -56,7 +58,9 @@ class MicronautConfigurationValidationGradlePluginSpec extends ApplicationContex
         output.contains("configurationValidation {")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << BuildTool.valuesGradle().collectMany { tool ->
+            supportedLanguages(tool).collect { lang -> [tool, lang] }
+        }
     }
 
     @PendingFeature
@@ -85,7 +89,9 @@ class MicronautConfigurationValidationGradlePluginSpec extends ApplicationContex
         output.indexOf(APP_PLUGIN) < output.indexOf(CONFIGURATION_VALIDATION_PLUGIN)
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << BuildTool.valuesGradle().collectMany { tool ->
+            supportedLanguages(tool).collect { lang -> [tool, lang] }
+        }
     }
 
     @PendingFeature

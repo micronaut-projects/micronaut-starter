@@ -31,6 +31,7 @@ dependencies {
 
 TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.register("micronautVersionInfo", WriteMicronautVersionInfoTask) {
     version = micronautVersion
+    coreVersion = micronautCoreVersion
     extraBomProperties = [
             'io.micronaut:micronaut-core',
             'io.micronaut.logging:micronaut-logging',

@@ -15,15 +15,15 @@
  */
 package io.micronaut.starter.feature.distributedconfig;
 
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
 import java.util.Map;
 
-public interface DistributedConfigFeature extends Feature {
+public interface DistributedConfigFeature extends JvmFeature {
 
     @Override
     default boolean supports(ApplicationType applicationType) {

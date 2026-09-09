@@ -24,7 +24,6 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 
 import jakarta.inject.Singleton;
@@ -33,6 +32,8 @@ import java.util.Set;
 @Requires(property = "micronaut.starter.feature.netty.server.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
 public class Netty extends AbstractMicronautServerFeature implements DefaultFeature {
+
+    public static final String ARTIFACT_ID_MICRONAUT_HTTP_SERVER_NETTY = "micronaut-http-server-netty";
 
     @Override
     public String getName() {
@@ -57,9 +58,9 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+        if (!generatorContext.getBuildTool().isGradle()) {
             generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                    .artifactId("micronaut-http-server-netty")
+                    .artifactId(ARTIFACT_ID_MICRONAUT_HTTP_SERVER_NETTY)
                     .compile());
         }
     }

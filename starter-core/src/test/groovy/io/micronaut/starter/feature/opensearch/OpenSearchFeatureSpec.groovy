@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 
 class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -33,7 +34,7 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
+        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations()
     }
 
     void 'test opensearch feature #opensearchFeature.name contributes testcontainers dependencies for #buildTool'(OpenSearchFeature opensearchFeature, BuildTool buildTool) {
@@ -52,14 +53,17 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         !isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
+        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
+            // OpenSearch Rest Client requires Jackson Databind, which is not supported for Python because it uses Java reflection.
+            !(it[0] instanceof OpenSearchRestClient && it[1] == BuildTool.PYRONAUT)
+        }
     }
 
     void "test opensearch feature #opensearchFeature.name is search engine category"(OpenSearchFeature opensearchFeature) {
         expect:
         Category.SEARCH == opensearchFeature.getCategory()
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
+        opensearchFeature << beanContext.getBeansOfType(OpenSearchFeature)
     }
 
     void "test opensearch feature #opensearchFeature.name documentation links"(OpenSearchFeature opensearchFeature) {
@@ -68,14 +72,18 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         opensearchFeature.getThirdPartyDocumentation() == 'https://opensearch.org/docs/latest/clients/java/'
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildTool.values()].combinations()
+        opensearchFeature << beanContext.getBeansOfType(OpenSearchFeature)
     }
 
     boolean isConfiguredForTestResources(BuildTool buildTool, BuildTestVerifier verifier, String template) {
-        buildTool == BuildTool.MAVEN ?
-            verifier.hasTestResourceDependency("micronaut-test-resources-opensearch") :
-            verifier.hasBuildPlugin("io.micronaut.test-resources") &&
-                    template.contains('''testResources {
+
+        if (buildTool == BuildTool.MAVEN) {
+            return verifier.hasTestResourceDependency("micronaut-test-resources-opensearch");
+        } else if (buildTool.isGradle()) {
+            return verifier.hasBuildPlugin("io.micronaut.test-resources") &&
+                template.contains('''testResources {
                                     |        additionalModules.add("opensearch")'''.stripMargin())
+        }
+        return false;
     }
 }
