@@ -85,6 +85,7 @@ io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.buildless
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
+io.micronaut.starter.feature.cdi
 io.micronaut.starter.feature.chatbots
 io.micronaut.starter.feature.chatbots.basecamp
 io.micronaut.starter.feature.chatbots.telegram
@@ -153,7 +154,6 @@ io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.pubsub
 io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
-io.micronaut.starter.feature.microstream
 io.micronaut.starter.feature.migration
 io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
@@ -255,6 +255,7 @@ io.micronaut.starter.rocker.feature.picocli.test.spock
 io.micronaut.starter.rocker.feature.server.template
 io.micronaut.starter.rocker.feature.springboot.template
 io.micronaut.starter.rocker.feature.test.template
+io.micronaut.starter.rocker.feature.validation
 io.micronaut.starter.rocker.feature.view
 io.micronaut.starter.rocker.template.api
 io.micronaut.starter.servlet
