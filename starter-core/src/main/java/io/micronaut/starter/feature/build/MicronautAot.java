@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.build;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.feature.JvmPackagingFeature;
-import io.micronaut.starter.util.LanguageUtils;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.util.StringUtils;
@@ -181,6 +180,6 @@ public class MicronautAot implements DefaultFeature, JvmPackagingFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return LanguageUtils.JVM_LANGUAGES.contains(options.getLanguage());
+        return true;
     }
 }

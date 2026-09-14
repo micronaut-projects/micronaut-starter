@@ -15,26 +15,45 @@
  */
 package io.micronaut.starter.feature.other;
 
-import static io.micronaut.starter.feature.Category.VALIDATION;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.JvmFeature;
+import io.micronaut.starter.options.BuildTool;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Singleton;
 
-public abstract class NullAway implements Feature {
+import static io.micronaut.core.util.StringUtils.TRUE;
+import static io.micronaut.starter.feature.Category.VALIDATION;
+
+@Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)
+@Singleton
+public class NullAway implements JvmFeature {
 
     public static final String NAME = "nullaway";
     private final Jspecify jspecify;
+    private final NullAwayGradlePluginFeature nullAwayGradlePluginFeature;
+    private final NullAwayMavenPluginFeature nullAwayMavenPluginFeature;
 
-    protected NullAway(Jspecify jspecify) {
+    public NullAway(Jspecify jspecify,
+                    NullAwayGradlePluginFeature nullAwayGradlePluginFeature,
+                    NullAwayMavenPluginFeature nullAwayMavenPluginFeature) {
         this.jspecify = jspecify;
+        this.nullAwayGradlePluginFeature = nullAwayGradlePluginFeature;
+        this.nullAwayMavenPluginFeature = nullAwayMavenPluginFeature;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(Jspecify.class)) {
             featureContext.addFeature(jspecify);
+        }
+        BuildTool buildTool = featureContext.getBuildTool();
+        if (buildTool.isGradle()) {
+            featureContext.addFeatureIfNotPresent(NullAwayGradlePluginFeature.class, nullAwayGradlePluginFeature);
+        } else if (buildTool == BuildTool.MAVEN) {
+            featureContext.addFeatureIfNotPresent(NullAwayMavenPluginFeature.class, nullAwayMavenPluginFeature);
         }
     }
 
@@ -69,13 +88,13 @@ public abstract class NullAway implements Feature {
         return VALIDATION;
     }
 
-    public static Dependency.Builder nullawayDependency() {
+    static Dependency.Builder nullawayDependency() {
         return Dependency.builder()
                 .groupId("com.uber.nullaway")
                 .lookupArtifactId("nullaway");
     }
 
-    public static Dependency.Builder errorProneDependency() {
+    static Dependency.Builder errorProneDependency() {
         return Dependency.builder()
                 .groupId("com.google.errorprone")
                 .lookupArtifactId("error_prone_core");

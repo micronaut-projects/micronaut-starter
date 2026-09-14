@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolSpec
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -23,23 +24,11 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     @Shared
     @Subject
-    NullAwayGradlePluginFeature nullAwayGradlePluginFeature = beanContext.getBean(NullAwayGradlePluginFeature)
+    NullAway nullAway = beanContext.getBean(NullAway)
 
-    @Shared
-    @Subject
-    NullAwayMavenPluginFeature nullAwayMavenPluginFeature = beanContext.getBean(NullAwayMavenPluginFeature)
-
-    void "nullaway-gradle-plugin supports application type #appType"(ApplicationType appType) {
+    void "nullaway supports application type #appType"(ApplicationType appType) {
         expect:
-        nullAwayGradlePluginFeature.supports(appType)
-
-        where:
-        appType << ApplicationType.values()
-    }
-
-    void "nullaway-maven-plugin supports application type #appType"(ApplicationType appType) {
-        expect:
-        nullAwayMavenPluginFeature.supports(appType)
+        nullAway.supports(appType)
 
         where:
         appType << ApplicationType.values()
@@ -47,8 +36,8 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test README.md with feature nullaway contains links to docs'() {
         when:
-        Map<String, String> output = generate(['nullaway-gradle-plugin'])
-        String readme = output["README.md"]
+        def output = generate(['nullaway'])
+        def readme = output["README.md"]
 
         then:
         readme
@@ -57,14 +46,13 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void "nullaway belongs to Validation category"() {
         expect:
-        Category.VALIDATION == beanContext.getBean(NullAwayGradlePluginFeature).category
-        Category.VALIDATION == beanContext.getBean(NullAwayMavenPluginFeature).category
+        Category.VALIDATION == beanContext.getBean(NullAway).category
     }
 
     void 'test Gradle nullaway feature dependencies'(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
-                .features(["nullaway-gradle-plugin"])
+                .features(["nullaway"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(GRADLE, template)
 
@@ -89,7 +77,7 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
     void 'test Maven nullaway feature dependencies'() {
         when:
         String template = new BuildBuilder(beanContext, MAVEN)
-                .features(["nullaway-maven-plugin"])
+                .features(["nullaway"])
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(MAVEN, template)
 
@@ -101,10 +89,10 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test maven jvm config'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
+        def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN),
-                ['nullaway-maven-plugin'])
-        String maven = output['.mvn/jvm.config']
+                ['nullaway'])
+        def maven = output['.mvn/jvm.config']
 
         then:
         maven
@@ -113,10 +101,10 @@ class NullAwaySpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test nullaway maven args'() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT,
+        def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN),
-                ['nullaway-maven-plugin'])
-        String pom = output['pom.xml']
+                ['nullaway'])
+        def pom = output['pom.xml']
 
         then:
         pom

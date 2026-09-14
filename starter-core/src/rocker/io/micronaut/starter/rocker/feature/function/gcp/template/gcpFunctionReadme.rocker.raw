@@ -6,7 +6,7 @@ Project project,
 Features features,
 String runCommand,
 String buildCommand,
-boolean isFunction,
+boolean isFunction
 )
 
 # Micronaut and Google Cloud Function
@@ -22,7 +22,6 @@ And visit http://localhost:8080/@project.getPropertyName()
 }
 
 ## Deploying the function
-
 
 First build the function with:
 

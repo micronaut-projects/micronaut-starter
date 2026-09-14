@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Implements the {@link FeatureOperations} interface.
@@ -73,12 +72,12 @@ public class FeatureService implements FeatureOperations {
 
     @Override
     public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language, BuildTool buildTool) {
-        return getFeatures(locale, type, f -> f.supports(language) && f.supports(buildTool) && f.supports(type));
+        return getFeatures(locale, type, f -> f.supports(language) && f.supports(buildTool));
     }
 
     @Override
     public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language) {
-        return getFeatures(locale, type, f -> f.supports(language) && f.supports(type));
+        return getFeatures(locale, type, f -> f.supports(language));
     }
 
     private List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Predicate<? super Feature> filterPredicate) {

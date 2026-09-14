@@ -19,6 +19,7 @@ import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.options.BuildTool;
 
 public final class GcpCloudFunctionBuildCommandUtils {
+
     public static final String MAVEN_PACKAGE_COMMAND = "mvnw clean package";
     public static final String GRADLE_PACKAGE_COMMAND = "gradlew shadowJar";
 

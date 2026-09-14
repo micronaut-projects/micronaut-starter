@@ -21,6 +21,9 @@ import io.micronaut.starter.util.LanguageUtils;
 public interface JvmOneOfFeature extends OneOfFeature {
     @Override
     default boolean supports(Language language) {
+        if (language == null) {
+            return true;
+        }
         return LanguageUtils.JVM_LANGUAGES.contains(language);
     }
 }
