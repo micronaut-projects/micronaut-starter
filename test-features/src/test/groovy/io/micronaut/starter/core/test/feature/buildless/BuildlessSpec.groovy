@@ -27,7 +27,7 @@ class BuildlessSpec extends CommandSpec {
 
         where:
         [buildTool, language] << [
-                BuildToolUtils.JVM_BUILD_TOOLS,
+                BuildTool.valuesGradle().toList(),
                 LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
