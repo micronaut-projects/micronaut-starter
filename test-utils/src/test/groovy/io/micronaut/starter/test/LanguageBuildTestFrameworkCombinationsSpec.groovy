@@ -12,8 +12,7 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
     void "#language #buildTool #testFramework combination expected"(Language language, BuildTool buildTool, TestFramework testFramework) {
         expect:
         (buildTool == BuildTool.MAVEN && BuildToolTest.IGNORE_MAVEN) ||
-                LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework]) ||
-                LanguageBuildTestFrameworkCombinations.pythonCombinations().contains([language, buildTool, testFramework])
+                LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework])
 
         where:
         language        | buildTool        | testFramework
