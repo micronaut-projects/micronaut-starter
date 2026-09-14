@@ -83,6 +83,8 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
     public static final String GROUP_ID_MICRONAUT_VIEWS = "io.micronaut.views";
     public static final String GROUP_ID_MICRONAUT_MCP = "io.micronaut.mcp";
+    public static final String GROUP_ID_IO_MICRONAUT_TOML = "io.micronaut.toml";
+    public static final String GROUP_ID_IO_MICRONAUT_JMX = "io.micronaut.jmx";
 
     private MicronautDependencyUtils() {
 
@@ -347,5 +349,13 @@ public final class MicronautDependencyUtils {
 
     public static Dependency.@NonNull Builder viewsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_VIEWS);
+    }
+
+    public static Dependency.@NonNull Builder tomlDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_TOML);
+    }
+
+    public static Dependency.@NonNull Builder jmxDependency() {
+        return micronautDependency(GROUP_ID_IO_MICRONAUT_JMX);
     }
 }

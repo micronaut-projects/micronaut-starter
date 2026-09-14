@@ -7,6 +7,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.KotlinSpecificFeature
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.feature.OneOfFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -34,7 +35,7 @@ class KaptSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "ksp does not requires kotlin"() {
         expect:
-        !(kapt instanceof LanguageSpecificFeature)
+        kapt instanceof KotlinSpecificFeature
     }
 
     void 'kapt feature is in the cloud category'() {

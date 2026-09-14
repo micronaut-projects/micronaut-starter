@@ -9,6 +9,7 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
@@ -47,7 +48,7 @@ class CreateGrpcSpec extends CommandSpec {
         output.contains("BUILD SUCCESS")
 
         where:
-        lang << Language.values()
+        lang << LanguageUtils.JVM_LANGUAGES
     }
 
     @IgnoreIf(value = { os.macOs }, reason = ": Error extracting protoc for version 3.11.4: Unsupported platform: protoc-3.11.4-osx-aarch_64.exe")

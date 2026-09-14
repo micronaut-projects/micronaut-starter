@@ -5,9 +5,11 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.feature.other.SwaggerUI
 import io.micronaut.starter.feature.security.Security
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.IgnoreIf
 
 import java.nio.file.Files
@@ -46,8 +48,13 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven #feature with #language without security"(String feature, Language language) {
+        given:
+        List<String> features = [Yaml.NAME, feature]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, 'kapt', feature])
+        generateProject(language, BuildTool.MAVEN, features)
         String output = executeMaven("compile")
 
         then:
@@ -66,8 +73,13 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
     }
 
     void "test #buildTool #feature with #language without security"(BuildTool buildTool, String feature, Language language) {
+        given:
+        List<String> features = [Yaml.NAME, feature]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, buildTool, [Yaml.NAME, 'kapt', feature])
+        generateProject(language, buildTool, features)
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -81,16 +93,21 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                BuildTool.valuesGradle(),
+                BuildTool.valuesGradle().toList(),
                 [SwaggerUI.NAME],
-                Language.values()
+                LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
 
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     void "test maven #feature with #language with security"(String feature, Language language, String securityFeature) {
+        given:
+        List<String> features = [Yaml.NAME, feature, securityFeature]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, BuildTool.MAVEN, [Yaml.NAME, 'kapt', feature, securityFeature])
+        generateProject(language, BuildTool.MAVEN, features)
         String output = executeMaven("compile")
 
         then:
@@ -119,8 +136,13 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
     }
 
     void "test #buildTool #feature with #language with security"(BuildTool buildTool, String feature, Language language, String securityFeature) {
+        given:
+        List<String> features = [Yaml.NAME, feature, securityFeature]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, buildTool, [Yaml.NAME, 'kapt', feature, securityFeature])
+        generateProject(language, buildTool, features)
         String output = executeGradle("compileJava")?.output
 
         then:
@@ -134,9 +156,9 @@ class SwaggerUIFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language, securityFeature] << [
-                BuildTool.valuesGradle(),
+                BuildTool.valuesGradle().toList(),
                 [SwaggerUI.NAME],
-                Language.values(),
+                LanguageUtils.JVM_LANGUAGES,
                 [Security.NAME]
         ].combinations()
     }

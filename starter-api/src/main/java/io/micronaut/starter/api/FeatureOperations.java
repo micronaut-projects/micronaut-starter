@@ -16,6 +16,8 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,4 +43,23 @@ public interface FeatureOperations {
      * @return The features
      */
     List<FeatureDTO> getFeatures(Locale locale, ApplicationType type);
+
+    /**
+     * A list of features applicable to the given application type.
+     * @param locale The locale
+     * @param type The type
+     * @param language Language
+     * @return The features
+     */
+    List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language);
+
+    /**
+     * A list of features applicable to the given application type.
+     * @param locale The locale
+     * @param type The type
+     * @param language Language
+     * @param buildTool Build Tool
+     * @return The features
+     */
+    List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language, BuildTool buildTool);
 }

@@ -19,15 +19,11 @@ package io.micronaut.starter.cli.feature.acme
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.io.ConsoleOutput
 import org.shredzone.acme4j.util.KeyPairUtils
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 
 import java.nio.file.Files
 import java.security.KeyPair
 
-// Fails in GitHub actions with
-// org.testcontainers.containers.ContainerFetchException: Can't get Docker image: RemoteDockerImage(imageName=letsencrypt/pebble:latest...
-@IgnoreIf({env["CI"]})
 class CreateKeyPairSpec extends CliBaseSpec {
 
     @Shared
@@ -59,4 +55,3 @@ class CreateKeyPairSpec extends CliBaseSpec {
         pair.getPublic().getModulus().bitLength() == command.keySize
     }
 }
-

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
@@ -25,7 +26,7 @@ import io.micronaut.starter.feature.testresources.TestResources;
 
 import java.util.Optional;
 
-public abstract class HibernateReactiveFeature extends EaseTestingFeature implements JpaFeature {
+public abstract class HibernateReactiveFeature extends EaseTestingFeature implements JpaFeature, RequiresJavaReflection {
 
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 

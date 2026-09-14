@@ -11,6 +11,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 import spock.lang.Unroll
 
@@ -66,7 +67,7 @@ class OpenTelemetryExporterZipkinSpec extends ApplicationContextSpec implements 
         template.contains('implementation("io.opentelemetry:opentelemetry-exporter-zipkin")')
      
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
     
     void 'test maven tracing-opentelemetry-exporter-zipkin feature for language=#language'(Language language) {

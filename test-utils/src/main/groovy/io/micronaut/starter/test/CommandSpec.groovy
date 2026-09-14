@@ -41,6 +41,8 @@ import spock.util.environment.OperatingSystem
 
 import java.nio.file.Files
 import java.time.Duration
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 abstract class CommandSpec extends Specification {
     private static final String ENV_JAVA_HOME = "JAVA_HOME"
@@ -80,6 +82,10 @@ abstract class CommandSpec extends Specification {
             output = executeMaven(command)
         }
         return output
+    }
+
+    boolean buildSucceeded(BuildTool buildTool, String output) {
+        output.contains("BUILD SUCCESS")
     }
 
     BuildResult executeGradle(String... arguments) {

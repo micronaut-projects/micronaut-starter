@@ -75,7 +75,9 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();
-            String sourceFile = generatorContext.getSourcePath("/{packagePath}/" + className + "Controller");
+            String controllerName = className + "Controller";
+            String sourceFile =
+                    generatorContext.getSourcePath("/{packagePath}/" + controllerName);
 
             boolean serdeFeaturePresent = generatorContext.isFeaturePresent(SerializationFeature.class);
             switch (language) {

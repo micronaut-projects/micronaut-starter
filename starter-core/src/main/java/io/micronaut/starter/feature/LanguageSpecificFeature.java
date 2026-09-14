@@ -30,4 +30,9 @@ public interface LanguageSpecificFeature extends Feature {
      * any language.
      */
     Language getRequiredLanguage();
+
+    @Override
+    default boolean supports(Language language) {
+        return getRequiredLanguage().equals(language);
+    }
 }

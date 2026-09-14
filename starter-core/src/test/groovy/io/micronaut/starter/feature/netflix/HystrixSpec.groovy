@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class HystrixSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -35,7 +36,7 @@ class HystrixSpec extends ApplicationContextSpec implements CommandOutputFixture
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-hystrix")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

@@ -22,12 +22,14 @@ import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.feature.validation.ProjectNameValidator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 
 import jakarta.inject.Singleton;
 import java.util.Collections;
@@ -73,6 +75,8 @@ public class ContextFactory {
 
         DefaultFeature.forEach(availableFeatures.getAllFeatures(), applicationType, newOptions, features, features::add);
 
+        newOptions = newOptions.withTestFramework(determineTestFramework(language, newOptions.getTestFramework(), features));
+
         featureValidator.validatePreProcessing(newOptions, applicationType, features);
 
         return new FeatureContext(newOptions, applicationType, operatingSystem, features);
@@ -110,5 +114,17 @@ public class ContextFactory {
             buildTool = language.getDefaults().getBuild();
         }
         return buildTool;
+    }
+
+    TestFramework determineTestFramework(Language language, TestFramework testFramework, Set<Feature> features) {
+        if (testFramework == null) {
+            testFramework = features.stream()
+                    .filter(TestFeature.class::isInstance)
+                    .map(TestFeature.class::cast)
+                    .map(TestFeature::getTestFramework)
+                    .findFirst()
+                    .orElse(language.getDefaults().getTest());
+        }
+        return testFramework;
     }
 }

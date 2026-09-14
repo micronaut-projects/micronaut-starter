@@ -47,7 +47,7 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
     void 'test gradle aws-v2-sdk feature for language=#language'(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .features(['aws-v2-sdk'])
                 .render()
@@ -57,6 +57,7 @@ class AwsV2SdkSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         where:
         [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+                .findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'test maven aws-v2-sdk feature for language=#language'(Language language) {

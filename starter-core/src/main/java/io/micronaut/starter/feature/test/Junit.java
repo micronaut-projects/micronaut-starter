@@ -33,7 +33,7 @@ import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.junit.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Junit implements TestFeature {
+public class Junit implements JvmTestFeature {
     private static final String GROUP_ID_JUNIT_PLATFORM = "org.junit.platform";
     private static final String ARTIFACT_ID_JUNIT_PLATFORM_LAUNCHER = "junit-platform-launcher";
     private static final Dependency DEPENDENCY_JUNIT_PLATFORM_LAUNCHER = Dependency.builder()

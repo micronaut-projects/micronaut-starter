@@ -60,7 +60,7 @@ class PermissionsSpec extends CommandSpec {
         where:
         [applicationType, language, buildTool, testFramework] << [
                 ApplicationType.values(),
-                Language.values(),
+                LanguageUtils.JVM_LANGUAGES,
                 BuildTool.valuesGradle(),
                 TestFrameworkCombinations.values(),
         ].combinations().findAll {

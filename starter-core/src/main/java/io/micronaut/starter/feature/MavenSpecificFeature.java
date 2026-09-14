@@ -15,11 +15,18 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.BuildTool;
+
 /**
  * A feature that only works with {@link io.micronaut.starter.options.BuildTool#MAVEN}.
  *
  * @author Dean Wette
  * @since 4.0.3
  */
-public interface MavenSpecificFeature extends Feature {
+public interface MavenSpecificFeature extends JvmFeature {
+
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        return buildTool == BuildTool.MAVEN;
+    }
 }

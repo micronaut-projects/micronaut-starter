@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.httpclient;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.feature.JvmFeature;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @Requires(property = "micronaut.starter.feature.http.client.jdk.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class HttpClientJdk implements HttpClientFeature {
+public class HttpClientJdk implements HttpClientFeature, JvmFeature {
     public static final String NAME = "http-client-jdk";
 
     public static final String ARTIFACT_ID_MICRONAUT_HTTP_CLIENT_JDK = "micronaut-http-client-jdk";

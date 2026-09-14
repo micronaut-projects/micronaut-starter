@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.options.Language;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -30,7 +31,6 @@ import io.micronaut.starter.rocker.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
-
 import java.util.Set;
 
 @Requires(property = "micronaut.starter.feature.logback.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -94,6 +94,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    public boolean supports(Language language) {
         return true;
     }
 }

@@ -31,7 +31,6 @@ import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.rocker.feature.build.gitignore;
 import io.micronaut.starter.rocker.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.rocker.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.rocker.feature.build.maven.templates.pom;
@@ -74,7 +73,6 @@ public class Maven implements BuildFeature {
         addMavenWrapper(generatorContext);
         if (generatorContext.isMicronautFramework()) {
             addPom(generatorContext);
-            addGitIgnore(generatorContext);
             Collection<String> moduleNames = generatorContext.getModuleNames();
             if (moduleNames.size() > 1) {
                 List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
@@ -121,15 +119,6 @@ public class Maven implements BuildFeature {
                 generatorContext.getFeatures(),
                 mavenBuild,
                 JvmArgumentsFeature.getJvmArguments(generatorContext.getFeatures().getFeatures()));
-    }
-
-    protected void addGitIgnore(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitIgnore(generatorContext)));
-    }
-
-    @SuppressWarnings("java:S1172") // Unused parameter for extension
-    protected RockerModel gitIgnore(GeneratorContext generatorContext) {
-        return gitignore.template(generatorContext.getFeatures());
     }
 
     @Override

@@ -16,15 +16,13 @@
 package io.micronaut.starter.test;
 
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestFrameworkUtils;
+
 import java.util.List;
 
 public class TestFrameworkCombinations {
 
     public static List<TestFramework> values() {
-        return List.of(
-                TestFramework.KOTEST,
-                TestFramework.JUNIT,
-                TestFramework.SPOCK
-        );
+        return TestFrameworkUtils.JVM_TEST_FRAMEWORKS;
     }
 }

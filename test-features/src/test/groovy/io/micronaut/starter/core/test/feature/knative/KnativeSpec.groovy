@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.feature.knative
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
@@ -33,6 +34,6 @@ class KnativeSpec extends CommandSpec {
         Files.exists(Paths.get(dir.getPath(), "knativeYaml.yml"))
 
         where:
-        buildTool << BuildToolCombinations.buildTools
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

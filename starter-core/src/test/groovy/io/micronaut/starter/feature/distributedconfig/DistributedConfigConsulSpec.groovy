@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class DistributedConfigConsulSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -36,7 +37,7 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
         template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -51,7 +52,7 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
         template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'test gradle config-consul multiple features'() {

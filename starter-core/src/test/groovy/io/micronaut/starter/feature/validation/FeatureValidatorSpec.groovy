@@ -17,9 +17,13 @@ class FeatureValidatorSpec extends BeanContextSpec {
     FeatureValidator featureValidator = beanContext.getBean(FeatureValidator)
 
     void "test feature conflicts with language selection"() {
+        given:
+        String featureName = "test-feature"
+        Language language = Language.JAVA
+
         when:
-        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
-            String name = "test-feature"
+        featureValidator.validatePreProcessing(new Options(language, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+            String name = featureName
             String description = "test desc"
             String title = "test title"
             Language requiredLanguage = Language.GROOVY
@@ -31,8 +35,8 @@ class FeatureValidatorSpec extends BeanContextSpec {
         }] as Set)
 
         then:
-        def ex = thrown(IllegalArgumentException)
-        ex.message == "The selected features are incompatible. [test-feature] requires groovy but java was the selected language."
+        IllegalArgumentException ex = thrown()
+        ex.message == "Feature ${featureName} does not support language ${language}. "
     }
 
     void "test conflicting features required language"() {
@@ -60,10 +64,9 @@ class FeatureValidatorSpec extends BeanContextSpec {
         }] as Set)
 
         then:
-        def ex = thrown(IllegalArgumentException)
-        ex.message.contains("The selected features are incompatible")
-        ex.message.contains("[groovy-feature] requires groovy")
-        ex.message.contains("[kotlin-feature] requires kotlin")
+        IllegalArgumentException ex = thrown()
+        ex.message.contains("Feature groovy-feature does not support language java. ")
+        ex.message.contains("Feature kotlin-feature does not support language java. ")
     }
 
     void "test one of"() {
@@ -91,7 +94,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
         }] as Set)
 
         then:
-        def ex = thrown(IllegalArgumentException)
+        IllegalArgumentException ex = thrown()
         ex.message.contains("There can only be one of the following features selected: [a, b]")
     }
 
@@ -107,7 +110,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
         ] as Set)
 
         then:
-        def ex = thrown(IllegalArgumentException)
+        IllegalArgumentException ex = thrown()
         ex.message.contains("Acme only supports Netty")
 
         where:

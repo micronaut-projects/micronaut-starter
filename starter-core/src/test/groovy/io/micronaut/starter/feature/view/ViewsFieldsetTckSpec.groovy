@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 
 class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -60,7 +61,7 @@ class ViewsFieldsetTckSpec extends ApplicationContextSpec implements CommandOutp
         }
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
     void 'ThymeleafSuite test is generated views-fieldset-tck'() {

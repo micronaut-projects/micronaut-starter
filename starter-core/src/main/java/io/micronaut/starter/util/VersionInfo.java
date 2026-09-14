@@ -71,12 +71,27 @@ public class VersionInfo {
         return getMicronautVersion().endsWith("-SNAPSHOT");
     }
 
+    /**
+     * @return Whether the Micronaut Core version is a snapshot version.
+     */
+    public static boolean isMicronautCoreSnapshot() {
+        return getMicronautCoreVersion().endsWith("-SNAPSHOT");
+    }
+
     public static String getMicronautVersion() {
         Object micronautVersion = VERSIONS.get("micronaut.version");
         if (micronautVersion != null) {
             return micronautVersion.toString();
         }
         return "5.0.0";
+    }
+
+    public static String getMicronautCoreVersion() {
+        Object micronautCoreVersion = VERSIONS.get("micronaut.core.version");
+        if (micronautCoreVersion != null) {
+            return micronautCoreVersion.toString();
+        }
+        return getMicronautVersion();
     }
 
     public static Optional<Integer> getMicronautMajorVersion() {

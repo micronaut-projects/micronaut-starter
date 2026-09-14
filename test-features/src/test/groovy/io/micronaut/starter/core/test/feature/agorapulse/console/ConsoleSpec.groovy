@@ -50,8 +50,8 @@ class ConsoleSpec extends CommandSpec {
 
         where:
         [language, buildTool, testFramework] << [
-                Language.values(),
-                [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE_KOTLIN],
+                LanguageUtils.JVM_LANGUAGES,
+                [BuildTool.valuesGradle().toList()],
                 TestFrameworkCombinations.values()
         ].combinations().findAll {
             return LanguageBuildTestFrameworkCombinations.filterByTestFramework(it)

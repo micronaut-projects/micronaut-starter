@@ -10,6 +10,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Subject
@@ -79,10 +80,10 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
                 .render()
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature kotlin-extension-functions does not support language ${language}. Feature kotlin-extension-functions does not support build tool maven. ")
 
         where:
-        language << (Language.values().toList() - Language.KOTLIN)
+        language << supportedLanguages(BuildTool.MAVEN)
     }
 
     @Unroll
@@ -110,9 +111,9 @@ class KotlinExtensionFunctionsSpec extends ApplicationContextSpec {
 
         then:
         IllegalArgumentException e = thrown()
-        e.message.contains("The selected features are incompatible")
+        e.message.contains("Feature kotlin-extension-functions does not support language ${language}. ")
 
         where:
-        language << (Language.values().toList() - Language.KOTLIN)
+        language << (LanguageUtils.JVM_LANGUAGES - Language.KOTLIN)
     }
 }

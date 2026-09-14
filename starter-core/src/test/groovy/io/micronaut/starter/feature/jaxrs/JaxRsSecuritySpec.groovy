@@ -27,8 +27,11 @@ class JaxRsSecuritySpec extends ApplicationContextSpec implements CommandOutputF
     @Unroll
     void 'test jax-rs-security with Gradle for language=#language'() {
         when:
+        List<String> features = language == Language.KOTLIN
+                ? ['security', JaxRs.NAME, 'kapt']
+                : ['security', JaxRs.NAME]
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['security', JaxRs.NAME, 'kapt'])
+                .features(features)
                 .language(language)
                 .render()
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, language, template)

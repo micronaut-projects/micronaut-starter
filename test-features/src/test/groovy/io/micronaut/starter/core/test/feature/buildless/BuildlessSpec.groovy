@@ -1,8 +1,10 @@
 package io.micronaut.starter.core.test.feature.buildless
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import org.gradle.testkit.runner.BuildResult
 import spock.lang.PendingFeature
 import spock.lang.Unroll
@@ -24,6 +26,9 @@ class BuildlessSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values()].combinations()
+        [buildTool, language] << [
+                BuildToolUtils.JVM_BUILD_TOOLS,
+                LanguageUtils.JVM_LANGUAGES
+        ].combinations()
     }
 }

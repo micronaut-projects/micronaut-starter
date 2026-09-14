@@ -95,9 +95,10 @@ public class Flyway implements MigrationFeature {
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.flywayDependency()
+        Dependency.Builder flyway = MicronautDependencyUtils.flywayDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_FLYWAY)
-                .compile());
+                .compile();
+        generatorContext.addDependency(flyway);
         if (generatorContext.isFeaturePresent(MySQL.class) || generatorContext.isFeaturePresent(MariaDB.class)) {
             generatorContext.addDependency(DEPENDENCY_FLYWAY_MYSQL);
         }
@@ -116,4 +117,3 @@ public class Flyway implements MigrationFeature {
         }
     }
 }
-

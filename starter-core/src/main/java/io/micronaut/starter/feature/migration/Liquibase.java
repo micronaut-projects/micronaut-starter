@@ -32,6 +32,7 @@ import jakarta.inject.Singleton;
 public class Liquibase implements MigrationFeature {
 
     public static final String NAME = "liquibase";
+    private static final String ARTIFACT_ID_LIQUIBASE_SLF_4_J = "liquibase-slf4j";
 
     private final Slf4jJulBridge slf4jJulBridge;
 
@@ -70,9 +71,10 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate("src/main/resources/db/liquibase-changelog.xml",
+        String resourcesPath = "src/main/resources";
+        generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate(resourcesPath + "/db/liquibase-changelog.xml",
                         liquibaseChangelog.template()));
-        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
+        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate(resourcesPath + "/db/changelog/01-schema.xml",
                         liquibaseSchema.template()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.liquibase")

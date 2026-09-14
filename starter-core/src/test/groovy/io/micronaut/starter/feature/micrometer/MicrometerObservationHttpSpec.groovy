@@ -10,6 +10,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -22,11 +23,13 @@ class MicrometerObservationHttpSpec extends ApplicationContextSpec implements Co
     @Unroll
     void 'test micrometer feature micrometer-observation-http contributes dependencies for #buildTool'(BuildTool buildTool) {
         given:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(["micrometer-observation-http"])
                 .render()
         when:
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-observation-http", Scope.COMPILE)

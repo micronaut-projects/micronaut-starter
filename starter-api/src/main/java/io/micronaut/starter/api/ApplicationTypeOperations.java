@@ -17,6 +17,7 @@ package io.micronaut.starter.api;
 
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.options.Language;
 import io.swagger.v3.oas.annotations.Parameter;
 
 /**
@@ -52,4 +53,14 @@ public interface ApplicationTypeOperations {
      */
     @Get("/application-types/{type}/features")
     FeatureList features(ApplicationType type, @Parameter(hidden = true) RequestInfo serverURL);
+
+    /**
+     * List the type features by language.
+     * @param type The features
+     * @param lang Language
+     * @param serverURL The server URL
+     * @return The features
+     */
+    @Get("/application-types/{type}/features/{lang}")
+    FeatureList featuresByLanguage(ApplicationType type, Language lang, @Parameter(hidden = true) RequestInfo serverURL);
 }

@@ -40,6 +40,12 @@ public class Core implements Feature {
             .runtime()
             .build();
 
+    private static final Dependency MICROMETER_CORE = Dependency.builder()
+            .groupId("io.micrometer")
+            .artifactId("micrometer-core")
+            .runtime()
+            .build();
+
     @Override
     public String getName() {
         return "micrometer";
