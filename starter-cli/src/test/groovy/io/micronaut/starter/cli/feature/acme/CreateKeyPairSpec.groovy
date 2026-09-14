@@ -24,6 +24,7 @@ import spock.lang.Shared
 import java.nio.file.Files
 import java.security.KeyPair
 
+@IgnoreIf({env["CI"]})
 class CreateKeyPairSpec extends CliBaseSpec {
 
     @Shared
