@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.JvmFeature;
 
 /**
  * Marker interface for Feature which extend JUnit and hence require Junit to be present.
  * 3.7.0
  */
-public interface JunitCompanionFeature extends Feature {
+public interface JunitCompanionFeature extends JvmFeature {
 }

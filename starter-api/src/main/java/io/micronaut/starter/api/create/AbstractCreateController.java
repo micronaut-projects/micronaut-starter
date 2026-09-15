@@ -88,7 +88,7 @@ public abstract class AbstractCreateController {
             generatorContext = projectGenerator.createGeneratorContext(
                     type,
                     project,
-                    new Options(lang,
+                    new Options(language,
                             testFramework != null ? testFramework.toTestFramework() : language.getDefaults().getTest(),
                             buildTool == null ? language.getDefaults().getBuild() : buildTool,
                             javaVersion == null ? MicronautJdkVersionConfiguration.DEFAULT_OPTION : javaVersion),

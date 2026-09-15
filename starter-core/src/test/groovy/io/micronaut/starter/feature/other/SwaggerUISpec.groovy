@@ -5,6 +5,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 
 class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -67,5 +71,4 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
         output.containsKey("src/test/java/example/micronaut/FooTest.java")
 
     }
-
 }

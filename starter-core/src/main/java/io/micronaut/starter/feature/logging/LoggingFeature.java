@@ -16,10 +16,9 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.JvmOneOfFeature;
 
-public interface LoggingFeature extends OneOfFeature {
-
+public interface LoggingFeature extends JvmOneOfFeature {
     @Override
     default Class<?> getFeatureClass() {
         return LoggingFeature.class;

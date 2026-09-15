@@ -29,7 +29,7 @@ class KotlinSymbolProcessingSpec extends ApplicationContextSpec implements Comma
 
     void "ksp does not requires kotlin"() {
         expect:
-        !(ksp instanceof LanguageSpecificFeature)
+        ksp instanceof KotlinSpecificFeature
     }
 
     void 'ksp feature is in the cloud category'() {

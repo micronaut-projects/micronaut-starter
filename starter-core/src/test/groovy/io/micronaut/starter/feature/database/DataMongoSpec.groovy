@@ -14,7 +14,8 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a #buildTool app in #language"() {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), [feature, 'kapt'])
+        List<String> features = language == Language.KOTLIN ? [feature, 'kapt'] : [feature]
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), features)
         String readme = output["README.md"]
         String build = output["build.gradle${buildTool == BuildTool.GRADLE_KOTLIN ? ".kts" : ""}".toString()]
 

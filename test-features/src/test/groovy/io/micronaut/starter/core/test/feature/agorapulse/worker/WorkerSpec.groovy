@@ -50,7 +50,7 @@ class WorkerSpec extends CommandSpec {
 
         where:
         [language, buildTool, testFramework] << [
-                Language.values(),
+                LanguageUtils.JVM_LANGUAGES,
                 BuildTool.valuesGradle(),
                 TestFrameworkCombinations.values()
         ].combinations().findAll {

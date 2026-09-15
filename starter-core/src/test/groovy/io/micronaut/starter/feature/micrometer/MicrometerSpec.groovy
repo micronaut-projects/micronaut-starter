@@ -22,7 +22,9 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
     @Unroll
     void 'test micrometer feature #micrometerFeature.name contributes dependencies for #buildTool'(MicrometerRegistryFeature micrometerFeature, BuildTool buildTool) {
         given:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features([micrometerFeature.name])
                 .render()
         when:
@@ -30,7 +32,7 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
                 MicronautDependencyUtils.GROUP_ID_IO_MICRONAUT_ORACLE_CLOUD : MicronautDependencyUtils.GROUP_ID_MICRONAUT_MICROMETER
         String artifactId = micrometerFeature instanceof OracleCloudFeature ?
                 OracleCloud.ARTIFACT_ID_MICRONAUT_ORACLECLOUD_MICROMETER : "micronaut-micrometer-registry-" + micrometerFeature.getImplementationName()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
@@ -42,12 +44,14 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
     void 'test gradle micrometer feature oracle cloud #buildTool'(BuildTool buildTool) {
         given:
         var name = beanContext.getBean(OracleCloud).getName()
+        Language language = supportedLanguages(buildTool).first()
 
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features([name])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency('io.micronaut.oraclecloud', 'micronaut-oraclecloud-bmc-monitoring', Scope.COMPILE)
@@ -58,12 +62,14 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "test #buildTool micrometer multiple features"(BuildTool buildTool) {
         when:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(["micrometer-atlas", "micrometer-influx"])
                 .render()
 
         then:
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-core", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", Scope.COMPILE)
@@ -161,11 +167,13 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "test micrometer annotation and feature for buildTool=#buildTool"(BuildTool buildTool) {
         when:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
         def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         deps.size() == 3
@@ -179,11 +187,13 @@ class MicrometerSpec extends ApplicationContextSpec implements CommandOutputFixt
 
     void "test micrometer dependencies for micrometer-atlas and micrometer-annotation for buildTool=#buildTool"(BuildTool buildTool) {
         when:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(["micrometer-atlas", "micrometer-annotation"])
                 .render()
         def deps = template.readLines().grep(~/.*io\.micronaut\.micrometer.*/).collect{ it.trim() }
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         deps.size() == 3

@@ -6,7 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 
 class DefaultRepositoryResolverSpec extends Specification {
 
-    void "do not generate snapshot repository if not Micronaut Framework"() {
+    void "generate snapshot repository for Micronaut snapshots"() {
         given:
         DefaultRepositoryResolver resolver = new DefaultRepositoryResolver()
         GeneratorContext generatorContext = Stub(GeneratorContext) {
@@ -23,7 +23,7 @@ class DefaultRepositoryResolverSpec extends Specification {
             getFramework() >> 'Micronaut'
         }
         expect:
-        VersionInfo.isMicronautSnapshot() == resolver.shouldAddSnapshotRepository(generatorContext)
+        (VersionInfo.isMicronautSnapshot() || VersionInfo.isMicronautCoreSnapshot()) == resolver.shouldAddSnapshotRepository(generatorContext)
     }
 
 }

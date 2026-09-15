@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
@@ -11,6 +12,14 @@ import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
 class OracleSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void 'test oracle test-resources startup timeout'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext([Oracle.NAME, 'test-resources'])
+
+        then:
+        commandContext.configuration.get('test-resources.containers.oracle.startup-timeout') == '600s'
+    }
 
     @Unroll
     void 'test #buildTool oracle feature for language=#language'(BuildTool buildTool, Language language) {

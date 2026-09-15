@@ -12,6 +12,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Shared
 import spock.lang.Subject;
 
@@ -50,7 +51,10 @@ class AmazonCloudWatchLoggingSpec extends ApplicationContextSpec implements Comm
         verifier.hasDependency("io.micronaut.aws", "micronaut-aws-cloudwatch-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [
+                LanguageUtils.JVM_LANGUAGES,
+                BuildTool.values()
+        ].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 
 }

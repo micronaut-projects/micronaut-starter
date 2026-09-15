@@ -56,6 +56,6 @@ class OpenTelemetryAnnotationsSpec extends ApplicationContextSpec implements Com
         verifier.hasDependency("io.micronaut.tracing", "micronaut-tracing-opentelemetry-annotation", Scope.ANNOTATION_PROCESSOR, 'micronaut.tracing.version', true)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 }

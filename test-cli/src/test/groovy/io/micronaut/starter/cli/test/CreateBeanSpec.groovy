@@ -5,6 +5,7 @@ import io.micronaut.starter.cli.command.project.bean.CreateBeanCommand
 import io.micronaut.starter.feature.crac.Crac
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
@@ -55,7 +56,7 @@ public class Application {
         output?.contains("BUILD SUCCESS")
 
         where:
-        build << BuildToolCombinations.buildTools
+        build << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     @Unroll
@@ -101,7 +102,7 @@ class Application {
         output?.contains("BUILD SUCCESS")
 
         where:
-        build << BuildToolCombinations.buildTools
+        build << BuildToolUtils.JVM_BUILD_TOOLS
     }
 
     @Unroll

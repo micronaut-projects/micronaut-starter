@@ -17,6 +17,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 import io.micronaut.starter.util.VersionInfo
 import jakarta.inject.Inject
 import spock.lang.Subject
@@ -47,7 +48,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('"micronaut.security.openid-configuration.enabled","false"')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'application with aot and oauth adds platform dependency for the aot scope -- language=#language (#tool)'(Language language, BuildTool tool) {
@@ -66,7 +67,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         template.contains("io.micronaut.platform:micronaut-platform:$VersionInfo.micronautVersion")
 
         where:
-        [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
+        [language, tool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations().findAll { it ->
+            supportedLanguages(it[1]).contains(it[0])
+        }
     }
 
     void 'application with aot and jwt adds security jwks aot key language=#language'(Language language) {
@@ -78,7 +81,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains("\"micronaut.security.jwks.enabled\",\"false\"")
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     void 'application with #buildTool and feature micronaut-aot for language=#language'(BuildTool buildTool, Language language) {
@@ -98,7 +101,9 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.contains('replaceLogbackXml = true')
 
         where:
-        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations()
+        [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations().findAll { it ->
+            supportedLanguages(it[0]).contains(it[1])
+        }
     }
 
     @Unroll
@@ -122,7 +127,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.indexOf(APP_PLUGIN) < output.indexOf(AOT_PLUGIN)
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll
@@ -136,7 +141,7 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         output.indexOf(APP_PLUGIN) < output.indexOf(AOT_PLUGIN)
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

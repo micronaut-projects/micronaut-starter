@@ -33,7 +33,7 @@ import java.util.Optional;
 
 @Requires(property = "micronaut.starter.feature.kotlin.extension.functions.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class KotlinExtensionFunctions implements Feature, KotlinSpecificFeature {
+public class KotlinExtensionFunctions implements KotlinSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {

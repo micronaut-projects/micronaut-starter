@@ -73,7 +73,7 @@ class SlackSpec extends CommandSpec {
         where:
         [applicationType, language, buildTool, testFramework, features] << [
                 [ApplicationType.DEFAULT],
-                Language.values(),
+                LanguageUtils.JVM_LANGUAGES,
                 BuildTool.valuesGradle(),
                 TestFrameworkCombinations.values(),
                 [

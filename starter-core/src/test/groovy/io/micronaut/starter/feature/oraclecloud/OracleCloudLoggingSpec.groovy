@@ -13,6 +13,7 @@ import io.micronaut.starter.feature.oraclecloud.OracleCloudLogging
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Subject
 
 class OracleCloudLoggingSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -49,6 +50,6 @@ class OracleCloudLoggingSpec extends ApplicationContextSpec implements CommandOu
         verifier.hasDependency("io.micronaut.oraclecloud", "micronaut-oraclecloud-logging", Scope.COMPILE)
 
         where:
-        [language, buildTool] << [Language.values().toList(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }
     }
 }

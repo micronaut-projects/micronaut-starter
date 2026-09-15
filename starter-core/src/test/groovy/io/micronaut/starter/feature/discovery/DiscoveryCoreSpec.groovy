@@ -14,9 +14,10 @@ class DiscoveryCoreSpec extends ApplicationContextSpec implements CommandOutputF
     void "discovery-core feature is default feature for function  and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['discovery-core'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency('io.micronaut', 'micronaut-discovery-core')

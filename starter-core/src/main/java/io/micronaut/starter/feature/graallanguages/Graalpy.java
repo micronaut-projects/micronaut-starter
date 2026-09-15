@@ -27,7 +27,6 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.MinJdkFeature;
 import io.micronaut.starter.rocker.feature.graallanguages.templates.graalPyMavenPlugin;
 import io.micronaut.starter.rocker.feature.graallanguages.templates.graalPyGradlePlugin;
@@ -41,7 +40,7 @@ import java.util.List;
 
 @Requires(property = "micronaut.starter.feature.graalpy.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Graalpy implements MinJdkFeature, Feature {
+public class Graalpy implements MinJdkFeature {
     public static final String NAME = "graalpy";
 
     private static final String GROUP_ID_GRAALVM_PYTHON = "org.graalvm.python";

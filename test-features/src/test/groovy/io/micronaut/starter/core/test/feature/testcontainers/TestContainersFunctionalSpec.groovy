@@ -54,15 +54,13 @@ class TestContainersFunctionalSpec extends CommandSpec {
 
         where:
         [buildTool, driverFeature] << [
-                BuildToolCombinations.buildTools,
+                BuildTool.valuesGradle().toList(),
                 beanContext.getBeansOfType(DatabaseDriverFeature)
                         .stream()
                         .filter( f -> PredicateUtils.testFeatureIfMacOS(List.of(Oracle.NAME, SQLServer.NAME)).test(f.name))
                         .filter( f -> f.name != SQLServer.NAME) // ignore SQLServer fails on CI and locally it passes only with TestContainers Desktop
                         .filter( f -> !f.embedded())
                         .toList()
-        ].combinations().findAll {
-            it[0] != BuildTool.MAVEN
-        }
+        ].combinations()
     }
 }

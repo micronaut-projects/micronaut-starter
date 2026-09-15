@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.feature.k8s
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
 import io.micronaut.starter.test.CommandSpec
@@ -41,9 +42,9 @@ class KubernetesClientSpec extends CommandSpec {
 
         where:
         [buildTool, feature, language] << [
-                BuildTool.valuesGradle(),
+                BuildTool.valuesGradle().toList(),
                 ["kubernetes-client", "kubernetes-reactor-client"],
-                Language.values()
+                LanguageUtils.JVM_LANGUAGES
         ].combinations()
     }
 }
