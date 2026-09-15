@@ -5,6 +5,7 @@ import io.micronaut.starter.cli.command.project.job.CreateJobCommand
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class CreateJobSpec extends CommandSpec {
@@ -27,7 +28,7 @@ class CreateJobSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered job") })
 
         where:
-        language << Language.values().findAll { it != Language.PYTHON }
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Override

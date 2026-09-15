@@ -51,6 +51,6 @@ public class SourcegenFeatureValidator implements FeatureValidator  {
     }
 
     public static boolean supports(Language language) {
-        return language != Language.GROOVY && language != Language.PYTHON;
+        return language == Language.JAVA || language == Language.KOTLIN;
     }
 }

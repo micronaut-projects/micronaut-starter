@@ -32,7 +32,6 @@ import io.micronaut.starter.rocker.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
-
 import java.util.Set;
 
 import static io.micronaut.starter.feature.build.pyronaut.PyronautUtils.isPyronaut;

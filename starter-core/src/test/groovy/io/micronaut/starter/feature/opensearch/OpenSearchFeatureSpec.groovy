@@ -53,10 +53,7 @@ class OpenSearchFeatureSpec extends ApplicationContextSpec implements CommandOut
         !isConfiguredForTestResources(buildTool, verifier, template)
 
         where:
-        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations().findAll {
-            // OpenSearch Rest Client requires Jackson Databind, which is not supported for Python because it uses Java reflection.
-            !(it[0] instanceof OpenSearchRestClient && it[1] == BuildTool.PYRONAUT)
-        }
+        [opensearchFeature, buildTool] << [beanContext.getBeansOfType(OpenSearchFeature), BuildToolUtils.JVM_BUILD_TOOLS].combinations()
     }
 
     void "test opensearch feature #opensearchFeature.name is search engine category"(OpenSearchFeature opensearchFeature) {

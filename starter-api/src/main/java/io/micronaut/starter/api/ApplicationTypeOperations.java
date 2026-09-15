@@ -56,7 +56,7 @@ public interface ApplicationTypeOperations {
 
     /**
      * List the type features by language.
-     * @param type The features
+     * @param type The application type
      * @param lang Language
      * @param serverURL The server URL
      * @return The features

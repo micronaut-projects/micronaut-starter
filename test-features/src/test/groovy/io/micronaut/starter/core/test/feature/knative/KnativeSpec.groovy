@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test.feature.knative
 
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.BuildToolUtils
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
@@ -33,7 +34,6 @@ class KnativeSpec extends CommandSpec {
         Files.exists(Paths.get(dir.getPath(), "knativeYaml.yml"))
 
         where:
-        // This spec always generates Java; add a Python/Pyronaut fixture before including Pyronaut.
-        buildTool << BuildToolCombinations.buildTools.findAll { it != BuildTool.PYRONAUT }
+        buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
 }

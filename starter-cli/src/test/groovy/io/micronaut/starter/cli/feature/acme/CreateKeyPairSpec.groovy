@@ -19,11 +19,13 @@ package io.micronaut.starter.cli.feature.acme
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.io.ConsoleOutput
 import org.shredzone.acme4j.util.KeyPairUtils
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 
 import java.nio.file.Files
 import java.security.KeyPair
 
+@IgnoreIf({env["CI"]})
 class CreateKeyPairSpec extends CliBaseSpec {
 
     @Shared

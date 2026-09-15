@@ -8,7 +8,7 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 
-class AmazonCognitoSpec extends CommandSpec {
+class AmazonCognitoFunctionalSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
@@ -22,7 +22,7 @@ class AmazonCognitoSpec extends CommandSpec {
                                                                                                                              TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito']
-        if (build.isGradle()) {
+        if (lang == Language.KOTLIN && build.isGradle()) {
             features.add('kapt')
         }
         generateProject(lang, build, features, applicationType, testFramework)
@@ -45,7 +45,7 @@ class AmazonCognitoSpec extends CommandSpec {
                                                                                                                     TestFramework testFramework) {
         given:
         List<String> features = ['amazon-cognito', 'aws-lambda']
-        if (build.isGradle()) {
+        if (lang == Language.KOTLIN && build.isGradle()) {
             features.add('kapt')
         }
         generateProject(lang, build, features, applicationType, testFramework)

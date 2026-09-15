@@ -58,6 +58,9 @@ public class SupportsFeatureValidator implements FeatureValidator {
                 if (!feature.supports(options.getBuildTool())) {
                     sb.append("Feature " + feature.getName() + " does not support build tool " +  options.getBuildTool() + ". ");
                 }
+                if (!feature.supports(options.getTestFramework())) {
+                    sb.append("Feature " + feature.getName() + " does not support test framework " +  options.getTestFramework() + ". ");
+                }
             }
         }
         String message = sb.toString();

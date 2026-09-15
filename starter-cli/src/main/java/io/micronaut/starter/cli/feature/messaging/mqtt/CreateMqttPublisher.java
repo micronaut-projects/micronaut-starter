@@ -32,6 +32,7 @@ import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
+import io.micronaut.starter.util.LanguageUtils;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -93,10 +94,9 @@ public class CreateMqttPublisher extends CodeGenCommand {
         } else if (config.getSourceLanguage() == PYTHON) {
             renderResult = templateRenderer.render(PythonTemplates.mqttPublisher(project, version), overwrite);
         }
-        if (config.getSourceLanguage() != PYTHON) {
+        if (LanguageUtils.JVM_LANGUAGES.contains(config.getSourceLanguage())) {
             renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
         }
-
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
                 out("@|blue ||@ Rendered MQTT publisher to " + renderResult.getPath());

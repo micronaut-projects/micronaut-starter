@@ -69,7 +69,6 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         output.containsKey("src/main/java/example/micronaut/FooController.java")
         output.containsKey("src/test/java/example/micronaut/FooTest.java")
-
     }
 
     void "test python example controller uses python source"() {
@@ -83,5 +82,4 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
         output["src/example/micronaut/default_controller.py"].contains("@Get(value=\"/default\", produces=\"text/plain\")")
         !output["src/example/micronaut/default_controller.py"].contains("package example.micronaut;")
     }
-
 }

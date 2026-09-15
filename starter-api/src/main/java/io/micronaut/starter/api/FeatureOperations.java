@@ -45,7 +45,7 @@ public interface FeatureOperations {
     List<FeatureDTO> getFeatures(Locale locale, ApplicationType type);
 
     /**
-     * A list of features applicable to the given application type.
+     * A list of features applicable to the given application type and language.
      * @param locale The locale
      * @param type The type
      * @param language Language
@@ -54,7 +54,7 @@ public interface FeatureOperations {
     List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, Language language);
 
     /**
-     * A list of features applicable to the given application type.
+     * A list of features applicable to the given application type, language and build tool.
      * @param locale The locale
      * @param type The type
      * @param language Language

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.CompilerArgCodeContributingFeature;
 import io.micronaut.starter.template.StringTemplate;
@@ -25,10 +26,12 @@ import org.jspecify.annotations.NonNull;
 import java.util.List;
 
 import static io.micronaut.core.util.StringUtils.TRUE;
+import static io.micronaut.starter.feature.other.NullAway.errorProneDependency;
+import static io.micronaut.starter.feature.other.NullAway.nullawayDependency;
 
 @Requires(property = "micronaut.starter.feature.nullaway.enabled", value = TRUE, defaultValue = TRUE)
 @Singleton
-public class NullAwayMavenPluginFeature extends NullAway implements CompilerArgCodeContributingFeature {
+public class NullAwayMavenPluginFeature implements CompilerArgCodeContributingFeature {
     private static final List<String> NULLAWAY_MAVEN_JVM_FLAGS = List.of(
             "--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
             "--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
@@ -42,13 +45,19 @@ public class NullAwayMavenPluginFeature extends NullAway implements CompilerArgC
             "--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED"
     );
 
-    protected NullAwayMavenPluginFeature(Jspecify jspecify) {
-        super(jspecify);
-    }
-
     @Override
     public String getName() {
         return "nullaway-maven-plugin";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
     @Override

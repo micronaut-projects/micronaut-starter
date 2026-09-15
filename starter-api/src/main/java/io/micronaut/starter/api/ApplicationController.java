@@ -179,8 +179,9 @@ public class ApplicationController implements ApplicationTypeOperations {
     }
 
     /**
-     * List the type features.
-     * @param type The features
+     * List the type features supported by the given language.
+     * @param type The application type
+     * @param lang The language
      * @param requestInfo The request info
      * @return The features
      */

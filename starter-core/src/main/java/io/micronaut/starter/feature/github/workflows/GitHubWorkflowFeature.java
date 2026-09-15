@@ -29,6 +29,10 @@ import java.util.List;
  * @since 2.2
  */
 public abstract class GitHubWorkflowFeature implements JvmFeature {
+    @Override
+    public boolean isPreview() {
+        return false;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
