@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#isJava()" tabindex="0">isJava()</a></li>
 <li><a href="#isGroovy()" tabindex="0">isGroovy()</a></li>
 <li><a href="#isKotlin()" tabindex="0">isKotlin()</a></li>
+<li><a href="#isPython()" tabindex="0">isPython()</a></li>
 <li><a href="#supports(io.micronaut.starter.application.ApplicationType)" tabindex="0">supports(ApplicationType)</a></li>
 </ol>
 </li>
@@ -125,14 +126,17 @@ extends <a href="../DefaultFeature.html" title="interface in io.micronaut.starte
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isKotlin()" class="member-name-link">isKotlin</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isVisible()" class="member-name-link">isVisible</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isPython()" class="member-name-link">isPython</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isVisible()" class="member-name-link">isVisible</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Some features should not be visible to the user because they are a common parent of other
 selectable features, or they should always be applied, or any other reason.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
 application types.</div>
 </div>
@@ -147,7 +151,7 @@ application types.</div>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;<a href="../Feature.html#method-summary" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="../Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="../Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getName()" title="getName()">getName</a>, <a href="../Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#getTitle()" title="getTitle()">getTitle</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a></code></div>
+<code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="../Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="../Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getName()" title="getName()">getName</a>, <a href="../Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#getTitle()" title="getTitle()">getTitle</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a>, <a href="../Feature.html#supports(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options)" title="supports(ApplicationType, Options)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.BuildTool)" title="supports(BuildTool)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.Language)" title="supports(Language)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.Options)" title="supports(Options)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.TestFramework)" title="supports(TestFramework)">supports</a></code></div>
 </section>
 </li>
 </ul>
@@ -218,6 +222,14 @@ for a list of phases to choose from.</div>
 <h3>isKotlin</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isKotlin</span>()</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPython()">
+<h3>isPython</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPython</span>()</div>
 </div>
 </section>
 </li>

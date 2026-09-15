@@ -64,7 +64,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(io.micronaut.starter.feature.other.Jspecify)" tabindex="0">NullAway(Jspecify)</a></li>
+<li><a href="#%3Cinit%3E(io.micronaut.starter.feature.other.Jspecify,io.micronaut.starter.feature.other.NullAwayGradlePluginFeature,io.micronaut.starter.feature.other.NullAwayMavenPluginFeature)" tabindex="0">NullAway(Jspecify, NullAwayGradlePluginFeature, NullAwayMavenPluginFeature)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -76,8 +76,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#getThirdPartyDocumentation()" tabindex="0">getThirdPartyDocumentation()</a></li>
 <li><a href="#supports(io.micronaut.starter.application.ApplicationType)" tabindex="0">supports(ApplicationType)</a></li>
 <li><a href="#getCategory()" tabindex="0">getCategory()</a></li>
-<li><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" tabindex="0">apply(GeneratorContext)</a></li>
-<li><a href="#getCompilerArgs(io.micronaut.starter.application.generator.GeneratorContext)" tabindex="0">getCompilerArgs(GeneratorContext)</a></li>
 </ol>
 </li>
 </ol>
@@ -93,7 +91,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../CompilerArgCodeContributingFeature.html" title="interface in io.micronaut.starter.feature">CompilerArgCodeContributingFeature</a>, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
@@ -103,7 +101,7 @@ loadScripts(document, 'script');</script>
 @Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">NullAway</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../CompilerArgCodeContributingFeature.html" title="interface in io.micronaut.starter.feature">CompilerArgCodeContributingFeature</a></span></div>
+implements <a href="../JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a></span></div>
 </div>
 </section>
 <section class="summary">
@@ -134,7 +132,9 @@ implements <a href="../CompilerArgCodeContributingFeature.html" title="interface
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.feature.other.Jspecify)" class="member-name-link">NullAway</a><wbr>(<a href="Jspecify.html" title="class in io.micronaut.starter.feature.other">Jspecify</a>&nbsp;jspecify)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.starter.feature.other.Jspecify,io.micronaut.starter.feature.other.NullAwayGradlePluginFeature,io.micronaut.starter.feature.other.NullAwayMavenPluginFeature)" class="member-name-link">NullAway</a><wbr>(<a href="Jspecify.html" title="class in io.micronaut.starter.feature.other">Jspecify</a>&nbsp;jspecify,
+ <a href="NullAwayGradlePluginFeature.html" title="class in io.micronaut.starter.feature.other">NullAwayGradlePluginFeature</a>&nbsp;nullAwayGradlePluginFeature,
+ <a href="NullAwayMavenPluginFeature.html" title="class in io.micronaut.starter.feature.other">NullAwayMavenPluginFeature</a>&nbsp;nullAwayMavenPluginFeature)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -150,18 +150,8 @@ implements <a href="../CompilerArgCodeContributingFeature.html" title="interface
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
-included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
-or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCategory()" class="member-name-link">getCategory</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCompilerArgs(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">getCompilerArgs</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCategory()" class="member-name-link">getCategory</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
@@ -200,7 +190,10 @@ application types.</div>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;<a href="../Feature.html#method-summary" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()" title="isVisible()">isVisible</a></code></div>
+<code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()" title="isVisible()">isVisible</a>, <a href="../Feature.html#supports(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options)" title="supports(ApplicationType, Options)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.Options)" title="supports(Options)">supports</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.JvmFeature">Methods inherited from interface&nbsp;<a href="../JvmFeature.html#method-summary" title="interface in io.micronaut.starter.feature">JvmFeature</a></h3>
+<code><a href="../JvmFeature.html#supports(io.micronaut.starter.options.BuildTool)" title="supports(BuildTool)">supports</a>, <a href="../JvmFeature.html#supports(io.micronaut.starter.options.Language)" title="supports(Language)">supports</a>, <a href="../JvmFeature.html#supports(io.micronaut.starter.options.TestFramework)" title="supports(TestFramework)">supports</a></code></div>
 </section>
 </li>
 </ul>
@@ -237,10 +230,12 @@ application types.</div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.starter.feature.other.Jspecify)">
+<section class="detail" id="&lt;init&gt;(io.micronaut.starter.feature.other.Jspecify,io.micronaut.starter.feature.other.NullAwayGradlePluginFeature,io.micronaut.starter.feature.other.NullAwayMavenPluginFeature)">
 <h3>NullAway</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NullAway</span><wbr><span class="parameters">(<a href="Jspecify.html" title="class in io.micronaut.starter.feature.other">Jspecify</a>&nbsp;jspecify)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NullAway</span><wbr><span class="parameters">(<a href="Jspecify.html" title="class in io.micronaut.starter.feature.other">Jspecify</a>&nbsp;jspecify,
+ <a href="NullAwayGradlePluginFeature.html" title="class in io.micronaut.starter.feature.other">NullAwayGradlePluginFeature</a>&nbsp;nullAwayGradlePluginFeature,
+ <a href="NullAwayMavenPluginFeature.html" title="class in io.micronaut.starter.feature.other">NullAwayMavenPluginFeature</a>&nbsp;nullAwayMavenPluginFeature)</span></div>
 </div>
 </section>
 </li>
@@ -366,42 +361,6 @@ should be applied.</div>
 <dd><code><a href="../Feature.html#getCategory()">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt>Returns:</dt>
 <dd>The <a href="../Category.html" title="class in io.micronaut.starter.feature"><code>Category</code></a> to which the feature belongs to.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="apply(io.micronaut.starter.application.generator.GeneratorContext)">
-<h3>apply</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">Feature</a></code></span></div>
-<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
-included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
-or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.
-
-At this point the feature list is set and cannot change.
-
-This method can be implemented to modify the generated project. The feature can add templates
-by executing <a href="../../application/generator/GeneratorContext.html#addTemplate(java.lang.String,io.micronaut.starter.template.Template)"><code>GeneratorContext.addTemplate(String, io.micronaut.starter.template.Template)</code></a>, modify configuration
-by modifying <a href="../../application/generator/GeneratorContext.html#getConfiguration()"><code>GeneratorContext.getConfiguration()</code></a> or <a href="../../application/generator/GeneratorContext.html#getBootstrapConfiguration()"><code>GeneratorContext.getBootstrapConfiguration()</code></a>, or modify build properties through <a href="../../application/generator/GeneratorContext.html#getBuildProperties()"><code>GeneratorContext.getBuildProperties()</code></a>.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>generatorContext</code> - THe generator context</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getCompilerArgs(io.micronaut.starter.application.generator.GeneratorContext)">
-<h3>getCompilerArgs</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getCompilerArgs</span><wbr><span class="parameters">(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../CompilerArgCodeContributingFeature.html#getCompilerArgs(io.micronaut.starter.application.generator.GeneratorContext)">getCompilerArgs</a></code>&nbsp;in interface&nbsp;<code><a href="../CompilerArgCodeContributingFeature.html" title="interface in io.micronaut.starter.feature">CompilerArgCodeContributingFeature</a></code></dd>
 </dl>
 </div>
 </section>

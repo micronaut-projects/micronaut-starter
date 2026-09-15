@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../feature/MavenSpecificFeature.html" title="interface in io.micronaut.starter.feature">MavenSpecificFeature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../feature/JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a>, <a href="../../feature/MavenSpecificFeature.html" title="interface in io.micronaut.starter.feature">MavenSpecificFeature</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
@@ -174,7 +174,13 @@ application types.</div>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;<a href="../../feature/Feature.html#method-summary" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../feature/Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="../../feature/Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="../../feature/Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../../feature/Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../../feature/Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../../feature/Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../../feature/Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a></code></div>
+<code><a href="../../feature/Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="../../feature/Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="../../feature/Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../../feature/Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../../feature/Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../../feature/Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../../feature/Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a>, <a href="../../feature/Feature.html#supports(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options)" title="supports(ApplicationType, Options)">supports</a>, <a href="../../feature/Feature.html#supports(io.micronaut.starter.options.Options)" title="supports(Options)">supports</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.JvmFeature">Methods inherited from interface&nbsp;<a href="../../feature/JvmFeature.html#method-summary" title="interface in io.micronaut.starter.feature">JvmFeature</a></h3>
+<code><a href="../../feature/JvmFeature.html#supports(io.micronaut.starter.options.Language)" title="supports(Language)">supports</a>, <a href="../../feature/JvmFeature.html#supports(io.micronaut.starter.options.TestFramework)" title="supports(TestFramework)">supports</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.MavenSpecificFeature">Methods inherited from interface&nbsp;<a href="../../feature/MavenSpecificFeature.html#method-summary" title="interface in io.micronaut.starter.feature">MavenSpecificFeature</a></h3>
+<code><a href="../../feature/MavenSpecificFeature.html#supports(io.micronaut.starter.options.BuildTool)" title="supports(BuildTool)">supports</a></code></div>
 </section>
 </li>
 </ul>

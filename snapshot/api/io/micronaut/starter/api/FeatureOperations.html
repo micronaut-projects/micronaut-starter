@@ -59,6 +59,8 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#getAllFeatures(java.util.Locale)" tabindex="0">getAllFeatures(Locale)</a></li>
 <li><a href="#getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType)" tabindex="0">getFeatures(Locale, ApplicationType)</a></li>
+<li><a href="#getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language)" tabindex="0">getFeatures(Locale, ApplicationType, Language)</a></li>
+<li><a href="#getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.options.BuildTool)" tabindex="0">getFeatures(Locale, ApplicationType, Language, BuildTool)</a></li>
 </ol>
 </li>
 </ol>
@@ -109,6 +111,21 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">A list of features applicable to the given application type.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language)" class="member-name-link">getFeatures</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
+ <a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">A list of features applicable to the given application type and language.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.options.BuildTool)" class="member-name-link">getFeatures</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
+ <a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language,
+ <a href="../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">A list of features applicable to the given application type, language and build tool.</div>
+</div>
 </div>
 </div>
 </div>
@@ -149,6 +166,46 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>locale</code> - The locale</dd>
 <dd><code>type</code> - The type</dd>
+<dt>Returns:</dt>
+<dd>The features</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language)">
+<h3>getFeatures</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</span>&nbsp;<span class="element-name">getFeatures</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
+ <a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</span></div>
+<div class="block">A list of features applicable to the given application type and language.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>locale</code> - The locale</dd>
+<dd><code>type</code> - The type</dd>
+<dd><code>language</code> - Language</dd>
+<dt>Returns:</dt>
+<dd>The features</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFeatures(java.util.Locale,io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.options.BuildTool)">
+<h3>getFeatures</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</span>&nbsp;<span class="element-name">getFeatures</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
+ <a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language,
+ <a href="../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</span></div>
+<div class="block">A list of features applicable to the given application type, language and build tool.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>locale</code> - The locale</dd>
+<dd><code>type</code> - The type</dd>
+<dd><code>language</code> - Language</dd>
+<dd><code>buildTool</code> - Build Tool</dd>
 <dt>Returns:</dt>
 <dd>The features</dd>
 </dl>

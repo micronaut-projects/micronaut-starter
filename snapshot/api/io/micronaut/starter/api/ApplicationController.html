@@ -66,6 +66,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#list(io.micronaut.starter.api.RequestInfo)" tabindex="0">list(RequestInfo)</a></li>
 <li><a href="#getType(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.api.RequestInfo)" tabindex="0">getType(ApplicationType, RequestInfo)</a></li>
 <li><a href="#features(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.api.RequestInfo)" tabindex="0">features(ApplicationType, RequestInfo)</a></li>
+<li><a href="#featuresByLanguage(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.api.RequestInfo)" tabindex="0">featuresByLanguage(ApplicationType, Language, RequestInfo)</a></li>
 </ol>
 </li>
 </ol>
@@ -134,15 +135,22 @@ implements <a href="ApplicationTypeOperations.html" title="interface in io.micro
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">List the type features.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ApplicationTypeDTO.html" title="class in io.micronaut.starter.api">ApplicationTypeDTO</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.api.RequestInfo)" class="member-name-link">getType</a><wbr>(<a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
- <a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;info)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FeatureList.html" title="class in io.micronaut.starter.api">FeatureList</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#featuresByLanguage(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.api.RequestInfo)" class="member-name-link">featuresByLanguage</a><wbr>(<a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ <a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">List the type features supported by the given language.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ApplicationTypeDTO.html" title="class in io.micronaut.starter.api">ApplicationTypeDTO</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.api.RequestInfo)" class="member-name-link">getType</a><wbr>(<a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;info)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get a specific application type.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ApplicationTypeList.html" title="class in io.micronaut.starter.api">ApplicationTypeList</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#list(io.micronaut.starter.api.RequestInfo)" class="member-name-link">list</a><wbr>(<a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;info)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ApplicationTypeList.html" title="class in io.micronaut.starter.api">ApplicationTypeList</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#list(io.micronaut.starter.api.RequestInfo)" class="member-name-link">list</a><wbr>(<a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;info)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">List the application types.</div>
 </div>
 </div>
@@ -238,6 +246,28 @@ implements <a href="ApplicationTypeOperations.html" title="interface in io.micro
 <dd><code><a href="ApplicationTypeOperations.html#features(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.api.RequestInfo)">features</a></code>&nbsp;in interface&nbsp;<code><a href="ApplicationTypeOperations.html" title="interface in io.micronaut.starter.api">ApplicationTypeOperations</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>type</code> - The features</dd>
+<dd><code>requestInfo</code> - The request info</dd>
+<dt>Returns:</dt>
+<dd>The features</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="featuresByLanguage(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.api.RequestInfo)">
+<h3>featuresByLanguage</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations">@Get("/application-types/{type}/features/{lang}")
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="FeatureList.html" title="class in io.micronaut.starter.api">FeatureList</a></span>&nbsp;<span class="element-name">featuresByLanguage</span><wbr><span class="parameters">(<a href="../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+ <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;lang,
+ <a href="RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</span></div>
+<div class="block">List the type features supported by the given language.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ApplicationTypeOperations.html#featuresByLanguage(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Language,io.micronaut.starter.api.RequestInfo)">featuresByLanguage</a></code>&nbsp;in interface&nbsp;<code><a href="ApplicationTypeOperations.html" title="interface in io.micronaut.starter.api">ApplicationTypeOperations</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>type</code> - The application type</dd>
+<dd><code>lang</code> - The language</dd>
 <dd><code>requestInfo</code> - The request info</dd>
 <dt>Returns:</dt>
 <dd>The features</dd>

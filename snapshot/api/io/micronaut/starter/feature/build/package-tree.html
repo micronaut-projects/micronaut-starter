@@ -68,7 +68,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">io.micronaut.starter.feature.build.<a href="Kapt.html" class="type-name-link" title="class in io.micronaut.starter.feature.build">Kapt</a> (implements io.micronaut.starter.feature.<a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a>)</li>
-<li class="circle">io.micronaut.starter.feature.build.<a href="MicronautAot.html" class="type-name-link" title="class in io.micronaut.starter.feature.build">MicronautAot</a> (implements io.micronaut.starter.feature.<a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>)</li>
+<li class="circle">io.micronaut.starter.feature.build.<a href="MicronautAot.html" class="type-name-link" title="class in io.micronaut.starter.feature.build">MicronautAot</a> (implements io.micronaut.starter.feature.<a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, io.micronaut.starter.feature.<a href="../JvmPackagingFeature.html" title="interface in io.micronaut.starter.feature">JvmPackagingFeature</a>)</li>
 <li class="circle">io.micronaut.starter.feature.build.<a href="MicronautBuildPlugin.html" class="type-name-link" title="class in io.micronaut.starter.feature.build">MicronautBuildPlugin</a> (implements io.micronaut.starter.feature.build.<a href="BuildPluginFeature.html" title="interface in io.micronaut.starter.feature.build">BuildPluginFeature</a>, io.micronaut.starter.feature.<a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>)</li>
 </ul>
 </li>
@@ -87,9 +87,27 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.starter.feature.build.<a href="BuildFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></li>
 </ul>
 </li>
+<li class="circle">io.micronaut.starter.feature.<a href="../JvmFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">JvmFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">io.micronaut.starter.feature.<a href="../OneOfFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">OneOfFeature</a>
 <ul>
-<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a></li>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a>)</li>
 </ul>
 </li>
 </ul>
@@ -107,9 +125,27 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.starter.feature.build.<a href="BuildFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></li>
 </ul>
 </li>
+<li class="circle">io.micronaut.starter.feature.<a href="../JvmFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">JvmFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">io.micronaut.starter.feature.<a href="../OneOfFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">OneOfFeature</a>
 <ul>
-<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a></li>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a>)</li>
 </ul>
 </li>
 </ul>
@@ -126,9 +162,27 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.starter.feature.build.<a href="BuildFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">BuildFeature</a></li>
 </ul>
 </li>
+<li class="circle">io.micronaut.starter.feature.<a href="../JvmFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">JvmFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">io.micronaut.starter.feature.<a href="../LanguageSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>
+<ul>
+<li class="circle">io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a> (also extends io.micronaut.starter.feature.<a href="../JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a>)
+<ul>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">io.micronaut.starter.feature.<a href="../OneOfFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature">OneOfFeature</a>
 <ul>
-<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a></li>
+<li class="circle">io.micronaut.starter.feature.build.<a href="KotlinSupportFeature.html" class="type-name-link" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a> (also extends io.micronaut.starter.feature.<a href="../KotlinSpecificFeature.html" title="interface in io.micronaut.starter.feature">KotlinSpecificFeature</a>)</li>
 </ul>
 </li>
 </ul>

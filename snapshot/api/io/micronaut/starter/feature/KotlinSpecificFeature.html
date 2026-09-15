@@ -59,6 +59,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#getRequiredLanguage()" tabindex="0">getRequiredLanguage()</a></li>
+<li><a href="#supports(io.micronaut.starter.options.BuildTool)" tabindex="0">supports(BuildTool)</a></li>
+<li><a href="#supports(io.micronaut.starter.options.Language)" tabindex="0">supports(Language)</a></li>
 </ol>
 </li>
 </ol>
@@ -71,16 +73,20 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described, <a href="Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered</code></dd>
+<dd><code>io.micronaut.core.naming.Described, <a href="Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a>, <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered</code></dd>
+</dl>
+<dl class="notes">
+<dt>All Known Subinterfaces:</dt>
+<dd><code><a href="build/KotlinSupportFeature.html" title="interface in io.micronaut.starter.feature.build">KotlinSupportFeature</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="config/Config4k.html" title="class in io.micronaut.starter.feature.config">Config4k</a>, <a href="kotlin/KotlinExtensionFunctions.html" title="class in io.micronaut.starter.feature.kotlin">KotlinExtensionFunctions</a>, <a href="kotlin/Ktor.html" title="class in io.micronaut.starter.feature.kotlin">Ktor</a></code></dd>
+<dd><code><a href="config/Config4k.html" title="class in io.micronaut.starter.feature.config">Config4k</a>, <a href="build/Kapt.html" title="class in io.micronaut.starter.feature.build">Kapt</a>, <a href="kotlin/KotlinExtensionFunctions.html" title="class in io.micronaut.starter.feature.kotlin">KotlinExtensionFunctions</a>, <a href="KotlinSymbolProcessing.html" title="class in io.micronaut.starter.feature">KotlinSymbolProcessing</a>, <a href="kotlin/Ktor.html" title="class in io.micronaut.starter.feature.kotlin">Ktor</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">KotlinSpecificFeature</span><span class="extends-implements">
-extends <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a></span></div>
+extends <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a>, <a href="JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a></span></div>
 <div class="block">A feature that only works with Kotlin specific language.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -115,6 +121,12 @@ extends <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRequiredLanguage()" class="member-name-link">getRequiredLanguage</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.options.BuildTool)" class="member-name-link">supports</a><wbr>(<a href="../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#supports(io.micronaut.starter.options.Language)" class="member-name-link">supports</a><wbr>(<a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -123,7 +135,10 @@ extends <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;<a href="Feature.html#method-summary" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="Feature.html#getName()" title="getName()">getName</a>, <a href="Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="Feature.html#getTitle()" title="getTitle()">getTitle</a>, <a href="Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="Feature.html#isVisible()" title="isVisible()">isVisible</a>, <a href="Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a>, <a href="Feature.html#supports(io.micronaut.starter.application.ApplicationType)" title="supports(ApplicationType)">supports</a></code></div>
+<code><a href="Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="Feature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="Feature.html#getDescription()" title="getDescription()">getDescription</a>, <a href="Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="Feature.html#getName()" title="getName()">getName</a>, <a href="Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="Feature.html#getTitle()" title="getTitle()">getTitle</a>, <a href="Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="Feature.html#isVisible()" title="isVisible()">isVisible</a>, <a href="Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a>, <a href="Feature.html#supports(io.micronaut.starter.application.ApplicationType)" title="supports(ApplicationType)">supports</a>, <a href="Feature.html#supports(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options)" title="supports(ApplicationType, Options)">supports</a>, <a href="Feature.html#supports(io.micronaut.starter.options.Options)" title="supports(Options)">supports</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.JvmFeature">Methods inherited from interface&nbsp;<a href="JvmFeature.html#method-summary" title="interface in io.micronaut.starter.feature">JvmFeature</a></h3>
+<code><a href="JvmFeature.html#supports(io.micronaut.starter.options.TestFramework)" title="supports(TestFramework)">supports</a></code></div>
 </section>
 </li>
 </ul>
@@ -146,6 +161,44 @@ extends <a href="LanguageSpecificFeature.html" title="interface in io.micronaut.
 <dt>Returns:</dt>
 <dd>The language this feature requires, or empty if the feature can be used with
 any language.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="supports(io.micronaut.starter.options.BuildTool)">
+<h3>supports</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supports</span><wbr><span class="parameters">(<a href="../options/BuildTool.html" title="enum class in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Feature.html#supports(io.micronaut.starter.options.BuildTool)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="JvmFeature.html#supports(io.micronaut.starter.options.BuildTool)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>buildTool</code> - The Build Tool</dd>
+<dt>Returns:</dt>
+<dd>Whether the feature supports the build tool</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="supports(io.micronaut.starter.options.Language)">
+<h3>supports</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supports</span><wbr><span class="parameters">(<a href="../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Feature.html#supports(io.micronaut.starter.options.Language)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="JvmFeature.html#supports(io.micronaut.starter.options.Language)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="JvmFeature.html" title="interface in io.micronaut.starter.feature">JvmFeature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="LanguageSpecificFeature.html#supports(io.micronaut.starter.options.Language)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature">LanguageSpecificFeature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>language</code> - Language</dd>
+<dt>Returns:</dt>
+<dd>Whether the feature supports the programming language</dd>
 </dl>
 </div>
 </section>

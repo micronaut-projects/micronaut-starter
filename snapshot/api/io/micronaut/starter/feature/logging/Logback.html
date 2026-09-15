@@ -78,6 +78,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#useJansi(io.micronaut.starter.application.generator.GeneratorContext)" tabindex="0">useJansi(GeneratorContext)</a></li>
 <li><a href="#addDependency(io.micronaut.starter.application.generator.GeneratorContext)" tabindex="0">addDependency(GeneratorContext)</a></li>
 <li><a href="#supports(io.micronaut.starter.application.ApplicationType)" tabindex="0">supports(ApplicationType)</a></li>
+<li><a href="#supports(io.micronaut.starter.options.Language)" tabindex="0">supports(Language)</a></li>
 </ol>
 </li>
 </ol>
@@ -93,7 +94,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="LoggingFeature.html" title="interface in io.micronaut.starter.feature.logging">LoggingFeature</a>, <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../JvmOneOfFeature.html" title="interface in io.micronaut.starter.feature">JvmOneOfFeature</a>, <a href="LoggingFeature.html" title="interface in io.micronaut.starter.feature.logging">LoggingFeature</a>, <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
@@ -188,9 +189,12 @@ or added explicitly by another feature through <a href="../FeatureContext.html#a
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
 application types.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useJansi(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">useJansi</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.options.Language)" class="member-name-link">supports</a><wbr>(<a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useJansi(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">useJansi</a><wbr>(@NonNull <a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -205,7 +209,7 @@ application types.</div>
 <code>getDescription</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.Feature">Methods inherited from interface&nbsp;<a href="../Feature.html#method-summary" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()" title="isVisible()">isVisible</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a></code></div>
+<code><a href="../Feature.html#getMicronautDocumentation()" title="getMicronautDocumentation()">getMicronautDocumentation</a>, <a href="../Feature.html#getOrder()" title="getOrder()">getOrder</a>, <a href="../Feature.html#getThirdPartyDocumentation()" title="getThirdPartyDocumentation()">getThirdPartyDocumentation</a>, <a href="../Feature.html#isCommunity()" title="isCommunity()">isCommunity</a>, <a href="../Feature.html#isPreview()" title="isPreview()">isPreview</a>, <a href="../Feature.html#isVisible()" title="isVisible()">isVisible</a>, <a href="../Feature.html#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" title="processSelectedFeatures(FeatureContext)">processSelectedFeatures</a>, <a href="../Feature.html#supports(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options)" title="supports(ApplicationType, Options)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.BuildTool)" title="supports(BuildTool)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.Options)" title="supports(Options)">supports</a>, <a href="../Feature.html#supports(io.micronaut.starter.options.TestFramework)" title="supports(TestFramework)">supports</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.logging.LoggingFeature">Methods inherited from interface&nbsp;<a href="LoggingFeature.html#method-summary" title="interface in io.micronaut.starter.feature.logging">LoggingFeature</a></h3>
 <code><a href="LoggingFeature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="LoggingFeature.html#getFeatureClass()" title="getFeatureClass()">getFeatureClass</a></code></div>
@@ -398,6 +402,24 @@ should be applied.</div>
 <dd><code>applicationType</code> - The application type</dd>
 <dt>Returns:</dt>
 <dd>True if the feature can be selected by the user</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="supports(io.micronaut.starter.options.Language)">
+<h3>supports</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">supports</span><wbr><span class="parameters">(<a href="../../options/Language.html" title="enum class in io.micronaut.starter.options">Language</a>&nbsp;language)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../Feature.html#supports(io.micronaut.starter.options.Language)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="../JvmOneOfFeature.html#supports(io.micronaut.starter.options.Language)">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../JvmOneOfFeature.html" title="interface in io.micronaut.starter.feature">JvmOneOfFeature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>language</code> - Language</dd>
+<dt>Returns:</dt>
+<dd>Whether the feature supports the programming language</dd>
 </dl>
 </div>
 </section>

@@ -97,6 +97,7 @@ io.micronaut.starter.feature.ci.workflows.gitlab
 io.micronaut.starter.feature.ci.workflows.oci
 io.micronaut.starter.feature.coherence
 io.micronaut.starter.feature.config
+io.micronaut.starter.feature.config.toml
 io.micronaut.starter.feature.consul
 io.micronaut.starter.feature.crac
 io.micronaut.starter.feature.database
