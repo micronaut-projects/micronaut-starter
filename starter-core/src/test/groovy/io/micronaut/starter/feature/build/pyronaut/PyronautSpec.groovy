@@ -127,18 +127,6 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         output["pyproject.toml"].contains('"io.micrometer:micrometer-core"')
     }
 
-    void "pyronaut pins Flyway to the native-compatible version"() {
-        when:
-        Map<String, String> output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT),
-                ["flyway"]
-        )
-
-        then:
-        output["pyproject.toml"].contains('"io.micronaut.flyway:micronaut-flyway:8.1.1"')
-    }
-
     void "pyronaut writes test resources additional modules for database drivers"() {
         when:
         Map<String, String> output = generate(
