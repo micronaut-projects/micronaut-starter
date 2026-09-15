@@ -83,7 +83,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
      */
     Object build(boolean render = true) {
         List<String> featureNames = this.features ?: []
-        Language language = this.language ?: Language.DEFAULT_OPTION
+        Language language = this.language ?: (Language.DEFAULT_OPTION)
         TestFramework testFramework = this.testFramework ?: language.defaults.test
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
         Project project = getProject()

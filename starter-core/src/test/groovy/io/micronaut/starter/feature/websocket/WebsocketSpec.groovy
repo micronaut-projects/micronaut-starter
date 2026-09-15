@@ -40,7 +40,7 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
         verifier.hasDependency("io.micronaut", "micronaut-websocket", Scope.COMPILE)
 
         where:
-        buildTool << BuildTool.values()
+        buildTool << BuildTool.values().toList()
     }
 
     @Unroll

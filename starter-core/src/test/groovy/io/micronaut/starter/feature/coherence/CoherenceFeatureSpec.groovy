@@ -8,6 +8,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -36,7 +37,7 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
         template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
     @Unroll
     void 'test maven coherence feature for language=#language'(Language language) {

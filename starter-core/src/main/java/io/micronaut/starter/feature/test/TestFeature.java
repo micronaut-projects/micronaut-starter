@@ -70,7 +70,10 @@ public interface TestFeature extends DefaultFeature {
         if (selectedTest == null) {
             selectedTest = options.getLanguage().getDefaults().getTest();
         }
-        return supports(applicationType) && selectedTest == getTestFramework();
+        return supports(applicationType) &&
+                supports(options.getBuildTool()) &&
+                supports(options.getLanguage()) &&
+                selectedTest == getTestFramework();
     }
 
     @Override

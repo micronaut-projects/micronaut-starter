@@ -20,14 +20,12 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.JvmPackagingFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jib.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Jib implements Feature {
+public class Jib implements JvmPackagingFeature {
 
     @Override
     public String getName() {
@@ -47,11 +45,6 @@ public class Jib implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.PACKAGING;
     }
 
     @Override

@@ -23,6 +23,7 @@ import io.micronaut.starter.rocker.feature.server.template.kotlinController;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
 
 /**
@@ -44,7 +45,7 @@ public class WorkflowsUtils {
                 javaVersion.majorVersion());
     }
 
-    public static RockerTemplate createExampleController(Project project, Language language) {
+    public static Template createExampleController(Project project, Language language) {
         RockerModel model = null;
         switch (language) {
             case KOTLIN:

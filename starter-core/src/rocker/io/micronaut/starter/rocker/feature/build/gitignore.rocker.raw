@@ -1,13 +1,10 @@
 @import io.micronaut.starter.feature.Features
 @args (Features features)
 Thumbs.db
-.DS_Store
 .gradle
-build/
 target/
 out/
 .micronaut/
-.idea
 *.iml
 *.ipr
 *.iws
@@ -18,3 +15,7 @@ out/
 @if (features.contains("views-react")) {
 src/js/node_modules
 }
+build/
+# Tooling
+.idea/
+.DS_Store

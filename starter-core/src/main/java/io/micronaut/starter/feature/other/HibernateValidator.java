@@ -20,12 +20,13 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.RequiresJavaReflection;
 import io.micronaut.starter.feature.validator.ValidationFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.hibernate.validator.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class HibernateValidator implements ValidationFeature {
+public class HibernateValidator implements ValidationFeature, RequiresJavaReflection {
 
     @Override
     public String getName() {

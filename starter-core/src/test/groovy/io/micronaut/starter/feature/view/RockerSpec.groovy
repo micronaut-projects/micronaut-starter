@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.StarterCoordinates
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 
 class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -64,7 +65,7 @@ rocker {
         template.contains(applyPlugin)
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.valuesGradle()].combinations()
+        [language, buildTool] << [LanguageUtils.JVM_LANGUAGES, BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven views-rocker feature for language=#language'() {
@@ -101,4 +102,3 @@ rocker {
         language << supportedLanguages(BuildTool.MAVEN)
     }
 }
-

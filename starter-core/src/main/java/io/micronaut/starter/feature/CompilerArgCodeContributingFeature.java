@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Marker interface for {@link Feature} which contribute compiler args for maven builds
  */
-public interface CompilerArgCodeContributingFeature extends Feature {
+public interface CompilerArgCodeContributingFeature extends MavenSpecificFeature {
     @NonNull
     List<String> getCompilerArgs(@NonNull GeneratorContext generatorContext);
 }

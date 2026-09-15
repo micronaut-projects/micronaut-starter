@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.LanguageUtils
 import spock.lang.Unroll
 
 class GoogleSecretManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -49,7 +50,7 @@ micronaut:
         template.count('implementation("io.micronaut.gcp:micronaut-gcp-secret-manager")') == 1
 
         where:
-        language << Language.values().toList()
+        language << LanguageUtils.JVM_LANGUAGES
     }
 
     @Unroll

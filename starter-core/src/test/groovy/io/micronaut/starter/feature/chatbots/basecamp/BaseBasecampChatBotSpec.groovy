@@ -5,6 +5,7 @@ import io.micronaut.starter.feature.chatbots.BaseChatBotSpec
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.LanguageUtils
 
 abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
@@ -20,10 +21,11 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
 
     void 'configuration is generated for #applicationType apps'() {
         when:
-        def output = generate(applicationType, [featureName])
-        def cfg = output["src/main/resources/application.properties"]
+        Map<String, String> output = generate(applicationType, [featureName])
+        String cfg = output["src/main/resources/application.properties"]
 
         then:
+        cfg
         cfg.contains("micronaut.chatbots.folder=botcommands")
 
         where:
@@ -42,6 +44,6 @@ abstract class BaseBasecampChatBotSpec extends BaseChatBotSpec {
         output.containsKey("src/test/resources/mockBasecampAboutCommand.json")
 
         where:
-        [language, applicationType] << [Language.values(), supportedApplicationTypes].combinations()
+        [language, applicationType] << [LanguageUtils.JVM_LANGUAGES, supportedApplicationTypes].combinations()
     }
 }

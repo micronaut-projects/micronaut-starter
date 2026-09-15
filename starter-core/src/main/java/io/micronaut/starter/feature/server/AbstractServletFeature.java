@@ -19,11 +19,12 @@ import static io.micronaut.starter.build.dependencies.MicronautDependencyUtils.G
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.JvmFeature;
 
 /**
  * Base feature for all servlet impls.
  */
-public abstract class AbstractServletFeature extends AbstractMicronautServerFeature {
+public abstract class AbstractServletFeature extends AbstractMicronautServerFeature implements JvmFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(

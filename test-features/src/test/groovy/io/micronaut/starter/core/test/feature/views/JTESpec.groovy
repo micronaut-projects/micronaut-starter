@@ -1,5 +1,6 @@
 package io.micronaut.starter.core.test.feature.views
 
+import io.micronaut.starter.feature.config.Yaml
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.BuildToolTest
@@ -20,8 +21,13 @@ class JTESpec extends CommandSpec {
     @IgnoreIf({ BuildToolTest.IGNORE_MAVEN })
     @Unroll
     void "test maven views-jte with #language"(Language language) {
+        given:
+        List<String> features = ["views-jte"]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, BuildTool.MAVEN, ["views-jte", "kapt"])
+        generateProject(language, BuildTool.MAVEN, features)
         String output = executeMaven("compile")
 
         then:
@@ -33,8 +39,13 @@ class JTESpec extends CommandSpec {
 
     @Unroll
     void "test gradle views-jte with #language and #dsl"(Language language, BuildTool buildTool, String dsl) {
+        given:
+        List<String> features = ["views-jte"]
+        if (language == Language.KOTLIN) {
+            features.add('kapt')
+        }
         when:
-        generateProject(language, buildTool, ["views-jte", "kapt"])
+        generateProject(language, buildTool, features)
         BuildResult result = executeGradle("build")
 
         then:

@@ -20,13 +20,19 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.JvmFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.jmx.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Jmx implements Feature {
+public class Jmx implements JvmFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_JMX = "micronaut-jmx";
+    private static final Dependency DEPENDENCY_MICRONAUT_JMX_COMPILE = MicronautDependencyUtils.jmxDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_JMX)
+            .compile()
+            .build();
 
     @Override
     public String getName() {
@@ -60,9 +66,6 @@ public class Jmx implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.jmx")
-                .artifactId("micronaut-jmx")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_JMX_COMPILE);
     }
 }

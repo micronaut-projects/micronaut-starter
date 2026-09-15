@@ -9,6 +9,7 @@ import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 
@@ -33,10 +34,12 @@ class McpClientJavaSdkSpec extends ApplicationContextSpec implements CommandOutp
 
     void "mcp-client-java-sdk dependencies  #buildTool"(BuildTool buildTool) {
         when:
+        Language language = supportedLanguages(buildTool).first()
         String template = new BuildBuilder(beanContext, buildTool)
+                .language(language)
                 .features(['mcp-client-java-sdk'])
                 .render()
-        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, language, template)
 
         then:
         verifier.hasDependency("io.micronaut.mcp", "micronaut-mcp-client-java-sdk", Scope.TEST)

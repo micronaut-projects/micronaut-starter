@@ -24,7 +24,7 @@ import io.micronaut.starter.options.JdkVersion;
  * @author Sergio del Amo
  * @since 2.0.0
  */
-public interface MinJdkFeature extends Feature {
+public interface MinJdkFeature extends JvmFeature {
 
     /**
      * @return The mininum JDK this feature requires

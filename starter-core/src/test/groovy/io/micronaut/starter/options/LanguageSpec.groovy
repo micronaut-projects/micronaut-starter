@@ -19,4 +19,19 @@ class LanguageSpec extends Specification {
         Language.KOTLIN || "src/main/kotlin/{packagePath}/{className}.kt"
         path = '/{packagePath}/{className}'
     }
+
+    @Unroll("expected test source path: #expected for path: #path , lang: #lang")
+    void "getTestSourcePath returns a path with the correct language extension and test source folder"(Language lang,
+                                                                                                          String expected,
+                                                                                                          String path) {
+        expect:
+        expected == lang.getTestSourcePath(path)
+
+        where:
+        lang            || expected
+        Language.JAVA   || "src/test/java/{packagePath}/{className}.java"
+        Language.GROOVY || "src/test/groovy/{packagePath}/{className}.groovy"
+        Language.KOTLIN || "src/test/kotlin/{packagePath}/{className}.kt"
+        path = '/{packagePath}/{className}'
+    }
 }

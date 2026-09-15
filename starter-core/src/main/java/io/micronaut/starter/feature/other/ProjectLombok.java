@@ -22,13 +22,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.options.Language;
+import io.micronaut.starter.feature.JavaSpecificFeature;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.lombok.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class ProjectLombok implements LanguageSpecificFeature {
+public class ProjectLombok implements JavaSpecificFeature {
 
     @Override
     public String getName() {
@@ -63,11 +62,6 @@ public class ProjectLombok implements LanguageSpecificFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://projectlombok.org/features/all";
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.JAVA;
     }
 
     @Override
