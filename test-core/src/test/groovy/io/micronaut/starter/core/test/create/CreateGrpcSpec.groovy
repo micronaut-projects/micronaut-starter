@@ -49,7 +49,6 @@ class CreateGrpcSpec extends CommandSpec {
 
         where:
         lang << LanguageUtils.JVM_LANGUAGES
-        
     }
 
     @IgnoreIf(value = { os.macOs }, reason = ": Error extracting protoc for version 3.11.4: Unsupported platform: protoc-3.11.4-osx-aarch_64.exe")

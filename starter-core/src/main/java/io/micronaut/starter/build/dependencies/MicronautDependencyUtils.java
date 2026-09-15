@@ -60,6 +60,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SQL = "io.micronaut.sql";
     public static final String GROUP_ID_MICRONAUT_STARTER = "io.micronaut.starter";
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
+    public static final String GROUP_ID_MICRONAUT_PYRONAUT = "io.micronaut.pyronaut";
 
     public static final String GROUP_ID_MICRONAUT_MICROMETER = "io.micronaut.micrometer";
     public static final String ARTIFACT_ID_PREFIX_MICRONAUT_MICROMETER = "micronaut-micrometer-";
@@ -168,6 +169,10 @@ public final class MicronautDependencyUtils {
 
     public static Dependency.@NonNull Builder kotlinDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KOTLIN);
+    }
+
+    public static Dependency.@NonNull Builder pyronautDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_PYRONAUT);
     }
 
     public static Dependency.@NonNull Builder micrometerDependency() {
@@ -292,6 +297,10 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .annotationProcessor();
+            case PYRONAUT -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .annotationProcessor(requiresPriority);
             case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, false, requiresPriority);
         };
     }
@@ -313,6 +322,10 @@ public final class MicronautDependencyUtils {
                     .groupId(groupId)
                     .artifactId(artifactId)
                     .testAnnotationProcessor();
+            case PYRONAUT -> Dependency.builder()
+                    .groupId(groupId)
+                    .artifactId(artifactId)
+                    .testAnnotationProcessor(requiresPriority);
             case MAVEN -> moduleMavenAnnotationProcessor(groupId, artifactId, propertyName, true, requiresPriority);
         };
     }

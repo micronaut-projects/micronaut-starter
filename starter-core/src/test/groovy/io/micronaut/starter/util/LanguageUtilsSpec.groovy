@@ -17,5 +17,6 @@ class LanguageUtilsSpec extends Specification {
         BuildTool.GRADLE        || LanguageUtils.JVM_LANGUAGES
         BuildTool.GRADLE_KOTLIN || LanguageUtils.JVM_LANGUAGES
         BuildTool.MAVEN         || [Language.JAVA, Language.GROOVY]
+        BuildTool.PYRONAUT      || [Language.PYTHON]
     }
 }

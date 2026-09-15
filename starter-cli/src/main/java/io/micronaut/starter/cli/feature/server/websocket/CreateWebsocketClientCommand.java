@@ -22,6 +22,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RenderResult;
@@ -39,6 +40,7 @@ import io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketC
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-websocket-client", description = "Creates a Websocket client")
 @Prototype
@@ -77,6 +79,8 @@ public class CreateWebsocketClientCommand extends CodeGenCommand {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Client.groovy", groovyWebsocketClient.template(project)), overwrite);
         } else if (config.getSourceLanguage() == KOTLIN) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Client.kt", kotlinWebsocketClient.template(project)), overwrite);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.websocketClient(project), overwrite);
         }
 
         if (renderResult != null) {

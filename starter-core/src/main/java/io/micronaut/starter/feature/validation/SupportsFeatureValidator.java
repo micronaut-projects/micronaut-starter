@@ -20,7 +20,11 @@ import io.micronaut.core.order.Ordered;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.LanguageUtils;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -31,6 +35,18 @@ public class SupportsFeatureValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         StringBuilder sb = new StringBuilder();
+        if (options.getLanguage() == Language.PYTHON && options.getBuildTool() != BuildTool.PYRONAUT) {
+            sb.append(options.getLanguage() + " applications must use the " + BuildTool.PYRONAUT + " build tool. ");
+        }
+        if (options.getLanguage() == Language.PYTHON && options.getTestFramework() != TestFramework.PYTEST) {
+            sb.append(options.getLanguage() + " applications must use the " + TestFramework.PYTEST + " test framework. ");
+        }
+        if (LanguageUtils.JVM_LANGUAGES.contains(options.getLanguage())  && options.getTestFramework() == TestFramework.PYTEST) {
+            sb.append("You can only use " + TestFramework.PYTEST + " testing framework with " + Language.PYTHON + ". ");
+        }
+        if (LanguageUtils.JVM_LANGUAGES.contains(options.getLanguage())  && options.getBuildTool() == BuildTool.PYRONAUT) {
+            sb.append("You can only use " + BuildTool.PYRONAUT + " build tool with " + Language.PYTHON + ". ");
+        }
         for (Feature feature : features) {
             if (!feature.supports(applicationType, options)) {
                 if (!feature.supports(applicationType)) {

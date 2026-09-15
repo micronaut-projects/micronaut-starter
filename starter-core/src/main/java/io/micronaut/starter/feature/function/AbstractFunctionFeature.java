@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.naming.NameUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -32,6 +33,7 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.starter.template.StringTemplate;
 
 import java.util.Optional;
 
@@ -61,6 +63,42 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
         return httpFunctionGroovyController.template(project, useSerde);
     }
 
+    protected String pythonControllerTemplate(Project project) {
+        String path = "/" + project.getPropertyName();
+        return """
+            from dataclasses import dataclass
+            from typing import Annotated
+
+            from micronaut.http import MediaType
+            from micronaut.http.annotation import Body, Get, Post
+            from micronaut.serde.annotation import Serdeable
+
+
+            @Serdeable
+            @dataclass
+            class SampleInputMessage:
+                name: str
+
+
+            @Serdeable
+            @dataclass
+            class SampleReturnMessage:
+                message: str
+
+
+            @Get(value="%s", produces=MediaType.TEXT_PLAIN)
+            def index() -> str:
+                return "Example Response"
+
+
+            @Post(value="%s")
+            def post_method(input_message: Annotated[SampleInputMessage, Body]) -> SampleReturnMessage:
+                return SampleReturnMessage(
+                    f"Hello {input_message.name}, thank you for sending the message"
+                )
+            """.formatted(path, path);
+    }
+
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         BuildTool buildTool = generatorContext.getBuildTool();
 
@@ -75,7 +113,10 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();
-            String sourceFile = generatorContext.getSourcePath("/{packagePath}/" + className + "Controller");
+            String controllerName = className + "Controller";
+            String sourceFile = language == Language.PYTHON
+                    ? "src/{packagePath}/" + NameUtils.underscoreSeparate(controllerName, true) + ".py"
+                    : generatorContext.getSourcePath("/{packagePath}/" + controllerName);
 
             boolean serdeFeaturePresent = generatorContext.isFeaturePresent(SerializationFeature.class);
             switch (language) {
@@ -88,6 +129,11 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
                     generatorContext.addTemplate("function", new RockerTemplate(
                             sourceFile,
                             kotlinControllerTemplate(project, serdeFeaturePresent)));
+                    break;
+                case PYTHON:
+                    generatorContext.addTemplate("function", new StringTemplate(
+                            sourceFile,
+                            pythonControllerTemplate(project)));
                     break;
                 case JAVA:
                 default:

@@ -62,7 +62,7 @@ public interface KotlinSupportFeature extends OneOfFeature, KotlinSpecificFeatur
     default boolean supports(ApplicationType applicationType) {
         return true;
     }
-
+    
     @Override
     default String getCategory() {
         return Category.LANGUAGES;

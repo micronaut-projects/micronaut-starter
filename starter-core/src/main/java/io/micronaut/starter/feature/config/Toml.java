@@ -18,19 +18,24 @@ package io.micronaut.starter.feature.config;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.build.pyronaut.PyronautUtils;
 import io.micronaut.starter.feature.config.toml.MicronautToml;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TomlTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
 import java.util.function.Function;
 
 @Requires(property = "micronaut.starter.feature.toml.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class Toml implements ConfigurationFeature {
+public class Toml implements DefaultConfigurationFeature {
 
     public static final String NAME = "toml";
     private static final String EXTENSION = "toml";
@@ -74,6 +79,23 @@ public class Toml implements ConfigurationFeature {
     }
 
     @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.PYTHON && DefaultConfigurationFeature.super.shouldApply(applicationType, options, selectedFeatures);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (PyronautUtils.isPyronaut(generatorContext)) {
+            generatorContext.getAllConfigurations()
+                    .stream()
+                    .filter(config -> !config.isEmpty())
+                    .forEach(config -> generatorContext.addTemplate(config.getTemplateKey(), new TomlTemplate(pyronautPath(config), config)));
+        } else {
+            DefaultConfigurationFeature.super.apply(generatorContext);
+        }
+    }
+
+    @Override
     public Function<Configuration, Template> createTemplate() {
         return cfg -> new TomlTemplate(cfg.getFullPath(EXTENSION), cfg);
     }
@@ -81,5 +103,11 @@ public class Toml implements ConfigurationFeature {
     @Override
     public boolean supports(Language language) {
         return true;
+    }
+
+    private static String pyronautPath(Configuration config) {
+        String path = config.getPath();
+        String prefix = path.startsWith("src/test/resources/") ? "tests-config/" : "config/";
+        return prefix + config.getFileName() + "." + EXTENSION;
     }
 }

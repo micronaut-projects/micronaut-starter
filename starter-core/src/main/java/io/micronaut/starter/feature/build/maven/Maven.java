@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.build.maven;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.rocker.feature.build.gitignore;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -31,7 +33,6 @@ import io.micronaut.starter.build.maven.ParentPom;
 import io.micronaut.starter.build.maven.ParentPomFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.rocker.feature.build.gitignore;
 import io.micronaut.starter.rocker.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.rocker.feature.build.maven.templates.multimodule;
 import io.micronaut.starter.rocker.feature.build.maven.templates.pom;
@@ -139,7 +140,7 @@ public class Maven implements BuildFeature {
     @Deprecated(forRemoval = true, since = "5.1.6")
     @SuppressWarnings("java:S1172") // Unused parameter for extension
     protected RockerModel gitIgnore(GeneratorContext generatorContext) {
-        return gitignore.template(generatorContext.getFeatures());
+        return gitignore.template(generatorContext.getFeatures(), generatorContext.getLanguage() == Language.PYTHON);
     }
 
     @Override

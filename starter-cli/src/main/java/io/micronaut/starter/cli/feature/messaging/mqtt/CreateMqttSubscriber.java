@@ -23,6 +23,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.groovyListener;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.javaListener;
 import io.micronaut.starter.cli.rocker.feature.messaging.mqtt.template.listener.kotlinListener;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-mqtt-subscriber", description = "Creates a subscriber class for MQTT")
 @Prototype
@@ -81,8 +83,12 @@ public class CreateMqttSubscriber extends CodeGenCommand {
             rockerModel = groovyListener.template(project);
         } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinListener.template(project);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.mqttSubscriber(project, config.getFeatures().contains("mqtt") ? "v5" : "v3"), overwrite);
         }
-        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        if (config.getSourceLanguage() != PYTHON) {
+            renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
+        }
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {

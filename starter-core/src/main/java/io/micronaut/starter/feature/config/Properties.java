@@ -19,10 +19,14 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.Template;
 
 import jakarta.inject.Singleton;
+import java.util.Set;
 import java.util.function.Function;
 
 @Requires(property = "micronaut.starter.feature.properties.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -60,5 +64,10 @@ public class Properties implements DefaultConfigurationFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() != Language.PYTHON && DefaultConfigurationFeature.super.shouldApply(applicationType, options, selectedFeatures);
     }
 }

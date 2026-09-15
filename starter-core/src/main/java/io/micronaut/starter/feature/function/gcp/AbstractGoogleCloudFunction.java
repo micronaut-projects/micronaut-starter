@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.json.JacksonDatabindFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.options.Language;
 
 public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
     public static final Dependency.Builder GCP_FUNCTIONS_FRAMEWORK_API = Dependency.builder()
@@ -52,6 +53,9 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getLanguage() == Language.PYTHON) {
+            return;
+        }
         if (!featureContext.isPresent(ShadePlugin.class)) {
             featureContext.addFeature(shadePlugin);
         }
