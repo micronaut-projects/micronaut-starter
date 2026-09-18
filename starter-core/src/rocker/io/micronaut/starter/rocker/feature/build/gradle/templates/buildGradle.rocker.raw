@@ -193,7 +193,11 @@ graalvmNative.toolchainDetection = false
 graalvmNative {
     binaries {
         all {
-            buildArgs.add("-H:+SharedArenaSupport")
+            buildArgs.addAll(
+                    "-H:+UnlockExperimentalVMOptions",
+                    "-H:+SharedArenaSupport",
+                    "-H:-UnlockExperimentalVMOptions",
+            )
 @if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
             buildArgs.addAll(
                          "-H:+StaticExecutableWithDynamicLibC",
@@ -349,5 +353,4 @@ sourceSets {
 @gradleBuild.renderExtensions()
 @io.micronaut.starter.rocker.feature.test.template.failOnNoDiscoveredTests.template(gradleBuild.getDsl())
 @gradleBuild.renderSubstitutions()
-
 
