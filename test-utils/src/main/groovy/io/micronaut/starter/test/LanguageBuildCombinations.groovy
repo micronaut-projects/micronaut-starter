@@ -29,6 +29,10 @@ class LanguageBuildCombinations {
         l[0] == Language.KOTLIN && l[1] == BuildTool.MAVEN
     }
 
+    static final Function<List, Boolean> IS_PYRONAUT = l -> {
+        l[0] == Language.PYTHON && l[1] == BuildTool.PYRONAUT
+    }
+
     /**
      *
      * @return a List where each element is the list is a triple of [{@link io.micronaut.starter.options.Language}, {@link io.micronaut.starter.options.BuildTool}]
@@ -38,8 +42,14 @@ class LanguageBuildCombinations {
         (features
                 ? [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools, features].combinations()
                 : [LanguageUtils.JVM_LANGUAGES, BuildToolCombinations.buildTools].combinations()).findAll {
-            !IS_KOTLIN_MAVEN.apply(it)
+            !IS_KOTLIN_MAVEN.apply(it) && !IS_PYRONAUT.apply(it)
         }
+    }
+
+    static List<List> pythonCombinations(List<String> features = null) {
+        features
+                ? [Language.PYTHON, BuildTool.PYRONAUT, features].combinations()
+                : [[Language.PYTHON, BuildTool.PYRONAUT]]
     }
 
     @Memoized

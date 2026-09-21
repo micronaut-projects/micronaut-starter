@@ -25,4 +25,19 @@ class TestResourcesSpec extends ApplicationContextSpec {
         where:
         language << supportedLanguages(BuildTool.MAVEN)
     }
+
+    void 'test pyronaut testresources generates dependency'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.PYRONAUT)
+                .language(Language.PYTHON)
+                .testFramework(TestFramework.PYTEST)
+                .features([TestResources.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.PYRONAUT, Language.PYTHON, template)
+
+        then:
+        verifier.hasDependency("io.micronaut.testresources", "micronaut-test-resources-client")
+        template.contains("[tool.pyronaut.test-resources]")
+        template.contains("enabled = true")
+    }
 }

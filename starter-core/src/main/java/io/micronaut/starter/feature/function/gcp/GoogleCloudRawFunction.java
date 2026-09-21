@@ -115,7 +115,8 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),
                 getBuildCommand(buildTool),
-                generatorContext.getApplicationType() == ApplicationType.FUNCTION
+                generatorContext.getApplicationType() == ApplicationType.FUNCTION,
+                buildTool == BuildTool.PYRONAUT
             )
         );
     }

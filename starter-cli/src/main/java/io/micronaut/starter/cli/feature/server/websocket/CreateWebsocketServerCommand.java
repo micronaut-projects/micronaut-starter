@@ -22,6 +22,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.io.ConsoleOutput;
@@ -42,6 +43,7 @@ import io.micronaut.starter.cli.rocker.feature.server.websocket.kotlinWebsocketS
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-websocket-server", description = "Creates a Websocket server")
 @Prototype
@@ -89,6 +91,8 @@ public class CreateWebsocketServerCommand extends CodeGenCommand {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Server.groovy", groovyWebsocketServer.template(project)), overwrite);
         } else if (config.getSourceLanguage() == KOTLIN) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Server.kt", kotlinWebsocketServer.template(project)), overwrite);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.websocketServer(project), overwrite);
         }
 
         if (renderResult != null) {

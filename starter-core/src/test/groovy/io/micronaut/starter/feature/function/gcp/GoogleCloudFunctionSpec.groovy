@@ -102,6 +102,36 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         testSrcDir = language.testSrcDir
     }
 
+    void 'test pyronaut google cloud function feature for python'() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT, JdkVersion.JDK_25),
+                ['google-cloud-function']
+        )
+        String pyproject = output['pyproject.toml']
+        String controller = output['src/example/micronaut/foo_controller.py']
+        String readme = output['README.md']
+
+        then:
+        output.containsKey('src/main.py')
+        controller
+        controller.contains('from micronaut.serde.annotation import Serdeable')
+        controller.contains('@Serdeable')
+        controller.contains('@Get(value="/foo", produces=MediaType.TEXT_PLAIN)')
+        controller.contains('class SampleInputMessage')
+        controller.contains('class SampleReturnMessage')
+        pyproject.contains('"io.micronaut.gcp:micronaut-gcp-function-http"')
+        pyproject.contains('"com.google.cloud.functions:functions-framework-api"')
+        readme.contains('pyronaut run')
+        readme.contains('current Pyronaut build output is a Python wheel')
+        !readme.contains('./gradlew runFunction')
+        !readme.contains('./mvnw function:run')
+        !pyproject.contains('micronaut-jackson-databind')
+        !output.containsKey('build.gradle')
+        !output.containsKey('pom.xml')
+    }
+
     @Issue("https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32/files")
     void "for spock is required to add micronaut-servlet-core"() {
         when:

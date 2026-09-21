@@ -32,6 +32,11 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
         description = applicationType.name
     }
 
+    void "properties configuration is not applied to Python applications"() {
+        expect:
+        !props.shouldApply(ApplicationType.DEFAULT, new Options(Language.PYTHON), [] as Set)
+    }
+
     void "test configuration files generated for default properties feature"() {
         when:
         GeneratorContext generatorContext = buildGeneratorContext([], { context ->

@@ -61,4 +61,16 @@ class MyBatisSpec extends ApplicationContextSpec implements CommandOutputFixture
         where:
         buildTool << BuildToolUtils.JVM_BUILD_TOOLS
     }
+
+    void 'pyronaut rejects mybatis feature'() {
+        when:
+        new BuildBuilder(beanContext, BuildTool.PYRONAUT)
+                .features([NAME])
+                .language(Language.PYTHON)
+                .render()
+
+        then:
+        IllegalArgumentException e = thrown()
+        e.message.contains('Feature mybatis does not support language python. Feature mybatis does not support build tool pyronaut.')
+    }
 }

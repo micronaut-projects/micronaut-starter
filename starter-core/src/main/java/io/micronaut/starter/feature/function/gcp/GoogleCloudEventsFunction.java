@@ -110,7 +110,8 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),
                 getBuildCommand(buildTool),
-                true
+                true,
+                buildTool == BuildTool.PYRONAUT
             )
         );
     }

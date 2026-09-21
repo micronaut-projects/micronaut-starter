@@ -69,6 +69,17 @@ class SwaggerUISpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         output.containsKey("src/main/java/example/micronaut/FooController.java")
         output.containsKey("src/test/java/example/micronaut/FooTest.java")
+    }
 
+    void "test python example controller uses python source"() {
+        when:
+        GeneratorContext ctx = buildGeneratorContext(['swagger-ui'], new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT))
+        def output = generate(ApplicationType.DEFAULT, ctx)
+
+        then:
+        output.containsKey("src/example/micronaut/default_controller.py")
+        !output.containsKey("src/example/micronaut/DefaultController.py")
+        output["src/example/micronaut/default_controller.py"].contains("@Get(value=\"/default\", produces=\"text/plain\")")
+        !output["src/example/micronaut/default_controller.py"].contains("package example.micronaut;")
     }
 }

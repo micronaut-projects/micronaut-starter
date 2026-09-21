@@ -23,6 +23,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.feature.PythonTemplates;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.groovyListener;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.javaListener;
 import io.micronaut.starter.cli.rocker.feature.messaging.jms.template.listener.kotlinListener;
@@ -44,6 +45,7 @@ import java.io.IOException;
 import static io.micronaut.starter.options.Language.GROOVY;
 import static io.micronaut.starter.options.Language.JAVA;
 import static io.micronaut.starter.options.Language.KOTLIN;
+import static io.micronaut.starter.options.Language.PYTHON;
 
 @Command(name = "create-jms-consumer", description = "Creates a consumer class for JMS")
 @Prototype
@@ -97,6 +99,8 @@ public class CreateJmsConsumer extends CodeGenCommand {
             rockerModel = groovyListener.template(project, configClass);
         } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinListener.template(project, configClass);
+        } else if (config.getSourceLanguage() == PYTHON) {
+            renderResult = templateRenderer.render(PythonTemplates.jmsConsumer(project, configClass), overwrite);
         }
         if (LanguageUtils.JVM_LANGUAGES.contains(config.getSourceLanguage())) {
             renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

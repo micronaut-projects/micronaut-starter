@@ -29,7 +29,8 @@ import java.util.stream.Stream;
 public enum BuildTool {
     GRADLE("build/libs", "build.gradle", "-*-all.jar", "Gradle (Groovy)"),
     GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar", "Gradle (Kotlin)"),
-    MAVEN("target", "pom.xml", "-*.jar", "Maven");
+    MAVEN("target", "pom.xml", "-*.jar", "Maven"),
+    PYRONAUT("dist", "pyproject.toml", "-*.whl", "Pyronaut");
 
     public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE_KOTLIN;
 

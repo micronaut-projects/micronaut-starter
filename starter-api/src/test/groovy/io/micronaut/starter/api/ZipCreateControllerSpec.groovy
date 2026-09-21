@@ -104,6 +104,21 @@ class ZipCreateControllerSpec extends Specification {
         ZipUtil.containsFile(bytes, "Application.groovy")
     }
 
+    void "test create app with python"() {
+        when:
+        def bytes = client.createApp("test", Collections.emptyList(), null, null, Language.PYTHON, null)
+
+        then:
+        ZipUtil.containsFile(bytes, "pyproject.toml")
+        ZipUtil.containsFile(bytes, "config/application.toml")
+        ZipUtil.containsFile(bytes, "tests/test_application.py")
+        !ZipUtil.containsFile(bytes, "build.gradle.kts")
+        !ZipUtil.containsFile(bytes, "pom.xml")
+        ZipUtil.containsFileWithContents(bytes, "micronaut-cli.yml", "sourceLanguage: python")
+        ZipUtil.containsFileWithContents(bytes, "micronaut-cli.yml", "testFramework: pytest")
+        ZipUtil.containsFileWithContents(bytes, "micronaut-cli.yml", "buildTool: pyronaut")
+    }
+
     void "test create app with maven"() {
         when:
         def bytes = client.createApp("test", ['flyway'], BuildTool.MAVEN, null, Language.GROOVY, null)

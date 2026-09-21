@@ -31,6 +31,9 @@ public final class LanguageUtils {
         if (buildTool == BuildTool.MAVEN) {
             return List.of(Language.JAVA, Language.GROOVY);
         }
+        if (buildTool == BuildTool.PYRONAUT) {
+            return List.of(Language.PYTHON);
+        }
         return JVM_LANGUAGES;
     }
 }

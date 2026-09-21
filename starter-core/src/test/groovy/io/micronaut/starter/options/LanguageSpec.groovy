@@ -17,6 +17,7 @@ class LanguageSpec extends Specification {
         Language.JAVA   || "src/main/java/{packagePath}/{className}.java"
         Language.GROOVY || "src/main/groovy/{packagePath}/{className}.groovy"
         Language.KOTLIN || "src/main/kotlin/{packagePath}/{className}.kt"
+        Language.PYTHON || "src/{packagePath}/{className}.py"
         path = '/{packagePath}/{className}'
     }
 
@@ -32,6 +33,13 @@ class LanguageSpec extends Specification {
         Language.JAVA   || "src/test/java/{packagePath}/{className}.java"
         Language.GROOVY || "src/test/groovy/{packagePath}/{className}.groovy"
         Language.KOTLIN || "src/test/kotlin/{packagePath}/{className}.kt"
+        Language.PYTHON || "tests/{packagePath}/{className}.py"
         path = '/{packagePath}/{className}'
+    }
+
+    void "Python uses Pytest and Pyronaut as defaults"() {
+        expect:
+        Language.PYTHON.getDefaults().getTest() == TestFramework.PYTEST
+        Language.PYTHON.getDefaults().getBuild() == BuildTool.PYRONAUT
     }
 }
