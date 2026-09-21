@@ -69,6 +69,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#getDescription()" tabindex="0">getDescription()</a></li>
 <li><a href="#getOrder()" tabindex="0">getOrder()</a></li>
 <li><a href="#supports(io.micronaut.starter.application.ApplicationType)" tabindex="0">supports(ApplicationType)</a></li>
+<li><a href="#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)" tabindex="0">shouldApply(ApplicationType, Options, Set)</a></li>
+<li><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" tabindex="0">apply(GeneratorContext)</a></li>
 <li><a href="#createTemplate()" tabindex="0">createTemplate()</a></li>
 <li><a href="#supports(io.micronaut.starter.options.Language)" tabindex="0">supports(Language)</a></li>
 </ol>
@@ -86,7 +88,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="ConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">ConfigurationFeature</a>, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../JvmOneOfFeature.html" title="interface in io.micronaut.starter.feature">JvmOneOfFeature</a>, <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
+<dd><code>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="ConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">ConfigurationFeature</a>, <a href="DefaultConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">DefaultConfigurationFeature</a>, <a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../JvmOneOfFeature.html" title="interface in io.micronaut.starter.feature">JvmOneOfFeature</a>, <a href="../OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
@@ -96,7 +98,7 @@ loadScripts(document, 'script');</script>
 @Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">Toml</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="ConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">ConfigurationFeature</a></span></div>
+implements <a href="DefaultConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">DefaultConfigurationFeature</a></span></div>
 </div>
 </section>
 <section class="summary">
@@ -130,30 +132,44 @@ implements <a href="ConfigurationFeature.html" title="interface in io.micronaut.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a><wbr>&lt;<a href="Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a>, <a href="../../template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTemplate()" class="member-name-link">createTemplate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#apply(io.micronaut.starter.application.generator.GeneratorContext)" class="member-name-link">apply</a><wbr>(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
+or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a><wbr>&lt;<a href="Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a>, <a href="../../template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTemplate()" class="member-name-link">createTemplate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The name of the feature.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrder()" class="member-name-link">getOrder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrder()" class="member-name-link">getOrder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The order of a feature controls the order in which it applies.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#processSelectedFeatures(io.micronaut.starter.feature.FeatureContext)" class="member-name-link">processSelectedFeatures</a><wbr>(<a href="../FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
 or was included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)" class="member-name-link">shouldApply</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+ <a href="../../options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+ <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines if the feature should be applied to the project.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#supports(io.micronaut.starter.application.ApplicationType)" class="member-name-link">supports</a><wbr>(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code></div>
@@ -172,7 +188,10 @@ application types.</div>
 <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.starter.feature.config.ConfigurationFeature">Methods inherited from interface&nbsp;<a href="ConfigurationFeature.html#method-summary" title="interface in io.micronaut.starter.feature.config">ConfigurationFeature</a></h3>
-<code><a href="ConfigurationFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)" title="apply(GeneratorContext)">apply</a>, <a href="ConfigurationFeature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="ConfigurationFeature.html#getFeatureClass()" title="getFeatureClass()">getFeatureClass</a></code></div>
+<code><a href="ConfigurationFeature.html#getCategory()" title="getCategory()">getCategory</a>, <a href="ConfigurationFeature.html#getFeatureClass()" title="getFeatureClass()">getFeatureClass</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.starter.feature.DefaultFeature">Methods inherited from interface&nbsp;<a href="../DefaultFeature.html#method-summary" title="interface in io.micronaut.starter.feature">DefaultFeature</a></h3>
+<code><a href="../DefaultFeature.html#getTargetFramework()" title="getTargetFramework()">getTargetFramework</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.core.naming.Described">Methods inherited from interface&nbsp;io.micronaut.core.naming.Described</h3>
 <code>getDescription</code></div>
@@ -320,6 +339,61 @@ should be applied.</div>
 <dd><code>applicationType</code> - The application type</dd>
 <dt>Returns:</dt>
 <dd>True if the feature can be selected by the user</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)">
+<h3>shouldApply</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">shouldApply</span><wbr><span class="parameters">(<a href="../../application/ApplicationType.html" title="enum class in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+ <a href="../../options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+ <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)">DefaultFeature</a></code></span></div>
+<div class="block">Determines if the feature should be applied to the project.
+
+Default features do not need to be concerned if the feature was already
+selected and therefore is already in the list of selected features. The
+addition to the set is based on the identity of the feature instance and
+all features are singletons.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="DefaultConfigurationFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="DefaultConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">DefaultConfigurationFeature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dd><code>options</code> - The options</dd>
+<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
+<dt>Returns:</dt>
+<dd>True if the feature should apply</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="apply(io.micronaut.starter.application.generator.GeneratorContext)">
+<h3>apply</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">apply</span><wbr><span class="parameters">(<a href="../../application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+included by default as a result of <a href="../DefaultFeature.html#shouldApply(io.micronaut.starter.application.ApplicationType,io.micronaut.starter.options.Options,java.util.Set)"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
+or added explicitly by another feature through <a href="../FeatureContext.html#addFeature(io.micronaut.starter.feature.Feature)"><code>FeatureContext.addFeature(Feature)</code></a>.
+
+At this point the feature list is set and cannot change.
+
+This method can be implemented to modify the generated project. The feature can add templates
+by executing <a href="../../application/generator/GeneratorContext.html#addTemplate(java.lang.String,io.micronaut.starter.template.Template)"><code>GeneratorContext.addTemplate(String, io.micronaut.starter.template.Template)</code></a>, modify configuration
+by modifying <a href="../../application/generator/GeneratorContext.html#getConfiguration()"><code>GeneratorContext.getConfiguration()</code></a> or <a href="../../application/generator/GeneratorContext.html#getBootstrapConfiguration()"><code>GeneratorContext.getBootstrapConfiguration()</code></a>, or modify build properties through <a href="../../application/generator/GeneratorContext.html#getBuildProperties()"><code>GeneratorContext.getBuildProperties()</code></a>.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ConfigurationFeature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="ConfigurationFeature.html" title="interface in io.micronaut.starter.feature.config">ConfigurationFeature</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="../Feature.html#apply(io.micronaut.starter.application.generator.GeneratorContext)">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
 </div>
 </section>

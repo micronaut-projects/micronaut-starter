@@ -82,6 +82,7 @@ io.micronaut.starter.feature.azure
 io.micronaut.starter.feature.build
 io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.maven
+io.micronaut.starter.feature.build.pyronaut
 io.micronaut.starter.feature.buildless
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
@@ -142,6 +143,7 @@ io.micronaut.starter.feature.lang.groovy
 io.micronaut.starter.feature.lang.groovy.module
 io.micronaut.starter.feature.lang.java
 io.micronaut.starter.feature.lang.kotlin
+io.micronaut.starter.feature.lang.python
 io.micronaut.starter.feature.langchain4j
 io.micronaut.starter.feature.langchain4j.embeddedstore
 io.micronaut.starter.feature.langchain4j.languagemodels
@@ -172,6 +174,7 @@ io.micronaut.starter.feature.picocli.test.junit
 io.micronaut.starter.feature.picocli.test.kotest
 io.micronaut.starter.feature.picocli.test.spock
 io.micronaut.starter.feature.problemjson
+io.micronaut.starter.feature.pyronaut
 io.micronaut.starter.feature.reactive
 io.micronaut.starter.feature.reactor
 io.micronaut.starter.feature.redis

@@ -79,7 +79,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#buildCommand()" tabindex="0">buildCommand()</a></li>
 <li><a href="#isFunction(boolean)" tabindex="0">isFunction(boolean)</a></li>
 <li><a href="#isFunction()" tabindex="0">isFunction()</a></li>
-<li><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean)" tabindex="0">template(Project, Features, String, String, boolean)</a></li>
+<li><a href="#isPyronaut(boolean)" tabindex="0">isPyronaut(boolean)</a></li>
+<li><a href="#isPyronaut()" tabindex="0">isPyronaut()</a></li>
+<li><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean,boolean)" tabindex="0">template(Project, Features, String, String, boolean, boolean)</a></li>
 <li><a href="#buildTemplate()" tabindex="0">buildTemplate()</a></li>
 </ol>
 </li>
@@ -183,6 +185,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="gcpFunctionReadme.html" title="class in io.micronaut.starter.rocker.feature.function.gcp.template">gcpFunctionReadme</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFunction(boolean)" class="member-name-link">isFunction</a><wbr>(boolean&nbsp;isFunction)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPyronaut()" class="member-name-link">isPyronaut</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="gcpFunctionReadme.html" title="class in io.micronaut.starter.rocker.feature.function.gcp.template">gcpFunctionReadme</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPyronaut(boolean)" class="member-name-link">isPyronaut</a><wbr>(boolean&nbsp;isPyronaut)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#project()" class="member-name-link">project</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -196,11 +204,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runCommand(java.lang.String)" class="member-name-link">runCommand</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;runCommand)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="gcpFunctionReadme.html" title="class in io.micronaut.starter.rocker.feature.function.gcp.template">gcpFunctionReadme</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean)" class="member-name-link">template</a><wbr>(<a href="../../../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean,boolean)" class="member-name-link">template</a><wbr>(<a href="../../../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
  <a href="../../../../../feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features,
  <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;runCommand,
  <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;buildCommand,
- boolean&nbsp;isFunction)</code></div>
+ boolean&nbsp;isFunction,
+ boolean&nbsp;isPyronaut)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -359,14 +368,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean)">
+<section class="detail" id="isPyronaut(boolean)">
+<h3>isPyronaut</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="gcpFunctionReadme.html" title="class in io.micronaut.starter.rocker.feature.function.gcp.template">gcpFunctionReadme</a></span>&nbsp;<span class="element-name">isPyronaut</span><wbr><span class="parameters">(boolean&nbsp;isPyronaut)</span></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPyronaut()">
+<h3>isPyronaut</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPyronaut</span>()</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="template(io.micronaut.starter.application.Project,io.micronaut.starter.feature.Features,java.lang.String,java.lang.String,boolean,boolean)">
 <h3>template</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="gcpFunctionReadme.html" title="class in io.micronaut.starter.rocker.feature.function.gcp.template">gcpFunctionReadme</a></span>&nbsp;<span class="element-name">template</span><wbr><span class="parameters">(<a href="../../../../../application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
  <a href="../../../../../feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features,
  <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;runCommand,
  <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;buildCommand,
- boolean&nbsp;isFunction)</span></div>
+ boolean&nbsp;isFunction,
+ boolean&nbsp;isPyronaut)</span></div>
 </div>
 </section>
 </li>

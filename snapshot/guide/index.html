@@ -715,11 +715,11 @@ Application generation commands are:</p>
 <dl>
 <dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
 <dd>
-<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven.</p>
+<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven, pyronaut.</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, data-r2dbc, jackson-xml, websocket, views-fieldset, views-velocity, turbo, views-thymeleaf, views-soy, views-rocker, views-react, views-pebble, views-jinjava, views-jte, htmx, views-handlebars, views-freemarker, vertx-pg-client, vertx-mysql-client, validation, micronaut-http-validation, tracing-zipkin, tracing-jaeger, test-resources, mockito, mockserver-client-java, test-netty-leak, micronaut-test-rest-assured, localstack, junit-platform-suite-engine, junit-params, hamcrest, awaitility, assertj, gcp-cloud-trace, spring-web, spring-data-jpa, spring-data-jdbc, spring-boot, spring, sourcegen-generator, undertow-server, tomcat-server, netty-server, http-server-jdk, jetty-server, http-poja, spring-security-crypto, security-ojdbc-extensions, security-ldap, security-jwt, security-html-sanitizer, security-csrf, security, rxjava3-http-client, rxjava3, rss-itunes-podcast, rss, retry, jrebel, redis-lettuce, reactor-http-client, reactor, problem-json, swagger-ui, redoc, rapidoc, lombok, openrewrite, openapi-explorer, openapi-adoc, openapi, nullaway, management, jspecify, http-session, http-client, hibernate-validator, annotation-api, oracle-cloud-vault, oracle-cloud-sdk, oracle-cloud-httpclient-netty, oracle-cloud-logging, oracle-cloud-atp, tracing-opentelemetry-zipkin, tracing-opentelemetry-xray, tracing-opentelemetry-jaeger, tracing-opentelemetry-gcp, tracing-opentelemetry-exporter-otlp, tracing-opentelemetry-exporter-logging, opensearch-restclient, opensearch-httpclient5, opensearch-amazon, object-storage-oracle-cloud, object-storage-local, object-storage-gcp, object-storage-azure, object-storage-aws, netflix-ribbon, netflix-hystrix, netflix-archaius, multi-tenancy, liquibase, flyway, micrometer-wavefront, micrometer-statsd, micrometer-stackdriver, micrometer-signalfx, micrometer-prometheus-pushgateway, micrometer-prometheus, micrometer-oracle-cloud, micrometer-new-relic, micrometer-observation-http, micrometer-observation, micrometer-annotation, micrometer-kairos, micrometer-jmx, micrometer-influx, micrometer-humio, micrometer-graphite, micrometer-ganglia, micrometer-elastic, micrometer-dynatrace, micrometer-datadog, micrometer-cloudwatch, micrometer-azure-monitor, micrometer-atlas, micrometer-appoptics, rabbitmq, gcp-pubsub, nats, mqttv3, mqtt-hivemq, mqtt, kafka-streams, kafka, jms-sqs, jms-oracle-aq, jms-core, jms-activemq-classic, jms-activemq-artemis, mcp-stdio, mcp-http, mcp-client-langchain4j, mcp-client-java-sdk, slf4j-simple-logger, jul-to-slf4j, slf4j-simple, logback, log4j2, liquibase-slf4j, langchain4j-vertexai, langchain4j-vertexai-gemini, langchain4j-openai, langchain4j-ollama, langchain4j-mistralai, langchain4j-hugging-face, langchain4j-googleai-gemini, langchain4j-bedrock, langchain4j-azure, langchain4j-anthropic, langchain4j-store-qdrant, langchain4j-store-pgvector, langchain4j-store-oracle, langchain4j-store-opensearch, langchain4j-store-neo4j, langchain4j-store-mongodb-atlas, langchain4j-store-elasticsearch, langchain4j-agentic, groovy-yaml, groovy-xml, groovy-toml, groovy-sql, groovy-json, groovy-ginq, groovy-datetime, groovy-dateutil, kotlin-extension-functions, knative, kubernetes-reactor-client, kubernetes-informer, kubernetes-client, kubernetes, serialization-jsonp, serialization-jackson, serialization-bson, json-smart, json-schema-validation, json-schema-generator, json-schema, json-path, jackson-databind, jmx, jib, sql-jdbi, jax-rs, http-client-jdk, guice, graphql, graalvm, graalpy, github-workflow-oracle-cloud-functions, github-workflow-oracle-cloud-functions-graalvm, github-workflow-google-cloud-run, github-workflow-google-cloud-run-graalvm, github-workflow-graal-docker-registry, github-workflow-docker-registry, github-workflow-azure-container-instance, github-workflow-azure-container-instance-graalvm, gcp-secrets-manager, gcp-logging, oracle-function, google-cloud-function, azure-function, aws-lambda, email-template, email-sendgrid, email-postmark, email-mailtrap, email-mailpit-http-client, email-mailjet, email-javamail, email-amazon-ses, elasticsearch, eclipsestore-rest, eclipsestore, config-kubernetes, config-consul, discovery-eureka, discovery-kubernetes, discovery-core, discovery-consul, discovery-client, control-panel, dekorate-servicecatalog, dekorate-prometheus, dekorate-openshift, dekorate-kubernetes, dekorate-knative, dekorate-jaeger, dekorate-halkyon, r2dbc, sqlite, sqlserver, postgres, oracle, neo4j-bolt, mysql, mybatis, mongo-sync, mongo-reactive, mariadb, jooq, jakarta-data, jasync-sql, hibernate-reactive-jpa, hibernate-jpamodelgen, hibernate-jpa, h2, data-spring-jdbc, data-mongodb-reactive, data-mongodb, data-jpa, data-jdbc, data-hibernate-reactive, data-azure-cosmos, cassandra, crac, coherence-session, coherence, coherence-distributed-configuration, coherence-data, oracle-cloud-devops-build-ci, gitlab-workflow-ci, github-workflow-ci, google-cloud-workflow-ci, aws-codebuild-workflow-ci, chatbots-telegram-http, chatbots-basecamp-http, opendi, cache-infinispan, cache-hazelcast, cache-ehcache, cache-coherence, cache-caffeine, buildless, micronaut-aot, kapt, develocity, azure-tracing, azure-logging, azure-key-vault, azure-cosmos-db, aws-secrets-manager, aws-parameter-store, aws-lambda-custom-runtime, aws-alexa, dynamodb, aws-v2-sdk, aws-lambda-events-serde, amazon-cognito, amazon-cloudwatch-logging, amazon-api-gateway-http, amazon-api-gateway, asciidoctor, x86, arm, micronaut-aop, acme, ksp, security-oauth2, security-session, aws-cdk, ktor, shade, testcontainers, yaml, toml, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, data-r2dbc, jackson-xml, websocket, views-fieldset, views-velocity, turbo, views-thymeleaf, views-soy, views-rocker, views-react, views-pebble, views-jinjava, views-jte, htmx, views-handlebars, views-freemarker, vertx-pg-client, vertx-mysql-client, validation, micronaut-http-validation, tracing-zipkin, tracing-jaeger, test-resources, mockito, mockserver-client-java, test-netty-leak, micronaut-test-rest-assured, localstack, junit-platform-suite-engine, junit-params, hamcrest, awaitility, assertj, gcp-cloud-trace, spring-web, spring-data-jpa, spring-data-jdbc, spring-boot, spring, sourcegen-generator, undertow-server, tomcat-server, netty-server, http-server-jdk, jetty-server, http-poja, spring-security-crypto, security-ojdbc-extensions, security-ldap, security-jwt, security-html-sanitizer, security-csrf, security, rxjava3-http-client, rxjava3, rss-itunes-podcast, rss, retry, jrebel, redis-lettuce, reactor-http-client, reactor, pyronaut-requests, problem-json, swagger-ui, redoc, rapidoc, lombok, openrewrite, openapi-explorer, openapi-adoc, openapi, nullaway, management, jspecify, http-session, http-client, hibernate-validator, annotation-api, oracle-cloud-vault, oracle-cloud-sdk, oracle-cloud-httpclient-netty, oracle-cloud-logging, oracle-cloud-atp, tracing-opentelemetry-zipkin, tracing-opentelemetry-xray, tracing-opentelemetry-jaeger, tracing-opentelemetry-gcp, tracing-opentelemetry-exporter-otlp, tracing-opentelemetry-exporter-logging, opensearch-restclient, opensearch-httpclient5, opensearch-amazon, object-storage-oracle-cloud, object-storage-local, object-storage-gcp, object-storage-azure, object-storage-aws, netflix-ribbon, netflix-hystrix, netflix-archaius, multi-tenancy, liquibase, flyway, micrometer-wavefront, micrometer-statsd, micrometer-stackdriver, micrometer-signalfx, micrometer-prometheus-pushgateway, micrometer-prometheus, micrometer-oracle-cloud, micrometer-new-relic, micrometer-observation-http, micrometer-observation, micrometer-annotation, micrometer-kairos, micrometer-jmx, micrometer-influx, micrometer-humio, micrometer-graphite, micrometer-ganglia, micrometer-elastic, micrometer-dynatrace, micrometer-datadog, micrometer-cloudwatch, micrometer-azure-monitor, micrometer-atlas, micrometer-appoptics, rabbitmq, gcp-pubsub, nats, mqttv3, mqtt-hivemq, mqtt, kafka-streams, kafka, jms-sqs, jms-oracle-aq, jms-core, jms-activemq-classic, jms-activemq-artemis, mcp-stdio, mcp-http, mcp-client-langchain4j, mcp-client-java-sdk, slf4j-simple-logger, jul-to-slf4j, slf4j-simple, logback, log4j2, liquibase-slf4j, langchain4j-vertexai, langchain4j-vertexai-gemini, langchain4j-openai, langchain4j-ollama, langchain4j-mistralai, langchain4j-hugging-face, langchain4j-googleai-gemini, langchain4j-bedrock, langchain4j-azure, langchain4j-anthropic, langchain4j-store-qdrant, langchain4j-store-pgvector, langchain4j-store-oracle, langchain4j-store-opensearch, langchain4j-store-neo4j, langchain4j-store-mongodb-atlas, langchain4j-store-elasticsearch, langchain4j-agentic, groovy-yaml, groovy-xml, groovy-toml, groovy-sql, groovy-json, groovy-ginq, groovy-datetime, groovy-dateutil, kotlin-extension-functions, knative, kubernetes-reactor-client, kubernetes-informer, kubernetes-client, kubernetes, serialization-jsonp, serialization-jackson, serialization-bson, json-smart, json-schema-validation, json-schema-generator, json-schema, json-path, jackson-databind, jmx, jib, sql-jdbi, jax-rs, http-client-jdk, guice, graphql, graalvm, graalpy, github-workflow-oracle-cloud-functions, github-workflow-oracle-cloud-functions-graalvm, github-workflow-google-cloud-run, github-workflow-google-cloud-run-graalvm, github-workflow-graal-docker-registry, github-workflow-docker-registry, github-workflow-azure-container-instance, github-workflow-azure-container-instance-graalvm, gcp-secrets-manager, gcp-logging, oracle-function, google-cloud-function, azure-function, aws-lambda, email-template, email-sendgrid, email-postmark, email-mailtrap, email-mailpit-http-client, email-mailjet, email-javamail, email-amazon-ses, elasticsearch, eclipsestore-rest, eclipsestore, config-kubernetes, config-consul, discovery-eureka, discovery-kubernetes, discovery-core, discovery-consul, discovery-client, control-panel, dekorate-servicecatalog, dekorate-prometheus, dekorate-openshift, dekorate-kubernetes, dekorate-knative, dekorate-jaeger, dekorate-halkyon, r2dbc, sqlite, sqlserver, postgres, oracle, neo4j-bolt, mysql, mybatis, mongo-sync, mongo-reactive, mariadb, jooq, jakarta-data, jasync-sql, hibernate-reactive-jpa, hibernate-jpamodelgen, hibernate-jpa, h2, data-spring-jdbc, data-mongodb-reactive, data-mongodb, data-jpa, data-jdbc, data-hibernate-reactive, data-azure-cosmos, cassandra, crac, coherence-session, coherence, coherence-distributed-configuration, coherence-data, oracle-cloud-devops-build-ci, gitlab-workflow-ci, github-workflow-ci, google-cloud-workflow-ci, aws-codebuild-workflow-ci, chatbots-telegram-http, chatbots-basecamp-http, opendi, cache-infinispan, cache-hazelcast, cache-ehcache, cache-coherence, cache-caffeine, buildless, micronaut-aot, kapt, develocity, azure-tracing, azure-logging, azure-key-vault, azure-cosmos-db, aws-secrets-manager, aws-parameter-store, aws-lambda-custom-runtime, aws-alexa, dynamodb, aws-v2-sdk, aws-lambda-events-serde, amazon-cognito, amazon-cloudwatch-logging, amazon-api-gateway-http, amazon-api-gateway, asciidoctor, x86, arm, micronaut-aop, acme, ksp, security-oauth2, security-session, aws-cdk, ktor, shade, testcontainers, yaml, toml, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -735,7 +735,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
-<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+<p>Which language to use. Possible values: java, groovy, kotlin, python.</p>
 </dd>
 <dt class="hdlist1"><strong>--list-features</strong></dt>
 <dd>
@@ -743,7 +743,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, pytest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -802,7 +802,7 @@ Application generation commands are:</p>
 <dl>
 <dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
 <dd>
-<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven.</p>
+<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven, pyronaut.</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
@@ -822,7 +822,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
-<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+<p>Which language to use. Possible values: java, groovy, kotlin, python.</p>
 </dd>
 <dt class="hdlist1"><strong>--list-features</strong></dt>
 <dd>
@@ -830,7 +830,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, pytest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -889,7 +889,7 @@ Application generation commands are:</p>
 <dl>
 <dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
 <dd>
-<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven.</p>
+<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven, pyronaut.</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
@@ -909,7 +909,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
-<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+<p>Which language to use. Possible values: java, groovy, kotlin, python.</p>
 </dd>
 <dt class="hdlist1"><strong>--list-features</strong></dt>
 <dd>
@@ -917,7 +917,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, pytest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -976,7 +976,7 @@ Application generation commands are:</p>
 <dl>
 <dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
 <dd>
-<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven.</p>
+<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven, pyronaut.</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
@@ -996,7 +996,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
-<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+<p>Which language to use. Possible values: java, groovy, kotlin, python.</p>
 </dd>
 <dt class="hdlist1"><strong>--list-features</strong></dt>
 <dd>
@@ -1004,7 +1004,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, pytest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -1063,7 +1063,7 @@ Application generation commands are:</p>
 <dl>
 <dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
 <dd>
-<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven.</p>
+<p>Which build tool to configure. Possible values: gradle, gradle_kotlin, maven, pyronaut.</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
@@ -1083,7 +1083,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
 <dd>
-<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+<p>Which language to use. Possible values: java, groovy, kotlin, python.</p>
 </dd>
 <dt class="hdlist1"><strong>--list-features</strong></dt>
 <dd>
@@ -1091,7 +1091,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, pytest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
