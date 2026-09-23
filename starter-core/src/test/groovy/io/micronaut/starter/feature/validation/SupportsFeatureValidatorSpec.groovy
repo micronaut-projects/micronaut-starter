@@ -80,6 +80,17 @@ class SupportsFeatureValidatorSpec extends BeanContextSpec implements ContextFix
         ex.message.contains("Feature github-workflow-ci does not support language python. ")
     }
 
+    void "python supports service discovery features"(String feature) {
+        when:
+        buildGeneratorContext([feature], new Options(Language.PYTHON))
+
+        then:
+        noExceptionThrown()
+
+        where:
+        feature << ["discovery-consul", "discovery-eureka"]
+    }
+
     void "python rejects jvm-specific HTTP client features"() {
         when:
         buildGeneratorContext(["http-client-jdk"], new Options(Language.PYTHON, BuildTool.PYRONAUT))

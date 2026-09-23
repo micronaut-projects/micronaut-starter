@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['25']
+        java: ['25.0.3']
     steps:
       - uses: actions/checkout@v6
       - uses: actions/cache@v5
@@ -158,11 +158,12 @@ jobs:
           key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
             ${{ runner.os }}-test-aws-
-      - name: Set up JDK
-        uses: actions/setup-java@v5
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1.5.3
         with:
-          distribution: 'adopt'
           java-version: ${{ matrix.java }}
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run app Functional Tests
         run: ./gradlew test-buildtool:test --refresh-dependencies --parallel --continue
         env:
