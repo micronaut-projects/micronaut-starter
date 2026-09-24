@@ -91,14 +91,16 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         output.contains(AOT_PLUGIN)
         output.contains('aot {')
-        output.contains('optimizeServiceLoading = false')
         output.contains('convertYamlToJava = false')
-        output.contains('precomputeOperations = true')
-        output.contains('cacheEnvironment = true')
+        output.contains('precomputeOperations = false')
+        output.contains('cacheEnvironment = false')
         output.contains('optimizeClassLoading = true')
-        output.contains('deduceEnvironment = true')
+        output.contains('deduceEnvironment = false')
         output.contains('optimizeNetty = true')
         output.contains('replaceLogbackXml = true')
+
+        and: 'the removed service loading optimization is not configured'
+        !output.contains('optimizeServiceLoading')
 
         where:
         [buildTool, language] << [BuildTool.valuesGradle(), Language.values().toList()].combinations().findAll { it ->

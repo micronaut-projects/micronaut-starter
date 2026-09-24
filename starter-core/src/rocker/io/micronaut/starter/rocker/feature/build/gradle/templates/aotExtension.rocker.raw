@@ -4,12 +4,11 @@
     aot {
         // Please review carefully the optimizations enabled below
         // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading = false
         convertYamlToJava = false
-        precomputeOperations = true
-        cacheEnvironment = true
+        precomputeOperations = false
+        cacheEnvironment = false
         optimizeClassLoading = true
-        deduceEnvironment = true
+        deduceEnvironment = false
         optimizeNetty = true
         replaceLogbackXml = true
 @if(aotKeys != null) {
