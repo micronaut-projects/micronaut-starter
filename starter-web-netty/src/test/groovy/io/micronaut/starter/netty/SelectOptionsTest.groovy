@@ -41,12 +41,12 @@ class SelectOptionsTest extends Specification {
 
         then: "We get all the languages"
         def languageOpts = selectOptions.lang.options
-        languageOpts.size() == Language.values().size()
+        languageOpts.size() == 3
 
         then: "We get the correct Language default"
         selectOptions.lang.defaultOption.value == Language.DEFAULT_OPTION
 
-        Language.values().each { lang ->
+        [Language.JAVA, Language.GROOVY, Language.KOTLIN].each { lang ->
             then: "We can find the ${lang.name()} language"
             languageOpts.find {so -> lang == so.value} != null
         }
@@ -65,24 +65,24 @@ class SelectOptionsTest extends Specification {
 
         then: "We get all the test framework options"
         def testOpts = selectOptions.test.options
-        testOpts.size() == TestFramework.values().size()
+        testOpts.size() == 3
 
         then: "We get the correct TestFramework default"
         selectOptions.test.defaultOption.value == TestFramework.DEFAULT_OPTION
 
-        TestFramework.values().each { t ->
+        [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST].each { t ->
             then: "We can find the ${t.name()} test framework"
             testOpts.find {so -> t == so.value} != null
         }
 
         then: "We have all the build tools options"
         def buildOpts = selectOptions.build.options
-        buildOpts.size() == BuildTool.values().size()
+        buildOpts.size() == 3
 
         then: "We get the correct build tool default"
         selectOptions.build.defaultOption.value == BuildTool.DEFAULT_OPTION
 
-        BuildTool.values().each { t ->
+        [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN].each { t ->
             then: "We can find the ${t.name()} build tool"
             buildOpts.find {so -> t == so.value} != null
         }

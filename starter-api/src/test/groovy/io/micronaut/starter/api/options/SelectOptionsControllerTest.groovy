@@ -7,6 +7,8 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.api.JdkVersionDTO
 import io.micronaut.starter.api.SelectOptionsDTO
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
@@ -44,9 +46,23 @@ class SelectOptionsControllerTest extends Specification {
         noExceptionThrown()
 
         and: "order is as expected"
-        selectOptionsDTO.build.options.value == [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN, BuildTool.PYRONAUT]
+        selectOptionsDTO.build.options.value == [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN]
 
         and: "the default is Gradle Kotlin"
         selectOptionsDTO.build.defaultOption.value == BuildTool.GRADLE_KOTLIN
+    }
+
+    void "Python options are not exposed"() {
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        HttpRequest<?> request = HttpRequest.GET("/select-options")
+        when:
+        SelectOptionsDTO selectOptionsDTO = client.retrieve(request, SelectOptionsDTO)
+
+        then:
+        noExceptionThrown()
+        selectOptionsDTO.lang.options.value == [Language.JAVA, Language.GROOVY, Language.KOTLIN]
+        selectOptionsDTO.test.options.value == [TestFramework.JUNIT, TestFramework.SPOCK, TestFramework.KOTEST]
+        selectOptionsDTO.build.options.value == [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN]
     }
 }
