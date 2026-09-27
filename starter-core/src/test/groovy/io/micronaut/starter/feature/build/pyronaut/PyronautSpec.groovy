@@ -55,7 +55,11 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         pyproject.contains("[tool.pyronaut.platform]\nversion = \"${VersionInfo.micronautVersion}\"")
         pyproject.contains('[tool.pyronaut.toolchain]\ntype = "jvm"')
         pyproject.contains('[tool.pyronaut.processor]\nincremental = true\ndaemon = true\npython-incremental-mode = "optimistic"')
-        pyproject.contains('repositories = [\n    "https://central.sonatype.com/repository/maven-snapshots/",\n    "mavenCentral",')
+        boolean snapshot = VersionInfo.isMicronautSnapshot() || VersionInfo.isMicronautCoreSnapshot()
+        pyproject.contains(snapshot
+                ? 'repositories = [\n    "https://central.sonatype.com/repository/maven-snapshots/",\n    "mavenCentral",'
+                : 'repositories = [\n    "mavenCentral",\n]')
+        pyproject.contains("maven-snapshots") == snapshot
         !pyproject.contains("mavenLocal")
         pyproject.contains('"io.micronaut:micronaut-http-server-netty"')
         pyproject.contains('"io.micronaut.serde:micronaut-serde-processor"')
