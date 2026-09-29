@@ -49,8 +49,9 @@ class ThymeleafSpec extends ApplicationContextSpec implements CommandOutputFixtu
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(language, buildTool), ['views-thymeleaf'])
 
-        then: 'files are created in src/main/resources/views/fieldset'
-        output.keySet().findAll { it.startsWith("src/main/resources/views/fieldset") }
+        then: 'files are created in the language-specific views directory'
+        String viewsPath = language == Language.PYTHON ? 'views' : 'src/main/resources/views'
+        output.keySet().findAll { it.startsWith("${viewsPath}/fieldset") }
 
         where:
         [language, buildTool] << [Language.values(), BuildTool.values()].combinations().findAll { it -> supportedLanguages(it[1]).contains(it[0]) }

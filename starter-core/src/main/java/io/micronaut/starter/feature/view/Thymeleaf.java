@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -95,6 +96,7 @@ public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     private void addLayout(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        generatorContext.addTemplate(LAYOUT_HTML, new URLTemplate(VIEWS_PATH + LAYOUT_HTML, classLoader.getResource(RESOURCES_THYMELEAF_PATH +  LAYOUT_HTML)));
+        String viewsPath = generatorContext.getLanguage() == Language.PYTHON ? PYTHON_VIEWS_PATH : VIEWS_PATH;
+        generatorContext.addTemplate(LAYOUT_HTML, new URLTemplate(viewsPath + LAYOUT_HTML, classLoader.getResource(RESOURCES_THYMELEAF_PATH +  LAYOUT_HTML)));
     }
 }

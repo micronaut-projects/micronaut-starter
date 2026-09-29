@@ -35,6 +35,7 @@ public record PyronautBuild(String projectName,
                             List<String> repositories,
                             Collection<Dependency> dependencies,
                             boolean testResources,
+                            boolean views,
                             List<String> additionalModules,
                             List<String> suppressions) {
     public static final String TABLE_TOOL = "tool";
@@ -93,6 +94,9 @@ public record PyronautBuild(String projectName,
         values.put("python-test", "tests");
         values.put("resources", "config");
         values.put("test-resources", "tests-config");
+        if (views) {
+            values.put("additional-resources", List.of("views"));
+        }
         builder.append(new TomlTable(new TomlPath(List.of("tool", "pyronaut", "sources")), values));
 
         builder.append('\n');

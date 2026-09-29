@@ -55,6 +55,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         pyproject.contains("[tool.pyronaut.platform]\nversion = \"${VersionInfo.micronautVersion}\"")
         pyproject.contains('[tool.pyronaut.toolchain]\ntype = "jvm"')
         pyproject.contains('[tool.pyronaut.processor]\nincremental = true\ndaemon = true\npython-incremental-mode = "optimistic"')
+        !pyproject.contains('additional-resources = [\n    "views",\n]')
         boolean snapshot = VersionInfo.isMicronautSnapshot() || VersionInfo.isMicronautCoreSnapshot()
         pyproject.contains(snapshot
                 ? 'repositories = [\n    "https://central.sonatype.com/repository/maven-snapshots/",\n    "mavenCentral",'
@@ -267,10 +268,12 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         pyproject.contains('"io.micronaut.security:micronaut-security-processor"')
         pyproject.contains('"io.micronaut.kafka:micronaut-kafka"')
         pyproject.contains('"io.micronaut.views:micronaut-views-thymeleaf"')
+        pyproject.contains('additional-resources = [\n    "views",\n]')
         pyproject.contains('"io.micronaut.aws:micronaut-aws-lambda-events-serde"')
 
         and:
-        output.containsKey("src/main/resources/views/layout.html")
+        output.containsKey("views/layout.html")
+        !output.containsKey("config/views/layout.html")
         output["config/application.toml"].contains("[micronaut.security]")
         output["config/application.toml"].contains("authentication = 'bearer'")
         output["config/application.toml"].contains("token.jwt.signatures.secret.generator.secret")

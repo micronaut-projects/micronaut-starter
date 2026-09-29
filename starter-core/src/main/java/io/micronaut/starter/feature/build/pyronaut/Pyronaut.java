@@ -35,6 +35,7 @@ import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.security.SecurityOAuth2;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
+import io.micronaut.starter.feature.view.ViewFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.StringTemplate;
@@ -72,6 +73,7 @@ public class Pyronaut implements BuildFeature {
                 repositories(generatorContext),
                 dependencies,
                 generatorContext.hasFeature(TestResources.class),
+                generatorContext.hasFeature(ViewFeature.class),
                 additionalModules,
                 validationSuppressions(generatorContext));
         generatorContext.addTemplate("pyproject", new StringTemplate("pyproject.toml", pyronautBuild.render()));

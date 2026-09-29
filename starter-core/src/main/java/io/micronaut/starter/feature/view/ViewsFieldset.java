@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
@@ -90,7 +91,6 @@ public class ViewsFieldset implements Feature {
             TEXTAREA_HTML,
             TRIXEDITOR_HTML
     );
-    private static final String FIELDSET_PATH = "src/main/resources/views/fieldset/";
     private static final String RESOURCES_THYMELEAF_PATH = "views/thymeleaf/fieldset/";
 
     @Override
@@ -128,8 +128,9 @@ public class ViewsFieldset implements Feature {
 
     private void addThymeleafTemplates(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String fieldsetPath = (generatorContext.getLanguage() == Language.PYTHON ? ViewFeature.PYTHON_VIEWS_PATH : ViewFeature.VIEWS_PATH) + "fieldset/";
         for (String fileName : THYMELEAF_FRAGMENTS) {
-            generatorContext.addTemplate(fileName, new URLTemplate(FIELDSET_PATH + fileName, classLoader.getResource(RESOURCES_THYMELEAF_PATH +  fileName)));
+            generatorContext.addTemplate(fileName, new URLTemplate(fieldsetPath + fileName, classLoader.getResource(RESOURCES_THYMELEAF_PATH +  fileName)));
         }
     }
 
