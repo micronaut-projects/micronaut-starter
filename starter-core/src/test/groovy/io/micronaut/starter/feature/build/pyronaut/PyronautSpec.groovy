@@ -103,10 +103,12 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         codingSkill.contains("from micronaut.core.async_.annotation import SingleResult")
         codingSkill.contains("do not use `micronaut-jackson-databind`, `hibernate-jpa`, or `hibernate-validator`")
 
-        and: "the annotation-argument rule, which fails silently and so is the highest-value one"
+        and: "the annotation-argument rule, reported since Core 5.2.9 and silent before it"
         codingSkill.contains("## Annotations Are Read From Source, Not Evaluated")
-        codingSkill.contains("discarded **without a warning**")
+        codingSkill.contains("**fails processing** and names the fix")
         codingSkill.contains('QueryValue(defaultValue=str(DEFAULT_SIZE))')
+        codingSkill.contains("Size(min=MIN_PASSWORD, max=128)")
+        codingSkill.contains("older than 5.2.9")
 
         and: "module-level type annotations on a route module"
         codingSkill.contains('Controller("/api/v1/items")')

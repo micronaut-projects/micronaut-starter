@@ -229,24 +229,28 @@ public class PyronautAgentSkills implements DefaultFeature, PythonSpecificFeatur
 
             ## Annotations Are Read From Source, Not Evaluated
 
-            The processor reads annotation arguments from the source text. An argument it cannot read is discarded **without a warning**, so the code compiles, starts and serves with the constraint or default simply missing.
-
-            A bare name for a scalar argument does resolve, which is what makes the other two forms easy to reach for:
+            The processor reads annotation arguments from the source text; it never evaluates them. An argument it cannot read **fails processing** and names the fix:
 
             ```python
-            # WRONG -- the constraint disappears and the endpoint accepts anything
+            # FAILS -- "[PASSWORD] in Annotated[...] is a name bound to
+            # [Size(min=8, max=128)], not an annotation ... Write the annotation inline."
             PASSWORD = Size(min=8, max=128)
             password: Annotated[str, NotBlank, PASSWORD]
 
-            # WRONG -- the default is dropped and the parameter is published as required
+            # FAILS -- "The value [str(DEFAULT_SIZE)] of member [defaultValue] of
+            # @QueryValue is not a compile-time constant ... use a literal."
             size: Annotated[int, QueryValue(defaultValue=str(DEFAULT_SIZE))] = DEFAULT_SIZE
 
-            # RIGHT -- repetitive, and correct
+            # RIGHT
             password: Annotated[str, NotBlank, Size(min=8, max=128)]
             size: Annotated[int, QueryValue(defaultValue="100")] = DEFAULT_SIZE
+
+            # ALSO RIGHT -- a bare name for a *scalar* argument is read fine, so a
+            # constant for a bound or a default is not the problem here.
+            password: Annotated[str, NotBlank, Size(min=MIN_PASSWORD, max=128)]
             ```
 
-            Write every annotation argument out as a literal. Do not factor an annotation into a constant and do not compute an argument. Add a test asserting the constraint rejects bad input, because nothing else will reveal a dropped one.
+            So: write an annotation inline rather than binding it to a name, and do not compute an argument. On Micronaut Core older than 5.2.9 these two forms were discarded **without a warning** instead, leaving the constraint or default silently missing — a dropped `Size` on a password field compiled, started and served. If the project is pinned to an older Core, treat the rule as a silent-failure risk and add a test asserting the constraint rejects bad input.
 
             ## Controllers And Beans
 
