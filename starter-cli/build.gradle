@@ -66,6 +66,12 @@ graalvmNative {
                 logger.lifecycle("Using musl libc")
                 buildArgs("--libc=musl", "--static")
             }
+            if (!graalvmNative.metadataRepository.enabled.get()) {
+                // netty-codec-http and netty-codec-http2 ship --initialize-at-build-time=io.netty, which clashes with
+                // the --initialize-at-run-time=io.netty.util.internal.TypeParameterMatcher of micronaut-http-netty.
+                // The metadata repository overrides the configuration of those JARs, do the same when it is disabled.
+                buildArgs("--exclude-config", /.*netty-codec-http2?-.*\.jar/, "^/META-INF/native-image/.*")
+            }
             mainClass = "io.micronaut.starter.cli.MicronautStarter"
         }
     }
