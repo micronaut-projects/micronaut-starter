@@ -20,10 +20,28 @@ import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 import java.util.Map;
 
 public interface DistributedConfigFeature extends JvmFeature {
+
+    @Override
+    default boolean supports(Language language) {
+        return language == Language.PYTHON || JvmFeature.super.supports(language);
+    }
+
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        return buildTool == BuildTool.PYRONAUT || JvmFeature.super.supports(buildTool);
+    }
+
+    @Override
+    default boolean supports(TestFramework testFramework) {
+        return testFramework == TestFramework.PYTEST || JvmFeature.super.supports(testFramework);
+    }
 
     @Override
     default boolean supports(ApplicationType applicationType) {

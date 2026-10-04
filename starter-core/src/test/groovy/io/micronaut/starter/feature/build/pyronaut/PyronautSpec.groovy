@@ -78,7 +78,7 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         projectSkill.contains("name: pyronaut-project")
         projectSkill.contains("`src/`: application Python sources")
         projectSkill.contains("[tool.pyronaut.dependencies]")
-        projectSkill.contains("Avoid `bootstrap.properties` and `bootstrap.toml`")
+        projectSkill.contains("Distributed configuration features use `config/bootstrap.toml`")
 
         and:
         String cliSkill = output[".agents/skills/pyronaut-cli/SKILL.md"]

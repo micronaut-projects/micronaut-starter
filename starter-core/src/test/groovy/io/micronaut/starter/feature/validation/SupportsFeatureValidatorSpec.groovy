@@ -42,7 +42,7 @@ class SupportsFeatureValidatorSpec extends BeanContextSpec implements ContextFix
         ex.message == "You can only use pytest testing framework with python. "
     }
 
-    void "python rejects unsupported configuration logging and bootstrap features"() {
+    void "python rejects unsupported configuration and logging features"() {
         when:
         buildGeneratorContext(["yaml"], new Options(Language.PYTHON))
 
@@ -56,13 +56,29 @@ class SupportsFeatureValidatorSpec extends BeanContextSpec implements ContextFix
         then:
         ex = thrown(IllegalArgumentException)
         ex.message == "Feature log4j2 does not support language python. "
+    }
 
+    void "python supports distributed configuration features"(String feature) {
         when:
-        buildGeneratorContext(["aws-secrets-manager"], new Options(Language.PYTHON, BuildTool.PYRONAUT), ApplicationType.DEFAULT)
+        buildGeneratorContext([feature], new Options(Language.PYTHON, BuildTool.PYRONAUT), ApplicationType.DEFAULT)
 
         then:
-        ex = thrown(IllegalArgumentException)
-        ex.message.contains("Feature aws-secrets-manager does not support language python. ")
+        noExceptionThrown()
+
+        where:
+        feature << ["gcp-secrets-manager", "azure-key-vault", "aws-secrets-manager"]
+    }
+
+    void "python rejects features that require JVM packaging"(String feature) {
+        when:
+        buildGeneratorContext([feature], new Options(Language.PYTHON, BuildTool.PYRONAUT))
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message.contains("Feature ${feature} does not support language python. ")
+
+        where:
+        feature << ["jib", "config-kubernetes"]
     }
 
     void "python supports graalvm but rejects CI features"() {
