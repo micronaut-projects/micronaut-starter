@@ -119,7 +119,7 @@ public class PyronautAgentSkills implements DefaultFeature, PythonSpecificFeatur
             name = "demo"
             ```
 
-            Distributed configuration features use `config/bootstrap.toml` for settings needed before remote configuration is loaded. Keep normal application settings in `config/application.toml`.
+            Do not create `bootstrap.properties` or `bootstrap.toml`. Configure remote property sources with `micronaut.config.import` in `config/application.toml`. Replace generated project and vault name placeholders with your actual values, and use the provider's standard credential configuration.
 
             ## Generated Files
 

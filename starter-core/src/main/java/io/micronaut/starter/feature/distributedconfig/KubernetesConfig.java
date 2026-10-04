@@ -24,8 +24,6 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.Kubernetes;
 
 import io.micronaut.starter.feature.k8s.KubernetesClient;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.LanguageUtils;
 import jakarta.inject.Singleton;
 
 /**
@@ -69,11 +67,6 @@ public class KubernetesConfig implements DistributedConfigFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
-    }
-
-    @Override
-    public boolean supports(Language language) {
-        return language == null || LanguageUtils.JVM_LANGUAGES.contains(language);
     }
 
     @Override

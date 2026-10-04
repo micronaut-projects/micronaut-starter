@@ -22,6 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Requires(property = "micronaut.starter.feature.gcp.secrets.manager.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -47,7 +48,16 @@ public class GoogleSecretManager implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(gcpSecretManagerDependency());
-        populateBootstrapForDistributedConfiguration(generatorContext);
+        if (generatorContext.getLanguage() == Language.PYTHON) {
+            addConfigurationImport(generatorContext, "gcp-secret-manager://application?project-id=YOUR_PROJECT_ID");
+        } else {
+            populateBootstrapForDistributedConfiguration(generatorContext);
+        }
+    }
+
+    @Override
+    public boolean supportsPython() {
+        return true;
     }
 
     private Dependency.@NonNull Builder gcpSecretManagerDependency() {

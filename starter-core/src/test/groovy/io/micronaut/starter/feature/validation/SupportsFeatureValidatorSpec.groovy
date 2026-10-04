@@ -66,7 +66,19 @@ class SupportsFeatureValidatorSpec extends BeanContextSpec implements ContextFix
         noExceptionThrown()
 
         where:
-        feature << ["gcp-secrets-manager", "azure-key-vault", "aws-secrets-manager"]
+        feature << ["gcp-secrets-manager", "azure-key-vault"]
+    }
+
+    void "python rejects distributed features without native config imports"(String feature) {
+        when:
+        buildGeneratorContext([feature], new Options(Language.PYTHON, BuildTool.PYRONAUT))
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message.contains("Feature ${feature} does not support language python. ")
+
+        where:
+        feature << ["aws-secrets-manager", "aws-parameter-store", "oracle-cloud-vault", "config-consul", "coherence-distributed-configuration", "netflix-archaius"]
     }
 
     void "python rejects features that require JVM packaging"(String feature) {
