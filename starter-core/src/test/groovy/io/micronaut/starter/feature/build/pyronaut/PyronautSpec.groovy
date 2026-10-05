@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.build.pyronaut
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.Dependency
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -144,6 +145,61 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         output["pyproject.toml"].contains("[tool.pyronaut.test-resources]")
         output["pyproject.toml"].contains("enabled = true")
         output["pyproject.toml"].contains('additional-modules = [\n    "jdbc-mysql",\n]')
+    }
+
+    void "pyronaut renders testResourcesService dependencies as versioned test resources additional modules"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.PYTHON, TestFramework.PYTEST, BuildTool.PYRONAUT),
+                ["langchain4j-store-qdrant", "test-resources"]
+        )
+        String pyproject = output["pyproject.toml"]
+        String langchain4jVersion = VersionInfo.getBomVersion("micronaut.langchain4j")
+        String testSection = pyproject.substring(pyproject.indexOf("test = ["))
+
+        then:
+        pyproject.contains("[tool.pyronaut.test-resources]\nenabled = true\ninfer-classpath = true\nadditional-modules = [\n    \"io.micronaut.langchain4j:micronaut-langchain4j-qdrant-testresource:${langchain4jVersion}\",\n]")
+        !testSection.contains("micronaut-langchain4j-qdrant-testresource")
+    }
+
+    void "pyronaut does not render testResourcesService dependencies without test resources"() {
+        given:
+        PyronautBuild build = new PyronautBuild("demo", "1.0.0", [], [
+                Dependency.builder().groupId("io.micronaut.langchain4j").artifactId("micronaut-langchain4j-ollama-testresource").testResourcesService().build()
+        ], false, false, [], [])
+
+        when:
+        String pyproject = build.render()
+
+        then:
+        !pyproject.contains("additional-modules")
+        !pyproject.contains("micronaut-langchain4j-ollama-testresource")
+    }
+
+    void "pyronaut resolves testResourcesService dependency versions and merges them with additional modules"() {
+        given:
+        PyronautBuild build = new PyronautBuild("demo", "1.0.0", [], [
+                Dependency.builder().groupId("com.example").artifactId("explicit-testresource").version("1.2.3").testResourcesService().build(),
+                Dependency.builder().groupId("com.example").artifactId("property-testresource").version('${micronaut.langchain4j.version}').testResourcesService().build(),
+                Dependency.builder().groupId("com.example").artifactId("version-property-testresource").versionProperty("micronaut.langchain4j.version").testResourcesService().build(),
+                Dependency.builder().groupId("com.example").artifactId("unresolved-testresource").testResourcesService().build(),
+                Dependency.builder().groupId("com.example").artifactId("unresolved-testresource").testResourcesService().build(),
+        ], true, false, ["jdbc-mysql"], [])
+        String langchain4jVersion = VersionInfo.getBomVersion("micronaut.langchain4j")
+
+        when:
+        String pyproject = build.render()
+
+        then:
+        pyproject.contains("""additional-modules = [
+    "com.example:explicit-testresource:1.2.3",
+    "com.example:property-testresource:${langchain4jVersion}",
+    "com.example:unresolved-testresource",
+    "com.example:version-property-testresource:${langchain4jVersion}",
+    "jdbc-mysql",
+]""")
+        pyproject.contains("test = [\n]")
     }
 
     void "pyronaut suppresses r2dbc connection validation when test resources supplies the database"() {
