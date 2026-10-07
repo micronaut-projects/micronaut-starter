@@ -116,7 +116,6 @@ public class SelectOptionsDTO {
         );
 
         List<LanguageDTO> languages = Arrays.stream(Language.values())
-                .filter(it -> it != Language.PYTHON)
                 .map(it -> new LanguageDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
@@ -126,7 +125,6 @@ public class SelectOptionsDTO {
         );
 
         List<TestFrameworkDTO> testFrameworks = Arrays.stream(TestFramework.values())
-                .filter(it -> it != TestFramework.PYTEST)
                 .map(it -> new TestFrameworkDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
@@ -136,7 +134,6 @@ public class SelectOptionsDTO {
         );
 
        List<BuildToolDTO> buildTools = Arrays.stream(BuildTool.values())
-               .filter(it -> it != BuildTool.PYRONAUT)
                .map(it -> new BuildToolDTO(it, messageSource, messageContext))
                .collect(Collectors.toList());
 
