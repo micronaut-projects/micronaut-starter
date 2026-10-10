@@ -38,12 +38,11 @@ public class CamelHttp implements Feature {
     public static final String NAME = "camel-http";
 
     private static final Dependency HTTP = MicronautDependencyUtils.camel()
-            .artifactId("micronaut-camel-http")
+            .artifactId("micronaut-camel-platform-http")
             .compile()
             .build();
-    private static final Dependency REST = Dependency.builder()
-            .groupId(Camel.GROUP_ID_CAMEL)
-            .artifactId("camel-rest")
+    private static final Dependency REST = MicronautDependencyUtils.camel()
+            .artifactId("micronaut-camel-rest")
             .compile()
             .build();
 

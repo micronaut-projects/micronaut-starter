@@ -43,7 +43,7 @@ class CamelSpec extends ApplicationContextSpec implements CommandOutputFixture {
         verifier.hasDependency("io.micronaut.camel", "micronaut-camel-core", Scope.COMPILE)
         verifier.hasAnnotationProcessor("io.micronaut.camel", "micronaut-camel-processor")
         verifier.hasDependency("io.micronaut.camel", "micronaut-camel-test", Scope.TEST)
-        verifier.hasDependency("org.apache.camel", "camel-direct", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.camel", "micronaut-camel-direct", Scope.COMPILE)
 
         where:
         language << LanguageUtils.JVM_LANGUAGES
@@ -74,8 +74,8 @@ class CamelSpec extends ApplicationContextSpec implements CommandOutputFixture {
         BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
 
         then:
-        verifier.hasDependency("io.micronaut.camel", "micronaut-camel-http", Scope.COMPILE)
-        verifier.hasDependency("org.apache.camel", "camel-rest", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.camel", "micronaut-camel-platform-http", Scope.COMPILE)
+        verifier.hasDependency("io.micronaut.camel", "micronaut-camel-rest", Scope.COMPILE)
         verifier.hasDependency("io.micronaut.camel", "micronaut-camel-core", Scope.COMPILE)
     }
 }

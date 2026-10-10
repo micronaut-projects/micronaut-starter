@@ -36,7 +36,6 @@ import jakarta.inject.Singleton;
 public class Camel implements Feature {
 
     public static final String NAME = "camel";
-    public static final String GROUP_ID_CAMEL = "org.apache.camel";
 
     private static final Dependency CORE = MicronautDependencyUtils.camel()
             .artifactId("micronaut-camel-core")
@@ -50,9 +49,8 @@ public class Camel implements Feature {
             .artifactId("micronaut-camel-test")
             .test()
             .build();
-    private static final Dependency DIRECT = Dependency.builder()
-            .groupId(GROUP_ID_CAMEL)
-            .artifactId("camel-direct")
+    private static final Dependency DIRECT = MicronautDependencyUtils.camel()
+            .artifactId("micronaut-camel-direct")
             .compile()
             .build();
 
