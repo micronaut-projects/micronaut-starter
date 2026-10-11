@@ -79,6 +79,10 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         projectSkill.contains("`src/`: application Python sources")
         projectSkill.contains("[tool.pyronaut.dependencies]")
         projectSkill.contains("Avoid `bootstrap.properties` and `bootstrap.toml`")
+        projectSkill.contains("`development-runtime`")
+        projectSkill.contains("four-part form `group:artifact:pom:version`")
+        projectSkill.contains("Do not let Test Resources resolve a property it does not own")
+        projectSkill.contains("at least 256 bits")
 
         and:
         String cliSkill = output[".agents/skills/pyronaut-cli/SKILL.md"]
@@ -86,6 +90,10 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         cliSkill.contains("`--project-dir .` is unnecessary")
         cliSkill.contains("pyronaut validate-config --scenario run|test|production")
         cliSkill.contains("PYRONAUT_TRACE_DELEGATION=true")
+        cliSkill.contains("## Compiling Is Not Running")
+        cliSkill.contains("__pyronaut__/reports/tests/junit.xml")
+        cliSkill.contains("Test resource service is not available")
+        cliSkill.contains("BindException: Address already in use")
 
         and:
         String codingSkill = output[".agents/skills/pyronaut-coding/SKILL.md"]
@@ -95,6 +103,32 @@ class PyronautSpec extends BeanContextSpec implements CommandOutputFixture {
         codingSkill.contains("not `from io.micronaut.http.annotation import Get`")
         codingSkill.contains("from micronaut.core.async_.annotation import SingleResult")
         codingSkill.contains("do not use `micronaut-jackson-databind`, `hibernate-jpa`, or `hibernate-validator`")
+
+        and: "the annotation-argument rule, reported since Core 5.2.9 and silent before it"
+        codingSkill.contains("## Annotations Are Read From Source, Not Evaluated")
+        codingSkill.contains("**fails processing** and names the fix")
+        codingSkill.contains('QueryValue(defaultValue=str(DEFAULT_SIZE))')
+        codingSkill.contains("Size(min=MIN_PASSWORD, max=128)")
+        codingSkill.contains("older than 5.2.9")
+
+        and: "module-level type annotations on a route module"
+        codingSkill.contains('Controller("/api/v1/items")')
+        codingSkill.contains("Requires(env=")
+        codingSkill.contains("@EventListener")
+        codingSkill.contains("Operation ids must be unique")
+
+        and: "imports: keyword escaping, nested types, and locating a class"
+        codingSkill.contains("`Pageable.from_(page, size)`")
+        codingSkill.contains("@Mapper.Mapping(...)`, not `Mapping`")
+        codingSkill.contains('grep -rn "class StartupEvent" __pyronaut__/ide-stubs/')
+        codingSkill.contains("Do not write your own `__init__.py`")
+        codingSkill.contains("imports **every** module in its package, eagerly")
+
+        and: "data, errors and test lifecycle"
+        codingSkill.contains("class ItemMapper(Protocol):")
+        codingSkill.contains("must be a Java `Throwable`")
+        codingSkill.contains("TestInstance(TestInstance.Lifecycle.PER_CLASS)")
+        codingSkill.contains("Do not write a test that depends on data another test can change")
     }
 
     void "pyronaut supports database dependencies and test resources metadata"() {
