@@ -91,6 +91,29 @@ class SupportsFeatureValidatorSpec extends BeanContextSpec implements ContextFix
         feature << ["discovery-consul", "discovery-eureka"]
     }
 
+    void "python supports cloud secrets configuration imports"(String feature) {
+        when:
+        buildGeneratorContext([feature], new Options(Language.PYTHON, BuildTool.PYRONAUT))
+
+        then:
+        noExceptionThrown()
+
+        where:
+        feature << ["gcp-secrets-manager", "azure-key-vault"]
+    }
+
+    void "python keeps other distributed configuration features unsupported"(String feature) {
+        when:
+        buildGeneratorContext([feature], new Options(Language.PYTHON, BuildTool.PYRONAUT))
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message.contains("Feature ${feature} does not support language python. ")
+
+        where:
+        feature << ["aws-secrets-manager", "aws-parameter-store", "oracle-cloud-vault", "config-consul", "coherence-distributed-configuration", "netflix-archaius"]
+    }
+
     void "python rejects jvm-specific HTTP client features"() {
         when:
         buildGeneratorContext(["http-client-jdk"], new Options(Language.PYTHON, BuildTool.PYRONAUT))
