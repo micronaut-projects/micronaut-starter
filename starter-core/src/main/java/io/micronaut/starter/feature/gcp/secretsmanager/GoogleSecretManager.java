@@ -45,6 +45,11 @@ public class GoogleSecretManager implements DistributedConfigFeature {
     }
 
     @Override
+    public boolean supportsPython() {
+        return true;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(gcpSecretManagerDependency());
         addConfigurationImport(generatorContext, "gcp-secret-manager://application");
