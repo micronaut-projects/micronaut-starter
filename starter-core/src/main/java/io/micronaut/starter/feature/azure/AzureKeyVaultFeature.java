@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.discovery.DiscoveryClient;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -82,13 +83,14 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addDependencies(generatorContext);
-        Map<String, Object> configuration = populateConfigurationForDistributedConfiguration(generatorContext);
-        configuration.put("micronaut.config.import.provider", "azure-key-vault");
-        configuration.put("micronaut.config.import.vault-url", "${AZURE_VAULT_URI}");
-        configuration.put("micronaut.config.import.credential-mode", "client-secret");
-        configuration.put("micronaut.config.import.client-id", "${AZURE_CLIENT_ID}");
-        configuration.put("micronaut.config.import.tenant-id", "${AZURE_TENANT_ID}");
-        configuration.put("micronaut.config.import.client-secret", "${AZURE_SECRET_VALUE}");
+        Map<String, Object> declaration = new LinkedHashMap<>();
+        declaration.put("provider", "azure-key-vault");
+        declaration.put("vault-url", "${AZURE_VAULT_URI}");
+        declaration.put("credential-mode", "client-secret");
+        declaration.put("client-id", "${AZURE_CLIENT_ID}");
+        declaration.put("tenant-id", "${AZURE_TENANT_ID}");
+        declaration.put("client-secret", "${AZURE_SECRET_VALUE}");
+        addConfigurationImport(generatorContext, declaration);
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {
