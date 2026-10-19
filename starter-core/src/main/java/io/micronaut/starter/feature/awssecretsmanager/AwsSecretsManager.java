@@ -36,7 +36,6 @@ public class AwsSecretsManager implements DistributedConfigFeature {
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_AWS_SECRETSMANAGER = MicronautDependencyUtils.awsDependency()
             .artifactId(ARTIFACT_ID_MICRONAUT_AWS_SECRETSMANAGER)
             .compile();
-    private static final String PROPERTY_MICRONAUT_CONFIG_IMPORT = "micronaut.config.import";
 
     @Override
     public String getTitle() {
@@ -70,8 +69,7 @@ public class AwsSecretsManager implements DistributedConfigFeature {
     }
 
     protected void addConfigurationProperties(@NonNull GeneratorContext generatorContext) {
-        populateConfigurationForDistributedConfiguration(generatorContext)
-                .put(PROPERTY_MICRONAUT_CONFIG_IMPORT, "optional:aws-secretsmanager:///config/" + "${micronaut.application.name}");
+        addConfigurationImport(generatorContext, "optional:aws-secretsmanager:///config/" + "${micronaut.application.name}");
     }
 
     protected static void addDependencies(@NonNull GeneratorContext generatorContext) {

@@ -70,7 +70,7 @@ public class AwsParameterStore implements DistributedConfigFeature {
     }
 
     protected void addConfigurationProperties(@NonNull GeneratorContext generatorContext) {
-        populateConfigurationForDistributedConfiguration(generatorContext).putAll(PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION);
+        addConfigurationImport(generatorContext, PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION.get(PROPERTY_MICRONAUT_CONFIG_IMPORT));
     }
 
     protected void addDependencies(@NonNull GeneratorContext generatorContext) {

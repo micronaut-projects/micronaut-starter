@@ -44,12 +44,12 @@ class AzureKeyVaultFeatureSpec extends ApplicationContextSpec implements Command
 
         then:
         config.containsKey("micronaut.application.name")
-        config["micronaut.config.import.provider"] == "azure-key-vault"
-        config["micronaut.config.import.vault-url"] == '${AZURE_VAULT_URI}'
-        config["micronaut.config.import.credential-mode"] == 'client-secret'
-        config["micronaut.config.import.client-id"] == '${AZURE_CLIENT_ID}'
-        config["micronaut.config.import.tenant-id"] == '${AZURE_TENANT_ID}'
-        config["micronaut.config.import.client-secret"] == '${AZURE_SECRET_VALUE}'
+        config["micronaut.config.import"]["provider"] == "azure-key-vault"
+        config["micronaut.config.import"]["vault-url"] == '${AZURE_VAULT_URI}'
+        config["micronaut.config.import"]["credential-mode"] == 'client-secret'
+        config["micronaut.config.import"]["client-id"] == '${AZURE_CLIENT_ID}'
+        config["micronaut.config.import"]["tenant-id"] == '${AZURE_TENANT_ID}'
+        config["micronaut.config.import"]["client-secret"] == '${AZURE_SECRET_VALUE}'
         !context.bootstrapConfiguration.containsKey("micronaut.config-client.enabled")
     }
 
