@@ -119,7 +119,7 @@ public class PyronautAgentSkills implements DefaultFeature, PythonSpecificFeatur
             name = "demo"
             ```
 
-            Avoid `bootstrap.properties` and `bootstrap.toml`; Pyronaut projects should use normal application configuration and exclude features that require bootstrap configuration.
+            Do not create `bootstrap.properties` or `bootstrap.toml`. Configure supported remote property sources with `micronaut.config.import` in `config/application.toml`, using the generated import settings and the provider's standard credential configuration.
 
             ## Generated Files
 
