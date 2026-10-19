@@ -54,6 +54,7 @@ class DistributedConfigImportsSpec extends BeanContextSpec implements CommandOut
         imported.toSet() == providers.toSet()
         imported.size() == providers.size()
         !output.keySet().any { it.tokenize('/').last().startsWith('bootstrap') }
+        !features.contains("discovery-consul") || config["consul.client.defaultZone"] == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
 
         cleanup:
         locator?.close()
@@ -66,6 +67,8 @@ class DistributedConfigImportsSpec extends BeanContextSpec implements CommandOut
         ["azure-key-vault", "oracle-cloud-vault"]      | ["azure-key-vault", "oraclecloud-vault"]
         ["azure-key-vault"]                           | ["azure-key-vault"]
         ["oracle-cloud-vault"]                        | ["oraclecloud-vault"]
+        ["gcp-secrets-manager", "discovery-consul"]    | ["gcp-secret-manager"]
+        ["azure-key-vault", "discovery-consul"]        | ["azure-key-vault"]
     }
 
     private PropertySourceImporter importer(String provider, List<String> imported) {
