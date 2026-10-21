@@ -71,7 +71,7 @@ public class KubernetesConfig implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        populateBootstrapForDistributedConfiguration(generatorContext);
+        addConfigurationImport(generatorContext, "optional:kubernetes://configmap");
         generatorContext.addDependency(Dependency.builder()
                 .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-discovery-client")

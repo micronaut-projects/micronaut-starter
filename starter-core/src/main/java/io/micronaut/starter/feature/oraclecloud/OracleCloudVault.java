@@ -24,8 +24,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Requires(property = "micronaut.starter.feature.oracle.cloud.vault.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -68,11 +67,11 @@ public class OracleCloudVault implements DistributedConfigFeature {
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
 
-        Map<String, Object> bootstrapConfiguration = populateBootstrapForDistributedConfiguration(generatorContext);
-        bootstrapConfiguration.put("oci.vault.config.enabled", true);
-        Map<String, String> map = new HashMap<>();
-        map.put("ocid", "");
-        map.put("compartment-ocid", "");
-        bootstrapConfiguration.put("oci.vault.vaults", Collections.singletonList(map));
+        Map<String, Object> declaration = new LinkedHashMap<>();
+        declaration.put("provider", "oraclecloud-vault");
+        declaration.put("config-profile", "DEFAULT");
+        declaration.put("ocid", "");
+        declaration.put("compartment-id", "");
+        addConfigurationImport(generatorContext, declaration);
     }
 }

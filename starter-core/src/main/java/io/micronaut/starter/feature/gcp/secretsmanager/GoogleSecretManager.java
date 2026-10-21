@@ -47,7 +47,7 @@ public class GoogleSecretManager implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(gcpSecretManagerDependency());
-        populateBootstrapForDistributedConfiguration(generatorContext);
+        addConfigurationImport(generatorContext, "gcp-secret-manager://application");
     }
 
     private Dependency.@NonNull Builder gcpSecretManagerDependency() {
