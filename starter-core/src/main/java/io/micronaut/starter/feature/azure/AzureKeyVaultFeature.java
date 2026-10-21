@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.discovery.DiscoveryClient;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 /**
@@ -80,7 +81,16 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addDependencies(generatorContext);
-        populateBootstrapForDistributedConfiguration(generatorContext);
+        if (generatorContext.getLanguage() == Language.PYTHON) {
+            addConfigurationImport(generatorContext, "azure-key-vault://YOUR_VAULT_NAME");
+        } else {
+            populateBootstrapForDistributedConfiguration(generatorContext);
+        }
+    }
+
+    @Override
+    public boolean supportsPython() {
+        return true;
     }
 
     protected void addDependencies(GeneratorContext generatorContext) {

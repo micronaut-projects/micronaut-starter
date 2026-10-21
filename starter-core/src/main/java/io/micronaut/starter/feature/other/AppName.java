@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -56,7 +57,7 @@ public class AppName implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> appNameConfig;
-        if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
+        if (generatorContext.getLanguage() != Language.PYTHON && generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
             appNameConfig = generatorContext.getBootstrapConfiguration();
         } else {
             appNameConfig = generatorContext.getConfiguration();
