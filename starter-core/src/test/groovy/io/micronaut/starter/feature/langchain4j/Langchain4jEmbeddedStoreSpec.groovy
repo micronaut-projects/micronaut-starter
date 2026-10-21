@@ -65,4 +65,23 @@ class Langchain4jEmbeddedStoreSpec extends BeanContextSpec implements CommandOut
         "langchain4j-store-pgvector" | "io.micronaut.langchain4j" | "micronaut-langchain4j-store-pgvector"
         dependency = "${groupId}:${artifactId}"
     }
+
+    @Unroll("feature #featureName adds test resources dependency #artifactId for build tool #buildTool")
+    void "langchain4j embedded store test resources dependency"(BuildTool buildTool, String featureName, String artifactId) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(Language.JAVA)
+                .features([featureName, "test-resources"])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, Language.JAVA, template)
+
+        then:
+        verifier.hasTestResourceDependency("io.micronaut.langchain4j", artifactId)
+
+        where:
+        buildTool               | featureName   | artifactId
+        BuildTool.GRADLE        | "langchain4j-store-qdrant" | "micronaut-langchain4j-qdrant-testresource"
+        BuildTool.GRADLE_KOTLIN | "langchain4j-store-qdrant" | "micronaut-langchain4j-qdrant-testresource"
+        BuildTool.MAVEN         | "langchain4j-store-qdrant" | "micronaut-langchain4j-qdrant-testresource"
+    }
 }
