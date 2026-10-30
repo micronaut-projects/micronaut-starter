@@ -20,12 +20,38 @@ import org.jspecify.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public interface DistributedConfigFeature extends JvmFeature {
+
+    @Override
+    default boolean supports(Language language) {
+        return language == Language.PYTHON && supportsPython() || JvmFeature.super.supports(language);
+    }
+
+    @Override
+    default boolean supports(BuildTool buildTool) {
+        return buildTool == BuildTool.PYRONAUT && supportsPython() || JvmFeature.super.supports(buildTool);
+    }
+
+    @Override
+    default boolean supports(TestFramework testFramework) {
+        return testFramework == TestFramework.PYTEST && supportsPython() || JvmFeature.super.supports(testFramework);
+    }
+
+    /**
+     * Whether this distributed configuration feature supports Python projects.
+     * @return Whether Python is supported
+     */
+    default boolean supportsPython() {
+        return false;
+    }
 
     @Override
     default boolean supports(ApplicationType applicationType) {

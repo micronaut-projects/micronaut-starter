@@ -71,6 +71,11 @@ public class AzureKeyVaultFeature implements DistributedConfigFeature {
     }
 
     @Override
+    public boolean supportsPython() {
+        return true;
+    }
+
+    @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/#azureKeyVault";
     }
