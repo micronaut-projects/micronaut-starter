@@ -36,6 +36,12 @@ import java.nio.charset.StandardCharsets
 
 class DistributedConfigImportsSpec extends BeanContextSpec implements CommandOutputFixture {
 
+    private static final Map<String, Object> AZURE_CREDENTIALS = [
+            AZURE_VAULT_URI: "https://example.vault.azure.net/",
+            AZURE_CLIENT_ID: "client-id",
+            AZURE_TENANT_ID: "tenant-id",
+            AZURE_SECRET_VALUE: "client-secret"]
+
     void "combined #features declarations render valid TOML and reach every importer"(List<String> features, List<String> providers) {
         given:
         Map<String, String> output = generate(ApplicationType.DEFAULT,
@@ -48,6 +54,8 @@ class DistributedConfigImportsSpec extends BeanContextSpec implements CommandOut
         def locator = new ConfigImportPropertySourcesLocator({ providers.collect { importer(it, imported) } })
         def environment = new DefaultEnvironment((DefaultApplicationContextBuilder) ApplicationContext.builder())
         environment.addPropertySource(PropertySource.of("generated-application", config))
+        environment.addPropertySource(PropertySource.of("azure-credentials", AZURE_CREDENTIALS,
+                PropertySource.PropertyConvention.ENVIRONMENT_VARIABLE))
         locator.load(environment)
 
         then:
