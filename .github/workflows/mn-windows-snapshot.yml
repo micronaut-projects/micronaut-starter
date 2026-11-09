@@ -12,11 +12,11 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: "⬇ Checkout the repository"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: "☕️ Setup GraalVM"
-        uses: graalvm/setup-graalvm@v1.5.3
+        uses: graalvm/setup-graalvm@v1.5.6
         with:
           java-version: '25.0.3'
           distribution: 'graalvm'
