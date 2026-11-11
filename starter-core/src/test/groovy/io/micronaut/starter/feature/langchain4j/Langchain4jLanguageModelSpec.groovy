@@ -29,7 +29,7 @@ class Langchain4jLanguageModelSpec extends BeanContextSpec implements CommandOut
         verifier.hasDependency(groupId, artifactId, Scope.COMPILE)
         verifier.hasDependency("io.micronaut.langchain4j", "micronaut-langchain4j-processor", Scope.ANNOTATION_PROCESSOR)
         if (featureName == "langchain4j-ollama") {
-            assert verifier.hasDependency("io.micronaut.langchain4j", "micronaut-langchain4j-ollama-testresources", Scope.TEST_RESOURCES_SERVICE)
+            assert verifier.hasDependency("io.micronaut.langchain4j", "micronaut-langchain4j-ollama-testresource", Scope.TEST_RESOURCES_SERVICE)
         }
 
         where:
@@ -47,4 +47,22 @@ class Langchain4jLanguageModelSpec extends BeanContextSpec implements CommandOut
         dependency = "${groupId}:${artifactId}"
     }
 
+    @Unroll("feature #featureName adds test resources dependency #artifactId for build tool #buildTool")
+    void "langchain4j language model test resources dependency"(BuildTool buildTool, String featureName, String artifactId) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .language(Language.JAVA)
+                .features([featureName, "test-resources"])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, Language.JAVA, template)
+
+        then:
+        verifier.hasTestResourceDependency("io.micronaut.langchain4j", artifactId)
+
+        where:
+        buildTool               | featureName   | artifactId
+        BuildTool.GRADLE        | "langchain4j-ollama" | "micronaut-langchain4j-ollama-testresource"
+        BuildTool.GRADLE_KOTLIN | "langchain4j-ollama" | "micronaut-langchain4j-ollama-testresource"
+        BuildTool.MAVEN         | "langchain4j-ollama" | "micronaut-langchain4j-ollama-testresource"
+    }
 }

@@ -19,21 +19,27 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.langchain4j.Langchain4jLanguageModel;
 import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.feature.testresources.TestResourcesAdditionalModulesProvider;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @Requires(property = "micronaut.starter.feature.langchain4j.ollama.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 @Singleton
-public class OllamaLangchain4jLanguageModel implements Langchain4jLanguageModel {
+public class OllamaLangchain4jLanguageModel implements Langchain4jLanguageModel, TestResourcesAdditionalModulesProvider {
     private static final String NAME = "langchain4j-ollama";
     private static final String ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA = "micronaut-langchain4j-ollama";
     private static final Dependency DEPENDENCY_MICRONAUT_LANGCHAIN4J_OLLAMA = MicronautDependencyUtils.langchain4j()
             .artifactId(ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA)
             .compile()
             .build();
-    private static final String ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA_TESTRESOURCES = "micronaut-langchain4j-ollama-testresources";
+    private static final String ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA_TESTRESOURCES = "micronaut-langchain4j-ollama-testresource";
     private static final Dependency DEPENDENCY_MICRONAUT_LANGCHAIN4J_OLLAMA_TESTRESOURCES = MicronautDependencyUtils.langchain4j()
             .artifactId(ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA_TESTRESOURCES)
             .testResourcesService()
@@ -56,5 +62,17 @@ public class OllamaLangchain4jLanguageModel implements Langchain4jLanguageModel 
         if (generatorContext.hasFeature(TestResources.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_LANGCHAIN4J_OLLAMA_TESTRESOURCES);
         }
+    }
+
+    @Override
+    @NonNull
+    public List<String> getTestResourcesAdditionalModules(@NonNull GeneratorContext generatorContext) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    @NonNull
+    public List<MavenCoordinate> getTestResourcesDependencies(@NonNull GeneratorContext generatorContext) {
+        return Collections.singletonList(new MavenCoordinate(MicronautDependencyUtils.GROUP_ID_MICRONAUT_LANGCHAIN4J, ARTIFACT_ID_MICRONAUT_LANGCHAIN_4_J_OLLAMA_TESTRESOURCES, null));
     }
 }
