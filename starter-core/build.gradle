@@ -27,6 +27,7 @@ dependencies {
     implementation("org.apache.commons:commons-compress:1.27.1")
 
     testImplementation("org.apache.groovy:groovy-xml")
+    testImplementation("io.micronaut.toml:micronaut-toml")
 }
 
 TaskProvider<WriteMicronautVersionInfoTask> micronautVersionInfo = tasks.register("micronautVersionInfo", WriteMicronautVersionInfoTask) {

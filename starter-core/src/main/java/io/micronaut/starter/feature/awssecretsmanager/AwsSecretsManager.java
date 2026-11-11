@@ -21,7 +21,6 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.feature.awsparameterstore.AwsParameterStore;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
@@ -56,7 +55,7 @@ public class AwsSecretsManager implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         addDependencies(generatorContext);
-        addBootstrapProperties(generatorContext);
+        addConfigurationProperties(generatorContext);
     }
 
     @Override
@@ -69,8 +68,8 @@ public class AwsSecretsManager implements DistributedConfigFeature {
         return "https://aws.amazon.com/secrets-manager/";
     }
 
-    protected void addBootstrapProperties(@NonNull GeneratorContext generatorContext) {
-        populateBootstrapForDistributedConfiguration(generatorContext).putAll(AwsParameterStore.PROPERTIES_AWS_DISTRIBUTED_CONFIGURATION);
+    protected void addConfigurationProperties(@NonNull GeneratorContext generatorContext) {
+        addConfigurationImport(generatorContext, "optional:aws-secretsmanager:///config/" + "${micronaut.application.name}");
     }
 
     protected static void addDependencies(@NonNull GeneratorContext generatorContext) {

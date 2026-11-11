@@ -21,6 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface DistributedConfigFeature extends JvmFeature {
@@ -36,10 +38,34 @@ public interface DistributedConfigFeature extends JvmFeature {
     }
 
     @NonNull
-    default Map<String, Object> populateBootstrapForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
-        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
+    default Map<String, Object> populateConfigurationForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
+        Map<String, Object> config = generatorContext.getConfiguration();
         config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
-        config.put("micronaut.config-client.enabled", true);
         return config;
+    }
+
+    /**
+     * Adds a scalar or structured config import without replacing another feature's declaration.
+     * @param generatorContext The generator context
+     * @param declaration The connection string or structured import map
+     */
+    default void addConfigurationImport(@NonNull GeneratorContext generatorContext, @NonNull Object declaration) {
+        Map<String, Object> configuration = populateConfigurationForDistributedConfiguration(generatorContext);
+        String key = "micronaut.config.import";
+        Object existing = configuration.get(key);
+        if (existing == null) {
+            configuration.put(key, declaration);
+        } else {
+            List<Object> imports = existing instanceof List<?> previous
+                    ? new ArrayList<>(previous) : new ArrayList<>(List.of(existing));
+            imports.add(declaration);
+            configuration.put(key, imports);
+        }
+    }
+
+    @NonNull
+    @Deprecated(forRemoval = true)
+    default Map<String, Object> populateBootstrapForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
+        return populateConfigurationForDistributedConfiguration(generatorContext);
     }
 }

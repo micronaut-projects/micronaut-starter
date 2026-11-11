@@ -21,7 +21,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigConsul;
 
 import jakarta.inject.Singleton;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class Consul implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config;
-        if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
+        if (generatorContext.isFeaturePresent(DistributedConfigConsul.class)) {
             config = generatorContext.getBootstrapConfiguration();
         } else {
             config = generatorContext.getConfiguration();
