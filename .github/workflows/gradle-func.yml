@@ -159,7 +159,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up GraalVM
-        uses: graalvm/setup-graalvm@v1.5.6
+        uses: graalvm/setup-graalvm@v1.6.9
         with:
           java-version: ${{ matrix.java }}
           distribution: 'graalvm'
