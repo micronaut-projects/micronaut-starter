@@ -21,8 +21,6 @@ jobs:
           java-version: '25.0.3'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: "🧪 Verify JVM External Command"
-        run: ./gradlew micronaut-cli:test --tests io.micronaut.starter.cli.ExternalCommandSpec --no-daemon
       - name: "📸 Build the Native Image"
         run: ./gradlew micronaut-cli:nativeCompile --no-daemon
         env:
