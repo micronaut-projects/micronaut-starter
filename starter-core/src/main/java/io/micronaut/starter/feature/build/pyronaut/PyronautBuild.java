@@ -22,12 +22,14 @@ import io.micronaut.starter.feature.config.toml.TomlPath;
 import io.micronaut.starter.feature.config.toml.TomlTable;
 import io.micronaut.starter.util.VersionInfo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public record PyronautBuild(String projectName,
@@ -41,6 +43,7 @@ public record PyronautBuild(String projectName,
     public static final String TABLE_TOOL = "tool";
     public static final String TABLE_PYRONAUT = "pyronaut";
     public static final String TABLE_DEPENDENCIES = "dependencies";
+    private static final String GROUP_ID_PREFIX_MICRONAUT = "io.micronaut.";
 
     public String render() {
         StringBuilder builder = new StringBuilder();
@@ -123,8 +126,9 @@ public record PyronautBuild(String projectName,
         values = new LinkedHashMap<>();
         values.put("enabled", testResources);
         values.put("infer-classpath", testResources);
-        if (testResources && !additionalModules.isEmpty()) {
-            values.put("additional-modules", additionalModules);
+        List<String> testResourcesModules = testResourcesModules();
+        if (!testResourcesModules.isEmpty()) {
+            values.put("additional-modules", testResourcesModules);
         }
         builder.append(new TomlTable(new TomlPath(List.of("tool", "pyronaut", "test-resources")), values));
 
@@ -132,6 +136,63 @@ public record PyronautBuild(String projectName,
         builder.append('\n');
         builder.append(new TomlTable(new TomlPath(List.of(TABLE_TOOL, TABLE_PYRONAUT, TABLE_DEPENDENCIES)), dependencyMap));
         return builder.toString();
+    }
+
+    /**
+     * Computes the modules added to the test resources server classpath. Pyronaut builds that classpath
+     * by inference from the runtime and test dependencies plus {@code additional-modules}, so any
+     * dependency declared with {@link Scope#TEST_RESOURCES_SERVICE} has to be rendered here.
+     *
+     * @return The sorted, de-duplicated list of additional modules
+     */
+    private List<String> testResourcesModules() {
+        if (!testResources) {
+            return List.of();
+        }
+        Set<String> modules = new LinkedHashSet<>(additionalModules);
+        dependencies.stream()
+                .filter(dependency -> dependency.getScope() == Scope.TEST_RESOURCES_SERVICE)
+                .filter(dependency -> StringUtils.isNotEmpty(dependency.getGroupId()))
+                .filter(dependency -> !dependency.isPom())
+                .map(PyronautBuild::testResourcesCoordinate)
+                .forEach(modules::add);
+        return sorted(modules);
+    }
+
+    /**
+     * Test resources service modules are rendered with an explicit version, because Pyronaut applies the
+     * Micronaut Test Resources version to {@code group:artifact} entries.
+     *
+     * @param dependency The dependency
+     * @return The coordinate
+     */
+    private static String testResourcesCoordinate(Dependency dependency) {
+        return resolveVersion(dependency)
+                .map(version -> dependency.getGroupId() + ":" + dependency.getArtifactId() + ":" + version)
+                .orElseGet(() -> dependency.getGroupId() + ":" + dependency.getArtifactId());
+    }
+
+    private static Optional<String> resolveVersion(Dependency dependency) {
+        String version = dependency.getVersion();
+        if (StringUtils.isNotEmpty(version) && !version.startsWith("${")) {
+            return Optional.of(version);
+        }
+        List<String> candidateProperties = new ArrayList<>();
+        if (StringUtils.isNotEmpty(version) && version.startsWith("${") && version.endsWith("}")) {
+            candidateProperties.add(version.substring(2, version.length() - 1));
+        }
+        if (StringUtils.isNotEmpty(dependency.getVersionProperty())) {
+            candidateProperties.add(dependency.getVersionProperty());
+        }
+        String groupId = dependency.getGroupId();
+        if (groupId.startsWith(GROUP_ID_PREFIX_MICRONAUT)) {
+            candidateProperties.add("micronaut." + groupId.substring(GROUP_ID_PREFIX_MICRONAUT.length()) + ".version");
+        }
+        Map<String, String> versions = VersionInfo.getDependencyVersions();
+        return candidateProperties.stream()
+                .map(versions::get)
+                .filter(StringUtils::isNotEmpty)
+                .findFirst();
     }
 
     private static Map<String, Object> dependenciesMap(Collection<Dependency> dependencies) {
@@ -173,9 +234,10 @@ public record PyronautBuild(String projectName,
             return java.util.Optional.of("runtime");
         }
         if (scope == Scope.TEST || scope == Scope.TEST_RUNTIME || scope == Scope.TEST_COMPILE_ONLY
-                || scope == Scope.TEST_ANNOTATION_PROCESSOR || scope == Scope.TEST_RESOURCES_SERVICE) {
+                || scope == Scope.TEST_ANNOTATION_PROCESSOR) {
             return java.util.Optional.of("test");
         }
+        // Scope.TEST_RESOURCES_SERVICE is rendered into [tool.pyronaut.test-resources].additional-modules
         return java.util.Optional.empty();
     }
 
