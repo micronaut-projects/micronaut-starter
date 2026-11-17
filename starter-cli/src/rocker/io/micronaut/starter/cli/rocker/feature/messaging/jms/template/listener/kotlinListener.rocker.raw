@@ -10,7 +10,7 @@
 }
 
 import io.micronaut.jms.annotations.JMSListener
-import static @(configClass).CONNECTION_FACTORY_BEAN_NAME
+import @(configClass).CONNECTION_FACTORY_BEAN_NAME
 
 @@JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 class @project.getClassName() {

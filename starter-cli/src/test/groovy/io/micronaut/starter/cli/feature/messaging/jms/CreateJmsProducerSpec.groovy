@@ -35,12 +35,12 @@ class CreateJmsProducerSpec extends CommandSpec implements CommandFixture {
         exitCode == 0
         output.exists()
         if (language == Language.PYTHON) {
-            output.text.contains("from micronaut.jms.annotations import JMSProducer")
-            output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("from micronaut.jms.annotations import JMSProducer")
+            assert output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
         } else {
-            output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
-            output.text.contains("import static io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-            output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
+            assert output.text.contains("${language == Language.KOTLIN ? 'import' : 'import static'} io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            assert output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
         }
 
         1 * consoleOutput.out({ it.contains("Rendered JMS producer") })
@@ -65,12 +65,12 @@ class CreateJmsProducerSpec extends CommandSpec implements CommandFixture {
         exitCode == 0
         output.exists()
         if (language == Language.PYTHON) {
-            output.text.contains("from micronaut.jms.annotations import JMSProducer")
-            output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("from micronaut.jms.annotations import JMSProducer")
+            assert output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
         } else {
-            output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
-            output.text.contains("import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-            output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
+            assert output.text.contains("${language == Language.KOTLIN ? 'import' : 'import static'} io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            assert output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
         }
 
         1 * consoleOutput.out({ it.contains("Rendered JMS producer") })
@@ -95,12 +95,12 @@ class CreateJmsProducerSpec extends CommandSpec implements CommandFixture {
         exitCode == 0
         output.exists()
         if (language == Language.PYTHON) {
-            output.text.contains("from micronaut.jms.annotations import JMSProducer")
-            output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("from micronaut.jms.annotations import JMSProducer")
+            assert output.text.contains("@JMSProducer(Configuration.CONNECTION_FACTORY_BEAN_NAME)")
         } else {
-            output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
-            output.text.contains("import static io.micronaut.jms.sqs.configuration.SqsConfiguration.CONNECTION_FACTORY_BEAN_NAME")
-            output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
+            assert output.text.contains("import io.micronaut.jms.annotations.JMSProducer")
+            assert output.text.contains("${language == Language.KOTLIN ? 'import' : 'import static'} io.micronaut.jms.sqs.configuration.SqsConfiguration.CONNECTION_FACTORY_BEAN_NAME")
+            assert output.text.contains("@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)")
         }
 
         1 * consoleOutput.out({ it.contains("Rendered JMS producer") })
