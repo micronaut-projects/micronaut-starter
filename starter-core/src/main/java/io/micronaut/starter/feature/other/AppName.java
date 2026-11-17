@@ -22,11 +22,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.util.Map;
 import java.util.Set;
 
 @Requires(property = "micronaut.starter.feature.app.name.enabled", value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
@@ -55,13 +53,7 @@ public class AppName implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map<String, Object> appNameConfig;
-        if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
-            appNameConfig = generatorContext.getBootstrapConfiguration();
-        } else {
-            appNameConfig = generatorContext.getConfiguration();
-        }
-        appNameConfig.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
+        generatorContext.getConfiguration().put("micronaut.application.name", generatorContext.getProject().getPropertyName());
     }
 
     @Override
