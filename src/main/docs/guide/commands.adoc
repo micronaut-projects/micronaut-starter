@@ -19,3 +19,30 @@ include::{includedir}/mn-create-grpc-app.adoc[]
 == create-messaging-app
 
 include::{includedir}/mn-create-messaging-app.adoc[]
+
+== External commands
+
+`mn` can be extended without rebuilding it. When the first command name is not a built-in command, `mn` looks for an executable named `mn-<name>` on `PATH` and runs it with the remaining arguments, following the `git-<name>` and `kubectl-<name>` convention. The external command inherits the standard streams and its exit code becomes the exit code of `mn`. If the command cannot be started, `mn` prints the reason and exits with 127.
+
+[source,bash]
+----
+$ cat ~/bin/mn-hello
+#!/bin/sh
+echo "hello $*"
+$ chmod +x ~/bin/mn-hello
+$ mn hello world
+hello world
+----
+
+Built-in commands always win: the lookup only runs for a name `mn` would otherwise reject.
+
+* The name must match `[a-z][a-z0-9-]*`.
+* Only the directories listed in `PATH` are searched, in order. Empty entries are skipped and relative entries are resolved from the working directory, as the shell does. On Windows, the extensions in `PATHEXT` are tried in order and entries wrapped in double quotes are accepted.
+* Root options in front of the name (`-x`/`--stacktrace` and `-v`/`--verbose`) are consumed by `mn` and are not passed on to the external command. Clustered short options such as `-xv` are not recognized there. `--help` and `--version` in front of the name are handled by `mn`, and `--` ends the root options. Everything after the name, including `--help`, belongs to the external command.
+* `mn --help` lists the external commands it finds under *External commands*.
+
+=== Windows
+
+`.exe` commands are started directly. The Java process API does not escape double quotes inside arguments, so an argument that contains a double quote does not reach an `.exe` command unchanged.
+
+`.cmd` and `.bat` commands run through `cmd.exe`, which parses the command line again, so `mn` passes every argument in double quotes. `mn` refuses to start the command, prints the offending character and exits with 127, when an argument contains a double quote, a control character or one of `%`, `&`, `(`, `)`, `<`, `>`, `+^+`, `|` and `!`, or when the path of the batch file contains a double quote, a control character, `%` or `!`. Other characters in the path of the batch file, such as spaces, parentheses and `&`, are fine. Because the arguments are quoted, batch scripts should read them with `+%~1+`, `+%~2+` and so on, which remove the quotes, rather than with `%1` or `%*`.
