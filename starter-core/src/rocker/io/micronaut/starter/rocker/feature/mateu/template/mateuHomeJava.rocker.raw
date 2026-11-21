@@ -1,0 +1,33 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import io.mateu.uidl.annotations.Button;
+import io.mateu.uidl.annotations.Title;
+import io.mateu.uidl.annotations.UI;
+import io.mateu.uidl.data.Message;
+import jakarta.validation.constraints.NotEmpty;
+
+/**
+ * A screen declared in plain Java. Mateu renders the field as a required input
+ * and the method as a button; the returned message is shown as a notification.
+ * See https://mateu.io for forms, CRUDs, wizards and app shells.
+ */
+@@UI("")
+@@Title("Hello from Mateu")
+public class Home {
+
+    @@NotEmpty
+    String name;
+
+    @@Button
+    Message greet() {
+        return Message.success("Hello, " + name + "!");
+    }
+}

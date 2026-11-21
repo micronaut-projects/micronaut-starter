@@ -41,6 +41,7 @@ import io.micronaut.starter.feature.build.gradle.JavaGradlePlugin
 import io.micronaut.starter.feature.build.maven.EnforcerPlugin
 import io.micronaut.starter.feature.build.maven.Maven
 import io.micronaut.starter.feature.buildless.Buildless
+import io.micronaut.starter.feature.mateu.Mateu
 import io.micronaut.starter.feature.cache.Caffeine
 import io.micronaut.starter.feature.cache.Coherence
 import io.micronaut.starter.feature.cache.EHCache
@@ -441,6 +442,7 @@ class FeatureDisabledSpec extends Specification {
         'kubernetes' | 'micronaut.starter.feature.kubernetes.enabled' | Kubernetes
         'micrometer-influx' | 'micronaut.starter.feature.micrometer.influx.enabled' | Influx
         'buildless' | 'micronaut.starter.feature.buildless.enabled' | Buildless
+        'mateu' | 'micronaut.starter.feature.mateu.enabled' | Mateu
         'tracing-opentelemetry-xray' | 'micronaut.starter.feature.tracing.opentelemetry.xray.enabled' | OpenTelemetryXray
         'views-soy' | 'micronaut.starter.feature.views.soy.enabled' | Soy
         'spring-data-jdbc' | 'micronaut.starter.feature.spring.data.jdbc.enabled' | SpringDataJdbc
