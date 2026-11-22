@@ -80,7 +80,7 @@ error-prone-gradle-plugin = "4.3.0"
 error-prone-core = "2.48.0"
 odi = "1.0.0"
 jakarta-enterprise-cdi-api = "4.1.0"
-mateu = "3.0.4"
+mateu = "3.0.5"
 
 [libraries]
 mateu-micronaut = { module = "io.mateu:mateu-micronaut", version.ref = "mateu" }
