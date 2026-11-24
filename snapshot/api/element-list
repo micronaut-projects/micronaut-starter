@@ -148,7 +148,6 @@ io.micronaut.starter.feature.langchain4j
 io.micronaut.starter.feature.langchain4j.embeddedstore
 io.micronaut.starter.feature.langchain4j.languagemodels
 io.micronaut.starter.feature.logging
-io.micronaut.starter.feature.mateu
 io.micronaut.starter.feature.mcp
 io.micronaut.starter.feature.messaging
 io.micronaut.starter.feature.messaging.jms
@@ -248,7 +247,6 @@ io.micronaut.starter.rocker.feature.lang.groovy
 io.micronaut.starter.rocker.feature.lang.java
 io.micronaut.starter.rocker.feature.lang.kotlin
 io.micronaut.starter.rocker.feature.logging.template
-io.micronaut.starter.rocker.feature.mateu.template
 io.micronaut.starter.rocker.feature.messaging.kafka.templates
 io.micronaut.starter.rocker.feature.migration.template
 io.micronaut.starter.rocker.feature.other.template
